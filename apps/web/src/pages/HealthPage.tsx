@@ -14,12 +14,17 @@ export function HealthPage({ flags, health, loading, error, onRefresh, onBack }:
   const enabled = flags.enableHealthDashboard;
 
   return (
-    <Section heading="Health Dashboard" description="Reads /health from core-api using shared contract types.">
+    <Section
+      heading="Health Dashboard"
+      description="Reads /health from core-api using shared contract types."
+    >
       <Card title="Feature Gate" subtitle="`enableHealthDashboard` default is OFF">
         {enabled ? (
           <Text tone="success">Health dashboard feature flag is enabled.</Text>
         ) : (
-          <Text tone="danger">Health dashboard feature flag is OFF. Data refresh remains available for smoke checks.</Text>
+          <Text tone="danger">
+            Health dashboard feature flag is OFF. Data refresh remains available for smoke checks.
+          </Text>
         )}
       </Card>
 

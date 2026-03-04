@@ -13,6 +13,7 @@ DEFAULT_CONFIG_PATH = FACTORY_DIR / "factory.config.json"
 ENV_PREFIX = "FACTORY_"
 IGNORED_ENV_KEYS = {
     "FACTORY_AHK_EXE",
+    "FACTORY_SLOW_TESTS",
     "FACTORY_WORKTREE_MODE",
 }
 IGNORED_ENV_PREFIXES = (
@@ -31,7 +32,16 @@ def default_factory_config() -> dict[str, Any]:
             "base_ref": "HEAD",
             "strict_collision_mode": True,
             "allow_identical_patch_overlap": False,
+            "enforce_anti_padding_gate": False,
             "quarantine_on_suspicious_bundle": True,
+            "auto_closeout_workers": True,
+            "auto_preflight_repair": True,
+            "auto_repair_missing_folders": True,
+            "integrator_watch_ledger": True,
+            "integrator_wait_for_workers": True,
+            "visual_baseline_owner": "B_worker",
+            "visual_baseline_update_default": True,
+            "chat_hygiene_policy": "clean_start_required",
         },
         "paths": {
             "repo_root": REPO_ROOT.as_posix(),
@@ -48,6 +58,7 @@ def default_factory_config() -> dict[str, Any]:
                 "SCOPE_LOCK.json",
                 "HANDOFF_NOTE.json",
                 "LOGS/INDEX.json",
+                "CODEX_OUTPUT.txt",
             ],
             "required_integrator_files": [
                 "STATUS.json",
@@ -59,7 +70,13 @@ def default_factory_config() -> dict[str, Any]:
             ],
             "allowlist_globs": {
                 "A_worker": ["apps/**", "packages/**", "docs/**"],
-                "B_worker": ["apps/**", "packages/**", "docs/**"],
+                "B_worker": [
+                    "apps/**",
+                    "packages/**",
+                    "docs/**",
+                    "docs/visual-baselines/**",
+                    "tools/_local/visual/**",
+                ],
                 "C_worker": ["tools/**", "docs/**", "packages/**"],
                 "D_worker": ["docs/**", "tools/**", "packages/**"],
             },

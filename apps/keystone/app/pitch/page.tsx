@@ -1,43 +1,37 @@
-import Link from "next/link";
-import { LayerDebugPanel, LayerFlagsProvider, GlassCard, InsetPanel } from "@hitech/ui-kit";
-import { PITCH_DECK_FIXTURE } from "@hitech/contracts";
-import { PitchShell } from "../../components/pitch";
+import { LayerFlagsProvider } from "@hitech/ui-kit";
+import { PitchRouteChooser, PitchShell } from "../../components/pitch";
+import { PitchLayerDevTools } from "../../components/pitch/debug/pitch-layer-dev-tools";
+import { buildPitchShellFrameModel } from "../../components/pitch/view-model/pitch-shell-model";
 import {
+  resolvePitchSearchParams,
   resolvePitchLayerFlags,
   type PitchSearchParamsProps
 } from "../../lib/pitch/layer-resolution";
 
 export const dynamic = "force-dynamic";
 
-export default function PitchIndexPage({ searchParams }: PitchSearchParamsProps) {
-  const resolved = resolvePitchLayerFlags(searchParams);
-  const deck = PITCH_DECK_FIXTURE;
+export default async function PitchIndexPage({ searchParams }: PitchSearchParamsProps) {
+  const resolved = resolvePitchLayerFlags(await resolvePitchSearchParams(searchParams));
+  const isProduction = process.env.NODE_ENV === "production";
+  const showRouteChooser = resolved.debug || isProduction;
+  const debugVisible = resolved.debug && !isProduction;
+  const shellModel = buildPitchShellFrameModel();
 
   return (
     <LayerFlagsProvider initialResolved={resolved}>
-      <PitchShell
-        title="Keystone Pitch Deck"
-        subtitle="Contracts-first pitch module with deterministic screen fixtures"
-        nav={{ links: deck.navigation.links }}
-      >
-        <GlassCard className="p-4" tone="default" backdrop="off">
-          <InsetPanel title="Pantallas" description="Selecciona una ruta de pitch">
-            <ul className="m-0 grid list-disc gap-2 pl-5">
-              {deck.navigation.links.map((link) => (
-                <li key={link.slug}>
-                  <Link
-                    href={link.href}
-                    className="text-sm font-medium text-[hsl(var(--ui-accent))] underline-offset-4 hover:underline"
-                  >
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </InsetPanel>
-        </GlassCard>
+      <PitchShell model={shellModel}>
+        {showRouteChooser ? (
+          <PitchRouteChooser />
+        ) : (
+          <section className="pitch-static-card pitch-glass-card pitch-neon-edge rounded-[var(--pitch-radius-lg)] p-4">
+            <h2 className="m-0 text-base font-semibold text-[color:var(--pitch-ink)]">Pitch Index bloqueado</h2>
+            <p className="m-0 mt-2 text-sm text-[color:var(--pitch-muted)]">
+              En entorno local, activa `?debug=1` para mostrar herramientas avanzadas.
+            </p>
+          </section>
+        )}
       </PitchShell>
-      {resolved.debug ? <LayerDebugPanel /> : null}
+      <PitchLayerDevTools visible={debugVisible} />
     </LayerFlagsProvider>
   );
 }
