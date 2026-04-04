@@ -72,6 +72,13 @@ def _polish_widget(widget: QWidget) -> None:
     widget.update()
 
 
+def _layout_parent_widget(layout: QLayout | None) -> QWidget | None:
+    if layout is None:
+        return None
+    parent = layout.parent()
+    return parent if isinstance(parent, QWidget) else None
+
+
 @dataclass(slots=True, frozen=True)
 class GlassWorkspaceTabSpec:
     tab_id: str
@@ -147,12 +154,16 @@ class GlassWorkspaceTabs(QTabWidget):
         self._tab_density = _choice(density, SUPPORTED_TAB_DENSITY, "comfortable")
         self._tab_variant = _choice(variant, SUPPORTED_TAB_VARIANTS, "glass")
         self._icon_mode = _choice(icon_mode, SUPPORTED_TAB_ICON_MODES, "icon_text")
+        self._max_tab_title_chars = 26
         self.set_tab_placement(placement)
         self.setProperty("tabDensity", self._tab_density)
         self.setProperty("tabVariant", self._tab_variant)
         self.setProperty("tabIconMode", self._icon_mode)
 
         tab_bar = self.tabBar()
+        tab_bar.setExpanding(False)
+        tab_bar.setElideMode(Qt.ElideRight)
+        tab_bar.setDrawBase(False)
         tab_moved = getattr(tab_bar, "tabMoved", None)
         if tab_moved is not None:
             tab_moved.connect(self._on_tab_moved)
@@ -221,6 +232,8 @@ class GlassWorkspaceTabs(QTabWidget):
 
         if spec.tooltip:
             self.setTabToolTip(index, spec.tooltip)
+        else:
+            self.setTabToolTip(index, str(spec.title or tab_id))
         if spec.icon_name:
             icon = get_icon(spec.icon_name, namespace=spec.icon_namespace, pack=spec.icon_pack)
             if not icon.isNull() and self._icon_mode != "text_only":
@@ -277,7 +290,6 @@ class GlassWorkspaceTabs(QTabWidget):
         tab_bar = self.tabBar()
         tab_bar.setTabEnabled(index, enabled)
         self._set_tab_visible(index, visible)
-        tab_bar.setTabTextColor(index, Qt.white if normalized == "visible" else Qt.gray)
         tab_bar.setTabData(index, {"state": normalized})
         self._sync_tab_label(index, tab_id)
 
@@ -422,16 +434,14 @@ class GlassWorkspaceTabs(QTabWidget):
         self.setCurrentIndex(index)
 
     def _tab_label(self, spec: GlassWorkspaceTabSpec) -> str:
-        base = str(spec.title or "Tab")
+        base = str(spec.title or "Tab").strip()
+        if len(base) > self._max_tab_title_chars:
+            base = f"{base[: self._max_tab_title_chars - 1].rstrip()}…"
         if self._icon_mode == "icon_only":
             return ""
         badge = str(self._tab_badges.get(spec.tab_id, spec.badge or "")).strip()
         if badge:
             base = f"{base} [{badge}]"
-        if spec.favorite:
-            base = f"* {base}"
-        if spec.pinned:
-            base = f"{base} [pin]"
         return base
 
     def _sync_tab_label(self, index: int, tab_id: str) -> None:
@@ -442,6 +452,11 @@ class GlassWorkspaceTabs(QTabWidget):
         if self._icon_mode == "icon_only":
             label = ""
         self.setTabText(index, label)
+        state = self._tab_states.get(tab_id, "visible")
+        tooltip = str(spec.tooltip or spec.title or tab_id).strip()
+        if state != "visible":
+            tooltip = f"{tooltip}\nstate: {state}"
+        self.setTabToolTip(index, tooltip)
 
     def _refresh_all_tab_labels(self) -> None:
         for index, tab_id in enumerate(self._tab_ids):
@@ -485,12 +500,12 @@ class GlassPanelFrame(QFrame):
         self.setProperty("panelState", self._panel_state)
 
         outer = QVBoxLayout(self)
-        outer.setContentsMargins(12, 12, 12, 12)
-        outer.setSpacing(8)
+        outer.setContentsMargins(4, 4, 4, 4)
+        outer.setSpacing(3)
 
         header = QHBoxLayout()
         header.setContentsMargins(0, 0, 0, 0)
-        header.setSpacing(8)
+        header.setSpacing(4)
         self._title_icon = QLabel("", self)
         self._title_icon.setFixedWidth(18)
         self._title_icon.setVisible(False)
@@ -517,18 +532,22 @@ class GlassPanelFrame(QFrame):
 
         self._toolbar_layout = QHBoxLayout()
         self._toolbar_layout.setContentsMargins(0, 0, 0, 0)
-        self._toolbar_layout.setSpacing(6)
+        self._toolbar_layout.setSpacing(4)
         self._toolbar_host = QWidget(self)
         self._toolbar_host.setLayout(self._toolbar_layout)
         self._toolbar_host.setVisible(self._toolbar_enabled)
 
+        self._content_host = QFrame(self)
+        self._content_host.setObjectName(f"glass_panel_content_{self._panel_id}")
+        self._content_host.setProperty("card", "clear")
         self._content_layout = QVBoxLayout()
         self._content_layout.setContentsMargins(0, 0, 0, 0)
-        self._content_layout.setSpacing(8)
+        self._content_layout.setSpacing(4)
+        self._content_host.setLayout(self._content_layout)
 
         self._footer_layout = QHBoxLayout()
         self._footer_layout.setContentsMargins(0, 0, 0, 0)
-        self._footer_layout.setSpacing(6)
+        self._footer_layout.setSpacing(4)
         self._footer_host = QWidget(self)
         self._footer_host.setLayout(self._footer_layout)
         self._footer_host.setVisible(self._footer_enabled)
@@ -536,7 +555,7 @@ class GlassPanelFrame(QFrame):
         outer.addLayout(header)
         outer.addWidget(self._subtitle_label)
         outer.addWidget(self._toolbar_host)
-        outer.addLayout(self._content_layout, 1)
+        outer.addWidget(self._content_host, 1)
         outer.addWidget(self._footer_host)
 
         if spec.min_size:
@@ -555,6 +574,10 @@ class GlassPanelFrame(QFrame):
     @property
     def content_layout(self) -> QVBoxLayout:
         return self._content_layout
+
+    @property
+    def content_host(self) -> QWidget:
+        return self._content_host
 
     def set_panel_title(self, title: str) -> None:
         self._title_label.setText(str(title))
@@ -602,16 +625,15 @@ class GlassPanelFrame(QFrame):
         widget = self._deferred_factory()
         if widget is None:
             return
-        self._clear_layout(self._content_layout)
-        self._content_layout.addWidget(widget)
+        self.set_content_widget(widget)
         self._deferred_loaded = True
 
     def _render_deferred_placeholder(self) -> None:
-        self._clear_layout(self._content_layout)
+        self.clear_content()
         placeholder = QLabel("Deferred panel. Content will be created on demand.", self)
         placeholder.setProperty("role", "panel_subtitle")
         placeholder.setWordWrap(True)
-        self._content_layout.addWidget(placeholder)
+        self.add_content_widget(placeholder)
 
     def _apply_state_behavior(self) -> None:
         if self._panel_state == "hidden":
@@ -645,6 +667,28 @@ class GlassPanelFrame(QFrame):
             widget = item.widget()
             if widget is not None:
                 widget.setVisible(bool(visible))
+
+    def clear_content(self) -> None:
+        self._clear_layout(self._content_layout)
+
+    def set_content_widget(self, widget: QWidget) -> None:
+        self.clear_content()
+        self.add_content_widget(widget, stretch=1)
+
+    def add_content_widget(self, widget: QWidget, stretch: int = 0) -> None:
+        if widget is None:
+            raise ValueError("content widget is required")
+        if widget is self or widget is self._content_host:
+            raise ValueError("panel cannot mount itself as content")
+        if widget.isAncestorOf(self._content_host):
+            raise ValueError("cannot mount ancestor widget into descendant-owned panel layout")
+
+        old_parent = widget.parentWidget()
+        old_layout = old_parent.layout() if isinstance(old_parent, QWidget) else None
+        if isinstance(old_layout, QLayout):
+            old_layout.removeWidget(widget)
+        widget.setParent(self._content_host)
+        self._content_layout.addWidget(widget, max(0, int(stretch)))
 
     def _clear_layout(self, layout: QLayout) -> None:
         while layout.count():
@@ -713,6 +757,22 @@ class GlassLayoutController:
     def reset_defaults(self) -> None:
         for key, sizes in self.default_sizes.items():
             self.set_sizes(key, list(sizes))
+
+
+class GlassPanelSlotHost(QFrame):
+    """Dedicated child host that owns nested slot insertion layout."""
+
+    def __init__(self, panel_id: str, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.setObjectName(f"glass_panel_slot_host_{str(panel_id or '').strip().lower() or 'slot'}")
+        self.setProperty("card", "clear")
+        self._host_layout = QVBoxLayout(self)
+        self._host_layout.setContentsMargins(0, 0, 0, 0)
+        self._host_layout.setSpacing(6)
+
+    @property
+    def host_layout(self) -> QVBoxLayout:
+        return self._host_layout
 
 
 @dataclass(slots=True)
@@ -833,6 +893,7 @@ class GlassPanelTemplate(QWidget):
 
         self.layout_controller = GlassLayoutController(splitters={}, default_sizes={})
         self._panels: dict[str, GlassPanelFrame] = {}
+        self._slot_shell_ids: set[str] = set()
         self.workspace_tabs: GlassWorkspaceTabs | None = None
 
         self.slots, self.cards, self.actions = self._build()
@@ -842,8 +903,8 @@ class GlassPanelTemplate(QWidget):
         card = QFrame(self)
         card.setProperty("card", card_kind)
         card_layout = QVBoxLayout(card)
-        card_layout.setContentsMargins(16, 14, 16, 14)
-        card_layout.setSpacing(10)
+        card_layout.setContentsMargins(6, 5, 6, 5)
+        card_layout.setSpacing(4)
         return card, card_layout
 
     def _build(self) -> tuple[GlassTemplateSlots, GlassTemplateCards, GlassTemplateActions]:
@@ -856,7 +917,7 @@ class GlassPanelTemplate(QWidget):
         outer.setSpacing(0)
 
         scene_layout = QVBoxLayout(content)
-        scene_layout.setContentsMargins(10, 10, 10, 10)
+        scene_layout.setContentsMargins(2, 2, 2, 2)
         scene_layout.setSpacing(0)
 
         shell = QFrame(self)
@@ -865,8 +926,8 @@ class GlassPanelTemplate(QWidget):
         scene_layout.addWidget(shell)
 
         shell_layout = QVBoxLayout(shell)
-        shell_layout.setContentsMargins(20, 20, 20, 20)
-        shell_layout.setSpacing(14)
+        shell_layout.setContentsMargins(4, 4, 4, 4)
+        shell_layout.setSpacing(4)
 
         if self._with_chrome:
             host = self.window() if isinstance(self.window(), QWidget) else self
@@ -892,7 +953,7 @@ class GlassPanelTemplate(QWidget):
         body = QWidget(shell)
         body_layout = QVBoxLayout(body)
         body_layout.setContentsMargins(0, 0, 0, 0)
-        body_layout.setSpacing(14)
+        body_layout.setSpacing(2)
 
         tabs: GlassWorkspaceTabs | None = None
         body_host_layout: QVBoxLayout = body_layout
@@ -913,7 +974,7 @@ class GlassPanelTemplate(QWidget):
             workspace_page = QWidget(tabs)
             workspace_layout = QVBoxLayout(workspace_page)
             workspace_layout.setContentsMargins(0, 0, 0, 0)
-            workspace_layout.setSpacing(14)
+            workspace_layout.setSpacing(2)
             tabs.add_workspace_tab(
                 GlassWorkspaceTabSpec(
                     tab_id=self._default_tab_id,
@@ -955,6 +1016,13 @@ class GlassPanelTemplate(QWidget):
         split.addWidget(side_panel)
         split.setStretchFactor(0, 3)
         split.setStretchFactor(1, 2)
+        main_panel.setProperty("slotShell", True)
+        side_panel.setProperty("slotShell", True)
+        self._slot_shell_ids = {"main", "side"}
+        main_slot_host = GlassPanelSlotHost("main", main_panel)
+        side_slot_host = GlassPanelSlotHost("side", side_panel)
+        main_panel.set_content_widget(main_slot_host)
+        side_panel.set_content_widget(side_slot_host)
         self.layout_controller.register_splitter(
             "main_side",
             split,
@@ -973,21 +1041,20 @@ class GlassPanelTemplate(QWidget):
         footer = QFrame(self)
         footer.setProperty("card", "footer")
         footer_layout = QHBoxLayout(footer)
-        footer_layout.setContentsMargins(14, 10, 14, 10)
-        footer_layout.setSpacing(10)
+        footer_layout.setContentsMargins(6, 4, 6, 4)
+        footer_layout.setSpacing(4)
         shell_layout.addWidget(footer)
-        if not self._show_footer:
+        if not self._show_footer or not self._include_default_actions:
             footer.hide()
 
         status = QFrame(self)
         status.setProperty("card", "muted")
         status.setProperty("panelRole", "aux")
         status_layout = QVBoxLayout(status)
-        status_layout.setContentsMargins(14, 10, 14, 10)
-        status_layout.setSpacing(8)
+        status_layout.setContentsMargins(6, 4, 6, 4)
+        status_layout.setSpacing(4)
         shell_layout.addWidget(status)
-        if not self._show_status:
-            status.hide()
+        status.hide()
 
         shell_layout.insertWidget(shell_layout.count() - 2, body, 1)
 
@@ -1029,8 +1096,8 @@ class GlassPanelTemplate(QWidget):
 
         slots = GlassTemplateSlots(
             hero_slot=hero_layout,
-            main_slot=main_panel.content_layout,
-            side_slot=side_panel.content_layout,
+            main_slot=main_slot_host.host_layout,
+            side_slot=side_slot_host.host_layout,
             footer_slot=footer_layout,
             status_slot=status_layout,
             workspace_tabs=tabs,
@@ -1064,6 +1131,12 @@ class GlassPanelTemplate(QWidget):
                 surface_opacity_scale=self._surface_opacity_scale,
             )
         )
+        backdrop = getattr(self, "_glass_backdrop", None)
+        if backdrop is not None and hasattr(backdrop, "apply_theme"):
+            try:
+                backdrop.apply_theme(self._theme_id)
+            except Exception:
+                pass
 
     def set_theme(self, theme_id: str) -> None:
         self._theme_id = str(theme_id or DEFAULT_THEME_ID)
@@ -1129,6 +1202,7 @@ class GlassPanelTemplate(QWidget):
             self.cards.status.show()
             return
         self._status_label.hide()
+        self.cards.status.hide()
 
     def set_side_visible(self, visible: bool) -> None:
         self.cards.side.setVisible(bool(visible))
@@ -1162,6 +1236,7 @@ class GlassPanelTemplate(QWidget):
         minimum_width: int | None = None,
         icon_name: str | None = None,
     ) -> QPushButton:
+        self.cards.footer.show()
         button = create_button(
             text,
             variant,
@@ -1266,6 +1341,7 @@ class GlassPanelTemplate(QWidget):
             "side": self.slots.side_slot,
             "status": self.slots.status_slot,
         }[normalized_slot]
+        container_parent = _layout_parent_widget(container_layout) or self
         panel = GlassPanelFrame(
             GlassPanelSpec(
                 panel_id=panel_id,
@@ -1288,7 +1364,7 @@ class GlassPanelTemplate(QWidget):
                 footer_enabled=footer_enabled,
                 metadata=dict(metadata or {}),
             ),
-            self,
+            container_parent,
         )
         container_layout.addWidget(panel)
         self._panels[panel_id] = panel
@@ -1299,6 +1375,13 @@ class GlassPanelTemplate(QWidget):
 
     def panel(self, panel_id: str) -> GlassPanelFrame | None:
         return self._panels.get(str(panel_id or "").strip())
+
+    def panel_is_slot_shell(self, panel_id: str) -> bool:
+        normalized = str(panel_id or "").strip()
+        if not normalized:
+            return False
+        panel = self.panel(normalized)
+        return bool(panel is not None and panel.property("slotShell"))
 
     def set_panel_state(self, panel_id: str, state: str) -> None:
         panel = self.panel(panel_id)
@@ -1319,6 +1402,8 @@ class GlassPanelTemplate(QWidget):
         panel = self.panel(panel_id)
         if panel is None:
             return False
+        if self.panel_is_slot_shell(panel_id):
+            return False
         slot = str(target_slot or "").strip().lower()
         slot_map = {
             "main": self.slots.main_slot,
@@ -1328,16 +1413,32 @@ class GlassPanelTemplate(QWidget):
         destination = slot_map.get(slot)
         if destination is None:
             return False
+        destination_parent = _layout_parent_widget(destination)
+        if destination_parent is not None and (panel is destination_parent or panel.isAncestorOf(destination_parent)):
+            return False
 
-        parent_layout = panel.parentWidget().layout() if panel.parentWidget() else None
-        if isinstance(parent_layout, (QVBoxLayout, QHBoxLayout)):
+        current_parent = panel.parentWidget()
+        if current_parent is destination_parent and destination.indexOf(panel) >= 0:
+            if index is None:
+                return True
+            target_index = max(0, min(int(index), max(0, destination.count() - 1)))
+            current_index = destination.indexOf(panel)
+            if current_index == target_index:
+                return True
+            destination.removeWidget(panel)
+            destination.insertWidget(target_index, panel)
+            return True
+
+        parent_widget = panel.parentWidget()
+        parent_layout = parent_widget.layout() if isinstance(parent_widget, QWidget) else None
+        if isinstance(parent_layout, QLayout):
             parent_layout.removeWidget(panel)
         panel.setParent(None)
 
         if index is None:
             destination.addWidget(panel)
         else:
-            destination.insertWidget(max(0, int(index)), panel)
+            destination.insertWidget(max(0, min(int(index), destination.count())), panel)
         return True
 
     def set_split_proportions(self, *, main: int, side: int) -> None:

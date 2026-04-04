@@ -5,6 +5,9 @@ from typing import Callable, Optional
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QPushButton, QWidget
 
+from .appearance import AppearanceProfile, EffectsProfile
+from .contracts import DEFAULT_THEME_ID
+from .effects import apply_shadow_profile, repolish
 from .icons import apply_icon
 
 
@@ -23,6 +26,17 @@ _SUPPORTED_BUTTON_VARIANTS = {
     "warning",
     "success",
 }
+
+
+def _resolve_theme_id(widget: QWidget | None) -> str:
+    current = widget
+    while isinstance(current, QWidget):
+        for key in ("themeId", "theme_id"):
+            value = current.property(key)
+            if str(value or "").strip():
+                return str(value).strip().lower()
+        current = current.parentWidget()
+    return DEFAULT_THEME_ID
 
 
 def _normalize_button_variant(value: str) -> str:
@@ -54,7 +68,9 @@ def create_button(
 ) -> QPushButton:
     button = QPushButton(text, parent)
     button.setCursor(Qt.PointingHandCursor)
-    button.setProperty("variant", _normalize_button_variant(variant))
+    button.setFlat(True)
+    variant_name = _normalize_button_variant(variant)
+    button.setProperty("variant", variant_name)
     button.setAccessibleName(str(text or "action_button").strip())
     if tooltip:
         button.setToolTip(tooltip)
@@ -62,6 +78,8 @@ def create_button(
         button.setMinimumWidth(max(72, int(minimum_width)))
     if default:
         button.setDefault(True)
+    button.setEnabled(button.isEnabled())
+    button.setAutoDefault(bool(default))
     if on_click is not None:
         button.clicked.connect(on_click)
     if icon_name:
@@ -74,4 +92,8 @@ def create_button(
             accessible_name=icon_accessible_name,
             tooltip=tooltip,
         )
+    profile = AppearanceProfile(theme_id=_resolve_theme_id(parent))
+    effects = EffectsProfile.from_appearance(profile)
+    apply_shadow_profile(button, profile, effects)
+    repolish(button)
     return button
