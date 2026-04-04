@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QStackedLayout, QVBoxLayout, QWidget
 
 from .backdrop import FrostedGlassBackdrop
 from .contracts import DEFAULT_THEME_ID
+from .frameless import FramelessResizeController
 from .theme import build_stylesheet
 
 
@@ -14,8 +15,9 @@ def build_glass_dialog_scene(
     host: QWidget,
     *,
     theme_id: str = DEFAULT_THEME_ID,
+    typography_scale: str = "lg",
     variant: str = "selector",
-    margins: tuple[int, int, int, int] = (10, 10, 10, 10),
+    margins: tuple[int, int, int, int] = (6, 6, 6, 6),
     motion_enabled: bool = True,
     apply_stylesheet: bool = True,
     backdrop_factory: Optional[Callable[[QWidget], QWidget]] = None,
@@ -30,7 +32,10 @@ def build_glass_dialog_scene(
         pass
 
     if apply_stylesheet:
-        host.setStyleSheet(build_stylesheet(theme_id))
+        host.setStyleSheet(build_stylesheet(theme_id, typography_scale=typography_scale))
+
+    if bool(host.windowFlags() & Qt.FramelessWindowHint) and not hasattr(host, "_resize_controller"):
+        setattr(host, "_resize_controller", FramelessResizeController(host, margin=8))
 
     outer = QVBoxLayout(host)
     outer.setContentsMargins(*margins)
@@ -45,11 +50,21 @@ def build_glass_dialog_scene(
     stack.setStackingMode(QStackedLayout.StackAll)
 
     if backdrop_factory is None:
-        backdrop = FrostedGlassBackdrop(stage, motion_enabled=motion_enabled)
+        backdrop = FrostedGlassBackdrop(
+            stage,
+            theme_id=theme_id,
+            variant=variant,
+            motion_enabled=motion_enabled,
+        )
     else:
         backdrop = backdrop_factory(stage)
         if backdrop is None:
-            backdrop = FrostedGlassBackdrop(stage, motion_enabled=motion_enabled)
+            backdrop = FrostedGlassBackdrop(
+                stage,
+                theme_id=theme_id,
+                variant=variant,
+                motion_enabled=motion_enabled,
+            )
     content = QWidget(stage)
     content.setObjectName("GlassContent")
     content.setAttribute(Qt.WA_StyledBackground, True)
