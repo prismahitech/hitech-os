@@ -5,6 +5,12 @@ import { createRequire } from "node:module";
 import fs from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const appDir = path.resolve(__dirname, "..");
+const requireFromApp = createRequire(path.join(appDir, "package.json"));
 
 const basePortRaw = process.env.KEYSTONE_PORT ?? process.env.PORT ?? "3100";
 const scanWindowRaw = process.env.KEYSTONE_PORT_SCAN ?? "99";
@@ -18,7 +24,6 @@ const reservedPorts = new Set(
     .filter((candidate) => Number.isInteger(candidate) && candidate > 0),
 );
 const extraArgs = process.argv.slice(2);
-const require = createRequire(import.meta.url);
 
 if (Number.isNaN(basePort) || basePort <= 0) {
   console.error(`[keystone] Invalid base port: ${basePortRaw}`);
@@ -42,12 +47,14 @@ function isPortAvailable(port) {
       server.close(() => resolve(true));
     });
 
+    // Listen without forcing a host so the probe reflects the same dual-stack
+    // binding behavior used by Next on Windows.
     server.listen({ port });
   });
 }
 
 async function handleNextDevLock() {
-  const lockPath = path.join(process.cwd(), ".next", "dev", "lock");
+  const lockPath = path.join(appDir, ".next", "dev", "lock");
 
   try {
     const fd = await fs.open(lockPath, "r+");
@@ -68,6 +75,17 @@ async function handleNextDevLock() {
     }
 
     throw error;
+  }
+}
+
+function resolveNextBin() {
+  try {
+    return requireFromApp.resolve("next/dist/bin/next");
+  } catch (error) {
+    console.error(
+      `[keystone] Cannot resolve Next CLI from appDir ${appDir}: ${error.message}`,
+    );
+    process.exit(1);
   }
 }
 
@@ -109,13 +127,14 @@ if (selectedPort !== basePort) {
 const child = spawn(
   process.execPath,
   [
-    require.resolve("next/dist/bin/next"),
+    resolveNextBin(),
     "dev",
     "-p",
     String(selectedPort),
     ...extraArgs,
   ],
   {
+    cwd: appDir,
     stdio: "inherit",
     env: { ...process.env, PORT: String(selectedPort) },
   },
