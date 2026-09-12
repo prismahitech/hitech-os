@@ -233,3 +233,12 @@ No updates published yet.
 - State: `READY_FOR_INTEGRATION`.
 - No user action required.
 
+
+## 2026-09-11T22:44:00-06:00 — START
+
+- Current canonical phase: `CORPUS_FINAL_PARALLEL_VERIFICATION`.
+- Chat 1 mapping re-resolved from `STATUS_INDEX.json`: `TABLET_PROMOTION`, phase role `TABLET_FINAL_WITNESS`, expected result `PASS_TABLET_CORPUS_WITNESS`.
+- Immutable read-only certification ref: `chat1/tablet-corpus-cert-20260904@fd111022438bab909151c2220b52e95aa5aa7eb3`.
+- Current canonical `main` observed at `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+- This phase writes only this Chat 1 mailbox branch. No certification/candidate/product/runtime/global-authority mutation is authorized.
+- Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and will not be inspected.
