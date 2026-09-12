@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:44:00-06:00",
+  "updatedAt": "2026-09-11T22:50:34-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat1/tablet-corpus-cert-20260904",
   "workHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
-  "summary": "Chat 1 resumed under CORPUS_FINAL_PARALLEL_VERIFICATION as TABLET_FINAL_WITNESS. Verification is read-only against immutable certification head fd111022438bab909151c2220b52e95aa5aa7eb3; only this status mailbox may be written.",
+  "summary": "Chat 1 independent Tablet final witness audit passed against immutable certification head fd111022438bab909151c2220b52e95aa5aa7eb3. Final receipt publication is the only remaining step.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -50,7 +50,14 @@
     "Certification status counts are 139 VALID_ELIGIBLE_CANDIDATE, 788 VALID_REGISTER_TARGET_FIRST and 2 VALID_BLOCKED.",
     "The sole stronger-authority row is TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1; BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 proves its elevated coordinates without changing candidate semantics.",
     "Both physical DRIFT targets remain exact source conflicts with promotionStatus BLOCKED and workEntryDecision BLOCKED.",
-    "Current canonical main observed at 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Current phase is CORPUS_FINAL_PARALLEL_VERIFICATION; Chat 1 role resolved from STATUS_INDEX.json as TABLET_FINAL_WITNESS with expected result PASS_TABLET_CORPUS_WITNESS."
+    "Current canonical main observed at 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Current phase is CORPUS_FINAL_PARALLEL_VERIFICATION; Chat 1 role resolved from STATUS_INDEX.json as TABLET_FINAL_WITNESS with expected result PASS_TABLET_CORPUS_WITNESS.",
+    "Independent exact-head audit recomputed 929 NORMALIZED rows, 929 CERTIFICATION rows, 0 INVALID rows, 929 unique target IDs, duplicateTargetIds=0 and semanticMutationCount=0.",
+    "Certification labels independently recomputed as 139 VALID_ELIGIBLE_CANDIDATE + 788 VALID_REGISTER_TARGET_FIRST + 2 VALID_BLOCKED; physical partition independently recomputed as 927 CURRENT + 2 DRIFT.",
+    "All 929 source head/file/line mappings, source-record SHA-256 hashes, normalized-record SHA-256 hashes and identity pass-through comparisons reproduced with zero failures.",
+    "All five immutable worker source-file SHA-256 values recomputed and matched the certification MANIFEST.",
+    "Both known Tablet DRIFT targets remain DRIFT / BLOCKED / BLOCKED and VALID_BLOCKED in CONFLICTS.",
+    "Cobrar binding reuse remains exact at BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 with REC.button.primary, ACT.primary and LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE; Work Entry remains REGISTER_TARGET_FIRST.",
+    "Certification head is exactly one commit ahead of base 8cc1918c5e015d1408335c15313e7364e04859c2 and adds exactly the five certification files."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -211,6 +218,16 @@
       "name": "semantic invariants",
       "result": "PASS",
       "details": "139 ELIGIBLE_CANDIDATE, 788 REGISTER_TARGET_FIRST, 2 BLOCKED; Work Entry 927 REGISTER_TARGET_FIRST + 2 BLOCKED; two DRIFT conflicts and single existing Identity binding reuse preserved exactly."
+    },
+    {
+      "name": "independent Tablet final witness content audit",
+      "result": "PASS_TABLET_CORPUS_WITNESS",
+      "details": "NORMALIZED=929; CERTIFICATION=929; INVALID=0; unique=929; duplicates=0; semanticMutationCount=0; labels 139/788/2; physical 927 CURRENT + 2 DRIFT; provenance/hash/identity-pass-through 929/929; defects=0."
+    },
+    {
+      "name": "immutable certification branch boundary",
+      "result": "PASS",
+      "details": "8cc1918c5e015d1408335c15313e7364e04859c2..fd111022438bab909151c2220b52e95aa5aa7eb3 is exactly one commit and adds only MANIFEST.json, NORMALIZED.jsonl, CERTIFICATION.jsonl, INVALID.jsonl and SUMMARY.md under candidates/tablet/certification/."
     }
   ],
   "unresolved": [
@@ -220,7 +237,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Independently re-read and verify the immutable Tablet certification head, recompute all required witness invariants, then publish handoff.parallelWitness.",
+  "nextAction": "Publish the final handoff.parallelWitness receipt as PASS_TABLET_CORPUS_WITNESS and enter CERTIFIED_HOLD.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -294,7 +311,28 @@
       "expectedInputCount": 929,
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
-      "canonicalPromotionPerformed": false
+      "canonicalPromotionPerformed": false,
+      "audit": {
+        "normalizedCount": 929,
+        "certificationCount": 929,
+        "invalidCount": 0,
+        "uniqueTargetIds": 929,
+        "duplicateTargetIds": 0,
+        "semanticMutationCount": 0,
+        "certificationLabels": {
+          "VALID_ELIGIBLE_CANDIDATE": 139,
+          "VALID_REGISTER_TARGET_FIRST": 788,
+          "VALID_BLOCKED": 2
+        },
+        "physicalStatus": {
+          "CURRENT": 927,
+          "DRIFT": 2
+        },
+        "provenanceCompleteCount": 929,
+        "provenanceFailureCount": 0,
+        "sourceFileHashFailureCount": 0,
+        "defects": []
+      }
     }
   }
 }
