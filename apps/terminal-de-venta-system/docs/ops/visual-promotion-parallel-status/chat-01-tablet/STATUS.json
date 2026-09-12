@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T16:28:00-06:00",
+  "state": "READY_FOR_INTEGRATION",
+  "updatedAt": "2026-09-12T16:31:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
   "workHead": "535b4f002a830a84c6dfd4b166b032adaf91409a",
-  "summary": "Chat 1 materialized and independently validated the seven owned Tablet promotion-readiness outputs. Zero-loss, source-record hash pins, enum/proposal semantics, subset parity, manifest parity and write ownership all pass with zero defects.",
+  "summary": "Chat 1 completed CANONICAL_PROMOTION_READINESS_RESOLUTION for Tablet with PASS_TABLET_PROMOTION_READINESS. All 929 certified targets were resolved exactly once; current authority supports 0 READY reuse, 0 READY registration and 929 legitimately blocked outcomes without fake green.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -109,7 +109,14 @@
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/INVALID.jsonl",
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/STATUS.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/LOG.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/LOG.md",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/RESOLUTION.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/REUSE.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/REGISTRATION_PROPOSALS.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/BLOCKED.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/PROJECTION_DEBT.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/MANIFEST.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/tablet/SUMMARY.md"
   ],
   "validations": [
     {
@@ -276,16 +283,23 @@
       "name": "Current-head stability during lane mutation",
       "result": "PASS_ALREADY_CURRENT",
       "details": "Canonical main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12, equal to the lane base, through final read-back."
+    },
+    {
+      "name": "final phase receipt",
+      "result": "PASS_TABLET_PROMOTION_READINESS",
+      "details": "929/929 targets resolved exactly once; zero-loss/hash/subset/manifest/ownership validation passed; exact work head 535b4f002a830a84c6dfd4b166b032adaf91409a handed to Chat 6."
     }
   ],
   "unresolved": [
-    "788 corpus-valid Tablet records still require REGISTER_TARGET_FIRST semantic/application authority before any exact apply can exist.",
-    "2 corpus-valid Tablet records remain physical DRIFT / BLOCKED conflicts and must not be normalized into readiness.",
-    "This witness is coordination evidence only and does not authorize canonical Identity/RIFAT/NDC/Target Index promotion, GVAE_EXACT_APPLY or product/runtime mutation."
+    "924 Tablet targets remain blocked by missing canonical semantic authority and downstream exact application authority.",
+    "Cobrar primary reuses ACT.primary / REC.button.primary / BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 but remains blocked by exact-target adapter/layer-application-policy reconciliation.",
+    "Two Cobrar accent exact targets reuse TOK.color.accent semantic evidence but remain blocked by ambiguous binding, missing Identity recipe/application layer and missing canonical projection policy.",
+    "Two certified physical DRIFT targets remain blocked and unrepaired.",
+    "No Tablet target is currently READY_REUSE_EXISTING_AUTHORITY or READY_FOR_CANONICAL_REGISTRATION."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Publish PASS_TABLET_PROMOTION_READINESS under handoff.promotionReadiness and hand off exact work head 535b4f002a830a84c6dfd4b166b032adaf91409a to Chat 6.",
+  "nextAction": "Handoff to Chat 6 via handoff.promotionReadiness. Consume chat1/canonical-promotion-readiness-tablet-20260912@535b4f002a830a84c6dfd4b166b032adaf91409a. Chat 1 should resume only for a bounded evidence-backed correction request.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -443,13 +457,119 @@
     "holdState": "CERTIFIED_HOLD",
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
-      "result": "IN_PROGRESS",
-      "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
+      "result": "PASS_TABLET_PROMOTION_READINESS",
+      "role": "TABLET_PROMOTION_READINESS_RESOLVER",
+      "lane": "TABLET_PROMOTION",
       "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "expectedInputCount": 929,
+      "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
+      "workHead": "535b4f002a830a84c6dfd4b166b032adaf91409a",
+      "outputRoot": "prisma-html/governance/visual-promotion/promotion-readiness/tablet",
+      "certifiedCorpus": {
+        "manifestGitBlobSha": "6246e92d7b38750d45b2d74e6adf1b61fcd43a56",
+        "candidateCorpusGitBlobSha": "af6b8a7bea4be94fa0e0e42354d404d74c183083",
+        "inputCount": 929
+      },
+      "outputGitBlobShas": {
+        "resolution": "f2ce653ec10da67a81ed051da19e96b0c9323872",
+        "reuse": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "registrationProposals": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "blocked": "f2ce653ec10da67a81ed051da19e96b0c9323872",
+        "projectionDebt": "23e5d2411b592035a2a0b25a043fea80697a3b99",
+        "manifest": "b76f93e0a6dbf3a5d125238fdd8deb2e3f99d253",
+        "summary": "c97e19557077d00ff5e305dfdb8d39ef6ffc03c6"
+      },
+      "accounting": {
+        "inputCount": 929,
+        "resolutionCount": 929,
+        "uniqueTargetCount": 929,
+        "missingCount": 0,
+        "extraCount": 0,
+        "duplicateTargetIds": 0,
+        "semanticMutationCount": 0,
+        "readyExistingAuthorityReuse": 0,
+        "readyCanonicalRegistration": 0,
+        "legitimatelyBlocked": 929,
+        "notApplicable": 0
+      },
+      "decisions": {
+        "BLOCKED_MISSING_SEMANTIC_AUTHORITY": 924,
+        "BLOCKED_MISSING_APPLICATION_AUTHORITY": 1,
+        "BLOCKED_MISSING_BINDING": 2,
+        "BLOCKED_PHYSICAL_DRIFT": 2
+      },
+      "authorityReuseDisposition": {
+        "PROPOSE_NEW": 138,
+        "REUSE_EXISTING": 1,
+        "UNRESOLVED": 790,
+        "NOT_APPLICABLE": 0
+      },
+      "canonicalMeaningResolution": {
+        "PROPOSE_NEW": 138,
+        "REUSE_EXISTING": 3,
+        "UNRESOLVED": 788,
+        "NOT_APPLICABLE": 0
+      },
+      "projectionDebtClassification": {
+        "CURRENT": 927,
+        "CANONICAL_PROJECTION_REQUIRED_MISSING": 2
+      },
+      "subsetCounts": {
+        "reuse": 0,
+        "registrationProposals": 0,
+        "blocked": 929,
+        "projectionDebt": 2
+      },
+      "sourceRecordHashPins": {
+        "verified": 929,
+        "failed": 0
+      },
+      "currentAuthorityReuse": {
+        "canonicalTabletAdapter": "prisma.adapter.tablet.v1",
+        "cobrarPrimary": {
+          "targetId": "TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1",
+          "visualMeaningId": "ACT.primary",
+          "identityRecipeId": "REC.button.primary",
+          "existingBindingId": "BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1",
+          "applicationLayerId": "LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE",
+          "decision": "BLOCKED_MISSING_APPLICATION_AUTHORITY"
+        },
+        "accentTargets": [
+          {
+            "targetId": "TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1",
+            "visualMeaningId": "TOK.color.accent",
+            "existingBindingId": "BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1",
+            "decision": "BLOCKED_MISSING_BINDING"
+          },
+          {
+            "targetId": "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1",
+            "visualMeaningId": "TOK.color.accent",
+            "existingBindingId": "BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1",
+            "decision": "BLOCKED_MISSING_BINDING"
+          }
+        ]
+      },
+      "physicalDriftTargets": [
+        "TGT.CENSUS.TABLET.3B2FED34BC21B5C9FEEC.V1",
+        "TGT.CENSUS.TABLET.850AD4CEF4CCD12BCD05.V1"
+      ],
+      "validation": {
+        "result": "PASS_TABLET_PROMOTION_READINESS_VALIDATION",
+        "defects": 0,
+        "writeOwnershipPass": true,
+        "subsetParityPass": true,
+        "manifestParityPass": true,
+        "sourceRecordHashPassCount": 929,
+        "mainHeadAtFinalValidation": "d4b451cc92c597d02cfc65094922bd2c5dd17c12"
+      },
+      "broadRediscoveryPerformed": false,
       "materialityCatalogInspected": false,
       "productRuntimeMutationPerformed": false,
-      "canonicalAuthorityMutationPerformed": false
+      "projectionRepairPerformed": false,
+      "canonicalAuthorityMutationPerformed": false,
+      "canonicalIdsMinted": false,
+      "gvaeApplyPerformed": false,
+      "filesManifestTouched": false,
+      "defects": []
     }
   }
 }
