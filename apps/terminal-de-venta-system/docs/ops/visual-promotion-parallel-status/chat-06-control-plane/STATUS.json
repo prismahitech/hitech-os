@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "WAITING_EXTERNAL",
-  "updatedAt": "2026-09-12T13:36:00Z",
+  "updatedAt": "2026-09-12T18:50:00Z",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
   "workHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
-  "summary": "Chat 6 control-plane remains fully ready on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Current-head AutoMesh run 34696570043 is PASS with 100% authority coverage, zero blockers and Layer Map present. To maximize parallel startup without crossing lane ownership, Chat 6 provisioned the five canonical worker branch refs from the exact current main and made no commits on those branches. Worker promotionReadiness receipts remain absent, so final composition is still fail-closed.",
+  "summary": "Chat 6 promotion-readiness control plane is merged and current-head authority is independently verified on main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Full certified corpus blobs were read directly and parsed: 2,097 candidate rows, 2,097 certification rows, 2,097 current-truth rows; all baseline accounting reproduces exactly. Five worker branches exist but remain byte-identical to main and no handoff.promotionReadiness receipts are present, so final composition remains fail-closed.",
   "blockers": [
     {
       "scope": "parallel-worker-handoffs",
@@ -81,7 +81,11 @@
     "Post-merge revalidation run 34696527763 failed closed as BLOCKED_INVALID_PRIOR_AUTHORITY because tasks/promotion-readiness-composer/authority_mesh/reports/LAYERS_MAP.json in the prior artifact was not a JSON object; this artifact was not reused.",
     "Fresh task-exact AutoMesh run 34696570043 on main d4b451cc92c597d02cfc65094922bd2c5dd17c12 passed: governance 20/20 authorities, composer 27/27 authorities, 100% coverage, blockers=0, Layer Map generated, requestDigest 61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c.",
     "Current-phase readiness receipts remain absent from Chats 1-5, and branch discovery shows only Chat 6 canonical-promotion-readiness branches. No cross-chat branch/mailbox mutation was performed.",
-    "Provisioned the five canonical worker branch refs from exact current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 without committing to any worker-owned path; this removes branch-start friction while preserving disjoint write ownership."
+    "Provisioned the five canonical worker branch refs from exact current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 without committing to any worker-owned path; this removes branch-start friction while preserving disjoint write ownership.",
+    "Full direct-blob audit completed for CANDIDATE_CORPUS.jsonl, CERTIFICATION.jsonl and CURRENT_TRUTH.json: 2,097/2,097/2,097 records parsed with exact surface partition 929 Tablet, 827 PC, 271 Mobile, 70 Shared UI.",
+    "Current Truth independently reproduces Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; promotion 139 ELIGIBLE_CANDIDATE + 1,926 REGISTER_TARGET_FIRST + 32 BLOCKED; physical 2,094 CURRENT + 3 DRIFT; projection 1,820 CURRENT + 139 MISSING + 138 DRIFT.",
+    "Current-head AutoMesh run 34696570043 is independently verified PASS on main d4b451cc92c597d02cfc65094922bd2c5dd17c12; artifact 10298622594 digest sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2.",
+    "All five provisioned worker branches currently compare identical to main (ahead=0, behind=0). No worker evidence has been fabricated or written by Chat 6."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -401,6 +405,24 @@
       "result": "PASS",
       "evidence": "workflow run 34692332327",
       "details": "head 7d209c3eeeecca9ce45d250e91e0d52148958cee"
+    },
+    {
+      "name": "Full certified corpus direct-blob audit",
+      "result": "PASS_2097_OF_2097",
+      "evidence": "Git blobs af6b8a7bea4be94fa0e0e42354d404d74c183083 / 05b4f36b65464e035177468b5088039b96069460 / 1e36a9d7eebfcf8976db9458dd2f530ebca364b4",
+      "details": "All candidate, certification and current-truth records parsed; baseline counts reproduce exactly; no recensus."
+    },
+    {
+      "name": "Current-head task-exact Authority Mesh verification",
+      "result": "PASS_COMPOSED_AUTHORITY_MESH",
+      "evidence": "run 34696570043; artifact 10298622594; sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2",
+      "details": "main d4b451cc92c597d02cfc65094922bd2c5dd17c12; workflow success; 100% required-authority coverage; blockers=0; Layer Map present."
+    },
+    {
+      "name": "Worker branch start boundary",
+      "result": "PASS_CLEAN_START",
+      "evidence": "Chats 1-5 canonical promotion-readiness branches",
+      "details": "All five branches are identical to current main; ahead=0/behind=0. Chat 6 performed no cross-lane writes."
     }
   ],
   "unresolved": [
@@ -411,7 +433,7 @@
   ],
   "needsUserAction": true,
   "userActionRequested": "Resume/activate Chats 1-5 so each executes its already-canonical mailbox-driven CANONICAL_PROMOTION_READINESS_RESOLUTION lane. No prompt or handoff content needs to be copied between chats; each Chat must re-read the canonical repo prompt and its own mailbox.",
-  "nextAction": "Read Chats 1-5 deterministic mailboxes directly as promotionReadiness receipts appear. For each receipt, verify its exact worker head and lane-owned bytes, then feed only accepted immutable lane outputs into the merged composer. Hard-stop until all five receipts are present; do not infer or write worker evidence.",
+  "nextAction": "Continue polling Chats 1-5 deterministic mailboxes and branch heads. On first promotionReadiness receipt, validate exact work head, lane-owned path boundary, source-record hashes, manifest accounting, vocabulary and authority refs; accept only immutable evidence. Compose only after all five accepted receipts.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
