@@ -322,3 +322,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Chats 1–5 can begin immediately from `STATUS_INDEX.json` and the canonical prompt without owner message relay. Chat 6 remains sole global composer/integrator.
 - Disjoint phase roots are canonical: Tablet, PC, Mobile, Shared UI, Atlasfin evidence, and Chat 6 contracts/composed.
 - Next Chat 6 action is current-main Authority Mesh revalidation before further governed source mutation.
+
+### 2026-09-12T11:58:30Z — MILESTONE
+- Implemented the canonical `CANONICAL_PROMOTION_READINESS_RESOLUTION` phase scaffold on `chat6/promotion-readiness-control-plane-20260912`.
+- Six disjoint phase write roots are defined; canonical prompts and STATUS_INDEX/contract now use `handoff.promotionReadiness`.
+- Added promotion-readiness contract/schemas, exact 2,097-record baseline, setup authority evidence, integration barriers, fail-closed validator/composer tooling and tests.
+- Certified corpus, product/runtime and global NDC/Identity/RIFAT/Target Index authority remain untouched.
+- Next serial barrier: bounded PR + one deterministic FILES_MANIFEST refresh + exact-head gates + merge.
