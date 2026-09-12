@@ -118,3 +118,15 @@ Re-read the canonical startup set, status-channel contract, STATUS_INDEX, own ma
 
 ## 2026-09-11T22:45:00-06:00 — DECISION
 Final witness verification will read only exact Git head-tree bytes. No certification/source/candidate/product/runtime/consumer/global-authority mutation is authorized. Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and will not be inspected. Only this Chat 4 mailbox may be written.
+
+## 2026-09-11T22:57:00-06:00 — FINDING
+Reproduced the immutable certification artifact boundary. Compare `8cc1918c5e015d1408335c15313e7364e04859c2..553577aa74045c73ab9c92d1f81538e7e0a8c65a` is exactly one commit and exactly five added paths, all under `prisma-html/governance/visual-promotion/candidates/shared-ui/certification/**`. No consumer, product or global-authority path is present.
+
+## 2026-09-11T22:57:00-06:00 — VALIDATION
+Final Shared UI witness invariants reproduced from exact Git blobs: `NORMALIZED=70`, `CERTIFICATION=70`, `INVALID=0`, `duplicateTargetIds=0`, `semanticMutationCount=0`; certification labels are `40 VALID_REGISTER_TARGET_FIRST + 30 VALID_BLOCKED`. Source outcome partition is exact and contiguous: candidate `1..40`, unresolved `1..19`, conflict `1..11`. All 70 preserved semantics remain `ndcResolutionStatus=UNRESOLVED`, `atlasfinMatchStatus=NO_MATCH`, `projectionStatus=CURRENT`; 19 no-region unresolved and 11 multi-region conflict outcomes remain unselected/unrepaired.
+
+## 2026-09-11T22:57:00-06:00 — HANDOFF
+Published `handoff.parallelWitness.result=PASS_SHARED_UI_CORPUS_WITNESS` with exact certification head and output Git blob SHAs. Safety flags: `materialityCatalogInspected=false`, `broadRediscoveryPerformed=false`, `productRuntimeMutation=false`, `consumerMutation=false`, `globalAuthorityMutation=false`, `canonicalPromotionPerformed=false`, `sourceCertificationMutationPerformed=false`. Defects: none.
+
+## 2026-09-11T22:57:00-06:00 — COMPLETE
+`CORPUS_FINAL_PARALLEL_VERIFICATION` is complete for Chat 4. State is `DONE`; operational posture is `CERTIFIED_HOLD`. No user action is required. Await Chat 6 deterministic aggregation/cross-check. No further Chat 4 lane mutation is authorized unless Chat 6 issues a bounded evidence-backed correction request.
