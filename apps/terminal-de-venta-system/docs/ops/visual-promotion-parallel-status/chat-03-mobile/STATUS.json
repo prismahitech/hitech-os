@@ -4,12 +4,12 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-04T23:59:00-06:00",
-  "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-11T22:45:00-06:00",
+  "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat3/mobile-corpus-cert-20260904",
   "workHead": "664035e83943ae48c923585765d3c505b1bd8c53",
-  "summary": "Chat 3 Mobile candidate corpus certification is complete. A strict representation-only derivative was created from immutable worker head 7f32ce6f1b602a14781fa2f4f3f323035f8029ec: 271/271 corpus-valid, invalid=0, semanticMutationCount=0, 133 CURRENT + 138 DRIFT preserved, and all 271 outcomes remain REGISTER_TARGET_FIRST.",
+  "summary": "Chat 3 has started the canonical CORPUS_FINAL_PARALLEL_VERIFICATION as MOBILE_FINAL_WITNESS. Verification is read-only against immutable certification head 664035e83943ae48c923585765d3c505b1bd8c53; only this status mailbox branch will be written.",
   "blockers": [],
   "findings": [
     "The strict Control Plane candidate contract at source head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb rejects the original Mobile top-level projection object and requires its projection fields at top level.",
@@ -95,7 +95,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Handoff certification branch chat3/mobile-corpus-cert-20260904 at 664035e83943ae48c923585765d3c505b1bd8c53 to Chat 6. Make no further Mobile certification mutation unless deterministic integration requests a bounded evidence-backed correction.",
+  "nextAction": "Independently reproduce every Mobile final-witness invariant from exact certification head-tree bytes, then publish PASS_MOBILE_CORPUS_WITNESS only if all invariants pass.",
   "handoff": {
     "readiness": "READY_FOR_INTEGRATION",
     "phase": "CANDIDATE_CORPUS_CERTIFICATION_PARALLEL",
@@ -132,6 +132,16 @@
       "Preserve the immutable raw worker source head separately from the certified derivative.",
       "Do not interpret VALID_REGISTER_TARGET_FIRST as APPLY_READY.",
       "Preserve 133 CURRENT / 138 DRIFT and the unresolved RIFAT-vs-product reconciliation."
-    ]
+    ],
+    "parallelWitness": {
+      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+      "result": "IN_PROGRESS",
+      "certificationHead": "664035e83943ae48c923585765d3c505b1bd8c53",
+      "expectedInputCount": 271,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalPromotionPerformed": false,
+      "defects": []
+    }
   }
 }
