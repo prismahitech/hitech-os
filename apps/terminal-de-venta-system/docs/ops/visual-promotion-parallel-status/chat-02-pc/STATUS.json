@@ -4,94 +4,39 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "DONE",
-  "updatedAt": "2026-09-11T22:53:00-06:00",
-  "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-  "workBranch": "chat2/pc-corpus-cert-20260904",
-  "workHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
-  "summary": "PASS_PC_CORPUS_WITNESS. Chat 2 independently cross-checked the immutable PC certification head for the current CORPUS_FINAL_PARALLEL_VERIFICATION phase. All required corpus invariants pass; the known selector conflict and all 139 projection MISSING records remain unresolved exactly as certified. Chat 2 is now in CERTIFIED_HOLD. No product/runtime, certification, canonical authority, projection, or Materiality mutation occurred.",
-  "blockers": [
-    {
-      "scope": "candidate",
-      "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
-      "code": "CURRENT_AUTHORITY_SELECTOR_DISAGREEMENT",
-      "detail": "Target Index selector is '.supplier-readable-v07' while expanded Visual Control selector is '.supplier-readable-v07 *'.",
-      "impact": "Preserved exactly as intentional unresolved corpus evidence. It is not a witness defect and does not authorize repair."
-    }
-  ],
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-12T16:08:00-06:00",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
+  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION started for Chat 2 / PC_PROMOTION_READINESS_RESOLVER. The immutable certified PC corpus is being reused as input; no recensus, product/runtime mutation, projection repair, global authority mutation, canonical ID minting, or Materiality Catalog inspection is authorized.",
+  "blockers": [],
   "findings": [
-    "STATUS_INDEX resolves Chat 2 to PC_PROMOTION / PC_FINAL_WITNESS with expected result PASS_PC_CORPUS_WITNESS.",
-    "Exact certification head is 8cc979c141000fcedabf832f16468a6ee3e328e2 and its five output Git blob identities match the prior deterministic handoff.",
-    "NORMALIZED=827, CERTIFICATION=827, INVALID=0, duplicateTargetIds=0, semanticMutationCount=0.",
-    "All 827 certification labels remain VALID_REGISTER_TARGET_FIRST.",
-    "Physical partition remains 826 CURRENT + 1 DRIFT.",
-    "Projection partition remains 688 CURRENT + 139 MISSING; no MISSING record was promoted or repaired.",
-    "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains the exact unresolved selector conflict and is normalized line 827 with hash-preserving representation.",
-    "Certification provenance remains pinned to source branch/head/base/file/bucket/line, source file Git blob SHA, file SHA-256, source-record SHA-256 and normalized record SHA-256.",
-    "Materiality Catalog remained completely uninspected."
+    "STATUS_INDEX v1.2.0 assigns Chat 2 to PC_PROMOTION_READINESS_RESOLVER with expected result PASS_PC_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
+    "Current canonical main and the assigned work branch both resolve to d4b451cc92c597d02cfc65094922bd2c5dd17c12.",
+    "Certified PC input remains 827 targets with 826 physical CURRENT + 1 DRIFT and 688 projection CURRENT + 139 MISSING from the prior immutable certification evidence.",
+    "Promotion-readiness record schema is available on current main and is the machine contract for phase output."
   ],
   "decisions": [
-    "Publish PASS_PC_CORPUS_WITNESS because every canonical Chat 2 final-witness invariant passes against immutable certification head-tree evidence.",
-    "Remain in CERTIFIED_HOLD after witness publication.",
-    "Do not mutate/rebase certification bytes, repair projection gaps, resolve the selector conflict, infer semantics, mint canonical IDs, or modify product/runtime/global authority.",
-    "Current main movement does not alter the immutable certification object being witnessed; no new repository mutation beyond the dedicated status mailbox was performed."
+    "Execute only the PC promotion-readiness assignment on chat2/canonical-promotion-readiness-pc-20260912.",
+    "Write phase artifacts only under prisma-html/governance/visual-promotion/promotion-readiness/pc/**; status writes remain limited to this mailbox branch.",
+    "Preserve unknown semantic/binding/application authority as unknown or blocked; do not infer meaning from selectors or Atlasfin recipe similarity.",
+    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and will not be inspected."
   ],
   "changedPaths": [
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json"
   ],
-  "validations": [
-    {
-      "check": "immutable certification head identity",
-      "result": "PASS",
-      "detail": "Read-only verification used chat2/pc-corpus-cert-20260904@8cc979c141000fcedabf832f16468a6ee3e328e2."
-    },
-    {
-      "check": "certification output Git blobs",
-      "result": "PASS",
-      "detail": "MANIFEST bc53a0e1d92df2092248bacfb9ca042b65e188e2; NORMALIZED d7e7c730342a24d3daeadb3f9b07cfd95278c0b0; CERTIFICATION 9c0517f3e098cdf0c02aa52aa469bbf04b4264d7; INVALID e69de29bb2d1d6434b8b29ae775ad8c2e48c5391; SUMMARY 3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0."
-    },
-    {
-      "check": "PC final witness accounting",
-      "result": "PASS",
-      "detail": "827 normalized; 827 certification; invalid=0; uniqueTargetIds=827; duplicateTargetIds=0; semanticMutationCount=0."
-    },
-    {
-      "check": "certification label invariant",
-      "result": "PASS",
-      "detail": "VALID_REGISTER_TARGET_FIRST=827."
-    },
-    {
-      "check": "physical/projection invariant",
-      "result": "PASS",
-      "detail": "Physical CURRENT=826 / DRIFT=1; projection CURRENT=688 / MISSING=139."
-    },
-    {
-      "check": "selector conflict preservation",
-      "result": "PASS",
-      "detail": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains DRIFT with blocker current-authority-selector-disagreement and exact selectors preserved."
-    },
-    {
-      "check": "provenance completeness",
-      "result": "PASS",
-      "detail": "Certification rows retain source head/file/line/blob/file-hash/record-hash provenance; hard conflict row independently reproduces sourceRecordSha256 == normalizedRecordSha256 and representationChanged=false."
-    },
-    {
-      "check": "scope and mutation boundaries",
-      "result": "PASS",
-      "detail": "Materiality inspected=false; product/runtime mutation=false; canonical promotion=false; certification mutation=false."
-    }
-  ],
+  "validations": [],
   "unresolved": [
-    "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains intentionally unresolved due to the exact selector disagreement.",
-    "All 139 projection MISSING states remain unrepaired.",
-    "All 827 NDC resolutions remain UNRESOLVED and all 827 canonical Identity bindings remain BLOCKED / REGISTER_TARGET_FIRST."
+    "827 PC targets require exact promotion-readiness resolution and zero-loss accounting.",
+    "The known selector DRIFT must remain blocked unless current authority proves resolution.",
+    "All 139 projection MISSING rows require canonical projection-debt classification without repair."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. Await only a bounded evidence-backed correction request from the global compositor if a real witness mismatch is proven.",
+  "nextAction": "Resolve the immutable certified PC subset against current machine contracts and existing authority, write the seven owned phase outputs, validate zero-loss/schema/provenance, then publish PASS_PC_PROMOTION_READINESS or a precise hard stop.",
   "handoff": {
-    "readiness": "CERTIFIED_HOLD",
+    "readiness": "IN_PROGRESS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
     "certificationBranch": "chat2/pc-corpus-cert-20260904",
     "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
@@ -100,50 +45,23 @@
       "result": "PASS_PC_CORPUS_WITNESS",
       "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
       "expectedInputCount": 827,
-      "outputGitBlobs": {
-        "MANIFEST.json": "bc53a0e1d92df2092248bacfb9ca042b65e188e2",
-        "NORMALIZED.jsonl": "d7e7c730342a24d3daeadb3f9b07cfd95278c0b0",
-        "CERTIFICATION.jsonl": "9c0517f3e098cdf0c02aa52aa469bbf04b4264d7",
-        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "SUMMARY.md": "3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0"
-      },
-      "outputSha256": {
-        "MANIFEST.json": "7c12b5af232134ff5fa2f6992c908068caa6d152e1faaf6af650063bd9c0b46a",
-        "NORMALIZED.jsonl": "127068ef114305f7dc386cd7a764527b39a6039da90e8af50df52439d4ff2044",
-        "CERTIFICATION.jsonl": "46e114dccd889a055550acc27ce6c455a01e67347d5fadd2c96db588e5786f21",
-        "INVALID.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "SUMMARY.md": "be7b59c2e9555bff9f08df14278034c76c5a52fba976d17ba4d712402269c2fd"
-      },
-      "normalizedCount": 827,
-      "certificationCount": 827,
       "invalidCount": 0,
-      "uniqueTargetIds": 827,
       "duplicateTargetIds": 0,
       "semanticMutationCount": 0,
-      "certificationStatusCounts": {
-        "VALID_REGISTER_TARGET_FIRST": 827
-      },
-      "physicalStatusCounts": {
-        "CURRENT": 826,
-        "DRIFT": 1
-      },
-      "projectionStatusCounts": {
-        "CURRENT": 688,
-        "MISSING": 139
-      },
-      "selectorConflict": {
-        "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
-        "preserved": true,
-        "resolved": false,
-        "targetIndexSelector": ".supplier-readable-v07",
-        "expandedVisualControlSelector": ".supplier-readable-v07 *"
-      },
-      "projectionMissingSilentlyRepairedCount": 0,
-      "provenanceHashesComplete": true,
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalPromotionPerformed": false,
-      "certificationMutationPerformed": false,
+      "defects": []
+    },
+    "promotionReadiness": {
+      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+      "result": "IN_PROGRESS",
+      "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
+      "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "expectedInputCount": 827,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalPromotionPerformed": false,
       "defects": []
     }
   }
