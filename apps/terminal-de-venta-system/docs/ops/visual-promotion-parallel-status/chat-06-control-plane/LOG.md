@@ -285,3 +285,11 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - PR #539 Shared UI and PR #540 Atlasfin source paths were individually proven byte-identical on merged main and closed without merge as superseded.
 - Final result: `PASS_CORPUS_FINAL_PARALLEL_VERIFICATION_MERGED_MAIN_VERIFIED`.
 - Hold state: `CERTIFIED_CORPUS_HOLD`. Corpus validity does not imply canonical APPLY/runtime readiness.
+
+### 2026-09-12T11:47:30Z — START
+- Started `CANONICAL_PROMOTION_READINESS_RESOLUTION` as Chat 6 / Visual Promotion Control Plane.
+- Canonical main/base: `3eb092fad5e746a7ceeb9fdba079671934ae9b6d`.
+- Revalidated certified corpus invariants: 2,097 total; 139 eligible; 1,926 register-first; 32 blocked; Work Entry 2,065 register-first + 32 blocked; exact apply=0; authorized promotions=0; runtimeVisualGreen=false; semantic groups=10; cross-surface canonical groups=0; Atlasfin refs 2,421/2,421.
+- Universal anti-rework PROPOSAL and MUTATION evaluations: `PASS_ANTI_REWORK_GATE`, capability `visual.generic_application_engine_v1`, action `ADVANCE`, `doNotRebuild=true` preserved.
+- Fresh Authority Mesh run `34691841895`: `PASS_COMPOSED_AUTHORITY_MESH`; both lanes 100% coverage; blockers=0; Layer Map present; artifact `10297390387`, digest `sha256:4fe961b2860c5d0a97bc106b87f57fd95f6f4c8d1b4329e614603150434919eb`.
+- Product/runtime mutation, canonical registration, Materiality use, recensus and broad rediscovery remain forbidden.
