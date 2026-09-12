@@ -4,262 +4,42 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-11T22:54:00-06:00",
-  "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
-  "workBranch": "chat3/mobile-corpus-cert-20260904",
-  "workHead": "664035e83943ae48c923585765d3c505b1bd8c53",
-  "summary": "PASS_MOBILE_CORPUS_WITNESS. Chat 3 independently verified the immutable Mobile certification head from exact Git tree bytes: 271/271 normalized, 271/271 certification, invalid=0, unique targets=271, duplicate/missing/extra=0, semanticMutationCount=0, 271 VALID_REGISTER_TARGET_FIRST, projection partition 133 CURRENT + 138 DRIFT, zero source/normalized hash mismatches, representation-only provenance preserved, strict NDC/Atlasfin/Identity references valid, and no RIFAT-vs-product repair direction selected. Chat 3 is now in CERTIFIED_HOLD.",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-12T16:07:00-06:00",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
+  "workHead": null,
+  "summary": "Chat 3 started CANONICAL_PROMOTION_READINESS_RESOLUTION as MOBILE_PROMOTION_READINESS_RESOLVER. The immutable certified Mobile corpus is input evidence; this lane will resolve all 271 targets exactly once and classify the 138 DRIFT records without mutating RIFAT, product/runtime, projections, or global authority.",
   "blockers": [],
   "findings": [
-    "The strict Control Plane candidate contract at source head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb rejects the original Mobile top-level projection object and requires its projection fields at top level.",
-    "Strict Control Plane NDC validation expects raw domain-scoped NDC IDs in ndc.ndcRefs; Mobile source used ndc::SURF.mb.owner_home, so the derivative normalizes it to SURF.mb.owner_home while preserving the original qualified value in certification provenance.",
-    "Strict Atlasfin reference validation requires raw adapter ID ADP.MB.TOUCH.V2; the source carried atlasfin::ADP.MB.TOUCH.V2, and the derivative preserves the original value in certification provenance.",
-    "1,493 previously unqualified evidence references were converted to strict authority-ref form without losing their original raw strings.",
-    "Direct current registry checks confirm SURF.mb.owner_home, ADP.MB.TOUCH.V2 and prisma.adapter.mobile.v1 exist in their respective NDC, Atlasfin and Identity registries.",
-    "Read-back validation confirmed 271 normalized rows, 271 certification rows, zero INVALID rows, 271 unique target IDs, and zero source-record or normalized-record hash mismatches.",
-    "Certification branch differs from its canonical base by exactly five files, all under the owned Mobile certification directory.",
-    "Current main remained 8cc1918c5e015d1408335c15313e7364e04859c2 through certification closure.",
-    "Independent exact-Git-blob readback reproduced all certification file SHA-256 digests and all 271 source-record plus 271 normalized-record SHA-256 pins with zero mismatches.",
-    "All 271 certification labels are VALID_REGISTER_TARGET_FIRST and the projection partition is exactly 133 CURRENT + 138 DRIFT.",
-    "All 138 DRIFT rows explicitly preserve no repair direction, retain projection-hash-drift, REGISTER_TARGET_FIRST, and null applicationLayerId; no suspicious RIFAT-vs-product repair selection was found.",
-    "Representation-only normalization reconstructs exactly from source evidence: semanticDiffCount=0, representationErrorCount=0, and 1,493 evidence-reference conversions preserve original values in certification provenance.",
-    "Current main remained 7c5b8d477a9006c5184ddbc806874b6e7c02571c through final witness closure; the pinned NDC, Atlasfin and Identity registry Git blobs are byte-identical to those at the immutable certification head."
+    "Current canonical main at start is d4b451cc92c597d02cfc65094922bd2c5dd17c12.",
+    "STATUS_INDEX assigns Chat 3 role MOBILE_PROMOTION_READINESS_RESOLVER with expected result PASS_MOBILE_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
+    "The current phase requires seven owned outputs under prisma-html/governance/visual-promotion/promotion-readiness/mobile/** and zero-loss accounting for 271 Mobile targets.",
+    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and will not be inspected."
   ],
   "decisions": [
-    "Normalization is representation-only; the original worker bytes remain immutable evidence.",
-    "Preserve all Mobile semantic statuses, blockers, notes, physical coordinates, projection decisions and Work Entry decisions.",
-    "Do not choose RIFAT-vs-product repair direction for any of the 138 DRIFT targets.",
-    "Do not promote Atlasfin by similarity and do not use Materiality Catalog.",
-    "Do not refresh prisma-html/FILES_MANIFEST.json and do not open a Chat 3 PR; final assembly belongs to Chat 6.",
-    "Certification status for all 271 rows is VALID_REGISTER_TARGET_FIRST; this does not upgrade promotionStatus or authorize GVAE.",
-    "Publish PASS_MOBILE_CORPUS_WITNESS and enter CERTIFIED_HOLD; perform no correction, promotion, projection repair, product/runtime mutation or certification-branch mutation."
+    "Reuse the immutable certified corpus under prisma-html/governance/visual-promotion/contracts/corpus-certification/; do not recensus or rebuild earlier phases.",
+    "Use only current canonical NDC/Identity/RIFAT/Visual Control/Target Index authority and Atlasfin as support-only reference.",
+    "Do not mint canonical IDs, repair projection bytes, or select an authority direction without evidence."
   ],
-  "changedPaths": [
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/STATUS.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/LOG.md"
-  ],
-  "validations": [
-    {
-      "name": "certification branch scope",
-      "result": "PASS",
-      "details": "Exactly five changed paths from base 8cc1918c5e015d1408335c15313e7364e04859c2, all under prisma-html/governance/visual-promotion/candidates/mobile/certification/."
-    },
-    {
-      "name": "strict candidate representation",
-      "result": "PASS",
-      "details": "271/271 normalized records satisfy the exact candidate.schema/control_plane.py field, enum, closed-shape and authority-ref rules used by Control Plane source head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb."
-    },
-    {
-      "name": "zero-loss accounting",
-      "result": "PASS",
-      "details": "271 input = 271 normalized = 271 certification; unique targets 271; missing 0; extra 0; duplicates 0."
-    },
-    {
-      "name": "certification validity",
-      "result": "PASS",
-      "details": "271 VALID_REGISTER_TARGET_FIRST; INVALID.jsonl is empty."
-    },
-    {
-      "name": "semantic invariants",
-      "result": "PASS",
-      "details": "semanticMutationCount=0; promotionStatus/workEntryDecision remain REGISTER_TARGET_FIRST for all 271; NDC resolution, binding status and Atlasfin match status are unchanged."
-    },
-    {
-      "name": "projection partition",
-      "result": "PASS",
-      "details": "133 CURRENT + 138 DRIFT preserved exactly; no repair direction selected."
-    },
-    {
-      "name": "record provenance hashes",
-      "result": "PASS",
-      "details": "All 271 certification rows pin source head/file/line/source-record SHA-256 and normalized-record SHA-256; independent read-back found 0 source hash mismatches and 0 normalized hash mismatches."
-    },
-    {
-      "name": "file digests",
-      "result": "PASS",
-      "details": "NORMALIZED.jsonl SHA-256 bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1; CERTIFICATION.jsonl SHA-256 81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287."
-    },
-    {
-      "name": "reference validation",
-      "result": "PASS",
-      "details": "Strict evidence-ref syntax has 0 invalid refs; current NDC, Atlasfin and Identity registries contain the referenced Mobile surface/adapter records."
-    },
-    {
-      "name": "Materiality and broad rediscovery",
-      "result": "PASS",
-      "details": "Materiality Catalog was not inspected or consumed; no broad rediscovery occurred."
-    },
-    {
-      "name": "final witness exact-head accounting",
-      "result": "PASS",
-      "details": "At certification head 664035e83943ae48c923585765d3c505b1bd8c53: NORMALIZED=271, CERTIFICATION=271, INVALID=0, uniqueTargetIds=271, duplicate/missing/extra=0."
-    },
-    {
-      "name": "final witness certification labels and projection partition",
-      "result": "PASS",
-      "details": "271/271 certification labels are VALID_REGISTER_TARGET_FIRST. Projection status is exactly 133 CURRENT + 138 DRIFT."
-    },
-    {
-      "name": "final witness no-repair-direction invariant",
-      "result": "PASS",
-      "details": "138/138 DRIFT rows explicitly retain no repair direction, projection-hash-drift, REGISTER_TARGET_FIRST and null applicationLayerId; no RIFAT-vs-product repair choice detected."
-    },
-    {
-      "name": "final witness representation-only normalization",
-      "result": "PASS",
-      "details": "semanticDiffCount=0; representationErrorCount=0; 1,493 evidence-ref conversions reconstruct normalized evidence exactly and certification provenance preserves original qualified/raw values."
-    },
-    {
-      "name": "final witness provenance hashes",
-      "result": "PASS",
-      "details": "271/271 source-record SHA-256 pins and 271/271 normalized-record SHA-256 pins reproduce with zero mismatches."
-    },
-    {
-      "name": "final witness output digests",
-      "result": "PASS",
-      "details": "NORMALIZED sha256=bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1; CERTIFICATION sha256=81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287; INVALID sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855."
-    },
-    {
-      "name": "final witness strict reference validity",
-      "result": "PASS",
-      "details": "271/271 strictCandidateValidation=PASS and referenceValidation=PASS. NDC SURF.mb.owner_home, Atlasfin ADP.MB.TOUCH.V2 and Identity prisma.adapter.mobile.v1 remain present; their registry blobs match certification-head blobs exactly on current main."
-    },
-    {
-      "name": "final witness prohibited actions",
-      "result": "PASS",
-      "details": "Materiality Catalog not inspected; no broad rediscovery; no product/runtime mutation; no canonical promotion; no certification/source repair."
-    }
-  ],
+  "changedPaths": [],
+  "validations": [],
   "unresolved": [
-    "The 138 projection DRIFT records intentionally remain for later authority reconciliation; this witness does not select RIFAT or product as repair truth.",
-    "All 271 Mobile targets remain REGISTER_TARGET_FIRST and are not APPLY_READY.",
-    "Global corpus assembly, witness cross-check, one-time FILES_MANIFEST refresh, final gates, PR and merge remain Chat 6 responsibilities."
+    "Per-target promotion readiness and projection-debt direction are being resolved from current authority."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. Chat 6 may consume handoff.parallelWitness directly from status/vp-chat-03-mobile. Chat 3 performs no further mutation unless a later bounded, evidence-backed correction request is issued.",
+  "nextAction": "Create the assigned work branch from current main, inspect exact Mobile certified records and current authority, generate deterministic readiness outputs, validate zero-loss and schema invariants, then publish handoff.promotionReadiness.",
   "handoff": {
-    "readiness": "READY_FOR_INTEGRATION",
-    "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-    "result": "PASS_MOBILE_CORPUS_WITNESS",
-    "certificationBranch": "chat3/mobile-corpus-cert-20260904",
-    "certificationHead": "664035e83943ae48c923585765d3c505b1bd8c53",
-    "certificationBaseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-    "certificationRoot": "prisma-html/governance/visual-promotion/candidates/mobile/certification",
-    "sourceBranch": "visual-promotion-chat3-mobile-20260904",
-    "sourceHead": "7f32ce6f1b602a14781fa2f4f3f323035f8029ec",
-    "sourceBaseHead": "57b01ad8bda043ec25763203354b686341bace09",
-    "sourceInputCount": 271,
-    "normalizedCount": 271,
-    "certificationCount": 271,
-    "invalidCount": 0,
-    "semanticMutationCount": 0,
-    "projectionStatusCounts": {
-      "CURRENT": 133,
-      "DRIFT": 138
-    },
-    "certificationStatusCounts": {
-      "VALID_REGISTER_TARGET_FIRST": 271
-    },
-    "normalizedSha256": "bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1",
-    "certificationSha256": "81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287",
-    "materialityCatalogInspected": false,
-    "broadRediscoveryPerformed": false,
-    "filesManifestUpdated": false,
-    "prOpened": false,
-    "runtimeVisualGreen": false,
-    "canonicalPromotionPerformed": false,
-    "integrationNotes": [
-      "Consume the exact certification head/tree, not reconstructed history.",
-      "Preserve the immutable raw worker source head separately from the certified derivative.",
-      "Do not interpret VALID_REGISTER_TARGET_FIRST as APPLY_READY.",
-      "Preserve 133 CURRENT / 138 DRIFT and the unresolved RIFAT-vs-product reconciliation."
-    ],
-    "parallelWitness": {
-      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-      "result": "PASS_MOBILE_CORPUS_WITNESS",
-      "certificationHead": "664035e83943ae48c923585765d3c505b1bd8c53",
+    "promotionReadiness": {
+      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+      "role": "MOBILE_PROMOTION_READINESS_RESOLVER",
+      "result": "IN_PROGRESS",
+      "expectedResult": "PASS_MOBILE_PROMOTION_READINESS",
       "expectedInputCount": 271,
-      "outputGitBlobShas": {
-        "MANIFEST.json": "73a83bddce5f9c1b8c2ff1d968c122d1050282ab",
-        "NORMALIZED.jsonl": "cc474d39d2027371921d8aba19ee02911c96b0f2",
-        "CERTIFICATION.jsonl": "5b1ebf8f14557a104419fd13b27b7ca34bdc2664",
-        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "SUMMARY.md": "843487a2c2bbf93293b6464452fb6cb16558428d"
-      },
-      "outputSha256": {
-        "NORMALIZED.jsonl": "bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1",
-        "CERTIFICATION.jsonl": "81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287",
-        "INVALID.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "sourceEvidenceSha256": {
-        "UNRESOLVED.jsonl": "291ca7bdd5f0c7c26064c0cf8a0d2bb1c30b69797f6b988a0cd19965c7c17350",
-        "CONFLICTS.jsonl": "f34febd565cdb691c2e2aa47abd3060d5a0f44cbf18cb59c9d3fb2b8cb54faee"
-      },
-      "normalizedCount": 271,
-      "certificationCount": 271,
-      "invalidCount": 0,
-      "uniqueTargetIds": 271,
-      "duplicateTargetIds": 0,
-      "missingTargetIds": 0,
-      "extraTargetIds": 0,
-      "semanticMutationCount": 0,
-      "certificationStatusCounts": {
-        "VALID_REGISTER_TARGET_FIRST": 271
-      },
-      "projectionStatusCounts": {
-        "CURRENT": 133,
-        "DRIFT": 138
-      },
-      "driftInvariantCounts": {
-        "noRepairDirection": 138,
-        "projectionHashDriftBlocker": 138,
-        "registerTargetFirst": 138,
-        "nullApplicationLayerId": 138
-      },
-      "provenanceVerification": {
-        "sourceRecordsChecked": 271,
-        "sourceRecordHashMismatches": 0,
-        "normalizedRecordsChecked": 271,
-        "normalizedRecordHashMismatches": 0,
-        "sourceTargetMismatches": 0,
-        "semanticDiffCount": 0,
-        "representationErrorCount": 0,
-        "evidenceRefConversionCount": 1493,
-        "originalQualifiedRawValuesPreserved": true
-      },
-      "strictReferenceValidation": {
-        "strictCandidatePassCount": 271,
-        "referencePassCount": 271,
-        "ndc": {
-          "id": "SURF.mb.owner_home",
-          "registryGitBlobSha": "44c29f0333144501b0bef2e36c0aed0d3865ef2f",
-          "currentMainBlobMatchesCertification": true,
-          "valid": true
-        },
-        "atlasfin": {
-          "id": "ADP.MB.TOUCH.V2",
-          "registryGitBlobSha": "f6eb2a32ff7a18ec80c6917654fc6d63c9024319",
-          "currentMainBlobMatchesCertification": true,
-          "valid": true
-        },
-        "identity": {
-          "id": "prisma.adapter.mobile.v1",
-          "registryGitBlobSha": "b284f0300ae5cd6d88a5d6cd252c11858ab7376d",
-          "currentMainBlobMatchesCertification": true,
-          "valid": true
-        }
-      },
-      "rifatVsProductRepairDirectionSelected": false,
       "materialityCatalogInspected": false,
-      "broadRediscoveryPerformed": false,
-      "productRuntimeMutation": false,
-      "canonicalPromotionPerformed": false,
-      "runtimeVisualGreen": false,
-      "defects": [],
-      "holdState": "CERTIFIED_HOLD"
-    },
-    "holdState": "CERTIFIED_HOLD"
+      "productRuntimeMutationPerformed": false,
+      "canonicalAuthorityMutationPerformed": false
+    }
   }
 }
