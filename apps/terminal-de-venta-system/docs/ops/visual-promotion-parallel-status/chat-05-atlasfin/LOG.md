@@ -151,3 +151,36 @@ No updates published yet.
 - Current canonical main is `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
 - Bounded comparison from certification base to current main shows coordination/governance movement without structured Atlasfin authority drift, so the immutable certification remains eligible for read-only revalidation.
 - Materiality Catalog remains completely uninspected; product/runtime mutation and canonical promotion remain forbidden.
+
+## 2026-09-11T23:02:00-06:00 — FINDING
+- Immutable certification branch still resolves exactly to `6c7743f55434eb8d3429f286e2f9eae275d93d87`, with parent/base `8cc1918c5e015d1408335c15313e7364e04859c2`.
+- Source accounting reproduces 929 Tablet + 827 PC + 271 Mobile + 70 Shared UI = 2,097 source surface outcomes.
+- Certification evidence reproduces 2,421 non-null Atlasfin reference rows: 2,097 adapter + 324 recipe references. `INVALID_REFS.jsonl` is the empty Git blob `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`.
+- Current structured Atlasfin recipe and adapter authority blobs remain exactly `af8dbff2cf22e0cb77163128af0358cd0a9d3762` and `f6eb2a32ff7a18ec80c6917654fc6d63c9024319`, matching certification provenance.
+- Qualified Mobile and Shared UI adapter rows retain original `atlasfin::` serialization, normalized raw adapter IDs, source head/file/line/hash, `VALID_REFERENCE`, and `semanticMutation=false`.
+- Recipe review groups reproduce card=95, table=171, panel=47, overlay=11 and declare `semanticCoalescingAllowed=false`; `ALL_NULL_ATLASFIN_REFS` and `NO_MATCH` stay excluded from automatic semantic coalescing.
+
+## 2026-09-11T23:02:00-06:00 — VALIDATION
+- Final witness result: `PASS_ATLASFIN_CORPUS_WITNESS`.
+- Valid normalized Atlasfin references: 2,421/2,421.
+- Hard invalid references: 0.
+- Representation-only adapter normalizations: 341.
+- Semantic mutations: 0.
+- Provenance required fields are present in the certification evidence: `sourceHead`, `sourceFile`, `sourceLine`, `sourceRecordSha256`.
+- Current main was rechecked at completion and remains `7c5b8d477a9006c5184ddbc806874b6e7c02571c`; no relevant structured Atlasfin authority drift was found.
+- Materiality Catalog inspected: false.
+- Product/runtime mutation: false.
+- Canonical promotion: false.
+- Global snapshot written by Chat 5: false.
+
+## 2026-09-11T23:02:00-06:00 — DECISION
+- Publish the deterministic witness receipt under `handoff.parallelWitness` in the Chat 5 mailbox.
+- Snapshot acceptance criteria require Chat 6's read-only snapshot to reproduce the same 2,097 outcomes, 2,421 references, 341 representation-only normalizations, 0 semantic mutations, recipe-group partition and complete provenance, while failing closed on head/hash/shape mismatch.
+- Any witness/snapshot mismatch is a hard stop for Chat 6, not a warning.
+- Chat 5 now remains in `CERTIFIED_HOLD`; no source/certification/runtime/global-authority mutation is permitted by this phase.
+
+## 2026-09-11T23:02:00-06:00 — COMPLETE
+- Chat 5 current canonical assignment is complete.
+- Status mailbox state is `DONE` with `handoff.parallelWitness.result = PASS_ATLASFIN_CORPUS_WITNESS`.
+- No blocker and no user action remain for Chat 5.
+- Chat 6 can read this deterministic mailbox directly; no owner relay is required.
