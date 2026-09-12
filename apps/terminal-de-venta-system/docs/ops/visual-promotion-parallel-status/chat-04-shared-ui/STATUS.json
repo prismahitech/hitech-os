@@ -4,23 +4,28 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:45:00-06:00",
+  "state": "DONE",
+  "updatedAt": "2026-09-11T22:57:00-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat4/shared-ui-corpus-cert-20260904",
   "workHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a",
-  "summary": "Chat 4 started CORPUS_FINAL_PARALLEL_VERIFICATION as SHARED_UI_FINAL_WITNESS. The immutable certification head remains 553577aa74045c73ab9c92d1f81538e7e0a8c65a. Verification is read-only from exact Git head-tree bytes; only this mailbox may be written. Current canonical main observed as 7c5b8d477a9006c5184ddbc806874b6e7c02571c. No product/runtime, certification, consumer, canonical authority, candidate shard, FILES_MANIFEST, Materiality Catalog, or other-chat mailbox mutation is authorized or being performed.",
+  "summary": "Chat 4 completed CORPUS_FINAL_PARALLEL_VERIFICATION as SHARED_UI_FINAL_WITNESS. Independent read-only verification of exact certification head 553577aa74045c73ab9c92d1f81538e7e0a8c65a reproduced every required invariant: NORMALIZED=70, CERTIFICATION=70, INVALID=0, unique target IDs=70, semanticMutationCount=0, labels 40 VALID_REGISTER_TARGET_FIRST + 30 VALID_BLOCKED, 19 no-region unresolved preserved, 11 multi-region conflicts preserved, NDC UNRESOLVED=70, Atlasfin NO_MATCH=70, projection CURRENT=70. Certification base-to-head is exactly one commit with exactly five certification files and no consumer/product/global-authority changes. PASS_SHARED_UI_CORPUS_WITNESS published; Chat 4 now holds in CERTIFIED_HOLD with no further lane mutation authorized.",
   "blockers": [],
   "findings": [
-    "Canonical phase is CORPUS_FINAL_PARALLEL_VERIFICATION and Chat 4 role is SHARED_UI_FINAL_WITNESS.",
-    "Expected phase result is PASS_SHARED_UI_CORPUS_WITNESS only if every Shared UI invariant independently reproduces from immutable certification head 553577aa74045c73ab9c92d1f81538e7e0a8c65a.",
-    "Current canonical main observed at 7c5b8d477a9006c5184ddbc806874b6e7c02571c; this final witness reads immutable exact-head evidence and does not authorize new lane/source mutation."
+    "Exact immutable certification head verified: 553577aa74045c73ab9c92d1f81538e7e0a8c65a.",
+    "Git compare from certification base 8cc1918c5e015d1408335c15313e7364e04859c2 to certification head is exactly one commit and five added files, all under prisma-html/governance/visual-promotion/candidates/shared-ui/certification/**.",
+    "NORMALIZED.jsonl has exactly 70 records and CERTIFICATION.jsonl has exactly 70 records; INVALID.jsonl is the empty Git blob.",
+    "Certification rows partition exactly as candidate source records 1..40, unresolved source records 1..19, and conflict source records 1..11, yielding 40 VALID_REGISTER_TARGET_FIRST and 30 VALID_BLOCKED.",
+    "All 70 certification records preserve semanticMutation=false, ndcResolutionStatus=UNRESOLVED, atlasfinMatchStatus=NO_MATCH and projectionStatus=CURRENT.",
+    "No-region unresolved count remains 19 and multi-region conflict count remains 11; no region was inferred.",
+    "No product/runtime, consumer, candidate-source, generated projection, canonical Identity/RIFAT/NDC/Target Index, Factory Ledger/Evidence Index, FILES_MANIFEST, or other Chat mailbox bytes were changed by this witness.",
+    "Current canonical main observed as 7c5b8d477a9006c5184ddbc806874b6e7c02571c; current prompt already contains the mailbox-driven final verification assignment, and no new source mutation is being performed that would require stale mutation authority reuse."
   ],
   "decisions": [
-    "Perform read-only verification from exact certification head-tree bytes.",
-    "Write only STATUS.json and append-only LOG.md on status/vp-chat-04-shared-ui.",
-    "Do not inspect or consume the Materiality Catalog.",
-    "Do not repair, infer, promote, recensus, or mutate certification/source/product/global authority while producing the witness."
+    "Published PASS_SHARED_UI_CORPUS_WITNESS because every required invariant reproduced from immutable exact-head evidence.",
+    "Kept Materiality Catalog uninspected and at STANDBY_USER_INVOKED_ONLY.",
+    "Performed no broad rediscovery, repair, inference, promotion, rebase, source/certification commit, product/runtime mutation or global authority mutation.",
+    "Remain in CERTIFIED_HOLD after witness completion; any later correction must be a bounded evidence-backed request from the authorized integration owner."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json",
@@ -28,24 +33,100 @@
   ],
   "validations": [
     {
-      "name": "canonical-assignment-resolution",
+      "name": "exact-head-scope",
       "result": "PASS",
-      "detail": "STATUS_INDEX resolves Chat 4 to SHARED_UI_PROMOTION / SHARED_UI_FINAL_WITNESS / status/vp-chat-04-shared-ui with expected result PASS_SHARED_UI_CORPUS_WITNESS."
+      "detail": "8cc1918c5e015d1408335c15313e7364e04859c2..553577aa74045c73ab9c92d1f81538e7e0a8c65a = one commit, five certification files only."
     },
     {
-      "name": "immutable-certification-head",
-      "result": "IN_PROGRESS",
-      "detail": "Read-only witness verification is running against chat4/shared-ui-corpus-cert-20260904@553577aa74045c73ab9c92d1f81538e7e0a8c65a."
+      "name": "record-counts",
+      "result": "PASS",
+      "detail": "NORMALIZED=70; CERTIFICATION=70; INVALID=0."
+    },
+    {
+      "name": "unique-target-ids",
+      "result": "PASS",
+      "detail": "70 certification records contain 70 distinct targetId values; duplicateTargetIds=0."
+    },
+    {
+      "name": "certification-labels",
+      "result": "PASS",
+      "detail": "40 VALID_REGISTER_TARGET_FIRST + 30 VALID_BLOCKED."
+    },
+    {
+      "name": "source-outcome-partition",
+      "result": "PASS",
+      "detail": "40 candidate + 19 unresolved + 11 conflict = 70, with source logical record sequences complete."
+    },
+    {
+      "name": "semantic-fidelity",
+      "result": "PASS",
+      "detail": "semanticMutationCount=0; NDC UNRESOLVED=70; Atlasfin NO_MATCH=70; projection CURRENT=70."
+    },
+    {
+      "name": "unresolved-conflict-preservation",
+      "result": "PASS",
+      "detail": "19 no-region unresolved records remain unresolved; 11 multi-region conflict records remain conflicts; no inferred region."
+    },
+    {
+      "name": "safety-boundary",
+      "result": "PASS",
+      "detail": "Materiality uninspected; productRuntimeMutation=false; canonicalPromotionPerformed=false; consumer/product/global authority changes=0."
     }
   ],
   "unresolved": [
-    "Final witness invariants are still being independently verified from exact certification bytes."
+    "The 19 no-region and 11 multi-region records remain intentionally unresolved/blocked for later governed promotion work.",
+    "All 70 NDC outcomes remain UNRESOLVED and all 70 Atlasfin outcomes remain NO_MATCH; this witness does not resolve or promote them."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Complete the deterministic Shared UI final witness verification and publish handoff.parallelWitness. If and only if every invariant passes, publish PASS_SHARED_UI_CORPUS_WITNESS and enter CERTIFIED_HOLD.",
+  "nextAction": "CERTIFIED_HOLD. Await Chat 6 deterministic aggregation/cross-check. Do not mutate the lane unless Chat 6 issues a bounded evidence-backed correction request.",
   "handoff": {
     "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-    "parallelWitness": null
+    "parallelWitness": {
+      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+      "result": "PASS_SHARED_UI_CORPUS_WITNESS",
+      "certificationBranch": "chat4/shared-ui-corpus-cert-20260904",
+      "certificationHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a",
+      "certificationBaseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
+      "expectedInputCount": 70,
+      "normalizedCount": 70,
+      "certificationCount": 70,
+      "invalidCount": 0,
+      "semanticMutationCount": 0,
+      "duplicateTargetIds": 0,
+      "outputGitBlobShas": {
+        "MANIFEST.json": "132257fd22056f35ce71b35e2a1710dd597e83b0",
+        "NORMALIZED.jsonl": "ad91d542af9ba5334bc47fba0b953c515caf2fa3",
+        "CERTIFICATION.jsonl": "b7c7e1a281640b058061ada51d051c38c929cf4c",
+        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "SUMMARY.md": "9717ceeb7d499b3d564b34ce5fcc227be175d6f5"
+      },
+      "invariants": {
+        "certificationLabels": {
+          "VALID_REGISTER_TARGET_FIRST": 40,
+          "VALID_BLOCKED": 30
+        },
+        "sourceOutcomeBuckets": {
+          "candidate": 40,
+          "unresolved": 19,
+          "conflict": 11
+        },
+        "noRegionUnresolved": 19,
+        "multiRegionConflicts": 11,
+        "ndcUnresolved": 70,
+        "atlasfinNoMatch": 70,
+        "projectionCurrent": 70,
+        "physicalCurrent": 70
+      },
+      "materialityCatalogInspected": false,
+      "broadRediscoveryPerformed": false,
+      "productRuntimeMutation": false,
+      "consumerMutation": false,
+      "globalAuthorityMutation": false,
+      "canonicalPromotionPerformed": false,
+      "sourceCertificationMutationPerformed": false,
+      "defects": []
+    },
+    "holdState": "CERTIFIED_HOLD"
   }
 }
