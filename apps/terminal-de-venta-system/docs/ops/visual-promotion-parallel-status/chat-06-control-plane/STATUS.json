@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T12:00:00Z",
+  "updatedAt": "2026-09-12T11:58:30Z",
   "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
   "workBranch": "chat6/promotion-readiness-control-plane-20260912",
   "workHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION bootstrap is merged and verified on canonical main 6cd1c4fb71efe04f03635c613b2a95880d36c59f. Merged tree exactly equals certified PR #550 final head tree 429455089e874890dd84b2089b2e677e5af3bc33. Six mailbox-driven lanes, disjoint write ownership, machine vocabulary/contracts and baseline are now canonical and all six Chats may begin immediately. Chat 6 continues with composer tooling after revalidating Authority Mesh for the new main.",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION phase scaffold is implemented on Chat 6 work branch. Canonical prompts, status mapping, disjoint ownership, readiness vocabulary, contracts/schemas, baseline/setup evidence and deterministic validator/composer tooling are present. No certified-corpus, product/runtime or global canonical authority bytes were modified.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -62,7 +62,8 @@
     "Merged main@3eb092fad5e746a7ceeb9fdba079671934ae9b6d has tree 502a911c62ce785990f3e0e7f5cd57bf36559403, exactly identical to final certified PR head 34499286414be11703edaef3be93180230658f0f; compare introduced zero file differences. FILES_MANIFEST main blob remains f8a2539d49db381270158ce96bfa9fca838b3a86.",
     "PRs #539 and #540 were proven byte-superseded on merged main by exact Git blob equality for all five owned source paths in each PR, then closed without merge to avoid duplicate history.",
     "Revalidated canonical corpus on main: 2,097 input/certification rows; 139 VALID_ELIGIBLE_CANDIDATE; 1,926 VALID_REGISTER_TARGET_FIRST; 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; GVAE_EXACT_APPLY=0; authorized canonical promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; semantic review groups=10; crossSurfaceGroupCount=0; Atlasfin refs=2,421 with hardInvalidRefCount=0.",
-    "Revalidated canonical corpus on main: 2,097 records, 139 VALID_ELIGIBLE_CANDIDATE, 1,926 VALID_REGISTER_TARGET_FIRST, 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; semantic review groups=10; cross-surface groups=0; Atlasfin refs=2,421/2,421; Materiality uninspected."
+    "Revalidated canonical corpus on main: 2,097 records, 139 VALID_ELIGIBLE_CANDIDATE, 1,926 VALID_REGISTER_TARGET_FIRST, 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; semantic review groups=10; cross-surface groups=0; Atlasfin refs=2,421/2,421; Materiality uninspected.",
+    "Phase setup branch now defines six disjoint write roots and machine-readable readiness/projection/cross-surface classifications; Chat 6 tooling enforces exact target-set zero-loss, no worker canonical-ID minting, Atlasfin-not-semantic-authority, input status preservation and collision checks."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -96,13 +97,21 @@
     "Resume only through the canonical final-verification serial barriers: materialized corpus -> five direct mailbox witness receipts -> exact final assembly -> one FILES_MANIFEST refresh -> exact PR-head gates -> merge -> merged-main verification.",
     "Treat the current-head anti-rework decision as deterministically preserved because all four canonical Factory Ledger authority blobs are unchanged from the previously PASSed gate base, requested action remains ADVANCE, and the required fresh current-head Mesh is now PASS with 100% coverage/zero blockers; no capability semantics changed.",
     "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase.",
-    "New phase will be safely parallelized with six disjoint promotion-readiness roots; certified corpus remains read-only historical evidence and global canonical authority remains untouched until a later plan/gate barrier."
+    "New phase will be safely parallelized with six disjoint promotion-readiness roots; certified corpus remains read-only historical evidence and global canonical authority remains untouched until a later plan/gate barrier.",
+    "Merge the phase scaffold to canonical main before worker execution so all Chats can independently resolve the same canonical prompt/status mapping without branch-specific instructions."
   ],
   "changedPaths": [
+    "prisma-html/docs/ops/visual-promotion-parallel/README.md",
+    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
+    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
+    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md",
+    "prisma-html/docs/ops/visual-promotion-parallel/status-channel/README.md",
+    "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
-    "prisma-html/docs/ops/visual-promotion-parallel/**",
     "prisma-html/governance/visual-promotion/promotion-readiness/**",
-    "status-only mailbox updates on status/vp-chat-06-control-plane"
+    "prisma-html/tools/visual_promotion/promotion_readiness.py",
+    "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py",
+    "prisma-html/tools/visual_promotion/cli.py"
   ],
   "validations": [
     {
@@ -380,7 +389,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Revalidate the phase-bootstrap Authority Mesh artifact against merged main 6cd1c4fb71efe04f03635c613b2a95880d36c59f. If current-head authority remains PASS, begin Chat 6 dedicated promotion-readiness validator/composer tooling while reading Chats 1–5 mailboxes directly for new phase receipts.",
+  "nextAction": "Open the bounded phase-setup PR, consume VISCORE's deterministic FILES_MANIFEST candidate, commit that manifest once, require exact-head gates green, merge to main, then read Chats 1-5 promotionReadiness receipts directly.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -836,7 +845,20 @@
       "corpusInputCount": 2097,
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
-      "canonicalAuthorityMutation": false
+      "canonicalAuthorityMutation": false,
+      "phaseSetup": {
+        "status": "READY_FOR_PR_VALIDATION",
+        "workBranch": "chat6/promotion-readiness-control-plane-20260912",
+        "canonicalPromptUpdated": true,
+        "statusIndexUpdated": true,
+        "statusContractUpdated": true,
+        "disjointOwnershipDefined": true,
+        "schemasCreated": true,
+        "validatorComposerCreated": true,
+        "certifiedCorpusModified": false,
+        "productRuntimeMutation": false,
+        "canonicalAuthorityMutation": false
+      }
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
