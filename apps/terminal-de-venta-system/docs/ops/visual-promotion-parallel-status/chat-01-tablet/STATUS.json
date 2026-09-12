@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-05T00:02:20-06:00",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-11T22:44:00-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat1/tablet-corpus-cert-20260904",
   "workHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
-  "summary": "Chat 1 completed TABLET CORPUS CERTIFICATION. The certified derivative at chat1/tablet-corpus-cert-20260904@fd111022438bab909151c2220b52e95aa5aa7eb3 contains exactly the five required files under candidates/tablet/certification/**. Final audit: 929/929 normalized rows, 929/929 certification rows, 929 unique targets, INVALID.jsonl empty, 929/929 source-record hashes recomputed and matched, identity-pass-through exact, semanticMutationCount=0. The 139 ELIGIBLE_CANDIDATE, 788 REGISTER_TARGET_FIRST and 2 BLOCKED semantics remain unchanged.",
+  "summary": "Chat 1 resumed under CORPUS_FINAL_PARALLEL_VERIFICATION as TABLET_FINAL_WITNESS. Verification is read-only against immutable certification head fd111022438bab909151c2220b52e95aa5aa7eb3; only this status mailbox may be written.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -49,7 +49,8 @@
     "INVALID.jsonl is empty with Git empty-blob SHA e69de29bb2d1d6434b8b29ae775ad8c2e48c5391.",
     "Certification status counts are 139 VALID_ELIGIBLE_CANDIDATE, 788 VALID_REGISTER_TARGET_FIRST and 2 VALID_BLOCKED.",
     "The sole stronger-authority row is TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1; BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 proves its elevated coordinates without changing candidate semantics.",
-    "Both physical DRIFT targets remain exact source conflicts with promotionStatus BLOCKED and workEntryDecision BLOCKED."
+    "Both physical DRIFT targets remain exact source conflicts with promotionStatus BLOCKED and workEntryDecision BLOCKED.",
+    "Current canonical main observed at 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Current phase is CORPUS_FINAL_PARALLEL_VERIFICATION; Chat 1 role resolved from STATUS_INDEX.json as TABLET_FINAL_WITNESS with expected result PASS_TABLET_CORPUS_WITNESS."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -73,7 +74,8 @@
     "Hand off exact certification head fd111022438bab909151c2220b52e95aa5aa7eb3 to Chat 6 for aggregate corpus composition; make no further Chat 1 lane mutation unless a bounded evidence-backed correction is requested.",
     "Certify Tablet rows by identity pass-through because all 929 source records are already strict-record compatible; normalize only the canonical shard intake envelope and certification/provenance representation.",
     "Classify corpus validity separately from promotion readiness: valid REGISTER_TARGET_FIRST and valid BLOCKED records remain unresolved/blocked rather than being upgraded.",
-    "Publish the certification head for Chat 6 consumption and make no PR or FILES_MANIFEST update from Chat 1."
+    "Publish the certification head for Chat 6 consumption and make no PR or FILES_MANIFEST update from Chat 1.",
+    "For this phase, perform only independent read-only verification from exact certification head-tree bytes and write only this mailbox branch. Do not mutate certification bytes, candidate shards, product/runtime, global authority or FILES_MANIFEST.json."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
@@ -218,7 +220,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Handoff to Chat 6/integration. Consume chat1/tablet-corpus-cert-20260904@fd111022438bab909151c2220b52e95aa5aa7eb3 together with immutable source chat1/tablet-visual-promotion-57b01ad8@1b669d98dc9063fe4d6f5f8ddc06262a6968e728. Chat 1 should only resume for a bounded evidence-backed certification correction request.",
+  "nextAction": "Independently re-read and verify the immutable Tablet certification head, recompute all required witness invariants, then publish handoff.parallelWitness.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -284,6 +286,15 @@
     "canonicalPromotionPerformed": false,
     "productRuntimeMutation": false,
     "filesManifestTouched": false,
-    "pullRequestOpened": false
+    "pullRequestOpened": false,
+    "parallelWitness": {
+      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+      "result": "IN_PROGRESS",
+      "certificationHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
+      "expectedInputCount": 929,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalPromotionPerformed": false
+    }
   }
 }
