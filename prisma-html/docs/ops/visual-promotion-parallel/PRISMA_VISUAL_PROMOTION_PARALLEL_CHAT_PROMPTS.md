@@ -60,311 +60,248 @@ These rules are inherited by every chat below:
 
 ## CURRENT CONTINUATION PHASE — NORMATIVE OVERRIDE
 
-Phase: `CORPUS_FINAL_PARALLEL_VERIFICATION`
+Phase: `CANONICAL_PROMOTION_READINESS_RESOLUTION`
 
-This phase parallelizes the remaining finalization without creating multiple writers for the same global corpus.
+This phase begins only after `CORPUS_FINAL_PARALLEL_VERIFICATION` is merged and verified. The certified corpus under `prisma-html/governance/visual-promotion/contracts/corpus-certification/` is immutable input evidence for this phase. Do not rebuild, recensus, broad-discover or silently reinterpret it.
 
-Repository truth at phase start:
+### Canonical phase-start truth
 
-- canonical main: `1cc4d0d45b3878ace2906d08fa67f325a3b98a9d`;
-- Chat 6 work branch: `chat6/candidate-corpus-cert-20260904`;
-- Chat 6 observed work head before this prompt update: `9fdc3545d8b3309395f9276723c81f9799b1c60f`;
-- AutoMesh/current-head authority: PASS;
-- fresh task-exact Mesh: `PASS_COMPOSED_AUTHORITY_MESH`;
-- universal anti-rework PROPOSAL: PASS;
-- universal anti-rework MUTATION: PASS;
-- independent surface certification audit: `2,097/2,097` PASS with zero semantic/provenance mismatches;
-- Atlasfin certification audit: `2,421/2,421` PASS, invalid=0;
-- exact-head/hash-pinned normalizer/intake: implemented and fail-closed;
-- Materiality Catalog remains uninspected;
-- product/runtime mutation remains zero;
-- canonical promotion remains zero.
+Resolve current `main` directly before work. At phase bootstrap on `3eb092fad5e746a7ceeb9fdba079671934ae9b6d`, repository evidence revalidated:
 
-The five certification heads remain immutable accepted evidence:
+- total certified input: 2,097;
+- `VALID_ELIGIBLE_CANDIDATE`: 139;
+- `VALID_REGISTER_TARGET_FIRST`: 1,926;
+- `VALID_BLOCKED`: 32;
+- Work Entry: 2,065 `REGISTER_TARGET_FIRST` + 32 `BLOCKED`;
+- `GVAE_EXACT_APPLY=0`;
+- currently authorized canonical promotions: 0;
+- `runtimeVisualGreen=false`;
+- whole-surface APPLY_READY count: 0;
+- semantic review groups: 10;
+- cross-surface canonical groups: 0;
+- Atlasfin references: 2,421/2,421 valid;
+- Materiality Catalog: `STANDBY_USER_INVOKED_ONLY`, uninspected.
 
-| Chat | Lane | Certification head |
-|---|---|---|
-| 1 | Tablet | `fd111022438bab909151c2220b52e95aa5aa7eb3` |
-| 2 | PC | `8cc979c141000fcedabf832f16468a6ee3e328e2` |
-| 3 | Mobile | `664035e83943ae48c923585765d3c505b1bd8c53` |
-| 4 | Shared UI | `553577aa74045c73ab9c92d1f81538e7e0a8c65a` |
-| 5 | Atlasfin | `6c7743f55434eb8d3429f286e2f9eae275d93d87` |
+Surface truth is reused exactly: Tablet 929, PC 827, Mobile 271, Shared UI 70. Existing DRIFT/MISSING/BLOCKED evidence remains evidence, not a repair request.
 
-## Parallel verification architecture
+### Phase objective
 
-There is one global writer and five independent witnesses.
+Convert the maximum **demonstrably resolvable** portion of the 2,097 certified records into machine-verifiable canonical-promotion readiness without changing product/runtime and without inventing meaning.
 
-- Chats 1–4 independently verify their certified surface truth and publish a deterministic witness receipt to their own status mailbox.
-- Chat 5 independently verifies Atlasfin reference/snapshot expectations and publishes an Atlasfin witness receipt.
-- Chat 6 remains the **only** writer/compositor for the global corpus, integration branch, one-time FILES_MANIFEST refresh, final PR and merge.
-- Chats 1–5 do not wait for Chat 6 and do not mutate their certification branches.
-- Chat 6 does not wait to materialize the corpus. It continues global generation immediately and consumes the five witness receipts before final PR closure.
-- No Chat may modify another Chat's certification bytes or mailbox.
+For every input target, determine from existing authority and exact evidence:
 
-A witness receipt is coordination evidence, not canonical authority, Work Entry authorization or runtime certification.
+1. neutral/canonical meaning when provable;
+2. existing NDC / existing Identity meaning reuse or proposal-needed state;
+3. existing Identity recipe reuse when provable;
+4. Atlasfin reference evidence without granting Atlasfin semantic authority;
+5. canonical adapter;
+6. exact physical target;
+7. route/region/slot/component/owner/layer applicability;
+8. projection policy/debt classification;
+9. exact existing binding or proposal-needed state;
+10. deterministic registration readiness;
+11. exact missing authority when blocked;
+12. whether Work Entry could be rerun after registration;
+13. primary block reason and all authority gaps;
+14. strong cross-surface semantic equivalence evidence;
+15. visual-only equivalence that must **not** coalesce meaning.
 
-### Common witness rules for Chats 1–5
+Workers do not mint canonical NDC, VIS, BND, TGT, LYR or adapter IDs. Proposal keys are local evidence keys only. Unknown remains unknown.
 
-Perform the verification read-only from exact Git head-tree bytes.
+### Common machine output contract
 
-Write **only** to your existing dedicated status mailbox branch. Do not create source/certification commits.
+Chats 1–4 write exactly one `RESOLUTION.jsonl` row per certified target in their surface and derive subset files from that exact row set:
 
-Under `handoff.parallelWitness` publish at minimum:
+- `RESOLUTION.jsonl`
+- `REUSE.jsonl`
+- `REGISTRATION_PROPOSALS.jsonl`
+- `BLOCKED.jsonl`
+- `PROJECTION_DEBT.jsonl`
+- `MANIFEST.json`
+- `SUMMARY.md`
 
-- `phase: CORPUS_FINAL_PARALLEL_VERIFICATION`;
-- `result`;
-- `certificationHead`;
-- `expectedInputCount`;
-- exact certification output Git blob SHAs or SHA-256 digests used;
-- `invalidCount`;
-- `semanticMutationCount`;
-- `duplicateTargetIds` where applicable;
-- surface/reference-specific invariant counts;
-- `materialityCatalogInspected: false`;
-- `productRuntimeMutation: false`;
-- `canonicalPromotionPerformed: false`;
-- exact defects, if any.
+Every resolution row must preserve `surfaceKey`, `targetId` and the certified corpus `recordSha256` as `sourceRecordSha256`; must use the vocabulary registry's `promotionReadinessDecision`, `authorityReuseDisposition` and `projectionDebtClassification`; must list `evidenceRefs` and exact `blockingAuthorityGaps`; and must not silently fill absent semantic/physical fields.
 
-A PASS receipt must be reproducible from the immutable certification head.
+Each surface must prove:
 
-If a real defect exists, publish `FAIL_*_WITNESS` with the exact target/reference, source file/line/hash and violated invariant. Do not repair anything unless Chat 6 later issues a bounded correction request.
+`inputCount = resolutionCount = uniqueTargetCount`
 
----
+and:
 
-### CHAT 1 — TABLET FINAL WITNESS
+`resolutionCount = readyExistingAuthorityReuse + readyCanonicalRegistration + legitimatelyBlocked + notApplicable`.
 
-Read only:
+No missing, extra or duplicate target IDs.
 
-`chat1/tablet-corpus-cert-20260904@fd111022438bab909151c2220b52e95aa5aa7eb3`
+### Parallel architecture and disjoint write ownership
 
-Verify independently:
+| Chat | Phase role | Work branch | Exclusive phase output |
+|---|---|---|---|
+| 1 | `TABLET_PROMOTION_READINESS_RESOLVER` | `chat1/canonical-promotion-readiness-tablet-20260912` | `prisma-html/governance/visual-promotion/promotion-readiness/tablet/**` |
+| 2 | `PC_PROMOTION_READINESS_RESOLVER` | `chat2/canonical-promotion-readiness-pc-20260912` | `prisma-html/governance/visual-promotion/promotion-readiness/pc/**` |
+| 3 | `MOBILE_PROMOTION_READINESS_RESOLVER` | `chat3/canonical-promotion-readiness-mobile-20260912` | `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**` |
+| 4 | `SHARED_UI_PROMOTION_READINESS_RESOLVER` | `chat4/canonical-promotion-readiness-shared-ui-20260912` | `prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**` |
+| 5 | `ATLASFIN_SEMANTIC_REFERENCE_ANALYST` | `chat5/canonical-promotion-readiness-atlasfin-20260912` | `prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**` |
+| 6 | `CANONICAL_PROMOTION_READINESS_COMPOSER` | `chat6/canonical-promotion-readiness-control-plane-20260912` | contracts/composed/control-plane paths defined below |
 
-- NORMALIZED = 929;
-- CERTIFICATION = 929;
-- INVALID = 0;
-- unique target IDs = 929;
-- semanticMutationCount = 0;
-- certification labels remain:
-  - 139 `VALID_ELIGIBLE_CANDIDATE`;
-  - 788 `VALID_REGISTER_TARGET_FIRST`;
-  - 2 `VALID_BLOCKED`;
-- physical partition remains 927 CURRENT + 2 DRIFT;
-- both known Tablet DRIFT target IDs remain blocked;
-- the existing Cobrar Identity binding reuse remains exact and is not promoted beyond its recorded state;
-- source head/file/line/record-hash provenance is complete.
+Chat 6 exclusively owns:
 
-Publish:
+- `prisma-html/governance/visual-promotion/promotion-readiness/README.md`;
+- `prisma-html/governance/visual-promotion/promotion-readiness/contracts/**`;
+- `prisma-html/governance/visual-promotion/promotion-readiness/composed/**`;
+- `prisma-html/tools/visual_promotion/promotion_readiness.py` and its focused tests;
+- phase coordination documents explicitly assigned by the repository owner.
 
-`PASS_TABLET_CORPUS_WITNESS`
+No Chat writes another Chat's phase output or mailbox. Status branches remain coordination-only.
 
-only if every invariant passes.
+### Common hard stops
 
-Then remain in `CERTIFIED_HOLD`.
+All Chats:
 
----
+- reuse the certified corpus; no recensus or broad rediscovery;
+- do not rebuild GVAE or Atlasfin;
+- do not inspect/use Materiality Catalog;
+- do not mutate CSS/SCSS/TSX/JSX/product runtime;
+- do not repair generated product projections;
+- do not run GVAE APPLY or wildcard/batch mutation;
+- do not mutate global Identity/RIFAT/NDC/Target Index/Factory Ledger authority;
+- do not interpret Atlasfin recipe equality as semantic identity;
+- do not invent canonical IDs;
+- preserve unknown/ambiguous evidence as unknown/ambiguous;
+- revalidate Authority Mesh if relevant `main` drift occurs before governed mutation;
+- publish START, blockers/clears, material findings, handoff and completion to the same deterministic mailbox branch;
+- place this phase receipt under `handoff.promotionReadiness`.
 
-### CHAT 2 — PC FINAL WITNESS
+### CHAT 1 — TABLET PROMOTION READINESS
 
-Read only:
+Role: `TABLET_PROMOTION_READINESS_RESOLVER`.
 
-`chat2/pc-corpus-cert-20260904@8cc979c141000fcedabf832f16468a6ee3e328e2`
+Read the common startup set, your own mailbox, the complete certified Tablet subset and current canonical NDC/Identity/RIFAT/Visual Control/Target Index authority. Use Atlasfin only as priority reference.
 
-Verify independently:
+Primary work:
 
-- NORMALIZED = 827;
-- CERTIFICATION = 827;
-- INVALID = 0;
-- unique target IDs = 827;
-- semanticMutationCount = 0;
-- all 827 certification labels remain `VALID_REGISTER_TARGET_FIRST`;
-- physical partition remains 826 CURRENT + 1 DRIFT;
-- projection partition remains 688 CURRENT + 139 MISSING;
-- selector conflict for `TGT.CENSUS.PC.097AB2F857F353CA4288.V1` remains exactly unresolved;
-- no projection MISSING record was silently repaired;
-- provenance hashes are complete.
+1. Resolve all 929 Tablet targets exactly once.
+2. Prioritize the 139 current `ELIGIBLE_CANDIDATE` rows.
+3. Prove existing neutral meaning/Identity meaning reuse where authority exists.
+4. Reuse existing recipes/adapters/bindings only by exact registry evidence.
+5. Prove route/region/slot/component/owner/layer only from existing governed authority; do not infer missing coordinates from CSS selectors.
+6. Preserve the 2 physical DRIFT rows as blocked unless current authority truly resolves them.
+7. Treat the known Cobrar binding `BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1` as reuse evidence only; do not generalize it to neighboring targets.
+8. Produce exact registration proposals only when semantic + recipe + adapter + physical/application evidence is sufficient.
+9. Classify all remaining authority gaps explicitly.
 
-Publish:
+Expected receipt: `PASS_TABLET_PROMOTION_READINESS`.
 
-`PASS_PC_CORPUS_WITNESS`
+### CHAT 2 — PC PROMOTION READINESS
 
-only if every invariant passes.
+Role: `PC_PROMOTION_READINESS_RESOLVER`.
 
-Then remain in `CERTIFIED_HOLD`.
+Resolve all 827 PC targets exactly once. Preserve the known physical selector DRIFT unless authority resolves it.
 
----
+For the 139 `projectionStatus=MISSING` rows, classify each exactly as one of the canonical `projectionDebtClassification` values. At minimum distinguish:
 
-### CHAT 3 — MOBILE FINAL WITNESS
+- canonical projection required and missing;
+- intentionally non-projected;
+- reference/governor-only;
+- stale authority;
+- unresolved/ambiguous.
 
-Read only:
+Do not repair projection files. Do not choose a projection owner without evidence.
 
-`chat3/mobile-corpus-cert-20260904@664035e83943ae48c923585765d3c505b1bd8c53`
+Resolve semantic/Identity/recipe/adapter/binding/application readiness from current authority only. Recipe similarity with Tablet is review evidence, never semantic proof.
 
-Verify independently:
+Expected receipt: `PASS_PC_PROMOTION_READINESS`.
 
-- NORMALIZED = 271;
-- CERTIFICATION = 271;
-- INVALID = 0;
-- unique target IDs = 271;
-- semanticMutationCount = 0;
-- all 271 certification labels remain `VALID_REGISTER_TARGET_FIRST`;
-- projection partition remains exactly 133 CURRENT + 138 DRIFT;
-- no RIFAT-vs-product repair direction was selected for the 138 DRIFT records;
-- representation normalization preserved original qualified/raw values in provenance;
-- strict NDC/Atlasfin/Identity references remain valid;
-- all source and normalized record hashes reproduce.
+### CHAT 3 — MOBILE PROMOTION READINESS
 
-Publish:
+Role: `MOBILE_PROMOTION_READINESS_RESOLVER`.
 
-`PASS_MOBILE_CORPUS_WITNESS`
+Resolve all 271 Mobile targets exactly once.
 
-only if every invariant passes.
+For the 138 current projection DRIFT rows, classify authority direction without mutating RIFAT or product. Each must be evidence-backed as one of:
 
-Then remain in `CERTIFIED_HOLD`.
+- RIFAT authoritative / product stale;
+- product likely newer candidate / authority reconciliation required;
+- intentional divergence;
+- ambiguous.
 
----
+The existing `SURF.mb.owner_home` supporting surface reference does not by itself resolve target-level neutral meaning. Existing adapter evidence is reusable only where the canonical Identity adapter registry proves it. Do not manufacture recipes/bindings.
 
-### CHAT 4 — SHARED UI FINAL WITNESS
+Expected receipt: `PASS_MOBILE_PROMOTION_READINESS`.
 
-Read only:
+### CHAT 4 — SHARED UI PROMOTION READINESS
 
-`chat4/shared-ui-corpus-cert-20260904@553577aa74045c73ab9c92d1f81538e7e0a8c65a`
+Role: `SHARED_UI_PROMOTION_READINESS_RESOLVER`.
 
-Verify independently:
+Resolve all 70 Shared UI targets exactly once.
 
-- NORMALIZED = 70;
-- CERTIFICATION = 70;
-- INVALID = 0;
-- unique target IDs = 70;
-- semanticMutationCount = 0;
-- certification labels remain 40 `VALID_REGISTER_TARGET_FIRST` + 30 `VALID_BLOCKED`;
-- 19 no-region unresolved records remain unresolved;
-- 11 multi-region conflicts remain conflicts;
-- all 70 NDC outcomes remain UNRESOLVED;
-- all 70 Atlasfin outcomes remain NO_MATCH;
-- projection remains CURRENT for all 70;
-- no consumer/product/global authority bytes changed.
+Focus on current authority only:
 
-Publish:
+- 19 no-region unresolved targets;
+- 11 multi-region conflicts;
+- 40 remaining register-first rows;
+- NDC unresolved across current corpus;
+- Atlasfin `NO_MATCH` across current Shared UI corpus.
 
-`PASS_SHARED_UI_CORPUS_WITNESS`
+Resolve no-region or multi-region only when existing RIFAT/Visual Control/owner authority proves the exact answer. Otherwise remain blocked. Shared ownership may prove a shared semantic source, but visual reuse alone does not.
 
-only if every invariant passes.
+Expected receipt: `PASS_SHARED_UI_PROMOTION_READINESS`.
 
-Then remain in `CERTIFIED_HOLD`.
+### CHAT 5 — ATLASFIN CROSS-SURFACE EVIDENCE
 
----
+Role: `ATLASFIN_SEMANTIC_REFERENCE_ANALYST`.
 
-### CHAT 5 — ATLASFIN FINAL WITNESS
+This lane is read-only with respect to canonical authority and does not write per-surface resolution rows.
 
-Read only:
+Write only:
 
-`chat5/atlasfin-corpus-cert-20260904@6c7743f55434eb8d3429f286e2f9eae275d93d87`
+`prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**`
 
-Use current structured Atlasfin authority and the immutable certification evidence.
+Produce:
 
-Verify independently:
+- `REFERENCE_ANALYSIS.jsonl`;
+- `IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl`;
+- `CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl`;
+- `VISUAL_ONLY_EQUIVALENCE.jsonl`;
+- `MANIFEST.json`;
+- `SUMMARY.md`.
 
-- source surface outcomes = 2,097;
-- non-null Atlasfin references = 2,421;
-- valid normalized references = 2,421;
-- hard invalid references = 0;
-- representation-only adapter normalizations = 341;
-- semanticMutationCount = 0;
-- every reference retains source head/file/line/hash provenance;
-- recipe review groups are re-derived from evidence;
-- recipe equality remains `semanticCoalescingAllowed=false`;
-- all-null/NO_MATCH groups remain excluded from semantic coalescing;
-- Materiality Catalog remains completely uninspected.
+Investigate strong cross-surface equivalence only when independent semantic evidence accompanies Atlasfin reference evidence. Strong evidence may include same existing NDC concept, same existing canonical Identity meaning, same established business action/state, or shared ownership proving one semantic source.
 
-Prepare the expected read-only snapshot acceptance criteria that Chat 6 must satisfy after materializing the global corpus. Do not write the global snapshot yourself.
+Atlasfin recipe/family/preset equality alone must be recorded as `VISUAL_SIMILARITY_ONLY`, never canonical semantic coalescing.
 
-Publish:
+Expected receipt: `PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE`.
 
-`PASS_ATLASFIN_CORPUS_WITNESS`
+### CHAT 6 — CANONICAL PROMOTION READINESS COMPOSER
 
-only if every invariant passes.
+Role: `CANONICAL_PROMOTION_READINESS_COMPOSER`.
 
-Then remain in `CERTIFIED_HOLD`.
+Chat 6 owns phase contracts, validator/composer tooling and final integration. It never repairs another lane's evidence by inference.
 
----
+Immediate work:
 
-### CHAT 6 — GLOBAL COMPOSITOR + INTEGRATOR
+1. Publish this phase and machine contracts.
+2. Keep the original certified corpus immutable.
+3. Validate every worker handoff directly from its mailbox and exact work head.
+4. Validate per-surface zero-loss and source-record hash pins.
+5. Validate vocabulary, authority-qualified refs, proposal-key rules and no canonical-ID minting.
+6. Cross-check Chat 5 evidence without granting Atlasfin authority.
+7. Compute duplicate/collision analysis separately from semantic equivalence.
+8. Build `composed/RESOLUTION_CORPUS.jsonl`, `CROSS_SURFACE_SEMANTIC_GROUPS.json`, `COLLISIONS.json`, `ZERO_LOSS.json`, `CANONICAL_PROMOTION_PLAN.json`, `CANONICAL_PROMOTION_PLAN.md` and `SUMMARY.md` only after accepted lane inputs exist.
+9. Separate plan output into safe exact authority reuse, safe exact canonical registration proposals, blocked and not-applicable.
+10. Require total accounting = 2,097 exactly.
+11. Run universal Factory Ledger anti-rework, current task-exact Authority Mesh + Layer Map and Work Entry on exact planned registration scope before any global authority mutation.
+12. If canonical registration is not explicitly machine-authorized, stop at `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`.
+13. If a later exact plan and gates authorize registration in this phase, perform it as a separate deterministic integration subphase. Product/runtime remains forbidden.
 
-Chat 6 continues immediately. Do not wait for witness receipts before materializing the corpus.
+Before final planning, read Chats 1–5 receipts directly from their status branches. Do not ask the owner to relay messages.
 
-Current work branch:
+Expected initial hard-stop result: `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`.
 
-`chat6/candidate-corpus-cert-20260904`
+### Deterministic close order
 
-Preserve all current-head Authority Mesh and anti-rework evidence, but because this prompt update advances `main`, revalidate authority against the new canonical HEAD before any *new* mutation performed after that movement. Use AutoMesh v2 rules. Do not silently reuse stale HEAD-bound authority.
+`phase bootstrap -> six lanes start -> surface/Atlasfin receipts -> zero-loss + authority/collision checks -> CANONICAL_PROMOTION_PLAN -> anti-rework -> current-head Authority Mesh + Layer Map -> Work Entry exact scope -> READY_FOR_CANONICAL_PROMOTION_INTEGRATION or separately authorized canonical-registration subphase`
 
-Remaining work:
-
-1. Materialize the nine global corpus outputs:
-   - `CORPUS_MANIFEST.json`
-   - `CANDIDATE_CORPUS.jsonl`
-   - `CERTIFICATION.jsonl`
-   - `INVALID.jsonl`
-   - `COLLISIONS.json`
-   - `SEMANTIC_REVIEW_GROUPS.json`
-   - `CURRENT_TRUTH.json`
-   - `SURFACE_READINESS.json`
-   - `SUMMARY.md`
-2. Certify:
-   - 2,097/2,097 normalized;
-   - 2,097/2,097 certification;
-   - invalid=0;
-   - missing=0;
-   - extra=0;
-   - duplicateTargetIds=0;
-   - semanticMutationCount=0;
-   - `GVAE_EXACT_APPLY=0`;
-   - `currentlyAuthorizedCanonicalPromotions=0`;
-   - `runtimeVisualGreen=false`;
-   - no whole surface APPLY_READY.
-3. Rebuild/validate the Atlasfin snapshot only as a read-only consumer of the materialized corpus.
-4. Continue using exact-head/hash-pinned fail-closed intake. Unknown head/hash/shape must fail closed.
-5. Create a fresh integration branch from the then-current `main` and assemble only accepted exact head-tree bytes.
-6. Before the final manifest refresh, re-read all five witness mailboxes directly from their deterministic `status/vp-chat-XX-...` branches. Do not ask the owner to paste witness messages between chats.
-7. Require these five independent receipts:
-   - `PASS_TABLET_CORPUS_WITNESS`;
-   - `PASS_PC_CORPUS_WITNESS`;
-   - `PASS_MOBILE_CORPUS_WITNESS`;
-   - `PASS_SHARED_UI_CORPUS_WITNESS`;
-   - `PASS_ATLASFIN_CORPUS_WITNESS`.
-8. Cross-check the materialized global corpus slices against those witness expectations. A witness mismatch is a hard stop, not a warning.
-9. If a witness reports a real certification defect, issue a bounded correction request to the owning Chat. Do not patch its certification bytes inside Chat 6.
-10. Once all accepted bytes and witness checks pass, refresh `prisma-html/FILES_MANIFEST.json` exactly once.
-11. Run in parallel where CI infrastructure permits:
-   - VISCORE;
-   - CI;
-   - ForgeOS Quality Gate;
-   - Sync Sentinel;
-   - Identity/RIFAT no-regression;
-   - strict schemas/vocabulary/authority refs;
-   - Work Entry/no-broad-rediscovery;
-   - Atlasfin static/read-only;
-   - Current Truth/Surface Readiness no-fake-green.
-12. Open one candidate-corpus-only integration PR.
-13. Merge only if the exact final PR head is clean/mergeable and every required gate is green. Standing repository-owner merge authorization applies.
-14. Verify merged `main` contains the exact accepted corpus/control-plane/certification bytes and the one final FILES_MANIFEST.
-15. Close PR #539/#540 only if byte-for-byte supersession is proven.
-16. Publish `DONE / PASS_CANDIDATE_CORPUS_CERTIFIED` to the Chat 6 mailbox.
-
-### Serial barriers that must not be faked
-
-Only these steps remain intentionally serial:
-
-`global corpus materialized -> five witness receipts cross-checked -> exact final assembly -> one FILES_MANIFEST refresh -> exact PR-head gates -> merge -> main verification`
-
-Everything else above should proceed in parallel.
-
-### Hard stop remains
-
-This phase does not authorize canonical Identity/RIFAT/NDC/Target Index promotion, new canonical IDs, product/runtime/CSS/TSX mutation, projection repair, Materiality Catalog use or any claim that corpus-valid means APPLY_READY.
-
-
----
+This phase does **not** authorize product/runtime visual mutation, projection repair, GVAE APPLY, Materiality Catalog use, wildcard surface mutation or runtime visual-green claims.
 
 # CHAT 1 — TABLET PROMOTION
 
