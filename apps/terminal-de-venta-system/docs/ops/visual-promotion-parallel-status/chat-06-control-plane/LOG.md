@@ -248,3 +248,8 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Exact assembly commit: `f52d9d9915179f805b92e11b3a168100eeb505c6`; tree `7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e`.
 - Assembly contains exactly 88 unique accepted paths using immutable Git blob identities from the pinned worker/certification/Atlasfin/Chat6 heads.
 - `prisma-html/FILES_MANIFEST.json` has not yet been refreshed. The required one-time mechanical refresh remains the next serial barrier.
+
+### 2026-09-12T06:48:00Z — PROGRESS
+- Opened the single final candidate-corpus integration PR: `#549` from `chat6/candidate-corpus-final-integration-20260912@f52d9d9915179f805b92e11b3a168100eeb505c6` to `main`.
+- PR initial diff: 88 changed files, matching the exact accepted assembly set.
+- Next barrier: mechanically generate and commit exactly one `prisma-html/FILES_MANIFEST.json` refresh, then validate the exact final PR head.
