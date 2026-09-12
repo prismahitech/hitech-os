@@ -4,42 +4,74 @@
   "lane": "ATLASFIN_BRIDGE",
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T16:07:00-06:00",
+  "state": "READY_FOR_INTEGRATION",
+  "updatedAt": "2026-09-12T16:13:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
-  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "summary": "Chat 5 started CANONICAL_PROMOTION_READINESS_RESOLUTION as ATLASFIN_SEMANTIC_REFERENCE_ANALYST from current canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. The lane is bounded to prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/** and must produce read-only cross-surface Atlasfin support evidence without minting canonical IDs, mutating authority/product/runtime, inspecting Materiality Catalog, or writing per-surface resolution rows.",
+  "workHead": "4ffbf95450de6f19adfa5ed2e5c084edd45ca36d",
+  "summary": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE. Chat 5 completed the bounded Atlasfin semantic-reference lane for CANONICAL_PROMOTION_READINESS_RESOLUTION. Six required files were created exclusively under promotion-readiness/atlasfin-evidence/**. The evidence preserves Atlasfin as support-only: 8 bounded reference-analysis rows, 0 exact Identity recipe reuse candidates, 0 independently proven cross-surface semantic groups, and 3 Tablet/PC recipe-equality groups classified VISUAL_SIMILARITY_ONLY with canonicalCoalescingAllowed=false. Materiality Catalog remained uninspected; no canonical IDs, authority, per-surface resolution, product/runtime, or FILES_MANIFEST bytes were mutated.",
   "blockers": [],
   "findings": [
-    "STATUS_INDEX.json assigns Chat 5 phaseRole=ATLASFIN_SEMANTIC_REFERENCE_ANALYST and expectedPhaseResult=PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE under handoff.promotionReadiness.",
-    "Current work branch chat5/canonical-promotion-readiness-atlasfin-20260912 exists and is pinned to current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 before lane output.",
-    "Certified corpus is immutable phase input; prior Atlasfin certification remains reusable evidence and Materiality Catalog remains STANDBY_USER_INVOKED_ONLY."
+    "Certified Atlasfin truth remains 2,421/2,421 valid non-null references over 2,097 source outcomes, hardInvalid=0, representation-only normalizations=341, semanticMutationCount=0.",
+    "Current canonical Identity recipe registry contains one recipe, REC.button.primary; none of the four certified Atlasfin recipe IDs is an exact Identity recipe match, so IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl is intentionally empty.",
+    "Certified corpus SEMANTIC_REVIEW_GROUPS.json reports groupCount=10 and crossSurfaceGroupCount=0; no independent semantic authority exists in the immutable certified evidence to justify a cross-surface canonical coalescing group.",
+    "Atlasfin recipe convergence remains table=171 (Tablet 66 + PC 105), card=95 (41 + 54), panel=47 (20 + 27), overlay=11 Tablet-only. The three cross-surface recipe groups are recorded only as VISUAL_SIMILARITY_ONLY.",
+    "Work branch is exactly 6 commits ahead / 0 behind base and changes exactly the six required files under prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**.",
+    "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 at completion, so no phase-head drift revalidation was required after branch creation."
   ],
   "decisions": [
-    "Execute only Chat 5 Atlasfin cross-surface evidence assignment.",
-    "Do not write any per-surface RESOLUTION.jsonl, canonical authority, product/runtime, FILES_MANIFEST.json, or other Chat ownership.",
-    "Treat Atlasfin recipe/family/preset equality alone as VISUAL_SIMILARITY_ONLY and require independent semantic authority for any stronger disposition."
+    "Publish PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE and hand off exact head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d to Chat 6.",
+    "Keep CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl empty because unknown/unsupported semantic equivalence must remain unknown rather than be inferred from Atlasfin recipe equality.",
+    "Keep IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl empty because current Identity authority has no exact recipe-ID reuse for the certified Atlasfin recipe groups.",
+    "Do not open or mutate per-surface readiness, canonical authority, product/runtime, Materiality Catalog, or global manifest ownership from Chat 5."
   ],
-  "changedPaths": [],
+  "changedPaths": [
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/REFERENCE_ANALYSIS.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/VISUAL_ONLY_EQUIVALENCE.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/MANIFEST.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/SUMMARY.md"
+  ],
   "validations": [
     {
-      "name": "Canonical assignment resolution",
+      "name": "Exclusive write-scope diff",
       "result": "PASS",
-      "detail": "Current prompt and STATUS_INDEX resolve Chat 5 to ATLASFIN_SEMANTIC_REFERENCE_ANALYST / chat5/canonical-promotion-readiness-atlasfin-20260912 / atlasfin-evidence ownership."
+      "detail": "Compare d4b451cc92c597d02cfc65094922bd2c5dd17c12..4ffbf95450de6f19adfa5ed2e5c084edd45ca36d: ahead_by=6, behind_by=0, exactly six added files, all inside Chat 5 atlasfin-evidence ownership."
     },
     {
-      "name": "Current main pin",
+      "name": "Required output presence",
       "result": "PASS",
-      "detail": "main and the phase work branch both resolve to d4b451cc92c597d02cfc65094922bd2c5dd17c12 at start."
+      "detail": "All six canonical Chat 5 outputs exist at the exact work head. Empty semantic/reuse JSONL files are deliberate zero-row evidence, not missing files."
+    },
+    {
+      "name": "Canonical Atlasfin evidence contract parity",
+      "result": "PASS",
+      "detail": "Exact branch bytes satisfy promotion_readiness.py validate_atlasfin_evidence invariants: required files present; materialityCatalogInspected=false; canonicalAuthorityMutationPerformed=false; productRuntimeMutationPerformed=false; semantic evidence contains no recipe-equality-only row; every visual-only row has canonicalCoalescingAllowed=false."
+    },
+    {
+      "name": "Identity recipe exact-match audit",
+      "result": "PASS",
+      "detail": "Canonical Identity recipe registry recipeCount=1 with REC.button.primary; exact match count against REC.table.governed.v2, REC.card.governed.v2, REC.panel.governed.v2, REC.overlay.governed.v2 is zero."
+    },
+    {
+      "name": "Cross-surface semantic authority audit",
+      "result": "PASS",
+      "detail": "Immutable certified semantic review reports crossSurfaceGroupCount=0, so no canonical semantic coalescing is asserted by Chat 5."
+    },
+    {
+      "name": "Forbidden-scope audit",
+      "result": "PASS",
+      "detail": "Materiality Catalog inspected=false; canonical IDs minted=false; per-surface resolution writes=false; canonical authority mutation=false; product/runtime mutation=false; FILES_MANIFEST mutation=false."
     }
   ],
   "unresolved": [
-    "Complete reference analysis, Identity recipe reuse candidate analysis, cross-surface semantic equivalence evidence, visual-only equivalence evidence, manifest and summary; validate against current composer contract."
+    "Chat 6 must consume and validate the exact Chat 5 work head together with Chats 1-4 readiness receipts before composing the global promotion-readiness plan.",
+    "Any future stronger cross-surface semantic equivalence requires independent canonical semantic authority; Atlasfin visual equality alone remains insufficient."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Derive bounded Atlasfin evidence from immutable certified corpus and current canonical Identity/NDC/Atlasfin authority, then publish exact work head and handoff.promotionReadiness receipt.",
+  "nextAction": "Handoff to Chat 6 via deterministic mailbox. Remain available only for an evidence-backed bounded correction request against exact work head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d.",
   "handoff": {
     "parallelWitness": {
       "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
@@ -49,10 +81,35 @@
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
-      "state": "IN_PROGRESS",
-      "expectedResult": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
+      "result": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
+      "state": "READY_FOR_INTEGRATION",
       "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912"
+      "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
+      "workHead": "4ffbf95450de6f19adfa5ed2e5c084edd45ca36d",
+      "referenceAnalysisRows": 8,
+      "identityRecipeReuseCandidateRows": 0,
+      "crossSurfaceSemanticEvidenceRows": 0,
+      "visualOnlyEquivalenceRows": 3,
+      "certifiedInputCount": 2097,
+      "certifiedAtlasfinReferences": 2421,
+      "validAtlasfinReferences": 2421,
+      "hardInvalidReferences": 0,
+      "representationOnlyNormalizations": 341,
+      "semanticMutationCount": 0,
+      "canonicalCoalescingGroups": 0,
+      "outputGitBlobShas": {
+        "CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "MANIFEST.json": "508b8d0d8b7cbbcc1886e6ca5e7af0e6817682fc",
+        "REFERENCE_ANALYSIS.jsonl": "eee93b03a72965d8b8a7912a9509bd90aef0c1cf",
+        "SUMMARY.md": "8fc54409e297e0e76a7df15c15a381aa0ad2d73f",
+        "VISUAL_ONLY_EQUIVALENCE.jsonl": "ae2fdb5a424058424498da7326f87cce53a358e9"
+      },
+      "materialityCatalogInspected": false,
+      "canonicalAuthorityMutationPerformed": false,
+      "productRuntimeMutationPerformed": false,
+      "filesManifestMutationPerformed": false,
+      "defects": []
     }
   }
 }
