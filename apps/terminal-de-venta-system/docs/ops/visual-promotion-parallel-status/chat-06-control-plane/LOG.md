@@ -228,3 +228,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Current corpus work branch/head: `chat6/candidate-corpus-cert-20260904@73fb33e42eeb2aa66a0816bcffc2d59fab54d876`.
 - Existing integration branch is treated as evidence only until current-head authority is revalidated and exact assembly is proven against current main.
 - Materiality Catalog remains uninspected; product/runtime mutation and canonical promotion remain forbidden.
+
+### 2026-09-12T06:40:00Z — VALIDATION
+- Read Chats 1–5 witness receipts directly from their mapped status branches.
+- PASS receipts present: Tablet, PC, Mobile, Shared UI, Atlasfin.
+- Exact immutable certification heads match the canonical continuation pins.
+- No witness reports a certification defect; preserved blockers/conflicts remain intentional corpus states, not witness failures.
+- AutoMesh v2 revalidation was triggered for prior artifact `9964303227` against current canonical `main` before any new governed integration mutation.
