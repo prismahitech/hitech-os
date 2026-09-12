@@ -789,3 +789,67 @@ A new agent must be able to arrive with no conversational memory and determine, 
 11. what is blocked rather than guessed.
 
 If the repository cannot answer those questions, the workflow is not ready for parallel execution.
+
+
+## CANONICAL_PROMOTION_READINESS_RESOLUTION addendum
+
+This addendum is normative for the phase `CANONICAL_PROMOTION_READINESS_RESOLUTION` and does not rewrite or invalidate the certified corpus.
+
+### Immutable input
+
+The entire directory:
+
+`prisma-html/governance/visual-promotion/contracts/corpus-certification/**`
+
+is read-only historical certification evidence for this phase. Workers resolve promotion readiness from it and current canonical authority. They do not mutate it, regenerate it, recensus surfaces or replace unknown values by inference.
+
+### Phase-owned outputs
+
+The governed output root is:
+
+`prisma-html/governance/visual-promotion/promotion-readiness/`
+
+Exclusive writers:
+
+- Chat 1: `tablet/**`
+- Chat 2: `pc/**`
+- Chat 3: `mobile/**`
+- Chat 4: `shared-ui/**`
+- Chat 5: `atlasfin-evidence/**`
+- Chat 6: root `README.md`, `contracts/**`, `composed/**`, and dedicated promotion-readiness validator/composer tooling.
+
+No surface worker writes `composed/**`. Chat 6 never rewrites another lane's accepted resolution bytes.
+
+### Resolution row invariant
+
+Each surface worker emits exactly one promotion-readiness resolution row for each certified surface target. The row preserves:
+
+- `surfaceKey`;
+- `targetId`;
+- certified `recordSha256` as `sourceRecordSha256`;
+- exact existing authority IDs only;
+- local proposal keys for proposed new authority, never minted canonical IDs;
+- physical/application evidence as proven or null;
+- `promotionReadinessDecision`;
+- `authorityReuseDisposition`;
+- `projectionDebtClassification`;
+- exact `blockingAuthorityGaps`;
+- evidence references and confidence.
+
+Subset files must be derivable from `RESOLUTION.jsonl`; they may not contain targets absent from it.
+
+### Meaning and cross-surface rules
+
+Canonical coalescing is allowed only when independent semantic authority supports it. Examples of potentially sufficient evidence include the same existing NDC neutral concept, same existing canonical Identity meaning, same established business action/state with canonical evidence, or one Shared UI owner proving one semantic source.
+
+Atlasfin recipe/family/preset equality alone is always visual similarity evidence, not semantic authority. The final composer must keep `VISUAL_SIMILARITY_ONLY` groups separate from semantic coalescing groups.
+
+### Registration boundary
+
+`READY_FOR_CANONICAL_REGISTRATION` means the proposal has enough exact evidence to be considered by the canonical composer. It is not a registered canonical target, Work Entry PASS, GVAE APPLY authorization, runtime visual certification or product mutation permission.
+
+Before any global canonical registration, Chat 6 must produce a complete `CANONICAL_PROMOTION_PLAN`, run universal Factory Ledger anti-rework, obtain current task-exact Authority Mesh + Layer Map, and run Work Entry for exact planned scope. Without that evidence the phase stops at `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`.
+
+### Product/runtime hard stop
+
+This phase forbids CSS/SCSS/TSX/JSX mutation, generated projection repair, product/runtime application, GVAE APPLY, wildcard surface mutation and automatic Materiality Catalog use.
