@@ -112,3 +112,9 @@ Chat 4 certification is `READY_FOR_INTEGRATION`. Exact certification handoff: `c
 
 ## 2026-09-04T23:53:09-06:00 — COMPLETE
 `CANDIDATE_CORPUS_CERTIFICATION_PARALLEL` is complete for Shared UI: `70/70 corpus-valid; invalid=0; semanticMutationCount=0; exact source provenance verified 70/70`. No user action is required from Chat 4.
+
+## 2026-09-11T22:45:00-06:00 — START
+Re-read the canonical startup set, status-channel contract, STATUS_INDEX, own mailbox and current Chat 4 section. Entered `CORPUS_FINAL_PARALLEL_VERIFICATION` as `SHARED_UI_FINAL_WITNESS`. Exact read-only certification target: `chat4/shared-ui-corpus-cert-20260904@553577aa74045c73ab9c92d1f81538e7e0a8c65a`. Current canonical main observed as `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+
+## 2026-09-11T22:45:00-06:00 — DECISION
+Final witness verification will read only exact Git head-tree bytes. No certification/source/candidate/product/runtime/consumer/global-authority mutation is authorized. Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and will not be inspected. Only this Chat 4 mailbox may be written.
