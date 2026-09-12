@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T11:47:30Z",
+  "updatedAt": "2026-09-12T11:54:00Z",
   "baseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
   "workBranch": "chat6/canonical-promotion-readiness-20260912",
-  "workHead": null,
-  "summary": "Chat 6 started CANONICAL_PROMOTION_READINESS_RESOLUTION bootstrap/control-plane work on canonical main 3eb092fad5e746a7ceeb9fdba079671934ae9b6d. Certified corpus was revalidated at 2,097 records with prior final-phase invariants intact. Universal anti-rework PROPOSAL and MUTATION evaluations PASS for visual.generic_application_engine_v1 requestedAction=ADVANCE. Fresh task-exact AutoMesh run 34691841895 is PASS_COMPOSED_AUTHORITY_MESH with 100% required-authority coverage in both lanes, zero blockers, and governed Layer Map evidence.",
+  "workHead": "b0dba951eaff6664a386700b55215298abc8572b",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION bootstrap is materialized on Chat 6 work branch and PR #550 is open. Six disjoint lane prompts, phase vocabulary, status mapping, governed promotion-readiness namespace, strict record/manifest/group/plan schemas and exact phase baseline are present. Certified corpus bytes remain untouched. Exact-head repository gates are running; one deterministic FILES_MANIFEST refresh remains pending.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -97,11 +97,10 @@
     "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/contracts/**",
-    "prisma-html/tools/visual_promotion/**",
-    "prisma-html/tools/visual_application/visual_work_entry_gate.py",
-    "prisma-html/tools/visual_application/tests/test_visual_work_entry_gate.py",
-    "Status-only mailbox updates on status/vp-chat-06-control-plane"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
+    "prisma-html/docs/ops/visual-promotion-parallel/**",
+    "prisma-html/governance/visual-promotion/promotion-readiness/**",
+    "status-only mailbox updates on status/vp-chat-06-control-plane"
   ],
   "validations": [
     {
@@ -349,7 +348,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Create and merge the canonical mailbox-driven phase bootstrap: six lane prompts, disjoint promotion-readiness write ownership, status phase mapping, machine-readable contracts, and read-only Chat 6 composer validation tooling. No canonical authority registration or product/runtime mutation.",
+  "nextAction": "Finish PR #550: consume the VISCORE deterministic manifest candidate, refresh FILES_MANIFEST exactly once, require exact-head CI/VISCORE/ForgeOS/Sync green, revalidate Authority Mesh if main moved, merge, verify merged tree, then publish phaseReady=true so all six lanes can begin immediately.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -741,6 +740,48 @@
     "phaseResult": "PASS_CORPUS_FINAL_PARALLEL_VERIFICATION_MERGED_MAIN_VERIFIED",
     "holdState": "CERTIFIED_CORPUS_HOLD",
     "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
-    "phaseBaseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d"
+    "phaseBaseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+    "bootstrapPullRequest": 550,
+    "bootstrapPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/550",
+    "bootstrapHead": "b0dba951eaff6664a386700b55215298abc8572b",
+    "phaseReady": false,
+    "lanes": {
+      "chat1": {
+        "role": "TABLET_PROMOTION_READINESS_RESOLVER",
+        "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
+        "writeRoot": "prisma-html/governance/visual-promotion/promotion-readiness/tablet/**",
+        "expected": "PASS_TABLET_PROMOTION_READINESS"
+      },
+      "chat2": {
+        "role": "PC_PROMOTION_READINESS_RESOLVER",
+        "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
+        "writeRoot": "prisma-html/governance/visual-promotion/promotion-readiness/pc/**",
+        "expected": "PASS_PC_PROMOTION_READINESS"
+      },
+      "chat3": {
+        "role": "MOBILE_PROMOTION_READINESS_RESOLVER",
+        "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
+        "writeRoot": "prisma-html/governance/visual-promotion/promotion-readiness/mobile/**",
+        "expected": "PASS_MOBILE_PROMOTION_READINESS"
+      },
+      "chat4": {
+        "role": "SHARED_UI_PROMOTION_READINESS_RESOLVER",
+        "workBranch": "chat4/canonical-promotion-readiness-shared-ui-20260912",
+        "writeRoot": "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**",
+        "expected": "PASS_SHARED_UI_PROMOTION_READINESS"
+      },
+      "chat5": {
+        "role": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
+        "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
+        "writeRoot": "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**",
+        "expected": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE"
+      },
+      "chat6": {
+        "role": "CANONICAL_PROMOTION_READINESS_COMPOSER",
+        "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
+        "writeRoot": "promotion-readiness contracts/composed + dedicated composer tooling",
+        "expected": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION"
+      }
+    }
   }
 }
