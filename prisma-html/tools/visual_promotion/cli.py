@@ -12,6 +12,7 @@ from .corpus_certification import (
 )
 from .final_aggregation import build_final_aggregation
 from .promotion_readiness import (
+    PromotionReadinessError,
     baseline as promotion_readiness_baseline,
     compose_plan as compose_promotion_readiness_plan,
     load_jsonl as load_promotion_readiness_jsonl,
@@ -184,7 +185,7 @@ def main(argv: list[str] | None = None) -> int:
             }
         else:
             result = validate_disjoint_write_ownership()
-    except (ControlPlaneError, OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
+    except (ControlPlaneError, PromotionReadinessError, OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         print(json.dumps({"status": "BLOCKED_VISUAL_PROMOTION_CONTROL_PLANE", "errors": [f"{type(exc).__name__}:{exc}"]}, indent=2, sort_keys=True))
         return 2
 
