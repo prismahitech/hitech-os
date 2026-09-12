@@ -288,3 +288,16 @@ No updates published yet.
 - Exclusive lane output: `prisma-html/governance/visual-promotion/promotion-readiness/tablet/**`.
 - Certified Tablet input count: **929** immutable corpus rows.
 - No recensus, broad rediscovery, Materiality Catalog, product/runtime mutation, projection repair, canonical-ID minting or global authority mutation is authorized.
+
+## 2026-09-12T16:17:00-06:00 — FINDING
+
+- Bounded current-authority resolution completed for **929/929** Tablet certified targets.
+- Dry-run decisions: **924 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_MISSING_APPLICATION_AUTHORITY + 2 BLOCKED_MISSING_BINDING + 2 BLOCKED_PHYSICAL_DRIFT = 929**.
+- Ready existing-authority reuse: **0**.
+- Ready canonical registration: **0**.
+- Local semantic proposal evidence: **138** rows, with no canonical IDs minted.
+- Current canonical adapter `prisma.adapter.tablet.v1` is reusable surface authority, but it does not erase exact-target application blockers.
+- Cobrar primary reuses exact `ACT.primary` / `REC.button.primary` / `BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1` evidence, while remaining application-authority blocked.
+- Cobrar accent `::before` and icon reuse only the existing `TOK.color.accent` semantic evidence; `BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1` remains ambiguous/blocked and both projection policies remain missing.
+- The two certified physical DRIFT targets remain blocked with no repair direction selected.
+- Materiality Catalog remains uninspected; no broad rediscovery or product/runtime/global-authority mutation occurred.
