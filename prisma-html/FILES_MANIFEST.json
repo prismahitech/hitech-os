@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 874,
+  "file_count_excluding_manifest": 876,
   "files": [
     {
       "bytes": 156,
@@ -4327,6 +4327,11 @@
       "sha256": "0172AE0CA1D264FD0FD85DA055CF57CEF773F0B420C64ADEE2C8998E8EB8F4EC"
     },
     {
+      "bytes": 26416,
+      "path": "tools/visual_promotion/promotion_readiness.py",
+      "sha256": "9C3D543223EE23CA6C986223A41F6300C6EBC22FC8A36E3BEF89A171C7612FDF"
+    },
+    {
       "bytes": 0,
       "path": "tools/visual_promotion/tests/__init__.py",
       "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
@@ -4360,6 +4365,11 @@
       "bytes": 8004,
       "path": "tools/visual_promotion/tests/test_corpus_certification.py",
       "sha256": "4AC4D2A96A59526462C87053E0EC6BFC66ECA86AA3CA1EA862531E8687E05A9D"
+    },
+    {
+      "bytes": 10918,
+      "path": "tools/visual_promotion/tests/test_promotion_readiness.py",
+      "sha256": "8003B0BC93CE310C974AA17C3FE2AE7978EC707E03E3955483512127C7BA5D46"
     },
     {
       "bytes": 516,
