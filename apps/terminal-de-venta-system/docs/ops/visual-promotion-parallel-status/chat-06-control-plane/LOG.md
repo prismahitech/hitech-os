@@ -336,3 +336,9 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Canonical anti-rework logic on current main for `visual.generic_application_engine_v1 / ADVANCE`: `PASS_ANTI_REWORK_GATE`.
 - Found a real Chat 6 tooling defect before merge: `compose_plan` references undefined `canonical_group_keys`. Full composition would crash after worker handoffs.
 - Chats 1–5 have not yet published `handoff.promotionReadiness`; their prior corpus witness receipts remain historical only.
+
+### 2026-09-12T13:22:00Z — BLOCKER_CLEARED
+- Corrected the undefined `canonical_group_keys` defect on the canonical Chat 6 branch and hardened registration readiness to require exact recipe/adapter/binding/physical/application evidence.
+- Opened bounded PR `#552`; changed paths are exactly the Chat 6-owned validator and focused test file.
+- PR head: `3a969d45888f48c127325d467711c99d67915944`.
+- Exact-head CI, VISCORE1, ForgeOS and Sync Sentinel are running. No merge before green evidence.
