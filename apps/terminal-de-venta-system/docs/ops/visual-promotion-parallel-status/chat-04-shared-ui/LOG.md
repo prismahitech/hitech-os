@@ -130,3 +130,12 @@ Published `handoff.parallelWitness.result=PASS_SHARED_UI_CORPUS_WITNESS` with ex
 
 ## 2026-09-11T22:57:00-06:00 — COMPLETE
 `CORPUS_FINAL_PARALLEL_VERIFICATION` is complete for Chat 4. State is `DONE`; operational posture is `CERTIFIED_HOLD`. No user action is required. Await Chat 6 deterministic aggregation/cross-check. No further Chat 4 lane mutation is authorized unless Chat 6 issues a bounded evidence-backed correction request.
+
+## 2026-09-12T16:08:00-06:00 — START
+Re-read the canonical prompt and this Chat 4 mailbox. Repository authority advances Chat 4 into `CANONICAL_PROMOTION_READINESS_RESOLUTION` as `SHARED_UI_PROMOTION_READINESS_RESOLVER`. Current canonical `main` is `d4b451cc92c597d02cfc65094922bd2c5dd17c12`. Assigned work branch `chat4/canonical-promotion-readiness-shared-ui-20260912` already exists exactly at that main head.
+
+## 2026-09-12T16:08:00-06:00 — DECISION
+Begin the new phase without rebuilding any closed corpus/certification phase. Exclusive work output is `prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**`; status writes remain restricted to this mailbox. Product/runtime/global authority mutation, Materiality inspection, broad rediscovery, projection repair and canonical-ID minting remain forbidden.
+
+## 2026-09-12T16:08:00-06:00 — PROGRESS
+The phase assignment is to resolve all 70 certified Shared UI targets exactly once, with particular attention to the 19 no-region unresolved targets, 11 multi-region conflicts, 40 register-first rows, NDC unresolved=70 and Atlasfin NO_MATCH=70. Required phase receipt is `handoff.promotionReadiness.result=PASS_SHARED_UI_PROMOTION_READINESS` if and only if zero-loss, schema/vocabulary and evidence-backed readiness resolution all pass.
