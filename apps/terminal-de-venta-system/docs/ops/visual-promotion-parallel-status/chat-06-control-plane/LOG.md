@@ -253,3 +253,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Opened the single final candidate-corpus integration PR: `#549` from `chat6/candidate-corpus-final-integration-20260912@f52d9d9915179f805b92e11b3a168100eeb505c6` to `main`.
 - PR initial diff: 88 changed files, matching the exact accepted assembly set.
 - Next barrier: mechanically generate and commit exactly one `prisma-html/FILES_MANIFEST.json` refresh, then validate the exact final PR head.
+
+### 2026-09-12T06:50:00Z — MILESTONE
+- Canonical one-time manifest refresh completed on PR #549 head `482ad07419a91074e895d40ba10b5f1cf2641596`.
+- Bot delta from exact assembly head changes only `prisma-html/FILES_MANIFEST.json`.
+- Committed manifest blob `f8a2539d49db381270158ce96bfa9fca838b3a86` equals the VISCORE-generated candidate artifact `10293221911` byte-for-byte.
+- SHA-256: `bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d`; file count excluding manifest: 868.
+- Manifest refresh count is exactly one. Final exact-head gates are now the active serial barrier.
