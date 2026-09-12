@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 782,
+  "file_count_excluding_manifest": 868,
   "files": [
     {
       "bytes": 156,
@@ -2587,6 +2587,61 @@
       "sha256": "E71FB17A6738A264654CBC13E6716551AF35B679577F79D43D1315809C667684"
     },
     {
+      "bytes": 7509,
+      "path": "extras/atlasfin/bridge/PRISMA_ATLASFIN_VISUAL_PROMOTION_BRIDGE_V1.schema.json",
+      "sha256": "FC48A2E751645F586BF485E3B6E2BB50345FA162E85A8CAE6C766DD099A4A13A"
+    },
+    {
+      "bytes": 3620,
+      "path": "extras/atlasfin/bridge/README.md",
+      "sha256": "1A451FEBD5888256708D5947230842201BAACC495253F8B80B51AC19F740987E"
+    },
+    {
+      "bytes": 32232,
+      "path": "extras/atlasfin/bridge/atlasfin_bridge.py",
+      "sha256": "745E19E6BFD70C2F5B90574E57D70B7CBD4F60C54FA09FFEBE903B5C52B76EEA"
+    },
+    {
+      "bytes": 2397094,
+      "path": "extras/atlasfin/bridge/certification/ATLASFIN_REFERENCE_CERTIFICATION.jsonl",
+      "sha256": "2566B64EABFEC3D88C59518A4A3160D48A8DDDA65A02709EDA1B14102B0A2EEA"
+    },
+    {
+      "bytes": 0,
+      "path": "extras/atlasfin/bridge/certification/INVALID_REFS.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 9224,
+      "path": "extras/atlasfin/bridge/certification/MANIFEST.json",
+      "sha256": "F7EC2376DBC0F918E24C6D47870967487303C40244B24BD73072E9EF7DCF6F33"
+    },
+    {
+      "bytes": 2188,
+      "path": "extras/atlasfin/bridge/certification/NORMALIZATION_POLICY.json",
+      "sha256": "24B7651C26BCE61F86DF7EC98096083727E0F44DEF6820141D5309DB025EE4F3"
+    },
+    {
+      "bytes": 170039,
+      "path": "extras/atlasfin/bridge/certification/RECIPE_REVIEW_GROUPS.json",
+      "sha256": "77C2B5F683CD8A83285B613923F887736D779937FA36323DD794C546F1A90A59"
+    },
+    {
+      "bytes": 2361,
+      "path": "extras/atlasfin/bridge/certification/SUMMARY.md",
+      "sha256": "000EBDFEAE315CDFFF8D08D61F70959CEB361433BD47E63D9D0C311D916D9D12"
+    },
+    {
+      "bytes": 1515,
+      "path": "extras/atlasfin/bridge/fixtures/tablet-candidate.json",
+      "sha256": "DBEB710ED00941574F2B883B586A292733B3F4E433837D1F37ED8D373B1BAB17"
+    },
+    {
+      "bytes": 7753,
+      "path": "extras/atlasfin/bridge/test_atlasfin_bridge.py",
+      "sha256": "C8818F35CA5CCF0BC2DEAB76D9397D25A3B2715845796E065ECBC4467CFECE76"
+    },
+    {
       "bytes": 18855,
       "path": "extras/atlasfin/c-acciones.html",
       "sha256": "45207AD146C5A7737664FDC0F38CFC88238B8C4F888E6423B26C94D736795A73"
@@ -3025,6 +3080,311 @@
       "bytes": 2677,
       "path": "governance/PRISMA_HTML_NARRATIVE_SWEEP_MANIFEST.json",
       "sha256": "82DE58FCF476246CFF077BD8A551D19D9E1E5DC129874A915E8CDEDA4023170D"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/candidates/mobile/CANDIDATES.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 523718,
+      "path": "governance/visual-promotion/candidates/mobile/CONFLICTS.jsonl",
+      "sha256": "F34FEBD565CDB691C2E2AA47ABD3060D5A0F44CBF18CB59C9D3FB2B8CB54FAEE"
+    },
+    {
+      "bytes": 2542,
+      "path": "governance/visual-promotion/candidates/mobile/MANIFEST.json",
+      "sha256": "337154D89DDADB08861B806560BBA8769EBEB5DA417B5788870CB16CC62633D5"
+    },
+    {
+      "bytes": 4712,
+      "path": "governance/visual-promotion/candidates/mobile/SUMMARY.md",
+      "sha256": "57516C2D20D11FE91D5396D8D1FC3FBF94CFBE4C4ADABFEBA150D4D375582620"
+    },
+    {
+      "bytes": 409992,
+      "path": "governance/visual-promotion/candidates/mobile/UNRESOLVED.jsonl",
+      "sha256": "291CA7BDD5F0C7C26064C0CF8A0D2BB1C30B69797F6B988A0CD19965C7C17350"
+    },
+    {
+      "bytes": 1056751,
+      "path": "governance/visual-promotion/candidates/mobile/certification/CERTIFICATION.jsonl",
+      "sha256": "81EB0AFBF8C7FA54833ED09F503D2CCF2EE5407C5AED089DCDA6BBD75219A287"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/candidates/mobile/certification/INVALID.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 6169,
+      "path": "governance/visual-promotion/candidates/mobile/certification/MANIFEST.json",
+      "sha256": "92651A2C4A7826AC03B8031D676F463E95AA399E7A8CE8D25EA0BEDB722C0A76"
+    },
+    {
+      "bytes": 991533,
+      "path": "governance/visual-promotion/candidates/mobile/certification/NORMALIZED.jsonl",
+      "sha256": "BFEC6C59764F92ED54EDD63DD1DF4273165044ADE95839A92D08930E93703EE1"
+    },
+    {
+      "bytes": 2612,
+      "path": "governance/visual-promotion/candidates/mobile/certification/SUMMARY.md",
+      "sha256": "35EB8061FC8E0FAADD24D5285ACC0F4046D01DDDCFD0EA01F1CE4ED568E6FD91"
+    },
+    {
+      "bytes": 279627,
+      "path": "governance/visual-promotion/candidates/pc/CANDIDATES.jsonl",
+      "sha256": "F96F8878FA598795B62F5B447372D3D7DEC97A24D05D383500D8B3BB4F561933"
+    },
+    {
+      "bytes": 1685,
+      "path": "governance/visual-promotion/candidates/pc/CONFLICTS.jsonl",
+      "sha256": "0267EDD96D9630882B3D3555A640543E6F16EFE26FCDC3B00624CDAA10B7A3F9"
+    },
+    {
+      "bytes": 7966,
+      "path": "governance/visual-promotion/candidates/pc/MANIFEST.json",
+      "sha256": "6ECDAE797F048CFD4B33C994B7ABBD2FEB70E69519FACDD9A015F5DE3CAB388E"
+    },
+    {
+      "bytes": 2663,
+      "path": "governance/visual-promotion/candidates/pc/SUMMARY.md",
+      "sha256": "BDC76CBF48AEAF0EA28F6B819A32A8D548F5006389CCA234E56FC45EBE3C6BCE"
+    },
+    {
+      "bytes": 921148,
+      "path": "governance/visual-promotion/candidates/pc/UNRESOLVED.jsonl",
+      "sha256": "9EBDA8BB2CE86B054653B197E13730D65A891571B1E2B1592C73B6F73A11A5BB"
+    },
+    {
+      "bytes": 979667,
+      "path": "governance/visual-promotion/candidates/pc/certification/CERTIFICATION.jsonl",
+      "sha256": "46E114DCCD889A055550ACC27CE6C455A01E67347D5FADD2C96DB588E5786F21"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/candidates/pc/certification/INVALID.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 2058,
+      "path": "governance/visual-promotion/candidates/pc/certification/MANIFEST.json",
+      "sha256": "7C12B5AF232134FF5FA2F6992C908068CAA6D152E1FAAF6AF650063BD9C0B46A"
+    },
+    {
+      "bytes": 1202460,
+      "path": "governance/visual-promotion/candidates/pc/certification/NORMALIZED.jsonl",
+      "sha256": "127068EF114305F7DC386CD7A764527B39A6039DA90E8AF50DF52439D4FF2044"
+    },
+    {
+      "bytes": 3006,
+      "path": "governance/visual-promotion/candidates/pc/certification/SUMMARY.md",
+      "sha256": "BE7B59C2E9555BFF9F08DF14278034C76C5A52FBA976D17BA4D712402269C2FD"
+    },
+    {
+      "bytes": 157020,
+      "path": "governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+      "sha256": "FF89E661FAF98F80F1E09FE2157BA1E60E1C250AE5F9E5101A8BAF9E482AAE3F"
+    },
+    {
+      "bytes": 44205,
+      "path": "governance/visual-promotion/candidates/shared-ui/CONFLICTS.jsonl",
+      "sha256": "B0F79B271C2314C7AFB9D499CC471AF414D2F662062561374A227549DD1EDD31"
+    },
+    {
+      "bytes": 3080,
+      "path": "governance/visual-promotion/candidates/shared-ui/MANIFEST.json",
+      "sha256": "C51394943B5FF2C06BCD714801122063CBD097498B2F467132D8D6B8D179B1C4"
+    },
+    {
+      "bytes": 2824,
+      "path": "governance/visual-promotion/candidates/shared-ui/SUMMARY.md",
+      "sha256": "FAD3898873FC84F47E80AD39028D71C3402FD9CEB89B4388BA26811E5FFCDF96"
+    },
+    {
+      "bytes": 62100,
+      "path": "governance/visual-promotion/candidates/shared-ui/UNRESOLVED.jsonl",
+      "sha256": "2F9B48426A6E60F82774751964BA5BD44C06EEA714C8C530BE687F8035F50055"
+    },
+    {
+      "bytes": 128952,
+      "path": "governance/visual-promotion/candidates/shared-ui/certification/CERTIFICATION.jsonl",
+      "sha256": "89C65C06BE8F48072B4CA594D35770E2841A26771A3A9E00AD35F998AF35CA40"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/candidates/shared-ui/certification/INVALID.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 3285,
+      "path": "governance/visual-promotion/candidates/shared-ui/certification/MANIFEST.json",
+      "sha256": "A67B7750BEF7DB3B938072CDA445E25B4293DDA3977420887D04A54C8A603361"
+    },
+    {
+      "bytes": 265985,
+      "path": "governance/visual-promotion/candidates/shared-ui/certification/NORMALIZED.jsonl",
+      "sha256": "E3C0410BA724AF7AC701D5A1B7A30DADBB1ABD2BFE4CD5DEDAD43A673D5C1C36"
+    },
+    {
+      "bytes": 2533,
+      "path": "governance/visual-promotion/candidates/shared-ui/certification/SUMMARY.md",
+      "sha256": "17F31D655175CE84D72F490CE7FA6F02C1D950B5453006E8B4F0ED2F9CE7BD40"
+    },
+    {
+      "bytes": 501357,
+      "path": "governance/visual-promotion/candidates/tablet/CANDIDATES.jsonl",
+      "sha256": "3D3A70E4B271F70305D41DFD70511E9776D6EC23F32C4011A4B543D6A628B915"
+    },
+    {
+      "bytes": 7354,
+      "path": "governance/visual-promotion/candidates/tablet/CONFLICTS.jsonl",
+      "sha256": "2ED2031784B6764E82BBFB20C06255318CE1E0B899E28B9E68480789B82891F5"
+    },
+    {
+      "bytes": 5937,
+      "path": "governance/visual-promotion/candidates/tablet/MANIFEST.json",
+      "sha256": "5BA25D4C118303BBB69F2BDAA002227E2B91624BB7C9CB00ED5B2C5B49452EF5"
+    },
+    {
+      "bytes": 3587,
+      "path": "governance/visual-promotion/candidates/tablet/SUMMARY.md",
+      "sha256": "3AF4BED52FC533D2BBC1BEE3985C8098D8D0A94DB832245096323DD2CA8E5073"
+    },
+    {
+      "bytes": 2737393,
+      "path": "governance/visual-promotion/candidates/tablet/UNRESOLVED.jsonl",
+      "sha256": "B4D732EA89E661828B9BEF4927E0F397EA20B42B46F229119FD5E98493C699AB"
+    },
+    {
+      "bytes": 812110,
+      "path": "governance/visual-promotion/candidates/tablet/certification/CERTIFICATION.jsonl",
+      "sha256": "2FF618E48B02AA8F56F008538CA0FFD02B63835B3C14ECCE389CC6F58B499EB5"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/candidates/tablet/certification/INVALID.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 3073,
+      "path": "governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
+      "sha256": "BEB01276E9A02F09A6750CCB7426445688CF65C28AF4908C96E55749FA789EB8"
+    },
+    {
+      "bytes": 3246104,
+      "path": "governance/visual-promotion/candidates/tablet/certification/NORMALIZED.jsonl",
+      "sha256": "10C07566EA6B36D160E19249F87B350B7EB3F2CEFC57FE49FDC11D5247C53F28"
+    },
+    {
+      "bytes": 4982,
+      "path": "governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
+      "sha256": "05E56F1CD22205D732EE3C412B149C9B7527BE658572DB1C0CCEEF8A904EF06F"
+    },
+    {
+      "bytes": 632,
+      "path": "governance/visual-promotion/contracts/README.md",
+      "sha256": "9A3972CCB52F6C824E336E28F98765CEC65683C716D7C469AB39BCD66A61D3C2"
+    },
+    {
+      "bytes": 1612,
+      "path": "governance/visual-promotion/contracts/candidate-shard-manifest.schema.json",
+      "sha256": "6541846C071124BFB1CA12DD6268FC38C14A924AE6C4C9A9094E5F6692D78F1F"
+    },
+    {
+      "bytes": 9524,
+      "path": "governance/visual-promotion/contracts/candidate.schema.json",
+      "sha256": "0D20ACBDF916422124C5392770789F05670761138D9D00EC375B5738AE156DBC"
+    },
+    {
+      "bytes": 7253,
+      "path": "governance/visual-promotion/contracts/certification-intake.registry.json",
+      "sha256": "29D8FA71FC25B6D5FF0003F6D44B58A209379D8216EA27DFC2E454F3DB905471"
+    },
+    {
+      "bytes": 2432,
+      "path": "governance/visual-promotion/contracts/control-plane.contract.json",
+      "sha256": "09254346421D321F90208097CBB4823456D5943956D2FC073DF6DBF28B6E173E"
+    },
+    {
+      "bytes": 1839,
+      "path": "governance/visual-promotion/contracts/corpus-certification.contract.json",
+      "sha256": "5FD87051493D413911530C53F53C71B003CECBCFDB0C96F7C47FD78DEE58B09B"
+    },
+    {
+      "bytes": 2876194,
+      "path": "governance/visual-promotion/contracts/corpus-certification/CANDIDATE_CORPUS.jsonl",
+      "sha256": "4FC99C8B1B7A6F9B6B97E3C7EE26CD964E1C67F7E61691384354CB24F6292696"
+    },
+    {
+      "bytes": 1466727,
+      "path": "governance/visual-promotion/contracts/corpus-certification/CERTIFICATION.jsonl",
+      "sha256": "B39261CD19BDCEA23880CEB5AEB4A5A8E602CD0E1203B019ACE0F90F56FB3732"
+    },
+    {
+      "bytes": 289,
+      "path": "governance/visual-promotion/contracts/corpus-certification/COLLISIONS.json",
+      "sha256": "37ECF3CF6F84FD549EF5B29C25195417373F108D0D83AE747C84D06ABC0BF434"
+    },
+    {
+      "bytes": 3731,
+      "path": "governance/visual-promotion/contracts/corpus-certification/CORPUS_MANIFEST.json",
+      "sha256": "13EA38E4711918633C9C7BEB4F8C674CF024C3DF62DCF2DF77273888857F09C1"
+    },
+    {
+      "bytes": 1632584,
+      "path": "governance/visual-promotion/contracts/corpus-certification/CURRENT_TRUTH.json",
+      "sha256": "645F5441C098B7BCF741A59C1A73ACCC08557CB7AA540D23EBD845115E504DEE"
+    },
+    {
+      "bytes": 0,
+      "path": "governance/visual-promotion/contracts/corpus-certification/INVALID.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 39867,
+      "path": "governance/visual-promotion/contracts/corpus-certification/SEMANTIC_REVIEW_GROUPS.json",
+      "sha256": "CCBAE5061A33E8CD384FB34117BB9BAA2B1893479C0011ACC08344561BAF64D3"
+    },
+    {
+      "bytes": 1382,
+      "path": "governance/visual-promotion/contracts/corpus-certification/SUMMARY.md",
+      "sha256": "4944FABC1780A87F2CCBFD3C92CE850797D3A65F7E81036A9933E79C5C802EA8"
+    },
+    {
+      "bytes": 3035,
+      "path": "governance/visual-promotion/contracts/corpus-certification/SURFACE_READINESS.json",
+      "sha256": "30FF400A481B0208E91EC3973F52B5304CC51D61D6AE80611ACF13EBFDCBCE37"
+    },
+    {
+      "bytes": 2615,
+      "path": "governance/visual-promotion/contracts/corpus-manifest.schema.json",
+      "sha256": "5DC40DF523FD8DB0D76703260C253949EA71A1072F81E88CE949B1F2D51A7DD4"
+    },
+    {
+      "bytes": 1554,
+      "path": "governance/visual-promotion/contracts/corpus-row.schema.json",
+      "sha256": "0360AA3A0162DF4B5C0D3F60840408DB3316289784E96236926EDCEBD9DB7AB1"
+    },
+    {
+      "bytes": 1740,
+      "path": "governance/visual-promotion/contracts/global-certification.schema.json",
+      "sha256": "6793E3B34C9380BF0AC04BBFB6021D9A5E1EF9BE2A7D07EF6AA8F18EE2695062"
+    },
+    {
+      "bytes": 10964,
+      "path": "governance/visual-promotion/contracts/intake-registry.json",
+      "sha256": "2698B0C0AF03CC57270051B063B78BBFDBC39A253260885D7197F9CFC9E13D8D"
+    },
+    {
+      "bytes": 1186,
+      "path": "governance/visual-promotion/contracts/intake-registry.schema.json",
+      "sha256": "DCF3D4D325F7096D9B96770EAC87053B8DC57D736966426726EE4C10148607E3"
+    },
+    {
+      "bytes": 6623,
+      "path": "governance/visual-promotion/contracts/legacy-worker-intake.registry.json",
+      "sha256": "E88FDC530B8F00DECD47707F4D0B7AA570F5939949F4AC5AD21C114A14FFDF7E"
     },
     {
       "bytes": 18105,
@@ -3882,9 +4242,9 @@
       "sha256": "0D2BC0AB56C8DCC45BABE64634A9F62598A95D823D3057EB8BC302BA00531B82"
     },
     {
-      "bytes": 12080,
+      "bytes": 13623,
       "path": "tools/visual_application/tests/test_visual_work_entry_gate.py",
-      "sha256": "AA87EAE13010ABB2B309BB3A51A921E2B5006467801D26EA7EE5A8BA42EB5915"
+      "sha256": "BA452E9405D063BF5336852BBFB6F58FB8242B4C2E4C54C25143A2B87B2F4C1B"
     },
     {
       "bytes": 9146,
@@ -3892,14 +4252,84 @@
       "sha256": "042CF2FC2B211D2B246C672925F32226D41C9EE9BD9B42A575DEAC7D730A0C15"
     },
     {
-      "bytes": 23847,
+      "bytes": 27234,
       "path": "tools/visual_application/visual_work_entry_gate.py",
-      "sha256": "AB94AA6C63B256BDC6F07D3E6FF874B80A01D9C097DD59A041DD3B67E73E0B42"
+      "sha256": "2A2D1D743DDDAC8730E3C01E35D0F60D26B4B5AABB54C48B129A2836BB3EA0C4"
     },
     {
       "bytes": 17203,
       "path": "tools/visual_core.py",
       "sha256": "272D8B00D7BC8FB50907D7521D774BA17F9BF012B5B538EC942184E0A1424203"
+    },
+    {
+      "bytes": 2781,
+      "path": "tools/visual_promotion/README.md",
+      "sha256": "C1BD0FCE875839BC7DFD1915936C25D8D78C42A156C4EB267EE8B16CA4FE2FAA"
+    },
+    {
+      "bytes": 2192,
+      "path": "tools/visual_promotion/__init__.py",
+      "sha256": "7EBAAD57E15B2B1069BD6701889F3C2C87CE9A29823B54F007C080982980EB15"
+    },
+    {
+      "bytes": 22596,
+      "path": "tools/visual_promotion/certification_handoffs.py",
+      "sha256": "A61408FCDB1BD0F76ECE3F242226CE71CE3AB19FF64D5EC7060467E9FA2BDF19"
+    },
+    {
+      "bytes": 6299,
+      "path": "tools/visual_promotion/cli.py",
+      "sha256": "E24DED235953490C2FAE009C6D4B423389E30F1BAAA57D79D98F95909F9F4C4A"
+    },
+    {
+      "bytes": 35328,
+      "path": "tools/visual_promotion/control_plane.py",
+      "sha256": "1C268EBC5C9329DF5107F287A8F9921DA55F309714DBCBB38347A6CEB7A3C22B"
+    },
+    {
+      "bytes": 26870,
+      "path": "tools/visual_promotion/corpus_certification.py",
+      "sha256": "445795A9C49158F4CDC24DA5BF8CDE223C5D569C2EF517CA96E786728BCC308C"
+    },
+    {
+      "bytes": 1180,
+      "path": "tools/visual_promotion/final_aggregation.py",
+      "sha256": "0172AE0CA1D264FD0FD85DA055CF57CEF773F0B420C64ADEE2C8998E8EB8F4EC"
+    },
+    {
+      "bytes": 0,
+      "path": "tools/visual_promotion/tests/__init__.py",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 1804,
+      "path": "tools/visual_promotion/tests/fixtures/candidate.tablet.json",
+      "sha256": "A944C71799CDCB68A5FA69BAECA7A7141074A8AF978A53CAA143FCE368617304"
+    },
+    {
+      "bytes": 14794,
+      "path": "tools/visual_promotion/tests/fixtures/exact-worker-samples.json",
+      "sha256": "94F53CD5388F3A8B59588591D4111D3B965385CA4DA8744682C21DD8D34A9468"
+    },
+    {
+      "bytes": 311,
+      "path": "tools/visual_promotion/tests/fixtures/shard-manifest.tablet.json",
+      "sha256": "4139186565382645FAD8D65466E231F56BB554939BE9CD2C38F456E5B76108A7"
+    },
+    {
+      "bytes": 4043,
+      "path": "tools/visual_promotion/tests/test_certification_handoffs.py",
+      "sha256": "97B4E68BE5C9B0382683E0767251AB1610FB5A24D0AC1613E49538D67B18124C"
+    },
+    {
+      "bytes": 14255,
+      "path": "tools/visual_promotion/tests/test_control_plane.py",
+      "sha256": "260FB4705859675AFB7A3809C1C78272F5EA3BDEB2B9DF4CB3E8FDB6EEFF1409"
+    },
+    {
+      "bytes": 8004,
+      "path": "tools/visual_promotion/tests/test_corpus_certification.py",
+      "sha256": "4AC4D2A96A59526462C87053E0EC6BFC66ECA86AA3CA1EA862531E8687E05A9D"
     },
     {
       "bytes": 516,
