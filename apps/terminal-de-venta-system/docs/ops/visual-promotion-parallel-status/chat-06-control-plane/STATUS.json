@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:50:00Z",
+  "updatedAt": "2026-09-12T06:52:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-final-integration-20260912",
-  "workHead": "482ad07419a91074e895d40ba10b5f1cf2641596",
-  "summary": "Final integration PR #549 now has the required one-time mechanical FILES_MANIFEST refresh. The GVAE all-surface workflow pushed exactly one bot commit and changed only prisma-html/FILES_MANIFEST.json. Its blob is byte-identical to the VISCORE-generated candidate from the exact pre-refresh assembly. Final exact-head gate verification is now active.",
+  "workHead": "34499286414be11703edaef3be93180230658f0f",
+  "summary": "PR #549 exact final head 34499286414be11703edaef3be93180230658f0f is clean/mergeable and all required exact-head workflows are PASS: CI, VISCORE1, ForgeOS Quality Gate, Sync Sentinel and GVAE All-Surface Authority. Five witness receipts PASS, manifest refresh exactly once, current-head Authority Mesh PASS.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -281,6 +281,36 @@
       "result": "PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT",
       "evidence": "workflow run 34678646588; artifact 10293925424; outer digest sha256:dc47fce3ad95dc6806d443e29577515cb4ea7473122b4c51beb17b3cc750861a",
       "details": "repoHead=7c5b8d477a9006c5184ddbc806874b6e7c02571c; two Chat 6 lanes resolved 15/15 and 10/10 required authorities respectively; 100% coverage; blockers=0; Layer Map present; requestDigest=50da5dfb1ae535bb2314f3aa815701f683347c777877a3ec4eb3dde67b086475."
+    },
+    {
+      "name": "Final exact-head CI",
+      "result": "PASS",
+      "evidence": "workflow run 34679171072",
+      "details": "head 34499286414be11703edaef3be93180230658f0f"
+    },
+    {
+      "name": "Final exact-head VISCORE1",
+      "result": "PASS",
+      "evidence": "workflow run 34679171062",
+      "details": "head 34499286414be11703edaef3be93180230658f0f; includes Identity/RIFAT no-regression, Atlasfin static, Work Entry and committed manifest parity"
+    },
+    {
+      "name": "Final exact-head ForgeOS",
+      "result": "PASS",
+      "evidence": "workflow run 34679171082",
+      "details": "head 34499286414be11703edaef3be93180230658f0f"
+    },
+    {
+      "name": "Final exact-head Sync Sentinel",
+      "result": "PASS",
+      "evidence": "workflow run 34679171068",
+      "details": "head 34499286414be11703edaef3be93180230658f0f"
+    },
+    {
+      "name": "Final exact-head GVAE all-surface",
+      "result": "PASS",
+      "evidence": "workflow run 34679171076",
+      "details": "head 34499286414be11703edaef3be93180230658f0f; no further branch mutation"
     }
   ],
   "unresolved": [
@@ -291,7 +321,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Require CI, VISCORE, ForgeOS, Sync Sentinel, GVAE all-surface, Identity/RIFAT, Atlasfin and no-fake-green gates all PASS on exact PR head 482ad07419a91074e895d40ba10b5f1cf2641596; merge only if clean/mergeable, then verify merged main exact bytes.",
+  "nextAction": "Merge PR #549 using exact expected head 34499286414be11703edaef3be93180230658f0f, then verify merged main contains the exact accepted tree/bytes and close superseded PRs #539/#540 only if byte supersession is proven.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -629,6 +659,16 @@
     "filesManifestBlobSha": "f8a2539d49db381270158ce96bfa9fca838b3a86",
     "filesManifestSha256": "bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d",
     "filesManifestFileCountExcludingManifest": 868,
-    "filesManifestCandidateArtifact": 10293221911
+    "filesManifestCandidateArtifact": 10293221911,
+    "finalPrHead": "34499286414be11703edaef3be93180230658f0f",
+    "finalPrMergeable": true,
+    "finalPrMergeableState": "clean",
+    "finalGateRuns": {
+      "CI": 34679171072,
+      "VISCORE1": 34679171062,
+      "ForgeOS": 34679171082,
+      "SyncSentinel": 34679171068,
+      "GVAEAllSurface": 34679171076
+    }
   }
 }
