@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "DONE",
-  "updatedAt": "2026-09-12T06:54:00Z",
+  "updatedAt": "2026-09-12T10:03:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-final-integration-20260912",
-  "workHead": "34499286414be11703edaef3be93180230658f0f",
-  "summary": "DONE / PASS_CANDIDATE_CORPUS_CERTIFIED. PR #549 merged to canonical main 3eb092fad5e746a7ceeb9fdba079671934ae9b6d. Merged main tree exactly equals the final green PR-head tree 502a911c62ce785990f3e0e7f5cd57bf36559403. Five independent witness receipts PASS, current-head AutoMesh full refresh PASS, exactly one mechanical FILES_MANIFEST refresh, all required exact-head gates PASS, old PRs #539/#540 closed only after byte-for-byte supersession proof. No product/runtime mutation, no canonical promotion, no Materiality Catalog inspection.",
+  "workHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "summary": "GLOBAL_COMPOSITOR_INTEGRATOR final verification is complete. PR #549 merged cleanly to main at 3eb092fad5e746a7ceeb9fdba079671934ae9b6d. The merged main tree exactly equals the certified final PR head tree 502a911c62ce785990f3e0e7f5cd57bf36559403; FILES_MANIFEST blob remains exact; all five independent witness receipts passed; current-head Authority Mesh passed after relevant-drift full refresh; all exact-head required workflows passed; superseded PRs #539 and #540 were byte-proven and closed without merge.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -58,7 +58,9 @@
     "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used.",
     "AutoMesh v2 run 34678646588 detected BLOCKED_RELEVANT_DRIFT and correctly executed full refresh; final state PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT on main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Fresh preflight/compose reported 100% authority coverage for both Chat 6 lanes, zero blockers and Layer Map present.",
     "Fresh final integration branch chat6/candidate-corpus-final-integration-20260912 was created from current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c with exactly 88 unique accepted paths and exact existing Git blob identities; assembly commit f52d9d9915179f805b92e11b3a168100eeb505c6.",
-    "One-time FILES_MANIFEST refresh completed at head 482ad07419a91074e895d40ba10b5f1cf2641596. Compare f52d9d99..482ad074 shows exactly one changed path: prisma-html/FILES_MANIFEST.json. The committed manifest Git blob f8a2539d49db381270158ce96bfa9fca838b3a86 exactly matches the VISCORE candidate artifact 10293221911; SHA-256 bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d; file count 868 excluding manifest."
+    "One-time FILES_MANIFEST refresh completed at head 482ad07419a91074e895d40ba10b5f1cf2641596. Compare f52d9d99..482ad074 shows exactly one changed path: prisma-html/FILES_MANIFEST.json. The committed manifest Git blob f8a2539d49db381270158ce96bfa9fca838b3a86 exactly matches the VISCORE candidate artifact 10293221911; SHA-256 bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d; file count 868 excluding manifest.",
+    "Merged main@3eb092fad5e746a7ceeb9fdba079671934ae9b6d has tree 502a911c62ce785990f3e0e7f5cd57bf36559403, exactly identical to final certified PR head 34499286414be11703edaef3be93180230658f0f; compare introduced zero file differences. FILES_MANIFEST main blob remains f8a2539d49db381270158ce96bfa9fca838b3a86.",
+    "PRs #539 and #540 were proven byte-superseded on merged main by exact Git blob equality for all five owned source paths in each PR, then closed without merge to avoid duplicate history."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -345,7 +347,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. Any future canonical semantic/binding/application promotion requires a separately authorized phase and fresh applicable gates.",
+  "nextAction": "None for CORPUS_FINAL_PARALLEL_VERIFICATION. Hold the certified corpus on main. Any later canonical promotion/apply/runtime work must start as a new governed phase from fresh current-head authority and must not reinterpret corpus-valid as APPLY_READY.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -719,6 +721,16 @@
     "supersededPullRequestsClosed": [
       539,
       540
-    ]
+    ],
+    "integrationState": "MERGED_MAIN_VERIFIED",
+    "finalPrMerged": true,
+    "finalPr": 549,
+    "filesManifestMainBlobSha": "f8a2539d49db381270158ce96bfa9fca838b3a86",
+    "supersededPullRequests": {
+      "539": "CLOSED_BYTE_SUPERSEDED",
+      "540": "CLOSED_BYTE_SUPERSEDED"
+    },
+    "phaseResult": "PASS_CORPUS_FINAL_PARALLEL_VERIFICATION_MERGED_MAIN_VERIFIED",
+    "holdState": "CERTIFIED_CORPUS_HOLD"
   }
 }
