@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 868,
+  "file_count_excluding_manifest": 874,
   "files": [
     {
       "bytes": 156,
@@ -2322,34 +2322,34 @@
       "sha256": "F7EAC069AB5775ABC4CEB5D0E79EE0220886CA62C3C680BEAB3D750FCA5989A6"
     },
     {
-      "bytes": 26076,
+      "bytes": 29216,
       "path": "docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
-      "sha256": "390760F4C0AC8B0ACA74045E9C60A0E52FCC6EBB221943CB84FF1405AF12DBC1"
+      "sha256": "8F12D1BB16C25677F096F094E6D0B0719F975E0CA9FE0C6C0FBF705B27236821"
     },
     {
-      "bytes": 25714,
+      "bytes": 27318,
       "path": "docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md",
-      "sha256": "6AEB4A47E821731F8195DE79D88C5D1D8DCAA6882B8BC1D40C32968F6393EC74"
+      "sha256": "EC1EC27B6F177FD025FF0DCF934EE17C9ADC89C28984431FC1EFA002D4270DB0"
     },
     {
-      "bytes": 8108,
+      "bytes": 10928,
       "path": "docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
-      "sha256": "B79C24A036CB8F6B78E931993A18703898E6B6015EF23667C85E5D896A6E6CB0"
+      "sha256": "6CA8A0BA7A34BED2831CCB9716224F789D13821458AC971FAA8D37DF677AC405"
     },
     {
-      "bytes": 3766,
+      "bytes": 4012,
       "path": "docs/ops/visual-promotion-parallel/README.md",
-      "sha256": "604335FFECAA29194602FDC356A16ACC5BA9B059F750F4CD066187675262B182"
+      "sha256": "976F906BB803E592CB5A00435075711C71D59B577A98B5C97B960A87033D4CF3"
     },
     {
-      "bytes": 4029,
+      "bytes": 4126,
       "path": "docs/ops/visual-promotion-parallel/status-channel/README.md",
-      "sha256": "67121016CBB7BBAA16EC1D28D49A6E99545B7CBC795372585E8562D1B943AF81"
+      "sha256": "8E4C0E58A3E1F5FFB5549BC9BCD4E08AA15FA5277B5BF95D92FCFF13893F9748"
     },
     {
-      "bytes": 3491,
+      "bytes": 3615,
       "path": "docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
-      "sha256": "AE2F13096518CA25D89A69A83261BA7EA461074F6B0A88F3039E8CAA4C2E619A"
+      "sha256": "F2BFADFCCA0E8B44C37E70A7724728BC83DA1B539F1319735540490C4188EE1A"
     },
     {
       "bytes": 10046,
@@ -3385,6 +3385,36 @@
       "bytes": 6623,
       "path": "governance/visual-promotion/contracts/legacy-worker-intake.registry.json",
       "sha256": "E88FDC530B8F00DECD47707F4D0B7AA570F5939949F4AC5AD21C114A14FFDF7E"
+    },
+    {
+      "bytes": 3119,
+      "path": "governance/visual-promotion/promotion-readiness/README.md",
+      "sha256": "5FF40776FD330E663A53D117EDB0823969076FF205124B764F7FBB66C8C56F31"
+    },
+    {
+      "bytes": 4520,
+      "path": "governance/visual-promotion/promotion-readiness/composed/PHASE_BASELINE.json",
+      "sha256": "B0F60DA850F1E6A55DBA380B8E68F6C28897D33B3A879AD6D9C49CFB5D2DD263"
+    },
+    {
+      "bytes": 2248,
+      "path": "governance/visual-promotion/promotion-readiness/contracts/canonical-promotion-plan.schema.json",
+      "sha256": "13590F8DB1C9A9642E0B93C24430577C3E60E490546FC051D9B43A08FF280833"
+    },
+    {
+      "bytes": 1912,
+      "path": "governance/visual-promotion/promotion-readiness/contracts/cross-surface-semantic-group.schema.json",
+      "sha256": "22C891051870292DBD602A288225ABCFE33563D26B0EE7FE06696A2C4791267E"
+    },
+    {
+      "bytes": 2139,
+      "path": "governance/visual-promotion/promotion-readiness/contracts/promotion-readiness-manifest.schema.json",
+      "sha256": "4962CCA12BE906DE306CD050113F40F1756AAEF1060E0C4C9257A36FCD43A4CE"
+    },
+    {
+      "bytes": 7064,
+      "path": "governance/visual-promotion/promotion-readiness/contracts/promotion-readiness-record.schema.json",
+      "sha256": "668DFF35926ADAE42443529A561DE6AE74A22E41873DF0D77EB2A50468AA298F"
     },
     {
       "bytes": 18105,

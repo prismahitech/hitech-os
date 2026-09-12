@@ -1,6 +1,6 @@
 {
   "schema": "prisma.visual-promotion.interoperability-vocabulary.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "CANONICAL_PARALLEL_VOCABULARY",
   "scope": {
     "includedSurfaceKeys": [
@@ -186,6 +186,65 @@
       "SURFACE_BATCH_PLAN",
       "REGISTER_TARGET_FIRST",
       "BLOCKED"
+    ],
+    "promotionReadinessDecision": [
+      "READY_REUSE_EXISTING_AUTHORITY",
+      "READY_FOR_CANONICAL_REGISTRATION",
+      "BLOCKED_MISSING_SEMANTIC_AUTHORITY",
+      "BLOCKED_MISSING_BINDING",
+      "BLOCKED_MISSING_APPLICATION_AUTHORITY",
+      "BLOCKED_PROJECTION_AUTHORITY",
+      "BLOCKED_PHYSICAL_DRIFT",
+      "BLOCKED_MULTI_REGION_CONFLICT",
+      "BLOCKED_NDC_AMBIGUITY",
+      "NOT_APPLICABLE"
+    ],
+    "authorityReuseDisposition": [
+      "REUSE_EXISTING",
+      "PROPOSE_NEW",
+      "UNRESOLVED",
+      "NOT_APPLICABLE"
+    ],
+    "projectionDebtClassification": [
+      "CURRENT",
+      "CANONICAL_PROJECTION_REQUIRED_MISSING",
+      "INTENTIONALLY_NON_PROJECTED",
+      "REFERENCE_GOVERNOR_ONLY",
+      "STALE_AUTHORITY",
+      "RIFAT_AUTHORITATIVE_PRODUCT_STALE",
+      "PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED",
+      "INTENTIONAL_DIVERGENCE",
+      "AMBIGUOUS",
+      "NOT_APPLICABLE"
+    ],
+    "crossSurfaceSemanticDisposition": [
+      "CANONICAL_COALESCE_ALLOWED",
+      "SEMANTIC_EQUIVALENCE_EVIDENCE_ONLY",
+      "VISUAL_SIMILARITY_ONLY",
+      "BLOCKED_AMBIGUOUS",
+      "NOT_APPLICABLE"
+    ],
+    "blockingAuthorityGap": [
+      "MISSING_NDC_PRIMARY_MEANING",
+      "MISSING_VISUAL_MEANING",
+      "MISSING_IDENTITY_RECIPE",
+      "MISSING_IDENTITY_ADAPTER",
+      "MISSING_BINDING",
+      "MISSING_ROUTE",
+      "MISSING_REGION",
+      "MISSING_SLOT",
+      "MISSING_COMPONENT",
+      "MISSING_OWNER",
+      "MISSING_APPLICATION_LAYER",
+      "MISSING_LAYER_APPLICATION_POLICY",
+      "MISSING_EXACT_TARGET_AUTHORITY",
+      "PROJECTION_MISSING",
+      "PROJECTION_DRIFT",
+      "PHYSICAL_DRIFT",
+      "MULTI_REGION_CONFLICT",
+      "NDC_AMBIGUITY",
+      "SEMANTIC_AMBIGUITY",
+      "AUTHORITY_RECONCILIATION_REQUIRED"
     ]
   },
   "ndcEdgeTypes": [
@@ -237,25 +296,35 @@
   },
   "writeOwnership": {
     "chat1": [
-      "prisma-html/governance/visual-promotion/candidates/tablet/**"
+      "prisma-html/governance/visual-promotion/candidates/tablet/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/tablet/**"
     ],
     "chat2": [
-      "prisma-html/governance/visual-promotion/candidates/pc/**"
+      "prisma-html/governance/visual-promotion/candidates/pc/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/pc/**"
     ],
     "chat3": [
-      "prisma-html/governance/visual-promotion/candidates/mobile/**"
+      "prisma-html/governance/visual-promotion/candidates/mobile/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/mobile/**"
     ],
     "chat4": [
-      "prisma-html/governance/visual-promotion/candidates/shared-ui/**"
+      "prisma-html/governance/visual-promotion/candidates/shared-ui/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**"
     ],
     "chat5": [
-      "prisma-html/extras/atlasfin/bridge/**"
+      "prisma-html/extras/atlasfin/bridge/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**"
     ],
     "chat6": [
       "prisma-html/tools/visual_promotion/**",
       "prisma-html/governance/visual-promotion/contracts/**",
       "prisma-html/tools/visual_application/visual_work_entry_gate.py",
-      "prisma-html/tools/visual_application/tests/test_visual_work_entry_gate.py"
+      "prisma-html/tools/visual_application/tests/test_visual_work_entry_gate.py",
+      "prisma-html/governance/visual-promotion/promotion-readiness/README.md",
+      "prisma-html/governance/visual-promotion/promotion-readiness/contracts/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/composed/**",
+      "prisma-html/tools/visual_promotion/promotion_readiness.py",
+      "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py"
     ]
   },
   "forbiddenParallelWorkerWrites": [
@@ -276,7 +345,11 @@
     "WORKERS_PROPOSE_CANONICAL_COMPOSERS_ASSIGN",
     "UNKNOWN_STAYS_UNKNOWN",
     "CANDIDATE_IS_NOT_AUTHORITY",
-    "SOURCE_STATIC_IS_NOT_RUNTIME_VISUAL_GREEN"
+    "SOURCE_STATIC_IS_NOT_RUNTIME_VISUAL_GREEN",
+    "CERTIFIED_CORPUS_IS_IMMUTABLE_PHASE_INPUT",
+    "PROMOTION_READINESS_IS_NOT_CANONICAL_REGISTRATION",
+    "RECIPE_EQUALITY_IS_NOT_SEMANTIC_IDENTITY",
+    "PROPOSAL_KEY_IS_NOT_CANONICAL_ID"
   ],
   "coordinationStatusChannel": {
     "schema": "prisma.visual-promotion.status-channel.v1",
@@ -298,6 +371,7 @@
     "statusIsAuthority": false,
     "statusMayAuthorizeMutation": false,
     "dedicatedBranchRequired": true,
-    "crossChatMailboxWritesAllowed": false
+    "crossChatMailboxWritesAllowed": false,
+    "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
   }
 }

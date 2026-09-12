@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.canonical-promotion-plan.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "phase",
+    "status",
+    "inputCount",
+    "readyExistingAuthorityReuse",
+    "readyCanonicalRegistration",
+    "blocked",
+    "notApplicable",
+    "missingCount",
+    "extraCount",
+    "duplicateTargetIds",
+    "semanticMutationCount",
+    "safeExactReuseTargets",
+    "safeExactRegistrationProposalKeys",
+    "blockedTargets",
+    "crossSurfaceSemanticGroups",
+    "canonicalMutationAuthorized",
+    "productRuntimeMutationAuthorized"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.canonical-promotion-plan.v1"
+    },
+    "phase": {
+      "const": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+    },
+    "status": {
+      "enum": [
+        "PENDING_SURFACE_HANDOFFS",
+        "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+        "BLOCKED"
+      ]
+    },
+    "inputCount": {
+      "const": 2097
+    },
+    "readyExistingAuthorityReuse": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "readyCanonicalRegistration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "notApplicable": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missingCount": {
+      "const": 0
+    },
+    "extraCount": {
+      "const": 0
+    },
+    "duplicateTargetIds": {
+      "const": 0
+    },
+    "semanticMutationCount": {
+      "const": 0
+    },
+    "safeExactReuseTargets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "safeExactRegistrationProposalKeys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "blockedTargets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "crossSurfaceSemanticGroups": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "canonicalMutationAuthorized": {
+      "const": false
+    },
+    "productRuntimeMutationAuthorized": {
+      "const": false
+    }
+  }
+}

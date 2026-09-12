@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.promotion-readiness.cross-surface-group.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "groupKey",
+    "disposition",
+    "members",
+    "semanticAuthoritySources",
+    "atlasfinEvidenceRefs",
+    "confidence",
+    "canonicalCoalescingAllowed",
+    "notes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.cross-surface-semantic-group.v1"
+    },
+    "groupKey": {
+      "type": "string",
+      "pattern": "^group\\.[a-z0-9._-]+$"
+    },
+    "disposition": {
+      "enum": [
+        "CANONICAL_COALESCE_ALLOWED",
+        "SEMANTIC_EQUIVALENCE_EVIDENCE_ONLY",
+        "VISUAL_SIMILARITY_ONLY",
+        "BLOCKED_AMBIGUOUS",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "members": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "surfaceKey",
+          "targetId"
+        ],
+        "properties": {
+          "surfaceKey": {
+            "enum": [
+              "tablet",
+              "pc",
+              "mobile",
+              "shared-ui"
+            ]
+          },
+          "targetId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "semanticAuthoritySources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "atlasfinEvidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "verified"
+      ]
+    },
+    "canonicalCoalescingAllowed": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

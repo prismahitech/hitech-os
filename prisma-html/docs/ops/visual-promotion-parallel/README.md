@@ -2,6 +2,10 @@
 
 Status: `CANONICAL_PARALLEL_WORK_ENTRY`
 
+Current canonical phase: `CANONICAL_PROMOTION_READINESS_RESOLUTION`
+
+The previous `CORPUS_FINAL_PARALLEL_VERIFICATION` phase is closed and must not be reconstructed. The certified corpus is now immutable input to promotion-readiness resolution.
+
 This folder is the startup point for the bounded parallel visual-promotion cohort covering **Tablet, PC, Mobile, Shared UI and Atlasfin**.
 
 ## Mandatory read order

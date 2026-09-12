@@ -1,0 +1,123 @@
+{
+  "schema": "prisma.visual-promotion.promotion-readiness-baseline.v1",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "baseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "certifiedCorpus": {
+    "manifestGitBlobSha": "6246e92d7b38750d45b2d74e6adf1b61fcd43a56",
+    "recordCount": 2097,
+    "certificationCount": 2097,
+    "certificationStatusCounts": {
+      "VALID_ELIGIBLE_CANDIDATE": 139,
+      "VALID_REGISTER_TARGET_FIRST": 1926,
+      "VALID_BLOCKED": 32
+    },
+    "workEntryDecisionCounts": {
+      "REGISTER_TARGET_FIRST": 2065,
+      "BLOCKED": 32
+    },
+    "GVAE_EXACT_APPLY": 0,
+    "currentlyAuthorizedCanonicalPromotions": 0,
+    "runtimeVisualGreen": false,
+    "wholeSurfaceApplyReadyCount": 0,
+    "semanticReviewGroupCount": 10,
+    "crossSurfaceGroupCount": 0,
+    "atlasfinReferenceCount": 2421,
+    "atlasfinHardInvalidRefCount": 0
+  },
+  "surfaces": {
+    "tablet": {
+      "input": 929,
+      "promotion": {
+        "ELIGIBLE_CANDIDATE": 139,
+        "REGISTER_TARGET_FIRST": 788,
+        "BLOCKED": 2
+      },
+      "physical": {
+        "CURRENT": 927,
+        "DRIFT": 2
+      }
+    },
+    "pc": {
+      "input": 827,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 827
+      },
+      "physical": {
+        "CURRENT": 826,
+        "DRIFT": 1
+      },
+      "projection": {
+        "CURRENT": 688,
+        "MISSING": 139
+      }
+    },
+    "mobile": {
+      "input": 271,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 271
+      },
+      "projection": {
+        "CURRENT": 133,
+        "DRIFT": 138
+      }
+    },
+    "shared-ui": {
+      "input": 70,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 40,
+        "BLOCKED": 30
+      },
+      "noRegionUnresolved": 19,
+      "multiRegionConflicts": 11,
+      "ndcResolved": 0,
+      "atlasfinMatches": 0
+    }
+  },
+  "parallelism": {
+    "safe": true,
+    "reason": "Certified corpus is immutable input; phase outputs are disjoint by surface/evidence lane; canonical/global integration has a single writer in Chat 6.",
+    "ownership": {
+      "chat1": "prisma-html/governance/visual-promotion/promotion-readiness/tablet/**",
+      "chat2": "prisma-html/governance/visual-promotion/promotion-readiness/pc/**",
+      "chat3": "prisma-html/governance/visual-promotion/promotion-readiness/mobile/**",
+      "chat4": "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**",
+      "chat5": "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**",
+      "chat6": [
+        "prisma-html/governance/visual-promotion/promotion-readiness/README.md",
+        "prisma-html/governance/visual-promotion/promotion-readiness/contracts/**",
+        "prisma-html/governance/visual-promotion/promotion-readiness/composed/**"
+      ]
+    }
+  },
+  "knownBlockers": [
+    "Tablet 139 ELIGIBLE_CANDIDATE rows still have Work Entry REGISTER_TARGET_FIRST; eligibility is not APPLY or canonical registration authority.",
+    "PC has 139 projection MISSING rows and one physical DRIFT selector conflict.",
+    "Mobile has 138 projection DRIFT rows with no preselected authority direction.",
+    "Shared UI has 19 no-region unresolved and 11 multi-region conflicts; all current Shared UI NDC primary meaning remains unresolved and Atlasfin match status is NO_MATCH.",
+    "Cross-surface canonical semantic groups are currently zero; recipe equality alone cannot create them.",
+    "Only one existing resolved binding is present in the certified corpus and it remains insufficient by itself to authorize application.",
+    "Materiality Catalog is unavailable to automatic discovery/fallback."
+  ],
+  "gates": {
+    "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
+    "antiReworkMutation": "PASS_ANTI_REWORK_GATE",
+    "capability": "visual.generic_application_engine_v1",
+    "requestedAction": "ADVANCE",
+    "authorityMeshRun": 34691841895,
+    "authorityMeshResult": "PASS_COMPOSED_AUTHORITY_MESH",
+    "authorityMeshRequestDigest": "ec0b013fe70ab96a9d4e1041efd7e7d9cc55ac6121406ef32dd303fabc52b0c4",
+    "authorityMeshArtifactId": 10297390387,
+    "authorityMeshArtifactDigest": "sha256:4fe961b2860c5d0a97bc106b87f57fd95f6f4c8d1b4329e614603150434919eb",
+    "authorityCoveragePct": 100,
+    "blockers": 0,
+    "layerMapPresent": true
+  },
+  "hardStops": {
+    "recensus": false,
+    "broadRediscovery": false,
+    "materialityCatalogInspected": false,
+    "canonicalAuthorityMutationAuthorized": false,
+    "productRuntimeMutationAuthorized": false,
+    "gvaeApplyAuthorized": false
+  }
+}

@@ -71,32 +71,31 @@ Status files are coordination evidence only. They are not NDC, Identity, RIFAT, 
 A coordinator can inspect all six deterministic status branches directly. Missing branch/status remains missing; never infer hidden progress.
 
 
-## Current phase: mailbox-driven final verification
+## Current phase: canonical promotion readiness resolution
 
 Current phase:
-`CORPUS_FINAL_PARALLEL_VERIFICATION`
 
-Canonical assignment source:
-`prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md`
+`CANONICAL_PROMOTION_READINESS_RESOLUTION`
 
-For existing Chats 1–6 the owner only needs to say:
+The certified corpus phase is DONE. Existing mailboxes and status branches are reused; only the phase role, expected result and phase receipt change.
 
-> Continue with your work. Re-read the canonical prompt and your own mailbox, then execute your current Chat assignment.
+Continuation message:
 
-The Chat must resolve its own mapping from this contract/STATUS_INDEX, read its own mailbox, execute its current canonical assignment, and publish the result back to the same status branch. Cross-chat copy/paste by the owner is not part of the protocol.
+> Continue with your work. Re-read the canonical prompt and your own mailbox, resolve CANONICAL_PROMOTION_READINESS_RESOLUTION from repository truth, then execute only your current Chat lane.
 
-Current witness receipts are stored under:
-`handoff.parallelWitness`
+Each Chat must resolve its mapping from `STATUS_INDEX.json`, publish START/progress/blocker/handoff events to its own mailbox branch, and place the phase receipt under `handoff.promotionReadiness`.
 
-Expected PASS results:
+Expected phase receipts:
 
 | Chat | Expected result |
 |---|---|
-| 1 | `PASS_TABLET_CORPUS_WITNESS` |
-| 2 | `PASS_PC_CORPUS_WITNESS` |
-| 3 | `PASS_MOBILE_CORPUS_WITNESS` |
-| 4 | `PASS_SHARED_UI_CORPUS_WITNESS` |
-| 5 | `PASS_ATLASFIN_CORPUS_WITNESS` |
-| 6 | final `DONE / PASS_CANDIDATE_CORPUS_CERTIFIED` after assembly/gates/merge |
+| 1 | `PASS_TABLET_PROMOTION_READINESS` |
+| 2 | `PASS_PC_PROMOTION_READINESS` |
+| 3 | `PASS_MOBILE_PROMOTION_READINESS` |
+| 4 | `PASS_SHARED_UI_PROMOTION_READINESS` |
+| 5 | `PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE` |
+| 6 | `READY_FOR_CANONICAL_PROMOTION_INTEGRATION` |
 
-Chat 6 reads the five witness receipts directly from their mapped status branches. Missing, stale or failing receipts are reported as such. Chat 6 must not ask the owner to relay them manually.
+Chat 6 reads Chats 1–5 directly from their deterministic status branches. Missing/stale/failing receipts remain missing/stale/failing. No repository-owner relay is part of the protocol.
+
+Status remains coordination evidence only. It never grants canonical registration, Work Entry authorization, GVAE APPLY or runtime certification.
