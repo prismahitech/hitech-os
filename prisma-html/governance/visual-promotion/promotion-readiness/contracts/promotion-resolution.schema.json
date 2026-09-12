@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.visual-promotion.promotion-resolution.v1",
+  "title": "PRISMA canonical promotion readiness resolution row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "phase",
+    "surfaceKey",
+    "targetId",
+    "input",
+    "canonicalMeaning",
+    "identity",
+    "atlasfin",
+    "physicalTarget",
+    "projectionResolution",
+    "registration",
+    "promotionReadinessStatus",
+    "blockingAuthorityGaps",
+    "postRegistrationWorkEntryPotential",
+    "confidence",
+    "evidenceRefs"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.promotion-resolution.v1"
+    },
+    "phase": {
+      "const": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+    },
+    "surfaceKey": {
+      "enum": [
+        "tablet",
+        "pc",
+        "mobile",
+        "shared-ui"
+      ]
+    },
+    "targetId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "certificationStatus",
+        "promotionStatus",
+        "workEntryDecision",
+        "physicalStatus",
+        "projectionStatus"
+      ]
+    },
+    "canonicalMeaning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ndcPrimaryId",
+        "ndcResolutionStatus",
+        "visualMeaningId",
+        "visualMeaningStatus",
+        "proposedMeaningSlug",
+        "semanticAuthorityRefs"
+      ],
+      "properties": {
+        "ndcPrimaryId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ndcResolutionStatus": {
+          "enum": [
+            "RESOLVED_EXISTING",
+            "CANDIDATE_REVIEW_REQUIRED",
+            "UNRESOLVED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "visualMeaningId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "visualMeaningStatus": {
+          "enum": [
+            "RESOLVED_EXISTING",
+            "CANDIDATE_REVIEW_REQUIRED",
+            "UNRESOLVED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "proposedMeaningSlug": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "semanticAuthorityRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "identityRecipeId",
+        "identityAdapterId",
+        "existingBindingId",
+        "bindingStatus"
+      ]
+    },
+    "atlasfin": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "matchStatus",
+        "referenceIds",
+        "semanticAuthorityGranted"
+      ],
+      "properties": {
+        "matchStatus": {
+          "enum": [
+            "MATCHED_EXACT",
+            "MATCHED_FAMILY",
+            "MATCHED_PRESET",
+            "MATCHED_RECIPE",
+            "AMBIGUOUS",
+            "NO_MATCH",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "referenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "semanticAuthorityGranted": {
+          "const": false
+        }
+      }
+    },
+    "physicalTarget": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "routeId",
+        "regionId",
+        "slotId",
+        "componentId",
+        "ownerId",
+        "implementationLayerId",
+        "applicationLayerId"
+      ]
+    },
+    "projectionResolution": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "classification",
+        "authorityRefs"
+      ]
+    },
+    "registration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registrationCandidateKey",
+        "deterministicRegistrationPossible",
+        "proposedCanonicalId"
+      ],
+      "properties": {
+        "registrationCandidateKey": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deterministicRegistrationPossible": {
+          "type": "boolean"
+        },
+        "proposedCanonicalId": {
+          "const": null
+        }
+      }
+    },
+    "promotionReadinessStatus": {
+      "enum": [
+        "READY_REUSE_EXISTING_AUTHORITY",
+        "READY_FOR_CANONICAL_REGISTRATION",
+        "BLOCKED_MISSING_SEMANTIC_AUTHORITY",
+        "BLOCKED_MISSING_RECIPE_AUTHORITY",
+        "BLOCKED_MISSING_ADAPTER_AUTHORITY",
+        "BLOCKED_MISSING_BINDING",
+        "BLOCKED_PROJECTION_AUTHORITY",
+        "BLOCKED_PHYSICAL_DRIFT",
+        "BLOCKED_MULTI_REGION_CONFLICT",
+        "BLOCKED_NDC_AMBIGUITY",
+        "BLOCKED_UNRESOLVED_AUTHORITY",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "blockingAuthorityGaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "postRegistrationWorkEntryPotential": {
+      "enum": [
+        "MAY_REACH_GVAE_EXACT_APPLY_AFTER_REGISTRATION_AND_RERUN",
+        "STILL_BLOCKED_AFTER_REGISTRATION",
+        "UNKNOWN_REQUIRES_RERUN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "crossSurfaceEvidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "verified"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
