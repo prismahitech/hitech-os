@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:45:00Z",
+  "updatedAt": "2026-09-12T06:48:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-final-integration-20260912",
   "workHead": "f52d9d9915179f805b92e11b3a168100eeb505c6",
-  "summary": "Fresh final integration assembly now exists directly on canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. It contains exactly 88 unique accepted paths from immutable worker/certification/Atlasfin/Chat6 head-tree blobs and no FILES_MANIFEST refresh yet. Five witnesses PASS and current-head Authority Mesh PASS.",
+  "summary": "Single final candidate-corpus integration PR #549 is open from exact assembly head f52d9d9915179f805b92e11b3a168100eeb505c6. Five witnesses and current-head Authority Mesh are PASS. The next serial barrier is the one-time mechanically generated FILES_MANIFEST followed by exact-head gates.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -290,7 +290,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Select the canonical mechanical one-time FILES_MANIFEST refresh path that cannot mutate unrelated authority; then refresh exactly once, open the single integration PR, and run exact-head gates.",
+  "nextAction": "Observe PR #549 workflows. Use canonical VISCORE mechanical manifest generation on the exact assembled tree, commit only the resulting FILES_MANIFEST once, then require all exact-head gates green before merge.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -621,6 +621,8 @@
     "integrationBase": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
     "assemblyPathCount": 88,
     "assemblyTree": "7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e",
-    "filesManifestRefreshed": false
+    "filesManifestRefreshed": false,
+    "integrationPullRequest": 549,
+    "integrationPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/549"
   }
 }
