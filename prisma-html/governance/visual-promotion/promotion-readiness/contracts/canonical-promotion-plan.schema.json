@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.visual-promotion.canonical-promotion-plan.v1",
+  "title": "PRISMA canonical promotion plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "phase",
+    "inputCount",
+    "accounting",
+    "zeroLoss",
+    "collisions",
+    "crossSurfaceGroups",
+    "workEntry",
+    "canonicalMutationPerformed",
+    "productRuntimeMutationPerformed",
+    "status"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.canonical-promotion-plan.v1"
+    },
+    "phase": {
+      "const": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+    },
+    "inputCount": {
+      "const": 2097
+    },
+    "accounting": {
+      "type": "object",
+      "required": [
+        "readyExistingAuthorityReuse",
+        "readyCanonicalRegistrationProposals",
+        "legitimatelyBlocked",
+        "notApplicable",
+        "sum"
+      ],
+      "properties": {
+        "readyExistingAuthorityReuse": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "readyCanonicalRegistrationProposals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "legitimatelyBlocked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notApplicable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sum": {
+          "const": 2097
+        }
+      }
+    },
+    "zeroLoss": {
+      "type": "object",
+      "required": [
+        "missing",
+        "extra",
+        "duplicateTargetIds",
+        "semanticMutationCount"
+      ],
+      "properties": {
+        "missing": {
+          "const": 0
+        },
+        "extra": {
+          "const": 0
+        },
+        "duplicateTargetIds": {
+          "const": 0
+        },
+        "semanticMutationCount": {
+          "const": 0
+        }
+      }
+    },
+    "collisions": {
+      "type": "object"
+    },
+    "crossSurfaceGroups": {
+      "type": "array",
+      "items": {
+        "$ref": "cross-surface-semantic-group.schema.json"
+      }
+    },
+    "workEntry": {
+      "type": "object"
+    },
+    "canonicalMutationPerformed": {
+      "const": false
+    },
+    "productRuntimeMutationPerformed": {
+      "const": false
+    },
+    "status": {
+      "enum": [
+        "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+        "BLOCKED_PROMOTION_READINESS_INCOMPLETE"
+      ]
+    }
+  }
+}
