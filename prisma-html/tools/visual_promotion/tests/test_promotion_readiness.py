@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from visual_promotion.promotion_readiness import (
@@ -131,7 +132,7 @@ class PromotionReadinessTests(unittest.TestCase):
         return rows
 
     def _patch_expected_counts(self, module):
-        return unittest.mock.patch.dict(module.SURFACE_COUNTS, SURFACE_COUNTS, clear=True)
+        return mock.patch.dict(module.SURFACE_COUNTS, SURFACE_COUNTS, clear=True)
 
     def test_source_record_sha_mismatch_fails_closed(self):
         import visual_promotion.promotion_readiness as module
@@ -161,6 +162,49 @@ class PromotionReadinessTests(unittest.TestCase):
             with self.assertRaisesRegex(PromotionReadinessError, "PROPOSE_NEW_CANNOT_MINT_CANONICAL_ID"):
                 validate_surface("tablet", certified=certified, readiness_root=self.ready)
 
+    def test_ready_registration_requires_complete_exact_authority(self):
+        import visual_promotion.promotion_readiness as module
+        source = [row for row in self.cert_rows.values() if row["surfaceKey"] == "pc"][0]
+        row = resolution("pc", source["targetId"], source["recordSha256"], "READY_FOR_CANONICAL_REGISTRATION")
+        row["canonicalMeaning"] = {
+            "ndcPrimaryId": "ENT.sale",
+            "visualMeaningId": None,
+            "proposalKey": None,
+            "resolution": "REUSE_EXISTING",
+        }
+        row["authorityReuseDisposition"] = "REUSE_EXISTING"
+        row["application"]["exactTargetRegistrationReady"] = True
+        root = self.ready / "pc"
+        write_jsonl(root / "RESOLUTION.jsonl", [row])
+        write_jsonl(root / "REUSE.jsonl", [])
+        write_jsonl(root / "REGISTRATION_PROPOSALS.jsonl", [row])
+        write_jsonl(root / "BLOCKED.jsonl", [])
+        write_jsonl(root / "PROJECTION_DEBT.jsonl", [])
+        (root / "MANIFEST.json").write_text(json.dumps({
+            "schema": "prisma.visual-promotion.promotion-readiness-manifest.v1",
+            "phase": PHASE,
+            "surfaceKey": "pc",
+            "inputCount": 1,
+            "resolutionCount": 1,
+            "uniqueTargetCount": 1,
+            "readyExistingAuthorityReuse": 0,
+            "readyCanonicalRegistration": 1,
+            "legitimatelyBlocked": 0,
+            "notApplicable": 0,
+            "missingCount": 0,
+            "extraCount": 0,
+            "duplicateTargetIds": 0,
+            "semanticMutationCount": 0,
+            "materialityCatalogInspected": False,
+            "productRuntimeMutationPerformed": False,
+            "canonicalAuthorityMutationPerformed": False,
+        }), encoding="utf-8")
+        with self._patch_expected_counts(module):
+            certified = module.load_certified_corpus(self.cert)
+            with self.assertRaisesRegex(PromotionReadinessError, "REGISTRATION_IDENTITY_RECIPE_REQUIRED"):
+                validate_surface("pc", certified=certified, readiness_root=self.ready)
+
+
     def test_pending_is_not_fake_green(self):
         import visual_promotion.promotion_readiness as module
         with self._patch_expected_counts(module):
@@ -188,7 +232,7 @@ class PromotionReadinessTests(unittest.TestCase):
             "canonicalAuthorityMutationPerformed": False,
             "productRuntimeMutationPerformed": False,
         }), encoding="utf-8")
-        with self._patch_expected_counts(module), unittest.mock.patch.object(module, "SURFACE_ORDER", tuple(SURFACE_COUNTS)):
+        with self._patch_expected_counts(module), mock.patch.object(module, "SURFACE_ORDER", tuple(SURFACE_COUNTS)):
             plan = compose_plan(cert_root=self.cert, readiness_root=self.ready)
         self.assertEqual(plan["status"], "READY_FOR_CANONICAL_PROMOTION_INTEGRATION")
         self.assertEqual(plan["blocked"], sum(SURFACE_COUNTS.values()))
