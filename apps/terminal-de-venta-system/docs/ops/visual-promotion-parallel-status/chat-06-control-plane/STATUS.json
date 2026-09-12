@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T11:54:00Z",
+  "updatedAt": "2026-09-12T11:55:30Z",
   "baseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
-  "workBranch": "chat6/canonical-promotion-readiness-20260912",
-  "workHead": "b0dba951eaff6664a386700b55215298abc8572b",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION bootstrap is materialized on Chat 6 work branch and PR #550 is open. Six disjoint lane prompts, phase vocabulary, status mapping, governed promotion-readiness namespace, strict record/manifest/group/plan schemas and exact phase baseline are present. Certified corpus bytes remain untouched. Exact-head repository gates are running; one deterministic FILES_MANIFEST refresh remains pending.",
+  "workBranch": "chat6/promotion-readiness-control-plane-20260912",
+  "workHead": null,
+  "summary": "Started CANONICAL_PROMOTION_READINESS_RESOLUTION as Chat 6 / Visual Promotion Control Plane. Certified corpus is immutable input. Universal anti-rework PROPOSAL and MUTATION evaluations PASS for ADVANCE of visual.generic_application_engine_v1. Fresh task-exact six-lane AutoMesh run 34692209649 PASS_COMPOSED_AUTHORITY_MESH on current main with 100% required-authority coverage, zero blockers and Layer Maps. Phase setup mutation is now authorized within bounded governance/tooling scope only.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -61,7 +61,8 @@
     "One-time FILES_MANIFEST refresh completed at head 482ad07419a91074e895d40ba10b5f1cf2641596. Compare f52d9d99..482ad074 shows exactly one changed path: prisma-html/FILES_MANIFEST.json. The committed manifest Git blob f8a2539d49db381270158ce96bfa9fca838b3a86 exactly matches the VISCORE candidate artifact 10293221911; SHA-256 bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d; file count 868 excluding manifest.",
     "Merged main@3eb092fad5e746a7ceeb9fdba079671934ae9b6d has tree 502a911c62ce785990f3e0e7f5cd57bf36559403, exactly identical to final certified PR head 34499286414be11703edaef3be93180230658f0f; compare introduced zero file differences. FILES_MANIFEST main blob remains f8a2539d49db381270158ce96bfa9fca838b3a86.",
     "PRs #539 and #540 were proven byte-superseded on merged main by exact Git blob equality for all five owned source paths in each PR, then closed without merge to avoid duplicate history.",
-    "Revalidated canonical corpus on main: 2,097 input/certification rows; 139 VALID_ELIGIBLE_CANDIDATE; 1,926 VALID_REGISTER_TARGET_FIRST; 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; GVAE_EXACT_APPLY=0; authorized canonical promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; semantic review groups=10; crossSurfaceGroupCount=0; Atlasfin refs=2,421 with hardInvalidRefCount=0."
+    "Revalidated canonical corpus on main: 2,097 input/certification rows; 139 VALID_ELIGIBLE_CANDIDATE; 1,926 VALID_REGISTER_TARGET_FIRST; 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; GVAE_EXACT_APPLY=0; authorized canonical promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; semantic review groups=10; crossSurfaceGroupCount=0; Atlasfin refs=2,421 with hardInvalidRefCount=0.",
+    "Revalidated canonical corpus on main: 2,097 records, 139 VALID_ELIGIBLE_CANDIDATE, 1,926 VALID_REGISTER_TARGET_FIRST, 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; semantic review groups=10; cross-surface groups=0; Atlasfin refs=2,421/2,421; Materiality uninspected."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -94,7 +95,8 @@
     "Chats 1-5 unresolved/conflict states are valid corpus states and will not be semantically rewritten to manufacture completeness.",
     "Resume only through the canonical final-verification serial barriers: materialized corpus -> five direct mailbox witness receipts -> exact final assembly -> one FILES_MANIFEST refresh -> exact PR-head gates -> merge -> merged-main verification.",
     "Treat the current-head anti-rework decision as deterministically preserved because all four canonical Factory Ledger authority blobs are unchanged from the previously PASSed gate base, requested action remains ADVANCE, and the required fresh current-head Mesh is now PASS with 100% coverage/zero blockers; no capability semantics changed.",
-    "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase."
+    "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase.",
+    "New phase will be safely parallelized with six disjoint promotion-readiness roots; certified corpus remains read-only historical evidence and global canonical authority remains untouched until a later plan/gate barrier."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
@@ -348,7 +350,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Finish PR #550: consume the VISCORE deterministic manifest candidate, refresh FILES_MANIFEST exactly once, require exact-head CI/VISCORE/ForgeOS/Sync green, revalidate Authority Mesh if main moved, merge, verify merged tree, then publish phaseReady=true so all six lanes can begin immediately.",
+  "nextAction": "Create and merge the canonical phase setup: prompts, status phase mapping, disjoint write ownership, promotion-readiness contracts/schemas and Chat 6 composer scaffold. Then read worker mailboxes directly and continue global composition only after their handoffs exist.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -782,6 +784,29 @@
         "writeRoot": "promotion-readiness contracts/composed + dedicated composer tooling",
         "expected": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION"
       }
+    },
+    "promotionReadiness": {
+      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+      "role": "CANONICAL_PROMOTION_READINESS_CONTROL_PLANE",
+      "result": "IN_PROGRESS",
+      "canonicalMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+      "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
+      "antiReworkMutation": "PASS_ANTI_REWORK_GATE",
+      "authorityMesh": {
+        "runId": 34692209649,
+        "artifactId": 10298070499,
+        "artifactDigest": "sha256:9ffb78fa7f5d9b02eff050b4761ff30d779da34566f3c34fdcfbcbf113f32a91",
+        "requestDigest": "51ef6177f3b04b0614d56b4ab547431392cb3bcde6c5aa79b94061c44ea95484",
+        "repoHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+        "status": "PASS_COMPOSED_AUTHORITY_MESH",
+        "requiredAuthorityCoveragePct": 100,
+        "blockers": 0,
+        "layerMapPresent": true
+      },
+      "corpusInputCount": 2097,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalAuthorityMutation": false
     }
   }
 }
