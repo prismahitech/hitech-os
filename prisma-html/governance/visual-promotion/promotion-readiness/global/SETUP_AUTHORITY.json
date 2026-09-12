@@ -1,0 +1,50 @@
+{
+  "schema": "prisma.visual-promotion.promotion-readiness-setup-authority.v1",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "canonicalMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "factoryLedger": {
+    "capabilityId": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE",
+    "proposalGate": "PASS_ANTI_REWORK_GATE",
+    "mutationGate": "PASS_ANTI_REWORK_GATE",
+    "authorityBlobShas": {
+      "ledger": "191385babfdfe4efa6e3b64e335fc34c8de53ad5",
+      "doNotRebuildMap": "b7b6232ce8a6bbf00a0b68b6f689b3fa99b92af8",
+      "registrationIndex": "fb005f51d53420252486e435e43145fd7664a714",
+      "evidenceIndex": "c04a43c5c0988a01623ee9501bddca18973f6c1e"
+    }
+  },
+  "authorityMesh": {
+    "runId": 34692209649,
+    "artifactId": 10298070499,
+    "artifactDigest": "sha256:9ffb78fa7f5d9b02eff050b4761ff30d779da34566f3c34fdcfbcbf113f32a91",
+    "requestDigest": "51ef6177f3b04b0614d56b4ab547431392cb3bcde6c5aa79b94061c44ea95484",
+    "status": "PASS_COMPOSED_AUTHORITY_MESH",
+    "repoHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+    "laneCount": 6,
+    "requiredAuthorityCoveragePct": 100,
+    "blockers": 0,
+    "layerMapPresent": true,
+    "productionCertified": false
+  },
+  "mutationScope": {
+    "allowed": [
+      "prisma-html/docs/ops/visual-promotion-parallel/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/contracts/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/global/**",
+      "prisma-html/tools/visual_promotion/**",
+      "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json"
+    ],
+    "forbidden": [
+      "product/runtime source",
+      "canonical NDC/Identity/RIFAT/Target Index authority",
+      "certified corpus history",
+      "Materiality Catalog",
+      "GVAE APPLY",
+      "projection repair"
+    ]
+  }
+}
