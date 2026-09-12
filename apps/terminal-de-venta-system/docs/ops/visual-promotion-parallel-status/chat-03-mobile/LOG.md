@@ -108,3 +108,14 @@ No updates published yet.
 - Receipt published at `handoff.parallelWitness` with exact certification head, Git blob SHAs, SHA-256 digests, accounting, drift invariants, provenance/hash verification, reference validation and prohibited-action flags.
 - Materiality Catalog was not inspected. Broad rediscovery was not performed. Product/runtime mutation = false. Canonical promotion = false. No certification/source bytes were changed.
 - Chat 3 enters `CERTIFIED_HOLD` represented by status-channel state `READY_FOR_INTEGRATION`. Chat 6 can read the witness receipt directly from `status/vp-chat-03-mobile`; no owner relay is required.
+
+## 2026-09-12T16:07:00-06:00 — START / PROGRESS / DECISION
+
+- Re-read the canonical prompt and own deterministic mailbox after the owner continuation message.
+- Canonical `main` is `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; current phase is `CANONICAL_PROMOTION_READINESS_RESOLUTION`.
+- `STATUS_INDEX.json` assigns Chat 3 lane `MOBILE_PROMOTION`, role `MOBILE_PROMOTION_READINESS_RESOLVER`, expected result `PASS_MOBILE_PROMOTION_READINESS`, receipt field `handoff.promotionReadiness`.
+- Opened/confirmed owned work branch `chat3/canonical-promotion-readiness-mobile-20260912` from the exact current `main`.
+- Required scope is exactly the 271 certified Mobile corpus records. Prior corpus certification and final witness remain closed evidence and will not be rebuilt.
+- Owned output root is `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**`; no other Chat ownership or global authority is writable in this lane.
+- Decision: resolve semantic/binding/application-layer readiness and projection debt only from current canonical authority; preserve unknowns; no broad rediscovery, no canonical ID minting, no RIFAT/product overwrite, no projection repair.
+- Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and is not being inspected.
