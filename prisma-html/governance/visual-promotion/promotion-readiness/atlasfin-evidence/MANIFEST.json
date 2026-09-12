@@ -1,0 +1,61 @@
+{
+  "schema": "prisma.visual-promotion.atlasfin-promotion-readiness-evidence-manifest.v1",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "chatId": 5,
+  "lane": "ATLASFIN_BRIDGE",
+  "phaseRole": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
+  "certifiedCorpusPath": "prisma-html/governance/visual-promotion/contracts/corpus-certification",
+  "certifiedInputCount": 2097,
+  "certifiedAtlasfinReferenceCount": 2421,
+  "certifiedValidAtlasfinReferenceCount": 2421,
+  "hardInvalidReferenceCount": 0,
+  "representationOnlyNormalizationCount": 341,
+  "semanticMutationCount": 0,
+  "referenceAnalysisRows": 8,
+  "identityRecipeReuseCandidateRows": 0,
+  "crossSurfaceSemanticEvidenceRows": 0,
+  "visualOnlyEquivalenceRows": 3,
+  "atlasfinRecipeReferenceCount": 324,
+  "atlasfinAdapterReferenceCount": 2097,
+  "recipeReviewGroups": {
+    "REC.table.governed.v2": {"tablet": 66, "pc": 105, "total": 171},
+    "REC.card.governed.v2": {"tablet": 41, "pc": 54, "total": 95},
+    "REC.panel.governed.v2": {"tablet": 20, "pc": 27, "total": 47},
+    "REC.overlay.governed.v2": {"tablet": 11, "total": 11}
+  },
+  "certifiedSemanticReview": {
+    "groupCount": 10,
+    "crossSurfaceGroupCount": 0,
+    "crossSurfaceCanonicalGroupCount": 0
+  },
+  "identityRecipeRegistry": {
+    "path": "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+    "recipeCount": 1,
+    "existingRecipeIds": ["REC.button.primary"],
+    "exactAtlasfinRecipeIdMatches": 0
+  },
+  "outputs": [
+    "REFERENCE_ANALYSIS.jsonl",
+    "IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl",
+    "CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl",
+    "VISUAL_ONLY_EQUIVALENCE.jsonl",
+    "MANIFEST.json",
+    "SUMMARY.md"
+  ],
+  "invariants": {
+    "atlasfinIsSupportOnly": true,
+    "recipeEqualityIsSemanticAuthority": false,
+    "unknownRemainsUnknown": true,
+    "canonicalIdsMinted": false,
+    "perSurfaceResolutionRowsWritten": false,
+    "materialityCatalogInspected": false,
+    "canonicalAuthorityMutationPerformed": false,
+    "productRuntimeMutationPerformed": false,
+    "filesManifestMutationPerformed": false
+  },
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false
+}
