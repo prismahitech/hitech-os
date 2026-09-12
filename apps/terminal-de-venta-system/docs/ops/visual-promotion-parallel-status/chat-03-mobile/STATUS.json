@@ -4,12 +4,12 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:53:00-06:00",
+  "state": "READY_FOR_INTEGRATION",
+  "updatedAt": "2026-09-11T22:54:00-06:00",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat3/mobile-corpus-cert-20260904",
   "workHead": "664035e83943ae48c923585765d3c505b1bd8c53",
-  "summary": "Chat 3 MOBILE_FINAL_WITNESS is independently reproducing the immutable Mobile certification. Exact-head verification now confirms 271 normalized + 271 certification rows, zero invalid/duplicate/missing/extra targets, zero semantic mutations, exact 133 CURRENT + 138 DRIFT, and zero hash mismatches. Final reference/provenance closure is in progress.",
+  "summary": "PASS_MOBILE_CORPUS_WITNESS. Chat 3 independently verified the immutable Mobile certification head from exact Git tree bytes: 271/271 normalized, 271/271 certification, invalid=0, unique targets=271, duplicate/missing/extra=0, semanticMutationCount=0, 271 VALID_REGISTER_TARGET_FIRST, projection partition 133 CURRENT + 138 DRIFT, zero source/normalized hash mismatches, representation-only provenance preserved, strict NDC/Atlasfin/Identity references valid, and no RIFAT-vs-product repair direction selected. Chat 3 is now in CERTIFIED_HOLD.",
   "blockers": [],
   "findings": [
     "The strict Control Plane candidate contract at source head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb rejects the original Mobile top-level projection object and requires its projection fields at top level.",
@@ -23,7 +23,8 @@
     "Independent exact-Git-blob readback reproduced all certification file SHA-256 digests and all 271 source-record plus 271 normalized-record SHA-256 pins with zero mismatches.",
     "All 271 certification labels are VALID_REGISTER_TARGET_FIRST and the projection partition is exactly 133 CURRENT + 138 DRIFT.",
     "All 138 DRIFT rows explicitly preserve no repair direction, retain projection-hash-drift, REGISTER_TARGET_FIRST, and null applicationLayerId; no suspicious RIFAT-vs-product repair selection was found.",
-    "Representation-only normalization reconstructs exactly from source evidence: semanticDiffCount=0, representationErrorCount=0, and 1,493 evidence-reference conversions preserve original values in certification provenance."
+    "Representation-only normalization reconstructs exactly from source evidence: semanticDiffCount=0, representationErrorCount=0, and 1,493 evidence-reference conversions preserve original values in certification provenance.",
+    "Current main remained 7c5b8d477a9006c5184ddbc806874b6e7c02571c through final witness closure; the pinned NDC, Atlasfin and Identity registry Git blobs are byte-identical to those at the immutable certification head."
   ],
   "decisions": [
     "Normalization is representation-only; the original worker bytes remain immutable evidence.",
@@ -31,14 +32,12 @@
     "Do not choose RIFAT-vs-product repair direction for any of the 138 DRIFT targets.",
     "Do not promote Atlasfin by similarity and do not use Materiality Catalog.",
     "Do not refresh prisma-html/FILES_MANIFEST.json and do not open a Chat 3 PR; final assembly belongs to Chat 6.",
-    "Certification status for all 271 rows is VALID_REGISTER_TARGET_FIRST; this does not upgrade promotionStatus or authorize GVAE."
+    "Certification status for all 271 rows is VALID_REGISTER_TARGET_FIRST; this does not upgrade promotionStatus or authorize GVAE.",
+    "Publish PASS_MOBILE_CORPUS_WITNESS and enter CERTIFIED_HOLD; perform no correction, promotion, projection repair, product/runtime mutation or certification-branch mutation."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/candidates/mobile/certification/MANIFEST.json",
-    "prisma-html/governance/visual-promotion/candidates/mobile/certification/NORMALIZED.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/mobile/certification/CERTIFICATION.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/mobile/certification/INVALID.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/mobile/certification/SUMMARY.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/LOG.md"
   ],
   "validations": [
     {
@@ -94,31 +93,56 @@
     {
       "name": "final witness exact-head accounting",
       "result": "PASS",
-      "details": "NORMALIZED=271, CERTIFICATION=271, INVALID=0, uniqueTargetIds=271, duplicate/missing/extra=0."
+      "details": "At certification head 664035e83943ae48c923585765d3c505b1bd8c53: NORMALIZED=271, CERTIFICATION=271, INVALID=0, uniqueTargetIds=271, duplicate/missing/extra=0."
     },
     {
-      "name": "final witness semantic invariants",
+      "name": "final witness certification labels and projection partition",
       "result": "PASS",
-      "details": "semanticMutationCount=0; certification labels 271 VALID_REGISTER_TARGET_FIRST; projection partition 133 CURRENT + 138 DRIFT; 138/138 drift rows retain no-repair-direction and REGISTER_TARGET_FIRST."
+      "details": "271/271 certification labels are VALID_REGISTER_TARGET_FIRST. Projection status is exactly 133 CURRENT + 138 DRIFT."
+    },
+    {
+      "name": "final witness no-repair-direction invariant",
+      "result": "PASS",
+      "details": "138/138 DRIFT rows explicitly retain no repair direction, projection-hash-drift, REGISTER_TARGET_FIRST and null applicationLayerId; no RIFAT-vs-product repair choice detected."
+    },
+    {
+      "name": "final witness representation-only normalization",
+      "result": "PASS",
+      "details": "semanticDiffCount=0; representationErrorCount=0; 1,493 evidence-ref conversions reconstruct normalized evidence exactly and certification provenance preserves original qualified/raw values."
     },
     {
       "name": "final witness provenance hashes",
       "result": "PASS",
-      "details": "271/271 source-record hashes and 271/271 normalized-record hashes reproduced with zero mismatches; file SHA-256 digests reproduce exactly."
+      "details": "271/271 source-record SHA-256 pins and 271/271 normalized-record SHA-256 pins reproduce with zero mismatches."
+    },
+    {
+      "name": "final witness output digests",
+      "result": "PASS",
+      "details": "NORMALIZED sha256=bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1; CERTIFICATION sha256=81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287; INVALID sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855."
+    },
+    {
+      "name": "final witness strict reference validity",
+      "result": "PASS",
+      "details": "271/271 strictCandidateValidation=PASS and referenceValidation=PASS. NDC SURF.mb.owner_home, Atlasfin ADP.MB.TOUCH.V2 and Identity prisma.adapter.mobile.v1 remain present; their registry blobs match certification-head blobs exactly on current main."
+    },
+    {
+      "name": "final witness prohibited actions",
+      "result": "PASS",
+      "details": "Materiality Catalog not inspected; no broad rediscovery; no product/runtime mutation; no canonical promotion; no certification/source repair."
     }
   ],
   "unresolved": [
-    "The 138 projection DRIFT records still require later authority reconciliation; corpus certification intentionally does not select RIFAT or product as repair truth.",
-    "All 271 outcomes still require semantic/binding/application promotion beyond REGISTER_TARGET_FIRST before any exact application authority can exist.",
-    "Global corpus assembly, one-time FILES_MANIFEST refresh, final gates and integration PR are owned by Chat 6."
+    "The 138 projection DRIFT records intentionally remain for later authority reconciliation; this witness does not select RIFAT or product as repair truth.",
+    "All 271 Mobile targets remain REGISTER_TARGET_FIRST and are not APPLY_READY.",
+    "Global corpus assembly, witness cross-check, one-time FILES_MANIFEST refresh, final gates, PR and merge remain Chat 6 responsibilities."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Complete strict current-registry reference verification and publish PASS_MOBILE_CORPUS_WITNESS only if the remaining final-witness invariant is clean.",
+  "nextAction": "CERTIFIED_HOLD. Chat 6 may consume handoff.parallelWitness directly from status/vp-chat-03-mobile. Chat 3 performs no further mutation unless a later bounded, evidence-backed correction request is issued.",
   "handoff": {
     "readiness": "READY_FOR_INTEGRATION",
-    "phase": "CANDIDATE_CORPUS_CERTIFICATION_PARALLEL",
-    "result": "PASS_MOBILE_CANDIDATE_CORPUS_CERTIFIED",
+    "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+    "result": "PASS_MOBILE_CORPUS_WITNESS",
     "certificationBranch": "chat3/mobile-corpus-cert-20260904",
     "certificationHead": "664035e83943ae48c923585765d3c505b1bd8c53",
     "certificationBaseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
@@ -154,30 +178,88 @@
     ],
     "parallelWitness": {
       "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-      "result": "IN_PROGRESS",
+      "result": "PASS_MOBILE_CORPUS_WITNESS",
       "certificationHead": "664035e83943ae48c923585765d3c505b1bd8c53",
       "expectedInputCount": 271,
-      "materialityCatalogInspected": false,
-      "productRuntimeMutation": false,
-      "canonicalPromotionPerformed": false,
-      "defects": [],
+      "outputGitBlobShas": {
+        "MANIFEST.json": "73a83bddce5f9c1b8c2ff1d968c122d1050282ab",
+        "NORMALIZED.jsonl": "cc474d39d2027371921d8aba19ee02911c96b0f2",
+        "CERTIFICATION.jsonl": "5b1ebf8f14557a104419fd13b27b7ca34bdc2664",
+        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "SUMMARY.md": "843487a2c2bbf93293b6464452fb6cb16558428d"
+      },
+      "outputSha256": {
+        "NORMALIZED.jsonl": "bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1",
+        "CERTIFICATION.jsonl": "81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287",
+        "INVALID.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceEvidenceSha256": {
+        "UNRESOLVED.jsonl": "291ca7bdd5f0c7c26064c0cf8a0d2bb1c30b69797f6b988a0cd19965c7c17350",
+        "CONFLICTS.jsonl": "f34febd565cdb691c2e2aa47abd3060d5a0f44cbf18cb59c9d3fb2b8cb54faee"
+      },
       "normalizedCount": 271,
       "certificationCount": 271,
       "invalidCount": 0,
+      "uniqueTargetIds": 271,
       "duplicateTargetIds": 0,
+      "missingTargetIds": 0,
+      "extraTargetIds": 0,
       "semanticMutationCount": 0,
+      "certificationStatusCounts": {
+        "VALID_REGISTER_TARGET_FIRST": 271
+      },
       "projectionStatusCounts": {
         "CURRENT": 133,
         "DRIFT": 138
       },
-      "certificationStatusCounts": {
-        "VALID_REGISTER_TARGET_FIRST": 271
+      "driftInvariantCounts": {
+        "noRepairDirection": 138,
+        "projectionHashDriftBlocker": 138,
+        "registerTargetFirst": 138,
+        "nullApplicationLayerId": 138
       },
-      "sourceRecordHashMismatches": 0,
-      "normalizedRecordHashMismatches": 0,
-      "semanticDiffCount": 0,
-      "representationErrorCount": 0,
-      "rifatVsProductRepairDirectionSelected": false
-    }
+      "provenanceVerification": {
+        "sourceRecordsChecked": 271,
+        "sourceRecordHashMismatches": 0,
+        "normalizedRecordsChecked": 271,
+        "normalizedRecordHashMismatches": 0,
+        "sourceTargetMismatches": 0,
+        "semanticDiffCount": 0,
+        "representationErrorCount": 0,
+        "evidenceRefConversionCount": 1493,
+        "originalQualifiedRawValuesPreserved": true
+      },
+      "strictReferenceValidation": {
+        "strictCandidatePassCount": 271,
+        "referencePassCount": 271,
+        "ndc": {
+          "id": "SURF.mb.owner_home",
+          "registryGitBlobSha": "44c29f0333144501b0bef2e36c0aed0d3865ef2f",
+          "currentMainBlobMatchesCertification": true,
+          "valid": true
+        },
+        "atlasfin": {
+          "id": "ADP.MB.TOUCH.V2",
+          "registryGitBlobSha": "f6eb2a32ff7a18ec80c6917654fc6d63c9024319",
+          "currentMainBlobMatchesCertification": true,
+          "valid": true
+        },
+        "identity": {
+          "id": "prisma.adapter.mobile.v1",
+          "registryGitBlobSha": "b284f0300ae5cd6d88a5d6cd252c11858ab7376d",
+          "currentMainBlobMatchesCertification": true,
+          "valid": true
+        }
+      },
+      "rifatVsProductRepairDirectionSelected": false,
+      "materialityCatalogInspected": false,
+      "broadRediscoveryPerformed": false,
+      "productRuntimeMutation": false,
+      "canonicalPromotionPerformed": false,
+      "runtimeVisualGreen": false,
+      "defects": [],
+      "holdState": "CERTIFIED_HOLD"
+    },
+    "holdState": "CERTIFIED_HOLD"
   }
 }
