@@ -5,12 +5,19 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T11:58:30Z",
+  "updatedAt": "2026-09-12T13:16:00Z",
   "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
-  "workBranch": "chat6/promotion-readiness-control-plane-20260912",
-  "workHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION phase scaffold is implemented on Chat 6 work branch. Canonical prompts, status mapping, disjoint ownership, readiness vocabulary, contracts/schemas, baseline/setup evidence and deterministic validator/composer tooling are present. No certified-corpus, product/runtime or global canonical authority bytes were modified.",
-  "blockers": [],
+  "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
+  "workHead": "85a9e89678986e512fe3424979866a0f61272555",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION phase scaffold is merged on current main. Chat 6 is continuing only its control-plane lane. Current task-exact AutoMesh on main passes with 100% required-authority coverage and zero blockers. Review found the canonical readiness composer branch has one real fail-closed defect: compose_plan references undefined canonical_group_keys; tooling is not yet safe to merge.",
+  "blockers": [
+    {
+      "scope": "chat6-control-plane",
+      "code": "PROMOTION_READINESS_COMPOSER_UNDEFINED_GROUP_KEYS",
+      "detail": "prisma-html/tools/visual_promotion/promotion_readiness.py on chat6/canonical-promotion-readiness-control-plane-20260912 references canonical_group_keys in compose_plan without defining it.",
+      "impact": "Full composition would fail at runtime after all worker handoffs. Do not merge tooling until corrected and covered by tests."
+    }
+  ],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
     "Current Visual Control census and Target Index are reusable physical truth. DISCOVERY_ONLY is not UNDISCOVERED and broad recensus is not a legal shortcut.",
@@ -63,7 +70,10 @@
     "PRs #539 and #540 were proven byte-superseded on merged main by exact Git blob equality for all five owned source paths in each PR, then closed without merge to avoid duplicate history.",
     "Revalidated canonical corpus on main: 2,097 input/certification rows; 139 VALID_ELIGIBLE_CANDIDATE; 1,926 VALID_REGISTER_TARGET_FIRST; 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; GVAE_EXACT_APPLY=0; authorized canonical promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; semantic review groups=10; crossSurfaceGroupCount=0; Atlasfin refs=2,421 with hardInvalidRefCount=0.",
     "Revalidated canonical corpus on main: 2,097 records, 139 VALID_ELIGIBLE_CANDIDATE, 1,926 VALID_REGISTER_TARGET_FIRST, 32 VALID_BLOCKED; Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; semantic review groups=10; cross-surface groups=0; Atlasfin refs=2,421/2,421; Materiality uninspected.",
-    "Phase setup branch now defines six disjoint write roots and machine-readable readiness/projection/cross-surface classifications; Chat 6 tooling enforces exact target-set zero-loss, no worker canonical-ID minting, Atlasfin-not-semantic-authority, input status preservation and collision checks."
+    "Phase setup branch now defines six disjoint write roots and machine-readable readiness/projection/cross-surface classifications; Chat 6 tooling enforces exact target-set zero-loss, no worker canonical-ID minting, Atlasfin-not-semantic-authority, input status preservation and collision checks.",
+    "Current canonical main is 6cd1c4fb71efe04f03635c613b2a95880d36c59f (PR #550 phase bootstrap merged). The phase prompt/index/contracts are canonical and disjoint; Chats 1-5 have not yet published promotionReadiness receipts.",
+    "Task-exact AutoMesh run 34692497931 on current main is PASS_COMPOSED_AUTHORITY_MESH with promotion-readiness-governance 20/20 authorities and promotion-readiness-composer 27/27 authorities, zero blockers and Layer Map generation.",
+    "Canonical anti-rework gate logic re-evaluated against current main authority blobs for visual.generic_application_engine_v1 / ADVANCE: PASS_ANTI_REWORK_GATE; capability remains DONE / SOURCE_READY / doNotRebuild=true."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -389,7 +399,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Open the bounded phase-setup PR, consume VISCORE's deterministic FILES_MANIFEST candidate, commit that manifest once, require exact-head gates green, merge to main, then read Chats 1-5 promotionReadiness receipts directly.",
+  "nextAction": "Fix only the Chat 6-owned promotion_readiness.py/test defect on the canonical control-plane branch, validate fail-closed cross-surface composition behavior, then open a bounded PR. Continue reading Chats 1-5 mailboxes directly; do not compose until all promotionReadiness receipts exist.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -826,17 +836,17 @@
     },
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
-      "role": "CANONICAL_PROMOTION_READINESS_CONTROL_PLANE",
+      "role": "CANONICAL_PROMOTION_READINESS_COMPOSER",
       "result": "IN_PROGRESS",
-      "canonicalMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+      "canonicalMain": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
       "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
       "antiReworkMutation": "PASS_ANTI_REWORK_GATE",
       "authorityMesh": {
-        "runId": 34692209649,
-        "artifactId": 10298070499,
-        "artifactDigest": "sha256:9ffb78fa7f5d9b02eff050b4761ff30d779da34566f3c34fdcfbcbf113f32a91",
-        "requestDigest": "51ef6177f3b04b0614d56b4ab547431392cb3bcde6c5aa79b94061c44ea95484",
-        "repoHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+        "runId": 34692497931,
+        "artifactId": 10297371448,
+        "artifactDigest": "sha256:b84a9994231181f00451ee4be5db12232683b1fe08f1fc3d9d990f901acf0d94",
+        "requestDigest": "7ed81364d69deaee91f4c7a1443baaf64d301d918e1598083f16dac1c1e5a386",
+        "repoHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
         "status": "PASS_COMPOSED_AUTHORITY_MESH",
         "requiredAuthorityCoveragePct": 100,
         "blockers": 0,
@@ -858,7 +868,11 @@
         "certifiedCorpusModified": false,
         "productRuntimeMutation": false,
         "canonicalAuthorityMutation": false
-      }
+      },
+      "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
+      "antiReworkCurrentHead": "PASS_ANTI_REWORK_GATE",
+      "workersReadyToStart": true,
+      "workerReceiptsPresent": 0
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
