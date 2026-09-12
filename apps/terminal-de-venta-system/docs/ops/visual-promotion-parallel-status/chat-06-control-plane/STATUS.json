@@ -5,19 +5,12 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T13:16:00Z",
+  "updatedAt": "2026-09-12T13:22:00Z",
   "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-  "workHead": "85a9e89678986e512fe3424979866a0f61272555",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION phase scaffold is merged on current main. Chat 6 is continuing only its control-plane lane. Current task-exact AutoMesh on main passes with 100% required-authority coverage and zero blockers. Review found the canonical readiness composer branch has one real fail-closed defect: compose_plan references undefined canonical_group_keys; tooling is not yet safe to merge.",
-  "blockers": [
-    {
-      "scope": "chat6-control-plane",
-      "code": "PROMOTION_READINESS_COMPOSER_UNDEFINED_GROUP_KEYS",
-      "detail": "prisma-html/tools/visual_promotion/promotion_readiness.py on chat6/canonical-promotion-readiness-control-plane-20260912 references canonical_group_keys in compose_plan without defining it.",
-      "impact": "Full composition would fail at runtime after all worker handoffs. Do not merge tooling until corrected and covered by tests."
-    }
-  ],
+  "workHead": "3a969d45888f48c127325d467711c99d67915944",
+  "summary": "Chat 6 control-plane tooling defect is corrected on the canonical work branch and bounded PR #552 is open with exactly two changed Chat 6-owned files. Current-main anti-rework and task-exact Authority Mesh are PASS. Exact-head CI/VISCORE/ForgeOS/Sync validation is running.",
+  "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
     "Current Visual Control census and Target Index are reusable physical truth. DISCOVERY_ONLY is not UNDISCOVERED and broad recensus is not a legal shortcut.",
@@ -73,7 +66,8 @@
     "Phase setup branch now defines six disjoint write roots and machine-readable readiness/projection/cross-surface classifications; Chat 6 tooling enforces exact target-set zero-loss, no worker canonical-ID minting, Atlasfin-not-semantic-authority, input status preservation and collision checks.",
     "Current canonical main is 6cd1c4fb71efe04f03635c613b2a95880d36c59f (PR #550 phase bootstrap merged). The phase prompt/index/contracts are canonical and disjoint; Chats 1-5 have not yet published promotionReadiness receipts.",
     "Task-exact AutoMesh run 34692497931 on current main is PASS_COMPOSED_AUTHORITY_MESH with promotion-readiness-governance 20/20 authorities and promotion-readiness-composer 27/27 authorities, zero blockers and Layer Map generation.",
-    "Canonical anti-rework gate logic re-evaluated against current main authority blobs for visual.generic_application_engine_v1 / ADVANCE: PASS_ANTI_REWORK_GATE; capability remains DONE / SOURCE_READY / doNotRebuild=true."
+    "Canonical anti-rework gate logic re-evaluated against current main authority blobs for visual.generic_application_engine_v1 / ADVANCE: PASS_ANTI_REWORK_GATE; capability remains DONE / SOURCE_READY / doNotRebuild=true.",
+    "Bounded PR #552 contains only prisma-html/tools/visual_promotion/promotion_readiness.py and prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py; no corpus, canonical authority or product/runtime paths."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -108,7 +102,8 @@
     "Treat the current-head anti-rework decision as deterministically preserved because all four canonical Factory Ledger authority blobs are unchanged from the previously PASSed gate base, requested action remains ADVANCE, and the required fresh current-head Mesh is now PASS with 100% coverage/zero blockers; no capability semantics changed.",
     "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase.",
     "New phase will be safely parallelized with six disjoint promotion-readiness roots; certified corpus remains read-only historical evidence and global canonical authority remains untouched until a later plan/gate barrier.",
-    "Merge the phase scaffold to canonical main before worker execution so all Chats can independently resolve the same canonical prompt/status mapping without branch-specific instructions."
+    "Merge the phase scaffold to canonical main before worker execution so all Chats can independently resolve the same canonical prompt/status mapping without branch-specific instructions.",
+    "Do not compose or create CANONICAL_PROMOTION_PLAN until Chats 1-5 publish current-phase promotionReadiness receipts; merge only the read-only validator/composer tooling if exact-head gates pass."
   ],
   "changedPaths": [
     "prisma-html/docs/ops/visual-promotion-parallel/README.md",
@@ -399,7 +394,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Fix only the Chat 6-owned promotion_readiness.py/test defect on the canonical control-plane branch, validate fail-closed cross-surface composition behavior, then open a bounded PR. Continue reading Chats 1-5 mailboxes directly; do not compose until all promotionReadiness receipts exist.",
+  "nextAction": "Wait for exact-head PR #552 gates; if green and main remains compatible, merge the bounded tooling PR, verify merged-main tree, publish blocker-cleared milestone, then continue direct mailbox monitoring for Chats 1-5 promotionReadiness receipts.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -872,7 +867,15 @@
       "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
       "antiReworkCurrentHead": "PASS_ANTI_REWORK_GATE",
       "workersReadyToStart": true,
-      "workerReceiptsPresent": 0
+      "workerReceiptsPresent": 0,
+      "toolingPullRequest": 552,
+      "toolingPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/552",
+      "toolingHead": "3a969d45888f48c127325d467711c99d67915944",
+      "toolingChangedPaths": [
+        "prisma-html/tools/visual_promotion/promotion_readiness.py",
+        "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py"
+      ],
+      "toolingValidationState": "RUNNING"
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
