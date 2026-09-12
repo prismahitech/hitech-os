@@ -293,3 +293,11 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Universal anti-rework PROPOSAL and MUTATION evaluations: `PASS_ANTI_REWORK_GATE`, capability `visual.generic_application_engine_v1`, action `ADVANCE`, `doNotRebuild=true` preserved.
 - Fresh Authority Mesh run `34691841895`: `PASS_COMPOSED_AUTHORITY_MESH`; both lanes 100% coverage; blockers=0; Layer Map present; artifact `10297390387`, digest `sha256:4fe961b2860c5d0a97bc106b87f57fd95f6f4c8d1b4329e614603150434919eb`.
 - Product/runtime mutation, canonical registration, Materiality use, recensus and broad rediscovery remain forbidden.
+
+### 2026-09-12T11:54:00Z — PROGRESS
+- Opened bootstrap PR `#550` from `chat6/canonical-promotion-readiness-20260912@b0dba951eaff6664a386700b55215298abc8572b`.
+- Six new phase roles and disjoint phase output roots are encoded in the canonical prompt and `STATUS_INDEX.json`.
+- Added strict machine contracts for per-target readiness records, surface manifests, cross-surface semantic groups and final canonical-promotion plans.
+- Added machine-readable exact phase baseline with the revalidated 2,097-record accounting and known blockers.
+- Certified corpus bytes remain untouched. No canonical registration, product/runtime mutation, Materiality read, recensus or GVAE APPLY occurred.
+- Exact-head CI/VISCORE/ForgeOS/Sync are running. Mechanical FILES_MANIFEST refresh is the remaining bootstrap serialization point.
