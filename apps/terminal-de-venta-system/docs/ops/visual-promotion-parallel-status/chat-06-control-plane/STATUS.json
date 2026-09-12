@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:42:00Z",
+  "updatedAt": "2026-09-12T06:45:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
-  "workBranch": "chat6/candidate-corpus-cert-20260904",
-  "workHead": "73fb33e42eeb2aa66a0816bcffc2d59fab54d876",
-  "summary": "All five independent corpus witnesses PASS. AutoMesh v2 revalidation against canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c detected relevant drift and completed a full fresh Authority Mesh successfully: run 34678646588, artifact 10293925424, PASS_COMPOSED_AUTHORITY_MESH, 100% required authority coverage in both Chat 6 lanes, zero blockers, Layer Map present. The four Factory Ledger authority blobs are byte-identical by Git blob identity to the previously PASSed anti-rework gate base; capability remains DONE/SOURCE_READY/doNotRebuild=true with ADVANCE.",
+  "workBranch": "chat6/candidate-corpus-final-integration-20260912",
+  "workHead": "f52d9d9915179f805b92e11b3a168100eeb505c6",
+  "summary": "Fresh final integration assembly now exists directly on canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. It contains exactly 88 unique accepted paths from immutable worker/certification/Atlasfin/Chat6 head-tree blobs and no FILES_MANIFEST refresh yet. Five witnesses PASS and current-head Authority Mesh PASS.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -56,7 +56,8 @@
     "Universal anti-rework gate classifies visual.generic_application_engine_v1 as DONE/SOURCE_READY/doNotRebuild=true and permits ADVANCE. PROPOSAL and MUTATION evaluations both PASS.",
     "Current canonical main advanced to 7c5b8d477a9006c5184ddbc806874b6e7c02571c via mailbox-driven final-verification coordination; this is a drift event requiring AutoMesh v2 classification before any new governed mutation.",
     "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used.",
-    "AutoMesh v2 run 34678646588 detected BLOCKED_RELEVANT_DRIFT and correctly executed full refresh; final state PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT on main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Fresh preflight/compose reported 100% authority coverage for both Chat 6 lanes, zero blockers and Layer Map present."
+    "AutoMesh v2 run 34678646588 detected BLOCKED_RELEVANT_DRIFT and correctly executed full refresh; final state PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT on main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Fresh preflight/compose reported 100% authority coverage for both Chat 6 lanes, zero blockers and Layer Map present.",
+    "Fresh final integration branch chat6/candidate-corpus-final-integration-20260912 was created from current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c with exactly 88 unique accepted paths and exact existing Git blob identities; assembly commit f52d9d9915179f805b92e11b3a168100eeb505c6."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -289,7 +290,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Create a fresh integration branch from current main and assemble only exact accepted head-tree bytes: worker candidate shards, owner certification derivatives, Atlasfin bridge/certification, Chat 6 control-plane and the nine materialized global corpus outputs. Then cross-check before the single FILES_MANIFEST refresh.",
+  "nextAction": "Select the canonical mechanical one-time FILES_MANIFEST refresh path that cannot mutate unrelated authority; then refresh exactly once, open the single integration PR, and run exact-head gates.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -604,7 +605,7 @@
       "sharedUi": "553577aa74045c73ab9c92d1f81538e7e0a8c65a",
       "atlasfin": "6c7743f55434eb8d3429f286e2f9eae275d93d87"
     },
-    "integrationBranch": null,
+    "integrationBranch": "chat6/candidate-corpus-final-integration-20260912",
     "currentHeadAuthorityMesh": "PASS_COMPOSED_AUTHORITY_MESH",
     "authorityMeshRun": 33949294075,
     "authorityMeshRequestDigest": "5cd15e40ea840664e61fc9683f0726dc28d330303f527fc8bd192c7a3b82a7c7",
@@ -615,6 +616,11 @@
       "sharedUi": "PASS_SHARED_UI_CORPUS_WITNESS",
       "atlasfin": "PASS_ATLASFIN_CORPUS_WITNESS"
     },
-    "finalWitnessesDirectlyRead": true
+    "finalWitnessesDirectlyRead": true,
+    "integrationHead": "f52d9d9915179f805b92e11b3a168100eeb505c6",
+    "integrationBase": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
+    "assemblyPathCount": 88,
+    "assemblyTree": "7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e",
+    "filesManifestRefreshed": false
   }
 }
