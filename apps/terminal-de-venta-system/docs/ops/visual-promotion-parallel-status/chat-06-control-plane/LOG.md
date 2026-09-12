@@ -363,3 +363,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Confirmed current-head AutoMesh run `34696570043` PASS on that exact head; artifact `10298622594`; 100% required-authority coverage; blockers=0; Layer Map present.
 - Provisioned worker refs only, all from exact current main, with zero worker-path commits: Chat 1 Tablet, Chat 2 PC, Chat 3 Mobile, Chat 4 Shared UI, Chat 5 Atlasfin evidence.
 - Did not write any worker mailbox or lane output. `handoff.promotionReadiness` remains missing for Chats 1–5, so composition remains fail-closed.
+
+### 2026-09-12T18:50:00Z — VALIDATION
+- Read full certified corpus blobs directly by Git blob SHA: candidate `af6b8a7...`, certification `05b4f36...`, current truth `1e36a9d...`.
+- Parsed counts: 2,097 candidate + 2,097 certification + 2,097 current-truth rows; surface partition 929/827/271/70 reproduced exactly.
+- Current Truth: Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; promotion 139 ELIGIBLE + 1,926 REGISTER_TARGET_FIRST + 32 BLOCKED; physical 2,094 CURRENT + 3 DRIFT; projection 1,820 CURRENT + 139 MISSING + 138 DRIFT.
+- Independently verified AutoMesh run `34696570043` is SUCCESS on exact current main `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; artifact `10298622594`, digest `sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2`.
+- Worker branches 1–5 remain identical to main (ahead=0/behind=0); no current-phase receipts yet. Final composer remains intentionally fail-closed.
