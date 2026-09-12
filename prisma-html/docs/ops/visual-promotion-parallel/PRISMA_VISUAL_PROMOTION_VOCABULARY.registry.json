@@ -1,6 +1,6 @@
 {
   "schema": "prisma.visual-promotion.interoperability-vocabulary.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "CANONICAL_PARALLEL_VOCABULARY",
   "scope": {
     "includedSurfaceKeys": [
@@ -124,7 +124,17 @@
       "evidenceRefs",
       "confidence",
       "blockers",
-      "notes"
+      "notes",
+      "promotionReadinessStatus",
+      "blockingAuthorityGaps",
+      "projectionAuthorityClassification",
+      "registrationCandidateKey",
+      "deterministicRegistrationPossible",
+      "postRegistrationWorkEntryPotential",
+      "semanticAuthorityRefs",
+      "crossSurfaceEvidenceRefs",
+      "canonicalCoalescingAllowed",
+      "equivalenceType"
     ]
   },
   "enums": {
@@ -186,6 +196,46 @@
       "SURFACE_BATCH_PLAN",
       "REGISTER_TARGET_FIRST",
       "BLOCKED"
+    ],
+    "promotionReadinessStatus": [
+      "READY_REUSE_EXISTING_AUTHORITY",
+      "READY_FOR_CANONICAL_REGISTRATION",
+      "BLOCKED_MISSING_SEMANTIC_AUTHORITY",
+      "BLOCKED_MISSING_RECIPE_AUTHORITY",
+      "BLOCKED_MISSING_ADAPTER_AUTHORITY",
+      "BLOCKED_MISSING_BINDING",
+      "BLOCKED_PROJECTION_AUTHORITY",
+      "BLOCKED_PHYSICAL_DRIFT",
+      "BLOCKED_MULTI_REGION_CONFLICT",
+      "BLOCKED_NDC_AMBIGUITY",
+      "BLOCKED_UNRESOLVED_AUTHORITY",
+      "NOT_APPLICABLE"
+    ],
+    "pcProjectionAuthorityClassification": [
+      "CANONICAL_PROJECTION_REQUIRED_MISSING",
+      "INTENTIONALLY_NON_PROJECTED",
+      "REFERENCE_OR_GOVERNOR_ONLY",
+      "STALE_AUTHORITY",
+      "UNRESOLVED",
+      "NOT_APPLICABLE"
+    ],
+    "mobileProjectionAuthorityClassification": [
+      "RIFAT_AUTHORITATIVE_PRODUCT_STALE",
+      "PRODUCT_LIKELY_NEWER_AUTHORITY_RECONCILIATION_REQUIRED",
+      "INTENTIONAL_DIVERGENCE",
+      "AMBIGUOUS",
+      "NOT_APPLICABLE"
+    ],
+    "postRegistrationWorkEntryPotential": [
+      "MAY_REACH_GVAE_EXACT_APPLY_AFTER_REGISTRATION_AND_RERUN",
+      "STILL_BLOCKED_AFTER_REGISTRATION",
+      "UNKNOWN_REQUIRES_RERUN",
+      "NOT_APPLICABLE"
+    ],
+    "equivalenceType": [
+      "CANONICAL_SEMANTIC_EQUIVALENCE",
+      "VISUAL_ONLY_SIMILARITY",
+      "NO_PROVEN_EQUIVALENCE"
     ]
   },
   "ndcEdgeTypes": [
@@ -299,5 +349,30 @@
     "statusMayAuthorizeMutation": false,
     "dedicatedBranchRequired": true,
     "crossChatMailboxWritesAllowed": false
+  },
+  "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "phaseWriteOwnership": {
+    "chat1": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/tablet/**"
+    ],
+    "chat2": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/pc/**"
+    ],
+    "chat3": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/mobile/**"
+    ],
+    "chat4": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**"
+    ],
+    "chat5": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin/**"
+    ],
+    "chat6": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/contracts/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/global/**",
+      "prisma-html/tools/visual_promotion/**",
+      "prisma-html/docs/ops/visual-promotion-parallel/**",
+      "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json"
+    ]
   }
 }
