@@ -142,3 +142,12 @@ No updates published yet.
 ## 2026-09-04T23:51:17-06:00 — HANDOFF
 - Chat 6 should consume `chat5/atlasfin-corpus-cert-20260904@6c7743f55434eb8d3429f286e2f9eae275d93d87` together with immutable raw worker heads and source bridge `chat5-atlasfin-bridge-20260904@c5ef78edcc1bcb50ca7b108e316cdc0dbe1034d0`.
 - Final `prisma-html/FILES_MANIFEST.json` refresh remains Chat 6/integration-owned and must happen exactly once after accepted corpus bytes are assembled.
+
+## 2026-09-11T22:45:00-06:00 — START
+- Re-read current canonical main instructions and resolved the normative phase as `CORPUS_FINAL_PARALLEL_VERIFICATION`.
+- Exact Chat 5 role is `ATLASFIN FINAL WITNESS`; expected result is `PASS_ATLASFIN_CORPUS_WITNESS` only if every immutable-head invariant reproduces.
+- Read current Chat 5 mailbox before work and published `IN_PROGRESS` on the dedicated status branch.
+- Immutable witness input is `chat5/atlasfin-corpus-cert-20260904@6c7743f55434eb8d3429f286e2f9eae275d93d87`.
+- Current canonical main is `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+- Bounded comparison from certification base to current main shows coordination/governance movement without structured Atlasfin authority drift, so the immutable certification remains eligible for read-only revalidation.
+- Materiality Catalog remains completely uninspected; product/runtime mutation and canonical promotion remain forbidden.
