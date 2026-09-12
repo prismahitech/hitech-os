@@ -453,7 +453,7 @@ def compose_plan(
         "blockedTargets": sorted(
             row["targetId"] for row in all_rows if str(row["promotionReadinessDecision"]).startswith("BLOCKED_")
         ),
-        "crossSurfaceSemanticGroups": [],
+        "crossSurfaceSemanticGroups": sorted(canonical_group_keys),
         "canonicalMutationAuthorized": False,
         "productRuntimeMutationAuthorized": False,
         "resolutionCorpusDigest": _sha256_json(all_rows),
