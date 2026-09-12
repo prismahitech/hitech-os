@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T11:58:00Z",
-  "baseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "updatedAt": "2026-09-12T12:00:00Z",
+  "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
   "workBranch": "chat6/promotion-readiness-control-plane-20260912",
-  "workHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
-  "summary": "Promotion-readiness bootstrap PR #550 is exact-head green and clean/mergeable. Mechanical FILES_MANIFEST refresh exactly matches the VISCORE candidate SHA-256 5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883 with 874 files excluding manifest. Exact final head passes CI, VISCORE1, ForgeOS and Sync Sentinel. Canonical main has not moved from the Authority Mesh base.",
+  "workHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION bootstrap is merged and verified on canonical main 6cd1c4fb71efe04f03635c613b2a95880d36c59f. Merged tree exactly equals certified PR #550 final head tree 429455089e874890dd84b2089b2e677e5af3bc33. Six mailbox-driven lanes, disjoint write ownership, machine vocabulary/contracts and baseline are now canonical and all six Chats may begin immediately. Chat 6 continues with composer tooling after revalidating Authority Mesh for the new main.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -380,7 +380,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Merge PR #550 with expected head 7d209c3eeeecca9ce45d250e91e0d52148958cee, verify merged main tree equals certified PR head tree, then publish phaseReady=true and begin Chat 6 composer tooling against the new canonical phase.",
+  "nextAction": "Revalidate the phase-bootstrap Authority Mesh artifact against merged main 6cd1c4fb71efe04f03635c613b2a95880d36c59f. If current-head authority remains PASS, begin Chat 6 dedicated promotion-readiness validator/composer tooling while reading Chats 1–5 mailboxes directly for new phase receipts.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -776,7 +776,7 @@
     "bootstrapPullRequest": 550,
     "bootstrapPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/550",
     "bootstrapHead": "b0dba951eaff6664a386700b55215298abc8572b",
-    "phaseReady": false,
+    "phaseReady": true,
     "lanes": {
       "chat1": {
         "role": "TABLET_PROMOTION_READINESS_RESOLVER",
@@ -846,6 +846,14 @@
       "VISCORE1": 34692332341,
       "ForgeOS": 34692332335,
       "SyncSentinel": 34692332327
-    }
+    },
+    "bootstrapMergedMain": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
+    "bootstrapMergedTree": "429455089e874890dd84b2089b2e677e5af3bc33",
+    "bootstrapFinalPrTree": "429455089e874890dd84b2089b2e677e5af3bc33",
+    "bootstrapTreeExact": true,
+    "canonicalPromptPath": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md",
+    "statusIndexPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
+    "statusContractPath": "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
+    "phaseOutputRoot": "prisma-html/governance/visual-promotion/promotion-readiness"
   }
 }
