@@ -5,17 +5,17 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "WAITING_EXTERNAL",
-  "updatedAt": "2026-09-12T21:57:00Z",
+  "updatedAt": "2026-09-12T22:04:32Z",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
   "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "summary": "Chat 6 is the active CANONICAL_PROMOTION_READINESS_COMPOSER. PR #552 is merged on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12, current-head anti-rework and Authority Mesh are PASS, and all six canonical work branches are aligned for the promotion-readiness phase. Chats 1-5 still have no handoff.promotionReadiness receipts, so composition remains fail-closed. Execution is turn-driven: worker chats require one owner activation turn, and Chat 6 requires a later owner turn to read and compose their receipts; no background polling is implied.",
+  "summary": "Chat 6 is active as CANONICAL_PROMOTION_READINESS_COMPOSER on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. The control-plane tooling from PR #552 is merged and current-head Authority Mesh remains PASS. Chat 6 work branch is now fast-forward aligned to current main. Worker lanes 1-5 are provisioned but still publish no handoff.promotionReadiness receipts, so final composition remains correctly fail-closed.",
   "blockers": [
     {
       "scope": "parallel-worker-handoffs",
       "code": "PROMOTION_READINESS_WORKER_HANDOFFS_MISSING",
-      "detail": "handoff.promotionReadiness is absent in the deterministic mailboxes for the five worker lanes. Their canonical work branches exist and are based on current main; no worker lane output has been fabricated or cross-written.",
-      "impact": "Chat 6 cannot validate zero-loss lane outputs or compose CANONICAL_PROMOTION_PLAN until all five owner-published receipts exist and pass exact branch/path/hash/accounting validation."
+      "detail": "Current-phase handoff.promotionReadiness receipts are absent for all five worker lanes. Their canonical work branches exist and remain at the phase base until each worker chat is activated.",
+      "impact": "Chat 6 cannot legally compose the final plan without owner-published worker evidence; it will not fabricate, infer, or cross-write another lane."
     }
   ],
   "findings": [
@@ -85,7 +85,9 @@
     "Full direct-blob audit completed for CANDIDATE_CORPUS.jsonl, CERTIFICATION.jsonl and CURRENT_TRUTH.json: 2,097/2,097/2,097 records parsed with exact surface partition 929 Tablet, 827 PC, 271 Mobile, 70 Shared UI.",
     "Current Truth independently reproduces Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; promotion 139 ELIGIBLE_CANDIDATE + 1,926 REGISTER_TARGET_FIRST + 32 BLOCKED; physical 2,094 CURRENT + 3 DRIFT; projection 1,820 CURRENT + 139 MISSING + 138 DRIFT.",
     "Current-head AutoMesh run 34696570043 is independently verified PASS on main d4b451cc92c597d02cfc65094922bd2c5dd17c12; artifact 10298622594 digest sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2.",
-    "All five provisioned worker branches currently compare identical to main (ahead=0, behind=0). No worker evidence has been fabricated or written by Chat 6."
+    "All five provisioned worker branches currently compare identical to main (ahead=0, behind=0). No worker evidence has been fabricated or written by Chat 6.",
+    "Current worker check at 2026-09-12T22:04:32Z: all five canonical readiness branches still point to main d4b451cc92c597d02cfc65094922bd2c5dd17c12 and all five mailboxes still lack handoff.promotionReadiness.",
+    "Chat 6 canonical work branch was fast-forwarded without force to current main d4b451cc92c597d02cfc65094922bd2c5dd17c12; no worker-owned, product/runtime, canonical authority or corpus bytes were changed."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -125,7 +127,8 @@
     "Reject the prior readiness Authority Mesh artifact for post-merge reuse because revalidation classified it BLOCKED_INVALID_PRIOR_AUTHORITY; use only fresh run 34696570043 for current main.",
     "Stop composition until all five current-phase worker receipts and exact work heads exist; prior corpus witness receipts do not substitute for promotionReadiness receipts.",
     "Do not create worker branches or write worker mailboxes from Chat 6; preserve disjoint lane ownership.",
-    "Execution liveness is turn-driven, not background polling: each worker needs one owner activation turn; Chat 6 needs a later owner turn to read worker mailboxes and compose. Repository mailboxes remove handoff relaying, not the need to activate chats."
+    "Execution liveness is turn-driven, not background polling: each worker needs one owner activation turn; Chat 6 needs a later owner turn to read worker mailboxes and compose. Repository mailboxes remove handoff relaying, not the need to activate chats.",
+    "Execution is turn-driven rather than background-polling: each worker chat needs one owner activation turn, and Chat 6 needs a later owner turn to consume the resulting deterministic receipts."
   ],
   "changedPaths": [
     "prisma-html/docs/ops/visual-promotion-parallel/README.md",
@@ -433,8 +436,8 @@
     "Assemble accepted bytes from then-current main, refresh FILES_MANIFEST once, run final gates, open one corpus-only PR and merge only if all required checks are green."
   ],
   "needsUserAction": true,
-  "userActionRequested": "Paste this same message once into each existing worker chat: \"Continue with your work. Re-read the canonical prompt and your own mailbox, then execute your current Chat assignment.\" After all worker chats finish, return to Chat 6 with a new turn. No per-chat numbering, prompt duplication or receipt relay is required.",
-  "nextAction": "Owner activates each existing worker chat with the same generic continuation message. Each worker resolves its own identity from repository truth, works only its lane, updates only its mailbox and publishes handoff.promotionReadiness. After the five workers finish, owner sends a new turn to Chat 6; Chat 6 then reads the five deterministic mailboxes/branches directly, validates receipts and composes only if all five are accepted.",
+  "userActionRequested": "Activate each of the five worker chats with the same message: \"Continue with your work. Re-read the canonical prompt and your own mailbox, then execute your current Chat assignment.\" Then return to Chat 6 after they finish. No chat number, per-chat prompt copy, or receipt relay is needed.",
+  "nextAction": "Remain ready for deterministic intake. Owner must activate each existing worker chat once with the same generic continuation message. When their five handoff.promotionReadiness receipts exist, Chat 6 will read the deterministic mailboxes/branches directly, validate exact head/path/hash/zero-loss/accounting/authority evidence, reject any invalid lane, and compose CANONICAL_PROMOTION_PLAN only after all five are accepted.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
