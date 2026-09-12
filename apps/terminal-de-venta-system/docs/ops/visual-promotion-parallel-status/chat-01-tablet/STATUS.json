@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "DONE",
-  "updatedAt": "2026-09-11T22:51:04-06:00",
-  "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-  "workBranch": "chat1/tablet-corpus-cert-20260904",
-  "workHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
-  "summary": "Chat 1 completed CORPUS_FINAL_PARALLEL_VERIFICATION as TABLET_FINAL_WITNESS. Independent exact-head verification reproduced every required invariant and published PASS_TABLET_CORPUS_WITNESS. Canonical continuation state is CERTIFIED_HOLD.",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-12T16:08:00-06:00",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
+  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "summary": "Chat 1 started CANONICAL_PROMOTION_READINESS_RESOLUTION as TABLET_PROMOTION_READINESS_RESOLVER from current main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Scope is the immutable 929-row certified Tablet corpus and exclusive output prisma-html/governance/visual-promotion/promotion-readiness/tablet/**.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -57,7 +57,9 @@
     "All five immutable worker source-file SHA-256 values recomputed and matched the certification MANIFEST.",
     "Both known Tablet DRIFT targets remain DRIFT / BLOCKED / BLOCKED and VALID_BLOCKED in CONFLICTS.",
     "Cobrar binding reuse remains exact at BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 with REC.button.primary, ACT.primary and LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE; Work Entry remains REGISTER_TARGET_FIRST.",
-    "Certification head is exactly one commit ahead of base 8cc1918c5e015d1408335c15313e7364e04859c2 and adds exactly the five certification files."
+    "Certification head is exactly one commit ahead of base 8cc1918c5e015d1408335c15313e7364e04859c2 and adds exactly the five certification files.",
+    "Current phase resolved from STATUS_INDEX.json as CANONICAL_PROMOTION_READINESS_RESOLUTION; Chat 1 role is TABLET_PROMOTION_READINESS_RESOLVER with expected receipt PASS_TABLET_PROMOTION_READINESS.",
+    "Assigned work branch chat1/canonical-promotion-readiness-tablet-20260912 already exists at current main d4b451cc92c597d02cfc65094922bd2c5dd17c12."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -82,7 +84,8 @@
     "Certify Tablet rows by identity pass-through because all 929 source records are already strict-record compatible; normalize only the canonical shard intake envelope and certification/provenance representation.",
     "Classify corpus validity separately from promotion readiness: valid REGISTER_TARGET_FIRST and valid BLOCKED records remain unresolved/blocked rather than being upgraded.",
     "Publish the certification head for Chat 6 consumption and make no PR or FILES_MANIFEST update from Chat 1.",
-    "For this phase, perform only independent read-only verification from exact certification head-tree bytes and write only this mailbox branch. Do not mutate certification bytes, candidate shards, product/runtime, global authority or FILES_MANIFEST.json."
+    "For this phase, perform only independent read-only verification from exact certification head-tree bytes and write only this mailbox branch. Do not mutate certification bytes, candidate shards, product/runtime, global authority or FILES_MANIFEST.json.",
+    "Reuse the immutable certified corpus and current canonical authority only. No recensus, broad rediscovery, Materiality Catalog, product/runtime mutation, projection repair, canonical-ID minting or global authority writes."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
@@ -242,7 +245,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. No further Chat 1 writes unless Chat 6/integration issues a bounded evidence-backed correction request.",
+  "nextAction": "Resolve all 929 Tablet certified targets into the promotion-readiness contract, validate zero-loss/hash pins/subset parity, then publish handoff.promotionReadiness.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -397,6 +400,16 @@
       "sourceOrCertificationMutationPerformed": false,
       "defects": []
     },
-    "holdState": "CERTIFIED_HOLD"
+    "holdState": "CERTIFIED_HOLD",
+    "promotionReadiness": {
+      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+      "result": "IN_PROGRESS",
+      "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
+      "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "expectedInputCount": 929,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutationPerformed": false,
+      "canonicalAuthorityMutationPerformed": false
+    }
   }
 }
