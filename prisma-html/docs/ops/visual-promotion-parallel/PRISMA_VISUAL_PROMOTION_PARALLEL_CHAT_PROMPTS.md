@@ -58,7 +58,184 @@ These rules are inherited by every chat below:
 - Publish immediately when this instruction is received, whenever a blocker appears/clears, after a material finding/decision/milestone, and at completion. Include work branch/head, blockers, findings, validations and next action.
 
 
-## CURRENT CONTINUATION PHASE — NORMATIVE OVERRIDE
+## CURRENT CONTINUATION PHASE — CANONICAL_PROMOTION_READINESS_RESOLUTION
+
+This section is the active normative assignment for Chats 1–6. It supersedes the closed corpus-final-verification phase below.
+
+Canonical input is the merged certified corpus under:
+`prisma-html/governance/visual-promotion/contracts/corpus-certification/`.
+
+Do not rebuild it, recensus, perform broad rediscovery, rebuild GVAE/Atlasfin, inspect Materiality, invent canonical IDs or convert recipe similarity into semantic authority.
+
+The phase is read-only/proposal with respect to product/runtime and global canonical authority.
+
+Common required outputs for Chats 1–4, under each lane's exclusive phase root:
+
+- `PROMOTION_RESOLUTION.jsonl`: exactly one row per certified target owned by the lane;
+- `CANONICAL_MEANING_PROPOSALS.jsonl`: only evidence-backed new-meaning proposals, never minted canonical IDs;
+- `EXISTING_AUTHORITY_REUSE.jsonl`: exact reusable NDC/Identity/recipe/adapter/binding evidence;
+- `BLOCKING_AUTHORITY_GAPS.jsonl`: explicit unresolved authorities;
+- `MANIFEST.json`: counts, source pins and output hashes;
+- `SUMMARY.md`: human summary preserving unknowns and blockers.
+
+Every `PROMOTION_RESOLUTION.jsonl` row must answer, when evidence exists: neutral/canonical meaning, existing NDC, existing Identity meaning, Identity recipe, Atlasfin support, Identity/surface adapter, exact physical target, region/slot/component/owner/layer, projection policy, exact binding, deterministic registration possibility, missing authority, post-registration Work Entry potential, blockers and cross-surface evidence.
+
+No worker may mint final `NDC`, `VIS.`, `BND.`, `TGT.`, `LYR.`, recipe or adapter IDs.
+
+### CHAT 1 — TABLET CANONICAL PROMOTION READINESS
+
+Role: `TABLET_CANONICAL_PROMOTION_READINESS`.
+
+Exclusive phase write root:
+`prisma-html/governance/visual-promotion/promotion-readiness/tablet/**`.
+
+Read the certified Tablet corpus and existing NDC/Identity/RIFAT/Target Index/Visual Control/Atlasfin authority selected by current task authority.
+
+Prioritize all 139 `VALID_ELIGIBLE_CANDIDATE` records. Determine how many have enough exact semantic + recipe + adapter + physical-coordinate + binding evidence for `READY_REUSE_EXISTING_AUTHORITY` or `READY_FOR_CANONICAL_REGISTRATION`.
+
+Preserve the two physical DRIFT records as blocked unless current authority explicitly resolves their drift. Do not recensus them broadly.
+
+Additional required output:
+`REGISTRATION_PROPOSALS.jsonl`.
+
+Completion receipt:
+`handoff.promotionReadiness.result = READY_TABLET_PROMOTION_READINESS_HANDOFF`.
+
+### CHAT 2 — PC CANONICAL PROMOTION READINESS
+
+Role: `PC_CANONICAL_PROMOTION_READINESS`.
+
+Exclusive phase write root:
+`prisma-html/governance/visual-promotion/promotion-readiness/pc/**`.
+
+Resolve all 827 certified PC targets using current authority only.
+
+For each of the 139 `projectionStatus=MISSING` records, additionally write:
+`PROJECTION_MISSING_CLASSIFICATION.jsonl`.
+
+Allowed classifications only:
+`CANONICAL_PROJECTION_REQUIRED_MISSING`,
+`INTENTIONALLY_NON_PROJECTED`,
+`REFERENCE_OR_GOVERNOR_ONLY`,
+`STALE_AUTHORITY`,
+`UNRESOLVED`.
+
+Do not repair projection, invent canonical sources or copy product bytes into RIFAT.
+
+Preserve the known selector DRIFT unless current authority resolves it exactly.
+
+Completion receipt:
+`handoff.promotionReadiness.result = READY_PC_PROMOTION_READINESS_HANDOFF`.
+
+### CHAT 3 — MOBILE CANONICAL PROMOTION READINESS
+
+Role: `MOBILE_CANONICAL_PROMOTION_READINESS`.
+
+Exclusive phase write root:
+`prisma-html/governance/visual-promotion/promotion-readiness/mobile/**`.
+
+Resolve all 271 certified Mobile targets using current authority only.
+
+For each of the 138 `projectionStatus=DRIFT` records, additionally write:
+`PROJECTION_DRIFT_CLASSIFICATION.jsonl`.
+
+Allowed classifications only:
+`RIFAT_AUTHORITATIVE_PRODUCT_STALE`,
+`PRODUCT_LIKELY_NEWER_AUTHORITY_RECONCILIATION_REQUIRED`,
+`INTENTIONAL_DIVERGENCE`,
+`AMBIGUOUS`.
+
+Do not choose a repair direction without evidence and do not mutate product or RIFAT.
+
+Completion receipt:
+`handoff.promotionReadiness.result = READY_MOBILE_PROMOTION_READINESS_HANDOFF`.
+
+### CHAT 4 — SHARED UI CANONICAL PROMOTION READINESS
+
+Role: `SHARED_UI_CANONICAL_PROMOTION_READINESS`.
+
+Exclusive phase write root:
+`prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**`.
+
+Resolve all 70 certified Shared UI targets from current authority only.
+
+The 19 no-region unresolved and 11 multi-region conflicts may be resolved only when existing ownership/region authority proves a unique outcome. Otherwise they remain blocked.
+
+Current NDC unresolved state and Atlasfin `NO_MATCH` remain unknown unless current evidence resolves them. Do not use Materiality.
+
+Additional required output:
+`REGION_CONFLICT_CLASSIFICATION.jsonl`.
+
+Completion receipt:
+`handoff.promotionReadiness.result = READY_SHARED_UI_PROMOTION_READINESS_HANDOFF`.
+
+### CHAT 5 — ATLASFIN SEMANTIC REFERENCE ANALYSIS
+
+Role: `ATLASFIN_SEMANTIC_REFERENCE_ANALYSIS`.
+
+Exclusive phase write root:
+`prisma-html/governance/visual-promotion/promotion-readiness/atlasfin/**`.
+
+Atlasfin remains read-only reference/cockpit, not semantic authority.
+
+Use the certified 2,421/2,421 Atlasfin references plus current NDC/Identity authority to produce:
+
+- `ATLASFIN_REFERENCE_ANALYSIS.jsonl`;
+- `IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl`;
+- `CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl`;
+- `VISUAL_ONLY_EQUIVALENCE.jsonl`;
+- `MANIFEST.json`;
+- `SUMMARY.md`.
+
+A cross-surface semantic group needs independent semantic evidence. Same Atlasfin recipe alone is `VISUAL_ONLY_SIMILARITY`, not canonical coalescing authority.
+
+Do not inspect Materiality and do not modify Atlasfin source registries.
+
+Completion receipt:
+`handoff.promotionReadiness.result = READY_ATLASFIN_PROMOTION_READINESS_HANDOFF`.
+
+### CHAT 6 — CANONICAL PROMOTION READINESS CONTROL PLANE
+
+Role: `CANONICAL_PROMOTION_READINESS_CONTROL_PLANE`.
+
+Exclusive phase roots:
+`prisma-html/governance/visual-promotion/promotion-readiness/contracts/**`
+and
+`prisma-html/governance/visual-promotion/promotion-readiness/global/**`.
+
+Chat 6 may also modify bounded `prisma-html/tools/visual_promotion/**` control-plane code/tests and the canonical parallel/status documents needed to run this phase.
+
+Chat 6 must:
+
+1. keep the certified corpus immutable;
+2. define machine-readable promotion-readiness schemas and canonical vocabulary;
+3. enforce exactly one worker resolution per certified target;
+4. read Chats 1–5 handoffs directly from their status branches;
+5. validate surface counts and exact target-set equality;
+6. validate no missing/extra/duplicate target IDs and no silent semantic mutation;
+7. validate existing-authority references and new-meaning proposals without minting IDs;
+8. analyze binding/registration collisions;
+9. compose cross-surface semantic groups only from independent semantic evidence;
+10. separately preserve visual-only equivalences;
+11. classify safe exact authority reuse, safe exact registration proposals, blocked and not-applicable records;
+12. run/revalidate Factory Ledger, Authority Mesh + Layer Map and Work Entry at the plan barrier;
+13. emit `CANONICAL_PROMOTION_PLAN.json`, `ZERO_LOSS_ACCOUNTING.json`, `COLLISIONS.json`, `CROSS_SURFACE_SEMANTIC_GROUPS.json`, `BLOCKING_AUTHORITY_GAPS.json`, `WORK_ENTRY_READINESS.json` and `SUMMARY.md`;
+14. stop before global canonical authority mutation unless a later explicit repository-owner authorization opens that subphase.
+
+Final required accounting:
+
+`2097 = readyExistingAuthorityReuse + readyCanonicalRegistrationProposals + legitimatelyBlocked + notApplicable`.
+
+If worker handoffs are not yet available, Chat 6 continues all independent control-plane work and stops only at the real external dependency, never by asking the owner to copy messages between Chats.
+
+Completion result:
+`READY_FOR_CANONICAL_PROMOTION_INTEGRATION`.
+
+### Phase hard stops
+
+This phase does not authorize CSS/SCSS/TSX/JSX mutation, product projection repair, canonical NDC/Identity/RIFAT/Target Index writes, GVAE APPLY, wildcard surface APPLY or Materiality use.
+
+## PREVIOUS CLOSED PHASE — CORPUS_FINAL_PARALLEL_VERIFICATION (HISTORICAL)
 
 Phase: `CORPUS_FINAL_PARALLEL_VERIFICATION`
 
