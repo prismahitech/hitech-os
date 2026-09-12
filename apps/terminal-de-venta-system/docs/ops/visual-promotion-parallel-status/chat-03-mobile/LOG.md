@@ -75,3 +75,11 @@ No updates published yet.
 - No RIFAT-vs-product repair direction chosen. No broad rediscovery. No Materiality Catalog. No product/runtime/global-authority mutation. No `FILES_MANIFEST.json` refresh. No Chat 3 PR.
 - Chat 3 state: `READY_FOR_INTEGRATION` with result `PASS_MOBILE_CANDIDATE_CORPUS_CERTIFIED`.
 - Handoff to Chat 6: consume `chat3/mobile-corpus-cert-20260904` @ `664035e83943ae48c923585765d3c505b1bd8c53` as the certified Mobile derivative while preserving raw source provenance `7f32ce6f1b602a14781fa2f4f3f323035f8029ec`.
+
+## 2026-09-11T22:45:00-06:00 — START / PROGRESS
+
+- Re-read current canonical phase from main `7c5b8d477a9006c5184ddbc806874b6e7c02571c`: `CORPUS_FINAL_PARALLEL_VERIFICATION`.
+- Resolved Chat 3 lane from STATUS_INDEX: `MOBILE_PROMOTION`, status branch `status/vp-chat-03-mobile`, phase role `MOBILE_FINAL_WITNESS`, expected result `PASS_MOBILE_CORPUS_WITNESS`.
+- Final witness source is immutable certification head `664035e83943ae48c923585765d3c505b1bd8c53` on `chat3/mobile-corpus-cert-20260904`.
+- Verification starts read-only from exact Git head-tree bytes. No certification/source/product/runtime/global-authority mutation is authorized or planned.
+- Materiality Catalog remains uninspected and forbidden for this task.
