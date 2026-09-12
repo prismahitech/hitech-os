@@ -242,3 +242,21 @@ No updates published yet.
 - Current canonical `main` observed at `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
 - This phase writes only this Chat 1 mailbox branch. No certification/candidate/product/runtime/global-authority mutation is authorized.
 - Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and will not be inspected.
+
+## 2026-09-11T22:50:34-06:00 — VALIDATION
+
+- Independent exact-head verification result: **PASS_TABLET_CORPUS_WITNESS**.
+- Immutable certification head: `fd111022438bab909151c2220b52e95aa5aa7eb3`.
+- `NORMALIZED.jsonl`: **929** rows.
+- `CERTIFICATION.jsonl`: **929** rows.
+- `INVALID.jsonl`: **0** rows.
+- Unique target IDs: **929**; duplicates: **0**.
+- Semantic mutations: **0**.
+- Certification labels: **139 VALID_ELIGIBLE_CANDIDATE + 788 VALID_REGISTER_TARGET_FIRST + 2 VALID_BLOCKED**.
+- Physical partition: **927 CURRENT + 2 DRIFT**.
+- Provenance: **929/929** source head/file/line mappings and source/normalized SHA-256 hashes reproduced; identity pass-through failures: **0**.
+- All five worker source-file SHA-256 values in the certification manifest were independently recomputed and matched.
+- Both known DRIFT target IDs remain `DRIFT / BLOCKED / BLOCKED` and `VALID_BLOCKED`.
+- Cobrar reuse remains exactly `BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1` and Work Entry remains `REGISTER_TARGET_FIRST`; it was not upgraded to APPLY.
+- Certification branch boundary: one commit from `8cc1918c5e015d1408335c15313e7364e04859c2`, exactly five certification files added.
+- Defects found: **0**.
