@@ -4,13 +4,20 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T13:28:00Z",
-  "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
+  "state": "WAITING_EXTERNAL",
+  "updatedAt": "2026-09-12T13:32:00Z",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
   "workHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
-  "summary": "PR #552 remains bounded to Chat 6 tooling plus the deterministic FILES_MANIFEST refresh required by VISCORE. The committed manifest now matches VISCORE artifact 10298204165 exactly by Git blob SHA f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a. Final exact-head gates are running.",
-  "blockers": [],
+  "summary": "Chat 6 control-plane tooling is merged and verified on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. PR #552 exact-head CI/VISCORE1/ForgeOS/Sync passed; merged-main tree exactly equals final PR tree. Post-merge prior-artifact revalidation correctly failed closed because the old artifact contained a non-object LAYERS_MAP.json, so Chat 6 obtained a fresh current-main task-exact Authority Mesh instead. Fresh run 34696570043 is PASS_COMPOSED_AUTHORITY_MESH with 100% required-authority coverage, zero blockers and mandatory Layer Map. Chats 1-5 have not published current-phase promotionReadiness receipts or work branches, so final composition is hard-stopped without inference.",
+  "blockers": [
+    {
+      "scope": "parallel-worker-handoffs",
+      "code": "PROMOTION_READINESS_WORKER_HANDOFFS_MISSING",
+      "detail": "handoff.promotionReadiness is absent in deterministic mailboxes for Chats 1, 2, 3, 4 and 5; expected current-phase worker branches are also absent.",
+      "impact": "Chat 6 cannot validate zero-loss lane outputs or compose CANONICAL_PROMOTION_PLAN without crossing lane ownership or fabricating worker evidence."
+    }
+  ],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
     "Current Visual Control census and Target Index are reusable physical truth. DISCOVERY_ONLY is not UNDISCOVERED and broad recensus is not a legal shortcut.",
@@ -68,7 +75,12 @@
     "Task-exact AutoMesh run 34692497931 on current main is PASS_COMPOSED_AUTHORITY_MESH with promotion-readiness-governance 20/20 authorities and promotion-readiness-composer 27/27 authorities, zero blockers and Layer Map generation.",
     "Canonical anti-rework gate logic re-evaluated against current main authority blobs for visual.generic_application_engine_v1 / ADVANCE: PASS_ANTI_REWORK_GATE; capability remains DONE / SOURCE_READY / doNotRebuild=true.",
     "Bounded PR #552 contains only prisma-html/tools/visual_promotion/promotion_readiness.py and prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py; no corpus, canonical authority or product/runtime paths.",
-    "VISCORE deterministic manifest artifact 10298204165 produced SHA-256 001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272 / Git blob f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a; PR #552 committed manifest matches that Git blob exactly with file_count_excluding_manifest=876."
+    "VISCORE deterministic manifest artifact 10298204165 produced SHA-256 001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272 / Git blob f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a; PR #552 committed manifest matches that Git blob exactly with file_count_excluding_manifest=876.",
+    "PR #552 merged as d4b451cc92c597d02cfc65094922bd2c5dd17c12; merged tree 00df3cf4b148df1f64ca7d6bd498104d746ba51c exactly equals final PR head tree and compare introduces zero file differences.",
+    "PR #552 final exact-head gates PASS: CI 34696430001, VISCORE1 34696430023, ForgeOS 34696430024, Sync Sentinel 34696430039.",
+    "Post-merge revalidation run 34696527763 failed closed as BLOCKED_INVALID_PRIOR_AUTHORITY because tasks/promotion-readiness-composer/authority_mesh/reports/LAYERS_MAP.json in the prior artifact was not a JSON object; this artifact was not reused.",
+    "Fresh task-exact AutoMesh run 34696570043 on main d4b451cc92c597d02cfc65094922bd2c5dd17c12 passed: governance 20/20 authorities, composer 27/27 authorities, 100% coverage, blockers=0, Layer Map generated, requestDigest 61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c.",
+    "Current-phase readiness receipts remain absent from Chats 1-5, and branch discovery shows only Chat 6 canonical-promotion-readiness branches. No cross-chat branch/mailbox mutation was performed."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -104,7 +116,10 @@
     "New phase is safely parallelizable only with immutable certified corpus inputs, disjoint per-lane promotion-readiness output roots, no worker canonical-ID minting, and Chat 6 as sole global composer/integrator. Prior corpus-certification evidence is read-only historical authority for this phase.",
     "New phase will be safely parallelized with six disjoint promotion-readiness roots; certified corpus remains read-only historical evidence and global canonical authority remains untouched until a later plan/gate barrier.",
     "Merge the phase scaffold to canonical main before worker execution so all Chats can independently resolve the same canonical prompt/status mapping without branch-specific instructions.",
-    "Do not compose or create CANONICAL_PROMOTION_PLAN until Chats 1-5 publish current-phase promotionReadiness receipts; merge only the read-only validator/composer tooling if exact-head gates pass."
+    "Do not compose or create CANONICAL_PROMOTION_PLAN until Chats 1-5 publish current-phase promotionReadiness receipts; merge only the read-only validator/composer tooling if exact-head gates pass.",
+    "Reject the prior readiness Authority Mesh artifact for post-merge reuse because revalidation classified it BLOCKED_INVALID_PRIOR_AUTHORITY; use only fresh run 34696570043 for current main.",
+    "Stop composition until all five current-phase worker receipts and exact work heads exist; prior corpus witness receipts do not substitute for promotionReadiness receipts.",
+    "Do not create worker branches or write worker mailboxes from Chat 6; preserve disjoint lane ownership."
   ],
   "changedPaths": [
     "prisma-html/docs/ops/visual-promotion-parallel/README.md",
@@ -393,9 +408,9 @@
     "Generate and validate the 2,097-record global corpus outputs.",
     "Assemble accepted bytes from then-current main, refresh FILES_MANIFEST once, run final gates, open one corpus-only PR and merge only if all required checks are green."
   ],
-  "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Require CI, VISCORE1, ForgeOS and Sync Sentinel PASS on exact head 9ff0629c0fa74d0b6586fd85555338b757474124. If main is unchanged and PR is clean/mergeable, merge #552 and verify merged-main tree; otherwise revalidate authority before merge.",
+  "needsUserAction": true,
+  "userActionRequested": "Resume/activate Chats 1-5 so each executes its already-canonical mailbox-driven CANONICAL_PROMOTION_READINESS_RESOLUTION lane. No prompt or handoff content needs to be copied between chats; each Chat must re-read the canonical repo prompt and its own mailbox.",
+  "nextAction": "When Chats 1-5 publish handoff.promotionReadiness, read those five deterministic mailboxes directly, validate exact work heads and lane bytes, run the merged promotion_readiness validator/composer, enforce 2,097 zero-loss/collision/semantic rules, and produce CANONICAL_PROMOTION_PLAN. No canonical authority or product/runtime mutation before that.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -833,16 +848,16 @@
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "CANONICAL_PROMOTION_READINESS_COMPOSER",
-      "result": "IN_PROGRESS",
-      "canonicalMain": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
+      "result": "WAITING_WORKER_HANDOFFS",
+      "canonicalMain": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
       "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
       "antiReworkMutation": "PASS_ANTI_REWORK_GATE",
       "authorityMesh": {
-        "runId": 34692497931,
-        "artifactId": 10297371448,
-        "artifactDigest": "sha256:b84a9994231181f00451ee4be5db12232683b1fe08f1fc3d9d990f901acf0d94",
-        "requestDigest": "7ed81364d69deaee91f4c7a1443baaf64d301d918e1598083f16dac1c1e5a386",
-        "repoHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
+        "runId": 34696570043,
+        "artifactId": 10298622594,
+        "artifactDigest": "sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2",
+        "requestDigest": "61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c",
+        "repoHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
         "status": "PASS_COMPOSED_AUTHORITY_MESH",
         "requiredAuthorityCoveragePct": 100,
         "blockers": 0,
@@ -866,7 +881,7 @@
         "canonicalAuthorityMutation": false
       },
       "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-      "antiReworkCurrentHead": "PASS_ANTI_REWORK_GATE",
+      "antiReworkCurrentHead": "PASS_BY_UNCHANGED_CANONICAL_AUTHORITY_BYTES_AND_ADVANCE_ACTION",
       "workersReadyToStart": true,
       "workerReceiptsPresent": 0,
       "toolingPullRequest": 552,
@@ -881,7 +896,30 @@
       "manifestArtifactDigest": "sha256:4d038f22afe5c0852257122f3c53133b31dbb39c322844b6fc7a1921a23dfbfb",
       "manifestSha256": "001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272",
       "manifestGitBlobSha": "f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a",
-      "manifestExactMatch": true
+      "manifestExactMatch": true,
+      "toolingMerged": true,
+      "toolingFinalHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
+      "toolingMergedMain": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "mergedTree": "00df3cf4b148df1f64ca7d6bd498104d746ba51c",
+      "exactHeadGateRuns": {
+        "CI": 34696430001,
+        "VISCORE1": 34696430023,
+        "ForgeOS": 34696430024,
+        "SyncSentinel": 34696430039
+      },
+      "staleRevalidation": {
+        "runId": 34696527763,
+        "result": "BLOCKED_INVALID_PRIOR_AUTHORITY",
+        "reason": "JSON_OBJECT_REQUIRED:tasks/promotion-readiness-composer/authority_mesh/reports/LAYERS_MAP.json"
+      },
+      "workerReceiptsRequired": 5,
+      "missingWorkerReceipts": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
