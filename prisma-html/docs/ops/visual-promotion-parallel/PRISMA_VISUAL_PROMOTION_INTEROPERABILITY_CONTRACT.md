@@ -789,3 +789,120 @@ A new agent must be able to arrive with no conversational memory and determine, 
 11. what is blocked rather than guessed.
 
 If the repository cannot answer those questions, the workflow is not ready for parallel execution.
+
+
+---
+
+## 29. CANONICAL_PROMOTION_READINESS_RESOLUTION
+
+This section is normative for the active phase and supersedes earlier candidate-generation/final-witness assignments only where phase behavior differs.
+
+### 29.1 Immutable input
+
+The merged corpus under `prisma-html/governance/visual-promotion/contracts/corpus-certification/` is read-only evidence. No lane may rewrite, regenerate or silently normalize those files.
+
+Canonical input accounting:
+
+- total records: 2,097;
+- Tablet: 929;
+- PC: 827;
+- Mobile: 271;
+- Shared UI: 70;
+- duplicate target IDs: 0;
+- semantic mutations: 0;
+- current authorized canonical promotions: 0;
+- GVAE_EXACT_APPLY: 0.
+
+### 29.2 Phase-specific disjoint ownership
+
+- Chat 1: `prisma-html/governance/visual-promotion/promotion-readiness/tablet/**`
+- Chat 2: `prisma-html/governance/visual-promotion/promotion-readiness/pc/**`
+- Chat 3: `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**`
+- Chat 4: `prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**`
+- Chat 5: `prisma-html/governance/visual-promotion/promotion-readiness/atlasfin/**`
+- Chat 6: `prisma-html/governance/visual-promotion/promotion-readiness/contracts/**`, `prisma-html/governance/visual-promotion/promotion-readiness/global/**`, bounded `prisma-html/tools/visual_promotion/**`, and the canonical parallel/status documents required to operate this phase.
+
+A lane may update only its own deterministic status mailbox on its dedicated status branch.
+
+### 29.3 Readiness classification
+
+Every certified target must receive exactly one phase readiness outcome:
+
+- `READY_REUSE_EXISTING_AUTHORITY`
+- `READY_FOR_CANONICAL_REGISTRATION`
+- `BLOCKED_MISSING_SEMANTIC_AUTHORITY`
+- `BLOCKED_MISSING_RECIPE_AUTHORITY`
+- `BLOCKED_MISSING_ADAPTER_AUTHORITY`
+- `BLOCKED_MISSING_BINDING`
+- `BLOCKED_PROJECTION_AUTHORITY`
+- `BLOCKED_PHYSICAL_DRIFT`
+- `BLOCKED_MULTI_REGION_CONFLICT`
+- `BLOCKED_NDC_AMBIGUITY`
+- `BLOCKED_UNRESOLVED_AUTHORITY`
+- `NOT_APPLICABLE`
+
+A primary readiness status never erases secondary blocking gaps; `blockingAuthorityGaps` retains all still-unresolved authority requirements.
+
+`READY_FOR_CANONICAL_REGISTRATION` means a deterministic registration proposal can be constructed from existing evidence. It is not canonical authority and is not APPLY_READY.
+
+`READY_REUSE_EXISTING_AUTHORITY` requires exact existing canonical meaning/recipe/adapter/binding/target evidence; similarity is insufficient.
+
+### 29.4 Projection-debt classification
+
+PC `projectionStatus=MISSING` records may only be classified as:
+
+- `CANONICAL_PROJECTION_REQUIRED_MISSING`
+- `INTENTIONALLY_NON_PROJECTED`
+- `REFERENCE_OR_GOVERNOR_ONLY`
+- `STALE_AUTHORITY`
+- `UNRESOLVED`
+
+Mobile `projectionStatus=DRIFT` records may only be classified as:
+
+- `RIFAT_AUTHORITATIVE_PRODUCT_STALE`
+- `PRODUCT_LIKELY_NEWER_AUTHORITY_RECONCILIATION_REQUIRED`
+- `INTENTIONAL_DIVERGENCE`
+- `AMBIGUOUS`
+
+Classification is evidence, not permission to repair projection/source.
+
+### 29.5 Cross-surface semantic rule
+
+Recipe equality, family equality, visual similarity or shared styling alone never proves shared canonical meaning.
+
+A cross-surface semantic group requires at least one independent semantic authority source, such as an existing common NDC concept, existing canonical Identity meaning, established business action/state authority, or shared ownership that proves a single semantic source.
+
+Every group records members, evidence, confidence, semantic authority source, `canonicalCoalescingAllowed` and whether evidence is semantic or visual-only.
+
+### 29.6 Zero-loss composer barrier
+
+Before Chat 6 may emit a final `CANONICAL_PROMOTION_PLAN`:
+
+1. exactly 2,097 unique certified target IDs must be accounted for;
+2. no missing, extra or duplicate target IDs may exist;
+3. original corpus evidence and statuses remain traceable;
+4. all worker records validate against the phase schema and vocabulary;
+5. collisions and cross-surface groups are explicitly evaluated;
+6. unknown/ambiguous fields remain unknown/blocked;
+7. Materiality remains uninspected;
+8. product/runtime and global canonical authority remain unmodified.
+
+Final accounting is:
+
+`2,097 = ready existing authority reuse + ready canonical registration proposals + legitimately blocked + not applicable`.
+
+### 29.7 Canonical mutation hard stop
+
+This phase ends at `READY_FOR_CANONICAL_PROMOTION_INTEGRATION` unless a later explicit repository-owner authorization opens canonical registration.
+
+No worker or composer may cross this phase into:
+
+- Identity/RIFAT/NDC/Target Index writes;
+- generated product projection repair;
+- CSS/SCSS/TSX/JSX mutation;
+- runtime application;
+- GVAE APPLY;
+- Materiality use;
+- wildcard/broad surface APPLY.
+
+Any later canonical registration subphase must rerun the universal Factory Ledger gate, current task-exact Authority Mesh + Layer Map, Work Entry, collision/zero-loss gates and exact-head CI before mutation.
