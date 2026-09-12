@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T13:22:00Z",
+  "updatedAt": "2026-09-12T13:28:00Z",
   "baseHead": "6cd1c4fb71efe04f03635c613b2a95880d36c59f",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-  "workHead": "3a969d45888f48c127325d467711c99d67915944",
-  "summary": "Chat 6 control-plane tooling defect is corrected on the canonical work branch and bounded PR #552 is open with exactly two changed Chat 6-owned files. Current-main anti-rework and task-exact Authority Mesh are PASS. Exact-head CI/VISCORE/ForgeOS/Sync validation is running.",
+  "workHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
+  "summary": "PR #552 remains bounded to Chat 6 tooling plus the deterministic FILES_MANIFEST refresh required by VISCORE. The committed manifest now matches VISCORE artifact 10298204165 exactly by Git blob SHA f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a. Final exact-head gates are running.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -67,7 +67,8 @@
     "Current canonical main is 6cd1c4fb71efe04f03635c613b2a95880d36c59f (PR #550 phase bootstrap merged). The phase prompt/index/contracts are canonical and disjoint; Chats 1-5 have not yet published promotionReadiness receipts.",
     "Task-exact AutoMesh run 34692497931 on current main is PASS_COMPOSED_AUTHORITY_MESH with promotion-readiness-governance 20/20 authorities and promotion-readiness-composer 27/27 authorities, zero blockers and Layer Map generation.",
     "Canonical anti-rework gate logic re-evaluated against current main authority blobs for visual.generic_application_engine_v1 / ADVANCE: PASS_ANTI_REWORK_GATE; capability remains DONE / SOURCE_READY / doNotRebuild=true.",
-    "Bounded PR #552 contains only prisma-html/tools/visual_promotion/promotion_readiness.py and prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py; no corpus, canonical authority or product/runtime paths."
+    "Bounded PR #552 contains only prisma-html/tools/visual_promotion/promotion_readiness.py and prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py; no corpus, canonical authority or product/runtime paths.",
+    "VISCORE deterministic manifest artifact 10298204165 produced SHA-256 001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272 / Git blob f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a; PR #552 committed manifest matches that Git blob exactly with file_count_excluding_manifest=876."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -394,7 +395,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Wait for exact-head PR #552 gates; if green and main remains compatible, merge the bounded tooling PR, verify merged-main tree, publish blocker-cleared milestone, then continue direct mailbox monitoring for Chats 1-5 promotionReadiness receipts.",
+  "nextAction": "Require CI, VISCORE1, ForgeOS and Sync Sentinel PASS on exact head 9ff0629c0fa74d0b6586fd85555338b757474124. If main is unchanged and PR is clean/mergeable, merge #552 and verify merged-main tree; otherwise revalidate authority before merge.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -870,12 +871,17 @@
       "workerReceiptsPresent": 0,
       "toolingPullRequest": 552,
       "toolingPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/552",
-      "toolingHead": "3a969d45888f48c127325d467711c99d67915944",
+      "toolingHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
       "toolingChangedPaths": [
         "prisma-html/tools/visual_promotion/promotion_readiness.py",
         "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py"
       ],
-      "toolingValidationState": "RUNNING"
+      "toolingValidationState": "FINAL_GATES_RUNNING",
+      "manifestArtifactId": 10298204165,
+      "manifestArtifactDigest": "sha256:4d038f22afe5c0852257122f3c53133b31dbb39c322844b6fc7a1921a23dfbfb",
+      "manifestSha256": "001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272",
+      "manifestGitBlobSha": "f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a",
+      "manifestExactMatch": true
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
