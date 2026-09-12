@@ -235,3 +235,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Exact immutable certification heads match the canonical continuation pins.
 - No witness reports a certification defect; preserved blockers/conflicts remain intentional corpus states, not witness failures.
 - AutoMesh v2 revalidation was triggered for prior artifact `9964303227` against current canonical `main` before any new governed integration mutation.
+
+### 2026-09-12T06:42:00Z — BLOCKER_CLEARED
+- AutoMesh v2 revalidation run `34678646588` completed successfully on canonical main `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+- It detected relevant drift, performed the mandatory full refresh, and ended `PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT`.
+- Fresh Mesh: `PASS_COMPOSED_AUTHORITY_MESH`, both Chat 6 lanes at 100% required-authority coverage, blockers=0, Layer Map present.
+- Evidence artifact: `10293925424`, digest `sha256:dc47fce3ad95dc6806d443e29577515cb4ea7473122b4c51beb17b3cc750861a`.
+- Factory Ledger canonical authority blobs are unchanged from the prior PASSed anti-rework base; capability remains `DONE / SOURCE_READY / doNotRebuild=true`, action `ADVANCE`.
