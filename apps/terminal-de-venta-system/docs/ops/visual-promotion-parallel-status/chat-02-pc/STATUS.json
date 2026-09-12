@@ -4,54 +4,146 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:44:00-06:00",
+  "state": "DONE",
+  "updatedAt": "2026-09-11T22:53:00-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat2/pc-corpus-cert-20260904",
   "workHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
-  "summary": "CORPUS_FINAL_PARALLEL_VERIFICATION started for Chat 2 / PC_FINAL_WITNESS. Verification is read-only against the immutable certification head; only this mailbox may be updated.",
+  "summary": "PASS_PC_CORPUS_WITNESS. Chat 2 independently cross-checked the immutable PC certification head for the current CORPUS_FINAL_PARALLEL_VERIFICATION phase. All required corpus invariants pass; the known selector conflict and all 139 projection MISSING records remain unresolved exactly as certified. Chat 2 is now in CERTIFIED_HOLD. No product/runtime, certification, canonical authority, projection, or Materiality mutation occurred.",
   "blockers": [
     {
       "scope": "candidate",
       "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
       "code": "CURRENT_AUTHORITY_SELECTOR_DISAGREEMENT",
       "detail": "Target Index selector is '.supplier-readable-v07' while expanded Visual Control selector is '.supplier-readable-v07 *'.",
-      "impact": "Must remain unresolved in witness evidence; no repair is authorized."
+      "impact": "Preserved exactly as intentional unresolved corpus evidence. It is not a witness defect and does not authorize repair."
     }
   ],
   "findings": [
     "STATUS_INDEX resolves Chat 2 to PC_PROMOTION / PC_FINAL_WITNESS with expected result PASS_PC_CORPUS_WITNESS.",
-    "Immutable certification head is 8cc979c141000fcedabf832f16468a6ee3e328e2.",
-    "Current canonical main is 7c5b8d477a9006c5184ddbc806874b6e7c02571c; current witness work does not mutate product, authority, or certification bytes."
+    "Exact certification head is 8cc979c141000fcedabf832f16468a6ee3e328e2 and its five output Git blob identities match the prior deterministic handoff.",
+    "NORMALIZED=827, CERTIFICATION=827, INVALID=0, duplicateTargetIds=0, semanticMutationCount=0.",
+    "All 827 certification labels remain VALID_REGISTER_TARGET_FIRST.",
+    "Physical partition remains 826 CURRENT + 1 DRIFT.",
+    "Projection partition remains 688 CURRENT + 139 MISSING; no MISSING record was promoted or repaired.",
+    "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains the exact unresolved selector conflict and is normalized line 827 with hash-preserving representation.",
+    "Certification provenance remains pinned to source branch/head/base/file/bucket/line, source file Git blob SHA, file SHA-256, source-record SHA-256 and normalized record SHA-256.",
+    "Materiality Catalog remained completely uninspected."
   ],
   "decisions": [
-    "Execute only the PC final witness assignment from the current canonical prompt.",
-    "Do not mutate or rebase the certification branch.",
-    "Do not inspect or consume Materiality Catalog.",
-    "Unknown/conflict truth remains unresolved; no canonical IDs or projection repairs are permitted."
+    "Publish PASS_PC_CORPUS_WITNESS because every canonical Chat 2 final-witness invariant passes against immutable certification head-tree evidence.",
+    "Remain in CERTIFIED_HOLD after witness publication.",
+    "Do not mutate/rebase certification bytes, repair projection gaps, resolve the selector conflict, infer semantics, mint canonical IDs, or modify product/runtime/global authority.",
+    "Current main movement does not alter the immutable certification object being witnessed; no new repository mutation beyond the dedicated status mailbox was performed."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md"
   ],
-  "validations": [],
+  "validations": [
+    {
+      "check": "immutable certification head identity",
+      "result": "PASS",
+      "detail": "Read-only verification used chat2/pc-corpus-cert-20260904@8cc979c141000fcedabf832f16468a6ee3e328e2."
+    },
+    {
+      "check": "certification output Git blobs",
+      "result": "PASS",
+      "detail": "MANIFEST bc53a0e1d92df2092248bacfb9ca042b65e188e2; NORMALIZED d7e7c730342a24d3daeadb3f9b07cfd95278c0b0; CERTIFICATION 9c0517f3e098cdf0c02aa52aa469bbf04b4264d7; INVALID e69de29bb2d1d6434b8b29ae775ad8c2e48c5391; SUMMARY 3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0."
+    },
+    {
+      "check": "PC final witness accounting",
+      "result": "PASS",
+      "detail": "827 normalized; 827 certification; invalid=0; uniqueTargetIds=827; duplicateTargetIds=0; semanticMutationCount=0."
+    },
+    {
+      "check": "certification label invariant",
+      "result": "PASS",
+      "detail": "VALID_REGISTER_TARGET_FIRST=827."
+    },
+    {
+      "check": "physical/projection invariant",
+      "result": "PASS",
+      "detail": "Physical CURRENT=826 / DRIFT=1; projection CURRENT=688 / MISSING=139."
+    },
+    {
+      "check": "selector conflict preservation",
+      "result": "PASS",
+      "detail": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains DRIFT with blocker current-authority-selector-disagreement and exact selectors preserved."
+    },
+    {
+      "check": "provenance completeness",
+      "result": "PASS",
+      "detail": "Certification rows retain source head/file/line/blob/file-hash/record-hash provenance; hard conflict row independently reproduces sourceRecordSha256 == normalizedRecordSha256 and representationChanged=false."
+    },
+    {
+      "check": "scope and mutation boundaries",
+      "result": "PASS",
+      "detail": "Materiality inspected=false; product/runtime mutation=false; canonical promotion=false; certification mutation=false."
+    }
+  ],
   "unresolved": [
-    "Selector conflict TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains intentionally unresolved.",
-    "139 projection MISSING records must remain unrepaired."
+    "TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains intentionally unresolved due to the exact selector disagreement.",
+    "All 139 projection MISSING states remain unrepaired.",
+    "All 827 NDC resolutions remain UNRESOLVED and all 827 canonical Identity bindings remain BLOCKED / REGISTER_TARGET_FIRST."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Independently cross-check the immutable certification head-tree invariants and publish the deterministic PC witness receipt.",
+  "nextAction": "CERTIFIED_HOLD. Await only a bounded evidence-backed correction request from the global compositor if a real witness mismatch is proven.",
   "handoff": {
-    "readiness": "VERIFYING_FINAL_WITNESS",
+    "readiness": "CERTIFIED_HOLD",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
     "certificationBranch": "chat2/pc-corpus-cert-20260904",
     "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
     "parallelWitness": {
       "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-      "result": "IN_PROGRESS",
+      "result": "PASS_PC_CORPUS_WITNESS",
       "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
       "expectedInputCount": 827,
+      "outputGitBlobs": {
+        "MANIFEST.json": "bc53a0e1d92df2092248bacfb9ca042b65e188e2",
+        "NORMALIZED.jsonl": "d7e7c730342a24d3daeadb3f9b07cfd95278c0b0",
+        "CERTIFICATION.jsonl": "9c0517f3e098cdf0c02aa52aa469bbf04b4264d7",
+        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "SUMMARY.md": "3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0"
+      },
+      "outputSha256": {
+        "MANIFEST.json": "7c12b5af232134ff5fa2f6992c908068caa6d152e1faaf6af650063bd9c0b46a",
+        "NORMALIZED.jsonl": "127068ef114305f7dc386cd7a764527b39a6039da90e8af50df52439d4ff2044",
+        "CERTIFICATION.jsonl": "46e114dccd889a055550acc27ce6c455a01e67347d5fadd2c96db588e5786f21",
+        "INVALID.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "SUMMARY.md": "be7b59c2e9555bff9f08df14278034c76c5a52fba976d17ba4d712402269c2fd"
+      },
+      "normalizedCount": 827,
+      "certificationCount": 827,
+      "invalidCount": 0,
+      "uniqueTargetIds": 827,
+      "duplicateTargetIds": 0,
+      "semanticMutationCount": 0,
+      "certificationStatusCounts": {
+        "VALID_REGISTER_TARGET_FIRST": 827
+      },
+      "physicalStatusCounts": {
+        "CURRENT": 826,
+        "DRIFT": 1
+      },
+      "projectionStatusCounts": {
+        "CURRENT": 688,
+        "MISSING": 139
+      },
+      "selectorConflict": {
+        "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
+        "preserved": true,
+        "resolved": false,
+        "targetIndexSelector": ".supplier-readable-v07",
+        "expandedVisualControlSelector": ".supplier-readable-v07 *"
+      },
+      "projectionMissingSilentlyRepairedCount": 0,
+      "provenanceHashesComplete": true,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalPromotionPerformed": false,
+      "certificationMutationPerformed": false,
       "defects": []
     }
   }
