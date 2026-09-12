@@ -4,12 +4,12 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:52:00Z",
+  "state": "DONE",
+  "updatedAt": "2026-09-12T06:54:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-final-integration-20260912",
   "workHead": "34499286414be11703edaef3be93180230658f0f",
-  "summary": "PR #549 exact final head 34499286414be11703edaef3be93180230658f0f is clean/mergeable and all required exact-head workflows are PASS: CI, VISCORE1, ForgeOS Quality Gate, Sync Sentinel and GVAE All-Surface Authority. Five witness receipts PASS, manifest refresh exactly once, current-head Authority Mesh PASS.",
+  "summary": "DONE / PASS_CANDIDATE_CORPUS_CERTIFIED. PR #549 merged to canonical main 3eb092fad5e746a7ceeb9fdba079671934ae9b6d. Merged main tree exactly equals the final green PR-head tree 502a911c62ce785990f3e0e7f5cd57bf36559403. Five independent witness receipts PASS, current-head AutoMesh full refresh PASS, exactly one mechanical FILES_MANIFEST refresh, all required exact-head gates PASS, old PRs #539/#540 closed only after byte-for-byte supersession proof. No product/runtime mutation, no canonical promotion, no Materiality Catalog inspection.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -311,6 +311,30 @@
       "result": "PASS",
       "evidence": "workflow run 34679171076",
       "details": "head 34499286414be11703edaef3be93180230658f0f; no further branch mutation"
+    },
+    {
+      "name": "Merged-main exact tree verification",
+      "result": "PASS",
+      "evidence": "main 3eb092fad5e746a7ceeb9fdba079671934ae9b6d; final PR head 34499286414be11703edaef3be93180230658f0f",
+      "details": "both tree SHA 502a911c62ce785990f3e0e7f5cd57bf36559403; compare reports zero file differences"
+    },
+    {
+      "name": "Superseded PR #539 byte identity",
+      "result": "PASS",
+      "evidence": "five Shared UI source Git blobs match merged main exactly",
+      "details": "PR closed without merge only after all 5/5 paths matched"
+    },
+    {
+      "name": "Superseded PR #540 byte identity",
+      "result": "PASS",
+      "evidence": "five Atlasfin bridge source Git blobs match merged main exactly",
+      "details": "PR closed without merge only after all 5/5 paths matched"
+    },
+    {
+      "name": "Merged main corpus manifest",
+      "result": "PASS_CANDIDATE_CORPUS_CERTIFIED",
+      "evidence": "prisma-html/governance/visual-promotion/contracts/corpus-certification/CORPUS_MANIFEST.json on main",
+      "details": "2097 records; invalid=0; duplicateTargetIds=0; semanticMutationCount=0; GVAE_EXACT_APPLY=0; authorized promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; Materiality uninspected"
     }
   ],
   "unresolved": [
@@ -321,7 +345,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Merge PR #549 using exact expected head 34499286414be11703edaef3be93180230658f0f, then verify merged main contains the exact accepted tree/bytes and close superseded PRs #539/#540 only if byte supersession is proven.",
+  "nextAction": "CERTIFIED_HOLD. Any future canonical semantic/binding/application promotion requires a separately authorized phase and fresh applicable gates.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -347,7 +371,7 @@
     "integrationPlanReady": false,
     "workerOutcomeRowsValidated": 2097,
     "controlPlaneCollisionCount": 0,
-    "phase": "CANDIDATE_CORPUS_FINAL_AGGREGATION",
+    "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
     "planStatus": "PLAN_COMPLETE_WAITING_OWNER_AUTHORIZATION",
     "commonWorkerBaseHead": "57b01ad8bda043ec25763203354b686341bace09",
     "exactAcceptanceInputs": [
@@ -669,6 +693,32 @@
       "ForgeOS": 34679171082,
       "SyncSentinel": 34679171068,
       "GVAEAllSurface": 34679171076
-    }
+    },
+    "result": "PASS_CANDIDATE_CORPUS_CERTIFIED",
+    "finalState": "DONE",
+    "mergedMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+    "mergedMainTree": "502a911c62ce785990f3e0e7f5cd57bf36559403",
+    "finalPrTree": "502a911c62ce785990f3e0e7f5cd57bf36559403",
+    "mainTreeEqualsFinalPrTree": true,
+    "finalCorpus": {
+      "recordCount": 2097,
+      "certificationCount": 2097,
+      "invalidCount": 0,
+      "missingCount": 0,
+      "extraCount": 0,
+      "duplicateTargetIds": 0,
+      "semanticMutationCount": 0,
+      "GVAE_EXACT_APPLY": 0,
+      "currentlyAuthorizedCanonicalPromotions": 0,
+      "runtimeVisualGreen": false,
+      "wholeSurfaceApplyReadyCount": 0,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutationPerformed": false,
+      "canonicalPromotionPerformed": false
+    },
+    "supersededPullRequestsClosed": [
+      539,
+      540
+    ]
   }
 }
