@@ -370,3 +370,9 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Current Truth: Work Entry 2,065 REGISTER_TARGET_FIRST + 32 BLOCKED; promotion 139 ELIGIBLE + 1,926 REGISTER_TARGET_FIRST + 32 BLOCKED; physical 2,094 CURRENT + 3 DRIFT; projection 1,820 CURRENT + 139 MISSING + 138 DRIFT.
 - Independently verified AutoMesh run `34696570043` is SUCCESS on exact current main `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; artifact `10298622594`, digest `sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2`.
 - Worker branches 1–5 remain identical to main (ahead=0/behind=0); no current-phase receipts yet. Final composer remains intentionally fail-closed.
+
+### 2026-09-12T21:57:00Z — DECISION / COORDINATION_READY
+- Canonical Chat 6 work branch was fast-forwarded without force to current main `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; no product/runtime or worker-owned bytes were changed.
+- Confirmed the activation model is turn-driven, not background polling. The five worker chats each require one owner turn to resume; Chat 6 requires a later owner turn to read their deterministic mailboxes and compose.
+- The same generic continuation message is sufficient for every worker chat because each resolves its own identity, branch, mailbox and role from repository truth.
+- No per-chat prompt duplication and no owner receipt relay are required. Missing receipts remain missing and composition stays fail-closed.
