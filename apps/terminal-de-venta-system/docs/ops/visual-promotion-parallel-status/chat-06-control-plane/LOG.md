@@ -221,3 +221,10 @@ Universal anti-rework gate passed in both `PROPOSAL` and `MUTATION` modes for ca
 ## 2026-09-05T06:20:00Z — DECISION
 
 Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inputs are fixed to the exact five heads in the current canonical prompt. Existing unresolved/conflict semantics are valid corpus states and will be preserved.
+
+### 2026-09-12T04:45:00Z — START
+- Resumed Chat 6 under `CORPUS_FINAL_PARALLEL_VERIFICATION` as `GLOBAL_COMPOSITOR_INTEGRATOR`.
+- Canonical main: `7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+- Current corpus work branch/head: `chat6/candidate-corpus-cert-20260904@73fb33e42eeb2aa66a0816bcffc2d59fab54d876`.
+- Existing integration branch is treated as evidence only until current-head authority is revalidated and exact assembly is proven against current main.
+- Materiality Catalog remains uninspected; product/runtime mutation and canonical promotion remain forbidden.
