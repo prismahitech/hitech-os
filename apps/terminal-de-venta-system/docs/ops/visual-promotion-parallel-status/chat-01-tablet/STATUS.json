@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:50:34-06:00",
+  "state": "DONE",
+  "updatedAt": "2026-09-11T22:51:04-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat1/tablet-corpus-cert-20260904",
   "workHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
-  "summary": "Chat 1 independent Tablet final witness audit passed against immutable certification head fd111022438bab909151c2220b52e95aa5aa7eb3. Final receipt publication is the only remaining step.",
+  "summary": "Chat 1 completed CORPUS_FINAL_PARALLEL_VERIFICATION as TABLET_FINAL_WITNESS. Independent exact-head verification reproduced every required invariant and published PASS_TABLET_CORPUS_WITNESS. Canonical continuation state is CERTIFIED_HOLD.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -228,16 +228,21 @@
       "name": "immutable certification branch boundary",
       "result": "PASS",
       "details": "8cc1918c5e015d1408335c15313e7364e04859c2..fd111022438bab909151c2220b52e95aa5aa7eb3 is exactly one commit and adds only MANIFEST.json, NORMALIZED.jsonl, CERTIFICATION.jsonl, INVALID.jsonl and SUMMARY.md under candidates/tablet/certification/."
+    },
+    {
+      "name": "final phase receipt",
+      "result": "PASS_TABLET_CORPUS_WITNESS",
+      "details": "Reproducible from immutable certification head fd111022438bab909151c2220b52e95aa5aa7eb3; receipt published under handoff.parallelWitness; Chat 1 now in CERTIFIED_HOLD."
     }
   ],
   "unresolved": [
     "788 corpus-valid Tablet records still require REGISTER_TARGET_FIRST semantic/application authority before any exact apply can exist.",
     "2 corpus-valid Tablet records remain physical DRIFT / BLOCKED conflicts and must not be normalized into readiness.",
-    "Corpus certification does not authorize canonical Identity/RIFAT/NDC/Target Index promotion, GVAE_EXACT_APPLY or product/runtime mutation."
+    "This witness is coordination evidence only and does not authorize canonical Identity/RIFAT/NDC/Target Index promotion, GVAE_EXACT_APPLY or product/runtime mutation."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Publish the final handoff.parallelWitness receipt as PASS_TABLET_CORPUS_WITNESS and enter CERTIFIED_HOLD.",
+  "nextAction": "CERTIFIED_HOLD. No further Chat 1 writes unless Chat 6/integration issues a bounded evidence-backed correction request.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -306,33 +311,92 @@
     "pullRequestOpened": false,
     "parallelWitness": {
       "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-      "result": "IN_PROGRESS",
+      "result": "PASS_TABLET_CORPUS_WITNESS",
       "certificationHead": "fd111022438bab909151c2220b52e95aa5aa7eb3",
       "expectedInputCount": 929,
+      "certificationOutputGitBlobShas": {
+        "manifest": "6914a2e372f69bd8295fa9f2259af4910851add6",
+        "normalized": "776eb8bbc2b6ae70cbd2b0da351f9057d8ba2d67",
+        "certification": "7a6ffef009a6775fc8e9d6f131803185c7cedf08",
+        "invalid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "summary": "6027ecdf748a5fd19b99c2bbcfe6039ec9b80307"
+      },
+      "normalizedCount": 929,
+      "certificationCount": 929,
+      "invalidCount": 0,
+      "uniqueTargetIds": 929,
+      "duplicateTargetIds": 0,
+      "semanticMutationCount": 0,
+      "certificationLabels": {
+        "VALID_ELIGIBLE_CANDIDATE": 139,
+        "VALID_REGISTER_TARGET_FIRST": 788,
+        "VALID_BLOCKED": 2
+      },
+      "physicalStatus": {
+        "CURRENT": 927,
+        "DRIFT": 2
+      },
+      "promotionStatus": {
+        "ELIGIBLE_CANDIDATE": 139,
+        "REGISTER_TARGET_FIRST": 788,
+        "BLOCKED": 2
+      },
+      "workEntryDecision": {
+        "REGISTER_TARGET_FIRST": 927,
+        "BLOCKED": 2
+      },
+      "sourceBuckets": {
+        "CANDIDATES": 139,
+        "UNRESOLVED": 788,
+        "CONFLICTS": 2
+      },
+      "driftTargetIds": [
+        "TGT.CENSUS.TABLET.3B2FED34BC21B5C9FEEC.V1",
+        "TGT.CENSUS.TABLET.850AD4CEF4CCD12BCD05.V1"
+      ],
+      "existingCobrarBindingReuse": {
+        "targetId": "TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1",
+        "existingBindingId": "BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1",
+        "bindingStatus": "EXISTING_RESOLVED",
+        "identityRecipeId": "REC.button.primary",
+        "visualMeaningId": "ACT.primary",
+        "applicationLayerId": "LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE",
+        "promotionStatus": "ELIGIBLE_CANDIDATE",
+        "workEntryDecision": "REGISTER_TARGET_FIRST",
+        "certificationStatus": "VALID_ELIGIBLE_CANDIDATE"
+      },
+      "provenance": {
+        "completeCount": 929,
+        "sourceRecordSha256Failures": 0,
+        "normalizedRecordSha256Failures": 0,
+        "identityPassThroughFailures": 0,
+        "sourceMappingFailures": 0,
+        "targetAlignmentFailures": 0,
+        "sourceHeadMismatches": 0,
+        "sourceBaseMismatches": 0,
+        "normalizedLineMismatches": 0
+      },
+      "sourceFileSha256Checks": {
+        "candidates": "3d3a70e4b271f70305d41dfd70511e9776d6ec23f32c4011a4b543d6a628b915",
+        "unresolved": "b4d732ea89e661828b9bef4927e0f397ea20b42b46f229119fd5e98493c699ab",
+        "conflicts": "2ed2031784b6764e82bbfb20c06255318ce1e0b899e28b9e68480789b82891f5",
+        "manifest": "5ba25d4c118303bbb69f2bdaa002227e2b91624bb7c9cb00ed5b2c5b49452ef5",
+        "summary": "3af4bed52fc533d2bbc1bee3985c8098d8d0a94db832245096323dd2ca8e5073",
+        "allMatched": true
+      },
+      "certificationBranchBoundary": {
+        "base": "8cc1918c5e015d1408335c15313e7364e04859c2",
+        "head": "fd111022438bab909151c2220b52e95aa5aa7eb3",
+        "aheadBy": 1,
+        "addedFileCount": 5,
+        "onlyCertificationFiles": true
+      },
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalPromotionPerformed": false,
-      "audit": {
-        "normalizedCount": 929,
-        "certificationCount": 929,
-        "invalidCount": 0,
-        "uniqueTargetIds": 929,
-        "duplicateTargetIds": 0,
-        "semanticMutationCount": 0,
-        "certificationLabels": {
-          "VALID_ELIGIBLE_CANDIDATE": 139,
-          "VALID_REGISTER_TARGET_FIRST": 788,
-          "VALID_BLOCKED": 2
-        },
-        "physicalStatus": {
-          "CURRENT": 927,
-          "DRIFT": 2
-        },
-        "provenanceCompleteCount": 929,
-        "provenanceFailureCount": 0,
-        "sourceFileHashFailureCount": 0,
-        "defects": []
-      }
-    }
+      "sourceOrCertificationMutationPerformed": false,
+      "defects": []
+    },
+    "holdState": "CERTIFIED_HOLD"
   }
 }
