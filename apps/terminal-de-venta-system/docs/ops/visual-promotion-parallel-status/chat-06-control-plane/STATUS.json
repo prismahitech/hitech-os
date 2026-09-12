@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "WAITING_EXTERNAL",
-  "updatedAt": "2026-09-12T13:32:00Z",
+  "updatedAt": "2026-09-12T13:36:00Z",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
   "workHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
-  "summary": "Chat 6 control-plane tooling is merged and verified on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. PR #552 exact-head CI/VISCORE1/ForgeOS/Sync passed; merged-main tree exactly equals final PR tree. Post-merge prior-artifact revalidation correctly failed closed because the old artifact contained a non-object LAYERS_MAP.json, so Chat 6 obtained a fresh current-main task-exact Authority Mesh instead. Fresh run 34696570043 is PASS_COMPOSED_AUTHORITY_MESH with 100% required-authority coverage, zero blockers and mandatory Layer Map. Chats 1-5 have not published current-phase promotionReadiness receipts or work branches, so final composition is hard-stopped without inference.",
+  "summary": "Chat 6 control-plane remains fully ready on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Current-head AutoMesh run 34696570043 is PASS with 100% authority coverage, zero blockers and Layer Map present. To maximize parallel startup without crossing lane ownership, Chat 6 provisioned the five canonical worker branch refs from the exact current main and made no commits on those branches. Worker promotionReadiness receipts remain absent, so final composition is still fail-closed.",
   "blockers": [
     {
       "scope": "parallel-worker-handoffs",
@@ -80,7 +80,8 @@
     "PR #552 final exact-head gates PASS: CI 34696430001, VISCORE1 34696430023, ForgeOS 34696430024, Sync Sentinel 34696430039.",
     "Post-merge revalidation run 34696527763 failed closed as BLOCKED_INVALID_PRIOR_AUTHORITY because tasks/promotion-readiness-composer/authority_mesh/reports/LAYERS_MAP.json in the prior artifact was not a JSON object; this artifact was not reused.",
     "Fresh task-exact AutoMesh run 34696570043 on main d4b451cc92c597d02cfc65094922bd2c5dd17c12 passed: governance 20/20 authorities, composer 27/27 authorities, 100% coverage, blockers=0, Layer Map generated, requestDigest 61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c.",
-    "Current-phase readiness receipts remain absent from Chats 1-5, and branch discovery shows only Chat 6 canonical-promotion-readiness branches. No cross-chat branch/mailbox mutation was performed."
+    "Current-phase readiness receipts remain absent from Chats 1-5, and branch discovery shows only Chat 6 canonical-promotion-readiness branches. No cross-chat branch/mailbox mutation was performed.",
+    "Provisioned the five canonical worker branch refs from exact current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 without committing to any worker-owned path; this removes branch-start friction while preserving disjoint write ownership."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -410,7 +411,7 @@
   ],
   "needsUserAction": true,
   "userActionRequested": "Resume/activate Chats 1-5 so each executes its already-canonical mailbox-driven CANONICAL_PROMOTION_READINESS_RESOLUTION lane. No prompt or handoff content needs to be copied between chats; each Chat must re-read the canonical repo prompt and its own mailbox.",
-  "nextAction": "When Chats 1-5 publish handoff.promotionReadiness, read those five deterministic mailboxes directly, validate exact work heads and lane bytes, run the merged promotion_readiness validator/composer, enforce 2,097 zero-loss/collision/semantic rules, and produce CANONICAL_PROMOTION_PLAN. No canonical authority or product/runtime mutation before that.",
+  "nextAction": "Read Chats 1-5 deterministic mailboxes directly as promotionReadiness receipts appear. For each receipt, verify its exact worker head and lane-owned bytes, then feed only accepted immutable lane outputs into the merged composer. Hard-stop until all five receipts are present; do not infer or write worker evidence.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -919,7 +920,16 @@
         3,
         4,
         5
-      ]
+      ],
+      "workerBranchesProvisioned": true,
+      "workerBranchBase": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "workerBranches": {
+        "1": "chat1/canonical-promotion-readiness-tablet-20260912",
+        "2": "chat2/canonical-promotion-readiness-pc-20260912",
+        "3": "chat3/canonical-promotion-readiness-mobile-20260912",
+        "4": "chat4/canonical-promotion-readiness-shared-ui-20260912",
+        "5": "chat5/canonical-promotion-readiness-atlasfin-20260912"
+      }
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
