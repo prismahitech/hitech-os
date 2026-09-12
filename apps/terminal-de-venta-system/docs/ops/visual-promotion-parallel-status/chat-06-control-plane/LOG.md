@@ -301,3 +301,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Added machine-readable exact phase baseline with the revalidated 2,097-record accounting and known blockers.
 - Certified corpus bytes remain untouched. No canonical registration, product/runtime mutation, Materiality read, recensus or GVAE APPLY occurred.
 - Exact-head CI/VISCORE/ForgeOS/Sync are running. Mechanical FILES_MANIFEST refresh is the remaining bootstrap serialization point.
+
+### 2026-09-12T11:55:30Z — START
+- Started canonical phase `CANONICAL_PROMOTION_READINESS_RESOLUTION` as Chat 6 / Control Plane.
+- Canonical main revalidated at `3eb092fad5e746a7ceeb9fdba079671934ae9b6d`.
+- Universal Factory Ledger anti-rework: PROPOSAL PASS and MUTATION PASS for `visual.generic_application_engine_v1` action `ADVANCE`; `doNotRebuild=true` preserved.
+- Fresh six-lane AutoMesh: run `34692209649`, artifact `10298070499`, digest `sha256:9ffb78fa7f5d9b02eff050b4761ff30d779da34566f3c34fdcfbcbf113f32a91`, request `51ef6177f3b04b0614d56b4ab547431392cb3bcde6c5aa79b94061c44ea95484`; `PASS_COMPOSED_AUTHORITY_MESH`, 100% coverage, blockers=0, Layer Maps present.
+- Certified corpus remains immutable input; no recensus, Materiality, product/runtime mutation or global canonical promotion authorized.
