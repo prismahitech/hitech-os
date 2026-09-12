@@ -113,8 +113,9 @@ def _unique_strings(values: Iterable[Any], *, field: str) -> list[str]:
 def load_certified_corpus(cert_root: Path = CERT_ROOT) -> dict[str, dict[str, Any]]:
     path = cert_root / "CANDIDATE_CORPUS.jsonl"
     rows = _load_jsonl(path)
-    if len(rows) != 2097:
-        raise PromotionReadinessError(f"CERTIFIED_CORPUS_COUNT:{len(rows)}")
+    expected_total = sum(SURFACE_COUNTS.values())
+    if len(rows) != expected_total:
+        raise PromotionReadinessError(f"CERTIFIED_CORPUS_COUNT:{len(rows)}:expected={expected_total}")
     by_target: dict[str, dict[str, Any]] = {}
     counts = Counter()
     for row in rows:
@@ -225,6 +226,23 @@ def validate_resolution_row(
         meaning = row["canonicalMeaning"]
         if meaning.get("resolution") not in {"REUSE_EXISTING", "PROPOSE_NEW"}:
             raise PromotionReadinessError(f"REGISTRATION_MEANING_NOT_RESOLVED:{target}")
+        identity = row["identity"]
+        if not identity.get("identityRecipeId"):
+            raise PromotionReadinessError(f"REGISTRATION_IDENTITY_RECIPE_REQUIRED:{target}")
+        if not identity.get("identityAdapterId"):
+            raise PromotionReadinessError(f"REGISTRATION_IDENTITY_ADAPTER_REQUIRED:{target}")
+        if not identity.get("existingBindingId") and not identity.get("bindingProposalKey"):
+            raise PromotionReadinessError(f"REGISTRATION_BINDING_OR_PROPOSAL_REQUIRED:{target}")
+        physical = row.get("physical")
+        if not isinstance(physical, dict):
+            raise PromotionReadinessError(f"REGISTRATION_PHYSICAL_REQUIRED:{target}")
+        for field in ("routeId", "regionId", "slotId", "componentId", "ownerId", "implementationLayerId"):
+            if not physical.get(field):
+                raise PromotionReadinessError(f"REGISTRATION_PHYSICAL_FIELD_REQUIRED:{target}:{field}")
+        if not app.get("applicationLayerId"):
+            raise PromotionReadinessError(f"REGISTRATION_APPLICATION_LAYER_REQUIRED:{target}")
+        if not app.get("projectionPolicy"):
+            raise PromotionReadinessError(f"REGISTRATION_PROJECTION_POLICY_REQUIRED:{target}")
 
 
 def _target_set(rows: list[dict[str, Any]], path: Path) -> set[str]:
@@ -398,6 +416,79 @@ def check_all(
     }
 
 
+def _canonical_semantic_group_keys(
+    *,
+    readiness_root: Path,
+    certified: dict[str, dict[str, Any]],
+) -> list[str]:
+    path = readiness_root / "atlasfin-evidence" / "CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl"
+    rows = _load_jsonl(path)
+    keys: list[str] = []
+    seen_keys: set[str] = set()
+    canonical_member_owner: dict[str, str] = {}
+    allowed_dispositions = {
+        "CANONICAL_COALESCE_ALLOWED",
+        "SEMANTIC_EQUIVALENCE_EVIDENCE_ONLY",
+        "VISUAL_SIMILARITY_ONLY",
+        "BLOCKED_AMBIGUOUS",
+        NOT_APPLICABLE,
+    }
+    for row in rows:
+        if row.get("schema") != "prisma.visual-promotion.cross-surface-semantic-group.v1":
+            raise PromotionReadinessError("CROSS_SURFACE_GROUP_SCHEMA_INVALID")
+        key = row.get("groupKey")
+        if not isinstance(key, str) or not key.startswith("group."):
+            raise PromotionReadinessError("CROSS_SURFACE_GROUP_KEY_INVALID")
+        if key in seen_keys:
+            raise PromotionReadinessError(f"CROSS_SURFACE_GROUP_KEY_DUPLICATE:{key}")
+        seen_keys.add(key)
+        disposition = row.get("disposition")
+        if disposition not in allowed_dispositions:
+            raise PromotionReadinessError(f"CROSS_SURFACE_GROUP_DISPOSITION_INVALID:{key}:{disposition}")
+        coalesce = row.get("canonicalCoalescingAllowed")
+        if not isinstance(coalesce, bool):
+            raise PromotionReadinessError(f"CROSS_SURFACE_COALESCING_BOOL_REQUIRED:{key}")
+        sources = row.get("semanticAuthoritySources")
+        if not isinstance(sources, list) or any(not isinstance(x, str) or not x for x in sources):
+            raise PromotionReadinessError(f"CROSS_SURFACE_SEMANTIC_SOURCES_INVALID:{key}")
+        members = row.get("members")
+        if not isinstance(members, list) or len(members) < 2:
+            raise PromotionReadinessError(f"CROSS_SURFACE_MEMBERS_REQUIRED:{key}")
+        member_ids: set[str] = set()
+        member_surfaces: set[str] = set()
+        for member in members:
+            if not isinstance(member, dict):
+                raise PromotionReadinessError(f"CROSS_SURFACE_MEMBER_OBJECT_REQUIRED:{key}")
+            target = member.get("targetId")
+            surface = member.get("surfaceKey")
+            if target not in certified:
+                raise PromotionReadinessError(f"CROSS_SURFACE_UNKNOWN_TARGET:{key}:{target}")
+            if certified[target].get("surfaceKey") != surface:
+                raise PromotionReadinessError(f"CROSS_SURFACE_MEMBER_SURFACE_MISMATCH:{key}:{target}")
+            if target in member_ids:
+                raise PromotionReadinessError(f"CROSS_SURFACE_DUPLICATE_MEMBER:{key}:{target}")
+            member_ids.add(target)
+            member_surfaces.add(str(surface))
+        if coalesce:
+            if disposition != "CANONICAL_COALESCE_ALLOWED":
+                raise PromotionReadinessError(f"CROSS_SURFACE_COALESCE_DISPOSITION_CONFLICT:{key}")
+            if not sources:
+                raise PromotionReadinessError(f"CROSS_SURFACE_CANONICAL_AUTHORITY_REQUIRED:{key}")
+            if len(member_surfaces) < 2:
+                raise PromotionReadinessError(f"CROSS_SURFACE_REQUIRES_MULTIPLE_SURFACES:{key}")
+            for target in sorted(member_ids):
+                prior = canonical_member_owner.get(target)
+                if prior is not None:
+                    raise PromotionReadinessError(
+                        f"CROSS_SURFACE_CANONICAL_MEMBER_COLLISION:{target}:{prior}:{key}"
+                    )
+                canonical_member_owner[target] = key
+            keys.append(key)
+        elif disposition == "CANONICAL_COALESCE_ALLOWED":
+            raise PromotionReadinessError(f"CROSS_SURFACE_ALLOWED_MUST_COALESCE:{key}")
+    return keys
+
+
 def compose_plan(
     *,
     cert_root: Path = CERT_ROOT,
@@ -407,11 +498,13 @@ def compose_plan(
     if checked["status"] != "PASS_PROMOTION_READINESS_INPUTS":
         raise PromotionReadinessError("SURFACE_HANDOFFS_PENDING:" + ",".join(checked["pending"]))
 
+    certified = load_certified_corpus(cert_root)
     all_rows: list[dict[str, Any]] = []
     for surface in SURFACE_ORDER:
         all_rows.extend(_load_jsonl(readiness_root / surface / "RESOLUTION.jsonl"))
-    if len(all_rows) != 2097:
-        raise PromotionReadinessError(f"GLOBAL_COUNT:{len(all_rows)}")
+    expected_total = sum(SURFACE_COUNTS.values())
+    if len(all_rows) != expected_total:
+        raise PromotionReadinessError(f"GLOBAL_COUNT:{len(all_rows)}:expected={expected_total}")
     targets = [row["targetId"] for row in all_rows]
     if len(targets) != len(set(targets)):
         raise PromotionReadinessError("GLOBAL_DUPLICATE_TARGET_ID")
@@ -421,7 +514,7 @@ def compose_plan(
     ready_register = counts[READY_REGISTER]
     blocked = sum(v for k, v in counts.items() if k.startswith("BLOCKED_"))
     not_applicable = counts[NOT_APPLICABLE]
-    if ready_reuse + ready_register + blocked + not_applicable != 2097:
+    if ready_reuse + ready_register + blocked + not_applicable != expected_total:
         raise PromotionReadinessError("GLOBAL_ZERO_LOSS_ACCOUNTING_FAILED")
 
     registration_keys = sorted(
@@ -433,11 +526,16 @@ def compose_plan(
     if len(registration_keys) != len(set(registration_keys)):
         raise PromotionReadinessError("DUPLICATE_CANONICAL_PROPOSAL_KEY")
 
+    canonical_group_keys = _canonical_semantic_group_keys(
+        readiness_root=readiness_root,
+        certified=certified,
+    )
+
     return {
         "schema": "prisma.visual-promotion.canonical-promotion-plan.v1",
         "phase": PHASE,
         "status": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
-        "inputCount": 2097,
+        "inputCount": expected_total,
         "readyExistingAuthorityReuse": ready_reuse,
         "readyCanonicalRegistration": ready_register,
         "blocked": blocked,
