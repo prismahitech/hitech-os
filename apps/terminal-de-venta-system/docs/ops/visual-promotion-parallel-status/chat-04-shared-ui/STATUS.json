@@ -4,28 +4,23 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "DONE",
-  "updatedAt": "2026-09-11T22:57:00-06:00",
-  "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-  "workBranch": "chat4/shared-ui-corpus-cert-20260904",
-  "workHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a",
-  "summary": "Chat 4 completed CORPUS_FINAL_PARALLEL_VERIFICATION as SHARED_UI_FINAL_WITNESS. Independent read-only verification of exact certification head 553577aa74045c73ab9c92d1f81538e7e0a8c65a reproduced every required invariant: NORMALIZED=70, CERTIFICATION=70, INVALID=0, unique target IDs=70, semanticMutationCount=0, labels 40 VALID_REGISTER_TARGET_FIRST + 30 VALID_BLOCKED, 19 no-region unresolved preserved, 11 multi-region conflicts preserved, NDC UNRESOLVED=70, Atlasfin NO_MATCH=70, projection CURRENT=70. Certification base-to-head is exactly one commit with exactly five certification files and no consumer/product/global-authority changes. PASS_SHARED_UI_CORPUS_WITNESS published; Chat 4 now holds in CERTIFIED_HOLD with no further lane mutation authorized.",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-12T16:08:00-06:00",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat4/canonical-promotion-readiness-shared-ui-20260912",
+  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "summary": "Chat 4 entered CANONICAL_PROMOTION_READINESS_RESOLUTION as SHARED_UI_PROMOTION_READINESS_RESOLVER. Current canonical main and assigned work branch both resolve to d4b451cc92c597d02cfc65094922bd2c5dd17c12. The prior corpus witness is closed and will not be rebuilt. This phase will resolve the immutable 70-target Shared UI certified subset exactly once into promotion-readiness outputs under the exclusive shared-ui readiness directory, preserving unknown/ambiguous evidence and making no product/runtime/global-authority mutation.",
   "blockers": [],
   "findings": [
-    "Exact immutable certification head verified: 553577aa74045c73ab9c92d1f81538e7e0a8c65a.",
-    "Git compare from certification base 8cc1918c5e015d1408335c15313e7364e04859c2 to certification head is exactly one commit and five added files, all under prisma-html/governance/visual-promotion/candidates/shared-ui/certification/**.",
-    "NORMALIZED.jsonl has exactly 70 records and CERTIFICATION.jsonl has exactly 70 records; INVALID.jsonl is the empty Git blob.",
-    "Certification rows partition exactly as candidate source records 1..40, unresolved source records 1..19, and conflict source records 1..11, yielding 40 VALID_REGISTER_TARGET_FIRST and 30 VALID_BLOCKED.",
-    "All 70 certification records preserve semanticMutation=false, ndcResolutionStatus=UNRESOLVED, atlasfinMatchStatus=NO_MATCH and projectionStatus=CURRENT.",
-    "No-region unresolved count remains 19 and multi-region conflict count remains 11; no region was inferred.",
-    "No product/runtime, consumer, candidate-source, generated projection, canonical Identity/RIFAT/NDC/Target Index, Factory Ledger/Evidence Index, FILES_MANIFEST, or other Chat mailbox bytes were changed by this witness.",
-    "Current canonical main observed as 7c5b8d477a9006c5184ddbc806874b6e7c02571c; current prompt already contains the mailbox-driven final verification assignment, and no new source mutation is being performed that would require stale mutation authority reuse."
+    "STATUS_INDEX v1.2.0 assigns Chat 4 role SHARED_UI_PROMOTION_READINESS_RESOLVER and expected result PASS_SHARED_UI_PROMOTION_READINESS.",
+    "Canonical main is d4b451cc92c597d02cfc65094922bd2c5dd17c12 and the assigned work branch already exists exactly at that head.",
+    "Canonical phase input remains Shared UI certified count 70 with 40 register-first rows and 30 blocked rows, including 19 no-region unresolved and 11 multi-region conflicts; NDC remains unresolved across all 70 and Atlasfin remains NO_MATCH across all 70 until stronger current authority proves otherwise."
   ],
   "decisions": [
-    "Published PASS_SHARED_UI_CORPUS_WITNESS because every required invariant reproduced from immutable exact-head evidence.",
-    "Kept Materiality Catalog uninspected and at STANDBY_USER_INVOKED_ONLY.",
-    "Performed no broad rediscovery, repair, inference, promotion, rebase, source/certification commit, product/runtime mutation or global authority mutation.",
-    "Remain in CERTIFIED_HOLD after witness completion; any later correction must be a bounded evidence-backed request from the authorized integration owner."
+    "Do not rebuild or recertify prior phases.",
+    "Write phase artifacts only under prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**.",
+    "Keep Materiality Catalog uninspected and STANDBY_USER_INVOKED_ONLY.",
+    "Do not broad-rediscover, repair projections, mutate consumers/products/runtime/global authority, or mint canonical IDs."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json",
@@ -33,100 +28,28 @@
   ],
   "validations": [
     {
-      "name": "exact-head-scope",
+      "name": "phase-assignment",
       "result": "PASS",
-      "detail": "8cc1918c5e015d1408335c15313e7364e04859c2..553577aa74045c73ab9c92d1f81538e7e0a8c65a = one commit, five certification files only."
+      "detail": "Current prompt and STATUS_INDEX assign Chat 4 to CANONICAL_PROMOTION_READINESS_RESOLUTION / SHARED_UI_PROMOTION_READINESS_RESOLVER."
     },
     {
-      "name": "record-counts",
+      "name": "work-branch-base",
       "result": "PASS",
-      "detail": "NORMALIZED=70; CERTIFICATION=70; INVALID=0."
-    },
-    {
-      "name": "unique-target-ids",
-      "result": "PASS",
-      "detail": "70 certification records contain 70 distinct targetId values; duplicateTargetIds=0."
-    },
-    {
-      "name": "certification-labels",
-      "result": "PASS",
-      "detail": "40 VALID_REGISTER_TARGET_FIRST + 30 VALID_BLOCKED."
-    },
-    {
-      "name": "source-outcome-partition",
-      "result": "PASS",
-      "detail": "40 candidate + 19 unresolved + 11 conflict = 70, with source logical record sequences complete."
-    },
-    {
-      "name": "semantic-fidelity",
-      "result": "PASS",
-      "detail": "semanticMutationCount=0; NDC UNRESOLVED=70; Atlasfin NO_MATCH=70; projection CURRENT=70."
-    },
-    {
-      "name": "unresolved-conflict-preservation",
-      "result": "PASS",
-      "detail": "19 no-region unresolved records remain unresolved; 11 multi-region conflict records remain conflicts; no inferred region."
-    },
-    {
-      "name": "safety-boundary",
-      "result": "PASS",
-      "detail": "Materiality uninspected; productRuntimeMutation=false; canonicalPromotionPerformed=false; consumer/product/global authority changes=0."
+      "detail": "chat4/canonical-promotion-readiness-shared-ui-20260912 == current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 before phase writes."
     }
   ],
   "unresolved": [
-    "The 19 no-region and 11 multi-region records remain intentionally unresolved/blocked for later governed promotion work.",
-    "All 70 NDC outcomes remain UNRESOLVED and all 70 Atlasfin outcomes remain NO_MATCH; this witness does not resolve or promote them."
+    "Per-target promotion-readiness resolution has not yet been materialized for the 70 Shared UI certified records."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. Await Chat 6 deterministic aggregation/cross-check. Do not mutate the lane unless Chat 6 issues a bounded evidence-backed correction request.",
+  "nextAction": "Read the current promotion-readiness vocabulary/contracts and the immutable Shared UI certified subset plus current exact NDC/Identity/RIFAT/Visual Control/Target Index authority, then materialize and validate the seven assigned Shared UI readiness files with zero-loss accounting.",
   "handoff": {
-    "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-    "parallelWitness": {
-      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+    "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+    "promotionReadiness": null,
+    "priorParallelWitness": {
       "result": "PASS_SHARED_UI_CORPUS_WITNESS",
-      "certificationBranch": "chat4/shared-ui-corpus-cert-20260904",
-      "certificationHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a",
-      "certificationBaseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-      "expectedInputCount": 70,
-      "normalizedCount": 70,
-      "certificationCount": 70,
-      "invalidCount": 0,
-      "semanticMutationCount": 0,
-      "duplicateTargetIds": 0,
-      "outputGitBlobShas": {
-        "MANIFEST.json": "132257fd22056f35ce71b35e2a1710dd597e83b0",
-        "NORMALIZED.jsonl": "ad91d542af9ba5334bc47fba0b953c515caf2fa3",
-        "CERTIFICATION.jsonl": "b7c7e1a281640b058061ada51d051c38c929cf4c",
-        "INVALID.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "SUMMARY.md": "9717ceeb7d499b3d564b34ce5fcc227be175d6f5"
-      },
-      "invariants": {
-        "certificationLabels": {
-          "VALID_REGISTER_TARGET_FIRST": 40,
-          "VALID_BLOCKED": 30
-        },
-        "sourceOutcomeBuckets": {
-          "candidate": 40,
-          "unresolved": 19,
-          "conflict": 11
-        },
-        "noRegionUnresolved": 19,
-        "multiRegionConflicts": 11,
-        "ndcUnresolved": 70,
-        "atlasfinNoMatch": 70,
-        "projectionCurrent": 70,
-        "physicalCurrent": 70
-      },
-      "materialityCatalogInspected": false,
-      "broadRediscoveryPerformed": false,
-      "productRuntimeMutation": false,
-      "consumerMutation": false,
-      "globalAuthorityMutation": false,
-      "canonicalPromotionPerformed": false,
-      "sourceCertificationMutationPerformed": false,
-      "defects": []
-    },
-    "holdState": "CERTIFIED_HOLD"
+      "certificationHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a"
+    }
   }
 }
