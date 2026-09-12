@@ -1,0 +1,129 @@
+{
+  "schema": "prisma.visual-promotion.promotion-readiness-baseline.v1",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "status": "PASS_PROMOTION_READINESS_BASELINE",
+  "canonicalMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "immutableSourceBlobs": {
+    "corpusManifest": "6246e92d7b38750d45b2d74e6adf1b61fcd43a56",
+    "candidateCorpus": "af6b8a7bea4be94fa0e0e42354d404d74c183083",
+    "certification": "05b4f36b65464e035177468b5088039b96069460",
+    "currentTruth": "1e36a9d7eebfcf8976db9458dd2f530ebca364b4",
+    "surfaceReadiness": "a0901b9633eb349601335212f188c2b84ce30534",
+    "collisions": "9a709ffedfac54e286c52d820b157b2beca7402b",
+    "semanticReviewGroups": "f059564ed26e266e19f9d5d92ed25c4a3a5af243",
+    "summary": "e7bdf7f42ebe44859b62bf5a434435b4737816d2"
+  },
+  "accounting": {
+    "inputCount": 2097,
+    "uniqueTargetIds": 2097,
+    "certificationStatusCounts": {
+      "VALID_ELIGIBLE_CANDIDATE": 139,
+      "VALID_REGISTER_TARGET_FIRST": 1926,
+      "VALID_BLOCKED": 32
+    },
+    "promotionStatusCounts": {
+      "ELIGIBLE_CANDIDATE": 139,
+      "REGISTER_TARGET_FIRST": 1926,
+      "BLOCKED": 32
+    },
+    "workEntryDecisionCounts": {
+      "REGISTER_TARGET_FIRST": 2065,
+      "BLOCKED": 32
+    },
+    "physicalStatusCounts": {
+      "CURRENT": 2094,
+      "DRIFT": 3
+    },
+    "projectionStatusCounts": {
+      "CURRENT": 1820,
+      "MISSING": 139,
+      "DRIFT": 138
+    },
+    "surfaceCounts": {
+      "tablet": 929,
+      "pc": 827,
+      "mobile": 271,
+      "shared-ui": 70
+    }
+  },
+  "surfaces": {
+    "tablet": {
+      "total": 929,
+      "promotion": {
+        "ELIGIBLE_CANDIDATE": 139,
+        "REGISTER_TARGET_FIRST": 788,
+        "BLOCKED": 2
+      },
+      "physical": {
+        "CURRENT": 927,
+        "DRIFT": 2
+      },
+      "projection": {
+        "CURRENT": 929
+      }
+    },
+    "pc": {
+      "total": 827,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 827
+      },
+      "physical": {
+        "CURRENT": 826,
+        "DRIFT": 1
+      },
+      "projection": {
+        "CURRENT": 688,
+        "MISSING": 139
+      }
+    },
+    "mobile": {
+      "total": 271,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 271
+      },
+      "physical": {
+        "CURRENT": 271
+      },
+      "projection": {
+        "CURRENT": 133,
+        "DRIFT": 138
+      }
+    },
+    "shared-ui": {
+      "total": 70,
+      "promotion": {
+        "REGISTER_TARGET_FIRST": 40,
+        "BLOCKED": 30
+      },
+      "physical": {
+        "CURRENT": 70
+      },
+      "projection": {
+        "CURRENT": 70
+      },
+      "noRegionUnresolved": 19,
+      "multiRegionConflicts": 11
+    }
+  },
+  "semanticReview": {
+    "groupCount": 10,
+    "crossSurfaceGroupCount": 0
+  },
+  "atlasfin": {
+    "referenceCount": 2421,
+    "hardInvalidRefCount": 0,
+    "semanticMutationCount": 0
+  },
+  "collisions": {
+    "duplicateTargetIds": 0,
+    "bindingCandidateKeyCollisions": 0
+  },
+  "currentlyAuthorizedCanonicalPromotions": 0,
+  "GVAE_EXACT_APPLY": 0,
+  "runtimeVisualGreen": false,
+  "wholeSurfaceApplyReadyCount": 0,
+  "materialityCatalogPolicy": "STANDBY_USER_INVOKED_ONLY",
+  "materialityCatalogInspected": false,
+  "broadRediscoveryPerformed": false,
+  "corpusRegenerated": false
+}
