@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T11:55:30Z",
+  "updatedAt": "2026-09-12T11:58:00Z",
   "baseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
   "workBranch": "chat6/promotion-readiness-control-plane-20260912",
-  "workHead": null,
-  "summary": "Started CANONICAL_PROMOTION_READINESS_RESOLUTION as Chat 6 / Visual Promotion Control Plane. Certified corpus is immutable input. Universal anti-rework PROPOSAL and MUTATION evaluations PASS for ADVANCE of visual.generic_application_engine_v1. Fresh task-exact six-lane AutoMesh run 34692209649 PASS_COMPOSED_AUTHORITY_MESH on current main with 100% required-authority coverage, zero blockers and Layer Maps. Phase setup mutation is now authorized within bounded governance/tooling scope only.",
+  "workHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
+  "summary": "Promotion-readiness bootstrap PR #550 is exact-head green and clean/mergeable. Mechanical FILES_MANIFEST refresh exactly matches the VISCORE candidate SHA-256 5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883 with 874 files excluding manifest. Exact final head passes CI, VISCORE1, ForgeOS and Sync Sentinel. Canonical main has not moved from the Authority Mesh base.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -340,6 +340,36 @@
       "result": "PASS_CANDIDATE_CORPUS_CERTIFIED",
       "evidence": "prisma-html/governance/visual-promotion/contracts/corpus-certification/CORPUS_MANIFEST.json on main",
       "details": "2097 records; invalid=0; duplicateTargetIds=0; semanticMutationCount=0; GVAE_EXACT_APPLY=0; authorized promotions=0; runtimeVisualGreen=false; wholeSurfaceApplyReadyCount=0; Materiality uninspected"
+    },
+    {
+      "name": "Bootstrap manifest parity",
+      "result": "PASS",
+      "evidence": "VISCORE run 34692332341 / artifact 10296529768",
+      "details": "Committed manifest reconstruction matches artifact SHA-256 5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883 exactly; 874 files excluding manifest."
+    },
+    {
+      "name": "Bootstrap exact-head CI",
+      "result": "PASS",
+      "evidence": "workflow run 34692332328",
+      "details": "head 7d209c3eeeecca9ce45d250e91e0d52148958cee"
+    },
+    {
+      "name": "Bootstrap exact-head VISCORE1",
+      "result": "PASS",
+      "evidence": "workflow run 34692332341",
+      "details": "head 7d209c3eeeecca9ce45d250e91e0d52148958cee; committed manifest parity PASS; Work Entry, Identity/RIFAT, Atlasfin and no-fake-READY PASS."
+    },
+    {
+      "name": "Bootstrap exact-head ForgeOS",
+      "result": "PASS",
+      "evidence": "workflow run 34692332335",
+      "details": "head 7d209c3eeeecca9ce45d250e91e0d52148958cee"
+    },
+    {
+      "name": "Bootstrap exact-head Sync Sentinel",
+      "result": "PASS",
+      "evidence": "workflow run 34692332327",
+      "details": "head 7d209c3eeeecca9ce45d250e91e0d52148958cee"
     }
   ],
   "unresolved": [
@@ -350,7 +380,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Create and merge the canonical phase setup: prompts, status phase mapping, disjoint write ownership, promotion-readiness contracts/schemas and Chat 6 composer scaffold. Then read worker mailboxes directly and continue global composition only after their handoffs exist.",
+  "nextAction": "Merge PR #550 with expected head 7d209c3eeeecca9ce45d250e91e0d52148958cee, verify merged main tree equals certified PR head tree, then publish phaseReady=true and begin Chat 6 composer tooling against the new canonical phase.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -807,6 +837,15 @@
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalAuthorityMutation": false
+    },
+    "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
+    "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
+    "bootstrapManifestFileCount": 874,
+    "bootstrapGateRuns": {
+      "CI": 34692332328,
+      "VISCORE1": 34692332341,
+      "ForgeOS": 34692332335,
+      "SyncSentinel": 34692332327
     }
   }
 }
