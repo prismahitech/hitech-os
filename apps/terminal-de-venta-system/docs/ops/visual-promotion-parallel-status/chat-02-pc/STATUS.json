@@ -4,255 +4,55 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-04T23:56:00-06:00",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-11T22:44:00-06:00",
   "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
   "workBranch": "chat2/pc-corpus-cert-20260904",
   "workHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
-  "summary": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED. Chat 2 produced the strict certified derivative for all 827 PC source outcomes from immutable worker head 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078. 827/827 normalized records and 827/827 certification rows are corpus-valid, INVALID.jsonl is empty, duplicate targets=0, semanticMutationCount=0, exact source provenance is pinned, the one selector conflict and all 139 projection MISSING states are preserved. No source shard, product/runtime, global authority or FILES_MANIFEST mutation occurred.",
+  "summary": "CORPUS_FINAL_PARALLEL_VERIFICATION started for Chat 2 / PC_FINAL_WITNESS. Verification is read-only against the immutable certification head; only this mailbox may be updated.",
   "blockers": [
     {
       "scope": "candidate",
       "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
       "code": "CURRENT_AUTHORITY_SELECTOR_DISAGREEMENT",
       "detail": "Target Index selector is '.supplier-readable-v07' while expanded Visual Control selector is '.supplier-readable-v07 *'.",
-      "impact": "Preserved exactly as corpus-valid DRIFT/conflict evidence. It does not block corpus certification and does not authorize repair."
+      "impact": "Must remain unresolved in witness evidence; no repair is authorized."
     }
   ],
   "findings": [
-    "PC input census count is 827 and every target is reconciled exactly once.",
-    "Physical status: 826 CURRENT, 1 DRIFT, 0 MISSING.",
-    "Atlasfin-first classification: 186 MATCHED_RECIPE and 641 NO_MATCH. No family/preset was guessed and Atlasfin recipe IDs were not promoted into Identity recipe authority.",
-    "Projection status: 688 CURRENT, 139 MISSING, 0 DRIFT. MISSING is used only where Target Index explicitly carries a projection blocker with no proven canonical source/output.",
-    "Canonical Identity registry proves zero resolved PC element bindings and zero PC-specific canonical Identity recipes for these targets.",
-    "Materiality Catalog was not inspected, consumed or used as fallback.",
-    "Current canonical main is 66fa02147f0cf31529c090a47f376026b406875a.",
-    "Bounded read-only revalidation matched 28/28 source-authority blob SHAs recorded by the PC worker manifest against current main.",
-    "From worker base to current main, changed files are coordination/prompt/status-channel/FILES_MANIFEST bytes; none of the 28 recorded candidate source-authority inputs changed.",
-    "Interoperability contract delta from worker base only adds the status-channel write exception. No prior interoperability rule was removed.",
-    "Vocabulary scope, authority domains, ID policies, field names, enums, NDC edge types, Atlasfin sources, Materiality policy, write ownership, forbidden worker writes and hard truths are unchanged; only coordinationStatusChannel was added.",
-    "The worker branch still resolves exactly to 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078 and all five candidate output blob SHAs are unchanged.",
-    "Factory Ledger capability visual.generic_application_engine_v1 remains DONE / SOURCE_READY / doNotRebuild=true; this Chat 2 continuation is VERIFY/read-only and must not rebuild GVAE or treat DISCOVERY_ONLY census as application authority.",
-    "PC corpus certification precommit validation passed: 827/827 source records validate against the exact Chat 6 strict candidate schema at control-plane head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb.",
-    "The PC record representations require no field-level normalization; the legacy incompatibility is the source shard manifest/count envelope. NORMALIZED.jsonl can therefore preserve source record bytes exactly while the certification MANIFEST uses the strict candidate-shard envelope.",
-    "Certification classification is 827 VALID_REGISTER_TARGET_FIRST. Source bucket placement does not upgrade promotionStatus: all 186 source CANDIDATES records still carry REGISTER_TARGET_FIRST.",
-    "Precommit invariants: invalid=0, duplicate target IDs=0, semanticMutationCount=0, projection MISSING=139, physical CURRENT=826 / DRIFT=1, Atlasfin MATCHED_RECIPE=186 / NO_MATCH=641, NDC UNRESOLVED=827, binding BLOCKED=827.",
-    "Committed certification bytes passed post-write revalidation: 827 normalized, 827 certification, 0 invalid, 827 unique target IDs, 0 semantic mutations, 0 representation changes.",
-    "Certification branch base is current canonical main 8cc1918c5e015d1408335c15313e7364e04859c2 and final head is 8cc979c141000fcedabf832f16468a6ee3e328e2.",
-    "Certification branch is 5 commits ahead / 0 behind its base and changes exactly the five required files under prisma-html/governance/visual-promotion/candidates/pc/certification/**.",
-    "Immutable source branch agent/chat2-pc-promotion-20260904 remains exactly at 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078.",
-    "Committed semantic invariants: physical 826 CURRENT / 1 DRIFT; projection 688 CURRENT / 139 MISSING; Atlasfin 186 MATCHED_RECIPE / 641 NO_MATCH; NDC 827 UNRESOLVED; binding 827 BLOCKED; promotion and Work Entry 827 REGISTER_TARGET_FIRST.",
-    "All 827 certification labels are VALID_REGISTER_TARGET_FIRST; certification validity did not upgrade promotion readiness."
+    "STATUS_INDEX resolves Chat 2 to PC_PROMOTION / PC_FINAL_WITNESS with expected result PASS_PC_CORPUS_WITNESS.",
+    "Immutable certification head is 8cc979c141000fcedabf832f16468a6ee3e328e2.",
+    "Current canonical main is 7c5b8d477a9006c5184ddbc806874b6e7c02571c; current witness work does not mutate product, authority, or certification bytes."
   ],
   "decisions": [
-    "Reused current Visual Control/Target Index physical census and did not run broad rediscovery.",
-    "Preserved every existing TGT.CENSUS.* targetId byte-for-byte and minted no canonical IDs.",
-    "Used only exact structured Visual Control layerType == unique Atlasfin recipe familyKind as MATCHED_RECIPE evidence; otherwise recorded NO_MATCH.",
-    "Normalized CSS-insignificant comma/whitespace only when comparing selectors so '.prisma-home-primary, .prisma-home-secondary' and '.prisma-home-primary,.prisma-home-secondary' do not create fake drift.",
-    "Did not invent NDC meaning from visual names/selectors; unresolved meaning stayed unresolved.",
-    "Did not repair projection/source gaps, copy product bytes into RIFAT, or mutate runtime/product/global authority.",
-    "Classified main movement since baseHead as NON_RELEVANT_COORDINATION_ONLY for Chat 2 candidate provenance because all recorded semantic/physical/source authority blobs remain identical.",
-    "No shard recomputation, rebase, projection repair or candidate-file mutation is warranted by current main movement.",
-    "Remain in PC HOLD / READY_FOR_INTEGRATION and respond only to bounded evidence-backed integration correction requests.",
-    "Factory Ledger anti-rework classification for this continuation: VERIFY/REUSE only for existing visual.generic_application_engine_v1 capability; no BUILD/REBUILD or mutation gate is warranted.",
-    "Preserve every PC candidate record byte-for-byte in NORMALIZED.jsonl because the strict candidate schema already accepts all 827 source representations.",
-    "Normalize only the legacy PC shard manifest envelope into prisma.visual-promotion.candidate-shard.v1; do not rewrite candidate semantics.",
-    "Use SHA-256 over exact UTF-8 source JSON record bytes excluding the line terminator as the deterministic sourceRecordSha256 rule.",
-    "Certification completion result is PASS_PC_CANDIDATE_CORPUS_CERTIFIED.",
-    "Do not open a Chat 2 PR. Chat 6 owns final candidate-corpus integration PR and the one-time prisma-html/FILES_MANIFEST.json refresh.",
-    "Handoff the certification branch/head to Chat 6 without merging, rebasing, rewriting raw worker history or mutating global authority."
+    "Execute only the PC final witness assignment from the current canonical prompt.",
+    "Do not mutate or rebase the certification branch.",
+    "Do not inspect or consume Materiality Catalog.",
+    "Unknown/conflict truth remains unresolved; no canonical IDs or projection repairs are permitted."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/candidates/pc/certification/MANIFEST.json",
-    "prisma-html/governance/visual-promotion/candidates/pc/certification/NORMALIZED.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/pc/certification/CERTIFICATION.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/pc/certification/INVALID.jsonl",
-    "prisma-html/governance/visual-promotion/candidates/pc/certification/SUMMARY.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md"
   ],
-  "validations": [
-    {
-      "check": "zero-loss accounting",
-      "result": "PASS",
-      "detail": "827 input = 186 CANDIDATES + 640 UNRESOLVED + 1 CONFLICT."
-    },
-    {
-      "check": "unique target IDs",
-      "result": "PASS",
-      "detail": "827 unique output targetIds; no duplicate or missing census target."
-    },
-    {
-      "check": "closed vocabulary and authority domains",
-      "result": "PASS",
-      "detail": "All candidate status values and evidence authority domains conform to the cohort vocabulary."
-    },
-    {
-      "check": "write ownership",
-      "result": "PASS",
-      "detail": "Work branch diff contains exactly five added files under prisma-html/governance/visual-promotion/candidates/pc/**."
-    },
-    {
-      "check": "scope and mutation boundaries",
-      "result": "PASS",
-      "detail": "Materiality fallback NOT_USED; broad rediscovery NOT_RUN; global authority writes 0; product/runtime writes 0."
-    },
-    {
-      "check": "work branch head verification",
-      "result": "PASS",
-      "detail": "agent/chat2-pc-promotion-20260904 is identical to commit 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078 and is 5 commits ahead / 0 behind its recorded base."
-    },
-    {
-      "check": "status-channel branch isolation and mailbox contract",
-      "result": "PASS",
-      "detail": "status/vp-chat-02-pc is 2 commits ahead / 0 behind current main and changes only this Chat 2 mailbox's STATUS.json and LOG.md; all required STATUS fields are present and LOG.md preserved prior text append-only."
-    },
-    {
-      "check": "bounded source-authority hash revalidation against current main",
-      "result": "PASS",
-      "detail": "28/28 manifest-recorded source-authority Git blob SHAs match exactly on main 66fa02147f0cf31529c090a47f376026b406875a; relevant drift count 0."
-    },
-    {
-      "check": "interoperability contract drift classification",
-      "result": "PASS",
-      "detail": "Base-to-main contract change only adds the dedicated status-channel exception; no existing candidate semantics or authority rule was removed."
-    },
-    {
-      "check": "vocabulary semantic stability",
-      "result": "PASS",
-      "detail": "Core vocabulary sections used by Chat 2 are unchanged; only coordinationStatusChannel was added."
-    },
-    {
-      "check": "worker output immutability",
-      "result": "PASS",
-      "detail": "Work branch is still exactly 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078 and MANIFEST/CANDIDATES/UNRESOLVED/CONFLICTS/SUMMARY blob SHAs all match the recorded handoff."
-    },
-    {
-      "check": "PC corpus certification precommit",
-      "result": "PASS",
-      "detail": "827/827 strict-schema valid; reference validation PASS; invalid=0; duplicates=0; semanticMutationCount=0; 139 projection MISSING and the exact selector conflict preserved."
-    },
-    {
-      "check": "committed certification byte integrity",
-      "result": "PASS",
-      "detail": "All five committed files match their precommit SHA-256 digests; INVALID.jsonl is the canonical empty SHA-256 e3b0c442...."
-    },
-    {
-      "check": "post-write corpus accounting",
-      "result": "PASS",
-      "detail": "827 normalized + 827 certification rows; invalid=0; 827 unique normalized targets and 827 unique certification targets."
-    },
-    {
-      "check": "semantic invariants after commit",
-      "result": "PASS",
-      "detail": "semanticMutationCount=0; representationChanged=0; 139 projection MISSING preserved; exact selector DRIFT conflict preserved; all source promotion/Work Entry/NDC/Identity/Atlasfin statuses unchanged."
-    },
-    {
-      "check": "certification write ownership",
-      "result": "PASS",
-      "detail": "Diff from branch base contains exactly five files and every path is under prisma-html/governance/visual-promotion/candidates/pc/certification/**."
-    },
-    {
-      "check": "immutable raw worker provenance",
-      "result": "PASS",
-      "detail": "agent/chat2-pc-promotion-20260904 remains identical to recorded source head 896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078."
-    }
-  ],
+  "validations": [],
   "unresolved": [
-    "640 source records remain semantically unresolved exactly as in the immutable worker shard; corpus certification does not resolve them.",
-    "The selector conflict for TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains unresolved by design.",
-    "All 139 projection MISSING states remain unrepaired.",
-    "All 827 records remain NDC UNRESOLVED and canonical Identity binding BLOCKED / REGISTER_TARGET_FIRST.",
-    "Canonical promotion, global ID assignment, projection repair, GVAE APPLY and runtime certification remain later governed stages."
+    "Selector conflict TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains intentionally unresolved.",
+    "139 projection MISSING records must remain unrepaired."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Wait for Chat 6 deterministic final aggregation to consume chat2/pc-corpus-cert-20260904 @ 8cc979c141000fcedabf832f16468a6ee3e328e2. Make no further Chat 2 mutation unless an evidence-backed bounded certification correction is requested.",
+  "nextAction": "Independently cross-check the immutable certification head-tree invariants and publish the deterministic PC witness receipt.",
   "handoff": {
-    "readiness": "READY_FOR_INTEGRATION",
+    "readiness": "VERIFYING_FINAL_WITNESS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
-    "certificationPhase": "CANDIDATE_CORPUS_CERTIFICATION_PARALLEL",
     "certificationBranch": "chat2/pc-corpus-cert-20260904",
     "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
-    "certificationBase": "8cc1918c5e015d1408335c15313e7364e04859c2",
-    "sourceWorker": {
-      "branch": "agent/chat2-pc-promotion-20260904",
-      "head": "896f4a7f3463dc4ad1267f3e7d8f6a9fd70f4078",
-      "baseHead": "57b01ad8bda043ec25763203354b686341bace09",
-      "accounting": {
-        "input": 827,
-        "candidates": 186,
-        "unresolved": 640,
-        "conflicts": 1
-      }
-    },
-    "strictContract": {
-      "controlPlaneHead": "7cc48fa49906c8f443b267fd6c3590fd3f4340fb",
-      "candidateSchemaBlob": "6a7b0fb08ef0ba85ebd3782053f82a9a90cd8bdb",
-      "shardManifestSchemaBlob": "659cbc3f0239f0435008ba796ebc181b3da6232c"
-    },
-    "certification": {
-      "normalizedRecords": 827,
-      "certificationRows": 827,
-      "invalidRecords": 0,
-      "duplicateTargetIds": 0,
-      "semanticMutationCount": 0,
-      "representationChangedCount": 0,
-      "certificationStatusCounts": {
-        "VALID_REGISTER_TARGET_FIRST": 827
-      },
-      "physicalStatusCounts": {
-        "CURRENT": 826,
-        "DRIFT": 1
-      },
-      "projectionStatusCounts": {
-        "CURRENT": 688,
-        "MISSING": 139
-      },
-      "atlasfinMatchCounts": {
-        "MATCHED_RECIPE": 186,
-        "NO_MATCH": 641
-      },
-      "ndcResolutionCounts": {
-        "UNRESOLVED": 827
-      },
-      "bindingStatusCounts": {
-        "BLOCKED": 827
-      },
-      "promotionStatusCounts": {
-        "REGISTER_TARGET_FIRST": 827
-      },
-      "workEntryDecisionCounts": {
-        "REGISTER_TARGET_FIRST": 827
-      }
-    },
-    "outputRoot": "prisma-html/governance/visual-promotion/candidates/pc/certification",
-    "files": {
-      "MANIFEST.json": {
-        "blobSha": "bc53a0e1d92df2092248bacfb9ca042b65e188e2",
-        "sha256": "7c12b5af232134ff5fa2f6992c908068caa6d152e1faaf6af650063bd9c0b46a"
-      },
-      "NORMALIZED.jsonl": {
-        "blobSha": "d7e7c730342a24d3daeadb3f9b07cfd95278c0b0",
-        "sha256": "127068ef114305f7dc386cd7a764527b39a6039da90e8af50df52439d4ff2044"
-      },
-      "CERTIFICATION.jsonl": {
-        "blobSha": "9c0517f3e098cdf0c02aa52aa469bbf04b4264d7",
-        "sha256": "46e114dccd889a055550acc27ce6c455a01e67347d5fadd2c96db588e5786f21"
-      },
-      "INVALID.jsonl": {
-        "blobSha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "SUMMARY.md": {
-        "blobSha": "3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0",
-        "sha256": "be7b59c2e9555bff9f08df14278034c76c5a52fba976d17ba4d712402269c2fd"
-      }
-    },
-    "integrationNotes": [
-      "Consume certification bytes by exact head/tree, not by replaying Chat 2 history.",
-      "Candidate corpus validity is not promotion or APPLY authority.",
-      "Preserve the single selector conflict and 139 projection MISSING states.",
-      "Do not use Materiality Catalog.",
-      "Do not merge a separate Chat 2 PR; Chat 6 owns the final corpus-only integration PR and one-time FILES_MANIFEST refresh."
-    ]
+    "parallelWitness": {
+      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+      "result": "IN_PROGRESS",
+      "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
+      "expectedInputCount": 827,
+      "defects": []
+    }
   }
 }
