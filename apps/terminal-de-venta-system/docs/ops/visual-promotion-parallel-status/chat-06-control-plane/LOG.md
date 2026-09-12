@@ -242,3 +242,9 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Fresh Mesh: `PASS_COMPOSED_AUTHORITY_MESH`, both Chat 6 lanes at 100% required-authority coverage, blockers=0, Layer Map present.
 - Evidence artifact: `10293925424`, digest `sha256:dc47fce3ad95dc6806d443e29577515cb4ea7473122b4c51beb17b3cc750861a`.
 - Factory Ledger canonical authority blobs are unchanged from the prior PASSed anti-rework base; capability remains `DONE / SOURCE_READY / doNotRebuild=true`, action `ADVANCE`.
+
+### 2026-09-12T06:45:00Z — PROGRESS
+- Created fresh integration branch `chat6/candidate-corpus-final-integration-20260912` directly from current canonical `main@7c5b8d477a9006c5184ddbc806874b6e7c02571c`.
+- Exact assembly commit: `f52d9d9915179f805b92e11b3a168100eeb505c6`; tree `7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e`.
+- Assembly contains exactly 88 unique accepted paths using immutable Git blob identities from the pinned worker/certification/Atlasfin/Chat6 heads.
+- `prisma-html/FILES_MANIFEST.json` has not yet been refreshed. The required one-time mechanical refresh remains the next serial barrier.
