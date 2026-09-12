@@ -1,6 +1,6 @@
 {
   "schema": "prisma.visual-promotion.status-index.v1",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "contract": "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
   "mailboxes": [
     {
@@ -9,9 +9,9 @@
       "statusBranch": "status/vp-chat-01-tablet",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/LOG.md",
-      "phaseRole": "TABLET_FINAL_WITNESS",
-      "expectedPhaseResult": "PASS_TABLET_CORPUS_WITNESS",
-      "phaseReceiptField": "handoff.parallelWitness"
+      "phaseRole": "TABLET_PROMOTION_READINESS_RESOLVER",
+      "expectedPhaseResult": "PASS_TABLET_PROMOTION_READINESS",
+      "phaseReceiptField": "handoff.promotionReadiness"
     },
     {
       "chatId": 2,
@@ -19,9 +19,9 @@
       "statusBranch": "status/vp-chat-02-pc",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md",
-      "phaseRole": "PC_FINAL_WITNESS",
-      "expectedPhaseResult": "PASS_PC_CORPUS_WITNESS",
-      "phaseReceiptField": "handoff.parallelWitness"
+      "phaseRole": "PC_PROMOTION_READINESS_RESOLVER",
+      "expectedPhaseResult": "PASS_PC_PROMOTION_READINESS",
+      "phaseReceiptField": "handoff.promotionReadiness"
     },
     {
       "chatId": 3,
@@ -29,9 +29,9 @@
       "statusBranch": "status/vp-chat-03-mobile",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/LOG.md",
-      "phaseRole": "MOBILE_FINAL_WITNESS",
-      "expectedPhaseResult": "PASS_MOBILE_CORPUS_WITNESS",
-      "phaseReceiptField": "handoff.parallelWitness"
+      "phaseRole": "MOBILE_PROMOTION_READINESS_RESOLVER",
+      "expectedPhaseResult": "PASS_MOBILE_PROMOTION_READINESS",
+      "phaseReceiptField": "handoff.promotionReadiness"
     },
     {
       "chatId": 4,
@@ -39,9 +39,9 @@
       "statusBranch": "status/vp-chat-04-shared-ui",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/LOG.md",
-      "phaseRole": "SHARED_UI_FINAL_WITNESS",
-      "expectedPhaseResult": "PASS_SHARED_UI_CORPUS_WITNESS",
-      "phaseReceiptField": "handoff.parallelWitness"
+      "phaseRole": "SHARED_UI_PROMOTION_READINESS_RESOLVER",
+      "expectedPhaseResult": "PASS_SHARED_UI_PROMOTION_READINESS",
+      "phaseReceiptField": "handoff.promotionReadiness"
     },
     {
       "chatId": 5,
@@ -49,9 +49,9 @@
       "statusBranch": "status/vp-chat-05-atlasfin",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/LOG.md",
-      "phaseRole": "ATLASFIN_FINAL_WITNESS",
-      "expectedPhaseResult": "PASS_ATLASFIN_CORPUS_WITNESS",
-      "phaseReceiptField": "handoff.parallelWitness"
+      "phaseRole": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
+      "expectedPhaseResult": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
+      "phaseReceiptField": "handoff.promotionReadiness"
     },
     {
       "chatId": 6,
@@ -59,11 +59,11 @@
       "statusBranch": "status/vp-chat-06-control-plane",
       "statusPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/STATUS.json",
       "logPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/LOG.md",
-      "phaseRole": "GLOBAL_COMPOSITOR_INTEGRATOR",
-      "expectedPhaseResult": "PASS_CANDIDATE_CORPUS_CERTIFIED",
-      "phaseReceiptField": "handoff"
+      "phaseRole": "CANONICAL_PROMOTION_READINESS_COMPOSER",
+      "expectedPhaseResult": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+      "phaseReceiptField": "handoff.promotionReadiness"
     }
   ],
-  "currentPhase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
+  "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
   "canonicalPrompt": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md"
 }
