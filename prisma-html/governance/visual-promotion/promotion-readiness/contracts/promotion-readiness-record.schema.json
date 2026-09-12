@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.promotion-readiness.record.v1",
+  "title": "PRISMA promotion readiness resolution record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "phase",
+    "surfaceKey",
+    "targetId",
+    "sourceRecordSha256",
+    "promotionReadinessDecision",
+    "authorityReuseDisposition",
+    "projectionDebtClassification",
+    "canonicalMeaning",
+    "identity",
+    "atlasfin",
+    "physical",
+    "application",
+    "wouldPassWorkEntryAfterRegistration",
+    "evidenceRefs",
+    "blockingAuthorityGaps",
+    "confidence",
+    "notes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.promotion-readiness-record.v1"
+    },
+    "phase": {
+      "const": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+    },
+    "surfaceKey": {
+      "enum": [
+        "tablet",
+        "pc",
+        "mobile",
+        "shared-ui"
+      ]
+    },
+    "targetId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRecordSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "promotionReadinessDecision": {
+      "enum": [
+        "READY_REUSE_EXISTING_AUTHORITY",
+        "READY_FOR_CANONICAL_REGISTRATION",
+        "BLOCKED_MISSING_SEMANTIC_AUTHORITY",
+        "BLOCKED_MISSING_BINDING",
+        "BLOCKED_MISSING_APPLICATION_AUTHORITY",
+        "BLOCKED_PROJECTION_AUTHORITY",
+        "BLOCKED_PHYSICAL_DRIFT",
+        "BLOCKED_MULTI_REGION_CONFLICT",
+        "BLOCKED_NDC_AMBIGUITY",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "authorityReuseDisposition": {
+      "enum": [
+        "REUSE_EXISTING",
+        "PROPOSE_NEW",
+        "UNRESOLVED",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "projectionDebtClassification": {
+      "enum": [
+        "CURRENT",
+        "CANONICAL_PROJECTION_REQUIRED_MISSING",
+        "INTENTIONALLY_NON_PROJECTED",
+        "REFERENCE_GOVERNOR_ONLY",
+        "STALE_AUTHORITY",
+        "RIFAT_AUTHORITATIVE_PRODUCT_STALE",
+        "PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED",
+        "INTENTIONAL_DIVERGENCE",
+        "AMBIGUOUS",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "canonicalMeaning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ndcPrimaryId",
+        "visualMeaningId",
+        "proposalKey",
+        "resolution"
+      ],
+      "properties": {
+        "ndcPrimaryId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "visualMeaningId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "proposalKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^proposal\\.[a-z0-9._-]+$"
+        },
+        "resolution": {
+          "enum": [
+            "REUSE_EXISTING",
+            "PROPOSE_NEW",
+            "UNRESOLVED",
+            "NOT_APPLICABLE"
+          ]
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identityRecipeId",
+        "identityAdapterId",
+        "existingBindingId",
+        "bindingProposalKey"
+      ],
+      "properties": {
+        "identityRecipeId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identityAdapterId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "existingBindingId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bindingProposalKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^proposal\\.[a-z0-9._-]+$"
+        }
+      }
+    },
+    "atlasfin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "refs",
+        "supportOnly"
+      ],
+      "properties": {
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "supportOnly": {
+          "const": true
+        }
+      }
+    },
+    "physical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routeId",
+        "regionId",
+        "slotId",
+        "componentId",
+        "ownerId",
+        "selector",
+        "implementationLayerId"
+      ],
+      "properties": {
+        "routeId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "regionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "slotId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "componentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ownerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "selector": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "implementationLayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "applicationLayerId",
+        "projectionPolicy",
+        "exactTargetRegistrationReady"
+      ],
+      "properties": {
+        "applicationLayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "projectionPolicy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exactTargetRegistrationReady": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "wouldPassWorkEntryAfterRegistration": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "blockingAuthorityGaps": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "MISSING_NDC_PRIMARY_MEANING",
+          "MISSING_VISUAL_MEANING",
+          "MISSING_IDENTITY_RECIPE",
+          "MISSING_IDENTITY_ADAPTER",
+          "MISSING_BINDING",
+          "MISSING_ROUTE",
+          "MISSING_REGION",
+          "MISSING_SLOT",
+          "MISSING_COMPONENT",
+          "MISSING_OWNER",
+          "MISSING_APPLICATION_LAYER",
+          "MISSING_LAYER_APPLICATION_POLICY",
+          "MISSING_EXACT_TARGET_AUTHORITY",
+          "PROJECTION_MISSING",
+          "PROJECTION_DRIFT",
+          "PHYSICAL_DRIFT",
+          "MULTI_REGION_CONFLICT",
+          "NDC_AMBIGUITY",
+          "SEMANTIC_AMBIGUITY",
+          "AUTHORITY_RECONCILIATION_REQUIRED"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "verified"
+      ]
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
