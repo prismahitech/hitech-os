@@ -11,6 +11,12 @@ from .corpus_certification import (
     write_corpus_outputs,
 )
 from .final_aggregation import build_final_aggregation
+from .promotion_readiness import (
+    baseline as promotion_readiness_baseline,
+    compose_plan as compose_promotion_readiness_plan,
+    load_jsonl as load_promotion_readiness_jsonl,
+    validate_lane as validate_promotion_readiness_lane,
+)
 from .control_plane import (
     ControlPlaneError,
     build_current_truth,
@@ -53,6 +59,22 @@ def main(argv: list[str] | None = None) -> int:
     truth.add_argument("--outcomes", action="append", default=[])
 
     sub.add_parser("validate-write-ownership")
+
+    pr_base = sub.add_parser("promotion-readiness-baseline")
+    pr_base.add_argument("--repo-root", default=".")
+
+    pr_lane = sub.add_parser("promotion-readiness-validate")
+    pr_lane.add_argument("--repo-root", default=".")
+    pr_lane.add_argument("--surface", required=True, choices=["tablet", "pc", "mobile", "shared-ui"])
+    pr_lane.add_argument("--resolutions", required=True)
+
+    pr_compose = sub.add_parser("promotion-readiness-compose")
+    pr_compose.add_argument("--repo-root", default=".")
+    pr_compose.add_argument("--tablet", required=True)
+    pr_compose.add_argument("--pc", required=True)
+    pr_compose.add_argument("--mobile", required=True)
+    pr_compose.add_argument("--shared-ui", required=True)
+    pr_compose.add_argument("--cross-surface-groups")
 
     corpus = sub.add_parser("certify-corpus")
     corpus.add_argument("--repo-root", default=".")
@@ -99,6 +121,31 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "current-truth":
             current = build_current_truth(load_json(Path(args.target_index)), _rows(args.outcomes))
             result = {"currentTruth": current, "surfaceReadiness": build_surface_readiness(current)}
+        elif args.command == "promotion-readiness-baseline":
+            result = promotion_readiness_baseline(Path(args.repo_root).resolve())
+        elif args.command == "promotion-readiness-validate":
+            result = validate_promotion_readiness_lane(
+                Path(args.repo_root).resolve(),
+                args.surface,
+                load_promotion_readiness_jsonl(Path(args.resolutions)),
+            )
+        elif args.command == "promotion-readiness-compose":
+            repo_root = Path(args.repo_root).resolve()
+            lanes = {
+                "tablet": load_promotion_readiness_jsonl(Path(args.tablet)),
+                "pc": load_promotion_readiness_jsonl(Path(args.pc)),
+                "mobile": load_promotion_readiness_jsonl(Path(args.mobile)),
+                "shared-ui": load_promotion_readiness_jsonl(Path(args.shared_ui)),
+            }
+            groups = (
+                load_promotion_readiness_jsonl(Path(args.cross_surface_groups))
+                if args.cross_surface_groups else []
+            )
+            result = compose_promotion_readiness_plan(
+                repo_root,
+                lanes,
+                cross_surface_groups=groups,
+            )
         elif args.command in {"certify-corpus", "certify-final-corpus"}:
             repo_root = Path(args.repo_root).resolve()
             out_root = Path(args.out)
