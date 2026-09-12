@@ -4,179 +4,55 @@
   "lane": "ATLASFIN_BRIDGE",
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
-  "state": "DONE",
-  "updatedAt": "2026-09-11T23:02:00-06:00",
-  "baseHead": "8cc1918c5e015d1408335c15313e7364e04859c2",
-  "workBranch": "chat5/atlasfin-corpus-cert-20260904",
-  "workHead": "6c7743f55434eb8d3429f286e2f9eae275d93d87",
-  "summary": "PASS_ATLASFIN_CORPUS_WITNESS. Chat 5 independently revalidated the immutable Atlasfin certification head read-only for CORPUS_FINAL_PARALLEL_VERIFICATION. The 2,097 source outcomes and 2,421 non-null Atlasfin reference rows reproduce with 2,421 valid normalized references, invalid=0, 341 representation-only adapter normalizations, semanticMutationCount=0, complete source head/file/line/hash provenance, review-only recipe convergence, and no relevant structured-Atlasfin authority drift on current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Materiality Catalog was not inspected; no product/runtime mutation or canonical promotion occurred.",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-12T16:07:00-06:00",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
+  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "summary": "Chat 5 started CANONICAL_PROMOTION_READINESS_RESOLUTION as ATLASFIN_SEMANTIC_REFERENCE_ANALYST from current canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. The lane is bounded to prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/** and must produce read-only cross-surface Atlasfin support evidence without minting canonical IDs, mutating authority/product/runtime, inspecting Materiality Catalog, or writing per-surface resolution rows.",
   "blockers": [],
   "findings": [
-    "Immutable certification branch is still exactly chat5/atlasfin-corpus-cert-20260904@6c7743f55434eb8d3429f286e2f9eae275d93d87 with parent/base 8cc1918c5e015d1408335c15313e7364e04859c2.",
-    "Source accounting reproduces 929 Tablet + 827 PC + 271 Mobile + 70 Shared UI = 2,097 source surface outcomes.",
-    "Certification evidence contains 2,421 non-null Atlasfin reference rows: 2,097 adapter references + 324 recipe references; INVALID_REFS.jsonl is the empty Git blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391.",
-    "All reference evidence rows retain sourceHead, sourceFile, sourceLine and sourceRecordSha256. Sampled boundary rows confirm certificationStatus=VALID_REFERENCE and semanticMutation=false, including qualified Mobile/Shared UI adapter normalization rows.",
-    "The 341 representation-only normalizations are exactly the qualified atlasfin:: adapter representation class recorded by the certification policy; no semantic normalization is permitted or observed.",
-    "Recipe review groups reproduce as card=95, table=171, panel=47, overlay=11, total recipe references=324; RECIPE_REVIEW_GROUPS.json declares semanticCoalescingAllowed=false and excludes ALL_NULL_ATLASFIN_REFS and NO_MATCH from automatic semantic coalescing.",
-    "Current-main structured recipe and adapter authority Git blobs are still af8dbff2cf22e0cb77163128af0358cd0a9d3762 and f6eb2a32ff7a18ec80c6917654fc6d63c9024319, exactly matching the immutable certification authority provenance.",
-    "Current main remains 7c5b8d477a9006c5184ddbc806874b6e7c02571c at completion; its movement from certification base is coordination/governance-only for this witness scope."
+    "STATUS_INDEX.json assigns Chat 5 phaseRole=ATLASFIN_SEMANTIC_REFERENCE_ANALYST and expectedPhaseResult=PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE under handoff.promotionReadiness.",
+    "Current work branch chat5/canonical-promotion-readiness-atlasfin-20260912 exists and is pinned to current main d4b451cc92c597d02cfc65094922bd2c5dd17c12 before lane output.",
+    "Certified corpus is immutable phase input; prior Atlasfin certification remains reusable evidence and Materiality Catalog remains STANDBY_USER_INVOKED_ONLY."
   ],
   "decisions": [
-    "Publish PASS_ATLASFIN_CORPUS_WITNESS because every current-phase Atlasfin witness invariant reproduces from immutable exact-head evidence.",
-    "Remain in CERTIFIED_HOLD after receipt publication. Do not mutate the certification branch, global corpus, global snapshot, product/runtime, authority registries or FILES_MANIFEST.json.",
-    "Chat 6 must treat the Atlasfin snapshot as a read-only consumer and fail closed if its materialized corpus does not match the witness acceptance criteria under handoff.parallelWitness.snapshotAcceptanceCriteria.",
-    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and completely uninspected."
+    "Execute only Chat 5 Atlasfin cross-surface evidence assignment.",
+    "Do not write any per-surface RESOLUTION.jsonl, canonical authority, product/runtime, FILES_MANIFEST.json, or other Chat ownership.",
+    "Treat Atlasfin recipe/family/preset equality alone as VISUAL_SIMILARITY_ONLY and require independent semantic authority for any stronger disposition."
   ],
   "changedPaths": [],
   "validations": [
     {
-      "name": "Immutable certification head pin",
+      "name": "Canonical assignment resolution",
       "result": "PASS",
-      "detail": "chat5/atlasfin-corpus-cert-20260904 still resolves exactly to 6c7743f55434eb8d3429f286e2f9eae275d93d87; parent/base is 8cc1918c5e015d1408335c15313e7364e04859c2."
+      "detail": "Current prompt and STATUS_INDEX resolve Chat 5 to ATLASFIN_SEMANTIC_REFERENCE_ANALYST / chat5/canonical-promotion-readiness-atlasfin-20260912 / atlasfin-evidence ownership."
     },
     {
-      "name": "Source outcome accounting",
+      "name": "Current main pin",
       "result": "PASS",
-      "detail": "929 + 827 + 271 + 70 = 2,097 source surface outcomes, with exact source head/file/blob provenance recorded in MANIFEST.json."
-    },
-    {
-      "name": "Atlasfin reference row accounting",
-      "result": "PASS",
-      "detail": "2,421 certification rows = 2,097 adapters + 324 recipes; hard invalid references=0."
-    },
-    {
-      "name": "Current structured authority parity",
-      "result": "PASS",
-      "detail": "Current main recipe blob af8dbff2cf22e0cb77163128af0358cd0a9d3762 and adapter blob f6eb2a32ff7a18ec80c6917654fc6d63c9024319 equal the immutable certification authority blobs."
-    },
-    {
-      "name": "Representation-only normalization invariant",
-      "result": "PASS",
-      "detail": "341 qualified atlasfin:: adapter values normalize representation only; semanticMutationCount=0; original serialized values and source-record SHA-256 provenance are retained."
-    },
-    {
-      "name": "Recipe review convergence",
-      "result": "PASS",
-      "detail": "card=95, table=171, panel=47, overlay=11; total=324; reviewOnly=true; semanticCoalescingAllowed=false; ALL_NULL_ATLASFIN_REFS and NO_MATCH excluded from automatic semantic coalescing."
-    },
-    {
-      "name": "Main movement revalidation",
-      "result": "PASS",
-      "detail": "Current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c has no relevant structured Atlasfin authority drift relative to the certification source; current authority blob identities remain exact."
-    },
-    {
-      "name": "Forbidden-scope audit",
-      "result": "PASS",
-      "detail": "Materiality Catalog inspected=false; product/runtime mutation=false; canonical promotion=false; global snapshot not written by Chat 5."
+      "detail": "main and the phase work branch both resolve to d4b451cc92c597d02cfc65094922bd2c5dd17c12 at start."
     }
   ],
   "unresolved": [
-    "Chat 6 must materialize the global corpus and then satisfy the read-only Atlasfin snapshot acceptance criteria in this witness receipt before final integration closure."
+    "Complete reference analysis, Identity recipe reuse candidate analysis, cross-surface semantic equivalence evidence, visual-only equivalence evidence, manifest and summary; validate against current composer contract."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "CERTIFIED_HOLD. Chat 6 may consume handoff.parallelWitness directly from this deterministic mailbox and must hard-stop on any corpus/snapshot mismatch.",
+  "nextAction": "Derive bounded Atlasfin evidence from immutable certified corpus and current canonical Identity/NDC/Atlasfin authority, then publish exact work head and handoff.promotionReadiness receipt.",
   "handoff": {
-    "pullRequest": 540,
-    "pullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/540",
-    "integrationState": "CERTIFIED_HOLD",
-    "currentCanonicalMain": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
-    "continuationPhase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-    "chat5Mode": "CERTIFIED_HOLD",
-    "certificationBranch": "chat5/atlasfin-corpus-cert-20260904",
-    "certificationBase": "8cc1918c5e015d1408335c15313e7364e04859c2",
-    "certificationHead": "6c7743f55434eb8d3429f286e2f9eae275d93d87",
     "parallelWitness": {
       "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
       "result": "PASS_ATLASFIN_CORPUS_WITNESS",
-      "certificationBranch": "chat5/atlasfin-corpus-cert-20260904",
-      "certificationHead": "6c7743f55434eb8d3429f286e2f9eae275d93d87",
-      "certificationBase": "8cc1918c5e015d1408335c15313e7364e04859c2",
-      "expectedInputCount": 2421,
-      "sourceSurfaceOutcomeCount": 2097,
-      "nonNullAtlasfinReferenceCount": 2421,
-      "validNormalizedReferenceCount": 2421,
-      "invalidCount": 0,
-      "hardInvalidReferenceCount": 0,
-      "semanticMutationCount": 0,
-      "representationOnlyAdapterNormalizationCount": 341,
-      "recipeReferenceCount": 324,
-      "duplicateTargetIds": null,
-      "duplicateTargetIdsApplicability": "NOT_APPLICABLE_REFERENCE_ROWS_MAY_HAVE_ADAPTER_AND_RECIPE_FOR_SAME_TARGET",
-      "referenceCountsByField": {
-        "atlasfinCatalogElementId": 0,
-        "atlasfinUiId": 0,
-        "atlasfinFamilyId": 0,
-        "atlasfinPresetId": 0,
-        "atlasfinRecipeId": 324,
-        "atlasfinLegacyRecipeId": 0,
-        "atlasfinAdapterId": 2097
-      },
-      "recipeReviewGroups": [
-        {
-          "recipeId": "REC.card.governed.v2",
-          "surfaceCount": 95
-        },
-        {
-          "recipeId": "REC.table.governed.v2",
-          "surfaceCount": 171
-        },
-        {
-          "recipeId": "REC.panel.governed.v2",
-          "surfaceCount": 47
-        },
-        {
-          "recipeId": "REC.overlay.governed.v2",
-          "surfaceCount": 11
-        }
-      ],
-      "recipeReviewGroupCount": 4,
-      "semanticCoalescingAllowed": false,
-      "excludedSemanticCoalescingClasses": [
-        "ALL_NULL_ATLASFIN_REFS",
-        "NO_MATCH"
-      ],
-      "provenanceComplete": true,
-      "requiredProvenanceFields": [
-        "sourceHead",
-        "sourceFile",
-        "sourceLine",
-        "sourceRecordSha256"
-      ],
-      "certificationOutputGitBlobShas": {
-        "ATLASFIN_REFERENCE_CERTIFICATION.jsonl": "579f5eda34500333cfc1e1c373e858da2b382e5d",
-        "INVALID_REFS.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "MANIFEST.json": "1fbf1b53e248b743c381c261a965d35fc940ffa5",
-        "NORMALIZATION_POLICY.json": "f0f2c850e0adb34c6af7fd77db6551675f3781f6",
-        "RECIPE_REVIEW_GROUPS.json": "89fe722e859562c902e50f2b1a88f5db26e1222a",
-        "SUMMARY.md": "ed8545f677cd51406c6f883ee27f6ddf59be9001"
-      },
-      "certificationOutputSha256": {
-        "ATLASFIN_REFERENCE_CERTIFICATION.jsonl": "2566b64eabfec3d88c59518a4a3160d48a8ddda65a02709eda1b14102b0a2eea",
-        "NORMALIZATION_POLICY.json": "8d9ccc04ace197d645f9946278892a7d7f519f579449e03d893969e127ba8542",
-        "RECIPE_REVIEW_GROUPS.json": "1a456bd167d6ea53084d88660f9662212aaa07e5b77a09998923cb097a09ea7e"
-      },
-      "currentStructuredAuthorityGitBlobShas": {
-        "prisma-html/extras/atlasfin/assets/data/visual-recipe.registry.json": "af8dbff2cf22e0cb77163128af0358cd0a9d3762",
-        "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json": "f6eb2a32ff7a18ec80c6917654fc6d63c9024319"
-      },
-      "snapshotAcceptanceCriteria": [
-        "Snapshot is a read-only consumer of the materialized global corpus and must not mutate corpus, certification, canonical authority, product/runtime or FILES_MANIFEST.json.",
-        "Snapshot input must be exact-head/hash/shape pinned and fail closed on unknown head, hash, schema or missing provenance.",
-        "Snapshot must reproduce 2,097 Atlasfin source surface outcomes and 2,421 non-null Atlasfin references, partitioned as 2,097 adapter + 324 recipe references.",
-        "All 2,421 normalized references must resolve against current structured Atlasfin authority with hard invalid count 0.",
-        "Exactly 341 adapter changes may be representation-only atlasfin:: prefix normalization; semanticMutationCount must remain 0 and original serialized value/source record hash must remain inspectable.",
-        "Recipe review groups must reproduce card=95, table=171, panel=47 and overlay=11 with semanticCoalescingAllowed=false.",
-        "ALL_NULL_ATLASFIN_REFS and NO_MATCH groups must remain excluded from semantic coalescing; absence of a semantic match must not be silently repaired.",
-        "Every surfaced reference must retain sourceHead/sourceFile/sourceLine/sourceRecordSha256 provenance.",
-        "Materiality Catalog must remain uninspected, productRuntimeMutation=false and canonicalPromotionPerformed=false.",
-        "Any mismatch against this immutable witness is a hard stop for Chat 6, not a warning."
-      ],
-      "materialityCatalogInspected": false,
-      "productRuntimeMutation": false,
-      "canonicalPromotionPerformed": false,
-      "globalSnapshotWrittenByChat5": false,
-      "defects": []
+      "certificationHead": "6c7743f55434eb8d3429f286e2f9eae275d93d87"
+    },
+    "promotionReadiness": {
+      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+      "role": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
+      "state": "IN_PROGRESS",
+      "expectedResult": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
+      "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912"
     }
   }
 }
