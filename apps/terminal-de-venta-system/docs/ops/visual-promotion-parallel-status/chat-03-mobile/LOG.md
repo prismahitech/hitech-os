@@ -97,3 +97,14 @@ No updates published yet.
 - Drift policy PASS so far: all `138/138` DRIFT rows explicitly say no repair direction is selected, retain `projection-hash-drift`, remain `REGISTER_TARGET_FIRST`, and have no application layer. No RIFAT-vs-product repair choice was found.
 - The first string probe counted `137` because one note begins with capital `No`; a case-insensitive exact invariant check confirms `138/138`. This was a verifier wording issue, not a corpus defect.
 - No repair or certification mutation performed. Final witness remains read-only.
+
+## 2026-09-11T22:54:00-06:00 — VALIDATION / HANDOFF / COMPLETE
+
+- Final strict reference verification PASS: all `271/271` certification rows report strict candidate validation PASS, reference validation PASS, provenance pinned, zero-loss membership and `semanticMutation=false`.
+- Normalized Mobile reference set is deterministic across all 271 rows: NDC `SURF.mb.owner_home`, Atlasfin `ADP.MB.TOUCH.V2`, Identity `identity::prisma.adapter.mobile.v1`.
+- Current canonical `main` remained `7c5b8d477a9006c5184ddbc806874b6e7c02571c` through closure.
+- Current-main registry blobs are byte-identical to the certification-head registry blobs: NDC `44c29f0333144501b0bef2e36c0aed0d3865ef2f`, Atlasfin `f6eb2a32ff7a18ec80c6917654fc6d63c9024319`, Identity `b284f0300ae5cd6d88a5d6cd252c11858ab7376d`.
+- Final witness result: `PASS_MOBILE_CORPUS_WITNESS`.
+- Receipt published at `handoff.parallelWitness` with exact certification head, Git blob SHAs, SHA-256 digests, accounting, drift invariants, provenance/hash verification, reference validation and prohibited-action flags.
+- Materiality Catalog was not inspected. Broad rediscovery was not performed. Product/runtime mutation = false. Canonical promotion = false. No certification/source bytes were changed.
+- Chat 3 enters `CERTIFIED_HOLD` represented by status-channel state `READY_FOR_INTEGRATION`. Chat 6 can read the witness receipt directly from `status/vp-chat-03-mobile`; no owner relay is required.
