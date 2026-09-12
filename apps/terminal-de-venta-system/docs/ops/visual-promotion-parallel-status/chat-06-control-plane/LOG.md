@@ -376,3 +376,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Confirmed the activation model is turn-driven, not background polling. The five worker chats each require one owner turn to resume; Chat 6 requires a later owner turn to read their deterministic mailboxes and compose.
 - The same generic continuation message is sufficient for every worker chat because each resolves its own identity, branch, mailbox and role from repository truth.
 - No per-chat prompt duplication and no owner receipt relay are required. Missing receipts remain missing and composition stays fail-closed.
+
+### 2026-09-12T22:04:32Z — PROGRESS / INTAKE_READY
+- Rechecked canonical main: `d4b451cc92c597d02cfc65094922bd2c5dd17c12`.
+- Rechecked all five worker readiness branches: each still points to that exact main and no worker has published `handoff.promotionReadiness`.
+- Fast-forwarded Chat 6 canonical readiness branch to the exact current main without force and without touching product/runtime, certified corpus, canonical authority, or any worker-owned path.
+- Control Plane remains fail-closed and intake-ready. It will accept only exact worker-owned bytes with valid receipt, branch/head, source hashes, zero-loss accounting, vocabulary and authority evidence.
+- Coordination truth clarified: worker chats require one owner activation turn each; Chat 6 requires a later owner turn to consume their receipts. Repository mailboxes remove copy/paste relays but do not create background execution.
