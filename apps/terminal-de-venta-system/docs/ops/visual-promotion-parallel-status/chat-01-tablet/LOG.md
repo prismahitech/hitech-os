@@ -301,3 +301,19 @@ No updates published yet.
 - Cobrar accent `::before` and icon reuse only the existing `TOK.color.accent` semantic evidence; `BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1` remains ambiguous/blocked and both projection policies remain missing.
 - The two certified physical DRIFT targets remain blocked with no repair direction selected.
 - Materiality Catalog remains uninspected; no broad rediscovery or product/runtime/global-authority mutation occurred.
+
+## 2026-09-12T16:28:00-06:00 — VALIDATION
+
+- Work head: `535b4f002a830a84c6dfd4b166b032adaf91409a`.
+- Exact work-branch delta: **7 files**, all under `prisma-html/governance/visual-promotion/promotion-readiness/tablet/**`.
+- `RESOLUTION.jsonl`: **929** rows, **929** unique targets.
+- Certified `sourceRecordSha256` pins: **929/929 PASS**.
+- Missing / extra / duplicate targets: **0 / 0 / 0**.
+- Decision partition: **924 semantic-authority blocked + 1 application-authority blocked + 2 binding blocked + 2 physical-drift blocked = 929**.
+- `REUSE.jsonl`: **0** rows.
+- `REGISTRATION_PROPOSALS.jsonl`: **0** rows.
+- `BLOCKED.jsonl`: **929** rows, exact subset parity PASS.
+- `PROJECTION_DEBT.jsonl`: **2** rows, exact debt subset parity PASS.
+- Proposal-key / vocabulary / blocking-gap / Atlasfin-support-only / manifest parity checks: **PASS**.
+- Validation defects: **0**.
+- Canonical `main` remained `d4b451cc92c597d02cfc65094922bd2c5dd17c12` throughout the lane write, so no stale-head continuation was used.
