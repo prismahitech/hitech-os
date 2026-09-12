@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.visual-promotion.cross-surface-semantic-group.v1",
+  "title": "PRISMA cross-surface semantic evidence group",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "groupKey",
+    "equivalenceType",
+    "members",
+    "semanticAuthorityRefs",
+    "visualEvidenceRefs",
+    "confidence",
+    "canonicalCoalescingAllowed",
+    "reason"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.cross-surface-semantic-group.v1"
+    },
+    "groupKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "equivalenceType": {
+      "enum": [
+        "CANONICAL_SEMANTIC_EQUIVALENCE",
+        "VISUAL_ONLY_SIMILARITY",
+        "NO_PROVEN_EQUIVALENCE"
+      ]
+    },
+    "members": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "surfaceKey",
+          "targetId"
+        ],
+        "properties": {
+          "surfaceKey": {
+            "enum": [
+              "tablet",
+              "pc",
+              "mobile",
+              "shared-ui"
+            ]
+          },
+          "targetId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "semanticAuthorityRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visualEvidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "verified"
+      ]
+    },
+    "canonicalCoalescingAllowed": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
