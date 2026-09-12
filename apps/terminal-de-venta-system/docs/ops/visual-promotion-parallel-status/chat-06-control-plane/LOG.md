@@ -349,3 +349,11 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Corrected string ordering to match the canonical Python generator exactly; committed manifest Git blob is `f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a`, byte-identical to the artifact candidate.
 - Artifact manifest SHA-256: `001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272`; count excluding manifest: 876.
 - Exact final head `9ff0629c0fa74d0b6586fd85555338b757474124` gates are running.
+
+### 2026-09-12T13:32:00Z — HANDOFF / WAITING_EXTERNAL
+- PR #552 merged to canonical main `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; merged tree `00df3cf4b148df1f64ca7d6bd498104d746ba51c` exactly matches final PR head tree.
+- Exact-head gates PASS: CI `34696430001`, VISCORE1 `34696430023`, ForgeOS `34696430024`, Sync Sentinel `34696430039`.
+- Post-merge revalidation of the older Mesh artifact failed closed as `BLOCKED_INVALID_PRIOR_AUTHORITY` due non-object `LAYERS_MAP.json`; artifact was rejected, not reused.
+- Fresh current-main task-exact Mesh run `34696570043` is `PASS_COMPOSED_AUTHORITY_MESH`: governance 20/20, composer 27/27, coverage=100%, blockers=0, mandatory Layer Map generated. Artifact `10298622594`, digest `sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2`, requestDigest `61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c`.
+- Chats 1–5 still have no current-phase `handoff.promotionReadiness` receipts and no expected readiness work branches were found.
+- Hard stop: Chat 6 will not fabricate or cross-write worker evidence. Next action is deterministic composition only after all five receipts arrive.
