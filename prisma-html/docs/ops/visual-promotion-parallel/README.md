@@ -74,3 +74,30 @@ This split prevents routine status edits from invalidating the global `prisma-ht
 Parallel workers must have disjoint write ownership. Global canonical registries are assembled only by deterministic integration after worker outputs exist. Workers may record their exact `baseHead`; mixed-base output is never silently merged. If inputs drift, the integration layer must revalidate or block.
 
 The exact terms, ID rules, field names, statuses, relationship vocabulary, write ownership and anti-collision rules are normative in the interoperability contract and vocabulary registry in this folder.
+
+
+## Current canonical phase — CANONICAL_PROMOTION_READINESS_RESOLUTION
+
+The previous `CORPUS_FINAL_PARALLEL_VERIFICATION` phase is closed and its merged corpus under
+`prisma-html/governance/visual-promotion/contracts/corpus-certification/` is immutable historical input.
+
+The active phase is `CANONICAL_PROMOTION_READINESS_RESOLUTION`.
+
+Purpose: convert as many certified records as evidence permits into machine-verifiable canonical-registration readiness without changing product/runtime or global canonical authority.
+
+Parallel lanes and write ownership:
+
+| Chat | Phase lane | Exclusive phase write root |
+|---|---|---|
+| 1 | TABLET_CANONICAL_PROMOTION_READINESS | `prisma-html/governance/visual-promotion/promotion-readiness/tablet/**` |
+| 2 | PC_CANONICAL_PROMOTION_READINESS | `prisma-html/governance/visual-promotion/promotion-readiness/pc/**` |
+| 3 | MOBILE_CANONICAL_PROMOTION_READINESS | `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**` |
+| 4 | SHARED_UI_CANONICAL_PROMOTION_READINESS | `prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**` |
+| 5 | ATLASFIN_SEMANTIC_REFERENCE_ANALYSIS | `prisma-html/governance/visual-promotion/promotion-readiness/atlasfin/**` |
+| 6 | CANONICAL_PROMOTION_READINESS_CONTROL_PLANE | `prisma-html/governance/visual-promotion/promotion-readiness/contracts/**`, `promotion-readiness/global/**`, bounded `tools/visual_promotion/**` and these coordination documents |
+
+All lanes reuse the certified 2,097-record corpus. No recensus, broad rediscovery, corpus regeneration, Atlasfin rebuild or Materiality fallback is allowed.
+
+The phase is proposal/readiness only. It does not authorize canonical Identity/RIFAT/NDC/Target Index mutation, product/runtime mutation, projection repair, GVAE APPLY or wildcard surface mutation.
+
+Chat 6 consumes worker handoffs directly from deterministic mailboxes and must not ask the repository owner to relay cross-chat messages.
