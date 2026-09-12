@@ -167,3 +167,54 @@ No updates published yet.
 - Chat 2 PC corpus-certification lane is complete and `READY_FOR_INTEGRATION`.
 - No user action is required.
 - Further writes are blocked by lane policy unless deterministic integration requests a bounded evidence-backed certification correction.
+
+## 2026-09-11T22:44:00-06:00 — START
+
+- Canonical continuation phase re-read from repository truth: `CORPUS_FINAL_PARALLEL_VERIFICATION`.
+- Chat 2 resolves to `PC_PROMOTION`, role `PC_FINAL_WITNESS`, status branch `status/vp-chat-02-pc`, expected result `PASS_PC_CORPUS_WITNESS`.
+- Witness source is immutable read-only head `chat2/pc-corpus-cert-20260904@8cc979c141000fcedabf832f16468a6ee3e328e2`.
+- No source/certification/product/runtime/global-authority mutation is authorized. Only this mailbox may be written.
+
+## 2026-09-11T22:49:00-06:00 — FINDING
+
+- Exact certification head tree contains the five expected certification outputs with immutable Git blobs: MANIFEST `bc53a0e1d92df2092248bacfb9ca042b65e188e2`, NORMALIZED `d7e7c730342a24d3daeadb3f9b07cfd95278c0b0`, CERTIFICATION `9c0517f3e098cdf0c02aa52aa469bbf04b4264d7`, INVALID `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`, SUMMARY `3f57f5c9b96fc57ec665e58a5809aaee9e0f1dc0`.
+- Immutable MANIFEST/SUMMARY report NORMALIZED=827, CERTIFICATION=827, INVALID=0, duplicateTargetIds=0, semanticMutationCount=0, labels=827 `VALID_REGISTER_TARGET_FIRST`, physical=826 CURRENT + 1 DRIFT, projection=688 CURRENT + 139 MISSING.
+- Certification row for `TGT.CENSUS.PC.097AB2F857F353CA4288.V1` is the final normalized line 827, source bucket `CONFLICTS` line 1, with source/normalized SHA-256 equal and `representationChanged=false`; validation fields are PASS and `semanticMutation=false`.
+- The corresponding normalized record remains `physicalStatus=DRIFT`, carries blocker `current-authority-selector-disagreement`, and preserves the exact note: target-index `.supplier-readable-v07` vs expanded `.supplier-readable-v07 *`.
+- A projection-MISSING record remains present at the tail of the immutable normalized corpus; certification summary explicitly states all 139 MISSING records remain MISSING.
+
+## 2026-09-11T22:51:00-06:00 — VALIDATION
+
+- Exact certification head identity: PASS.
+- Five output Git blob identities: PASS and match the prior deterministic handoff.
+- NORMALIZED count 827 / CERTIFICATION count 827 / INVALID 0: PASS from immutable certification outputs.
+- Unique target IDs 827 / duplicateTargetIds 0: PASS from immutable certification summary and post-commit certification evidence.
+- semanticMutationCount=0: PASS; hard conflict row independently shows semanticMutation=false and hash-preserving normalization.
+- Certification labels 827 `VALID_REGISTER_TARGET_FIRST`: PASS.
+- Physical partition 826 CURRENT + 1 DRIFT: PASS.
+- Projection partition 688 CURRENT + 139 MISSING: PASS; no MISSING repair is claimed or observed in certification truth.
+- Selector conflict target remains unresolved exactly: PASS.
+- Provenance completeness: PASS; certification contract records source branch/head/base/file/bucket/line, file Git blob SHA, file SHA-256, source-record SHA-256, normalized line/hash and per-row sourceProvenance validation.
+- Materiality Catalog inspected: false.
+- Product/runtime mutation: false.
+- Canonical promotion performed: false.
+
+## 2026-09-11T22:52:00-06:00 — DECISION
+
+- All canonical Chat 2 final-witness invariants pass against immutable head-tree evidence.
+- Publish `PASS_PC_CORPUS_WITNESS` under `handoff.parallelWitness` and enter `CERTIFIED_HOLD`.
+- Do not repair the selector conflict, the 139 projection MISSING records, or any unresolved semantic/binding state.
+
+## 2026-09-11T22:53:00-06:00 — HANDOFF
+
+- Result: `PASS_PC_CORPUS_WITNESS`.
+- Certification head: `8cc979c141000fcedabf832f16468a6ee3e328e2`.
+- Expected input count: 827.
+- Exact defects: none in corpus witness invariants; the known selector conflict remains intentionally unresolved evidence, not a witness defect.
+- Receipt is coordination evidence only. It does not authorize canonical promotion, projection repair, GVAE APPLY, product/runtime mutation or runtime visual READY.
+
+## 2026-09-11T22:53:00-06:00 — COMPLETE
+
+- Chat 2 current assignment is complete.
+- State after completion: `CERTIFIED_HOLD` represented by mailbox state `DONE` plus the deterministic `handoff.parallelWitness` receipt.
+- No user action required. Await only a bounded evidence-backed correction request from the global compositor if a real witness mismatch is later proven.
