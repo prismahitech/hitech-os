@@ -329,3 +329,10 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Added promotion-readiness contract/schemas, exact 2,097-record baseline, setup authority evidence, integration barriers, fail-closed validator/composer tooling and tests.
 - Certified corpus, product/runtime and global NDC/Identity/RIFAT/Target Index authority remain untouched.
 - Next serial barrier: bounded PR + one deterministic FILES_MANIFEST refresh + exact-head gates + merge.
+
+### 2026-09-12T13:16:00Z — BLOCKER
+- Current canonical main: `6cd1c4fb71efe04f03635c613b2a95880d36c59f`; PR #550 phase bootstrap is already merged and its merge tree equals the validated PR head tree.
+- Current task-exact AutoMesh: run `34692497931`, artifact `10297371448`, `PASS_COMPOSED_AUTHORITY_MESH`; governance 20/20 and composer 27/27 required authorities, blockers=0, Layer Map generated.
+- Canonical anti-rework logic on current main for `visual.generic_application_engine_v1 / ADVANCE`: `PASS_ANTI_REWORK_GATE`.
+- Found a real Chat 6 tooling defect before merge: `compose_plan` references undefined `canonical_group_keys`. Full composition would crash after worker handoffs.
+- Chats 1–5 have not yet published `handoff.promotionReadiness`; their prior corpus witness receipts remain historical only.
