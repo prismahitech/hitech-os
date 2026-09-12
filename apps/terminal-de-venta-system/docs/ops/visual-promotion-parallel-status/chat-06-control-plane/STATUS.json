@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T04:45:00Z",
+  "updatedAt": "2026-09-12T06:40:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-cert-20260904",
   "workHead": "73fb33e42eeb2aa66a0816bcffc2d59fab54d876",
-  "summary": "Chat 6 resumed under CORPUS_FINAL_PARALLEL_VERIFICATION as GLOBAL_COMPOSITOR_INTEGRATOR. Canonical main is 7c5b8d477a9006c5184ddbc806874b6e7c02571c; current corpus work head is 73fb33e42eeb2aa66a0816bcffc2d59fab54d876. Before any new governed source/integration mutation, current-head authority must be revalidated per AutoMesh v2. Global corpus materialization/witness cross-check/final assembly remain the active assignment.",
+  "summary": "Chat 6 final verification resumed. All five independent witness receipts are now directly verified PASS from status branches. Corpus work head 73fb33e42eeb2aa66a0816bcffc2d59fab54d876 is materialized; AutoMesh v2 revalidation of prior current-head authority has been triggered against canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. No new governed integration mutation will occur until that revalidation resolves.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -54,7 +54,8 @@
     "AutoMesh v2 revalidation run 33949261013 passed against current main 1cc4d0d45b3878ace2906d08fa67f325a3b98a9d.",
     "Fresh task-exact AutoMesh run 33949294075 also passed PASS_COMPOSED_AUTHORITY_MESH on the same current main with 100% required authority coverage, blockers=0 and Layer Map evidence present for both Chat 6 tasks.",
     "Universal anti-rework gate classifies visual.generic_application_engine_v1 as DONE/SOURCE_READY/doNotRebuild=true and permits ADVANCE. PROPOSAL and MUTATION evaluations both PASS.",
-    "Current canonical main advanced to 7c5b8d477a9006c5184ddbc806874b6e7c02571c via mailbox-driven final-verification coordination; this is a drift event requiring AutoMesh v2 classification before any new governed mutation."
+    "Current canonical main advanced to 7c5b8d477a9006c5184ddbc806874b6e7c02571c via mailbox-driven final-verification coordination; this is a drift event requiring AutoMesh v2 classification before any new governed mutation.",
+    "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -280,7 +281,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Revalidate current-head authority and inspect the materialized corpus/current integration state; then read Chats 1-5 witness mailboxes directly and continue final assembly only if all required invariants hold.",
+  "nextAction": "Await/read AutoMesh v2 revalidation result; independently cross-check the materialized global corpus against the five witness expectations, then create fresh integration assembly from current main only if authority and corpus checks pass.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -598,6 +599,14 @@
     "integrationBranch": null,
     "currentHeadAuthorityMesh": "PASS_COMPOSED_AUTHORITY_MESH",
     "authorityMeshRun": 33949294075,
-    "authorityMeshRequestDigest": "5cd15e40ea840664e61fc9683f0726dc28d330303f527fc8bd192c7a3b82a7c7"
+    "authorityMeshRequestDigest": "5cd15e40ea840664e61fc9683f0726dc28d330303f527fc8bd192c7a3b82a7c7",
+    "finalWitnessReceipts": {
+      "tablet": "PASS_TABLET_CORPUS_WITNESS",
+      "pc": "PASS_PC_CORPUS_WITNESS",
+      "mobile": "PASS_MOBILE_CORPUS_WITNESS",
+      "sharedUi": "PASS_SHARED_UI_CORPUS_WITNESS",
+      "atlasfin": "PASS_ATLASFIN_CORPUS_WITNESS"
+    },
+    "finalWitnessesDirectlyRead": true
   }
 }
