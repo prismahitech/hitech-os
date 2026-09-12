@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-11T22:45:00-06:00",
+  "updatedAt": "2026-09-11T22:53:00-06:00",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat3/mobile-corpus-cert-20260904",
   "workHead": "664035e83943ae48c923585765d3c505b1bd8c53",
-  "summary": "Chat 3 has started the canonical CORPUS_FINAL_PARALLEL_VERIFICATION as MOBILE_FINAL_WITNESS. Verification is read-only against immutable certification head 664035e83943ae48c923585765d3c505b1bd8c53; only this status mailbox branch will be written.",
+  "summary": "Chat 3 MOBILE_FINAL_WITNESS is independently reproducing the immutable Mobile certification. Exact-head verification now confirms 271 normalized + 271 certification rows, zero invalid/duplicate/missing/extra targets, zero semantic mutations, exact 133 CURRENT + 138 DRIFT, and zero hash mismatches. Final reference/provenance closure is in progress.",
   "blockers": [],
   "findings": [
     "The strict Control Plane candidate contract at source head 7cc48fa49906c8f443b267fd6c3590fd3f4340fb rejects the original Mobile top-level projection object and requires its projection fields at top level.",
@@ -19,7 +19,11 @@
     "Direct current registry checks confirm SURF.mb.owner_home, ADP.MB.TOUCH.V2 and prisma.adapter.mobile.v1 exist in their respective NDC, Atlasfin and Identity registries.",
     "Read-back validation confirmed 271 normalized rows, 271 certification rows, zero INVALID rows, 271 unique target IDs, and zero source-record or normalized-record hash mismatches.",
     "Certification branch differs from its canonical base by exactly five files, all under the owned Mobile certification directory.",
-    "Current main remained 8cc1918c5e015d1408335c15313e7364e04859c2 through certification closure."
+    "Current main remained 8cc1918c5e015d1408335c15313e7364e04859c2 through certification closure.",
+    "Independent exact-Git-blob readback reproduced all certification file SHA-256 digests and all 271 source-record plus 271 normalized-record SHA-256 pins with zero mismatches.",
+    "All 271 certification labels are VALID_REGISTER_TARGET_FIRST and the projection partition is exactly 133 CURRENT + 138 DRIFT.",
+    "All 138 DRIFT rows explicitly preserve no repair direction, retain projection-hash-drift, REGISTER_TARGET_FIRST, and null applicationLayerId; no suspicious RIFAT-vs-product repair selection was found.",
+    "Representation-only normalization reconstructs exactly from source evidence: semanticDiffCount=0, representationErrorCount=0, and 1,493 evidence-reference conversions preserve original values in certification provenance."
   ],
   "decisions": [
     "Normalization is representation-only; the original worker bytes remain immutable evidence.",
@@ -86,6 +90,21 @@
       "name": "Materiality and broad rediscovery",
       "result": "PASS",
       "details": "Materiality Catalog was not inspected or consumed; no broad rediscovery occurred."
+    },
+    {
+      "name": "final witness exact-head accounting",
+      "result": "PASS",
+      "details": "NORMALIZED=271, CERTIFICATION=271, INVALID=0, uniqueTargetIds=271, duplicate/missing/extra=0."
+    },
+    {
+      "name": "final witness semantic invariants",
+      "result": "PASS",
+      "details": "semanticMutationCount=0; certification labels 271 VALID_REGISTER_TARGET_FIRST; projection partition 133 CURRENT + 138 DRIFT; 138/138 drift rows retain no-repair-direction and REGISTER_TARGET_FIRST."
+    },
+    {
+      "name": "final witness provenance hashes",
+      "result": "PASS",
+      "details": "271/271 source-record hashes and 271/271 normalized-record hashes reproduced with zero mismatches; file SHA-256 digests reproduce exactly."
     }
   ],
   "unresolved": [
@@ -95,7 +114,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Independently reproduce every Mobile final-witness invariant from exact certification head-tree bytes, then publish PASS_MOBILE_CORPUS_WITNESS only if all invariants pass.",
+  "nextAction": "Complete strict current-registry reference verification and publish PASS_MOBILE_CORPUS_WITNESS only if the remaining final-witness invariant is clean.",
   "handoff": {
     "readiness": "READY_FOR_INTEGRATION",
     "phase": "CANDIDATE_CORPUS_CERTIFICATION_PARALLEL",
@@ -141,7 +160,24 @@
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalPromotionPerformed": false,
-      "defects": []
+      "defects": [],
+      "normalizedCount": 271,
+      "certificationCount": 271,
+      "invalidCount": 0,
+      "duplicateTargetIds": 0,
+      "semanticMutationCount": 0,
+      "projectionStatusCounts": {
+        "CURRENT": 133,
+        "DRIFT": 138
+      },
+      "certificationStatusCounts": {
+        "VALID_REGISTER_TARGET_FIRST": 271
+      },
+      "sourceRecordHashMismatches": 0,
+      "normalizedRecordHashMismatches": 0,
+      "semanticDiffCount": 0,
+      "representationErrorCount": 0,
+      "rifatVsProductRepairDirectionSelected": false
     }
   }
 }
