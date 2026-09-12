@@ -83,3 +83,17 @@ No updates published yet.
 - Final witness source is immutable certification head `664035e83943ae48c923585765d3c505b1bd8c53` on `chat3/mobile-corpus-cert-20260904`.
 - Verification starts read-only from exact Git head-tree bytes. No certification/source/product/runtime/global-authority mutation is authorized or planned.
 - Materiality Catalog remains uninspected and forbidden for this task.
+
+## 2026-09-11T22:53:00-06:00 — FINDING / VALIDATION / DECISION
+
+- Independent exact-head readback of certification `664035e83943ae48c923585765d3c505b1bd8c53` reproduced `271` NORMALIZED rows, `271` CERTIFICATION rows and an empty INVALID file.
+- Target accounting PASS: `271` unique target IDs; duplicate/missing/extra counts all `0`.
+- Certification labels PASS: `271 VALID_REGISTER_TARGET_FIRST`.
+- Projection partition PASS: exactly `133 CURRENT + 138 DRIFT`.
+- Semantic preservation PASS: `semanticMutationCount=0`, independently reconstructed source-to-normalized semantic diff count `0`, representation error count `0`.
+- Provenance hashes PASS: `271/271` original source-record hashes and `271/271` normalized-record hashes reproduced with zero mismatches.
+- Exact file SHA-256 PASS: NORMALIZED `bfec6c59764f92ed54edd63dd1df4273165044ade95839a92d08930e93703ee1`; CERTIFICATION `81eb0afbf8c7fa54833ed09f503d2ccf2ee5407c5aed089dcda6bbd75219a287`.
+- Representation-only provenance PASS: all NDC/Atlasfin normalization records reproduce source and normalized values; `1,493` evidence-reference conversions reconstruct the normalized evidence lists exactly.
+- Drift policy PASS so far: all `138/138` DRIFT rows explicitly say no repair direction is selected, retain `projection-hash-drift`, remain `REGISTER_TARGET_FIRST`, and have no application layer. No RIFAT-vs-product repair choice was found.
+- The first string probe counted `137` because one note begins with capital `No`; a case-insensitive exact invariant check confirms `138/138`. This was a verifier wording issue, not a corpus defect.
+- No repair or certification mutation performed. Final witness remains read-only.
