@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.promotion-readiness.manifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "phase",
+    "surfaceKey",
+    "baseHead",
+    "certifiedCorpusManifestBlob",
+    "inputCount",
+    "resolutionCount",
+    "uniqueTargetCount",
+    "readyExistingAuthorityReuse",
+    "readyCanonicalRegistration",
+    "legitimatelyBlocked",
+    "notApplicable",
+    "missingCount",
+    "extraCount",
+    "duplicateTargetIds",
+    "semanticMutationCount",
+    "materialityCatalogInspected",
+    "productRuntimeMutationPerformed",
+    "canonicalAuthorityMutationPerformed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-promotion.promotion-readiness-manifest.v1"
+    },
+    "phase": {
+      "const": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+    },
+    "surfaceKey": {
+      "enum": [
+        "tablet",
+        "pc",
+        "mobile",
+        "shared-ui"
+      ]
+    },
+    "baseHead": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "certifiedCorpusManifestBlob": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "inputCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "resolutionCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "uniqueTargetCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "readyExistingAuthorityReuse": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "readyCanonicalRegistration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "legitimatelyBlocked": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "notApplicable": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missingCount": {
+      "const": 0
+    },
+    "extraCount": {
+      "const": 0
+    },
+    "duplicateTargetIds": {
+      "const": 0
+    },
+    "semanticMutationCount": {
+      "const": 0
+    },
+    "materialityCatalogInspected": {
+      "const": false
+    },
+    "productRuntimeMutationPerformed": {
+      "const": false
+    },
+    "canonicalAuthorityMutationPerformed": {
+      "const": false
+    }
+  }
+}
