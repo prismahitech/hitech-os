@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:40:00Z",
+  "updatedAt": "2026-09-12T06:42:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-cert-20260904",
   "workHead": "73fb33e42eeb2aa66a0816bcffc2d59fab54d876",
-  "summary": "Chat 6 final verification resumed. All five independent witness receipts are now directly verified PASS from status branches. Corpus work head 73fb33e42eeb2aa66a0816bcffc2d59fab54d876 is materialized; AutoMesh v2 revalidation of prior current-head authority has been triggered against canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. No new governed integration mutation will occur until that revalidation resolves.",
+  "summary": "All five independent corpus witnesses PASS. AutoMesh v2 revalidation against canonical main 7c5b8d477a9006c5184ddbc806874b6e7c02571c detected relevant drift and completed a full fresh Authority Mesh successfully: run 34678646588, artifact 10293925424, PASS_COMPOSED_AUTHORITY_MESH, 100% required authority coverage in both Chat 6 lanes, zero blockers, Layer Map present. The four Factory Ledger authority blobs are byte-identical by Git blob identity to the previously PASSed anti-rework gate base; capability remains DONE/SOURCE_READY/doNotRebuild=true with ADVANCE.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -55,7 +55,8 @@
     "Fresh task-exact AutoMesh run 33949294075 also passed PASS_COMPOSED_AUTHORITY_MESH on the same current main with 100% required authority coverage, blockers=0 and Layer Map evidence present for both Chat 6 tasks.",
     "Universal anti-rework gate classifies visual.generic_application_engine_v1 as DONE/SOURCE_READY/doNotRebuild=true and permits ADVANCE. PROPOSAL and MUTATION evaluations both PASS.",
     "Current canonical main advanced to 7c5b8d477a9006c5184ddbc806874b6e7c02571c via mailbox-driven final-verification coordination; this is a drift event requiring AutoMesh v2 classification before any new governed mutation.",
-    "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used."
+    "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used.",
+    "AutoMesh v2 run 34678646588 detected BLOCKED_RELEVANT_DRIFT and correctly executed full refresh; final state PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT on main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Fresh preflight/compose reported 100% authority coverage for both Chat 6 lanes, zero blockers and Layer Map present."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -86,7 +87,8 @@
     "Proceed with bounded corpus/control-plane source mutation. Do not rebuild GVAE; ADVANCE only.",
     "Consume only exact certified heads: Tablet fd111022438bab909151c2220b52e95aa5aa7eb3, PC 8cc979c141000fcedabf832f16468a6ee3e328e2, Mobile 664035e83943ae48c923585765d3c505b1bd8c53, Shared UI 553577aa74045c73ab9c92d1f81538e7e0a8c65a, Atlasfin 6c7743f55434eb8d3429f286e2f9eae275d93d87.",
     "Chats 1-5 unresolved/conflict states are valid corpus states and will not be semantically rewritten to manufacture completeness.",
-    "Resume only through the canonical final-verification serial barriers: materialized corpus -> five direct mailbox witness receipts -> exact final assembly -> one FILES_MANIFEST refresh -> exact PR-head gates -> merge -> merged-main verification."
+    "Resume only through the canonical final-verification serial barriers: materialized corpus -> five direct mailbox witness receipts -> exact final assembly -> one FILES_MANIFEST refresh -> exact PR-head gates -> merge -> merged-main verification.",
+    "Treat the current-head anti-rework decision as deterministically preserved because all four canonical Factory Ledger authority blobs are unchanged from the previously PASSed gate base, requested action remains ADVANCE, and the required fresh current-head Mesh is now PASS with 100% coverage/zero blockers; no capability semantics changed."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/contracts/**",
@@ -271,6 +273,12 @@
       "name": "Universal anti-rework gate MUTATION",
       "result": "PASS_ANTI_REWORK_GATE",
       "details": "Bound to current main 1cc4d0d45b3878ace2906d08fa67f325a3b98a9d and reviewed current-HEAD PASS_COMPOSED_AUTHORITY_MESH summary."
+    },
+    {
+      "name": "AutoMesh v2 revalidation on final-verification main",
+      "result": "PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT",
+      "evidence": "workflow run 34678646588; artifact 10293925424; outer digest sha256:dc47fce3ad95dc6806d443e29577515cb4ea7473122b4c51beb17b3cc750861a",
+      "details": "repoHead=7c5b8d477a9006c5184ddbc806874b6e7c02571c; two Chat 6 lanes resolved 15/15 and 10/10 required authorities respectively; 100% coverage; blockers=0; Layer Map present; requestDigest=50da5dfb1ae535bb2314f3aa815701f683347c777877a3ec4eb3dde67b086475."
     }
   ],
   "unresolved": [
@@ -281,7 +289,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Await/read AutoMesh v2 revalidation result; independently cross-check the materialized global corpus against the five witness expectations, then create fresh integration assembly from current main only if authority and corpus checks pass.",
+  "nextAction": "Create a fresh integration branch from current main and assemble only exact accepted head-tree bytes: worker candidate shards, owner certification derivatives, Atlasfin bridge/certification, Chat 6 control-plane and the nine materialized global corpus outputs. Then cross-check before the single FILES_MANIFEST refresh.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -577,11 +585,11 @@
     "globalToolingSourceReady": true,
     "currentPromptBlobSha": "4bb50fea55da73ed1f194bfd9a52a7aad2486f39",
     "authority": {
-      "revalidationRun": 33949261013,
-      "artifactId": 9964292163,
-      "outerDigest": "sha256:bbabab21cf15dbff944e5d817bb9a0b20dce4f23c1d742415618c34e46d8b0a7",
-      "freshComposedDigest": "sha256:c915ff04124922595333836a393eb9fb25ccd7e6442c3e2b36a3949751eb17a4",
-      "requestDigest": "421929585a3d9e5b7be508b2cf7b595c244322239890390415eacb29eab4c4ab",
+      "revalidationRun": 34678646588,
+      "artifactId": 10293925424,
+      "outerDigest": "sha256:dc47fce3ad95dc6806d443e29577515cb4ea7473122b4c51beb17b3cc750861a",
+      "requestDigest": "50da5dfb1ae535bb2314f3aa815701f683347c777877a3ec4eb3dde67b086475",
+      "repoHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
       "result": "PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT"
     },
     "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
