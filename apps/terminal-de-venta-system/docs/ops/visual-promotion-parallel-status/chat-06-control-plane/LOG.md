@@ -277,3 +277,11 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - PR #539 and PR #540 were closed without merge only after 5/5 source files in each were proven byte-identical to merged main.
 - Materiality Catalog remained uninspected. Product/runtime mutation=false. Canonical promotion=false.
 - Chat 6 enters `CERTIFIED_HOLD`.
+
+### 2026-09-12T10:03:00Z — DONE
+- PR #549 merged successfully as `3eb092fad5e746a7ceeb9fdba079671934ae9b6d`.
+- Merged `main` tree is `502a911c62ce785990f3e0e7f5cd57bf36559403`, exactly the same tree as certified final PR head `34499286414be11703edaef3be93180230658f0f`; zero file delta across the merge commit.
+- `prisma-html/FILES_MANIFEST.json` on merged main remains blob `f8a2539d49db381270158ce96bfa9fca838b3a86`.
+- PR #539 Shared UI and PR #540 Atlasfin source paths were individually proven byte-identical on merged main and closed without merge as superseded.
+- Final result: `PASS_CORPUS_FINAL_PARALLEL_VERIFICATION_MERGED_MAIN_VERIFIED`.
+- Hold state: `CERTIFIED_CORPUS_HOLD`. Corpus validity does not imply canonical APPLY/runtime readiness.
