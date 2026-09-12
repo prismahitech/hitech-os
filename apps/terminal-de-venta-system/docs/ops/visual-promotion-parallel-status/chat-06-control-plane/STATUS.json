@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T06:48:00Z",
+  "updatedAt": "2026-09-12T06:50:00Z",
   "baseHead": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
   "workBranch": "chat6/candidate-corpus-final-integration-20260912",
-  "workHead": "f52d9d9915179f805b92e11b3a168100eeb505c6",
-  "summary": "Single final candidate-corpus integration PR #549 is open from exact assembly head f52d9d9915179f805b92e11b3a168100eeb505c6. Five witnesses and current-head Authority Mesh are PASS. The next serial barrier is the one-time mechanically generated FILES_MANIFEST followed by exact-head gates.",
+  "workHead": "482ad07419a91074e895d40ba10b5f1cf2641596",
+  "summary": "Final integration PR #549 now has the required one-time mechanical FILES_MANIFEST refresh. The GVAE all-surface workflow pushed exactly one bot commit and changed only prisma-html/FILES_MANIFEST.json. Its blob is byte-identical to the VISCORE-generated candidate from the exact pre-refresh assembly. Final exact-head gate verification is now active.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -57,7 +57,8 @@
     "Current canonical main advanced to 7c5b8d477a9006c5184ddbc806874b6e7c02571c via mailbox-driven final-verification coordination; this is a drift event requiring AutoMesh v2 classification before any new governed mutation.",
     "All five required final-verification witness receipts were read directly from their deterministic status branches and PASS exactly: Tablet, PC, Mobile, Shared UI and Atlasfin. No owner relay was used.",
     "AutoMesh v2 run 34678646588 detected BLOCKED_RELEVANT_DRIFT and correctly executed full refresh; final state PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT on main 7c5b8d477a9006c5184ddbc806874b6e7c02571c. Fresh preflight/compose reported 100% authority coverage for both Chat 6 lanes, zero blockers and Layer Map present.",
-    "Fresh final integration branch chat6/candidate-corpus-final-integration-20260912 was created from current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c with exactly 88 unique accepted paths and exact existing Git blob identities; assembly commit f52d9d9915179f805b92e11b3a168100eeb505c6."
+    "Fresh final integration branch chat6/candidate-corpus-final-integration-20260912 was created from current main 7c5b8d477a9006c5184ddbc806874b6e7c02571c with exactly 88 unique accepted paths and exact existing Git blob identities; assembly commit f52d9d9915179f805b92e11b3a168100eeb505c6.",
+    "One-time FILES_MANIFEST refresh completed at head 482ad07419a91074e895d40ba10b5f1cf2641596. Compare f52d9d99..482ad074 shows exactly one changed path: prisma-html/FILES_MANIFEST.json. The committed manifest Git blob f8a2539d49db381270158ce96bfa9fca838b3a86 exactly matches the VISCORE candidate artifact 10293221911; SHA-256 bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d; file count 868 excluding manifest."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -290,7 +291,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Observe PR #549 workflows. Use canonical VISCORE mechanical manifest generation on the exact assembled tree, commit only the resulting FILES_MANIFEST once, then require all exact-head gates green before merge.",
+  "nextAction": "Require CI, VISCORE, ForgeOS, Sync Sentinel, GVAE all-surface, Identity/RIFAT, Atlasfin and no-fake-green gates all PASS on exact PR head 482ad07419a91074e895d40ba10b5f1cf2641596; merge only if clean/mergeable, then verify merged main exact bytes.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -617,12 +618,17 @@
       "atlasfin": "PASS_ATLASFIN_CORPUS_WITNESS"
     },
     "finalWitnessesDirectlyRead": true,
-    "integrationHead": "f52d9d9915179f805b92e11b3a168100eeb505c6",
+    "integrationHead": "482ad07419a91074e895d40ba10b5f1cf2641596",
     "integrationBase": "7c5b8d477a9006c5184ddbc806874b6e7c02571c",
     "assemblyPathCount": 88,
     "assemblyTree": "7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e",
-    "filesManifestRefreshed": false,
+    "filesManifestRefreshed": true,
     "integrationPullRequest": 549,
-    "integrationPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/549"
+    "integrationPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/549",
+    "filesManifestRefreshCount": 1,
+    "filesManifestBlobSha": "f8a2539d49db381270158ce96bfa9fca838b3a86",
+    "filesManifestSha256": "bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d",
+    "filesManifestFileCountExcludingManifest": 868,
+    "filesManifestCandidateArtifact": 10293221911
   }
 }
