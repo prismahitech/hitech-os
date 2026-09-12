@@ -1,0 +1,103 @@
+{
+  "schema": "prisma.visual-promotion.promotion-readiness-contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_CANONICAL_PHASE",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "canonicalBaseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
+  "immutableInputs": {
+    "corpusRoot": "prisma-html/governance/visual-promotion/contracts/corpus-certification",
+    "recordCount": 2097,
+    "surfaceCounts": {
+      "tablet": 929,
+      "pc": 827,
+      "mobile": 271,
+      "shared-ui": 70
+    },
+    "certificationStatusCounts": {
+      "VALID_ELIGIBLE_CANDIDATE": 139,
+      "VALID_REGISTER_TARGET_FIRST": 1926,
+      "VALID_BLOCKED": 32
+    },
+    "workEntryDecisionCounts": {
+      "REGISTER_TARGET_FIRST": 2065,
+      "BLOCKED": 32
+    },
+    "semanticReviewGroupCount": 10,
+    "crossSurfaceGroupCount": 0,
+    "atlasfinReferenceCount": 2421,
+    "materialityCatalogInspected": false
+  },
+  "writeOwnership": {
+    "chat1": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/tablet/**"
+    ],
+    "chat2": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/pc/**"
+    ],
+    "chat3": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/mobile/**"
+    ],
+    "chat4": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/**"
+    ],
+    "chat5": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin/**"
+    ],
+    "chat6": [
+      "prisma-html/governance/visual-promotion/promotion-readiness/contracts/**",
+      "prisma-html/governance/visual-promotion/promotion-readiness/global/**",
+      "prisma-html/tools/visual_promotion/**"
+    ]
+  },
+  "commonSurfaceOutputs": [
+    "PROMOTION_RESOLUTION.jsonl",
+    "CANONICAL_MEANING_PROPOSALS.jsonl",
+    "EXISTING_AUTHORITY_REUSE.jsonl",
+    "BLOCKING_AUTHORITY_GAPS.jsonl",
+    "MANIFEST.json",
+    "SUMMARY.md"
+  ],
+  "laneSpecificOutputs": {
+    "tablet": [
+      "REGISTRATION_PROPOSALS.jsonl"
+    ],
+    "pc": [
+      "PROJECTION_MISSING_CLASSIFICATION.jsonl"
+    ],
+    "mobile": [
+      "PROJECTION_DRIFT_CLASSIFICATION.jsonl"
+    ],
+    "shared-ui": [
+      "REGION_CONFLICT_CLASSIFICATION.jsonl"
+    ],
+    "atlasfin": [
+      "ATLASFIN_REFERENCE_ANALYSIS.jsonl",
+      "IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl",
+      "CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl",
+      "VISUAL_ONLY_EQUIVALENCE.jsonl",
+      "MANIFEST.json",
+      "SUMMARY.md"
+    ]
+  },
+  "globalOutputs": [
+    "CANONICAL_PROMOTION_PLAN.json",
+    "ZERO_LOSS_ACCOUNTING.json",
+    "COLLISIONS.json",
+    "CROSS_SURFACE_SEMANTIC_GROUPS.json",
+    "BLOCKING_AUTHORITY_GAPS.json",
+    "WORK_ENTRY_READINESS.json",
+    "SUMMARY.md"
+  ],
+  "phaseResult": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+  "hardStops": {
+    "productRuntimeMutation": false,
+    "canonicalAuthorityMutation": false,
+    "projectionRepair": false,
+    "gvaeApply": false,
+    "wildcardSurfaceApply": false,
+    "materialityUse": false,
+    "broadRediscovery": false,
+    "recensus": false,
+    "corpusRewrite": false
+  }
+}
