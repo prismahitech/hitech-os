@@ -1,0 +1,142 @@
+name: Chat3 Mobile Readiness Runner
+
+on:
+  push:
+    branches:
+      - tooling/chat3-mobile-readiness-runner-20260913
+
+permissions:
+  contents: write
+
+jobs:
+  resolve-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: chat3/canonical-promotion-readiness-mobile-20260912
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate and validate Mobile readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+
+          repo = Path.cwd()
+          tools = repo / 'prisma-html' / 'tools'
+          sys.path.insert(0, str(tools))
+          from visual_promotion.promotion_readiness import load_certified_corpus, validate_surface
+
+          cert_root = repo / 'prisma-html' / 'governance' / 'visual-promotion' / 'contracts' / 'corpus-certification'
+          readiness_root = repo / 'prisma-html' / 'governance' / 'visual-promotion' / 'promotion-readiness'
+          mobile_root = readiness_root / 'mobile'
+          debt_path = mobile_root / 'PROJECTION_DEBT.jsonl'
+          special = 'TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1'
+
+          certified = load_certified_corpus(cert_root)
+          mobile = {t:r for t,r in certified.items() if r.get('surfaceKey') == 'mobile'}
+          if len(mobile) != 271:
+              raise SystemExit(f'expected 271 certified mobile targets, got {len(mobile)}')
+
+          debt_ids = set()
+          for line in debt_path.read_text(encoding='utf-8').splitlines():
+              if line.strip():
+                  debt_ids.add(json.loads(line)['targetId'])
+          if len(debt_ids) != 138:
+              raise SystemExit(f'expected 138 mobile projection-debt targets, got {len(debt_ids)}')
+          unknown = debt_ids - set(mobile)
+          if unknown:
+              raise SystemExit(f'projection debt contains unknown mobile targets: {sorted(unknown)[:3]}')
+          if special not in debt_ids:
+              raise SystemExit('expected governed C30F mobile drift target is absent from certified debt set')
+
+          rows = []
+          for target in sorted(mobile):
+              src = mobile[target]
+              record_sha = src.get('recordSha256')
+              if not isinstance(record_sha, str) or len(record_sha) != 64:
+                  raise SystemExit(f'missing certified recordSha256 for {target}')
+              is_debt = target in debt_ids
+              projection = 'CURRENT'
+              gaps = ['MISSING_NDC_PRIMARY_MEANING']
+              notes = []
+              if is_debt:
+                  projection = 'AMBIGUOUS'
+                  gaps.append('PROJECTION_DRIFT')
+              if target == special:
+                  projection = 'PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED'
+                  gaps.append('AUTHORITY_RECONCILIATION_REQUIRED')
+                  notes.append('Current governed evidence preserves product-candidate versus stale-authority reconciliation debt without selecting a repair direction.')
+              rows.append({
+                  'schema':'prisma.visual-promotion.promotion-readiness-record.v1',
+                  'phase':'CANONICAL_PROMOTION_READINESS_RESOLUTION',
+                  'surfaceKey':'mobile',
+                  'targetId':target,
+                  'sourceRecordSha256':record_sha,
+                  'promotionReadinessDecision':'BLOCKED_MISSING_SEMANTIC_AUTHORITY',
+                  'authorityReuseDisposition':'UNRESOLVED',
+                  'projectionDebtClassification':projection,
+                  'canonicalMeaning':{'ndcPrimaryId':None,'visualMeaningId':None,'proposalKey':None,'resolution':'UNRESOLVED'},
+                  'identity':{'identityRecipeId':None,'identityAdapterId':None,'existingBindingId':None,'bindingProposalKey':None},
+                  'atlasfin':{'refs':[],'supportOnly':True},
+                  'physical':{'routeId':None,'regionId':None,'slotId':None,'componentId':None,'ownerId':None,'selector':None,'implementationLayerId':None},
+                  'application':{'applicationLayerId':None,'projectionPolicy':None,'exactTargetRegistrationReady':False},
+                  'wouldPassWorkEntryAfterRegistration':None,
+                  'evidenceRefs':['prisma-html/governance/visual-promotion/contracts/corpus-certification/CANDIDATE_CORPUS.jsonl'],
+                  'blockingAuthorityGaps':gaps,
+                  'confidence':'high',
+                  'notes':notes,
+              })
+
+          def write_jsonl(path, vals):
+              text = ''.join(json.dumps(v, ensure_ascii=False, separators=(',', ':')) + '\n' for v in vals)
+              path.write_text(text, encoding='utf-8')
+
+          write_jsonl(mobile_root / 'RESOLUTION.jsonl', rows)
+          write_jsonl(mobile_root / 'BLOCKED.jsonl', [{'targetId':r['targetId']} for r in rows])
+          debt_rows = [{'targetId':r['targetId']} for r in rows if r['projectionDebtClassification'] not in {'CURRENT','NOT_APPLICABLE'}]
+          write_jsonl(mobile_root / 'PROJECTION_DEBT.jsonl', debt_rows)
+          (mobile_root / 'REUSE.jsonl').write_text('', encoding='utf-8')
+          (mobile_root / 'REGISTRATION_PROPOSALS.jsonl').write_text('', encoding='utf-8')
+
+          manifest = {
+              'schema':'prisma.visual-promotion.promotion-readiness-manifest.v1',
+              'phase':'CANONICAL_PROMOTION_READINESS_RESOLUTION',
+              'surfaceKey':'mobile',
+              'inputCount':271,
+              'resolutionCount':271,
+              'uniqueTargetCount':271,
+              'readyExistingAuthorityReuse':0,
+              'readyCanonicalRegistration':0,
+              'legitimatelyBlocked':271,
+              'notApplicable':0,
+              'missingCount':0,
+              'extraCount':0,
+              'duplicateTargetIds':0,
+              'semanticMutationCount':0,
+              'materialityCatalogInspected':False,
+              'productRuntimeMutationPerformed':False,
+              'canonicalAuthorityMutationPerformed':False,
+          }
+          (mobile_root / 'MANIFEST.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          summary = '''# Mobile Promotion Readiness\n\nResult: `PASS_MOBILE_PROMOTION_READINESS` for the bounded Mobile readiness-resolution lane.\n\n- Certified inputs resolved: **271 / 271**.\n- Projection partition: **133 CURRENT + 138 projection-debt**.\n- Readiness decisions: **271 BLOCKED_MISSING_SEMANTIC_AUTHORITY**, **0 reuse**, **0 canonical registrations**, **0 not-applicable**.\n- Projection debt: **137 AMBIGUOUS** plus **1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED** (`TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1`).\n- Every resolution row preserves exact certified `sourceRecordSha256` provenance.\n- No semantic mutation, product/runtime mutation, canonical-authority mutation, projection repair, or GVAE APPLY was performed.\n- Materiality Catalog was not inspected. Atlasfin remains support-only.\n- Blocked target decisions are legitimate readiness outcomes and do not authorize invented canonical IDs.\n'''
+          (mobile_root / 'SUMMARY.md').write_text(summary, encoding='utf-8')
+
+          result = validate_surface('mobile', certified=certified, readiness_root=readiness_root)
+          if result.get('status') != 'PASS' or result.get('inputCount') != 271 or result.get('projectionDebtCount') != 138:
+              raise SystemExit('canonical mobile validator did not PASS: ' + json.dumps(result, sort_keys=True))
+          print('PASS_MOBILE_PROMOTION_READINESS')
+          print(json.dumps(result, indent=2, sort_keys=True))
+          PY
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prisma-html/governance/visual-promotion/promotion-readiness/mobile
+          git diff --cached --exit-code && { echo 'No generated changes'; exit 1; } || true
+          git commit -m 'visual-promotion: finalize mobile promotion readiness'
+          git push origin HEAD:chat3/canonical-promotion-readiness-mobile-20260912
