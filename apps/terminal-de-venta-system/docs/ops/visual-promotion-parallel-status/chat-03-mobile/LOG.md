@@ -119,3 +119,17 @@ No updates published yet.
 - Owned output root is `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**`; no other Chat ownership or global authority is writable in this lane.
 - Decision: resolve semantic/binding/application-layer readiness and projection debt only from current canonical authority; preserve unknowns; no broad rediscovery, no canonical ID minting, no RIFAT/product overwrite, no projection repair.
 - Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY` and is not being inspected.
+
+## 2026-09-13T01:20:00-06:00 — FINDING / VALIDATION / BLOCKER / HANDOFF
+
+- Re-read current main, canonical phase contract, own mailbox, schema and `promotion_readiness.py`; assignment remains Chat 3 `MOBILE_PROMOTION_READINESS_RESOLVER` with expected receipt `PASS_MOBILE_PROMOTION_READINESS`.
+- Current work head is `eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef`, exactly 5 commits ahead of phase base `d4b451cc92c597d02cfc65094922bd2c5dd17c12` and 0 behind.
+- Branch-scope validation PASS: only five owned Mobile readiness paths differ from base. No product/runtime/global-authority/status-crosswrite occurred.
+- Certified Mobile accounting is deterministically confirmed as `271 = 133 CURRENT + 138 DRIFT`; target IDs and exact certified `recordSha256` values are visible in repository evidence.
+- Material classification remains bounded: all targets still lack target-level neutral meaning, recipe, binding and application-layer authority. For DRIFT, `TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1` has evidence for `PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED`; the remaining DRIFT rows stay ambiguous without stronger target-local direction evidence.
+- The canonical seven-output contract is not complete: `RESOLUTION.jsonl` and `SUMMARY.md` are missing. Existing `BLOCKED.jsonl` has 271 target-id-only rows and `PROJECTION_DEBT.jsonl` has 138 target-id-only rows, so they are not valid full-row subsets yet.
+- Demonstrable execution hard stop: the canonical `CANDIDATE_CORPUS.jsonl` is 2,876,194 bytes. In the available GitHub connector, `fetch_file` returns empty content for this large file even with line-range arguments; raw/blob retrieval is truncated or rejected. The session has no executable repo checkout/runner and no connector-to-Python raw-byte bridge.
+- Because `promotion_readiness.py` requires exact 271-row source-hash pins, target uniqueness, exact subsets and manifest parity, hand-transcribing from truncated excerpts would be non-reproducible and risks fake green. That route is rejected.
+- Result published as `BLOCKED_EXECUTION_ENVIRONMENT_NO_CANONICAL_RUNNER`, not `PASS_MOBILE_PROMOTION_READINESS`.
+- Required continuation: resume from the same work head in an executable checkout/runner, deterministically generate the 271 full rows from the immutable corpus, derive subsets, run `promotion_readiness.py`, then publish PASS only if every zero-loss/source-hash/vocabulary/subset/manifest check passes.
+- Materiality Catalog remains uninspected. Product/runtime mutation = false. Projection repair = false. Global authority mutation = false. GVAE APPLY = false.
