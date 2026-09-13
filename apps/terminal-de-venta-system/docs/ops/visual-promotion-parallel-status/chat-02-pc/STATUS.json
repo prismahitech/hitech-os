@@ -4,39 +4,57 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T16:08:00-06:00",
+  "state": "BLOCKED",
+  "updatedAt": "2026-09-12T23:04:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
   "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION started for Chat 2 / PC_PROMOTION_READINESS_RESOLVER. The immutable certified PC corpus is being reused as input; no recensus, product/runtime mutation, projection repair, global authority mutation, canonical ID minting, or Materiality Catalog inspection is authorized.",
-  "blockers": [],
+  "summary": "Chat 2 / PC_PROMOTION_READINESS_RESOLVER reached a deterministic execution-environment hard stop after revalidating current repository authority. The 827-row PC source is authoritative and the required readiness contract is fully resolved, but this execution environment exposes authenticated GitHub read/write primitives without an authenticated repository checkout or a repo-code execution primitive. The connector also truncates large line-range payloads, so it cannot deterministically materialize and locally validate the required 827 per-target RESOLUTION rows plus exact subsets without risking partial/stale reconstruction. No invalid or partial readiness artifacts were committed.",
+  "blockers": [
+    "HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE: canonical output generation requires a deterministic 827-row transformation preserving each certified sourceRecordSha256 and then execution of prisma-html/tools/visual_promotion/promotion_readiness.py. This session can read/write GitHub objects but cannot execute repository code against the authenticated corpus or transfer the authenticated corpus bytes into the local Python/container runtime; large GitHub JSONL reads are response-budget truncated."
+  ],
   "findings": [
-    "STATUS_INDEX v1.2.0 assigns Chat 2 to PC_PROMOTION_READINESS_RESOLVER with expected result PASS_PC_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
-    "Current canonical main and the assigned work branch both resolve to d4b451cc92c597d02cfc65094922bd2c5dd17c12.",
-    "Certified PC input remains 827 targets with 826 physical CURRENT + 1 DRIFT and 688 projection CURRENT + 139 MISSING from the prior immutable certification evidence.",
-    "Promotion-readiness record schema is available on current main and is the machine contract for phase output."
+    "STATUS_INDEX v1.2.0 still assigns Chat 2 to PC_PROMOTION_READINESS_RESOLVER with expected result PASS_PC_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
+    "Canonical main remains d4b451cc92c597d02cfc65094922bd2c5dd17c12; no main revalidation drift occurred during this attempt.",
+    "Certified PC input remains exactly 827 targets with 826 physical CURRENT + 1 DRIFT and 688 projection CURRENT + 139 MISSING.",
+    "The phase validator requires exact target-set equality, exact sourceRecordSha256 equality against CANDIDATE_CORPUS.jsonl, exact subset equality, manifest accounting, and 827 PC RESOLUTION rows before PASS.",
+    "Exact sourceRecordSha256 values are recoverable from immutable PC certification evidence, but authenticated large-file reads are truncated by the connector before all 827 records can be deterministically transformed in-session.",
+    "The assigned output root is still absent on chat2/canonical-promotion-readiness-pc-20260912; no partial seven-file handoff was published."
   ],
   "decisions": [
-    "Execute only the PC promotion-readiness assignment on chat2/canonical-promotion-readiness-pc-20260912.",
-    "Write phase artifacts only under prisma-html/governance/visual-promotion/promotion-readiness/pc/**; status writes remain limited to this mailbox branch.",
-    "Preserve unknown semantic/binding/application authority as unknown or blocked; do not infer meaning from selectors or Atlasfin recipe similarity.",
-    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and will not be inspected."
+    "Do not manufacture, sample, infer, or partially reconstruct any of the 827 readiness records merely to obtain a green receipt.",
+    "Do not commit schema-valid-looking but unvalidated outputs; promotion-readiness PASS requires execution of the canonical validator over all 827 rows.",
+    "Preserve the known selector DRIFT and all 139 projection MISSING states; no product/runtime/projection repair is authorized.",
+    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and was not inspected.",
+    "No canonical IDs were invented, no GVAE APPLY was run, and no global authority was changed."
   ],
   "changedPaths": [
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md"
   ],
-  "validations": [],
+  "validations": [
+    "IDENTITY_AND_PHASE_REVALIDATION: PASS",
+    "CURRENT_MAIN_HEAD_REVALIDATION: PASS:d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+    "CERTIFIED_PC_INPUT_ACCOUNTING: PASS:827",
+    "KNOWN_PHYSICAL_PARTITION: PASS:826_CURRENT+1_DRIFT",
+    "KNOWN_PROJECTION_PARTITION: PASS:688_CURRENT+139_MISSING",
+    "PROMOTION_READINESS_VALIDATOR_CONTRACT_INSPECTED: PASS",
+    "SOURCE_RECORD_SHA_REQUIREMENT_CONFIRMED: PASS",
+    "MATERIALITY_CATALOG_INSPECTED: false",
+    "PRODUCT_RUNTIME_MUTATION_PERFORMED: false",
+    "CANONICAL_AUTHORITY_MUTATION_PERFORMED: false",
+    "CANONICAL_OUTPUT_VALIDATION: NOT_RUN_HARD_STOP"
+  ],
   "unresolved": [
-    "827 PC targets require exact promotion-readiness resolution and zero-loss accounting.",
-    "The known selector DRIFT must remain blocked unless current authority proves resolution.",
-    "All 139 projection MISSING rows require canonical projection-debt classification without repair."
+    "The seven canonical PC promotion-readiness output files are not materialized because deterministic full-corpus transformation and canonical validator execution are unavailable in this execution environment.",
+    "PASS_PC_PROMOTION_READINESS is not declared.",
+    "The known selector DRIFT and 139 projection MISSING rows remain intentionally unresolved source truth."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Resolve the immutable certified PC subset against current machine contracts and existing authority, write the seven owned phase outputs, validate zero-loss/schema/provenance, then publish PASS_PC_PROMOTION_READINESS or a precise hard stop.",
+  "nextAction": "Resume Chat 2 in a repo-capable execution environment that can read the authenticated full CANDIDATE_CORPUS.jsonl / immutable PC certification bytes and execute prisma-html/tools/visual_promotion/promotion_readiness.py. Generate exactly the seven owned outputs under prisma-html/governance/visual-promotion/promotion-readiness/pc/**, run full zero-loss/sourceRecordSha256/subset/manifest validation, and only then replace this blocker with PASS_PC_PROMOTION_READINESS.",
   "handoff": {
-    "readiness": "IN_PROGRESS",
+    "readiness": "BLOCKED",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
     "certificationBranch": "chat2/pc-corpus-cert-20260904",
     "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
@@ -55,14 +73,38 @@
     },
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
-      "result": "IN_PROGRESS",
+      "result": "BLOCKED_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE",
       "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
       "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
       "expectedInputCount": 827,
+      "resolvedInputCount": 0,
+      "outputRoot": "prisma-html/governance/visual-promotion/promotion-readiness/pc",
+      "requiredOutputCount": 7,
+      "materializedOutputCount": 0,
+      "zeroLossValidated": false,
+      "targetUniquenessValidated": false,
+      "sourceRecordSha256Validated": false,
+      "subsetsValidated": false,
+      "manifestAccountingValidated": false,
+      "vocabularyValidated": false,
+      "authorityEvidenceValidated": true,
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalPromotionPerformed": false,
-      "defects": []
+      "hardStop": {
+        "code": "HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE",
+        "cause": "Authenticated repository bytes are accessible only through bounded GitHub connector responses; the local execution runtime has no authenticated repo checkout/network path and no connector primitive exists to execute the canonical transformer/validator over those bytes. Large JSONL range reads are truncated, preventing deterministic in-session reconstruction of all 827 target/hash records.",
+        "evidence": [
+          "prisma-html/tools/visual_promotion/promotion_readiness.py requires exact 827-row target coverage and sourceRecordSha256 equality",
+          "GitHub connector range read of CERTIFICATION.jsonl requested 20 rows and was response-budget truncated before returning all requested rows",
+          "assigned work-branch output root remains absent; no invalid partial outputs committed"
+        ],
+        "requiredNextAction": "Execute the canonical 827-row generator/validator from an authenticated repo-capable runtime on the assigned work branch, then publish the validated seven-file receipt."
+      },
+      "defects": [
+        "Canonical seven-file PC promotion-readiness handoff cannot be deterministically generated and validated in the current tool runtime."
+      ]
     }
   }
 }
