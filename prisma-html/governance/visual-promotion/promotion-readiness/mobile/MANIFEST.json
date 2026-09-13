@@ -1,0 +1,19 @@
+{
+  "schema": "prisma.visual-promotion.promotion-readiness-manifest.v1",
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "surfaceKey": "mobile",
+  "inputCount": 271,
+  "resolutionCount": 271,
+  "uniqueTargetCount": 271,
+  "readyExistingAuthorityReuse": 0,
+  "readyCanonicalRegistration": 0,
+  "legitimatelyBlocked": 271,
+  "notApplicable": 0,
+  "missingCount": 0,
+  "extraCount": 0,
+  "duplicateTargetIds": 0,
+  "semanticMutationCount": 0,
+  "materialityCatalogInspected": false,
+  "productRuntimeMutationPerformed": false,
+  "canonicalAuthorityMutationPerformed": false
+}
