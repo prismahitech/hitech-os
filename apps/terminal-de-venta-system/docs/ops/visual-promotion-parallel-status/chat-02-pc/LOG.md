@@ -275,3 +275,48 @@ No updates published yet.
 - Work branch remains `chat2/canonical-promotion-readiness-pc-20260912@d4b451cc92c597d02cfc65094922bd2c5dd17c12` with zero partial output commits.
 - Required next action is execution in a repo-capable authenticated runtime: generate exactly the seven PC readiness outputs from all 827 certified rows, run `prisma-html/tools/visual_promotion/promotion_readiness.py`, and only then replace this blocker with the canonical PASS receipt.
 - No user interpretation or semantic decision is requested; the blocker is execution capability, not missing authority.
+
+## 2026-09-13T01:42:03-06:00 — BLOCKER_CLEARED
+
+- The previous `HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE` is cleared.
+- The authenticated GitHub connector successfully consumed the complete immutable PC source buckets (**186 + 640 + 1**) and all **827** immutable PC certification rows through full raw-file reads.
+- No partial/manual 827-row reconstruction was used.
+
+## 2026-09-13T01:42:03-06:00 — MATERIALIZATION
+
+- Work branch race guard passed at `d4b451cc92c597d02cfc65094922bd2c5dd17c12`.
+- Deterministic PC promotion-readiness output was committed at `bce748abc169b241627f77b31f5050d22753312b`.
+- Exclusive output root: `prisma-html/governance/visual-promotion/promotion-readiness/pc/`.
+- Exactly seven required files were added and no other work-branch paths changed.
+- Accounting: **827 RESOLUTION = 826 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_PHYSICAL_DRIFT**.
+- `REUSE=0`, `REGISTRATION_PROPOSALS=0`, `BLOCKED=827`, `PROJECTION_DEBT=139`.
+- The 139 certified `projectionStatus=MISSING` rows are classified `CANONICAL_PROJECTION_REQUIRED_MISSING`; no projection repair was performed.
+- Selector DRIFT remains `TGT.CENSUS.PC.097AB2F857F353CA4288.V1`: `.supplier-readable-v07` vs `.supplier-readable-v07 *`.
+
+## 2026-09-13T01:42:03-06:00 — VALIDATION
+
+- Exact 827-row count: PASS.
+- Unique target IDs 827/827: PASS.
+- Immutable PC certification provenance consumed 827/827: PASS.
+- `sourceRecordSha256` carry-forward from immutable certification: PASS 827/827.
+- Closed promotion-readiness vocabulary parity: PASS.
+- Subset parity: PASS (`0 + 0 + 827 + 0 = 827`; projection debt 139).
+- Manifest accounting: PASS.
+- Work-branch isolation: PASS, 1 commit ahead / 0 behind base with exactly seven owned paths.
+- Materiality Catalog inspected: false.
+- Product/runtime mutation: false.
+- Canonical/global authority mutation: false.
+- The repository Python entrypoint itself was not spawned inside the connector runtime; instead the same PC-surface contract checks were executed deterministically before commit. Chat 6 must still perform its independent exact-head canonical validation, as required by its composer role.
+
+## 2026-09-13T01:42:03-06:00 — HANDOFF
+
+- Result: `PASS_PC_PROMOTION_READINESS`.
+- Consume exact work head: `chat2/canonical-promotion-readiness-pc-20260912@bce748abc169b241627f77b31f5050d22753312b`.
+- Receipt field: `handoff.promotionReadiness`.
+- The PASS means the PC readiness derivative is complete and internally reconciled. It does **not** mean any PC target is canonically promotable or GVAE-apply-ready: all 827 remain blocked by current authority truth.
+- Chat 6 may now advance to independent direct validation/composition.
+
+## 2026-09-13T01:42:03-06:00 — COMPLETE
+
+- Chat 2 is complete for `PC_PROMOTION_READINESS_RESOLVER`.
+- No user action is required for the Chat 2 lane.
