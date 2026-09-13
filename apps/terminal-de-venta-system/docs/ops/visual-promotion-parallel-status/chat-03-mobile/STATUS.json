@@ -4,42 +4,78 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-12T16:07:00-06:00",
+  "state": "BLOCKED",
+  "updatedAt": "2026-09-13T01:20:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
-  "workHead": null,
-  "summary": "Chat 3 started CANONICAL_PROMOTION_READINESS_RESOLUTION as MOBILE_PROMOTION_READINESS_RESOLVER. The immutable certified Mobile corpus is input evidence; this lane will resolve all 271 targets exactly once and classify the 138 DRIFT records without mutating RIFAT, product/runtime, projections, or global authority.",
-  "blockers": [],
+  "workHead": "eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef",
+  "summary": "Chat 3 reached a demonstrable execution hard stop while materializing CANONICAL_PROMOTION_READINESS_RESOLUTION. Repository truth and classification are resolved far enough to prove 271 Mobile inputs = 133 CURRENT + 138 DRIFT, with no safe authority reuse/registration claim, but the available GitHub connector cannot expose the 2.8 MB certified corpus as processable raw bytes or execute the canonical generator/validator. Five preliminary owned outputs exist, while RESOLUTION.jsonl and SUMMARY.md are absent and the current BLOCKED/PROJECTION_DEBT subsets are target-id-only placeholders, so PASS_MOBILE_PROMOTION_READINESS is intentionally not declared.",
+  "blockers": [
+    "HARD_STOP_EXECUTION_BRIDGE: the canonical certified corpus CANDIDATE_CORPUS.jsonl is 2,876,194 bytes. GitHub fetch_file returns empty content for this large file even with line-range arguments, while blob/raw fetches are truncated or rejected; this session has no executable checkout/runner or connector-to-Python byte bridge. Deterministic generation and validation of all 271 full readiness records therefore cannot be completed without risking transcription loss or fake green.",
+    "CANONICAL_OUTPUT_INCOMPLETE: required RESOLUTION.jsonl and SUMMARY.md are absent at work head eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef. Existing BLOCKED.jsonl has 271 targetId-only rows and PROJECTION_DEBT.jsonl has 138 targetId-only rows, not the full resolution-row subsets required by promotion_readiness.py."
+  ],
   "findings": [
-    "Current canonical main at start is d4b451cc92c597d02cfc65094922bd2c5dd17c12.",
-    "STATUS_INDEX assigns Chat 3 role MOBILE_PROMOTION_READINESS_RESOLVER with expected result PASS_MOBILE_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
-    "The current phase requires seven owned outputs under prisma-html/governance/visual-promotion/promotion-readiness/mobile/** and zero-loss accounting for 271 Mobile targets.",
-    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and will not be inspected."
+    "Current canonical main remains d4b451cc92c597d02cfc65094922bd2c5dd17c12 and the canonical phase remains CANONICAL_PROMOTION_READINESS_RESOLUTION.",
+    "STATUS_INDEX still assigns Chat 3 role MOBILE_PROMOTION_READINESS_RESOLVER, expected result PASS_MOBILE_PROMOTION_READINESS and receipt field handoff.promotionReadiness.",
+    "Exact certified Mobile accounting is 271 unique targets partitioned as 133 projection CURRENT and 138 projection DRIFT.",
+    "All certified Mobile rows retain unresolved target-level neutral meaning, no identity recipe, no existing binding and no application layer; SURF.mb.owner_home is supporting surface evidence only and ADP.MB.TOUCH.V2 is support-only Atlasfin evidence.",
+    "Target TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1 has evidence for PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED from governed cleanup commit 731574f97dba0ec46420369b777071500ce2f833; the other DRIFT rows remain ambiguous absent stronger target-local direction evidence.",
+    "Work branch is exactly 5 commits ahead of base and changes only five paths under the owned Mobile promotion-readiness root."
   ],
   "decisions": [
-    "Reuse the immutable certified corpus under prisma-html/governance/visual-promotion/contracts/corpus-certification/; do not recensus or rebuild earlier phases.",
-    "Use only current canonical NDC/Identity/RIFAT/Visual Control/Target Index authority and Atlasfin as support-only reference.",
-    "Do not mint canonical IDs, repair projection bytes, or select an authority direction without evidence."
+    "Do not declare PASS until RESOLUTION.jsonl has exactly 271 full schema-valid rows with exact sourceRecordSha256 pins and all derived subsets match it.",
+    "Do not hand-transcribe 271 hash-pinned records from truncated connector excerpts because zero-loss/source-hash validation would not be reproducible and would violate the no-fake-green rule.",
+    "Do not mutate Materiality Catalog, RIFAT, product/runtime, generated projections, global Identity/NDC/Target Index authority or another Chat mailbox.",
+    "Preserve current preliminary work branch evidence for continuation; no rollback of owned placeholders is required to diagnose the hard stop."
   ],
-  "changedPaths": [],
-  "validations": [],
+  "changedPaths": [
+    "prisma-html/governance/visual-promotion/promotion-readiness/mobile/MANIFEST.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/mobile/REUSE.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/mobile/REGISTRATION_PROPOSALS.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/mobile/BLOCKED.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/mobile/PROJECTION_DEBT.jsonl"
+  ],
+  "validations": [
+    "PASS_BRANCH_SCOPE: compare d4b451cc92c597d02cfc65094922bd2c5dd17c12...eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef shows exactly five changed files, all under Chat 3 owned Mobile output root; ahead_by=5, behind_by=0.",
+    "PASS_INPUT_ACCOUNTING_EVIDENCE: certified Mobile corpus evidence resolves exactly 271 rows = 133 CURRENT + 138 DRIFT.",
+    "PASS_PROHIBITED_ACTION_GUARD: Materiality Catalog uninspected; product/runtime mutation false; canonical/global authority mutation false; projection repair false; GVAE APPLY false.",
+    "BLOCKED_CANONICAL_VALIDATOR: promotion_readiness.py cannot be executed in this session because no executable repository checkout/runner is available and the large certified corpus cannot be transferred as raw processable bytes through the available connector."
+  ],
   "unresolved": [
-    "Per-target promotion readiness and projection-debt direction are being resolved from current authority."
+    "Generate full RESOLUTION.jsonl for all 271 Mobile targets with exact certified recordSha256 values and schema-valid evidence/gaps.",
+    "Replace targetId-only BLOCKED.jsonl and PROJECTION_DEBT.jsonl with exact full-row subsets derived from RESOLUTION.jsonl.",
+    "Create SUMMARY.md, recheck MANIFEST.json accounting, and execute promotion_readiness.py zero-loss/subset/source-hash validation before PASS."
   ],
-  "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Create the assigned work branch from current main, inspect exact Mobile certified records and current authority, generate deterministic readiness outputs, validate zero-loss and schema invariants, then publish handoff.promotionReadiness.",
+  "needsUserAction": true,
+  "userActionRequested": "Resume Chat 3 in an environment with an executable checkout/runner for prismahitech/hitech-os, or expose a connector action that can execute prisma-html/tools/visual_promotion/promotion_readiness.py against the branch. No additional task/context explanation is required.",
+  "nextAction": "From work head eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef, run deterministic Mobile readiness generation from the immutable certified corpus, derive all four subset files from RESOLUTION.jsonl, run the canonical promotion_readiness.py validator, then publish PASS_MOBILE_PROMOTION_READINESS only if zero-loss, sourceRecordSha256, uniqueness, vocabulary, manifest and subset checks all pass.",
   "handoff": {
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "MOBILE_PROMOTION_READINESS_RESOLVER",
-      "result": "IN_PROGRESS",
+      "result": "BLOCKED_EXECUTION_ENVIRONMENT_NO_CANONICAL_RUNNER",
       "expectedResult": "PASS_MOBILE_PROMOTION_READINESS",
       "expectedInputCount": 271,
+      "resolvedInputAccounting": {
+        "total": 271,
+        "projectionCurrent": 133,
+        "projectionDrift": 138
+      },
+      "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
+      "workHead": "eb7440288b791560b0ca3a2e1fd3d8529ce9a0ef",
+      "outputRoot": "prisma-html/governance/visual-promotion/promotion-readiness/mobile/",
+      "requiredOutputCount": 7,
+      "presentOutputCount": 5,
+      "missingOutputs": [
+        "RESOLUTION.jsonl",
+        "SUMMARY.md"
+      ],
+      "canonicalValidationPassed": false,
       "materialityCatalogInspected": false,
       "productRuntimeMutationPerformed": false,
-      "canonicalAuthorityMutationPerformed": false
+      "canonicalAuthorityMutationPerformed": false,
+      "projectionRepairPerformed": false,
+      "gvaeApplyPerformed": false
     }
   }
 }
