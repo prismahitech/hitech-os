@@ -218,3 +218,60 @@ No updates published yet.
 - Chat 2 current assignment is complete.
 - State after completion: `CERTIFIED_HOLD` represented by mailbox state `DONE` plus the deterministic `handoff.parallelWitness` receipt.
 - No user action required. Await only a bounded evidence-backed correction request from the global compositor if a real witness mismatch is later proven.
+
+## 2026-09-12T16:08:00-06:00 — START
+
+- Canonical phase re-resolved from `STATUS_INDEX.json` and the current prompt: `CANONICAL_PROMOTION_READINESS_RESOLUTION`.
+- Chat 2 identity: `PC_PROMOTION`, role `PC_PROMOTION_READINESS_RESOLVER`, expected result `PASS_PC_PROMOTION_READINESS`.
+- Assigned work branch: `chat2/canonical-promotion-readiness-pc-20260912` at base/head `d4b451cc92c597d02cfc65094922bd2c5dd17c12`.
+- Exclusive output root: `prisma-html/governance/visual-promotion/promotion-readiness/pc/**`.
+- Input is the immutable certified 827-target PC corpus. No recensus, product/runtime mutation, projection repair, canonical promotion, global-authority mutation, GVAE APPLY or Materiality Catalog inspection is authorized.
+
+## 2026-09-12T22:48:00-06:00 — FINDING
+
+- Current repository authority remains stable at `d4b451cc92c597d02cfc65094922bd2c5dd17c12`; no relevant main drift requires rebasing the lane.
+- Certified PC truth remains 827 targets, physical `826 CURRENT + 1 DRIFT`, projection `688 CURRENT + 139 MISSING`, and `827 REGISTER_TARGET_FIRST`.
+- The canonical promotion-readiness validator requires exact target-set equality, exact `sourceRecordSha256` equality against `CANDIDATE_CORPUS.jsonl`, exact subset equality for REUSE / REGISTRATION_PROPOSALS / BLOCKED / PROJECTION_DEBT, and exact manifest accounting before PASS.
+- Immutable PC certification evidence exposes the required per-record source hash and proves semanticMutation=false, so source authority itself is not the blocker.
+
+## 2026-09-12T22:54:00-06:00 — BLOCKER_CLEARED
+
+- The earlier assumption that exact per-record hashes were inaccessible was narrowed and cleared: immutable `CERTIFICATION.jsonl` provides `targetId` plus exact `sourceRecordSha256`, and sampled records match the integrated corpus `recordSha256` exactly.
+- This does not by itself authorize a PASS; all 827 rows still require deterministic transformation and canonical validator execution.
+
+## 2026-09-12T23:04:00-06:00 — BLOCKER
+
+- Hard stop: `HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE`.
+- Cause: this session has authenticated GitHub read/write primitives but no authenticated repository checkout or connector primitive that executes repository code against the authenticated corpus. The local Python/container runtime cannot reach the private/authenticated repo bytes.
+- Demonstrable transport constraint: a bounded GitHub read requesting 20 certification rows was response-budget truncated before returning all requested rows. Full deterministic 827-row extraction/transformation cannot be completed through the connector response channel without partial manual reconstruction.
+- Canonical validator requirement makes partial/manual reconstruction unacceptable: every PC target must be present exactly once and every `sourceRecordSha256` must equal certified corpus `recordSha256` before a PASS is legal.
+- Assigned work-branch output root remains absent. No partial or fake-green readiness artifacts were committed.
+
+## 2026-09-12T23:04:00-06:00 — VALIDATION
+
+- Identity/phase/ownership revalidation: PASS.
+- Current main head: PASS, `d4b451cc92c597d02cfc65094922bd2c5dd17c12`.
+- Immutable input accounting: PASS, 827.
+- Known physical partition: PASS, 826 CURRENT + 1 DRIFT.
+- Known projection partition: PASS, 688 CURRENT + 139 MISSING.
+- Promotion-readiness machine contract inspected: PASS.
+- Materiality Catalog inspected: false.
+- Product/runtime mutation: false.
+- Canonical authority mutation: false.
+- Canonical seven-file output validation: NOT_RUN due to execution-environment hard stop.
+- `PASS_PC_PROMOTION_READINESS`: NOT_DECLARED.
+
+## 2026-09-12T23:04:00-06:00 — DECISION
+
+- Do not fabricate or sample the required 827 readiness records to manufacture a green receipt.
+- Preserve unknown semantic/binding/application authority as unknown/blocked.
+- Preserve the selector DRIFT and all 139 projection MISSING records without repair.
+- Publish the execution hard stop in `handoff.promotionReadiness` with exact cause/evidence/next action.
+
+## 2026-09-12T23:04:00-06:00 — HANDOFF
+
+- Phase result: `BLOCKED_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE`.
+- Expected PASS remains `PASS_PC_PROMOTION_READINESS` and is intentionally not claimed.
+- Work branch remains `chat2/canonical-promotion-readiness-pc-20260912@d4b451cc92c597d02cfc65094922bd2c5dd17c12` with zero partial output commits.
+- Required next action is execution in a repo-capable authenticated runtime: generate exactly the seven PC readiness outputs from all 827 certified rows, run `prisma-html/tools/visual_promotion/promotion_readiness.py`, and only then replace this blocker with the canonical PASS receipt.
+- No user interpretation or semantic decision is requested; the blocker is execution capability, not missing authority.
