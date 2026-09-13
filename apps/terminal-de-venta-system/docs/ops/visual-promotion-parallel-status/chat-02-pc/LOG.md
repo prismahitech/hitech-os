@@ -320,3 +320,47 @@ No updates published yet.
 
 - Chat 2 is complete for `PC_PROMOTION_READINESS_RESOLVER`.
 - No user action is required for the Chat 2 lane.
+
+
+## 2026-09-13T01:51:00-06:00 — BLOCKER_CLEARED
+
+- `HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE` is cleared.
+- The work branch now contains the complete seven-file PC readiness handoff at `bce748abc169b241627f77b31f5050d22753312b`.
+- Full Git-blob access allowed deterministic validation against the immutable integrated certified corpus rather than sampled reconstruction.
+
+## 2026-09-13T01:51:00-06:00 — VALIDATION
+
+- Global certified corpus: **2097** rows.
+- Certified PC input: **827** rows.
+- `RESOLUTION.jsonl`: **827/827**, target IDs unique and exact-set complete.
+- `sourceRecordSha256`: **827/827 exact matches** against certified `recordSha256`.
+- `BLOCKED.jsonl`: **827 exact subset**.
+- `REUSE.jsonl`: **0 exact subset**.
+- `REGISTRATION_PROPOSALS.jsonl`: **0 exact subset**.
+- `PROJECTION_DEBT.jsonl`: **139 exact subset**.
+- Manifest accounting: **PASS**.
+- Closed vocabulary / blocking-gap enums / authority-qualified evidence refs: **PASS**.
+- Decision partition: **826 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_PHYSICAL_DRIFT**.
+- Projection classification: **688 CURRENT + 139 CANONICAL_PROJECTION_REQUIRED_MISSING**.
+- Selector drift target `TGT.CENSUS.PC.097AB2F857F353CA4288.V1` preserves `.supplier-readable-v07` vs expanded `.supplier-readable-v07 *`.
+- Semantic mutation / canonical ID minting: **0**.
+- Materiality Catalog inspected: **false**.
+- Product/runtime mutation: **false**.
+- Canonical authority mutation: **false**.
+- Work-branch diff: exactly **7 owned PC readiness files**, one commit ahead / zero behind base.
+
+## 2026-09-13T01:51:00-06:00 — HANDOFF
+
+- Result: `PASS_PC_PROMOTION_READINESS`.
+- Work branch: `chat2/canonical-promotion-readiness-pc-20260912`.
+- Exact work head: `bce748abc169b241627f77b31f5050d22753312b`.
+- Output root: `prisma-html/governance/visual-promotion/promotion-readiness/pc/`.
+- Chat 6 may consume this exact head and receipt for canonical composition.
+- The 827 blocked decisions are legitimate readiness outcomes, not fake green: no current semantic/application authority was invented merely to manufacture promotable rows.
+
+## 2026-09-13T01:51:00-06:00 — COMPLETE
+
+- Chat 2 current assignment is complete.
+- Mailbox state: `DONE`.
+- `handoff.promotionReadiness.result = PASS_PC_PROMOTION_READINESS`.
+- No user action required. Await Chat 6 exact-head integration only.

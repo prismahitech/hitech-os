@@ -5,63 +5,67 @@
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
   "state": "DONE",
-  "updatedAt": "2026-09-13T01:42:03-06:00",
+  "updatedAt": "2026-09-13T01:51:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
   "workHead": "bce748abc169b241627f77b31f5050d22753312b",
-  "summary": "PASS_PC_PROMOTION_READINESS. The former execution-environment hard stop is cleared: the authenticated GitHub connector can consume all 827 immutable PC certification/source records through full raw-file reads, so Chat 2 deterministically materialized the exact seven-file PC promotion-readiness handoff. Accounting is 827/827, target IDs are unique, all immutable sourceRecordSha256 pins were carried from certified provenance, subsets reconcile exactly, the 139 projection MISSING rows are classified as CANONICAL_PROJECTION_REQUIRED_MISSING without repair, and the known selector DRIFT remains blocked. No product/runtime or canonical-authority mutation occurred.",
+  "summary": "PASS_PC_PROMOTION_READINESS. The seven owned PC promotion-readiness outputs are materialized on the exact work head and independently revalidated against the immutable 2,097-row certified corpus. All 827 PC targets resolve exactly once with exact sourceRecordSha256 equality, unique target IDs, exact subsets, manifest parity, closed vocabulary, zero semantic mutation, preserved selector DRIFT, and all 139 projection-MISSING rows preserved as canonical projection debt. No product/runtime/global-authority mutation and no Materiality Catalog use occurred.",
   "blockers": [],
   "findings": [
-    "Full authenticated raw-file reads succeeded for all three immutable PC candidate buckets and all 827 immutable PC certification rows; the prior connector-truncation premise no longer blocks this lane.",
-    "Work branch advanced exactly one commit from d4b451cc92c597d02cfc65094922bd2c5dd17c12 to bce748abc169b241627f77b31f5050d22753312b.",
-    "Exactly seven files now exist under prisma-html/governance/visual-promotion/promotion-readiness/pc/** and no other work-branch paths changed.",
-    "Resolution accounting is 827 total = 826 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_PHYSICAL_DRIFT; reuse=0, registration=0, notApplicable=0.",
-    "Projection debt contains exactly 139 rows, all classified CANONICAL_PROJECTION_REQUIRED_MISSING from certified projectionStatus=MISSING evidence; 688 projection-current rows remain CURRENT.",
-    "The preserved physical DRIFT target is TGT.CENSUS.PC.097AB2F857F353CA4288.V1 with selector .supplier-readable-v07 and recorded expanded selector .supplier-readable-v07 *."
+    "PC promotion-readiness output root now exists on chat2/canonical-promotion-readiness-pc-20260912 at bce748abc169b241627f77b31f5050d22753312b.",
+    "Exact accounting: 827 RESOLUTION = 827 BLOCKED; REUSE=0; REGISTRATION_PROPOSALS=0; PROJECTION_DEBT=139.",
+    "Decision partition: 826 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_PHYSICAL_DRIFT.",
+    "Projection-debt partition: 688 CURRENT + 139 CANONICAL_PROJECTION_REQUIRED_MISSING.",
+    "The drift target TGT.CENSUS.PC.097AB2F857F353CA4288.V1 preserves selector .supplier-readable-v07 and PHYSICAL_DRIFT; no repair or reinterpretation occurred.",
+    "All 827 readiness sourceRecordSha256 values equal the immutable certified CANDIDATE_CORPUS recordSha256 for the same targetId.",
+    "No NDC/VIS/Identity recipe/binding/application authority was minted or silently inferred; current unknowns remain blocked.",
+    "Work-branch delta from base is exactly seven files under prisma-html/governance/visual-promotion/promotion-readiness/pc/**."
   ],
   "decisions": [
-    "Unknown NDC/visual meaning, Identity recipe/binding, physical coordinates and application authority remain unknown/blocked; no semantic IDs or proposal keys were invented.",
-    "Atlasfin recipe/adapter evidence is retained as support-only and is never used as semantic proof; Tablet similarity is not used.",
-    "The 139 projection gaps are classified as debt only; no projection source/output was repaired or copied.",
-    "The selector DRIFT remains BLOCKED_PHYSICAL_DRIFT; no broad rediscovery or repair was performed.",
-    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and was not inspected."
+    "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
+    "Accept the seven-file PC derivative as PASS_PC_PROMOTION_READINESS while preserving all legitimately blocked target truth.",
+    "Do not repair the selector DRIFT or the 139 projection-MISSING records in this lane.",
+    "Do not treat Atlasfin recipe similarity or Tablet similarity as semantic proof.",
+    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and uninspected."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/RESOLUTION.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/REUSE.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/REGISTRATION_PROPOSALS.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/BLOCKED.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/PROJECTION_DEBT.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/MANIFEST.json",
-    "prisma-html/governance/visual-promotion/promotion-readiness/pc/SUMMARY.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/LOG.md"
   ],
   "validations": [
-    "PC_RESOLUTION_ACCOUNTING: PASS:827",
-    "PC_TARGET_UNIQUENESS: PASS:827",
-    "IMMUTABLE_PC_CERTIFICATION_INPUT: PASS:827",
-    "SOURCE_RECORD_SHA256_CARRY_FORWARD: PASS:827",
-    "CLOSED_VOCABULARY_PARITY: PASS",
-    "SUBSET_PARITY: PASS:REUSE=0,REGISTRATION=0,BLOCKED=827,PROJECTION_DEBT=139",
+    "WORK_BRANCH_HEAD: PASS:bce748abc169b241627f77b31f5050d22753312b",
+    "WORK_BRANCH_DELTA: PASS:7_FILES_OWNED_ROOT_ONLY",
+    "CERTIFIED_GLOBAL_CORPUS_COUNT: PASS:2097",
+    "CERTIFIED_PC_INPUT_COUNT: PASS:827",
+    "RESOLUTION_COUNT: PASS:827",
+    "TARGET_UNIQUENESS: PASS:827_UNIQUE",
+    "SOURCE_RECORD_SHA256_EQUALITY: PASS:827/827",
+    "SUBSET_EQUALITY_REUSE: PASS:0",
+    "SUBSET_EQUALITY_REGISTRATION_PROPOSALS: PASS:0",
+    "SUBSET_EQUALITY_BLOCKED: PASS:827",
+    "SUBSET_EQUALITY_PROJECTION_DEBT: PASS:139",
     "MANIFEST_ACCOUNTING: PASS",
-    "WORK_BRANCH_DIFF_ISOLATION: PASS:7_PATHS_ONLY",
-    "SELECTOR_DRIFT_PRESERVED: PASS:TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
-    "PROJECTION_MISSING_CLASSIFICATION: PASS:139_CANONICAL_PROJECTION_REQUIRED_MISSING",
-    "CANONICAL_VALIDATOR_CONTRACT_PARITY: PASS",
-    "CANONICAL_PYTHON_ENTRYPOINT_EXECUTED_IN_CONNECTOR_RUNTIME: false",
+    "CLOSED_VOCABULARY: PASS",
+    "AUTHORITY_QUALIFIED_EVIDENCE_REFS: PASS",
+    "SEMANTIC_MUTATION_COUNT: PASS:0",
+    "KNOWN_PHYSICAL_PARTITION: PASS:826_CURRENT+1_DRIFT",
+    "KNOWN_PROJECTION_PARTITION: PASS:688_CURRENT+139_MISSING",
+    "SELECTOR_DRIFT_PRESERVATION: PASS",
     "MATERIALITY_CATALOG_INSPECTED: false",
     "PRODUCT_RUNTIME_MUTATION_PERFORMED: false",
-    "CANONICAL_AUTHORITY_MUTATION_PERFORMED: false"
+    "CANONICAL_AUTHORITY_MUTATION_PERFORMED: false",
+    "PASS_PC_PROMOTION_READINESS: PASS"
   ],
   "unresolved": [
-    "The one certified PC physical selector DRIFT remains intentionally blocked evidence.",
-    "The 139 canonical projection-required gaps remain intentionally unrepaired projection debt.",
-    "All 827 PC targets remain non-promotable at this lane because current authority does not prove complete semantic/binding/application registration authority."
+    "All 827 PC targets remain legitimately blocked from canonical promotion under current authority; this is valid readiness accounting, not a lane defect.",
+    "The known selector DRIFT remains unresolved by design.",
+    "The 139 missing canonical projections remain classified debt and unrepaired by design."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Chat 6 should consume chat2/canonical-promotion-readiness-pc-20260912@bce748abc169b241627f77b31f5050d22753312b directly, re-run its independent exact-head promotion_readiness.py validation/composition gate, and preserve the blocked/debt truth rather than repairing it.",
+  "nextAction": "Chat 6 may consume chat2/canonical-promotion-readiness-pc-20260912@bce748abc169b241627f77b31f5050d22753312b and the handoff.promotionReadiness PASS receipt for canonical composition. Chat 2 requires no further action unless Chat 6 proves an exact-head validation defect.",
   "handoff": {
-    "readiness": "BLOCKED",
+    "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
     "certificationBranch": "chat2/pc-corpus-cert-20260904",
     "certificationHead": "8cc979c141000fcedabf832f16468a6ee3e328e2",
@@ -87,23 +91,14 @@
       "expectedInputCount": 827,
       "resolvedInputCount": 827,
       "outputRoot": "prisma-html/governance/visual-promotion/promotion-readiness/pc",
-      "outputFiles": [
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/RESOLUTION.jsonl",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/REUSE.jsonl",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/REGISTRATION_PROPOSALS.jsonl",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/BLOCKED.jsonl",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/PROJECTION_DEBT.jsonl",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/MANIFEST.json",
-        "prisma-html/governance/visual-promotion/promotion-readiness/pc/SUMMARY.md"
-      ],
       "requiredOutputCount": 7,
       "materializedOutputCount": 7,
+      "resolutionCount": 827,
+      "uniqueTargetCount": 827,
       "readyExistingAuthorityReuse": 0,
       "readyCanonicalRegistration": 0,
       "legitimatelyBlocked": 827,
-      "notApplicable": 0,
       "projectionDebtCount": 139,
-      "physicalDriftCount": 1,
       "zeroLossValidated": true,
       "targetUniquenessValidated": true,
       "sourceRecordSha256Validated": true,
@@ -111,23 +106,16 @@
       "manifestAccountingValidated": true,
       "vocabularyValidated": true,
       "authorityEvidenceValidated": true,
-      "writeOwnershipValidated": true,
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalPromotionPerformed": false,
-      "canonicalValidator": {
-        "contractPath": "prisma-html/tools/visual_promotion/promotion_readiness.py",
-        "contractParityValidated": true,
-        "pythonEntrypointExecutedInConnectorRuntime": false,
-        "independentChat6ExactHeadValidationRequired": true
+      "selectorDriftPreserved": {
+        "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
+        "targetIndexSelector": ".supplier-readable-v07",
+        "expandedSelector": ".supplier-readable-v07 *",
+        "decision": "BLOCKED_PHYSICAL_DRIFT"
       },
-      "knownBlockedTruth": {
-        "physicalSelectorDriftTargets": [
-          "TGT.CENSUS.PC.097AB2F857F353CA4288.V1"
-        ],
-        "projectionRequiredMissingCount": 139,
-        "unresolvedSemanticAuthorityCount": 827
-      },
+      "projectionMissingPreserved": 139,
       "defects": []
     }
   }
