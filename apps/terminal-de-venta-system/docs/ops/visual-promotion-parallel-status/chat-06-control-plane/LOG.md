@@ -383,3 +383,13 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Fast-forwarded Chat 6 canonical readiness branch to the exact current main without force and without touching product/runtime, certified corpus, canonical authority, or any worker-owned path.
 - Control Plane remains fail-closed and intake-ready. It will accept only exact worker-owned bytes with valid receipt, branch/head, source hashes, zero-loss accounting, vocabulary and authority evidence.
 - Coordination truth clarified: worker chats require one owner activation turn each; Chat 6 requires a later owner turn to consume their receipts. Repository mailboxes remove copy/paste relays but do not create background execution.
+
+### 2026-09-14T13:48:00-06:00 — VALIDATION / FAIL-CLOSED ON MOBILE
+- Canonical main rechecked: `d4b451cc92c597d02cfc65094922bd2c5dd17c12` (unchanged).
+- Accepted Tablet at `535b4f002a830a84c6dfd4b166b032adaf91409a`: 929/929, exact source hashes, exact declared blobs, 929 blocked, projection debt=2.
+- Accepted PC at `bce748abc169b241627f77b31f5050d22753312b` after independent raw-Git-blob audit against certified corpus `af6b8a7...`: 827/827, missing=0, extra=0, duplicates=0, source hash mismatches=0, 826 semantic-authority blocks + 1 physical drift, projection debt=139 exact. This closes the previously missing deep PC intake.
+- Accepted Shared UI at `3b7f7e285867818bf88708ae6e28df6c5aeec763`: 70/70, source hashes exact, declared blobs exact, decision partition 40/19/11.
+- Accepted Atlasfin evidence at `4ffbf95450de6f19adfa5ed2e5c084edd45ca36d`: 8 reference rows, 0 semantic coalescing rows, 3 visual-only equivalence rows, coalescing forbidden, Materiality uninspected.
+- Mobile mailbox remains `WORKING` with receipt `IN_PROGRESS_SOURCE_HASH_CORRECTION` and stale declared head `a5f3978...`. Actual branch is `bf99bf782c7b295ee8badd936a4b9078e751ecdf`.
+- Independently audited current Mobile bytes at `bf99bf7...`: 271/271 unique, source hash mismatches=0, blocked subset exact, projection debt=138 exact, manifest zero-loss fields correct. This evidence does **not** substitute for the owner lane's required `PASS_MOBILE_PROMOTION_READINESS` receipt.
+- Global composition remains forbidden until 5/5 accepted receipts. No composed artifacts, canonical registration, product/runtime mutation, projection repair, Materiality inspection, canonical ID minting or GVAE APPLY occurred.
