@@ -238,6 +238,11 @@ class PromotionReadinessTests(unittest.TestCase):
         self.assertEqual(plan["blocked"], sum(SURFACE_COUNTS.values()))
         self.assertEqual(plan["readyCanonicalRegistration"], 0)
         self.assertFalse(plan["canonicalMutationAuthorized"])
+        self.assertRegex(plan["resolutionCorpusDigest"], r"^[0-9a-f]{64}$")
+        plan_schema = json.loads((module.READINESS_ROOT / "contracts" / "canonical-promotion-plan.schema.json").read_text(encoding="utf-8"))
+        self.assertFalse(plan_schema["additionalProperties"])
+        self.assertTrue(set(plan).issubset(set(plan_schema["properties"])))
+        self.assertTrue(set(plan_schema["required"]).issubset(set(plan)))
 
 
 if __name__ == "__main__":
