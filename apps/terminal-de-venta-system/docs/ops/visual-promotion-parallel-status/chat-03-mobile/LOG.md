@@ -133,3 +133,23 @@ No updates published yet.
 - Result published as `BLOCKED_EXECUTION_ENVIRONMENT_NO_CANONICAL_RUNNER`, not `PASS_MOBILE_PROMOTION_READINESS`.
 - Required continuation: resume from the same work head in an executable checkout/runner, deterministically generate the 271 full rows from the immutable corpus, derive subsets, run `promotion_readiness.py`, then publish PASS only if every zero-loss/source-hash/vocabulary/subset/manifest check passes.
 - Materiality Catalog remains uninspected. Product/runtime mutation = false. Projection repair = false. Global authority mutation = false. GVAE APPLY = false.
+
+## 2026-09-14T13:45:00-06:00 — BLOCKER_CLEARED / VALIDATION / HANDOFF / COMPLETE
+
+- Resumed from the real Mobile work head and did not reset to the stale mailbox head.
+- Materialized the complete `RESOLUTION.jsonl` at exactly `271` rows. A read-back audit then found a materialization-only SHA-256 defect in 137 DRIFT rows; those 137 `sourceRecordSha256` values were corrected without changing target IDs, semantic decisions, projection classifications, authority gaps or any canonical meaning.
+- Final work head: `bf99bf782c7b295ee8badd936a4b9078e751ecdf`. Current canonical main remained `d4b451cc92c597d02cfc65094922bd2c5dd17c12`.
+- Final branch scope PASS: `17 ahead / 0 behind`; exactly seven changed files, all under `prisma-html/governance/visual-promotion/promotion-readiness/mobile/**`.
+- Final zero-loss accounting PASS: `271` resolution rows, `271` unique targets, missing `0`, extra `0`, duplicates `0`.
+- Certified source-hash validation PASS: `271/271` `sourceRecordSha256` values reproduce the immutable Mobile certified NORMALIZED records; mismatches `0`. Certified Mobile NORMALIZED blob: `cc474d39d2027371921d8aba19ee02911c96b0f2`.
+- Projection accounting PASS: `133 CURRENT + 138 DRIFT`; DRIFT remains `137 AMBIGUOUS + 1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED` for `TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1`.
+- Readiness decisions remain intentionally conservative: `271 BLOCKED_MISSING_SEMANTIC_AUTHORITY`, `0 READY_REUSE_EXISTING_AUTHORITY`, `0 READY_FOR_CANONICAL_REGISTRATION`. No semantic authority, Identity recipe, binding, application layer or repair direction was invented.
+- Exact current `promotion_readiness.py::validate_surface` rule set replay against the final branch bytes PASS: `surfaceKey=mobile`, `inputCount=271`, `legitimatelyBlocked=271`, `projectionDebtCount=138`, resolution digest `f3cd9b87583b0a2a65a9c530b52ee6f7c39b198ff685309e929ab97ea2154f8a`.
+- Derived subset validation PASS: `REUSE=0`, `REGISTRATION_PROPOSALS=0`, `BLOCKED=271`, `PROJECTION_DEBT=138`; target sets exactly match the canonical derivation from RESOLUTION.
+- Manifest accounting PASS for all fields enforced by the canonical readiness validator.
+- Output Git blob SHAs: RESOLUTION `3ab06c9bca25301dd292463ac3185386f968ef3e`; REUSE `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`; REGISTRATION_PROPOSALS `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`; BLOCKED `9550610e2e8586869fa1082e24d8cb2679e8c2a5`; PROJECTION_DEBT `3d6d42d468419e2e3fa1381845a9f19178633e29`; MANIFEST `c06af09636e95b4e7eeba0916bd60d7135150cfc`; SUMMARY `51c072d5c95d544cdcf46a903df168d3575a15f2`.
+- PR #553 executable-checkout evidence at the final head: CI PASS, ForgeOS Quality Gate PASS, Sync Sentinel PASS. VISCORE1 fails only at its final deterministic `prisma-html/FILES_MANIFEST.json` equality gate because the seven new Mobile outputs are intentionally absent from that global manifest; Chat 3 is explicitly forbidden to mutate that global path, so this is not converted into a lane defect.
+- Prohibited-action guard PASS: Materiality Catalog uninspected; product/runtime mutation=false; canonical authority mutation=false; projection repair=false; GVAE APPLY=false.
+- Final lane result: `PASS_MOBILE_PROMOTION_READINESS`.
+- Receipt published in `handoff.promotionReadiness`; state is `READY_FOR_INTEGRATION`. Chat 6 may consume the receipt directly. No owner relay or user action is required.
+
