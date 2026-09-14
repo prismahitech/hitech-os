@@ -5,17 +5,17 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "WAITING_EXTERNAL",
-  "updatedAt": "2026-09-12T22:04:32Z",
+  "updatedAt": "2026-09-14T13:48:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
   "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "summary": "Chat 6 is active as CANONICAL_PROMOTION_READINESS_COMPOSER on canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. The control-plane tooling from PR #552 is merged and current-head Authority Mesh remains PASS. Chat 6 work branch is now fast-forward aligned to current main. Worker lanes 1-5 are provisioned but still publish no handoff.promotionReadiness receipts, so final composition remains correctly fail-closed.",
+  "summary": "Chat 6 resumed CANONICAL_PROMOTION_READINESS_RESOLUTION on unchanged canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Independent intake now ACCEPTS Tablet, PC, Shared UI and Atlasfin evidence at their exact worker heads. Mobile remains the only fail-closed barrier: its mailbox still publishes IN_PROGRESS_SOURCE_HASH_CORRECTION at stale declared head a5f3978..., while the work branch has advanced to bf99bf7.... Chat 6 independently verified the new Mobile bytes as 271/271 with zero source-hash mismatch, but will not infer PASS or compose until Chat 3 publishes the required PASS_MOBILE_PROMOTION_READINESS receipt on the exact accepted head.",
   "blockers": [
     {
-      "scope": "parallel-worker-handoffs",
-      "code": "PROMOTION_READINESS_WORKER_HANDOFFS_MISSING",
-      "detail": "Current-phase handoff.promotionReadiness receipts are absent for all five worker lanes. Their canonical work branches exist and remain at the phase base until each worker chat is activated.",
-      "impact": "Chat 6 cannot legally compose the final plan without owner-published worker evidence; it will not fabricate, infer, or cross-write another lane."
+      "scope": "chat3-mobile-promotion-readiness",
+      "code": "MOBILE_PASS_RECEIPT_NOT_PUBLISHED",
+      "detail": "Chat 3 STATUS.json remains WORKING and handoff.promotionReadiness.result=IN_PROGRESS_SOURCE_HASH_CORRECTION with declared workHead a5f3978069da8e2c81df26957cd9fe683db6d08d, while the actual work branch is bf99bf782c7b295ee8badd936a4b9078e751ecdf.",
+      "impact": "Global composition remains fail-closed. The actual Mobile branch bytes independently pass 271/271 target, source-hash, subset and manifest checks, but repository protocol requires the owner lane to publish PASS_MOBILE_PROMOTION_READINESS before Chat 6 may accept the lane."
     }
   ],
   "findings": [
@@ -87,7 +87,15 @@
     "Current-head AutoMesh run 34696570043 is independently verified PASS on main d4b451cc92c597d02cfc65094922bd2c5dd17c12; artifact 10298622594 digest sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2.",
     "All five provisioned worker branches currently compare identical to main (ahead=0, behind=0). No worker evidence has been fabricated or written by Chat 6.",
     "Current worker check at 2026-09-12T22:04:32Z: all five canonical readiness branches still point to main d4b451cc92c597d02cfc65094922bd2c5dd17c12 and all five mailboxes still lack handoff.promotionReadiness.",
-    "Chat 6 canonical work branch was fast-forwarded without force to current main d4b451cc92c597d02cfc65094922bd2c5dd17c12; no worker-owned, product/runtime, canonical authority or corpus bytes were changed."
+    "Chat 6 canonical work branch was fast-forwarded without force to current main d4b451cc92c597d02cfc65094922bd2c5dd17c12; no worker-owned, product/runtime, canonical authority or corpus bytes were changed.",
+    "2026-09-14 intake: canonical main is unchanged at d4b451cc92c597d02cfc65094922bd2c5dd17c12; no main drift classification is required.",
+    "Tablet receipt reconfirmed PASS_TABLET_PROMOTION_READINESS at exact branch head 535b4f002a830a84c6dfd4b166b032adaf91409a. All seven declared output blob SHAs match actual Git blobs; independent raw-blob audit reproduces 929/929 unique targets, sourceRecordSha256 mismatch=0, decision partition 924/1/2/2 and projection debt=2.",
+    "PC receipt independently accepted at exact branch head bce748abc169b241627f77b31f5050d22753312b. Commit parent is exact phase main; delta is exactly seven pc/** outputs. Raw certified-corpus vs RESOLUTION audit reproduces 827/827 unique targets, missing=0, extra=0, duplicate=0, sourceRecordSha256 mismatch=0, 826 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_PHYSICAL_DRIFT, 688 CURRENT + 139 CANONICAL_PROJECTION_REQUIRED_MISSING, and exact 139-row projection-debt parity.",
+    "Shared UI receipt reconfirmed PASS_SHARED_UI_PROMOTION_READINESS at exact head 3b7f7e285867818bf88708ae6e28df6c5aeec763. All declared output blobs match actual Git blobs; independent audit reproduces 70/70, source hashes exact, blocked subset exact and 40/19/11 decision partition.",
+    "Atlasfin receipt reconfirmed PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE at exact head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d. All six declared blobs match actual Git blobs; evidence remains 8 reference rows, 0 Identity recipe reuse candidates, 0 semantic coalescing rows, 3 VISUAL_SIMILARITY_ONLY rows, canonicalCoalescingAllowed=false, Materiality uninspected.",
+    "Mobile actual work branch advanced to bf99bf782c7b295ee8badd936a4b9078e751ecdf with a single latest commit correcting RESOLUTION.jsonl. Independent raw-blob audit now reproduces 271/271 unique targets, missing=0, extra=0, sourceRecordSha256 mismatch=0, BLOCKED subset exact, projection-debt subset exact, 133 CURRENT + 137 AMBIGUOUS + 1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED, and manifest zero-loss fields. This is byte evidence only, not an accepted worker receipt.",
+    "Materiality Catalog remained uninspected. No product/runtime mutation, projection repair, canonical authority mutation, canonical ID minting or GVAE APPLY was performed by Chat 6.",
+    "Factory Ledger rule remains ADVANCE, not rebuild: visual.generic_application_engine_v1 is DONE/SOURCE_READY/doNotRebuild and current phase tooling is reused."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -427,17 +435,45 @@
       "result": "PASS_CLEAN_START",
       "evidence": "Chats 1-5 canonical promotion-readiness branches",
       "details": "All five branches are identical to current main; ahead=0/behind=0. Chat 6 performed no cross-lane writes."
+    },
+    {
+      "name": "Tablet worker intake revalidation",
+      "result": "PASS_ACCEPTED",
+      "evidence": "head 535b4f002a830a84c6dfd4b166b032adaf91409a; certified corpus blob af6b8a7bea4be94fa0e0e42354d404d74c183083",
+      "details": "929/929; source hashes exact; declared output blobs exact; owned-path delta only."
+    },
+    {
+      "name": "PC worker independent intake",
+      "result": "PASS_ACCEPTED",
+      "evidence": "head bce748abc169b241627f77b31f5050d22753312b; RESOLUTION/BLOCKED blob f1eaba41aff297fdd544805e8fafc8a4897f6d47",
+      "details": "827/827; source hashes exact; zero-loss; vocabulary/proposal rules checked; projection debt 139 exact; one physical-drift selector conflict preserved."
+    },
+    {
+      "name": "Shared UI worker intake revalidation",
+      "result": "PASS_ACCEPTED",
+      "evidence": "head 3b7f7e285867818bf88708ae6e28df6c5aeec763",
+      "details": "70/70; source hashes exact; declared blobs exact; blocked subset parity exact."
+    },
+    {
+      "name": "Atlasfin worker intake revalidation",
+      "result": "PASS_ACCEPTED_SUPPORT_ONLY",
+      "evidence": "head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d",
+      "details": "8 reference rows; 0 semantic coalescing rows; 3 visual-only rows; no visual-only coalescing; Materiality false."
+    },
+    {
+      "name": "Mobile current branch byte audit",
+      "result": "PASS_BYTES_PENDING_OWNER_RECEIPT",
+      "evidence": "actual branch head bf99bf782c7b295ee8badd936a4b9078e751ecdf; RESOLUTION blob 3ab06c9bca25301dd292463ac3185386f968ef3e",
+      "details": "271/271; source hashes exact; subsets exact; manifest exact. Mailbox still IN_PROGRESS at stale declared head a5f3978..., so lane is not accepted."
     }
   ],
   "unresolved": [
-    "Implement and test exact-head/hash-pinned certification intake plus separate semantic review grouping.",
-    "Independently verify all five exact certification handoffs and original worker/bridge provenance.",
-    "Generate and validate the 2,097-record global corpus outputs.",
-    "Assemble accepted bytes from then-current main, refresh FILES_MANIFEST once, run final gates, open one corpus-only PR and merge only if all required checks are green."
+    "Chat 3 must publish handoff.promotionReadiness.result=PASS_MOBILE_PROMOTION_READINESS on the exact Mobile branch head that owns the validated bytes.",
+    "After the Mobile PASS receipt is independently accepted, compose the exact 2,097-record corpus and canonical promotion plan; until then composition is forbidden."
   ],
-  "needsUserAction": true,
-  "userActionRequested": "Activate each of the five worker chats with the same message: \"Continue with your work. Re-read the canonical prompt and your own mailbox, then execute your current Chat assignment.\" Then return to Chat 6 after they finish. No chat number, per-chat prompt copy, or receipt relay is needed.",
-  "nextAction": "Remain ready for deterministic intake. Owner must activate each existing worker chat once with the same generic continuation message. When their five handoff.promotionReadiness receipts exist, Chat 6 will read the deterministic mailboxes/branches directly, validate exact head/path/hash/zero-loss/accounting/authority evidence, reject any invalid lane, and compose CANONICAL_PROMOTION_PLAN only after all five are accepted.",
+  "needsUserAction": false,
+  "userActionRequested": null,
+  "nextAction": "Fail-closed on Mobile only. On the next Chat 6 turn, re-read Chat 3 STATUS.json and actual work-branch head. If and only if PASS_MOBILE_PROMOTION_READINESS is published and its head/bytes match, accept the fifth receipt and immediately run deterministic global composition.",
   "handoff": {
     "ready": false,
     "workBranch": "chat6/candidate-corpus-cert-20260904",
@@ -875,86 +911,60 @@
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "CANONICAL_PROMOTION_READINESS_COMPOSER",
-      "result": "WAITING_WORKER_HANDOFFS",
+      "result": "WAITING_MOBILE_PROMOTION_READINESS",
       "canonicalMain": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "antiReworkProposal": "PASS_ANTI_REWORK_GATE",
-      "antiReworkMutation": "PASS_ANTI_REWORK_GATE",
+      "corpusInputCount": 2097,
+      "acceptedWorkerReceipts": 4,
+      "requiredWorkerReceipts": 5,
+      "accepted": {
+        "1": {
+          "result": "PASS_TABLET_PROMOTION_READINESS",
+          "head": "535b4f002a830a84c6dfd4b166b032adaf91409a",
+          "accepted": true
+        },
+        "2": {
+          "result": "PASS_PC_PROMOTION_READINESS",
+          "head": "bce748abc169b241627f77b31f5050d22753312b",
+          "accepted": true
+        },
+        "4": {
+          "result": "PASS_SHARED_UI_PROMOTION_READINESS",
+          "head": "3b7f7e285867818bf88708ae6e28df6c5aeec763",
+          "accepted": true
+        },
+        "5": {
+          "result": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
+          "head": "4ffbf95450de6f19adfa5ed2e5c084edd45ca36d",
+          "accepted": true
+        }
+      },
+      "pending": {
+        "3": {
+          "requiredResult": "PASS_MOBILE_PROMOTION_READINESS",
+          "mailboxResult": "IN_PROGRESS_SOURCE_HASH_CORRECTION",
+          "mailboxDeclaredHead": "a5f3978069da8e2c81df26957cd9fe683db6d08d",
+          "actualBranchHead": "bf99bf782c7b295ee8badd936a4b9078e751ecdf",
+          "independentByteAudit": "PASS_BYTES_PENDING_OWNER_RECEIPT",
+          "resolutionCount": 271,
+          "uniqueTargetCount": 271,
+          "sourceRecordHashMismatches": 0,
+          "projectionDebtCount": 138
+        }
+      },
+      "globalCompositionAuthorized": false,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutation": false,
+      "canonicalAuthorityMutation": false,
+      "projectionRepair": false,
+      "gvaeApply": false,
       "authorityMesh": {
         "runId": 34696570043,
-        "artifactId": 10298622594,
-        "artifactDigest": "sha256:e8ddc870f098d5e599b4a3ef4d65fecf78fb7bc8a5887ba295f927a8c6a8ffb2",
-        "requestDigest": "61b80f5016bfcf310b1425025b312e38ec4675bed0267d9bea4d0fc97319049c",
         "repoHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
         "status": "PASS_COMPOSED_AUTHORITY_MESH",
         "requiredAuthorityCoveragePct": 100,
         "blockers": 0,
-        "layerMapPresent": true
-      },
-      "corpusInputCount": 2097,
-      "materialityCatalogInspected": false,
-      "productRuntimeMutation": false,
-      "canonicalAuthorityMutation": false,
-      "phaseSetup": {
-        "status": "MERGED_READY_WAITING_WORKER_HANDOFFS",
-        "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-        "canonicalPromptUpdated": true,
-        "statusIndexUpdated": true,
-        "statusContractUpdated": true,
-        "disjointOwnershipDefined": true,
-        "schemasCreated": true,
-        "validatorComposerCreated": true,
-        "certifiedCorpusModified": false,
-        "productRuntimeMutation": false,
-        "canonicalAuthorityMutation": false
-      },
-      "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-      "antiReworkCurrentHead": "PASS_BY_UNCHANGED_CANONICAL_AUTHORITY_BYTES_AND_ADVANCE_ACTION",
-      "workersReadyToStart": true,
-      "workerReceiptsPresent": 0,
-      "toolingPullRequest": 552,
-      "toolingPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/552",
-      "toolingHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
-      "toolingChangedPaths": [
-        "prisma-html/tools/visual_promotion/promotion_readiness.py",
-        "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py"
-      ],
-      "toolingValidationState": "MERGED_GREEN_CURRENT_HEAD_MESH_PASS",
-      "manifestArtifactId": 10298204165,
-      "manifestArtifactDigest": "sha256:4d038f22afe5c0852257122f3c53133b31dbb39c322844b6fc7a1921a23dfbfb",
-      "manifestSha256": "001b60789c73f3e60eed0a99476d9e4edd52ceefc9942e44bee14677560d4272",
-      "manifestGitBlobSha": "f7ab3d42653c65ff9a2d87350bedc3dbe9e6510a",
-      "manifestExactMatch": true,
-      "toolingMerged": true,
-      "toolingFinalHead": "9ff0629c0fa74d0b6586fd85555338b757474124",
-      "toolingMergedMain": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "mergedTree": "00df3cf4b148df1f64ca7d6bd498104d746ba51c",
-      "exactHeadGateRuns": {
-        "CI": 34696430001,
-        "VISCORE1": 34696430023,
-        "ForgeOS": 34696430024,
-        "SyncSentinel": 34696430039
-      },
-      "staleRevalidation": {
-        "runId": 34696527763,
-        "result": "BLOCKED_INVALID_PRIOR_AUTHORITY",
-        "reason": "JSON_OBJECT_REQUIRED:tasks/promotion-readiness-composer/authority_mesh/reports/LAYERS_MAP.json"
-      },
-      "workerReceiptsRequired": 5,
-      "missingWorkerReceipts": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "workerBranchesProvisioned": true,
-      "workerBranchBase": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "workerBranches": {
-        "1": "chat1/canonical-promotion-readiness-tablet-20260912",
-        "2": "chat2/canonical-promotion-readiness-pc-20260912",
-        "3": "chat3/canonical-promotion-readiness-mobile-20260912",
-        "4": "chat4/canonical-promotion-readiness-shared-ui-20260912",
-        "5": "chat5/canonical-promotion-readiness-atlasfin-20260912"
+        "layerMapPresent": true,
+        "note": "Current only for unchanged pre-plan scope/head; a fresh task-exact Mesh is required after final CANONICAL_PROMOTION_PLAN if scope changes before canonical mutation."
       }
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
