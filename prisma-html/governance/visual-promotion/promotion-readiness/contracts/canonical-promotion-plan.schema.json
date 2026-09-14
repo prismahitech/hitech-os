@@ -20,6 +20,7 @@
     "safeExactRegistrationProposalKeys",
     "blockedTargets",
     "crossSurfaceSemanticGroups",
+    "resolutionCorpusDigest",
     "canonicalMutationAuthorized",
     "productRuntimeMutationAuthorized"
   ],
@@ -101,6 +102,10 @@
     },
     "productRuntimeMutationAuthorized": {
       "const": false
+    },
+    "resolutionCorpusDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     }
   }
 }
