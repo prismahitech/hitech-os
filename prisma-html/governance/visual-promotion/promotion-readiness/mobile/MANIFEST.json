@@ -2,6 +2,8 @@
   "schema": "prisma.visual-promotion.promotion-readiness-manifest.v1",
   "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
   "surfaceKey": "mobile",
+  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+  "certifiedCorpusManifestBlob": "6246e92d7b38750d45b2d74e6adf1b61fcd43a56",
   "inputCount": 271,
   "resolutionCount": 271,
   "uniqueTargetCount": 271,
