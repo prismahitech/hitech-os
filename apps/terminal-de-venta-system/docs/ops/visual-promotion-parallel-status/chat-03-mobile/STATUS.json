@@ -4,16 +4,13 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-13T16:45:00-06:00",
+  "state": "WORKING",
+  "updatedAt": "2026-09-14T13:37:04-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
-  "workHead": "b666e1b3666ae1ce24a71cce25d994ba74a24682",
-  "summary": "Chat 3 recovered the complete certified Mobile target/hash mapping and deterministically assembled the intended 271-row promotion-readiness resolution locally. SUMMARY.md is now present and branch scope remains confined to the seven owned Mobile readiness outputs. The remaining hard stop is transport-only: the available GitHub connector can replace RESOLUTION.jsonl only by receiving the complete file contents inline and has no local-file upload/append bridge, while the final resolution is roughly 300 KB. The repository copy therefore still contains only the first 133 CURRENT rows, so PASS_MOBILE_PROMOTION_READINESS is intentionally not declared.",
-  "blockers": [
-    "ATOMIC_WRITE_BRIDGE: local deterministic assembly has all 271 exact targetId/sourceRecordSha256 pairs and a schema-valid 271-row resolution candidate, but this session cannot transfer the local generated file into GitHub as a file object. GitHub.update_file accepts only complete inline UTF-8 text and there is no append or local-file parameter.",
-    "CANONICAL_RESOLUTION_INCOMPLETE_IN_REPO: work branch RESOLUTION.jsonl remains 133 rows. Canonical promotion_readiness.py requires exactly 271 rows and therefore cannot PASS until the remaining 138 DRIFT rows are committed with exact certified hashes."
-  ],
+  "workHead": "a5f3978069da8e2c81df26957cd9fe683db6d08d",
+  "summary": "Chat 3 resumed from the real Mobile branch, materialized 271 RESOLUTION rows and aligned manifest provenance without leaving the seven owned Mobile outputs. Read-back validation then caught 137 sourceRecordSha256 mismatches confined to DRIFT rows 135-271, caused by the in-session hashing implementation rather than semantic authority drift. PASS is not declared; correction and canonical validation remain in progress.",
+  "blockers": [],
   "findings": [
     "Canonical main remains d4b451cc92c597d02cfc65094922bd2c5dd17c12 and the phase remains CANONICAL_PROMOTION_READINESS_RESOLUTION.",
     "Exact Mobile accounting remains 271 unique certified targets = 133 CURRENT + 138 DRIFT.",
@@ -22,13 +19,16 @@
     "SUMMARY.md was added on the owned work branch. The seven required output filenames are now present, but RESOLUTION.jsonl is incomplete at 133 rows.",
     "Existing BLOCKED.jsonl with 271 target IDs and PROJECTION_DEBT.jsonl with 138 target IDs are valid subset representations for promotion_readiness.py because the canonical validator checks subset target sets via _target_set rather than requiring full resolution rows.",
     "A transient connector transport test briefly replaced RESOLUTION.jsonl with an invalid sentinel, but it was immediately restored byte-for-byte to prior blob 93265c86c46de1aaba4203482be300d39178ce37 in commit b666e1b3666ae1ce24a71cce25d994ba74a24682. No invalid content remains in the branch.",
-    "Latest CI on SUMMARY commit 8ea6e83eb3b48caeae224aa1704e27526854a1e4: CI PASS, ForgeOS Quality Gate PASS, Sync Sentinel PASS. VISCORE failed only at deterministic committed FILES_MANIFEST equality after all earlier steps passed; Chat 3 is not authorized to mutate that global manifest."
+    "Latest CI on SUMMARY commit 8ea6e83eb3b48caeae224aa1704e27526854a1e4: CI PASS, ForgeOS Quality Gate PASS, Sync Sentinel PASS. VISCORE failed only at deterministic committed FILES_MANIFEST equality after all earlier steps passed; Chat 3 is not authorized to mutate that global manifest.",
+    "2026-09-14 continuation: work branch advanced to a5f3978069da8e2c81df26957cd9fe683db6d08d with RESOLUTION.jsonl at 271 rows and MANIFEST schema provenance fields present.",
+    "Read-back validation with a corrected SHA-256 implementation proved 137 sourceRecordSha256 mismatches at RESOLUTION lines 135-271. Lines 1-134 match certified Mobile NORMALIZED.jsonl source hashes exactly."
   ],
   "decisions": [
     "Do not declare PASS until the repository RESOLUTION.jsonl itself contains all 271 exact certified records and canonical validation proves zero-loss/source-hash/subset/manifest accounting.",
     "Do not invent semantic, identity, binding, application-layer or projection repair authority to reduce the blocked count.",
     "Do not mutate Materiality Catalog, product/runtime, RIFAT, global manifests or another Chat mailbox to work around the connector limitation.",
-    "Preserve the exact current 133-row RESOLUTION blob and the locally assembled 271-row candidate as continuation evidence rather than risk another lossy inline transport attempt."
+    "Preserve the exact current 133-row RESOLUTION blob and the locally assembled 271-row candidate as continuation evidence rather than risk another lossy inline transport attempt.",
+    "Treat the 137 source-hash mismatches as a materialization defect only; do not alter semantic decisions, projection classifications, target IDs, or authority gaps while correcting them."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/promotion-readiness/mobile/MANIFEST.json",
@@ -43,20 +43,21 @@
     "PASS_BRANCH_SCOPE: compare d4b451cc92c597d02cfc65094922bd2c5dd17c12...chat3/canonical-promotion-readiness-mobile-20260912 is ahead only and changes exactly seven files, all under the owned Mobile readiness root.",
     "PASS_LOCAL_ASSEMBLY_ACCOUNTING: recovered exact 271 unique targetId/sourceRecordSha256 pairs and generated 271 resolution records with 133 CURRENT, 137 AMBIGUOUS and 1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED.",
     "PASS_PROHIBITED_ACTION_GUARD: Materiality Catalog uninspected; product/runtime mutation false; canonical/global authority mutation false; projection repair false; GVAE APPLY false.",
-    "BLOCKED_CANONICAL_SURFACE_VALIDATION: repository RESOLUTION.jsonl count is 133, expected 271."
+    "BLOCKED_CANONICAL_SURFACE_VALIDATION: repository RESOLUTION.jsonl count is 133, expected 271.",
+    "FAIL_SOURCE_HASH_READBACK: 271 resolution rows / 271 certified Mobile rows / target order exact / 271 unique targets, but 137 sourceRecordSha256 values mismatch certified source. No PASS until corrected."
   ],
   "unresolved": [
-    "Transfer the already assembled remaining 138 exact DRIFT resolution records into the repository RESOLUTION.jsonl without transcription loss.",
-    "Execute prisma-html/tools/visual_promotion/promotion_readiness.py against the resulting branch and publish PASS only if Mobile returns status PASS with inputCount 271 and projectionDebtCount 138."
+    "Correct exactly the 137 mismatched sourceRecordSha256 values without changing any Mobile semantic decision or projection classification.",
+    "Execute the canonical promotion_readiness.py against the corrected branch and publish PASS only on exact success."
   ],
-  "needsUserAction": true,
-  "userActionRequested": "Provide an executable checkout/runner bridge for this branch, or run the prepared deterministic completion package against the local repo. No task rediscovery or semantic decision is required.",
-  "nextAction": "Materialize the deterministic 271-row RESOLUTION.jsonl in the work branch, run the canonical Mobile promotion-readiness validator, then publish PASS_MOBILE_PROMOTION_READINESS if and only if the validator passes.",
+  "needsUserAction": false,
+  "userActionRequested": null,
+  "nextAction": "Correct the 137 materialization hashes, re-read all 271 rows, run canonical validation, then publish the final Mobile receipt.",
   "handoff": {
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "MOBILE_PROMOTION_READINESS_RESOLVER",
-      "result": "BLOCKED_ATOMIC_RESOLUTION_TRANSPORT",
+      "result": "IN_PROGRESS_SOURCE_HASH_CORRECTION",
       "expectedResult": "PASS_MOBILE_PROMOTION_READINESS",
       "expectedInputCount": 271,
       "resolvedInputAccounting": {
@@ -67,11 +68,11 @@
         "projectionAuthorityReconciliationRequired": 1
       },
       "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
-      "workHead": "b666e1b3666ae1ce24a71cce25d994ba74a24682",
+      "workHead": "a5f3978069da8e2c81df26957cd9fe683db6d08d",
       "outputRoot": "prisma-html/governance/visual-promotion/promotion-readiness/mobile/",
       "requiredOutputCount": 7,
       "presentOutputCount": 7,
-      "resolutionRowsPresent": 133,
+      "resolutionRowsPresent": 271,
       "resolutionRowsRequired": 271,
       "canonicalValidationPassed": false,
       "materialityCatalogInspected": false,
