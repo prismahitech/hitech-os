@@ -4,20 +4,13 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "WAITING_EXTERNAL",
-  "updatedAt": "2026-09-14T13:48:00-06:00",
+  "state": "DONE",
+  "updatedAt": "2026-09-14T16:52:00-06:00",
   "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
   "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-  "workHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "summary": "Chat 6 resumed CANONICAL_PROMOTION_READINESS_RESOLUTION on unchanged canonical main d4b451cc92c597d02cfc65094922bd2c5dd17c12. Independent intake now ACCEPTS Tablet, PC, Shared UI and Atlasfin evidence at their exact worker heads. Mobile remains the only fail-closed barrier: its mailbox still publishes IN_PROGRESS_SOURCE_HASH_CORRECTION at stale declared head a5f3978..., while the work branch has advanced to bf99bf7.... Chat 6 independently verified the new Mobile bytes as 271/271 with zero source-hash mismatch, but will not infer PASS or compose until Chat 3 publishes the required PASS_MOBILE_PROMOTION_READINESS receipt on the exact accepted head.",
-  "blockers": [
-    {
-      "scope": "chat3-mobile-promotion-readiness",
-      "code": "MOBILE_PASS_RECEIPT_NOT_PUBLISHED",
-      "detail": "Chat 3 STATUS.json remains WORKING and handoff.promotionReadiness.result=IN_PROGRESS_SOURCE_HASH_CORRECTION with declared workHead a5f3978069da8e2c81df26957cd9fe683db6d08d, while the actual work branch is bf99bf782c7b295ee8badd936a4b9078e751ecdf.",
-      "impact": "Global composition remains fail-closed. The actual Mobile branch bytes independently pass 271/271 target, source-hash, subset and manifest checks, but repository protocol requires the owner lane to publish PASS_MOBILE_PROMOTION_READINESS before Chat 6 may accept the lane."
-    }
-  ],
+  "workHead": "86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
+  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION completed and merged. All five worker receipts were independently accepted; deterministic composition accounts for exactly 2,097/2,097 targets with reuse=0, canonicalRegistration=0, blocked=2,097 and notApplicable=0. PR #554 merged to canonical main 46c9032... with a tree byte-equivalent to the final green PR head. Post-merge CI/ForgeOS/Sync and fresh task-exact Authority Mesh all PASS. The phase stops truthfully at READY_FOR_CANONICAL_PROMOTION_INTEGRATION: no canonical registration, product/runtime mutation, Materiality fallback, projection repair or GVAE APPLY was authorized or performed.",
+  "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
     "Current Visual Control census and Target Index are reusable physical truth. DISCOVERY_ONLY is not UNDISCOVERED and broad recensus is not a legal shortcut.",
@@ -95,7 +88,20 @@
     "Atlasfin receipt reconfirmed PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE at exact head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d. All six declared blobs match actual Git blobs; evidence remains 8 reference rows, 0 Identity recipe reuse candidates, 0 semantic coalescing rows, 3 VISUAL_SIMILARITY_ONLY rows, canonicalCoalescingAllowed=false, Materiality uninspected.",
     "Mobile actual work branch advanced to bf99bf782c7b295ee8badd936a4b9078e751ecdf with a single latest commit correcting RESOLUTION.jsonl. Independent raw-blob audit now reproduces 271/271 unique targets, missing=0, extra=0, sourceRecordSha256 mismatch=0, BLOCKED subset exact, projection-debt subset exact, 133 CURRENT + 137 AMBIGUOUS + 1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED, and manifest zero-loss fields. This is byte evidence only, not an accepted worker receipt.",
     "Materiality Catalog remained uninspected. No product/runtime mutation, projection repair, canonical authority mutation, canonical ID minting or GVAE APPLY was performed by Chat 6.",
-    "Factory Ledger rule remains ADVANCE, not rebuild: visual.generic_application_engine_v1 is DONE/SOURCE_READY/doNotRebuild and current phase tooling is reused."
+    "Factory Ledger rule remains ADVANCE, not rebuild: visual.generic_application_engine_v1 is DONE/SOURCE_READY/doNotRebuild and current phase tooling is reused.",
+    "Mobile owner receipt was finally accepted as PASS_MOBILE_PROMOTION_READINESS at exact head bf99bf782c7b295ee8badd936a4b9078e751ecdf, closing the fifth and final worker barrier.",
+    "Global deterministic composition preserves exactly 2,097 unique targets with zero missing, extra, duplicate-target or source-hash mismatch records.",
+    "Final decision partition is 2,061 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 20 BLOCKED_MISSING_APPLICATION_AUTHORITY + 2 BLOCKED_MISSING_BINDING + 3 BLOCKED_PHYSICAL_DRIFT + 11 BLOCKED_MULTI_REGION_CONFLICT = 2,097.",
+    "Canonical promotion plan contains 0 safe exact authority reuses, 0 safe exact canonical registrations, 2,097 blocked targets and 0 not-applicable targets; exact canonical registration scope is empty.",
+    "Collision analysis found 0 canonical proposal-key collisions and 0 binding proposal-key collisions. Existing one-to-many Tablet accent authority and four implementation-layer aliases remain preserved evidence, not canonical coalescing authority.",
+    "Atlasfin cross-surface evidence remains support-only: three visual-similarity groups, canonicalCoalescingAllowed=false, and zero independently proven canonical semantic coalescing groups.",
+    "Chat 6 found and corrected a real schema/composer contract defect before integration: resolutionCorpusDigest is now an explicit required canonical-plan schema property with focused parity coverage.",
+    "VISCORE deterministic FILES_MANIFEST candidate was consumed byte-exactly: artifact 10372383508, SHA-256 42cb1acf6ec78a694bfbfb5f4c1792c648075adb49606df8b3abefdfa6b189bb, Git blob f9e295b4061eb5afbc466474f57ae3c5df062cc0, file_count_excluding_manifest=883.",
+    "Final PR #554 head 86ed854e694ecd9b67a4f8bde15cb2a533f05b8f passed CI 34905779432, VISCORE1 34905779450, ForgeOS 34905779365 and Sync Sentinel 34905779442.",
+    "PR #554 merged as 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0. Compare final PR head to merged main changes zero files; merged tree is 46dbb1142c06ef346ee197ad420c385b9bc9f96a.",
+    "Post-merge main gates PASS: CI 34905943686, ForgeOS 34905943710 and Sync Sentinel 34905943705.",
+    "Fresh post-merge task-exact AutoMesh run 34906005888 passed PASS_COMPOSED_AUTHORITY_MESH on exact main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with both lanes at 100% required-authority coverage, zero missing authority, zero blockers and mandatory Layer Map generation.",
+    "Materiality Catalog remained uninspected throughout. Product/runtime mutation=false; canonical authority mutation=false; projection repair=false; GVAE APPLY=false."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -136,20 +142,24 @@
     "Stop composition until all five current-phase worker receipts and exact work heads exist; prior corpus witness receipts do not substitute for promotionReadiness receipts.",
     "Do not create worker branches or write worker mailboxes from Chat 6; preserve disjoint lane ownership.",
     "Execution liveness is turn-driven, not background polling: each worker needs one owner activation turn; Chat 6 needs a later owner turn to read worker mailboxes and compose. Repository mailboxes remove handoff relaying, not the need to activate chats.",
-    "Execution is turn-driven rather than background-polling: each worker chat needs one owner activation turn, and Chat 6 needs a later owner turn to consume the resulting deterministic receipts."
+    "Execution is turn-driven rather than background-polling: each worker chat needs one owner activation turn, and Chat 6 needs a later owner turn to consume the resulting deterministic receipts.",
+    "Accept all five exact owner receipts and compose only after 5/5 acceptance; do not infer or repair worker semantics during integration.",
+    "Treat collision analysis separately from semantic equivalence; visual or physical sameness never auto-coalesces canonical meaning.",
+    "Because safe exact reuse=0 and safe exact canonical registration=0, perform no canonical authority mutation. Stop this phase at READY_FOR_CANONICAL_PROMOTION_INTEGRATION.",
+    "Do not manufacture Work Entry APPLY scope from an empty registration plan. Exact-head PR and post-merge Visual Work Entry diff gates passed while no canonical target registration or GVAE APPLY was attempted.",
+    "Preserve all 2,097 blocked outcomes as truthful readiness evidence for a later authority-resolution phase rather than downgrading blockers into guessed registrations."
   ],
   "changedPaths": [
-    "prisma-html/docs/ops/visual-promotion-parallel/README.md",
-    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
-    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
-    "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md",
-    "prisma-html/docs/ops/visual-promotion-parallel/status-channel/README.md",
-    "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
-    "prisma-html/governance/visual-promotion/promotion-readiness/**",
-    "prisma-html/tools/visual_promotion/promotion_readiness.py",
-    "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py",
-    "prisma-html/tools/visual_promotion/cli.py"
+    "prisma-html/FILES_MANIFEST.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.md",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/COLLISIONS.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/CROSS_SURFACE_SEMANTIC_GROUPS.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/RESOLUTION_CORPUS.jsonl",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/SUMMARY.md",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/ZERO_LOSS.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/contracts/canonical-promotion-plan.schema.json",
+    "prisma-html/tools/visual_promotion/tests/test_promotion_readiness.py"
   ],
   "validations": [
     {
@@ -465,20 +475,65 @@
       "result": "PASS_BYTES_PENDING_OWNER_RECEIPT",
       "evidence": "actual branch head bf99bf782c7b295ee8badd936a4b9078e751ecdf; RESOLUTION blob 3ab06c9bca25301dd292463ac3185386f968ef3e",
       "details": "271/271; source hashes exact; subsets exact; manifest exact. Mailbox still IN_PROGRESS at stale declared head a5f3978..., so lane is not accepted."
+    },
+    {
+      "name": "Five-worker promotion-readiness intake",
+      "result": "PASS_5_OF_5_ACCEPTED",
+      "evidence": "Tablet 535b4f0; PC bce748a; Mobile bf99bf7; Shared UI 3b7f7e2; Atlasfin 4ffbf95",
+      "details": "Exact owner receipts and output blobs independently revalidated before composition."
+    },
+    {
+      "name": "Global zero-loss composition",
+      "result": "PASS_ZERO_LOSS",
+      "evidence": "resolutionCorpusDigest 10724899c2f2fce4248375e44d51632fc8b63012eaa85487f8589979ddf7a03b",
+      "details": "2,097 input = 0 reuse + 0 registration + 2,097 blocked + 0 not-applicable; unique=2,097; missing/extra/duplicate/source-hash mismatch/semantic-mutation=0."
+    },
+    {
+      "name": "Factory Ledger anti-rework",
+      "result": "PASS_ANTI_REWORK_GATE",
+      "evidence": "visual.generic_application_engine_v1 / ADVANCE",
+      "details": "Capability remains DONE / SOURCE_READY / doNotRebuild=true; existing machinery reused rather than rebuilt."
+    },
+    {
+      "name": "Post-anti-rework task-exact Authority Mesh",
+      "result": "PASS_COMPOSED_AUTHORITY_MESH",
+      "evidence": "run 34905498495; requestDigest ca03f8db8d49c8c2fe4b826c87a76ee35ed7d24c83f7eb7cff455279d7195861; composed sha256 468dc3abb8ab8c4f47b89215616556831f6762e4b7900fb8ca0c71edc9c387d3",
+      "details": "Both lanes 100% required-authority coverage, zero missing authority, blockers=0, Layer Map generated."
+    },
+    {
+      "name": "Final PR exact-head gates",
+      "result": "PASS",
+      "evidence": "PR #554 head 86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
+      "details": "CI 34905779432; VISCORE1 34905779450; ForgeOS 34905779365; Sync Sentinel 34905779442."
+    },
+    {
+      "name": "Merged-tree equivalence",
+      "result": "PASS_ZERO_FILE_DELTA",
+      "evidence": "main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 tree 46dbb1142c06ef346ee197ad420c385b9bc9f96a",
+      "details": "Compare final PR head to merge commit reports zero changed files."
+    },
+    {
+      "name": "Post-merge main gates",
+      "result": "PASS",
+      "evidence": "main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "details": "CI 34905943686; ForgeOS 34905943710; Sync Sentinel 34905943705."
+    },
+    {
+      "name": "Fresh post-merge task-exact Authority Mesh",
+      "result": "PASS_COMPOSED_AUTHORITY_MESH",
+      "evidence": "run 34906005888; artifact 10372663600; workflow artifact digest sha256:6871bd124aac3cd92c4402fd72280fe33d6780dacc135bc1f27931bd86d70126",
+      "details": "repoHead 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest a5184a8b1a7b772f2afde7a34108b007047f41d441ba4c8faa85f7b8e7e93adb; composed artifact sha256 c8c16b29c700dd7180542bf7142910533f8f70952e83a963e627ccdecb47a1f6; both lanes 100%; blockers=0; Layer Map generated."
     }
   ],
-  "unresolved": [
-    "Chat 3 must publish handoff.promotionReadiness.result=PASS_MOBILE_PROMOTION_READINESS on the exact Mobile branch head that owns the validated bytes.",
-    "After the Mobile PASS receipt is independently accepted, compose the exact 2,097-record corpus and canonical promotion plan; until then composition is forbidden."
-  ],
+  "unresolved": [],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Fail-closed on Mobile only. On the next Chat 6 turn, re-read Chat 3 STATUS.json and actual work-branch head. If and only if PASS_MOBILE_PROMOTION_READINESS is published and its head/bytes match, accept the fifth receipt and immediately run deterministic global composition.",
+  "nextAction": "Hold at READY_FOR_CANONICAL_PROMOTION_INTEGRATION. A later phase may resolve the 2,097 authority gaps and produce a new exact registration plan. No canonical registration or GVAE APPLY is authorized by this completed phase.",
   "handoff": {
-    "ready": false,
-    "workBranch": "chat6/candidate-corpus-cert-20260904",
-    "workHead": "9fdc3545d8b3309395f9276723c81f9799b1c60f",
-    "baseHead": "57b01ad8bda043ec25763203354b686341bace09",
+    "ready": true,
+    "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
+    "workHead": "86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
+    "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
     "closedPullRequest": 541,
     "validatedEquivalentCodeHead": "cb21ca01ecf8ec755fe34820d3d5b34673f70581",
     "finalChangedPathCount": 14,
@@ -494,7 +549,7 @@
       "Refresh FILES_MANIFEST.json only once at the integration stage after accepted prisma-html bytes are assembled."
     ],
     "continuationMode": "DETERMINISTIC_INTEGRATION_PLANNING",
-    "currentMainHead": "1cc4d0d45b3878ace2906d08fa67f325a3b98a9d",
+    "currentMainHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
     "explicitWorkerRefsReceived": true,
     "integrationPlanReady": false,
     "workerOutcomeRowsValidated": 2097,
@@ -811,14 +866,14 @@
     "assemblyPathCount": 88,
     "assemblyTree": "7c804398a4f58b79c2420d4c3fe6ad7a5bb2dd6e",
     "filesManifestRefreshed": true,
-    "integrationPullRequest": 549,
-    "integrationPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/549",
+    "integrationPullRequest": 554,
+    "integrationPullRequestUrl": "https://github.com/prismahitech/hitech-os/pull/554",
     "filesManifestRefreshCount": 1,
-    "filesManifestBlobSha": "f8a2539d49db381270158ce96bfa9fca838b3a86",
-    "filesManifestSha256": "bb3015374c1dd448ba92ea8c9c136b7b2861cffe5b51c055e9b0b69de1a3ae2d",
-    "filesManifestFileCountExcludingManifest": 868,
-    "filesManifestCandidateArtifact": 10293221911,
-    "finalPrHead": "34499286414be11703edaef3be93180230658f0f",
+    "filesManifestBlobSha": "f9e295b4061eb5afbc466474f57ae3c5df062cc0",
+    "filesManifestSha256": "42cb1acf6ec78a694bfbfb5f4c1792c648075adb49606df8b3abefdfa6b189bb",
+    "filesManifestFileCountExcludingManifest": 883,
+    "filesManifestCandidateArtifact": 10372383508,
+    "finalPrHead": "86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
     "finalPrMergeable": true,
     "finalPrMergeableState": "clean",
     "finalGateRuns": {
@@ -828,11 +883,11 @@
       "SyncSentinel": 34679171068,
       "GVAEAllSurface": 34679171076
     },
-    "result": "PASS_CANDIDATE_CORPUS_CERTIFIED",
-    "finalState": "DONE",
-    "mergedMain": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
-    "mergedMainTree": "502a911c62ce785990f3e0e7f5cd57bf36559403",
-    "finalPrTree": "502a911c62ce785990f3e0e7f5cd57bf36559403",
+    "result": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+    "finalState": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+    "mergedMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+    "mergedMainTree": "46dbb1142c06ef346ee197ad420c385b9bc9f96a",
+    "finalPrTree": "46dbb1142c06ef346ee197ad420c385b9bc9f96a",
     "mainTreeEqualsFinalPrTree": true,
     "finalCorpus": {
       "recordCount": 2097,
@@ -856,14 +911,14 @@
     ],
     "integrationState": "MERGED_MAIN_VERIFIED",
     "finalPrMerged": true,
-    "finalPr": 549,
+    "finalPr": 554,
     "filesManifestMainBlobSha": "f8a2539d49db381270158ce96bfa9fca838b3a86",
     "supersededPullRequests": {
       "539": "CLOSED_BYTE_SUPERSEDED",
       "540": "CLOSED_BYTE_SUPERSEDED"
     },
-    "phaseResult": "PASS_CORPUS_FINAL_PARALLEL_VERIFICATION_MERGED_MAIN_VERIFIED",
-    "holdState": "CERTIFIED_CORPUS_HOLD",
+    "phaseResult": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+    "holdState": "PROMOTION_INTEGRATION_HOLD_NO_REGISTRATION_SCOPE",
     "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
     "phaseBaseHead": "3eb092fad5e746a7ceeb9fdba079671934ae9b6d",
     "bootstrapPullRequest": 550,
@@ -911,10 +966,11 @@
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "role": "CANONICAL_PROMOTION_READINESS_COMPOSER",
-      "result": "WAITING_MOBILE_PROMOTION_READINESS",
-      "canonicalMain": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+      "result": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+      "canonicalMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "canonicalMainTree": "46dbb1142c06ef346ee197ad420c385b9bc9f96a",
       "corpusInputCount": 2097,
-      "acceptedWorkerReceipts": 4,
+      "acceptedWorkerReceipts": 5,
       "requiredWorkerReceipts": 5,
       "accepted": {
         "1": {
@@ -925,6 +981,11 @@
         "2": {
           "result": "PASS_PC_PROMOTION_READINESS",
           "head": "bce748abc169b241627f77b31f5050d22753312b",
+          "accepted": true
+        },
+        "3": {
+          "result": "PASS_MOBILE_PROMOTION_READINESS",
+          "head": "bf99bf782c7b295ee8badd936a4b9078e751ecdf",
           "accepted": true
         },
         "4": {
@@ -938,34 +999,96 @@
           "accepted": true
         }
       },
-      "pending": {
-        "3": {
-          "requiredResult": "PASS_MOBILE_PROMOTION_READINESS",
-          "mailboxResult": "IN_PROGRESS_SOURCE_HASH_CORRECTION",
-          "mailboxDeclaredHead": "a5f3978069da8e2c81df26957cd9fe683db6d08d",
-          "actualBranchHead": "bf99bf782c7b295ee8badd936a4b9078e751ecdf",
-          "independentByteAudit": "PASS_BYTES_PENDING_OWNER_RECEIPT",
-          "resolutionCount": 271,
-          "uniqueTargetCount": 271,
-          "sourceRecordHashMismatches": 0,
-          "projectionDebtCount": 138
-        }
+      "globalCompositionAuthorized": true,
+      "resolutionCorpusDigest": "10724899c2f2fce4248375e44d51632fc8b63012eaa85487f8589979ddf7a03b",
+      "accounting": {
+        "input": 2097,
+        "unique": 2097,
+        "readyExistingAuthorityReuse": 0,
+        "readyCanonicalRegistration": 0,
+        "legitimatelyBlocked": 2097,
+        "notApplicable": 0,
+        "missing": 0,
+        "extra": 0,
+        "duplicateTargetIds": 0,
+        "sourceRecordHashMismatches": 0,
+        "semanticMutationCount": 0
       },
-      "globalCompositionAuthorized": false,
-      "materialityCatalogInspected": false,
-      "productRuntimeMutation": false,
+      "blockedByDecision": {
+        "BLOCKED_MISSING_SEMANTIC_AUTHORITY": 2061,
+        "BLOCKED_MISSING_APPLICATION_AUTHORITY": 20,
+        "BLOCKED_MISSING_BINDING": 2,
+        "BLOCKED_PHYSICAL_DRIFT": 3,
+        "BLOCKED_MULTI_REGION_CONFLICT": 11
+      },
+      "projectionDebt": {
+        "count": 279,
+        "CURRENT": 1818,
+        "CANONICAL_PROJECTION_REQUIRED_MISSING": 141,
+        "AMBIGUOUS": 137,
+        "PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED": 1
+      },
+      "canonicalCollisionCount": 0,
+      "canonicalSemanticCoalescingGroupCount": 0,
+      "exactRegistrationScopeCount": 0,
+      "exactReuseScopeCount": 0,
+      "canonicalRegistrationAuthorized": false,
       "canonicalAuthorityMutation": false,
+      "productRuntimeMutation": false,
       "projectionRepair": false,
       "gvaeApply": false,
+      "materialityCatalogInspected": false,
+      "workEntry": {
+        "plannedRegistrationScopeCount": 0,
+        "exactApplyAuthorized": false,
+        "prDiffGate": "PASS",
+        "postMergeDiffGate": "PASS",
+        "note": "No exact registration targets exist in this plan; no APPLY scope was invented."
+      },
+      "antiRework": {
+        "result": "PASS_ANTI_REWORK_GATE",
+        "capability": "visual.generic_application_engine_v1",
+        "requestedAction": "ADVANCE",
+        "classification": "DONE",
+        "status": "SOURCE_READY",
+        "doNotRebuild": true
+      },
       "authorityMesh": {
-        "runId": 34696570043,
-        "repoHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
+        "runId": 34906005888,
+        "artifactId": 10372663600,
+        "repoHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
         "status": "PASS_COMPOSED_AUTHORITY_MESH",
         "requiredAuthorityCoveragePct": 100,
         "blockers": 0,
         "layerMapPresent": true,
-        "note": "Current only for unchanged pre-plan scope/head; a fresh task-exact Mesh is required after final CANONICAL_PROMOTION_PLAN if scope changes before canonical mutation."
-      }
+        "requestDigest": "a5184a8b1a7b772f2afde7a34108b007047f41d441ba4c8faa85f7b8e7e93adb",
+        "composedArtifactSha256": "c8c16b29c700dd7180542bf7142910533f8f70952e83a963e627ccdecb47a1f6"
+      },
+      "integration": {
+        "pullRequest": 554,
+        "finalPrHead": "86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
+        "mergedMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+        "mergedTree": "46dbb1142c06ef346ee197ad420c385b9bc9f96a",
+        "treeExact": true,
+        "finalChecks": {
+          "CI": 34905779432,
+          "VISCORE1": 34905779450,
+          "ForgeOS": 34905779365,
+          "SyncSentinel": 34905779442
+        },
+        "postMergeChecks": {
+          "CI": 34905943686,
+          "ForgeOS": 34905943710,
+          "SyncSentinel": 34905943705
+        }
+      },
+      "filesManifest": {
+        "artifactId": 10372383508,
+        "sha256": "42cb1acf6ec78a694bfbfb5f4c1792c648075adb49606df8b3abefdfa6b189bb",
+        "gitBlob": "f9e295b4061eb5afbc466474f57ae3c5df062cc0",
+        "fileCountExcludingManifest": 883
+      },
+      "nextGate": "A later authority-resolution phase must resolve blocked semantics/application/bindings/drift/conflicts and produce a new exact plan before any canonical registration can be considered."
     },
     "bootstrapFinalHead": "7d209c3eeeecca9ce45d250e91e0d52148958cee",
     "bootstrapManifestSha256": "5a0c6672908f663c18a4f3020fd85a8f4f694d4f437f97c5e3caea9366557883",
