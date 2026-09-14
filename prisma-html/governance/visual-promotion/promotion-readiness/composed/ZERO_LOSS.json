@@ -1,0 +1,54 @@
+{
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "status": "PASS_ZERO_LOSS",
+  "expectedInputCount": 2097,
+  "resolutionCount": 2097,
+  "uniqueTargetCount": 2097,
+  "surfaceCounts": {
+    "tablet": 929,
+    "pc": 827,
+    "mobile": 271,
+    "shared-ui": 70
+  },
+  "missingCount": 0,
+  "extraCount": 0,
+  "duplicateTargetIds": 0,
+  "sourceRecordHashMismatches": 0,
+  "semanticMutationCount": 0,
+  "decisionAccounting": {
+    "readyExistingAuthorityReuse": 0,
+    "readyCanonicalRegistration": 0,
+    "legitimatelyBlocked": 2097,
+    "notApplicable": 0,
+    "byDecision": {
+      "BLOCKED_MISSING_SEMANTIC_AUTHORITY": 2061,
+      "BLOCKED_MISSING_APPLICATION_AUTHORITY": 20,
+      "BLOCKED_MISSING_BINDING": 2,
+      "BLOCKED_PHYSICAL_DRIFT": 3,
+      "BLOCKED_MULTI_REGION_CONFLICT": 11
+    }
+  },
+  "projectionDebtAccounting": {
+    "debtCount": 279,
+    "byClassification": {
+      "CURRENT": 1818,
+      "CANONICAL_PROJECTION_REQUIRED_MISSING": 141,
+      "AMBIGUOUS": 137,
+      "PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED": 1
+    }
+  },
+  "workerHeads": {
+    "tablet": "535b4f002a830a84c6dfd4b166b032adaf91409a",
+    "pc": "bce748abc169b241627f77b31f5050d22753312b",
+    "mobile": "bf99bf782c7b295ee8badd936a4b9078e751ecdf",
+    "shared-ui": "3b7f7e285867818bf88708ae6e28df6c5aeec763",
+    "atlasfin": "4ffbf95450de6f19adfa5ed2e5c084edd45ca36d"
+  },
+  "resolutionBlobShas": {
+    "tablet": "f2ce653ec10da67a81ed051da19e96b0c9323872",
+    "pc": "f1eaba41aff297fdd544805e8fafc8a4897f6d47",
+    "mobile": "3ab06c9bca25301dd292463ac3185386f968ef3e",
+    "shared-ui": "73f38b2e7bc2b6f073e3791b70b05134034f42cc"
+  },
+  "resolutionCorpusDigest": "10724899c2f2fce4248375e44d51632fc8b63012eaa85487f8589979ddf7a03b"
+}
