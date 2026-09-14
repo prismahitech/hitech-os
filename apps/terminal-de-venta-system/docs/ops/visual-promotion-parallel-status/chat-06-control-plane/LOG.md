@@ -393,3 +393,19 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Mobile mailbox remains `WORKING` with receipt `IN_PROGRESS_SOURCE_HASH_CORRECTION` and stale declared head `a5f3978...`. Actual branch is `bf99bf782c7b295ee8badd936a4b9078e751ecdf`.
 - Independently audited current Mobile bytes at `bf99bf7...`: 271/271 unique, source hash mismatches=0, blocked subset exact, projection debt=138 exact, manifest zero-loss fields correct. This evidence does **not** substitute for the owner lane's required `PASS_MOBILE_PROMOTION_READINESS` receipt.
 - Global composition remains forbidden until 5/5 accepted receipts. No composed artifacts, canonical registration, product/runtime mutation, projection repair, Materiality inspection, canonical ID minting or GVAE APPLY occurred.
+
+### 2026-09-14T16:52:00-06:00 — COMPLETE / READY_FOR_CANONICAL_PROMOTION_INTEGRATION
+- Accepted all five current-phase owner receipts at exact worker heads: Tablet `535b4f0...`, PC `bce748a...`, Mobile `bf99bf7...`, Shared UI `3b7f7e2...`, Atlasfin `4ffbf95...`.
+- Deterministic global composition: **2,097/2,097** unique targets; **0** safe exact reuse; **0** safe exact canonical registration; **2,097** legitimately blocked; **0** not-applicable; missing/extra/duplicate/source-hash/semantic-mutation all zero.
+- Resolution corpus digest: `10724899c2f2fce4248375e44d51632fc8b63012eaa85487f8589979ddf7a03b`.
+- Corrected the canonical-plan schema parity defect for composer-emitted `resolutionCorpusDigest`; focused test coverage added.
+- Collision result: canonical proposal collisions=0; binding proposal collisions=0; canonical semantic coalescing groups=0. Atlasfin visual-only groups remain non-authoritative for coalescing.
+- Factory Ledger anti-rework: `PASS_ANTI_REWORK_GATE` for `visual.generic_application_engine_v1 / ADVANCE`; `DONE / SOURCE_READY / doNotRebuild=true` preserved.
+- Post-anti-rework Mesh run `34905498495`: `PASS_COMPOSED_AUTHORITY_MESH`, both lanes 100%, blockers=0, Layer Map present.
+- VISCORE deterministic manifest refresh consumed byte-exactly: artifact `10372383508`, SHA-256 `42cb1acf6ec78a694bfbfb5f4c1792c648075adb49606df8b3abefdfa6b189bb`, Git blob `f9e295b4061eb5afbc466474f57ae3c5df062cc0`, 883 files excluding manifest.
+- PR #554 final head `86ed854e694ecd9b67a4f8bde15cb2a533f05b8f` passed CI `34905779432`, VISCORE1 `34905779450`, ForgeOS `34905779365`, Sync Sentinel `34905779442`.
+- PR #554 merged as canonical main `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0`. Final PR head and merged main have identical tree `46dbb1142c06ef346ee197ad420c385b9bc9f96a`; compare reports zero changed files.
+- Post-merge main PASS: CI `34905943686`, ForgeOS `34905943710`, Sync Sentinel `34905943705`.
+- Fresh post-merge AutoMesh run `34906005888`: `PASS_COMPOSED_AUTHORITY_MESH` on exact merged main, requestDigest `a5184a8b1a7b772f2afde7a34108b007047f41d441ba4c8faa85f7b8e7e93adb`, composed SHA-256 `c8c16b29c700dd7180542bf7142910533f8f70952e83a963e627ccdecb47a1f6`, 100% both lanes, blockers=0, Layer Map present.
+- Exact registration scope is empty. No canonical authority mutation, product/runtime mutation, Materiality inspection, projection repair or GVAE APPLY occurred.
+- Final phase state: `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`. Next work is a later authority-resolution phase, not canonical registration from the current blocked plan.
