@@ -1,0 +1,135 @@
+{
+  "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+  "inputCount": 2097,
+  "targetIdCollisions": [],
+  "canonicalProposalKeyCount": 138,
+  "canonicalProposalKeyCollisions": [],
+  "bindingProposalKeyCount": 0,
+  "bindingProposalKeyCollisions": [],
+  "preservedAuthorityAmbiguities": [
+    {
+      "existingBindingId": "BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1",
+      "targets": [
+        "TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1",
+        "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1"
+      ],
+      "disposition": "PRESERVED_BLOCKED_ONE_TO_MANY_AUTHORITY"
+    }
+  ],
+  "physicalAliasGroups": [
+    {
+      "implementationLayerId": "products.pc.app.app.globals.css.prisma.home.primary.prisma.home.secondary",
+      "members": [
+        {
+          "surfaceKey": "pc",
+          "targetId": "TGT.CENSUS.PC.01C5CFE97E1BA579CA5A.V1",
+          "selector": ".prisma-home-primary,.prisma-home-secondary",
+          "decision": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+        },
+        {
+          "surfaceKey": "pc",
+          "targetId": "TGT.CENSUS.PC.A4ADAD0EA27B796524F0.V1",
+          "selector": ".prisma-home-primary, .prisma-home-secondary",
+          "decision": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+        }
+      ],
+      "canonicalProposalCollision": false
+    },
+    {
+      "implementationLayerId": "products.pc.app.app.suppliers.ux.v08.css.supplier.readable.v07",
+      "members": [
+        {
+          "surfaceKey": "pc",
+          "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
+          "selector": ".supplier-readable-v07",
+          "decision": "BLOCKED_PHYSICAL_DRIFT"
+        },
+        {
+          "surfaceKey": "pc",
+          "targetId": "TGT.CENSUS.PC.E114999E04BB510A39DF.V1",
+          "selector": ".supplier-readable-v07 *",
+          "decision": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+        }
+      ],
+      "canonicalProposalCollision": false
+    },
+    {
+      "implementationLayerId": "products.tablet.app.app.tablet.lab.tabletlabcapsule.module.css.autostudio.data.tabctl7.mode.rapido.previewcanvas.tabctl7recipepanel.autostudio.data.tabctl7.mode.receta.previewcanva",
+      "members": [
+        {
+          "surfaceKey": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.850AD4CEF4CCD12BCD05.V1",
+          "selector": ".autoStudio[data-tabctl7-mode=\"rapido\"] .previewCanvas .tabctl7RecipePanel, .autoStudio[data-tabctl7-mode=\"receta\"] .previewCanvas .tabctl7RecipePanel",
+          "decision": "BLOCKED_PHYSICAL_DRIFT"
+        },
+        {
+          "surfaceKey": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.B96CF5497DD1FE3BCACE.V1",
+          "selector": ".autoStudio[data-tabctl7-mode=\"rapido\"] .previewCanvas .tabctl7RecipePanel,.autoStudio[data-tabctl7-mode=\"receta\"] .previewCanvas .tabctl7RecipePanel",
+          "decision": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+        }
+      ],
+      "canonicalProposalCollision": false
+    },
+    {
+      "implementationLayerId": "products.tablet.app.app.tablet.lab.tabletlabcapsule.module.css.glasscard",
+      "members": [
+        {
+          "surfaceKey": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.3B2FED34BC21B5C9FEEC.V1",
+          "selector": ".glassCard",
+          "decision": "BLOCKED_PHYSICAL_DRIFT"
+        },
+        {
+          "surfaceKey": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.8A3EFBD02270B28ED78C.V1",
+          "selector": ".glassCard > *",
+          "decision": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+        }
+      ],
+      "canonicalProposalCollision": false
+    }
+  ],
+  "visualSimilarityOnlyGroups": [
+    {
+      "groupKey": "group.atlasfin.recipe.card.governed.v2.visual-only",
+      "atlasfinRecipeId": "REC.card.governed.v2",
+      "evidenceBasis": "ATLASFIN_RECIPE_EQUALITY_ONLY",
+      "surfaceCounts": {
+        "tablet": 41,
+        "pc": 54
+      },
+      "totalOccurrences": 95,
+      "canonicalCoalescingAllowed": false
+    },
+    {
+      "groupKey": "group.atlasfin.recipe.panel.governed.v2.visual-only",
+      "atlasfinRecipeId": "REC.panel.governed.v2",
+      "evidenceBasis": "ATLASFIN_RECIPE_EQUALITY_ONLY",
+      "surfaceCounts": {
+        "tablet": 20,
+        "pc": 27
+      },
+      "totalOccurrences": 47,
+      "canonicalCoalescingAllowed": false
+    },
+    {
+      "groupKey": "group.atlasfin.recipe.table.governed.v2.visual-only",
+      "atlasfinRecipeId": "REC.table.governed.v2",
+      "evidenceBasis": "ATLASFIN_RECIPE_EQUALITY_ONLY",
+      "surfaceCounts": {
+        "tablet": 66,
+        "pc": 105
+      },
+      "totalOccurrences": 171,
+      "canonicalCoalescingAllowed": false
+    }
+  ],
+  "canonicalCollisionCount": 0,
+  "canonicalSemanticCoalescingGroupCount": 0,
+  "notes": [
+    "Collision analysis is distinct from semantic equivalence.",
+    "Shared existing authority does not imply canonical coalescing.",
+    "Atlasfin recipe equality remains VISUAL_SIMILARITY_ONLY and cannot authorize semantic coalescing."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 876,
+  "file_count_excluding_manifest": 883,
   "files": [
     {
       "bytes": 156,
@@ -3392,14 +3392,49 @@
       "sha256": "5FF40776FD330E663A53D117EDB0823969076FF205124B764F7FBB66C8C56F31"
     },
     {
+      "bytes": 100385,
+      "path": "governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.json",
+      "sha256": "2B0CDA0A0F2818EC4AE2946E82BD2AA8BF5EA2CE20192619983D5FA4979A8881"
+    },
+    {
+      "bytes": 1786,
+      "path": "governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.md",
+      "sha256": "F2FF2F70FF3B9879FF6B1A9B6918C72B6F6088942DE085933B27ADC123A0CEA9"
+    },
+    {
+      "bytes": 4896,
+      "path": "governance/visual-promotion/promotion-readiness/composed/COLLISIONS.json",
+      "sha256": "DAA9DAC78E7F4CD33B88304954423D434D59AA8709F5349DB42D344059C5EBC6"
+    },
+    {
+      "bytes": 3,
+      "path": "governance/visual-promotion/promotion-readiness/composed/CROSS_SURFACE_SEMANTIC_GROUPS.json",
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
+    },
+    {
       "bytes": 4520,
       "path": "governance/visual-promotion/promotion-readiness/composed/PHASE_BASELINE.json",
       "sha256": "B0F60DA850F1E6A55DBA380B8E68F6C28897D33B3A879AD6D9C49CFB5D2DD263"
     },
     {
-      "bytes": 2248,
+      "bytes": 3876104,
+      "path": "governance/visual-promotion/promotion-readiness/composed/RESOLUTION_CORPUS.jsonl",
+      "sha256": "0DEF708191659225ADC7ABDE7A556ADA088BF5EF4CAA1D73B3F508FD68CFE33E"
+    },
+    {
+      "bytes": 1627,
+      "path": "governance/visual-promotion/promotion-readiness/composed/SUMMARY.md",
+      "sha256": "452B964BDAEC28FAB5C7E0AF2307DD0E81D44233C01721F54941D8D23D616F88"
+    },
+    {
+      "bytes": 1732,
+      "path": "governance/visual-promotion/promotion-readiness/composed/ZERO_LOSS.json",
+      "sha256": "E1915FC4365522E929602A0DFCA0F06E213CF045CCC45672589DB16808739429"
+    },
+    {
+      "bytes": 2375,
       "path": "governance/visual-promotion/promotion-readiness/contracts/canonical-promotion-plan.schema.json",
-      "sha256": "13590F8DB1C9A9642E0B93C24430577C3E60E490546FC051D9B43A08FF280833"
+      "sha256": "8433C35659EE92CB777BBFB3B78B28973221B12A59F1F8843DD10463405319FD"
     },
     {
       "bytes": 1912,
@@ -4367,9 +4402,9 @@
       "sha256": "4AC4D2A96A59526462C87053E0EC6BFC66ECA86AA3CA1EA862531E8687E05A9D"
     },
     {
-      "bytes": 10918,
+      "bytes": 11347,
       "path": "tools/visual_promotion/tests/test_promotion_readiness.py",
-      "sha256": "8003B0BC93CE310C974AA17C3FE2AE7978EC707E03E3955483512127C7BA5D46"
+      "sha256": "3B11E0F5A14B2FD539808BD3553D177E8C098C0063C5971C25724A1D05C345E1"
     },
     {
       "bytes": 516,
