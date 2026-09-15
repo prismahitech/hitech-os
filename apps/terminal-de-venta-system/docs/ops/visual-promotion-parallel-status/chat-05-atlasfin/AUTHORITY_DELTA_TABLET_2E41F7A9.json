@@ -1,0 +1,59 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "createdAt": "2026-09-15T09:40:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-tablet-2e41f7a9",
+  "surface": "tablet",
+  "targetId": "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1",
+  "question": "Does the Cobrar ::before accent census target require new authority, or is it covered by an existing ambiguous authority?",
+  "authorityFound": [
+    {
+      "domain": "identity",
+      "id": "TOK.color.accent",
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "identity",
+      "id": "BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1",
+      "status": "BLOCKED_BY_AMBIGUOUS_ONE_TO_MANY",
+      "cardinality": "ONE_TO_MANY_NON_EXHAUSTIVE",
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "promotion-readiness",
+      "path": "prisma-html/governance/visual-promotion/promotion-readiness/composed/COLLISIONS.json",
+      "finding": "Current composed evidence preserves this census target together with the accent icon target under the same existing authority ambiguity."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/manifest.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/COLLISIONS.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.md"
+  ],
+  "relationType": "TARGET_PARTICIPATES_IN_EXISTING_AMBIGUOUS_ONE_TO_MANY_VISUAL_TOKEN_AUTHORITY",
+  "equivalent": false,
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_AUTHORITY",
+    "ndc": "NOT_APPLICABLE_OPERATIONAL_DOMAIN_FOR_VISUAL_TOKEN",
+    "identity": "POSITIVE_EXISTING_TOKEN_AND_BINDING",
+    "rifatTargetIndex": "POSITIVE_EXISTING_PHYSICAL_TARGET_EVIDENCE",
+    "codeAtlas": "NO_STRONGER_EXACT_TARGET_SEMANTIC_EVIDENCE_FOUND_IN_BOUNDED_SEARCH",
+    "atlasfin": "NOT_USED_AS_SEMANTIC_AUTHORITY",
+    "ledgerEvidence": "BASELINE_ANTI_REWORK_RECEIPT_REUSED",
+    "history": "NOT_REQUIRED_TO_ESTABLISH_EXISTENCE"
+  },
+  "suggestedClassification": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+  "confidence": "HIGH",
+  "unresolvedRemainder": "Binding remains BLOCKED_BY_AMBIGUOUS_ONE_TO_MANY with missing layerId/exhaustiveTargetSet. Exact curation is required; no TRUE_NEW claim is supportable."
+}
