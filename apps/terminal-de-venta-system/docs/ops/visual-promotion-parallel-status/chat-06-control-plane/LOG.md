@@ -409,3 +409,150 @@ Bounded Chat 6 corpus/control-plane mutation is now permitted. Certification inp
 - Fresh post-merge AutoMesh run `34906005888`: `PASS_COMPOSED_AUTHORITY_MESH` on exact merged main, requestDigest `a5184a8b1a7b772f2afde7a34108b007047f41d441ba4c8faa85f7b8e7e93adb`, composed SHA-256 `c8c16b29c700dd7180542bf7142910533f8f70952e83a963e627ccdecb47a1f6`, 100% both lanes, blockers=0, Layer Map present.
 - Exact registration scope is empty. No canonical authority mutation, product/runtime mutation, Materiality inspection, projection repair or GVAE APPLY occurred.
 - Final phase state: `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`. Next work is a later authority-resolution phase, not canonical registration from the current blocked plan.
+
+## 2026-09-14T23:30:00Z — OWNER_ASSIGNMENT
+
+# OWNER ASSIGNMENT — AUTHORITY_RECONCILIATION_ANTI_REWORK
+
+**Chat:** 6
+**Role:** GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER
+**Assignment basis main:** `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0`
+**Work branch:** `chat6/authority-reconciliation-composer-20260914`
+**Exclusive output root:** `prisma-html/governance/visual-promotion/authority-reconciliation/**`
+
+La fase `CANONICAL_PROMOTION_READINESS_RESOLUTION` ya terminó y fue integrada por PR #554. **No la repitas.** Tu trabajo ahora es obtener el delta semántico real sin reconstruir lo que PRISMA ya sabe.
+
+## Verdad que debes preservar
+
+PR #529 / Factory Ledger ya certificaron 7 surfaces, 96 routes, 1,978 visual regions, 10,575 editable slots, 215 component owners, 89 CSS owners y 4,453 layers, con 0 blockers/0 warnings. GVAE Target Index tiene 3,915 registros: 4 EXACT_APPLICATION_TARGET y 3,911 VISUAL_CONTROL_CENSUS_TARGET. Los 2,097 de esta cohorte son 929 Tablet + 827 PC + 271 Mobile + 70 Shared UI.
+
+`visual.generic_application_engine_v1` está DONE / SOURCE_READY / doNotRebuild=true. Reuse/verify/advance solamente.
+
+## GitHub-only
+
+El dueño no tiene computadora. No pidas PowerShell, archivos locales, localhost, servidores, puertos ni pasos manuales. Resuelve `main` al empezar. El SHA de arriba es sólo la base de asignación. Si main avanzó, clasifica drift y usa AutoMesh v2/Authority Mesh desde GitHub cuando la autoridad/gate lo requiera.
+
+Antes de cualquier mutación de repo, obedece Factory Ledger anti-rework y autoridad vigente. Si un gate no puede ejecutarse desde GitHub, mantén el trabajo read-only y publica blocker preciso. No inventes PASS.
+
+## Lecturas obligatorias
+
+Lee desde el repo:
+- root `AGENTS.md`
+- Field Manual
+- Factory Ledger Agent Gate + Ledger + Evidence Index
+- Visual Change Master Map
+- parallel interoperability contract + vocabulary
+- PR #529 evidence
+- PR #554 `promotion-readiness/composed/**`
+- NDC `docs/ndc/**`
+- Identity `authority/rifat/identity/**`
+- RIFAT/Visual Control/Target Index
+- Code Atlas UIMAP/UI Bridge
+- Atlasfin structured registries como referencia solamente
+- status mailboxes/heads de Chats 1–5
+
+**Materiality Catalog NO está autorizado** en esta asignación. Sigue STANDBY_USER_INVOKED_ONLY.
+
+## Separación semántica obligatoria
+
+No confundas:
+- significado operacional NDC: `ENT.* EVT.* ACT.* STA.* MET.* ALT.* EVD.* CAP.* CAN.*`
+- significado visual Identity/VIS
+- ubicación física RIFAT/Visual Control
+- binding/application: `BND.* LYR.* recipe adapter`
+
+Relación no significa equivalencia. Ejemplo: Cobrar puede relacionar `ACT.sale.checkout` operacional con `identity::ACT.primary` visual sin que uno sustituya al otro.
+
+## Tu misión exacta
+
+1. Lee directamente las cinco mailboxes y sus exact work heads. No pidas al dueño relays.
+2. Valida zero-loss por lane y global: 929 + 827 + 271 + 70 = 2,097.
+3. Valida targetId, sourceRecordSha256/provenance, authority qualification, hashes/manifests y ausencia de canonical-ID minting.
+4. Consume la evidencia transversal de Chat 5.
+5. Para cada target, acepta exactamente una clasificación:
+   - `EXISTING_AUTHORITY_EXACT_REUSE`
+   - `EXISTING_CONCEPT_LINK_MISSING`
+   - `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`
+   - `EXISTING_AUTHORITY_CONFLICT_CURATE`
+   - `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`
+   - `TRUE_NEW_AUTHORITY_REQUIRED`
+   - `NOT_APPLICABLE`
+6. Rechaza cualquier `TRUE_NEW_AUTHORITY_REQUIRED` cuya negative-evidence checklist esté incompleta.
+7. La negative evidence mínima incluye NDC canon/registries/seeds, Identity/aliases/recipes/bindings/stacks, RIFAT/Target Index, Code Atlas/UIMAP, Atlasfin structured evidence, Factory Ledger/Evidence Index, history/PRs/docs cuando haya pista y crosswalk de Chat 5.
+8. Una búsqueda vacía aislada jamás prueba inexistencia.
+9. Separa projection debt del semantic delta.
+10. Produce conteos exactos por superficie y familia semántica.
+11. Produce `TRUE_NEW_AUTHORITY_DELTA` y `NEXT_PHASE_PLAN`.
+12. **No registres ni crees nueva autoridad en esta fase.** Nada de NDC/VIS/BND/TGT/LYR/recipes/adapters nuevos, canonical registration, projection repair o GVAE APPLY.
+
+## Archivos grandes
+
+No compongas otro archivo multi-MB monolítico si no es necesario.
+
+Usa:
+- shards deterministas de máximo 250 filas y preferentemente <= 2 MiB;
+- `resolution/part-0001.jsonl`, etc.;
+- `INDEX.json` pequeño;
+- `MANIFEST.json` con counts, source pins, hashes/blob SHAs y shard map;
+- `SUMMARY.md`;
+- subsets/deltas también shardeados si crecen.
+
+Para leer archivos grandes:
+1. code search por targetId/ID/path exacto;
+2. fetch_file por rangos;
+3. manifiestos/indexes pequeños;
+4. raw por commit SHA sólo del shard requerido;
+5. streaming línea a línea para agregados; no `json.load()` de corpus multi-MB;
+6. herramientas auxiliares sólo dentro de tu root;
+7. usa GitHub/CI existente; no cambies workflows globales por comodidad;
+8. si no hay ruta GitHub válida, `BLOCKED_EXECUTION_PATH`, no computadora del dueño.
+
+## Errores y solución inmediata
+
+- 301: usa `prismahitech/hitech-os`.
+- 404 ref/path: resuelve commit SHA y vuelve a leer por SHA; encodea espacios.
+- response truncada/EOF: no uses parcial; search/ranges/shards/streaming.
+- 403/rate limit: reduce a queries exactas y reutiliza manifests/hashes.
+- 409 SHA mismatch: re-fetch blob actual, integra sólo tu cambio, reintenta.
+- 422 branch exists: inspecciona y reutiliza si parte de autoridad correcta; no force/delete.
+- main avanzó: AutoMesh v2; drift relevante exige autoridad fresca.
+- source hash mismatch: marca drift; no corrijas hash a mano.
+- duplicate/missing/extra: FAIL; regenera desde input inmutable.
+- schema/enum desconocido: FAIL CLOSED.
+- ambigüedad NDC/Identity: conflicto/curation, nunca inferencia por selector.
+- check falla: lee logs y corrige causa; rerun sólo si transitorio.
+- FILES_MANIFEST: no tocar en worker lanes; si algún día corresponde integración global, una sola vez y con gates.
+- merge conflict: no force, no overwrite otra lane.
+- empty search: no prueba ausencia.
+- generated projection vs producto: history/authority antes de elegir dirección.
+- tool no puede ejecutar gate: read-only + blocker exacto.
+
+## Output global esperado
+
+Bajo `prisma-html/governance/visual-promotion/authority-reconciliation/composed/**`:
+- corpus shardeado reconciliado;
+- `ZERO_LOSS.json`;
+- `AUTHORITY_REUSE.json`;
+- `MISSING_LINKS.json`;
+- `APPLICATION_GAPS.json`;
+- `CURATION_CONFLICTS.json`;
+- `PROJECTION_RECONCILIATION.json`;
+- `TRUE_NEW_AUTHORITY_DELTA.json`;
+- `NEXT_PHASE_PLAN.md`;
+- `SUMMARY.md`.
+
+No reescribas resultados de Chats 1–5 por intuición. Si una lane no prueba algo, bloquea esa parte.
+
+## Cierre
+
+Cierra sólo con:
+- 2,097/2,097 exactos;
+- cero missing/extra/duplicate;
+- clasificación evidenciada para cada target;
+- TRUE_NEW con negative evidence completa;
+- semantic delta separado de projection/application debt;
+- outputs shardeados y consumibles;
+- exact heads/hashes/manifests;
+- ninguna canonical authority/runtime mutation.
+
+Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main sin instrucción explícita posterior del dueño.
