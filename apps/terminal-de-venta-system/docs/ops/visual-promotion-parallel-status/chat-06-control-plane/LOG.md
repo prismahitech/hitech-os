@@ -661,3 +661,13 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - Composer-final promotions from this audit: **0**. Remaining provisional: **1,744**. This prevents a family-level-authority fake green rather than pretending the rows are semantically closed.
 - Global accounting remains **313 accepted specific + 1,744 provisional + 40 Shared UI unresolved = 2,097**, with missing/extra/duplicate all zero and TRUE_NEW accepted = 0.
 
+## 2026-09-15 10:15 - Fresh Chat 5 support round consumed
+
+- Detected new Chat 5 mailbox head `c1e5584f3d0633a90b6c93038198ccba34af1347` after the handoff.
+- Delta inventory expanded from 5 to 10; baseline 2,097 receipt was not rebuilt.
+- New Shared UI deltas C2722826, 718C4BEE and 3863084F support `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`: existing `ACT.primary / REC.button.primary` authority is positive evidence, while exact target binding/application remains missing. None proves NDC equivalence or TRUE_NEW.
+- Delta 6A23B437 is a non-equivalence guard: the perf profile selector is performance/rendering evidence and must not be collapsed into `VIS.identity.profile`. It does not supply a replacement semantic classification.
+- Main-drift delta 8DB4370D independently corroborates the Chat 6 compare: PR #556 drift does not overlap the current semantic authority inputs used by this read-only reconciliation.
+- Chat 4 has not published a newer mailbox, so the composer does not turn these deltas into foreign-lane final classifications. Shared UI remains 30 classified / 40 unresolved.
+- Global accounting remains `313 + 1744 + 40 = 2097`; missing/extra/duplicate = 0; TRUE_NEW accepted = 0.
+
