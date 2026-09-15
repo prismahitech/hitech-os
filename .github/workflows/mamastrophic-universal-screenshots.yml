@@ -1,0 +1,372 @@
+name: Mamastrophic Universal Screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      surface:
+        description: Runtime app/surface to capture
+        required: true
+        default: pc
+        type: choice
+        options:
+          - pc
+          - tablet
+          - mobile
+          - web
+          - chart-lab
+          - control-center
+          - all
+      mode:
+        description: Screenshot evidence depth
+        required: true
+        default: screenshots
+        type: choice
+        options:
+          - screenshots
+          - screenshotsqa
+      workers:
+        description: Playwright workers per surface
+        required: true
+        default: '4'
+        type: choice
+        options: ['1', '2', '4', '6', '8']
+      allow_partial:
+        description: Allow bounded partial scroll coverage
+        required: true
+        default: true
+        type: boolean
+      deep_scroll:
+        description: Mamastrophic DeepScroll policy
+        required: true
+        default: auto
+        type: choice
+        options: [auto, 'on', 'off']
+  workflow_call:
+    inputs:
+      surface:
+        required: false
+        default: pc
+        type: string
+      mode:
+        required: false
+        default: screenshots
+        type: string
+      workers:
+        required: false
+        default: '4'
+        type: string
+      allow_partial:
+        required: false
+        default: true
+        type: boolean
+      deep_scroll:
+        required: false
+        default: auto
+        type: string
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/mamastrophic-universal-screenshots.yml'
+      - 'tools/Plawright Mamastrophic/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mamshot-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ inputs.surface || 'all' }}
+  cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  PYTHONDONTWRITEBYTECODE: '1'
+  PRISMA_TERMINAL_ROOT: ${{ github.workspace }}/apps/terminal-de-venta-system
+
+jobs:
+  plan:
+    name: Resolve selected runtime surfaces
+    runs-on: ubuntu-24.04
+    outputs:
+      surfaces: ${{ steps.matrix.outputs.surfaces }}
+    steps:
+      - id: matrix
+        shell: bash
+        env:
+          REQUESTED_SURFACE: ${{ inputs.surface || 'all' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          allowed = ["pc","tablet","mobile","web","chart-lab","control-center"]
+          value = (os.environ.get("REQUESTED_SURFACE") or "all").strip().lower()
+          if value == "all":
+              selected = allowed
+          elif value in allowed:
+              selected = [value]
+          else:
+              raise SystemExit(f"Unsupported surface: {value}")
+          print("surfaces=" + json.dumps(selected, separators=(",",":")))
+          PY
+
+  capture:
+    name: Capture ${{ matrix.surface }}
+    needs: plan
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        surface: ${{ fromJSON(needs.plan.outputs.surfaces) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CAPTURE_MODE: ${{ inputs.mode || 'screenshots' }}
+      CAPTURE_WORKERS: ${{ inputs.workers || '4' }}
+      CAPTURE_DEEP_SCROLL: ${{ inputs.deep_scroll || 'auto' }}
+      CAPTURE_ALLOW_PARTIAL: ${{ inputs.allow_partial == false && 'false' || 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install repository dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify universal artifact packager
+        run: python -m unittest -v "tools/Plawright Mamastrophic/tests/test_universal_artifact.py"
+
+      - name: Install Playwright Chromium
+        run: python apps/terminal-de-venta-system/products/pc/app/tools/setup_pc_playwright_ci.py
+
+      - name: Prepare isolated runtime prerequisites
+        shell: bash
+        env:
+          SURFACE: ${{ matrix.surface }}
+        run: |
+          set -euo pipefail
+          raw="$RUNNER_TEMP/mamshot/$SURFACE/raw"
+          mkdir -p "$raw/reports"
+
+          LICENSE_PATH="$RUNNER_TEMP/mamshot-license-$SURFACE.json"
+          echo "PRISMA_LICENSE_PATH=$LICENSE_PATH" >> "$GITHUB_ENV"
+          echo "PRISMA_LICENSE_ALLOW_UNSIGNED=1" >> "$GITHUB_ENV"
+          echo "PRISMA_RUNTIME_MODE=dev" >> "$GITHUB_ENV"
+          echo "PRISMA_RUNTIME_ROLE=$SURFACE" >> "$GITHUB_ENV"
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          now = datetime.now(timezone.utc)
+          surface = os.environ["SURFACE"]
+          payload = {
+              "schemaVersion": "1.0.0",
+              "licenseId": f"lic_mamshot_{surface}_ci",
+              "customerId": "cust_mamshot_ci",
+              "businessId": "biz_hitech_default",
+              "storeId": "store_obrera_04",
+              "plan": "TABLET_PC_MANAGED",
+              "state": "active",
+              "validFrom": (now - timedelta(days=1)).isoformat().replace("+00:00", "Z"),
+              "validUntil": (now + timedelta(days=7)).isoformat().replace("+00:00", "Z"),
+              "assignmentState": "assigned",
+              "limits": {"maxDevices": 8},
+              "features": {},
+              "capabilities": {},
+              "notes": ["Ephemeral unsigned CI fixture for screenshot evidence only"],
+          }
+          Path(os.environ["LICENSE_PATH"]).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          if [ "$SURFACE" = "pc" ]; then
+            db="$GITHUB_WORKSPACE/tools/_local/data/terminal-de-venta-system/canonical.db"
+            mkdir -p "$(dirname "$db")"
+            echo "DATABASE_URL=file:$db" >> "$GITHUB_ENV"
+            export DATABASE_URL="file:$db"
+            pnpm -C apps/terminal-de-venta-system/products/pc/app run prisma:generate
+            pnpm -C apps/terminal-de-venta-system/products/pc/app run db:canonical:migrate
+          elif [ "$SURFACE" = "tablet" ]; then
+            mkdir -p apps/terminal-de-venta-system/products/tablet/app/data
+            pnpm -C apps/terminal-de-venta-system/products/tablet/app run prisma:generate
+            pnpm -C apps/terminal-de-venta-system/products/tablet/app exec prisma db push --schema prisma/schema.prisma
+          fi
+
+      - name: Launch isolated runtime
+        id: launch
+        continue-on-error: true
+        shell: bash
+        env:
+          SURFACE: ${{ matrix.surface }}
+        run: |
+          set -euo pipefail
+          raw="$RUNNER_TEMP/mamshot/$SURFACE/raw"
+          mkdir -p "$raw/reports"
+
+          case "$SURFACE" in
+            pc)
+              port=3130
+              strategy=next-dev-isolated-ci
+              cmd='pnpm -C apps/terminal-de-venta-system/products/pc/app dev'
+              ;;
+            tablet)
+              port=3120
+              strategy=next-dev-isolated-ci
+              cmd='pnpm -C apps/terminal-de-venta-system/products/tablet/app dev'
+              ;;
+            mobile)
+              port=3140
+              strategy=pwa-next-dev-isolated-ci
+              cmd='pnpm -C apps/terminal-de-venta-system/products/mobile/app dev'
+              ;;
+            web)
+              port=3110
+              strategy=next-dev-isolated-ci
+              cmd='pnpm -C apps/terminal-de-venta-system/products/web/app dev'
+              ;;
+            chart-lab)
+              port=3000
+              strategy=next-dev-isolated-ci
+              cmd='pnpm -C apps/terminal-de-venta-system/products/chart-lab/app dev'
+              ;;
+            control-center)
+              port=3150
+              strategy=static-web-owner-isolated-ci
+              cmd='python3 -m http.server 3150 --bind 127.0.0.1 --directory apps/terminal-de-venta-system/prisma-control-center/internal/web'
+              ;;
+            *)
+              echo "Unsupported surface: $SURFACE" >&2
+              exit 2
+              ;;
+          esac
+
+          echo "port=$port" >> "$GITHUB_OUTPUT"
+          echo "strategy=$strategy" >> "$GITHUB_OUTPUT"
+          echo "command=$cmd" > "$raw/reports/runtime-launch-command.txt"
+          echo "$strategy" > "$raw/reports/runtime-launch-strategy.txt"
+
+          bash -lc "$cmd" > "$raw/reports/runtime.stdout.log" 2> "$raw/reports/runtime.stderr.log" &
+          echo $! > "$raw/reports/runtime.pid"
+
+          for i in $(seq 1 90); do
+            if curl -fsS "http://127.0.0.1:$port/" >/dev/null 2>&1; then
+              echo "RUNTIME_READY surface=$SURFACE port=$port strategy=$strategy"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "RUNTIME_NOT_READY surface=$SURFACE port=$port strategy=$strategy" >&2
+          tail -n 200 "$raw/reports/runtime.stdout.log" || true
+          tail -n 200 "$raw/reports/runtime.stderr.log" || true
+          exit 3
+
+      - name: Capture with canonical Mamastrophic engine
+        id: capture
+        if: always()
+        continue-on-error: true
+        shell: bash
+        env:
+          SURFACE: ${{ matrix.surface }}
+          LAUNCH_OUTCOME: ${{ steps.launch.outcome }}
+        run: |
+          set -euo pipefail
+          raw="$RUNNER_TEMP/mamshot/$SURFACE/raw"
+          mkdir -p "$raw/reports"
+
+          if [ "$LAUNCH_OUTCOME" != "success" ]; then
+            printf '{"status":"FAIL","surface":"%s","mode":"%s","reason":"RUNTIME_LAUNCH_FAILED"}\n' "$SURFACE" "$CAPTURE_MODE" > "$raw/reports/summary.json"
+            echo "capture_exit_code=91" >> "$GITHUB_OUTPUT"
+            exit 91
+          fi
+
+          args=(
+            -NoProfile
+            -ExecutionPolicy Bypass
+            -File "tools/Plawright Mamastrophic/RUN.ps1"
+            -Mode "$CAPTURE_MODE"
+            -Surface "$SURFACE"
+            -Workers "$CAPTURE_WORKERS"
+            -Shards 1
+            -GpuMode off
+            -DeepScroll "$CAPTURE_DEEP_SCROLL"
+            -ArtifactRoot "$raw"
+            -NoZip
+          )
+          if [ "$CAPTURE_ALLOW_PARTIAL" = "true" ]; then
+            args+=(-AllowPartial)
+          fi
+
+          set +e
+          pwsh "${args[@]}"
+          code=$?
+          set -e
+          echo "capture_exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit "$code"
+
+      - name: Build uniform screenshot artifact
+        id: package
+        if: always()
+        continue-on-error: true
+        shell: bash
+        env:
+          SURFACE: ${{ matrix.surface }}
+          PORT: ${{ steps.launch.outputs.port }}
+          LAUNCH_STRATEGY: ${{ steps.launch.outputs.strategy }}
+          CAPTURE_CODE: ${{ steps.capture.outputs.capture_exit_code }}
+        run: |
+          set -euo pipefail
+          raw="$RUNNER_TEMP/mamshot/$SURFACE/raw"
+          bundle="$RUNNER_TEMP/mamshot/$SURFACE/bundle"
+          port="${PORT:-0}"
+          strategy="${LAUNCH_STRATEGY:-runtime-launch-failed}"
+          code="${CAPTURE_CODE:-91}"
+          python "tools/Plawright Mamastrophic/ci/build_universal_artifact.py"             --raw-root "$raw"             --out-root "$bundle"             --surface "$SURFACE"             --mode "$CAPTURE_MODE"             --repo-head "$GITHUB_SHA"             --run-id "$GITHUB_RUN_ID"             --run-attempt "$GITHUB_RUN_ATTEMPT"             --workflow "$GITHUB_WORKFLOW"             --launch-strategy "$strategy"             --port "$port"             --capture-exit-code "$code"
+
+      - name: Upload universal screenshot artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: mamshot-${{ matrix.surface }}-${{ env.CAPTURE_MODE }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/mamshot/${{ matrix.surface }}/bundle/**
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 6
+
+      - name: Enforce honest final status
+        if: always()
+        shell: bash
+        env:
+          SURFACE: ${{ matrix.surface }}
+        run: |
+          set -euo pipefail
+          manifest="$RUNNER_TEMP/mamshot/$SURFACE/bundle/MANIFEST.json"
+          test -s "$manifest"
+          python - "$manifest" "$CAPTURE_ALLOW_PARTIAL" <<'PY'
+          import json,sys
+          p, allow = sys.argv[1], sys.argv[2].lower() == "true"
+          d=json.load(open(p,encoding="utf-8"))
+          status=d.get("status")
+          if status == "PASS":
+              print("MAMSHOT_STATUS=PASS")
+              raise SystemExit(0)
+          if status == "PARTIAL_PASS" and allow:
+              print("MAMSHOT_STATUS=PARTIAL_PASS")
+              raise SystemExit(0)
+          print("MAMSHOT_STATUS=" + str(status))
+          print("MAMSHOT_FAILURE_REASONS=" + json.dumps(d.get("failureReasons",[])))
+          raise SystemExit(2)
+          PY
