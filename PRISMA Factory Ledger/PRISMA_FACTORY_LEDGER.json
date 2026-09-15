@@ -2011,7 +2011,92 @@
         "claim runtime/browser or production certification from registration-only authority or source-static checks",
         "bypass surface-specific fixture, license, auth or runtime prerequisites merely to make screenshots green"
       ]
+    },
+    {
+      "id": "verticals.accounting_management",
+      "displayName": "PRISMA Vertical Contabilidad y gestión",
+      "domain": "verticals",
+      "surfaces": [
+        "governance",
+        "shared_core",
+        "tablet",
+        "pc",
+        "mobile"
+      ],
+      "classification": "BUILD",
+      "status": "NOT_STARTED",
+      "stateLabel": "ACCOUNTING_MANAGEMENT_VERTICAL_REGISTERED_BUILD_NOT_STARTED",
+      "doNotRebuild": false,
+      "nextGate": "On exact current main after this registration is merged, run the universal anti-rework PROPOSAL gate for verticals.accounting_management. Then obtain a fresh task-exact Authority Mesh for the bounded PRISMA VERTICALS documentation/registry work and run the anti-rework MUTATION gate before repository writes. Reuse the existing PRISMA Core + Vertical Layer architecture. The first implementation gate is documentation/contracts only: define Contabilidad y gestión as a draft vertical, explicitly model Tablet operational capture, PC deep governance/reconciliation and Mobile supervision, and keep product runtime/UI, database/schema, Prisma generation, ports, processes and deployment out of scope.",
+      "evidence": [
+        "Registration-only Authority Mesh run 35006282287 artifact 10411488668; PASS_COMPOSED_AUTHORITY_MESH at main 5f7cddebb7316597e95c0663d3a3638e826885fd; requestId f0ed8a1139733546; requestDigest 02014742b76b17a9c7494f64f6117d9e06cbf34e146b3370fa7cf5f4b951fffa; composed sha256 f3681d2f4158a03bf1bd5b99c90346c8ad05abc0869a40a5bdef8ac14669e19b; uploaded artifact sha256:8b3bdcc7f57ce16c5426fb40a65098214e61e4cc3b3f6566cd257c1aa14cd960",
+        "Existing PRISMA VERTICALS architecture, registry/profile contracts and Tablet/PC boundary documents are reuse dependencies. This registration authorizes no rebuild of Core or existing verticals.",
+        "The registration scope explicitly requires Mobile to be modeled as supervision for this new vertical while preserving Tablet operates, PC governs, Mobile supervises, Core records and Control audits."
+      ],
+      "doesNotProve": [
+        "The Contabilidad y gestión vertical profile, routes, entities, events, permissions, fixtures or documentation have been implemented",
+        "Any Tablet, PC or Mobile runtime behavior exists for this vertical",
+        "Any accounting, tax, fiscal, legal, audit or regulatory compliance certification",
+        "Any UI/demo HTML has been created or visually certified",
+        "Anti-rework PROPOSAL or MUTATION has passed for the post-registration documentation work"
+      ],
+      "allowedActions": [
+        "reuse the existing PRISMA Core and PRISMA VERTICALS architecture without rebuilding them",
+        "after the post-merge gates, add one draft accounting_management vertical profile and bounded documentation/contracts describing capabilities, responsibilities, events, permissions, offline/sync policy, KPIs and acceptance criteria",
+        "define Tablet as bounded operational capture/consultation, PC as deep accounting/management governance and reconciliation, and Mobile as supervision/alerts/approvals/summaries",
+        "keep claims clearly classified as architecture/demo/roadmap until separate runtime evidence exists"
+      ],
+      "forbiddenActions": [
+        "modify Tablet, PC or Mobile product/runtime source as part of registration or the first documentation gate",
+        "add accounting-specific fields directly into universal Core entities when they belong in a vertical extension",
+        "mutate Prisma schema, migrations, databases, customer data, ports, processes, dev servers or deployments",
+        "claim SAT, tax, accounting, legal, audit, payroll or regulatory compliance from architecture documents",
+        "treat registration-only authority as implementation, runtime certification or production readiness"
+      ]
+    },
+    {
+      "id": "verticals.professional_corporate_services",
+      "displayName": "PRISMA Vertical Servicios Profesionales y Corporativos",
+      "domain": "verticals",
+      "surfaces": [
+        "governance",
+        "shared_core",
+        "tablet",
+        "pc",
+        "mobile"
+      ],
+      "classification": "BUILD",
+      "status": "NOT_STARTED",
+      "stateLabel": "PROFESSIONAL_CORPORATE_SERVICES_VERTICAL_REGISTERED_BUILD_NOT_STARTED",
+      "doNotRebuild": false,
+      "nextGate": "On exact current main after this registration is merged, run the universal anti-rework PROPOSAL gate for verticals.professional_corporate_services. Then obtain a fresh task-exact Authority Mesh for the bounded PRISMA VERTICALS documentation/contracts implementation and run the MUTATION gate before repository writes. Reuse the existing Core + Vertical Layer architecture. The first implementation gate is documentation/contracts only and must model Tablet operations, PC governance and Mobile supervision. Keep verticals.accounting_management separate and unchanged.",
+      "evidence": [
+        "Registration-only Authority Mesh run 35014950489 artifact 10414742606; PASS_COMPOSED_AUTHORITY_MESH at main e643fe4b54be214b619805dc4fa0f35fecb82297; requestId eff3221d72f49bb8; requestDigest 65ddf0edc20fc538fbb84a83ce3ec1dfd58bf6358f3839146928f54fa06b78cd; composed sha256 917bd793dff3c669a306c26ab82002d0f936e73c6b84d81fb6594c75b5bc189f; uploaded artifact sha256:f1c6beebc85eb7898f97694692b03a5557cd9d6afdd2f1a302699aed1b50b74c",
+        "The authority request explicitly declares verticals.professional_corporate_services as NEW and SEPARATE from verticals.accounting_management and forbids rename, replacement, supersession or absorption of the accounting vertical.",
+        "Existing PRISMA VERTICALS registry/profile/capability/routing/entity/event/permission/UX/validation authorities are reuse dependencies; this registration authorizes no rebuild of existing verticals or Core."
+      ],
+      "doesNotProve": [
+        "The Servicios Profesionales y Corporativos vertical profile, routes, entities, events, permissions, UX, fixtures or documentation have been implemented",
+        "Any Tablet, PC or Mobile runtime behavior exists for this vertical",
+        "Any legal, accounting, fiscal, labor, financial, compliance or professional-practice certification",
+        "Any CIOB-specific implementation, demo HTML or visual certification exists",
+        "Post-registration PROPOSAL or MUTATION authorization"
+      ],
+      "allowedActions": [
+        "reuse the existing PRISMA Core and PRISMA VERTICALS architecture without rebuilding them",
+        "after post-merge gates, add one draft professional_corporate_services vertical profile and the bounded contract/documentation package",
+        "model consulting, corporate services, accounting/fiscal support, legal/corporate support, HR/labor, finance advisory, back office, compliance/document management and soft-landing/market-entry as configurable specialization families inside the broad vertical",
+        "define Tablet for bounded operational capture, PC for deep governance and Mobile for supervision",
+        "keep all claims at architecture/demo/roadmap maturity until separate runtime evidence exists"
+      ],
+      "forbiddenActions": [
+        "rename, replace, merge into or supersede verticals.accounting_management",
+        "modify Tablet, PC or Mobile product/runtime source as part of registration or the first documentation gate",
+        "mutate Prisma schema, migrations, databases, customer data, processes, ports, dev servers or deployments",
+        "claim certified legal, accounting, fiscal, labor, compliance or regulatory practice from architecture documents",
+        "treat this registration-only authority as runtime implementation or production readiness"
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T16:16:00Z"
+  "updatedAt": "2026-09-15T19:42:00Z"
 }
