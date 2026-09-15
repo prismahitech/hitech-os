@@ -8819,6 +8819,888 @@
       ],
       "qaNote": "Validar que Pendientes por enviar no use términos técnicos y que el usuario pueda regresar a Vender.",
       "businessExample": "Ejemplo food_truck-Pendientes por enviar-pending_sync: pedido rápido, menú limitado, cobro, estado offline, corte por ubicación o evento con menú agotado y recuperación guiada."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es empty?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es loading?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es error?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es success?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es disabled?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es offline?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Clientes",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Clientes cuando el estado es pending_sync?",
+      "visibleAnswer": "En Clientes, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Clientes mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Clientes-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es empty?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es loading?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es error?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es success?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es disabled?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es offline?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Diagnóstico",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Diagnóstico cuando el estado es pending_sync?",
+      "visibleAnswer": "En Diagnóstico, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Diagnóstico mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Diagnóstico-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es empty?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es loading?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es error?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es success?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es disabled?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es offline?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Expediente",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Expediente cuando el estado es pending_sync?",
+      "visibleAnswer": "En Expediente, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Expediente mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Expediente-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es empty?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es loading?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es error?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es success?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es disabled?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es offline?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Documentos",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Documentos cuando el estado es pending_sync?",
+      "visibleAnswer": "En Documentos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Documentos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Documentos-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es empty?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es loading?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es error?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es success?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es disabled?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es offline?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Tareas y vencimientos",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Tareas y vencimientos cuando el estado es pending_sync?",
+      "visibleAnswer": "En Tareas y vencimientos, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Tareas y vencimientos mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Tareas y vencimientos-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es empty?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es loading?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es error?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es success?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es disabled?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es offline?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Aprobaciones",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Aprobaciones cuando el estado es pending_sync?",
+      "visibleAnswer": "En Aprobaciones, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Aprobaciones mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Aprobaciones-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "empty",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es empty?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-empty: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "loading",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es loading?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-loading: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "error",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es error?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-error: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "success",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es success?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-success: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "disabled",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es disabled?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-disabled: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "offline",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es offline?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-offline: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "screen": "Seguimiento",
+      "state": "pending_sync",
+      "operatorQuestion": "¿Qué hago en Seguimiento cuando el estado es pending_sync?",
+      "visibleAnswer": "En Seguimiento, PRISMA debe mostrar una acción clara para servicios profesionales sin exponer lenguaje técnico.",
+      "allowedActions": [
+        "abrir detalle",
+        "registrar avance",
+        "volver a Clientes"
+      ],
+      "blockedActions": [
+        "administración profunda desde Tablet",
+        "cambio de política desde Mobile"
+      ],
+      "qaNote": "Validar que Seguimiento mantenga trazabilidad, autoridad por superficie y lenguaje humano.",
+      "businessExample": "Ejemplo professional_corporate_services-Seguimiento-pending_sync: seguimiento de cliente, servicio, documentos, responsables, vencimientos y evidencia."
     }
   ]
 }
