@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "IN_PROGRESS_READ_ONLY",
-  "updatedAt": "2026-09-15T09:40:00-06:00",
-  "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "updatedAt": "2026-09-15T10:14:37-06:00",
+  "baseHead": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "DYNAMIC_CROSS_AUTHORITY_SUPPORT active. Current mailboxes Chats 1-4 were re-read. Five bounded target-specific delta receipts are now published in Chat 5's mailbox without rebuilding the accepted 2,097-target baseline. WRITE_GATE_PATH_PENDING still blocks only governed output-root writes.",
+  "summary": "DYNAMIC_CROSS_AUTHORITY_SUPPORT continues on current main 8db4370d579014f8fed6e190ffce45e1589b33d9. Accepted 2,097-target baseline remains intact and was not rebuilt. Three new Shared UI target-specific semantic/application deltas plus one current-main drift revalidation receipt were published. WRITE_GATE_PATH_PENDING still blocks governed output-root writes only.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -30,14 +30,22 @@
     "Shared UI exact Identity authority contains BND.ACT.PRIMARY.SHAREDUI.V1 -> ACT.primary / REC.button.primary with status BLOCKED_BY_MISSING_BINDING and zero targets. This is positive existing semantic authority and is directly relevant to bounded Shared UI primary-action visual targets.",
     "Published target-specific Shared UI deltas for TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1 and TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1 suggesting EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while explicitly preserving ACT.primary != ACT.sale.checkout.",
     "Published Tablet accent deltas for TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1 and TGT.CENSUS.TABLET.2E41F7A945432E762571.V1 confirming existing TOK.color.accent / BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1 ambiguity and suggesting EXISTING_AUTHORITY_CONFLICT_CURATE.",
-    "Published PC delta for TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1 preserving PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED because projection is MISSING, while recording historical VIS.SURFACE.CONTENT.PRIMARY intent as positive anti-TRUE_NEW evidence rather than canonical Identity authority."
+    "Published PC delta for TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1 preserving PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED because projection is MISSING, while recording historical VIS.SURFACE.CONTENT.PRIMARY intent as positive anti-TRUE_NEW evidence rather than canonical Identity authority.",
+    "Current main advanced 8 commits from 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9 to 8db4370d579014f8fed6e190ffce45e1589b33d9. Exact compare changes only prisma-html/FILES_MANIFEST.json, docs/ops/README.md, and visual-operating-graph foundation docs/governance files; no NDC, Identity, RIFAT/Target Index, candidate corpus, Atlasfin registry, Factory Ledger, or Evidence Index path changed.",
+    "Main drift is non-overlapping for current read-only semantic support. Baseline rebuild=false and prior target deltas remain consumable. If governed writes later become authorized, write-gate/Authority Mesh must be re-pinned at then-current main.",
+    "Chat 1, Chat 2 and Chat 3 now report read-only reconciliation structurally complete. Their 1,744 combined EXISTING_CONCEPT_LINK_MISSING rows remain composer-provisional because Chat 6 requires target-specific concept qualification. Chat 4 remains the only surface lane with 40 target-specific unresolved rows.",
+    "Published Shared UI delta TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1: exact CheckoutButton target has existing ACT.primary / REC.button.primary Shared UI semantic authority but no exact binding; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, HIGH confidence, while preserving ACT.primary != ACT.sale.checkout.",
+    "Published Shared UI delta TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1: .actionButton base target has existing ACT.primary Shared UI authority but missing governed binding/application; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, HIGH confidence.",
+    "Published Shared UI delta TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1: grouped CheckoutButton + primary ScanButton reference-effects target has existing primary visual authority but no exact binding; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, MEDIUM_HIGH confidence and explicit no NDC equivalence."
   ],
   "decisions": [
     "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
     "Do not assert TRUE_NEW_AUTHORITY_REQUIRED from Chat 5. Surface workers must join target-specific negative evidence across the full checklist before that classification.",
     "Treat NDC operational meaning, Identity visual meaning, physical location and binding/application authority as separate domains; never collapse by name similarity.",
     "Do not use visual.operating_graph_v1 as this lane's capability, prerequisite or blocker.",
-    "Do not inspect Materiality Catalog, recensus, broad-rediscover, rebuild authority systems, repair projection, mutate product/runtime, mint canonical IDs, or perform GVAE APPLY."
+    "Do not inspect Materiality Catalog, recensus, broad-rediscover, rebuild authority systems, repair projection, mutate product/runtime, mint canonical IDs, or perform GVAE APPLY.",
+    "Prior 5 delta receipts remain valid after current-main drift because their authority source families are byte-path non-overlapping with the exact main compare.",
+    "Prioritize Chat 4's 40 Shared UI unresolved target-specific joins. Treat Tablet/PC/Mobile concept-link rows as structurally complete but composer-provisional unless a bounded target-specific qualification request appears."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
@@ -46,7 +54,11 @@
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_2E41F7A9.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_09F96569.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_BA225641.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_PC_6CC072FF.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_PC_6CC072FF.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_C2722826.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_718C4BEE.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3863084F.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json"
   ],
   "validations": [
     {
@@ -83,17 +95,27 @@
       "name": "Dynamic cross-authority delta publication",
       "result": "PASS_READ_ONLY",
       "detail": "5 bounded receipts published from current worker-mailbox questions. No baseline rebuild, governed output-root write, foreign mailbox mutation, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
+    },
+    {
+      "name": "Current-main read-only drift revalidation",
+      "result": "PASS_NON_OVERLAPPING",
+      "detail": "70f381e9... -> 8db4370d... is 8 commits / 13 changed paths limited to visual-operating-graph foundation, FILES_MANIFEST, and docs/ops README. Current cross-authority source families used by the baseline/deltas are unchanged by path."
+    },
+    {
+      "name": "Shared UI dynamic delta round 2",
+      "result": "PASS_READ_ONLY",
+      "detail": "3 additional bounded Shared UI target receipts published. No foreign mailbox write, baseline rebuild, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
     }
   ],
   "unresolved": [
-    "Continue target-specific support for Chat 1's remaining 924 semantic-link reviews and Chat 4's remaining target-specific Shared UI joins. Do not globalize or rebuild the baseline corpus.",
-    "Surface workers retain final per-target classification ownership; Chat 5 delta receipts are evidence inputs, not foreign-lane decisions.",
+    "Chat 4 still owns 40 target-specific Shared UI rows. Chat 5 has now published five Shared UI deltas total (09F96569, BA225641, C2722826, 718C4BEE, 3863084F) for direct consumption.",
+    "Chat 6 still holds 1,744 Tablet/PC/Mobile EXISTING_CONCEPT_LINK_MISSING rows provisional pending target-specific existing-concept qualification or a governed rule. Chat 5 will answer bounded target/concept questions but will not rebuild those surface corpora.",
     "WRITE_GATE_PATH_PENDING remains only for governed output-root writes under Chat 5's assigned work branch.",
-    "Any future TRUE_NEW candidate still requires complete target-specific negative evidence across NDC, Identity, RIFAT/Target Index, Code Atlas/UIMAP/UI Bridge, Atlasfin structured reference, Factory Ledger/Evidence Index, relevant history, and current cross-authority deltas."
+    "Any TRUE_NEW candidate still requires complete target-specific negative evidence across every required authority family; none is asserted by Chat 5."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT by re-reading current Chats 1-4 mailboxes, taking the next exact target/concept question, performing bounded cross-authority analysis, and publishing another compact delta receipt. Do not wait for WRITE_GATE_PATH_PENDING.",
+  "nextAction": "Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT with Chat 4 as first priority: take the next exact Shared UI target whose selector/component has a plausible existing Identity/NDC concept relation, perform bounded evidence review, and publish another delta. Also answer any target-specific qualification request from Chat 6 for the 1,744 provisional concept-link rows. Do not wait for the write gate.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
@@ -125,7 +147,7 @@
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
       "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
       "activatedAt": "2026-09-15T09:32:00-06:00",
-      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
       "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
       "baselineReceiptState": "READ_ONLY_EVIDENCE_READY",
       "baselineInputCount": 2097,
@@ -175,29 +197,70 @@
           "targetId": "TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1",
           "suggestedClassification": "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
           "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_C2722826.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_718C4BEE.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3863084F.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "confidence": "MEDIUM_HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json",
+          "topic": "main-drift",
+          "suggestedClassification": "READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE",
+          "confidence": "HIGH"
         }
       ],
-      "deltaReceiptCount": 5,
+      "deltaReceiptCount": 9,
       "lastMailboxScan": {
         "chat1": {
-          "state": "IN_PROGRESS",
-          "pendingSemanticReview": 924,
+          "state": "READ_ONLY_ANALYSIS_COMPLETE",
+          "input": 929,
+          "classificationsComplete": true,
+          "provisionalConceptLinkForComposer": 924,
           "trueNewDeclared": 0
         },
         "chat2": {
-          "state": "IN_PROGRESS",
-          "readOnlyAnalysisComplete": true,
+          "state": "READ_ONLY_ANALYSIS_COMPLETE",
+          "input": 827,
+          "classificationsComplete": true,
+          "provisionalConceptLinkForComposer": 687,
           "trueNewDeclared": 0
         },
         "chat3": {
-          "state": "IN_PROGRESS",
-          "readOnlyAnalysisComplete": true,
+          "state": "READ_ONLY_ANALYSIS_COMPLETE",
+          "input": 271,
+          "classificationsComplete": true,
+          "provisionalConceptLinkForComposer": 133,
           "trueNewDeclared": 0
         },
         "chat4": {
-          "state": "IN_PROGRESS",
+          "state": "IN_PROGRESS_READ_ONLY",
+          "input": 70,
+          "classifiedSpecific": 30,
           "unresolvedTargetSpecific": 40,
           "trueNewDeclared": 0
+        },
+        "chat6": {
+          "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
+          "acceptedSpecific": 313,
+          "provisionalConceptLink": 1744,
+          "unresolvedSharedUi": 40
         }
       }
     }
