@@ -4,12 +4,12 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "DONE",
-  "updatedAt": "2026-09-14T16:52:00-06:00",
-  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
-  "workHead": "86ed854e694ecd9b67a4f8bde15cb2a533f05b8f",
-  "summary": "CANONICAL_PROMOTION_READINESS_RESOLUTION completed and merged. All five worker receipts were independently accepted; deterministic composition accounts for exactly 2,097/2,097 targets with reuse=0, canonicalRegistration=0, blocked=2,097 and notApplicable=0. PR #554 merged to canonical main 46c9032... with a tree byte-equivalent to the final green PR head. Post-merge CI/ForgeOS/Sync and fresh task-exact Authority Mesh all PASS. The phase stops truthfully at READY_FOR_CANONICAL_PROMOTION_INTEGRATION: no canonical registration, product/runtime mutation, Materiality fallback, projection repair or GVAE APPLY was authorized or performed.",
+  "state": "NOT_STARTED",
+  "updatedAt": "2026-09-14T23:30:00Z",
+  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "workBranch": "chat6/authority-reconciliation-composer-20260914",
+  "workHead": null,
+  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER. Prior promotion-readiness phase remains closed and must not be repeated.",
   "blockers": [],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -101,7 +101,8 @@
     "PR #554 merged as 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0. Compare final PR head to merged main changes zero files; merged tree is 46dbb1142c06ef346ee197ad420c385b9bc9f96a.",
     "Post-merge main gates PASS: CI 34905943686, ForgeOS 34905943710 and Sync Sentinel 34905943705.",
     "Fresh post-merge task-exact AutoMesh run 34906005888 passed PASS_COMPOSED_AUTHORITY_MESH on exact main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with both lanes at 100% required-authority coverage, zero missing authority, zero blockers and mandatory Layer Map generation.",
-    "Materiality Catalog remained uninspected throughout. Product/runtime mutation=false; canonical authority mutation=false; projection repair=false; GVAE APPLY=false."
+    "Materiality Catalog remained uninspected throughout. Product/runtime mutation=false; canonical authority mutation=false; projection repair=false; GVAE APPLY=false.",
+    "Owner assignment 2026-09-14T23:30:00Z: compose only the true authority delta from the certified 2,097-target corpus; no recensus/rebuild."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -147,7 +148,8 @@
     "Treat collision analysis separately from semantic equivalence; visual or physical sameness never auto-coalesces canonical meaning.",
     "Because safe exact reuse=0 and safe exact canonical registration=0, perform no canonical authority mutation. Stop this phase at READY_FOR_CANONICAL_PROMOTION_INTEGRATION.",
     "Do not manufacture Work Entry APPLY scope from an empty registration plan. Exact-head PR and post-merge Visual Work Entry diff gates passed while no canonical target registration or GVAE APPLY was attempted.",
-    "Preserve all 2,097 blocked outcomes as truthful readiness evidence for a later authority-resolution phase rather than downgrading blockers into guessed registrations."
+    "Preserve all 2,097 blocked outcomes as truthful readiness evidence for a later authority-resolution phase rather than downgrading blockers into guessed registrations.",
+    "Execute the new authority-reconciliation composer assignment from the latest OWNER_ASSIGNMENT block in LOG.md; canonical registration is explicitly out of scope."
   ],
   "changedPaths": [
     "prisma-html/FILES_MANIFEST.json",
@@ -525,10 +527,13 @@
       "details": "repoHead 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest a5184a8b1a7b772f2afde7a34108b007047f41d441ba4c8faa85f7b8e7e93adb; composed artifact sha256 c8c16b29c700dd7180542bf7142910533f8f70952e83a963e627ccdecb47a1f6; both lanes 100%; blockers=0; Layer Map generated."
     }
   ],
-  "unresolved": [],
+  "unresolved": [
+    "Consume Chats 1-5 new authority-reconciliation receipts when available.",
+    "Determine exact true-new-authority delta only after complete negative-evidence validation."
+  ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Hold at READY_FOR_CANONICAL_PROMOTION_INTEGRATION. A later phase may resolve the 2,097 authority gaps and produce a new exact registration plan. No canonical registration or GVAE APPLY is authorized by this completed phase.",
+  "userActionRequested": "",
+  "nextAction": "Read latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat6/authority-reconciliation-composer-20260914, perform GitHub-only anti-rework/authority preflight as required, then compose the new phase.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
@@ -1106,6 +1111,18 @@
     "canonicalPromptPath": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_PARALLEL_CHAT_PROMPTS.md",
     "statusIndexPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
     "statusContractPath": "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
-    "phaseOutputRoot": "prisma-html/governance/visual-promotion/promotion-readiness"
+    "phaseOutputRoot": "prisma-html/governance/visual-promotion/promotion-readiness",
+    "authorityReconciliationAssignment": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "assigned": true,
+      "assignedAt": "2026-09-14T23:30:00Z",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat6/authority-reconciliation-composer-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/**",
+      "expectedInputCount": 2097,
+      "materialityCatalogAuthorized": false,
+      "githubOnly": true,
+      "status": "ASSIGNED_NOT_STARTED"
+    }
   }
 }
