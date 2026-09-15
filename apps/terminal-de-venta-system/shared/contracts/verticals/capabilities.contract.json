@@ -119,6 +119,46 @@
       "id": "field_route.routes",
       "vertical": "field_route",
       "displayName": "Rutas"
+    },
+    {
+      "id": "professional_services.clients",
+      "vertical": "professional_corporate_services",
+      "displayName": "Clientes y expedientes"
+    },
+    {
+      "id": "professional_services.engagements",
+      "vertical": "professional_corporate_services",
+      "displayName": "Servicios y encargos"
+    },
+    {
+      "id": "professional_services.documents",
+      "vertical": "professional_corporate_services",
+      "displayName": "Documentos y requisitos"
+    },
+    {
+      "id": "professional_services.tasks",
+      "vertical": "professional_corporate_services",
+      "displayName": "Tareas y responsables"
+    },
+    {
+      "id": "professional_services.deadlines",
+      "vertical": "professional_corporate_services",
+      "displayName": "Vencimientos y compromisos"
+    },
+    {
+      "id": "professional_services.approvals",
+      "vertical": "professional_corporate_services",
+      "displayName": "Aprobaciones controladas"
+    },
+    {
+      "id": "professional_services.evidence",
+      "vertical": "professional_corporate_services",
+      "displayName": "Evidencia y trazabilidad"
+    },
+    {
+      "id": "professional_services.recurring_services",
+      "vertical": "professional_corporate_services",
+      "displayName": "Servicios recurrentes"
     }
   ]
 }
