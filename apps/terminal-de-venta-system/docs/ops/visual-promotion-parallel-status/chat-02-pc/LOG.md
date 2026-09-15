@@ -612,3 +612,56 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Assignment basis `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0` is behind current main; drift revalidation is mandatory before work-branch mutation.
 - The assigned work branch is currently absent. No product/runtime/global-authority mutation has occurred.
 - Previous phase `CANONICAL_PROMOTION_READINESS_RESOLUTION` remains closed and will not be repeated.
+
+
+## 2026-09-14T18:26:00-06:00 — FINDING
+
+- Assignment-base `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0` -> current main `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9` changes exactly two trust-anchor paths: `PRISMA_FACTORY_LEDGER.json` and `PRISMA_EVIDENCE_INDEX.json` via PR #555.
+- PR #555 registers `visual.operating_graph_v1` only. Ledger truth is `BUILD / NOT_STARTED / doNotRebuild=false`; the recorded next gate explicitly requires universal anti-rework PROPOSAL, then task-exact Mesh, then MUTATION before Foundation/source writes.
+- Fresh GitHub-only AutoMesh run `34912650621` passed `PASS_COMPOSED_AUTHORITY_MESH` on exact current main. Artifact `10375670287`; uploaded digest `sha256:c26e8b136572e5742841bb51456bc2b2a20e24ca1a7308870000d2a3129bf377`; composed artifact SHA-256 `3fbc0256e6e8300b344fa9a0f5e6f96f8d54d337c540778205fc05eca4c72c56`; requestDigest `a35ac747cd6201f6e7ec910955211826c40c036d0044e7556ce8d62aebf3d0c8`.
+- PC Target Index remains blob `75399955f562452b7687913b8b8aeeda4930b9fe`; PC physical target authority did not drift with PR #555.
+- Immutable PC accounting remains 827 = 826 physical CURRENT + 1 DRIFT; projection 688 CURRENT + 139 MISSING; NDC/visual meaning unresolved 827; Identity binding blocked 827.
+- Atlasfin recipe matches remain 105 table + 54 card + 27 panel = 186 and are visual-similarity evidence only.
+- Historical exact `/catalog` / `ProductMediaWorkspace` / `.workspace` evidence resolves to `TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1`. `VIS.SURFACE.CONTENT.PRIMARY` remains a historical semantic candidate with Identity layer/binding pending, not canonical authority.
+- Selector drift target `TGT.CENSUS.PC.097AB2F857F353CA4288.V1` remains `.supplier-readable-v07` vs expanded `.supplier-readable-v07 *`; no repair performed.
+- Chat 5 cross-authority reconciliation is still NOT_STARTED, so no transverse crosswalk exists yet for TRUE_NEW negative-evidence closure.
+
+## 2026-09-14T18:26:00-06:00 — BLOCKER
+
+- `BLOCKED_EXECUTION_PATH`: the canonical anti-rework workflow `.github/workflows/prisma-factory-anti-rework-gate.yml` is triggered only by `pull_request` or `workflow_dispatch`.
+- The connected GitHub action surface exposes no workflow-dispatch primitive.
+- Opening a new PR merely as a gate carrier is explicitly forbidden until later owner instruction.
+- Therefore exact-task anti-rework PROPOSAL/MUTATION cannot be produced legally in this session. The assigned work branch remains uncreated and no authority-reconciliation output bytes were written.
+
+## 2026-09-14T18:26:00-06:00 — DECISION
+
+- Fail closed before work-branch/output mutation.
+- Preserve current corpus, PC Target Index, RIFAT, Identity, NDC, GVAE, product/runtime and projections unchanged.
+- Do not infer NDC operational meaning from selector/component names or Atlasfin recipes.
+- Do not declare `TRUE_NEW_AUTHORITY_REQUIRED` from empty search or missing projection.
+- Keep Materiality Catalog uninspected.
+- No owner action is requested; resume only when an authorized GitHub-only anti-rework execution path exists or the owner separately authorizes a PR carrier.
+
+## 2026-09-14T18:26:00-06:00 — VALIDATION
+
+- Mandatory GitHub authority reads: PASS.
+- Current main resolved/rechecked: PASS `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- Drift classification: RELEVANT_TRUST_ANCHOR_DRIFT.
+- Fresh Authority Mesh: PASS_COMPOSED_AUTHORITY_MESH.
+- PC target count: PASS 827.
+- Product/runtime mutation: 0.
+- Canonical authority mutation: 0.
+- Projection repair: 0.
+- GVAE APPLY: 0.
+- Materiality Catalog inspected: false.
+- Anti-rework PROPOSAL: NOT_RUN_BLOCKED_EXECUTION_PATH.
+- Anti-rework MUTATION: NOT_RUN_BLOCKED_EXECUTION_PATH.
+
+## 2026-09-14T18:26:00-06:00 — HANDOFF
+
+- Current result: `BLOCKED_EXECUTION_PATH`.
+- Work branch: `chat2/authority-reconciliation-pc-20260914` (**not created**).
+- Output root: `prisma-html/governance/visual-promotion/authority-reconciliation/pc/**` (**not mutated**).
+- Expected exact input: **827**.
+- Final classified rows: **0** because final shard materialization is downstream of the mandatory anti-rework gate.
+- Fresh Mesh evidence is ready and current; the remaining blocker is the canonical universal anti-rework execution primitive, not missing repository authority.
