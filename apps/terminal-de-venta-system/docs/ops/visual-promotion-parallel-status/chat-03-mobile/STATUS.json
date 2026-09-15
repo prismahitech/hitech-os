@@ -5,14 +5,24 @@
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T00:38:00Z",
+  "updatedAt": "2026-09-15T00:42:00Z",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat3/authority-reconciliation-mobile-20260914",
   "workHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
-  "summary": "BLOCKED_EXECUTION_PATH. Chat 3 completed current-head GitHub-only authority revalidation and the read-only Mobile reconciliation analysis for all 271 certified targets, but the canonical Factory Ledger task-specific anti-rework request gate cannot be executed with the currently exposed GitHub actions. Per OWNER_ASSIGNMENT, no lane output mutation is permitted before that gate. No owner/computer action is requested.",
+  "summary": "ORCHESTRATOR CORRECTION: Mobile authority reconciliation remains IN_PROGRESS. Lack of a task-specific anti-rework execution primitive blocks only governed work-branch output writes, not read-only reconciliation. Capability remains visual.generic_application_engine_v1 / ADVANCE; visual.operating_graph_v1 is unrelated.",
   "blockers": [
-    "BLOCKED_EXECUTION_PATH_FACTORY_LEDGER_REQUEST_GATE: OWNER_ASSIGNMENT requires the canonical PRISMA Factory Ledger anti-rework gate before any work-branch output mutation. The available GitHub connector exposes repository reads/writes, AutoMesh issue-comment execution, workflow logs/artifacts and reruns, but no workflow_dispatch/repository_dispatch/arbitrary runner capable of executing `PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py --request` for this task. Existing `prisma-factory-anti-rework-gate.yml` only runs --validate/--self-test, not a task-specific --request.",
-    "OUTPUT_MUTATION_WITHHELD_FAIL_CLOSED: the assigned work branch exists at current main, but `prisma-html/governance/visual-promotion/authority-reconciliation/mobile/**` remains unwritten until the task-specific PROPOSAL/MUTATION gate can run. This is intentional anti-rework behavior, not missing discovery."
+    {
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "lane-output-repository-write-only",
+      "detail": "The canonical task-specific anti-rework request gate is not currently executable through the connected GitHub action surface. This does not block read-only reconciliation. Capability is visual.generic_application_engine_v1 / ADVANCE.",
+      "impact": "Continue target-by-target evidence analysis, negative-evidence review, authority/history reconciliation and deterministic result preparation. Do not write governed lane output files until the correct gate evidence exists."
+    },
+    {
+      "code": "CROSS_AUTHORITY_EVIDENCE_PENDING",
+      "scope": "TRUE_NEW_AUTHORITY_REQUIRED-only",
+      "detail": "Chat 5 cross-authority evidence is not yet available.",
+      "impact": "Do not finalize TRUE_NEW_AUTHORITY_REQUIRED rows yet; all other evidence work continues."
+    }
   ],
   "findings": [
     "Current main remains exactly d4b451cc92c597d02cfc65094922bd2c5dd17c12; no phase-base drift occurred during closure.",
@@ -72,7 +82,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Resume automatically when a GitHub-native execution path can run the canonical task-specific Factory Ledger gate. No rediscovery is required; re-pin main/AutoMesh if HEAD changes, run PROPOSAL/MUTATION fail-closed, then materialize the already bounded 271-target evidence outputs.",
+  "nextAction": "Continue the assigned lane read-only immediately. Prepare the full reconciliation deterministically, publish compact progress/receipts in the mailbox, defer only governed output-file writes and final TRUE_NEW closure until the correct gate and Chat 5 evidence exist.",
   "handoff": {
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
