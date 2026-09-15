@@ -4,18 +4,18 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T00:38:00Z",
-  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
+  "updatedAt": "2026-09-15T09:36:00-06:00",
+  "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
-  "summary": "Chat 6 STARTED AUTHORITY_RECONCILIATION_ANTI_REWORK as global composer/orchestrator. Current main advanced to 70f381e9... via PR #555; drift touches canonical Factory Ledger/Evidence Index, so governed output mutation is held pending current-head anti-rework/Authority Mesh revalidation while read-only orchestration and contract preparation proceed.",
+  "summary": "Chat 6 is actively composing AUTHORITY_RECONCILIATION_ANTI_REWORK read-only. PC 827/827 and Mobile 271/271 are complete read-only; Tablet has 5 classified + 924 unresolved; Shared UI has 30 classified + 40 unresolved. Chat 5 baseline is consumed and dynamic cross-authority support is active. Global provisional composition is 1,133 classified + 964 unresolved = 2,097 exact.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
-      "scope": "composer-output-repository-write-only",
-      "detail": "PR #555 changed Ledger/Evidence trust anchors. Current-head revalidation is required, but the phase capability remains visual.generic_application_engine_v1 / ADVANCE. Continue read-only orchestration; hold only governed composer output writes until the correct current-head anti-rework MUTATION decision exists.",
-      "impact": "No need to wait idly for workers. Continue mailbox polling, schema/composition preparation and receipt validation read-only."
+      "scope": "composer-governed-output-repository-write-only",
+      "detail": "The task-specific Factory Ledger write gate remains unavailable through the connected GitHub execution path.",
+      "impact": "Read-only composition, receipt validation, zero-loss accounting, conflict detection and delta planning continue. Governed composed outputs remain unwritten."
     }
   ],
   "findings": [
@@ -113,7 +113,10 @@
     "AUTHORITY_RECONCILIATION start: current main=70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; compare from assignment basis changes only PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json.",
     "PR #555 registered visual.operating_graph_v1 as BUILD/NOT_STARTED and did not report product/runtime mutation. Existing GVAE evidence remains discoverable as visual.generic_application_engine_v1 SOURCE_READY/doNotRebuild.",
     "Worker mailbox snapshot: Chat 3 is IN_PROGRESS; Chats 1,2,4,5 remain NOT_STARTED at this check.",
-    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
+    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work.",
+    "GLOBAL_READ_ONLY_SNAPSHOT: 2,097 accounted, 1,133 classified, 964 unresolved, missing=0, extra=0, duplicate=0.",
+    "Provisional global classes: EXISTING_CONCEPT_LINK_MISSING=820; EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP=1; EXISTING_AUTHORITY_CONFLICT_CURATE=14; PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED=298; TRUE_NEW=0; EXACT_REUSE=0; NOT_APPLICABLE=0.",
+    "PC and Mobile are read-only complete; Tablet and Shared UI remain the only unresolved surface lanes."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -539,12 +542,13 @@
     }
   ],
   "unresolved": [
-    "Consume Chats 1-5 new authority-reconciliation receipts when available.",
-    "Determine exact true-new-authority delta only after complete negative-evidence validation."
+    "Tablet: 924 target-specific semantic-link reviews remain.",
+    "Shared UI: 40 target-specific semantic joins remain.",
+    "Governed composed output materialization remains pending WRITE_GATE_PATH_PENDING."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Continue read-only orchestration and ingest worker receipts as they arrive. Use visual.generic_application_engine_v1 / ADVANCE for the current-head anti-rework path; do not bind this phase to visual.operating_graph_v1.",
+  "nextAction": "Continue incremental composition. Accept PC and Mobile as read-only complete unless authority drifts; prioritize Shared UI 40 unresolved then Tablet 924 unresolved; consume Chat 5 delta receipts as they appear; reject any TRUE_NEW without complete target-specific negative evidence.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
@@ -1134,6 +1138,21 @@
       "materialityCatalogAuthorized": false,
       "githubOnly": true,
       "status": "IN_PROGRESS_READ_ONLY_PREFLIGHT"
+    },
+    "authorityReconciliationComposer": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "result": "IN_PROGRESS_READ_ONLY_COMPOSITION",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "snapshot": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json",
+      "expectedInputCount": 2097,
+      "accountedInputCount": 2097,
+      "classifiedCount": 1133,
+      "unresolvedCount": 964,
+      "missingCount": 0,
+      "extraCount": 0,
+      "duplicateTargetCount": 0,
+      "governedOutputsWritten": false,
+      "writeGate": "WRITE_GATE_PATH_PENDING"
     }
   }
 }
