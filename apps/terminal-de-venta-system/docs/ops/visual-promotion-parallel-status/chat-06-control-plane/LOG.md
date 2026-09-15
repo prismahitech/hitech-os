@@ -671,3 +671,15 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - Chat 4 has not published a newer mailbox, so the composer does not turn these deltas into foreign-lane final classifications. Shared UI remains 30 classified / 40 unresolved.
 - Global accounting remains `313 + 1744 + 40 = 2097`; missing/extra/duplicate = 0; TRUE_NEW accepted = 0.
 
+## 2026-09-15T11:08:30-06:00 - Worker mailbox restart wave
+
+- Owner explicitly authorized refreshing all worker mailboxes for replacement chats.
+- Current main remains `8db4370d579014f8fed6e190ffce45e1589b33d9`.
+- Created fresh `CONTINUATION.md` and `CONTINUATION.json` in Chats 1-5 and updated each `STATUS.json` with a `CONTINUE_IN_NEW_CHAT` handoff.
+- No substantive classification counts were changed by coordination fiat.
+- Chats 1-3 are redirected from “wait for write gate” to bounded target-specific qualification of the 1,744 composer-provisional concept-link rows.
+- Chat 4 is explicitly directed to finish its 40 Shared UI unresolved rows using the current Chat 5 evidence.
+- Chat 5 remains dynamic support and must not rebuild its 2,097 baseline.
+- Zero-loss remains 2,097 / missing 0 / extra 0 / duplicate 0; TRUE_NEW accepted 0.
+- No main mutation, governed composed-output materialization, canonical registration, projection repair or GVAE APPLY occurred.
+
