@@ -4,12 +4,12 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-12T16:26:00-06:00",
-  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "workBranch": "chat4/canonical-promotion-readiness-shared-ui-20260912",
-  "workHead": "3b7f7e285867818bf88708ae6e28df6c5aeec763",
-  "summary": "Chat 4 completed CANONICAL_PROMOTION_READINESS_RESOLUTION as SHARED_UI_PROMOTION_READINESS_RESOLVER. All 70 certified Shared UI targets were resolved exactly once into the assigned seven-file promotion-readiness derivative. Result: 0 READY_REUSE_EXISTING_AUTHORITY, 0 READY_FOR_CANONICAL_REGISTRATION, 70 legitimately blocked, 0 not-applicable, projection debt=0, semanticMutationCount=0. Decision partition: 40 BLOCKED_MISSING_SEMANTIC_AUTHORITY, 19 BLOCKED_MISSING_APPLICATION_AUTHORITY, 11 BLOCKED_MULTI_REGION_CONFLICT. No regions were inferred, no canonical IDs were minted, Materiality remained uninspected, and no product/runtime/global-authority mutation occurred.",
+  "state": "NOT_STARTED",
+  "updatedAt": "2026-09-14T23:30:00Z",
+  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
+  "workHead": null,
+  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for SHARED_UI_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
   "blockers": [],
   "findings": [
     "Current canonical main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 throughout this phase write.",
@@ -17,13 +17,15 @@
     "The canonical Identity adapter prisma.adapter.shared-ui.v1 is reusable neutral-source authority, but it does not establish target-level NDC meaning, visual meaning, recipe, binding, route/slot/component/owner or application-layer authority.",
     "All 70 certified projections remain CURRENT under the existing exact-byte-copy projection policy; PROJECTION_DEBT.jsonl is therefore empty.",
     "The 19 no-region records remain blocked without inferred regions and the 11 multi-region records remain explicit conflicts.",
-    "Target-level NDC/visual meaning/Identity recipe/binding authority remains unresolved for all 70; Atlasfin remains support-only and no target-level match was promoted."
+    "Target-level NDC/visual meaning/Identity recipe/binding authority remains unresolved for all 70; Atlasfin remains support-only and no target-level match was promoted.",
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
   ],
   "decisions": [
     "Do not rebuild closed census, certification or witness phases.",
     "Classify readiness conservatively from current machine-readable authority and preserve unknown/ambiguous states rather than inventing meaning or coordinates.",
     "Keep Materiality Catalog STANDBY_USER_INVOKED_ONLY and uninspected.",
-    "Do not perform product/runtime mutation, projection repair, canonical registration, GVAE apply or global authority writes in Chat 4."
+    "Do not perform product/runtime mutation, projection repair, canonical registration, GVAE apply or global authority writes in Chat 4.",
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat4/authority-reconciliation-shared-ui-20260914."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/RESOLUTION.jsonl",
@@ -79,13 +81,12 @@
     }
   ],
   "unresolved": [
-    "All 70 targets still lack target-level canonical semantic/recipe/binding/application authority sufficient for reuse or canonical registration.",
-    "19 targets remain no-region blocked.",
-    "11 targets retain multi-region conflict evidence."
+    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
+    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
   ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "READY_FOR_INTEGRATION. Chat 6 may consume the exact Shared UI readiness head and receipt. Do not mutate this lane again unless the canonical prompt advances or Chat 6 issues a bounded evidence-backed correction request.",
+  "userActionRequested": "",
+  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat4/authority-reconciliation-shared-ui-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
   "handoff": {
     "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
     "promotionReadiness": {
@@ -128,6 +129,18 @@
     "priorParallelWitness": {
       "result": "PASS_SHARED_UI_CORPUS_WITNESS",
       "certificationHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a"
+    },
+    "authorityReconciliationAssignment": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "assigned": true,
+      "assignedAt": "2026-09-14T23:30:00Z",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/**",
+      "expectedInputCount": 70,
+      "materialityCatalogAuthorized": false,
+      "githubOnly": true,
+      "status": "ASSIGNED_NOT_STARTED"
     }
   }
 }
