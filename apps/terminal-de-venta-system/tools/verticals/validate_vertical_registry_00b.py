@@ -26,6 +26,9 @@ def main():
                 if not CAP_RE.match(val): errors.append('bad namespace '+vid+' '+key+' '+val)
         if not p.get('tabletNavigation'): errors.append('empty tablet nav '+vid)
         if not p.get('pcNavigation'): errors.append('empty pc nav '+vid)
+        if vid == 'professional_corporate_services':
+            if not p.get('mobileNavigation') or len(p.get('mobileNavigation', [])) < 5: errors.append('empty mobile nav '+vid)
+            if not p.get('mobileRole'): errors.append('missing mobile role '+vid)
         if set(p.get('capabilities',[])) & set(p.get('tabletBlockedCapabilities',[])): errors.append('blocked capability active '+vid)
         if len(p.get('acceptanceCriteria',[]))<3: errors.append('few acceptance '+vid)
     if errors:
