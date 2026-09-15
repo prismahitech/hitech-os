@@ -44,7 +44,7 @@ class UniversalArtifactTests(unittest.TestCase):
             "--capture-exit-code", str(exit_code),
         ], text=True, capture_output=True, check=False)
 
-    def fixture(self, root: Path, status: str = "PASS", with_png: bool = True):
+    def fixture(self, root: Path, status: str = "PASS", with_png: bool = True, scroll_partial_count: int = 0):
         reports = root / "reports"
         reports.mkdir(parents=True)
         (reports / "summary.json").write_text(json.dumps({
@@ -53,6 +53,7 @@ class UniversalArtifactTests(unittest.TestCase):
             "mode": "screenshots",
             "targetCount": 1,
             "screenshotCount": 1 if with_png else 0,
+            "scrollCoveragePartialCount": scroll_partial_count,
         }), encoding="utf-8")
         (reports / "capture-manifest.json").write_text(json.dumps({
             "recordCount": 1,
@@ -120,6 +121,31 @@ class UniversalArtifactTests(unittest.TestCase):
             manifest = json.loads((out / "MANIFEST.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["status"], "FAIL")
             self.assertIn("MAMASTROPHIC_EXIT_CODE_7", manifest["failureReasons"])
+
+    def test_long_screenshot_paths_are_bounded_and_hashed(self):
+        with tempfile.TemporaryDirectory() as td:
+            base = Path(td)
+            raw, out = base / "raw", base / "out"
+            self.fixture(raw, with_png=False)
+            write_png(raw / "screens" / ("a" * 180) / (("b" * 180) + ".png"), 13, 7)
+            result = self.run_builder(raw, out)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            rows = list(csv.DictReader((out / "INDEX.csv").open(encoding="utf-8-sig")))
+            self.assertEqual(len(rows), 1)
+            self.assertLessEqual(len(rows[0]["file"].encode("utf-8")), 180)
+            self.assertRegex(rows[0]["file"], r"__[0-9a-f]{12}\.png$")
+
+    def test_pass_with_partial_scroll_is_exposed_as_partial_pass(self):
+        with tempfile.TemporaryDirectory() as td:
+            base = Path(td)
+            raw, out = base / "raw", base / "out"
+            self.fixture(raw, status="PASS", scroll_partial_count=2)
+            result = self.run_builder(raw, out)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            manifest = json.loads((out / "MANIFEST.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["sourceStatus"], "PASS")
+            self.assertEqual(manifest["status"], "PARTIAL_PASS")
+            self.assertIn("SCROLL_COVERAGE_PARTIAL", manifest["partialReasons"])
 
     def test_partial_pass_is_preserved(self):
         with tempfile.TemporaryDirectory() as td:

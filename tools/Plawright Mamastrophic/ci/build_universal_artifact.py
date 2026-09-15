@@ -23,6 +23,7 @@ SCHEMA = "prisma.mamastrophic.universal-screenshot-artifact.v1"
 ALLOWED_STATUS = {"PASS", "PARTIAL_PASS", "FAIL"}
 ALLOWED_SURFACES = {"pc", "tablet", "mobile", "web", "chart-lab", "control-center"}
 ALLOWED_MODES = {"screenshots", "screenshotsqa"}
+MAX_SCREENSHOT_FILENAME_BYTES = 180
 
 
 def read_json(path: Path, default: Any = None) -> Any:
@@ -59,15 +60,24 @@ def safe_token(value: str) -> str:
     return token or "item"
 
 
+def _utf8_prefix(value: str, max_bytes: int) -> str:
+    if len(value.encode("utf-8")) <= max_bytes:
+        return value
+    return value.encode("utf-8")[:max_bytes].decode("utf-8", errors="ignore").rstrip("._-")
+
+
 def unique_screenshot_name(rel: str, used: set[str]) -> str:
     p = Path(rel)
     stem = safe_token("__".join(p.with_suffix("").parts))
     base = f"{stem}.png"
-    if base not in used:
-        used.add(base)
-        return base
-    digest = hashlib.sha256(rel.encode("utf-8")).hexdigest()[:10]
-    base = f"{stem}__{digest}.png"
+    if len(base.encode("utf-8")) > MAX_SCREENSHOT_FILENAME_BYTES or base in used:
+        digest = hashlib.sha256(rel.encode("utf-8")).hexdigest()[:12]
+        suffix = f"__{digest}.png"
+        room = MAX_SCREENSHOT_FILENAME_BYTES - len(suffix.encode("utf-8"))
+        bounded = _utf8_prefix(stem, room) or "item"
+        base = f"{bounded}{suffix}"
+    if base in used:
+        raise RuntimeError(f"Deterministic screenshot filename collision for {rel!r}: {base!r}")
     used.add(base)
     return base
 
@@ -184,9 +194,18 @@ def main() -> int:
 
     raw_status = summary.get("status") if isinstance(summary, dict) else None
     reasons: list[str] = []
+    partial_reasons: list[str] = []
     status = raw_status if raw_status in ALLOWED_STATUS else "FAIL"
     if raw_status not in ALLOWED_STATUS:
         reasons.append("MISSING_OR_INVALID_MAMASTROPHIC_SUMMARY_STATUS")
+    if status == "PASS" and isinstance(summary, dict):
+        try:
+            partial_scroll_count = int(summary.get("scrollCoveragePartialCount") or 0)
+        except (TypeError, ValueError):
+            partial_scroll_count = 0
+        if partial_scroll_count > 0:
+            status = "PARTIAL_PASS"
+            partial_reasons.append("SCROLL_COVERAGE_PARTIAL")
     if args.capture_exit_code != 0:
         status = "FAIL"
         reasons.append(f"MAMASTROPHIC_EXIT_CODE_{args.capture_exit_code}")
@@ -258,6 +277,7 @@ def main() -> int:
         "status": status,
         "sourceStatus": raw_status,
         "failureReasons": reasons,
+        "partialReasons": partial_reasons,
         "surface": args.surface,
         "mode": args.mode,
         "repoHead": args.repo_head,
@@ -295,6 +315,7 @@ def main() -> int:
         "evidenceFiles": len(evidence_rows),
         "out": str(out),
         "reasons": reasons,
+        "partialReasons": partial_reasons,
     }, ensure_ascii=False))
     return 0 if status in {"PASS", "PARTIAL_PASS"} else 2
 

@@ -121,7 +121,7 @@ jobs:
       CAPTURE_MODE: ${{ inputs.mode || 'screenshots' }}
       CAPTURE_WORKERS: ${{ inputs.workers || '4' }}
       CAPTURE_DEEP_SCROLL: ${{ inputs.deep_scroll || 'auto' }}
-      CAPTURE_ALLOW_PARTIAL: ${{ inputs.allow_partial == false && 'false' || 'true' }}
+      CAPTURE_ALLOW_PARTIAL: ${{ github.event_name == 'pull_request' || inputs.allow_partial }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -178,10 +178,12 @@ jobs:
             echo "Unexpected Web node_modules already exists; refusing to replace it." >&2
             exit 4
           fi
-          ln -s "$runtime/node_modules" "$app/node_modules"
+          cp -a "$runtime/node_modules" "$app/node_modules"
+          test -x "$app/node_modules/.bin/next"
+          test -s "$app/node_modules/next/package.json"
           cat > "$raw/reports/web-ci-dependencies.json" <<'JSON'
           {
-            "strategy": "isolated-off-release-ci-dependencies",
+            "strategy": "isolated-off-release-ci-dependencies-materialized-in-checkout",
             "promotesWebToActiveWorkspace": false,
             "mutatesTrackedProductSource": false,
             "versions": {
