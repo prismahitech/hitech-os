@@ -1,0 +1,86 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "createdAt": "2026-09-15T11:17:28-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "mainDriftContext": {
+    "priorMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+    "changedPaths": [
+      "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+      "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"
+    ],
+    "exactRelevantCapabilityUnchanged": true,
+    "exactRelevantEvidenceEntriesUnchanged": true,
+    "disposition": "UNRELATED_TOOLING_CAPABILITY_APPEND_NO_RECLASSIFICATION",
+    "note": "PR #557 registered tooling.mamastrophic.universal_screenshot_artifacts. The visual.generic_application_engine_v1 capability object and all its Evidence Index entries are byte-equivalent as parsed JSON across the drift."
+  },
+  "deltaId": "chat5-delta-shared-ui-d3aedbc6",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.D3AEDBC66337719F150A.V1",
+  "question": "Does the grouped light-theme control target imply ACT.primary or NDC checkout semantics merely because ScanButton appears in the selector?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "[data-theme=\"prisma-light\"] [data-prisma-component=\"CategoryButton\"]:not([data-active=\"true\"]), [data-theme=\"prisma-light\"] [data-prisma-component=\"ScanButton\"], [data-theme=\"prisma-light\"] [data-prisma-component=\"IconButton\"], [data-theme=\"prisma-light\"] [data-prisma-component=\"SearchBar\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The exact selector group shares frosted light-theme styling. ScanButton has no data-prisma-primary=\"true\" marker in this target and is grouped with inactive CategoryButton, IconButton and SearchBar."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "ndc",
+      "id": "ACT.sale.checkout",
+      "finding": "Operational checkout meaning exists separately. No exact target relation binds this four-control visual group to checkout."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "apps/terminal-de-venta-system/products/shared-ui/prisma/components/prisma-components.css",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md"
+  ],
+  "relationType": "GROUPED_VISUAL_CONTROL_TARGET_DOES_NOT_PROVE_PRIMARY_ACTION_SEMANTICS",
+  "equivalent": false,
+  "explicitNonEquivalence": "The literal presence of ScanButton is insufficient to classify the whole grouped target as Identity ACT.primary. This exact selector omits the data-prisma-primary=\"true\" marker used by the previously qualified primary ScanButton targets and also styles three non-primary controls. ACT.primary is also not equivalent to NDC ACT.sale.checkout.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 exists but has zero exact targets; this target carries no primary marker and no bindingId.",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with semanticMeaningId=null and bindingId=null.",
+    "sharedUiStyleAuthority": "Exact source rule is a grouped frosted visual treatment across four heterogeneous controls.",
+    "ndc": "No exact target-specific operational checkout relation is registered.",
+    "atlasfin": "No semantic inference is permitted from Shared UI neutral adapter or visual similarity.",
+    "ledgerEvidence": "visual.generic_application_engine_v1 remains DONE/SOURCE_READY/doNotRebuild=true on current main drift; no semantic link is introduced by PR #557."
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "disposition": "NON_EQUIVALENCE_GUARD_ONLY",
+  "unresolvedRemainder": "The target still requires positive target-specific semantic evidence from the surface owner. Do not infer ACT.primary, ACT.sale.checkout, EXISTING_CONCEPT_LINK_MISSING or TRUE_NEW from selector vocabulary alone."
+}
