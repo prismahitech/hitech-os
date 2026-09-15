@@ -1,6 +1,6 @@
 {
   "suiteVersion": "0.0.1",
-  "caseCount": 60,
+  "caseCount": 66,
   "cases": [
     {
       "id": "smoke.convenience.scenario.01.quick_sale",
@@ -478,6 +478,54 @@
       "id": "smoke.food_truck.scenario.06.offline_sale",
       "verticalId": "food_truck",
       "scenarioId": "food_truck.scenario.06.offline_sale",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.01.client_intake",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.02.open_engagement",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.03.receive_document",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.04.advance_milestone",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.05.review_approval",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "commandIntent": "validacion contractual sin runtime externo",
+      "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
+      "failureMode": "bloquear implementacion del vertical hasta completar fixture"
+    },
+    {
+      "id": "smoke.professional_corporate_services.scenario.06.deadline_risk",
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
       "commandIntent": "validacion contractual sin runtime externo",
       "passCondition": "scenario declared, event declared, permission declared, acceptance rows present",
       "failureMode": "bloquear implementacion del vertical hasta completar fixture"
