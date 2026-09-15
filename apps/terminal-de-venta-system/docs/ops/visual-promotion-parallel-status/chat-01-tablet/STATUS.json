@@ -4,8 +4,8 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-15T00:30:00Z",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:38:00Z",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat1/authority-reconciliation-tablet-20260914",
   "workHead": null,
@@ -89,7 +89,8 @@
     "Five high-certainty Tablet targets can already be reconciled without semantic invention: 1 Cobrar primary = EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP; 2 Cobrar accent targets = EXISTING_AUTHORITY_CONFLICT_CURATE; 2 certified DRIFT targets = PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED.",
     "The remaining 924 prior semantic-blocked targets are intentionally not finalized into EXISTING_CONCEPT_LINK_MISSING versus TRUE_NEW_AUTHORITY_REQUIRED. Current Code Atlas UIMAP proves neutral meaning only for the golden Cobrar path; Atlasfin support-only evidence cannot supply semantic authority; Chat 5 new-phase crosswalk is not yet available. Unknown remains unknown.",
     "No target is currently proven EXISTING_AUTHORITY_EXACT_REUSE: even the golden Cobrar exact Target Index record remains blocked by exact application policy/adapter authority.",
-    "TRUE_NEW_AUTHORITY_REQUIRED declarations made by Chat 1 in this run: 0."
+    "TRUE_NEW_AUTHORITY_REQUIRED declarations made by Chat 1 in this run: 0.",
+    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
