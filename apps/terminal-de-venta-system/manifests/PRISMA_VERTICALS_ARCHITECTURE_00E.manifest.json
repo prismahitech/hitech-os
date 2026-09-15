@@ -1,8 +1,8 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00E_VERTICAL_UX_OPERATIONS",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "createdBy": "ChatGPT",
-  "description": "PRISMA vertical UX operations architecture: navigation, flows, microcopy, Tablet/PC boundaries, states and validation.",
+  "description": "PRISMA vertical UX operations architecture: navigation, flows, microcopy and governed Tablet/PC/Mobile boundaries.",
   "manifestPath": "manifests/PRISMA_VERTICALS_ARCHITECTURE_00E.manifest.json",
   "files": [
     {
