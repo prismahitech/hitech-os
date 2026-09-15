@@ -640,3 +640,15 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - No Materiality use, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR or merge.
 - `WRITE_GATE_PATH_PENDING` continues to block only governed output materialization.
 - New Chat must read continuation files and current mailboxes before continuing; do not rely only on prose from the old chat.
+
+## 2026-09-15 10:11 - Current-main revalidation + Shared UI delta intake
+
+- Resolved current `main` to `8db4370d579014f8fed6e190ffce45e1589b33d9` (PR #556), advancing from handoff main `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- Compared the full drift: visual-operating-graph foundation/docs plus `prisma-html/FILES_MANIFEST.json`; no NDC, Identity, RIFAT/Target Index, promotion-readiness evidence, candidate corpus, or worker mailbox files changed.
+- Preserved phase authority: `visual.generic_application_engine_v1 = DONE / SOURCE_READY / doNotRebuild=true / ADVANCE`. `visual.operating_graph_v1` remains unrelated to this reconciliation and is not a prerequisite/blocker.
+- Read fresh Chat 1–5 status mailboxes. No worker mailbox advanced after the 09:50 handoff. Chat 4 remains 30 classified / 40 target-specific unresolved. Chat 5 still has exactly five dynamic deltas; no sixth/newer delta appeared.
+- Consumed and validated Shared UI deltas `09F96569` and `BA225641`. Both reject TRUE_NEW using positive existing Shared UI visual semantic authority and support `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`; exact target binding/application is still missing. Composer does not override Chat 4 ownership, so Shared UI unresolved remains 40 until Chat 4 publishes its final surface classification.
+- Revalidated the 1,744 provisional `EXISTING_CONCEPT_LINK_MISSING` rows against current-main authority drift. Current Identity bindings blob remains `88c3a7e8736d637e07ae1fd7dab377867e2b5ca8`; recipe registry remains `aaf26182b1637e1bfc6a14bd537af100ed96b1e4`. PR #556 adds no target-specific concept qualification. Newly composer-final from this pass: 0; remaining provisional: 1,744.
+- Zero-loss remains exact: 2,097 accounted, missing 0, extra 0, duplicate 0. Acceptance equation remains `313 + 1744 + 40 = 2097`. TRUE_NEW accepted remains 0.
+- `WRITE_GATE_PATH_PENDING` still blocks only governed composed output writes. No `authority-reconciliation/composed/**` materialization, canonical minting/registration, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge was performed.
+
