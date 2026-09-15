@@ -5,7 +5,7 @@ import re
 import sys
 from pathlib import Path
 
-VERTICALS = ['convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck']
+VERTICALS = ['convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck','professional_corporate_services']
 TOPIC_RE = re.compile(r'^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$')
 PERM_RE = TOPIC_RE
 

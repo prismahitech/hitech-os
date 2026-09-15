@@ -278,3 +278,16 @@ Esto evita que una farmacia herede mesas de restaurante o que una barberia cargu
 Nunca agregar un evento vertical metiendolo directo en componentes UI. Primero entra al catalogo de eventos, luego a la politica del vertical, despues a permisos, despues a auditoria y al final a la UI.
 
 Si no pasa por ese camino, es contrabando arquitectonico. Y el contrabando arquitectonico siempre termina debajo de la alfombra, oliendo feo.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:events-permissions -->
+## Vertical: Servicios Profesionales y Corporativos
+
+**ID:** `professional_corporate_services`
+
+La vertical registra apertura y actualización de servicios, recepción y verificación documental, asignación y cierre de tareas, vencimientos en riesgo, aprobaciones, hitos y evidencia.
+
+Tablet captura hechos operativos acotados. PC administra clientes, expedientes, servicios, responsables, vencimientos y verificación. Mobile puede resolver aprobaciones expresamente acotadas y consultar alertas.
+
+Toda decisión que cambie un compromiso con cliente, un vencimiento, una aprobación o evidencia sensible conserva actor, entidad, antes/después, fecha y motivo cuando aplique.
+
+Estos contratos organizan operación y evidencia. No prueban cumplimiento legal, fiscal, contable, laboral o regulatorio por sí solos.

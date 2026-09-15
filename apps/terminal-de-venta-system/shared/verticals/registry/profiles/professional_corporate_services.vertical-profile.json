@@ -1,0 +1,148 @@
+{
+  "id": "professional_corporate_services",
+  "displayName": "Servicios Profesionales y Corporativos",
+  "market": "professional_services",
+  "status": "draft",
+  "priority": "phase_2",
+  "tabletRole": "Captura operativa acotada de clientes, intake, checklists, documentos, tareas y avance sin convertir Tablet en backoffice.",
+  "pcRole": "Gobierno profundo de expedientes, engagements, flujos, responsables, vencimientos, contratos/propuestas referenciados, evidencia, servicios recurrentes y reportes.",
+  "mobileRole": "Supervisión ejecutiva de alertas, aprobaciones, vencimientos, riesgo de cliente, próximos pasos y resúmenes.",
+  "specializationFamilies": [
+    "business_consulting",
+    "corporate_legal_support",
+    "accounting_fiscal_support",
+    "hr_labor_support",
+    "finance_advisory",
+    "managed_back_office",
+    "compliance_document_management",
+    "soft_landing_market_entry"
+  ],
+  "capabilities": [
+    "professional_services.clients",
+    "professional_services.engagements",
+    "professional_services.documents",
+    "professional_services.tasks",
+    "professional_services.deadlines",
+    "professional_services.approvals",
+    "professional_services.evidence",
+    "professional_services.recurring_services",
+    "professional_services.proposals_contracts",
+    "professional_services.external_advisors",
+    "professional_services.intake",
+    "professional_services.case_management"
+  ],
+  "tabletNavigation": [
+    "Clientes",
+    "Expedientes",
+    "Diagnóstico",
+    "Checklists",
+    "Documentos",
+    "Tareas",
+    "Pendientes por enviar"
+  ],
+  "pcNavigation": [
+    "Clientes",
+    "Expedientes",
+    "Servicios",
+    "Propuestas y contratos",
+    "Flujos",
+    "Documentos",
+    "Responsables",
+    "Vencimientos",
+    "Servicios recurrentes",
+    "Evidencia",
+    "Reportes",
+    "Configuración"
+  ],
+  "mobileNavigation": [
+    "Hoy",
+    "Clientes en riesgo",
+    "Alertas",
+    "Aprobaciones",
+    "Vencimientos",
+    "Próximas acciones",
+    "Resumen ejecutivo"
+  ],
+  "tabletBlockedCapabilities": [
+    "professional_services.workflow_admin",
+    "professional_services.permission_admin",
+    "professional_services.contract_template_admin",
+    "professional_services.compliance_policy_admin",
+    "professional_services.global_configuration"
+  ],
+  "events": [
+    "professional_services.client.created",
+    "professional_services.intake.completed",
+    "professional_services.engagement.opened",
+    "professional_services.engagement.status_changed",
+    "professional_services.document.received",
+    "professional_services.document.requested",
+    "professional_services.task.assigned",
+    "professional_services.task.completed",
+    "professional_services.deadline.at_risk",
+    "professional_services.approval.requested",
+    "professional_services.approval.completed",
+    "professional_services.deliverable.recorded",
+    "professional_services.recurring_service.scheduled",
+    "professional_services.external_advisor.assigned"
+  ],
+  "permissions": [
+    "professional_services.client.view",
+    "professional_services.client.edit",
+    "professional_services.intake.capture",
+    "professional_services.engagement.view",
+    "professional_services.engagement.manage",
+    "professional_services.document.view",
+    "professional_services.document.record",
+    "professional_services.task.manage",
+    "professional_services.deadline.manage",
+    "professional_services.approval.request",
+    "professional_services.approval.complete",
+    "professional_services.evidence.record",
+    "professional_services.recurring_service.manage",
+    "professional_services.external_advisor.manage",
+    "professional_services.audit.view"
+  ],
+  "offlinePolicy": {
+    "mode": "restricted",
+    "allowed": [
+      "captura de intake",
+      "avance de checklist",
+      "registro de observaciones",
+      "recepción documental",
+      "avance de tarea"
+    ],
+    "blocked": [
+      "aprobaciones sensibles",
+      "cierre contractual",
+      "cambio de privilegios",
+      "configuración global",
+      "decisiones profesionales que dependan de autoridad externa vigente"
+    ],
+    "operatorMessage": "Puedes seguir capturando avances permitidos; lo pendiente se enviará cuando haya conexión."
+  },
+  "kpis": [
+    "clientes activos",
+    "engagements activos",
+    "tiempo de onboarding",
+    "documentos pendientes",
+    "tareas vencidas",
+    "vencimientos próximos",
+    "bloqueadores por cliente",
+    "entregables completados",
+    "servicios recurrentes próximos",
+    "carga por responsable",
+    "tiempo de ciclo",
+    "expedientes completos"
+  ],
+  "acceptanceCriteria": [
+    "El usuario identifica en menos de cinco segundos qué cliente o compromiso requiere atención.",
+    "Cada engagement declara responsable, estado, siguiente acción y evidencia.",
+    "Tablet no muestra administración pesada del vertical.",
+    "PC conserva gobierno profundo del expediente y los flujos.",
+    "Mobile supervisa sin duplicar PC.",
+    "Los estados offline y pendientes son claros.",
+    "Las especializaciones no contaminan el Core.",
+    "La interfaz no afirma certificaciones profesionales que PRISMA no pueda demostrar."
+  ]
+}

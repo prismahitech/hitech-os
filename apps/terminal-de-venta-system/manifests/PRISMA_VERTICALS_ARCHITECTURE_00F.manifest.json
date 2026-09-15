@@ -1,9 +1,9 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00F_VERTICAL_VALIDATION_FIXTURES",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "createdAt": "2026-04-30T04:06:21Z",
-  "description": "Validation fixtures, smoke suite, acceptance matrix and cross-coverage for PRISMA vertical architecture.",
-  "installer": "install_prisma_verticals_00f.py",
+  "description": "Validation fixtures, smoke suite and acceptance matrix for 11 PRISMA vertical contracts; generated cross-coverage/evidence corpora remain a separate historical package concern.",
+  "installer": null,
   "manifestPath": "manifests/PRISMA_VERTICALS_ARCHITECTURE_00F.manifest.json",
   "requires": [
     "00A",
@@ -15,28 +15,8 @@
   "files": [
     {
       "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00F_VALIDATION_FIXTURES.md",
-      "sha256": "b5919818b9fac4d791a4cefa109a51db72c47591a836d6ae45b3d4920027a9e7",
-      "bytes": 11730
-    },
-    {
-      "path": "docs/qa/PRISMA_VERTICALS_00F_ACCEPTANCE_CRITERIA.md",
-      "sha256": "bc7f3a4e11ed47b89ce55aca1cca674d22c24af6a2f24a226936c966e5a3fbcb",
-      "bytes": 1766
-    },
-    {
-      "path": "docs/qa/PRISMA_VERTICALS_00F_CROSS_COVERAGE_MATRIX.md",
-      "sha256": "319ada6801165f619c8b3cf4ed706e6c2b5808a9dd0ebd080ede2f3de058aa04",
-      "bytes": 1068
-    },
-    {
-      "path": "docs/qa/PRISMA_VERTICALS_00F_FIXTURE_AUTHORING_GUIDE.md",
-      "sha256": "19b40201f0fcf642e1919c2d6ee0a29ad4f97bd8c1a8910eed1fd7ab14d320d4",
-      "bytes": 1923
-    },
-    {
-      "path": "docs/qa/PRISMA_VERTICALS_00F_SMOKE_PLAYBOOK.md",
-      "sha256": "391cc975e6789691017a4b8e7dd395ed63fc4afe16aedc88ba63c97801293353",
-      "bytes": 1629
+      "sha256": "c79013e04faafe7b60fdec0be67ffe72ddee46261bec20171f79e4029c00004e",
+      "bytes": 12944
     },
     {
       "path": "shared/contracts/verticals/vertical-validation-fixture.schema.json",
@@ -50,18 +30,8 @@
     },
     {
       "path": "shared/verticals/validation/acceptance/vertical-acceptance-matrix.v0.json",
-      "sha256": "22e7b92f8b2949b92d39b5b04145debf5fa2a3a2814080e87a0005a9316dffab",
-      "bytes": 75066
-    },
-    {
-      "path": "shared/verticals/validation/coverage/vertical-cross-coverage.v0.json",
-      "sha256": "adea3f60eaff3203b9fcd96afd3f78234274784267bc9658c355d1f3b857fc30",
-      "bytes": 169338
-    },
-    {
-      "path": "shared/verticals/validation/evidence/vertical-fixture-evidence-corpus.v0.json",
-      "sha256": "8f05a93c9b231047f6582d79f6bf89c4858e627caf154f30e0360f7dce2784fd",
-      "bytes": 731597
+      "sha256": "3b1fba7cd0d767798d47daf8c2597893cf02d140dccfc9cc49fc87ac8a87b578",
+      "bytes": 84650
     },
     {
       "path": "shared/verticals/validation/fixtures/apparel.validation-fixture.json",
@@ -165,26 +135,82 @@
     },
     {
       "path": "shared/verticals/validation/smoke/vertical-smoke-suite.v0.json",
-      "sha256": "96ab33d6356505044994696d83cf1eb56bf95d6856ea6aa66333a8ada7ee4942",
-      "bytes": 25338
+      "sha256": "c02f178d993bca31d5a0f2e6d1eab7875bd34021485cce6875201d294aa94feb",
+      "bytes": 28282
     },
     {
       "path": "shared/verticals/validation/vertical-validation-fixture.registry.v0.json",
-      "sha256": "d372c786f704e9dba76aa9c0702c7fa4b71d5464a8eb42c9d5a0b43f895d8f28",
-      "bytes": 2033
+      "sha256": "07f2d8db24613d11440b5f493b178355ffb8a4a09b3fbd8ffd37a88e29829e99",
+      "bytes": 2236
     },
     {
       "path": "tools/verticals/validate_vertical_validation_fixtures_00f.py",
-      "sha256": "10fd370371411465b0257d565bb5b49b58ecabb9f450bf933f5e62b66a054251",
-      "bytes": 5624
+      "sha256": "0a6969f7e5613e05641c019a802988b02f90d8fa8d29f3658498d8845ed11917",
+      "bytes": 6746
+    },
+    {
+      "path": "shared/verticals/validation/fixtures/professional_corporate_services.validation-fixture.json",
+      "bytes": 18757,
+      "sha256": "8f6b78c3098ba31e390faca26ae671279f6443604fb2d0e0325055264b8996e1"
+    },
+    {
+      "path": "shared/verticals/validation/scenarios/professional_corporate_services.validation-scenarios.json",
+      "bytes": 10224,
+      "sha256": "a641d5177a84cc955f80d1bc727b4f49922c65a2db840db4ba6197b754d988ee"
     }
   ],
   "manifestSelfHash": null,
   "validation": {
     "validator": "tools/verticals/validate_vertical_validation_fixtures_00f.py",
-    "expectedVerticals": 10,
-    "minimumScenarios": 60,
-    "minimumAcceptanceChecks": 300,
-    "minimumCoverageRows": 420
-  }
+    "expectedVerticals": 11,
+    "minimumScenarios": 66,
+    "minimumAcceptanceChecks": 330,
+    "minimumCoverageRowsWhenPresent": 462,
+    "minimumEvidenceRecordsWhenPresent": 1000,
+    "sourceContractValidationRequiresHistoricalGeneratedCorpora": false
+  },
+  "historicalNonVersionedArtifacts": [
+    {
+      "path": "docs/qa/PRISMA_VERTICALS_00F_ACCEPTANCE_CRITERIA.md",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "bc7f3a4e11ed47b89ce55aca1cca674d22c24af6a2f24a226936c966e5a3fbcb",
+      "historicalBytes": 1766,
+      "requiredForSourceContractValidation": false
+    },
+    {
+      "path": "docs/qa/PRISMA_VERTICALS_00F_CROSS_COVERAGE_MATRIX.md",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "319ada6801165f619c8b3cf4ed706e6c2b5808a9dd0ebd080ede2f3de058aa04",
+      "historicalBytes": 1068,
+      "requiredForSourceContractValidation": false
+    },
+    {
+      "path": "docs/qa/PRISMA_VERTICALS_00F_FIXTURE_AUTHORING_GUIDE.md",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "19b40201f0fcf642e1919c2d6ee0a29ad4f97bd8c1a8910eed1fd7ab14d320d4",
+      "historicalBytes": 1923,
+      "requiredForSourceContractValidation": false
+    },
+    {
+      "path": "docs/qa/PRISMA_VERTICALS_00F_SMOKE_PLAYBOOK.md",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "391cc975e6789691017a4b8e7dd395ed63fc4afe16aedc88ba63c97801293353",
+      "historicalBytes": 1629,
+      "requiredForSourceContractValidation": false
+    },
+    {
+      "path": "shared/verticals/validation/coverage/vertical-cross-coverage.v0.json",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "adea3f60eaff3203b9fcd96afd3f78234274784267bc9658c355d1f3b857fc30",
+      "historicalBytes": 169338,
+      "requiredForSourceContractValidation": false
+    },
+    {
+      "path": "shared/verticals/validation/evidence/vertical-fixture-evidence-corpus.v0.json",
+      "status": "NOT_VERSIONED_HISTORICAL_REFERENCE",
+      "historicalSha256": "8f05a93c9b231047f6582d79f6bf89c4858e627caf154f30e0360f7dce2784fd",
+      "historicalBytes": 731597,
+      "requiredForSourceContractValidation": false
+    }
+  ]
 }

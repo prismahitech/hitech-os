@@ -286,3 +286,20 @@ Un operador nuevo debe completar el flujo `pedido rápido, menú limitado, cobro
 - No se permite mezclar configuración global con venta diaria.
 - No se permite crear navegación por vertical sin estado vacío, error, deshabilitado, offline y pendiente por enviar.
 - No se permite que una vertical agregue operación sensible sin permiso visible y evento auditable.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:ux-operations -->
+## Vertical: Servicios Profesionales y Corporativos (`professional_corporate_services`)
+
+**Propósito:** convertir trabajo disperso por cliente en una ruta visible y trazable: diagnóstico, servicio, expediente, documentos, tareas, responsables, vencimientos, aprobación, evidencia y recurrencia.
+
+**Tablet:** Clientes, Diagnóstico, Checklist, Documentos, Avances y Pendientes por enviar.
+
+**PC:** Dashboard, Clientes, Expedientes, Servicios, Flujos, Documentos, Tareas y vencimientos, Responsables y Auditoría.
+
+**Mobile:** Resumen, Alertas, Aprobaciones, Vencimientos, Clientes en riesgo y Siguientes acciones.
+
+**Errores especiales:** documento obligatorio faltante; responsable no asignado; vencimiento en riesgo; aprobación pendiente; dependencia abierta.
+
+**KPIs:** clientes activos; servicios en curso; hitos a tiempo; documentos pendientes; tareas vencidas; clientes en riesgo; recurrencia al día.
+
+Una persona nueva debe poder abrir un cliente, entender qué servicio está activo, qué falta, quién responde, cuál es la siguiente fecha y qué evidencia existe sin preguntarle al autor original del expediente.

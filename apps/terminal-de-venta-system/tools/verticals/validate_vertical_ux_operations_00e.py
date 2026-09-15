@@ -38,8 +38,8 @@ def main() -> int:
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
     registry = load(root / 'shared/verticals/ux/vertical-ux-operation.registry.v0.json')
     profiles = registry.get('profiles', [])
-    if len(profiles) != 10:
-        fail(f'Se esperaban 10 perfiles UX, llegaron {len(profiles)}')
+    if len(profiles) != 11:
+        fail(f'Se esperaban 11 perfiles UX, llegaron {len(profiles)}')
     total_screens = 0
     total_flows = 0
     for entry in profiles:
@@ -50,12 +50,21 @@ def main() -> int:
             fail(f'verticalId inconsistente en {rel}')
         tablet = profile.get('tablet', {})
         pc = profile.get('pc', {})
+        mobile = profile.get('mobile', {})
         if not tablet.get('primaryEntry'):
             fail(f'{vid}: falta primaryEntry Tablet')
         if not tablet.get('navigation') or len(tablet['navigation']) < 5:
             fail(f'{vid}: navegación Tablet insuficiente')
         if not pc.get('navigation') or len(pc['navigation']) < 5:
             fail(f'{vid}: navegación PC insuficiente')
+        if vid == 'professional_corporate_services' and (not mobile.get('navigation') or len(mobile['navigation']) < 5):
+            fail('professional_corporate_services: falta Mobile supervisión')
+        if vid == 'professional_corporate_services':
+            mobile = profile.get('mobile', {})
+            if not mobile.get('navigation') or len(mobile['navigation']) < 5:
+                fail(f'{vid}: navegación Mobile insuficiente')
+            if mobile.get('role') != 'supervision':
+                fail(f'{vid}: Mobile debe declararse como supervision')
         if not tablet.get('blockedModules'):
             fail(f'{vid}: faltan bloqueos Tablet')
         screens = profile.get('screens', [])
@@ -82,8 +91,11 @@ def main() -> int:
         if hits:
             fail(f'{vid}: términos técnicos visibles detectados: {sorted(set(hits))}')
     trace = load(root / 'shared/verticals/ux/vertical-ux-operation.trace-matrix.v0.json')
-    if len(trace.get('rows', [])) < 400:
+    if len(trace.get('rows', [])) < 449:
         fail('Trace matrix UX demasiado chica')
+    traced = {row.get('verticalId') for row in trace.get('rows', [])}
+    if 'professional_corporate_services' not in traced:
+        fail('Trace matrix UX no cubre professional_corporate_services')
     print(f'OK vertical UX operations: {len(profiles)} verticals, {total_screens} screens, {total_flows} flows, {len(trace.get("rows", []))} trace rows validated')
     return 0
 

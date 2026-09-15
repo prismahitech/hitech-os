@@ -1263,9 +1263,49 @@
         "composed sha256:917bd793dff3c669a306c26ab82002d0f936e73c6b84d81fb6594c75b5bc189f",
         "uploaded artifact sha256:f1c6beebc85eb7898f97694692b03a5557cd9d6afdd2f1a302699aed1b50b74c"
       ]
+    },
+    {
+      "artifact": "PRISMA Professional & Corporate Services vertical contractual source-ready closure — PR #564",
+      "type": "professional_corporate_services_vertical_contract_source_ready",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "verticals",
+        "tablet_contract",
+        "pc_contract",
+        "mobile_contract"
+      ],
+      "status": "SOURCE_READY_STATIC_VALIDATED",
+      "proves": [
+        "The professional_corporate_services documentation/contracts package is implemented on PR #564 as a reusable client-neutral vertical and remains separate from verticals.accounting_management",
+        "The package defines the professional_services capability family, data extensions, event/permission policy, three-surface UX contract and validation fixture/scenario/smoke/acceptance source artifacts",
+        "Focused 00F source-contract validation passes with 11 fixtures, 66 scenarios, 330 acceptance checks, 66 smoke cases and 330 acceptance rows",
+        "00F no longer treats non-versioned historical generated cross-coverage/evidence corpora as mandatory source files; when those corpora are present they remain strictly validated, and when absent no evidence is fabricated",
+        "Fresh closure Authority Mesh passed on canonical main dbefaae0c14ba77aa7619282b4945260b94f65f0 with 100% required authority coverage and zero blockers"
+      ],
+      "doesNotProve": [
+        "Any Tablet, PC or Mobile product/runtime implementation",
+        "Runtime, browser, visual or production certification",
+        "Distribution, deployment or customer-live readiness",
+        "Any legal, accounting, fiscal, labor, financial, compliance or professional-practice certification",
+        "Any CIOB-specific implementation or use of real customer data",
+        "Existence of historical generated 00F cross-coverage/evidence corpora that are not versioned in the canonical repository"
+      ],
+      "evidence": [
+        "PR #564 branch docs/professional-corporate-services-vertical",
+        "00F truthful validator commit ea9ecb4aa4e567e45cccd4e531b33f4bdc04ee4c",
+        "00F truthful manifest commit 01fe7ba2b9e3a33727cca4f3d7eb847c8441edf4",
+        "Focused 00F source-contract validation: PASS_00F_SOURCE_CONTRACT_VALIDATION; fixtures=11; scenarios=66; acceptanceChecks=330; smokeCases=66; acceptanceRows=330",
+        "Authority Mesh run 35019951465",
+        "artifact 10417541089",
+        "requestId 6b4dc9919f93d1ef",
+        "requestDigest 6cef9f27f54f0d869b737e7db950914edd34308f0922ca307c8bea2c5db05756",
+        "composed sha256:ce31ca5715e47d4151b6f5b9dfbcccebea146fb36db36ba6d7bce24f26a6d277",
+        "uploaded artifact sha256:f220db69d34fc8ebc9dc139b9d7e13698967c4907fcdefd630ec68fceb006834"
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T17:33:23Z",
+  "updatedAt": "2026-09-15T20:38:02Z",
   "entries": [
     {
       "capabilityId": "runtime.tablet.zero_idle_guard",

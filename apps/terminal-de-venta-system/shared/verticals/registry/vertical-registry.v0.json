@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00B_VERTICAL_REGISTRY",
   "defaultVertical": "convenience",
   "registryRules": [
@@ -7,7 +7,8 @@
     "La navegacion visible sale del vertical activo, capacidades y permisos.",
     "Las capacidades bloqueadas no se exponen en Tablet.",
     "Los eventos verticales usan namespace.",
-    "PC gobierna configuracion profunda; Tablet opera caja."
+    "PC gobierna configuracion profunda; Tablet opera caja.",
+    "Mobile supervisa alertas, aprobaciones y resumenes; no sustituye gobierno PC."
   ],
   "verticals": [
     {
@@ -89,6 +90,14 @@
       "status": "draft",
       "priority": "phase_2",
       "profilePath": "shared/verticals/registry/profiles/food_truck.vertical-profile.json"
+    },
+    {
+      "id": "professional_corporate_services",
+      "displayName": "Servicios Profesionales y Corporativos",
+      "market": "professional_services",
+      "status": "draft",
+      "priority": "phase_2",
+      "profilePath": "shared/verticals/registry/profiles/professional_corporate_services.vertical-profile.json"
     }
   ]
 }

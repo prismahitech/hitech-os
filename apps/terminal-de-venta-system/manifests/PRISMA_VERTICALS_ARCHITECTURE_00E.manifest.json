@@ -1,8 +1,8 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00E_VERTICAL_UX_OPERATIONS",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "createdBy": "ChatGPT",
-  "description": "PRISMA vertical UX operations architecture: navigation, flows, microcopy, Tablet/PC boundaries, states and validation.",
+  "description": "PRISMA vertical UX operations architecture: navigation, flows, microcopy and governed Tablet/PC/Mobile boundaries.",
   "manifestPath": "manifests/PRISMA_VERTICALS_ARCHITECTURE_00E.manifest.json",
   "files": [
     {
@@ -12,13 +12,13 @@
     },
     {
       "path": "docs/architecture/PRISMA_VERTICALS_00E_TABLET_PC_OPERATION_BOUNDARIES.md",
-      "sha256": "b89b38211dddc3da26c624d5a5b51f82580c2c3e6cb5094346d02942eac6d747",
-      "bytes": 9936
+      "sha256": "bb32f38648d15783231da5628fcace3dcca69b68ce6c57f1168f7253da5e0793",
+      "bytes": 10992
     },
     {
       "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00E_VERTICAL_UX_OPERATIONS.md",
-      "sha256": "073105b9475f1a812fb7cd257c1c20e7e5875d8c6a60e1241bf3bab66daa8bf6",
-      "bytes": 16667
+      "sha256": "e45642a828e6a7586340076a3cf665ea487af87e81969c26e3c303870e046fd6",
+      "bytes": 17866
     },
     {
       "path": "docs/qa/PRISMA_VERTICALS_00E_QA_MATRIX.md",
@@ -27,8 +27,8 @@
     },
     {
       "path": "docs/ux/PRISMA_VERTICALS_00E_VERTICAL_FLOW_PLAYBOOK.md",
-      "sha256": "bd953690130b8a753ed57eef63c6c86ab470464e7e099623c7c44b6a4ed86d9f",
-      "bytes": 10857
+      "sha256": "ddc658f0d6a85af81c4637e76a9f040b876a02d810266d6854baf2a1aecd0f1d",
+      "bytes": 11679
     },
     {
       "path": "shared/contracts/verticals/ux-operation.schema.json",
@@ -87,22 +87,27 @@
     },
     {
       "path": "shared/verticals/ux/vertical-ux-operation.registry.v0.json",
-      "sha256": "e822fea3bacb6f302dac7d99d13169a6eefe27f8b4ce191898d328a9c1414b29",
-      "bytes": 2521
+      "sha256": "6f8083bd5f7de88b4ecd849b786459601168ff773313dd37e35698b673314a87",
+      "bytes": 2856
     },
     {
       "path": "shared/verticals/ux/vertical-ux-operation.trace-matrix.v0.json",
-      "sha256": "40046665cb18292643d95833100e2a1e1a313b24fb252d7d48b3cc69e3cc5a1a",
-      "bytes": 418413
+      "sha256": "38bc57fe3809749adf14a18f8dab0c59c14eec422776d9dbaa33156597bb1369",
+      "bytes": 461673
     },
     {
       "path": "tools/verticals/validate_vertical_ux_operations_00e.py",
-      "sha256": "250e749ae4fde417475e74c4f618309f4f33360958e231225ed66a61ca12d243",
-      "bytes": 3600
+      "sha256": "71909cbce80c03131e111dc3479312dadf5182d6e4764c999b3ad1b4d39dcaba",
+      "bytes": 4408
+    },
+    {
+      "path": "shared/verticals/ux/profiles/professional_corporate_services.ux-operation.json",
+      "bytes": 12291,
+      "sha256": "7ddef8e22680c51a125aac26205a8472336a20a50b2b1f27ae08c8fe53d0ca9e"
     }
   ],
   "verify": {
     "validator": "tools/verticals/validate_vertical_ux_operations_00e.py",
-    "expectedVerticals": 10
+    "expectedVerticals": 11
   }
 }

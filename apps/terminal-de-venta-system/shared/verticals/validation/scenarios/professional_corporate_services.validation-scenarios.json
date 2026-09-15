@@ -1,0 +1,246 @@
+{
+  "verticalId": "professional_corporate_services",
+  "scenarioVersion": "0.1.0",
+  "scenarios": [
+    {
+      "id": "professional_corporate_services.scenario.01.client_intake",
+      "title": "Validar client intake para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Clientes",
+      "flowKey": "professional_services.client_intake",
+      "initialState": "loading",
+      "actor": "consultant",
+      "mode": "tablet",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Clientes.",
+        "Ejecutar flujo client intake.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo client_intake termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.intake.completed",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.intake.capture"
+      ],
+      "offlineExpectation": "no promueve una accion sensible si falta autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:client_intake:1",
+        "pcs-01"
+      ]
+    },
+    {
+      "id": "professional_corporate_services.scenario.02.open_engagement",
+      "title": "Validar open engagement para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Expediente",
+      "flowKey": "professional_services.open_engagement",
+      "initialState": "ready",
+      "actor": "case_manager",
+      "mode": "tablet",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Expediente.",
+        "Ejecutar flujo open engagement.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo open_engagement termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.engagement.opened",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.engagement.manage"
+      ],
+      "offlineExpectation": "no promueve una accion sensible si falta autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:open_engagement:2",
+        "pcs-02"
+      ]
+    },
+    {
+      "id": "professional_corporate_services.scenario.03.receive_document",
+      "title": "Validar receive document para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Documentos",
+      "flowKey": "professional_services.receive_document",
+      "initialState": "ready",
+      "actor": "consultant",
+      "mode": "tablet",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Documentos.",
+        "Ejecutar flujo receive document.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo receive_document termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.document.received",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.document.record"
+      ],
+      "offlineExpectation": "no promueve una accion sensible si falta autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:receive_document:3",
+        "pcs-03"
+      ]
+    },
+    {
+      "id": "professional_corporate_services.scenario.04.advance_milestone",
+      "title": "Validar advance milestone para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Seguimiento",
+      "flowKey": "professional_services.advance_milestone",
+      "initialState": "ready",
+      "actor": "case_manager",
+      "mode": "tablet",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Seguimiento.",
+        "Ejecutar flujo advance milestone.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo advance_milestone termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.task.completed",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.task.manage"
+      ],
+      "offlineExpectation": "no promueve una accion sensible si falta autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:advance_milestone:4",
+        "pcs-04"
+      ]
+    },
+    {
+      "id": "professional_corporate_services.scenario.05.review_approval",
+      "title": "Validar review approval para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Aprobaciones",
+      "flowKey": "professional_services.review_approval",
+      "initialState": "ready",
+      "actor": "manager",
+      "mode": "mobile",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Aprobaciones.",
+        "Ejecutar flujo review approval.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo review_approval termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.approval.completed",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.approval.complete"
+      ],
+      "offlineExpectation": "no promueve una accion sensible si falta autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:review_approval:5",
+        "pcs-05"
+      ]
+    },
+    {
+      "id": "professional_corporate_services.scenario.06.deadline_risk",
+      "title": "Validar deadline risk para Servicios Profesionales y Corporativos",
+      "verticalId": "professional_corporate_services",
+      "primaryScreen": "Tareas y vencimientos",
+      "flowKey": "professional_services.deadline_risk",
+      "initialState": "offline",
+      "actor": "manager",
+      "mode": "tablet",
+      "preconditions": [
+        "Existe un cliente o contexto operativo valido.",
+        "Los permisos del actor fueron cargados antes de iniciar el flujo.",
+        "La informacion requerida para el escenario esta disponible."
+      ],
+      "steps": [
+        "Abrir pantalla Tareas y vencimientos.",
+        "Ejecutar flujo deadline risk.",
+        "Revisar mensaje operativo en es-MX.",
+        "Confirmar resultado, responsable y siguiente accion."
+      ],
+      "expectedResult": "El flujo deadline_risk termina con estado humano claro y trazabilidad verificable.",
+      "expectedEvents": [
+        "professional_services.deadline.at_risk",
+        "audit.event.recorded"
+      ],
+      "requiredPermissions": [
+        "professional_services.deadline.manage"
+      ],
+      "offlineExpectation": "no convierte un riesgo o pendiente en completado sin autoridad",
+      "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
+      "humanAcceptance": "El usuario entiende que paso, quien es responsable y cual es la siguiente accion.",
+      "kpiSignals": [
+        "tiempo_ciclo_servicio",
+        "pendientes_y_vencimientos"
+      ],
+      "traceTags": [
+        "00F:professional_corporate_services:deadline_risk:6",
+        "pcs-06"
+      ]
+    }
+  ]
+}

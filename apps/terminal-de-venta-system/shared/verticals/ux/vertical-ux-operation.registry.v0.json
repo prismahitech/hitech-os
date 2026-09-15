@@ -1,8 +1,8 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00E_VERTICAL_UX_OPERATIONS",
-  "version": "0.0.1",
-  "purpose": "Registro UX operativo por vertical para Tablet y PC.",
-  "profileCount": 10,
+  "version": "0.1.0",
+  "purpose": "Registro UX operativo por vertical para Tablet, PC y proyecciones Mobile cuando el perfil las declare.",
+  "profileCount": 11,
   "profiles": [
     {
       "verticalId": "convenience",
@@ -63,6 +63,13 @@
       "name": "Food truck / punto móvil de comida",
       "path": "shared/verticals/ux/profiles/food_truck.ux-operation.json",
       "primaryEntry": "Vender"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "name": "Servicios Profesionales y Corporativos",
+      "path": "shared/verticals/ux/profiles/professional_corporate_services.ux-operation.json",
+      "primaryEntry": "Clientes",
+      "mobileEntry": "Resumen"
     }
   ],
   "requiredStates": [

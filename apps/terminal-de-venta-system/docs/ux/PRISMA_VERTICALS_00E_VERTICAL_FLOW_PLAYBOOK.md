@@ -289,3 +289,23 @@
 - Mostrar que la operación local está guardada.
 - Mostrar si se puede seguir operando.
 - Mostrar pendientes sin palabras técnicas.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:flow-playbook -->
+## Servicios Profesionales y Corporativos
+
+### Ruta feliz
+1. Abrir **Clientes**.
+2. Registrar o revisar el diagnóstico.
+3. Abrir el servicio y su expediente.
+4. Identificar documentos, tareas, responsables y fechas.
+5. Registrar avances y evidencia.
+6. PC gobierna dependencias y cierre; Mobile supervisa alertas y aprobaciones acotadas.
+7. Dejar una siguiente acción visible.
+
+### Errores
+- Documento obligatorio faltante: registrar solicitud, responsable y siguiente fecha.
+- Responsable no asignado: asignar o derivar a PC.
+- Vencimiento en riesgo: registrar causa, responsable y siguiente acción.
+
+### Offline
+Tablet puede conservar captura operativa permitida. Las aprobaciones y cambios de política sensibles esperan conexión y autoridad.

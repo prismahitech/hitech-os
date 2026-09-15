@@ -1,0 +1,271 @@
+{
+  "verticalId": "professional_corporate_services",
+  "label": "Servicios Profesionales y Corporativos",
+  "version": 0,
+  "events": [
+    {
+      "topic": "professional_services.client.created",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.client.edit",
+      "visibleMicrocopy": "Cliente registrado."
+    },
+    {
+      "topic": "professional_services.client.updated",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.client.edit",
+      "visibleMicrocopy": "Datos del cliente actualizados."
+    },
+    {
+      "topic": "professional_services.intake.completed",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.intake.capture",
+      "visibleMicrocopy": "Diagnóstico registrado."
+    },
+    {
+      "topic": "professional_services.engagement.opened",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Servicio iniciado."
+    },
+    {
+      "topic": "professional_services.engagement.status_changed",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Estado del servicio actualizado."
+    },
+    {
+      "topic": "professional_services.document.requested",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.document.record",
+      "visibleMicrocopy": "Documento solicitado."
+    },
+    {
+      "topic": "professional_services.document.received",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.document.record",
+      "visibleMicrocopy": "Documento recibido."
+    },
+    {
+      "topic": "professional_services.task.assigned",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.task.manage",
+      "visibleMicrocopy": "Tarea asignada."
+    },
+    {
+      "topic": "professional_services.task.completed",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.task.manage",
+      "visibleMicrocopy": "Tarea completada."
+    },
+    {
+      "topic": "professional_services.deadline.created",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.deadline.manage",
+      "visibleMicrocopy": "Compromiso registrado."
+    },
+    {
+      "topic": "professional_services.deadline.at_risk",
+      "scope": "vertical",
+      "source": [
+        "pc",
+        "mobile"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.deadline.manage",
+      "visibleMicrocopy": "Hay un vencimiento que requiere atención."
+    },
+    {
+      "topic": "professional_services.approval.requested",
+      "scope": "vertical",
+      "source": [
+        "pc",
+        "mobile"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.approval.request",
+      "visibleMicrocopy": "Aprobación solicitada."
+    },
+    {
+      "topic": "professional_services.approval.completed",
+      "scope": "vertical",
+      "source": [
+        "pc",
+        "mobile"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.approval.complete",
+      "visibleMicrocopy": "Aprobación registrada."
+    },
+    {
+      "topic": "professional_services.deliverable.recorded",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.evidence.record",
+      "visibleMicrocopy": "Entregable registrado."
+    },
+    {
+      "topic": "professional_services.recurring_service.scheduled",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.recurring_service.manage",
+      "visibleMicrocopy": "Servicio recurrente programado."
+    },
+    {
+      "topic": "professional_services.external_advisor.assigned",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.external_advisor.manage",
+      "visibleMicrocopy": "Especialista externo asignado."
+    },
+    {
+      "topic": "professional_services.case_file.created",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Expediente creado."
+    },
+    {
+      "topic": "professional_services.case_file.updated",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Expediente actualizado."
+    },
+    {
+      "topic": "professional_services.evidence.updated",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.evidence.record",
+      "visibleMicrocopy": "Evidencia actualizada."
+    },
+    {
+      "topic": "professional_services.external_advisor.updated",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.external_advisor.manage",
+      "visibleMicrocopy": "Especialista externo actualizado."
+    }
+  ],
+  "auditRules": [
+    {
+      "ruleId": "professional_services.audit.client_commitment",
+      "when": "client_commitment_or_deadline_changes",
+      "requiredFields": [
+        "actorId",
+        "businessId",
+        "entityType",
+        "entityId",
+        "before",
+        "after",
+        "occurredAt"
+      ]
+    },
+    {
+      "ruleId": "professional_services.audit.sensitive_approval",
+      "when": "sensitive_approval_or_permission_used",
+      "requiredFields": [
+        "actorId",
+        "permission",
+        "reason",
+        "occurredAt"
+      ]
+    },
+    {
+      "ruleId": "professional_services.audit.document_evidence",
+      "when": "document_or_evidence_state_changes",
+      "requiredFields": [
+        "actorId",
+        "entityType",
+        "entityId",
+        "before",
+        "after",
+        "occurredAt"
+      ]
+    }
+  ],
+  "syncRules": [
+    {
+      "topicPattern": "professional_services.*",
+      "offlineAllowed": "bounded_by_action",
+      "retry": "governed",
+      "humanStatus": "Pendiente por enviar"
+    },
+    {
+      "topicPattern": "professional_services.approval.*",
+      "offlineAllowed": false,
+      "retry": "requires_current_authority",
+      "humanStatus": "Requiere conexión y autorización vigente"
+    }
+  ]
+}

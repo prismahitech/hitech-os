@@ -1,0 +1,391 @@
+{
+  "verticalId": "professional_corporate_services",
+  "name": "Servicios Profesionales y Corporativos",
+  "tablet": {
+    "primaryEntry": "Expedientes",
+    "navigation": [
+      "Clientes",
+      "Expedientes",
+      "Diagnóstico",
+      "Checklists",
+      "Documentos",
+      "Tareas",
+      "Pendientes por enviar"
+    ],
+    "blockedModules": [
+      "configuración global de flujos",
+      "administración de permisos",
+      "cierre contractual sensible",
+      "gobierno de compliance",
+      "reportería consolidada"
+    ],
+    "offlinePolicy": {
+      "canContinueSelling": false,
+      "canContinueBoundedCapture": true,
+      "copy": "Puedes seguir capturando avances permitidos; se enviarán cuando haya conexión.",
+      "mustShowPending": true
+    }
+  },
+  "pc": {
+    "navigation": [
+      "Clientes",
+      "Expedientes",
+      "Servicios",
+      "Propuestas y contratos",
+      "Flujos",
+      "Documentos",
+      "Responsables",
+      "Vencimientos",
+      "Servicios recurrentes",
+      "Evidencia",
+      "Reportes",
+      "Configuración"
+    ],
+    "governanceModules": [
+      "Servicios",
+      "Propuestas y contratos",
+      "Flujos",
+      "Responsables",
+      "Vencimientos",
+      "Servicios recurrentes",
+      "Evidencia",
+      "Reportes",
+      "Configuración"
+    ],
+    "copy": "PC gobierna el expediente completo, las responsabilidades, los compromisos y la evidencia."
+  },
+  "mobile": {
+    "primaryEntry": "Hoy",
+    "navigation": [
+      "Hoy",
+      "Clientes en riesgo",
+      "Alertas",
+      "Aprobaciones",
+      "Vencimientos",
+      "Próximas acciones",
+      "Resumen ejecutivo"
+    ],
+    "supervisionModules": [
+      "Alertas",
+      "Aprobaciones",
+      "Vencimientos",
+      "Riesgo de cliente",
+      "Próximas acciones",
+      "Resumen ejecutivo"
+    ],
+    "blockedModules": [
+      "configuración global",
+      "edición masiva de expedientes",
+      "administración de permisos",
+      "diseño de flujos"
+    ],
+    "copy": "Mobile supervisa y permite decisiones acotadas; no sustituye el gobierno de PC.",
+    "role": "supervision"
+  },
+  "screens": [
+    {
+      "id": "clientes",
+      "label": "Clientes",
+      "purpose": "consultar y actualizar datos operativos del cliente",
+      "primaryAction": "Abrir expediente",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay clientes para mostrar.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "expedientes",
+      "label": "Expedientes",
+      "purpose": "revisar el estado operativo del expediente",
+      "primaryAction": "Continuar expediente",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay expedientes activos.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "diagnóstico",
+      "label": "Diagnóstico",
+      "purpose": "capturar necesidades y alcance inicial",
+      "primaryAction": "Guardar diagnóstico",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay diagnóstico capturado.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "checklists",
+      "label": "Checklists",
+      "purpose": "dar seguimiento a requisitos y pasos del servicio",
+      "primaryAction": "Actualizar checklist",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay checklist activo.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "documentos",
+      "label": "Documentos",
+      "purpose": "registrar requisitos y recepción documental",
+      "primaryAction": "Registrar documento",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay documentos registrados.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "tareas",
+      "label": "Tareas",
+      "purpose": "consultar y actualizar trabajo asignado",
+      "primaryAction": "Actualizar tarea",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "No hay tareas pendientes.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "pendientes_por_enviar",
+      "label": "Pendientes por enviar",
+      "purpose": "explicar capturas locales aún no sincronizadas",
+      "primaryAction": "Reintentar envío",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Registrar nota"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la acción requiere autoridad vigente"
+      ],
+      "states": {
+        "empty": "Todo está enviado.",
+        "loading": "Un momento, estamos cargando.",
+        "error": "No pudimos completar la acción. Intenta otra vez.",
+        "success": "Listo. Operación registrada.",
+        "disabled": "Completa lo necesario para continuar.",
+        "offline": "Puedes seguir con la captura permitida y enviar después.",
+        "pending_sync": "Se enviará cuando haya conexión."
+      }
+    }
+  ],
+  "flows": [
+    {
+      "id": "professional_corporate_services.happy_path",
+      "name": "Flujo principal de servicio",
+      "steps": [
+        "Abrir expediente",
+        "Revisar servicio y siguientes acciones",
+        "Actualizar checklist, documento o tarea",
+        "Registrar evidencia",
+        "Confirmar estado visible"
+      ],
+      "blockedBy": [
+        "permiso insuficiente",
+        "dato obligatorio faltante"
+      ],
+      "successMessage": "Avance registrado."
+    },
+    {
+      "id": "professional_corporate_services.intake_path",
+      "name": "Diagnóstico e intake",
+      "steps": [
+        "Abrir cliente",
+        "Capturar necesidad",
+        "Confirmar documentos iniciales",
+        "Asignar siguiente acción",
+        "Guardar diagnóstico"
+      ],
+      "blockedBy": [
+        "cliente incompleto",
+        "permiso insuficiente"
+      ],
+      "successMessage": "Diagnóstico guardado."
+    },
+    {
+      "id": "professional_corporate_services.approval_path",
+      "name": "Aprobación controlada",
+      "steps": [
+        "Revisar solicitud",
+        "Consultar contexto y evidencia",
+        "Confirmar permiso vigente",
+        "Aprobar o rechazar",
+        "Registrar decisión"
+      ],
+      "blockedBy": [
+        "sin autoridad vigente",
+        "evidencia insuficiente"
+      ],
+      "successMessage": "Decisión registrada."
+    },
+    {
+      "id": "professional_corporate_services.offline_path",
+      "name": "Captura sin conexión",
+      "steps": [
+        "Mostrar aviso simple",
+        "Permitir sólo captura acotada",
+        "Guardar localmente",
+        "Marcar pendiente por enviar",
+        "Reanudar sincronización cuando vuelva la conexión"
+      ],
+      "blockedBy": [
+        "acción sensible no permitida sin conexión"
+      ],
+      "successMessage": "Guardado en este dispositivo. Se enviará después."
+    },
+    {
+      "id": "professional_corporate_services.error.document_missing",
+      "name": "Documento faltante",
+      "steps": [
+        "Detectar requisito faltante",
+        "Explicar qué falta",
+        "Asignar responsable",
+        "Registrar fecha objetivo"
+      ],
+      "blockedBy": [
+        "documento faltante"
+      ],
+      "successMessage": "Pendiente registrado."
+    },
+    {
+      "id": "professional_corporate_services.error.deadline_at_risk",
+      "name": "Vencimiento en riesgo",
+      "steps": [
+        "Detectar compromiso próximo",
+        "Mostrar prioridad",
+        "Identificar responsable",
+        "Registrar acción siguiente"
+      ],
+      "blockedBy": [
+        "sin responsable"
+      ],
+      "successMessage": "Acción de seguimiento registrada."
+    }
+  ],
+  "microcopy": {
+    "primary": "Expedientes",
+    "success": "Avance registrado.",
+    "error": "No pudimos completar la acción. Intenta otra vez.",
+    "offline": "La captura permitida quedó guardada. Se enviará después.",
+    "pending": "Pendiente por enviar.",
+    "disabled": "Completa lo necesario para continuar.",
+    "special": {
+      "documento faltante": "Falta un documento para continuar.",
+      "vencimiento en riesgo": "Este compromiso requiere atención.",
+      "aprobación requerida": "Esta acción necesita aprobación.",
+      "responsable faltante": "Asigna un responsable antes de continuar."
+    }
+  },
+  "forbiddenVisibleTerms": [
+    "payload",
+    "endpoint",
+    "outbox",
+    "ack",
+    "runtime",
+    "schema",
+    "queue",
+    "worker",
+    "API",
+    "mutation",
+    "repository"
+  ],
+  "acceptance": [
+    "La acción principal se entiende en menos de cinco segundos.",
+    "Cada pantalla tiene vacío, carga, error, éxito, deshabilitado, offline y pendiente por enviar.",
+    "Tablet sólo captura operación acotada.",
+    "PC conserva el gobierno completo del expediente.",
+    "Mobile supervisa y no duplica PC.",
+    "No aparecen términos técnicos visibles.",
+    "El usuario siempre ve responsable, siguiente acción y estado cuando corresponda."
+  ]
+}

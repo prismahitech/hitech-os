@@ -229,3 +229,28 @@ Si un cajero necesita salir de la venta para entender el negocio, el diseño est
 
 ### Regla de escape
 Si un cajero necesita salir de la venta para entender el negocio, el diseño está sobrecargando Tablet. Si un administrador intenta operar configuración desde la Tablet en hora pico, el producto está invitando al desastre con moño.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:surface-boundaries -->
+## Servicios Profesionales y Corporativos
+
+### Tablet debe hacer
+- Capturar diagnóstico y datos operativos acotados.
+- Registrar recepción de documentos y avance de checklist.
+- Actualizar hitos o notas de servicio cuando la política lo permita.
+
+### PC debe hacer
+- Gobernar el expediente completo, servicios, alcance, responsables, dependencias y vencimientos.
+- Gestionar contratos/propuestas, checklists, evidencia, auditoría y reportes.
+- Resolver conflictos y mantener historia profunda.
+
+### Mobile debe hacer
+- Mostrar alertas, aprobaciones acotadas, vencimientos y clientes en riesgo.
+- Exponer siguientes acciones y resumen ejecutivo.
+- Permitir sólo decisiones con permiso y contexto suficientes.
+
+### No debe vivir en Tablet o Mobile
+- Configuración profunda de flujos o políticas.
+- Administración masiva de contratos o expedientes.
+- Conciliación compleja.
+- Cambios globales de permisos.
+- Declaraciones de cumplimiento profesional sin evidencia externa.

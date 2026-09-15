@@ -1856,3 +1856,18 @@ El negocio usa `food_truck`. Tablet debe mostrar Vender, Menu, Ventas de hoy, Tu
 
 El negocio usa `food_truck`. Tablet debe mostrar Vender, Menu, Ventas de hoy, Turno, Pendientes por enviar. PC debe mostrar Menu, Costos, Inventario, Eventos, Dashboard, Sincronizacion. Si una accion pertenece a recipe.costing.deep, supplier.management, event_planning.full, payroll.full, se bloquea en Tablet y se manda a PC. Eventos esperados: menu.combo.sold, sale.completed, tip.recorded, shift.closed, sync.event.pending. El cajero recibe mensajes humanos, no nombres tecnicos.
 
+<!-- PRISMA_VERTICAL professional_corporate_services:capability-catalog -->
+## Familia `professional_services.*`
+
+| Capability | Alcance |
+|---|---|
+| `professional_services.clients` | identidad y contexto del cliente |
+| `professional_services.engagements` | servicios, encargos y alcance contratado |
+| `professional_services.documents` | requisitos, recepción, revisión y faltantes |
+| `professional_services.tasks` | trabajo, responsables, dependencias y avance |
+| `professional_services.deadlines` | compromisos, vencimientos y riesgo |
+| `professional_services.approvals` | decisiones acotadas con autoridad y rastro |
+| `professional_services.evidence` | evidencia de ejecución y trazabilidad |
+| `professional_services.recurring_services` | ciclos mensuales, periódicos o renovables |
+
+Contabilidad/fiscal, legal/corporativo, recursos humanos/laboral, finanzas, back office, cumplimiento documental y soft landing pueden activar vocabulario, plantillas, checklists y políticas adicionales. Ninguna especialización debe contaminar el Core ni presentarse como certificación profesional por el simple hecho de existir en PRISMA.

@@ -13,6 +13,10 @@
     {
       "surface": "Shared",
       "owns": "contracts, names, event topics and compatibility rules only"
+    },
+    {
+      "surface": "Mobile",
+      "owns": "supervisory read models, alerts and bounded approvals only; canonical policy remains in PC/shared authority"
     }
   ],
   "verticalOwnership": {
@@ -188,6 +192,32 @@
         "SalesByStop",
         "PrepPolicy",
         "AuditEntry"
+      ]
+    },
+    "professional_corporate_services": {
+      "tablet": [
+        "ClientIntake",
+        "DocumentReceipt",
+        "ChecklistProgress",
+        "ServiceProgressNote"
+      ],
+      "pc": [
+        "ClientFile",
+        "ServiceEngagement",
+        "DocumentRequirement",
+        "WorkItem",
+        "Deadline",
+        "ResponsibilityAssignment",
+        "EvidenceRecord",
+        "RecurringServicePlan",
+        "AuditEntry"
+      ],
+      "mobileProjection": [
+        "ClientRiskSignal",
+        "ApprovalSummary",
+        "DeadlineAlert",
+        "NextActionSummary",
+        "ManagementKPI"
       ]
     }
   }

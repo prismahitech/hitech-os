@@ -1,0 +1,124 @@
+{
+  "verticalId": "professional_corporate_services",
+  "label": "Servicios Profesionales y Corporativos",
+  "version": 0,
+  "permissions": [
+    "professional_services.client.view",
+    "professional_services.client.edit",
+    "professional_services.intake.capture",
+    "professional_services.engagement.view",
+    "professional_services.engagement.manage",
+    "professional_services.document.view",
+    "professional_services.document.record",
+    "professional_services.task.manage",
+    "professional_services.deadline.manage",
+    "professional_services.approval.request",
+    "professional_services.approval.complete",
+    "professional_services.evidence.record",
+    "professional_services.recurring_service.manage",
+    "professional_services.external_advisor.manage",
+    "professional_services.audit.view"
+  ],
+  "roleMatrix": {
+    "cashier": [
+      "professional_services.client.view",
+      "professional_services.intake.capture",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage"
+    ],
+    "supervisor": [
+      "professional_services.client.view",
+      "professional_services.client.edit",
+      "professional_services.intake.capture",
+      "professional_services.engagement.view",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage",
+      "professional_services.deadline.manage",
+      "professional_services.evidence.record",
+      "professional_services.approval.request"
+    ],
+    "manager": [
+      "professional_services.client.view",
+      "professional_services.client.edit",
+      "professional_services.intake.capture",
+      "professional_services.engagement.view",
+      "professional_services.engagement.manage",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage",
+      "professional_services.deadline.manage",
+      "professional_services.approval.request",
+      "professional_services.approval.complete",
+      "professional_services.evidence.record",
+      "professional_services.recurring_service.manage",
+      "professional_services.external_advisor.manage",
+      "professional_services.audit.view"
+    ],
+    "owner": [
+      "professional_services.client.view",
+      "professional_services.client.edit",
+      "professional_services.intake.capture",
+      "professional_services.engagement.view",
+      "professional_services.engagement.manage",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage",
+      "professional_services.deadline.manage",
+      "professional_services.approval.request",
+      "professional_services.approval.complete",
+      "professional_services.evidence.record",
+      "professional_services.recurring_service.manage",
+      "professional_services.external_advisor.manage",
+      "professional_services.audit.view"
+    ],
+    "backoffice_admin": [
+      "professional_services.client.view",
+      "professional_services.client.edit",
+      "professional_services.intake.capture",
+      "professional_services.engagement.view",
+      "professional_services.engagement.manage",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage",
+      "professional_services.deadline.manage",
+      "professional_services.approval.request",
+      "professional_services.approval.complete",
+      "professional_services.evidence.record",
+      "professional_services.recurring_service.manage",
+      "professional_services.external_advisor.manage",
+      "professional_services.audit.view"
+    ],
+    "field_operator": [
+      "professional_services.client.view",
+      "professional_services.intake.capture",
+      "professional_services.engagement.view",
+      "professional_services.document.view",
+      "professional_services.document.record",
+      "professional_services.task.manage",
+      "professional_services.evidence.record"
+    ]
+  },
+  "sensitivePermissions": [
+    "professional_services.engagement.manage",
+    "professional_services.deadline.manage",
+    "professional_services.approval.complete",
+    "professional_services.external_advisor.manage",
+    "professional_services.audit.view"
+  ],
+  "tabletPolicy": {
+    "canGrantPermissions": false,
+    "canUsePermissions": true,
+    "mustExplainDisabledActions": true,
+    "disabledCopy": "No tienes permiso para esta acción."
+  },
+  "mobilePolicy": {
+    "canGrantPermissions": false,
+    "canUsePermissions": true,
+    "allowedSensitiveActions": [
+      "professional_services.approval.complete"
+    ],
+    "mustShowReasonAndEvidence": true
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "verticalId": "professional_corporate_services",
+  "label": "Servicios Profesionales y Corporativos",
+  "version": "0.1.0",
+  "principle": "El cliente, el engagement y el expediente son extensiones verticales; no deben convertirse en campos universales del Core.",
+  "extensions": [
+    {
+      "extensionId": "professional_corporate_services.ClientOrganization",
+      "entityName": "ClientOrganization",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.ClientOrganization.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Business"
+      ],
+      "requiredEvents": [
+        "professional_services.client.created",
+        "professional_services.client.updated"
+      ],
+      "fixtures": [
+        "professional_corporate_services_ClientOrganization_happy_path.json",
+        "professional_corporate_services_ClientOrganization_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.ServiceEngagement",
+      "entityName": "ServiceEngagement",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.ServiceEngagement.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Business",
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.engagement.opened",
+        "professional_services.engagement.status_changed"
+      ],
+      "fixtures": [
+        "professional_corporate_services_ServiceEngagement_happy_path.json",
+        "professional_corporate_services_ServiceEngagement_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.CaseFile",
+      "entityName": "CaseFile",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.CaseFile.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Business",
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.case_file.created",
+        "professional_services.case_file.updated"
+      ],
+      "fixtures": [
+        "professional_corporate_services_CaseFile_happy_path.json",
+        "professional_corporate_services_CaseFile_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.DocumentRequirement",
+      "entityName": "DocumentRequirement",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.DocumentRequirement.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Business",
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.document.requested",
+        "professional_services.document.received"
+      ],
+      "fixtures": [
+        "professional_corporate_services_DocumentRequirement_happy_path.json",
+        "professional_corporate_services_DocumentRequirement_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.TaskAssignment",
+      "entityName": "TaskAssignment",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.TaskAssignment.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.task.assigned",
+        "professional_services.task.completed"
+      ],
+      "fixtures": [
+        "professional_corporate_services_TaskAssignment_happy_path.json",
+        "professional_corporate_services_TaskAssignment_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.DeadlineCommitment",
+      "entityName": "DeadlineCommitment",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.DeadlineCommitment.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.deadline.created",
+        "professional_services.deadline.at_risk"
+      ],
+      "fixtures": [
+        "professional_corporate_services_DeadlineCommitment_happy_path.json",
+        "professional_corporate_services_DeadlineCommitment_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.DeliverableEvidence",
+      "entityName": "DeliverableEvidence",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_write_when_operationally_required",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.DeliverableEvidence.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Operator"
+      ],
+      "requiredEvents": [
+        "professional_services.deliverable.recorded",
+        "professional_services.evidence.updated"
+      ],
+      "fixtures": [
+        "professional_corporate_services_DeliverableEvidence_happy_path.json",
+        "professional_corporate_services_DeliverableEvidence_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    },
+    {
+      "extensionId": "professional_corporate_services.ExternalAdvisor",
+      "entityName": "ExternalAdvisor",
+      "extensionType": "workflow_extension",
+      "ownerSurface": "pc_backoffice",
+      "storagePolicy": "pc_authoritative_with_bounded_projection",
+      "tabletAccess": "read_only_on_tablet",
+      "pcAuthority": "pc_governs_full_record_policy_history_and_sensitive_changes",
+      "mobileAccess": "summary_or_approval_projection_only",
+      "syncPolicy": "vertical.professional_corporate_services.ExternalAdvisor.v0 events via governed projection when changed",
+      "auditImpact": "required_when_affects_client_commitment_permission_money_document_or_compliance",
+      "offlineImpact": "bounded_capture_only; sensitive decisions require current authority",
+      "coreRelations": [
+        "Business"
+      ],
+      "requiredEvents": [
+        "professional_services.external_advisor.assigned",
+        "professional_services.external_advisor.updated"
+      ],
+      "fixtures": [
+        "professional_corporate_services_ExternalAdvisor_happy_path.json",
+        "professional_corporate_services_ExternalAdvisor_edge_case.json"
+      ],
+      "acceptanceCriteria": [
+        "extension validates without mutating core schema",
+        "extension declares Tablet, PC and Mobile boundaries",
+        "extension can be disabled without breaking other verticals",
+        "sensitive changes remain auditable"
+      ],
+      "forbiddenCoreFields": [
+        "clientEngagementId",
+        "caseFileId",
+        "professionalDeadline",
+        "externalAdvisorId",
+        "serviceSpecialization"
+      ]
+    }
+  ]
+}

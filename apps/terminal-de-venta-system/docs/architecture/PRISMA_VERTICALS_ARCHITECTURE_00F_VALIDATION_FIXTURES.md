@@ -185,12 +185,27 @@ Sin este bloque, PRISMA tendria documentos elegantes, que es muy bonito hasta qu
 - Todo flujo que afecte dinero, inventario, turno o cliente produce evento auditable.
 - El vertical no mete backoffice completo dentro de Tablet.
 
+## Vertical `professional_corporate_services` - Servicios Profesionales y Corporativos
+
+**Uso operativo:** clientes, diagnóstico, expedientes, documentos, tareas, vencimientos, aprobaciones, seguimiento y evidencia para firmas de servicios profesionales y corporativos.  
+**Flujos cubiertos:** client_intake, open_engagement, receive_document, advance_milestone, review_approval, deadline_risk.  
+**Pantallas cubiertas:** Clientes, Diagnóstico, Expediente, Documentos, Tareas y vencimientos, Aprobaciones, Seguimiento.  
+**Objetivo de prueba:** confirmar que el vertical puede administrar trabajo profesional trazable sin contaminar el Core, sin convertir Tablet en backoffice y sin convertir Mobile en sustituto del gobierno PC.
+
+### Criterio minimo
+
+- Tablet captura hechos y avances acotados; PC gobierna expediente, reglas y reportes; Mobile supervisa alertas, aprobaciones y riesgo.
+- Las acciones sensibles exigen permiso y dejan evento auditable.
+- Los estados `empty`, `error`, `offline`, `sync_pending` y `success` tienen salida visible.
+- El vertical no afirma certificación legal, contable, fiscal, laboral ni regulatoria.
+- Los datos de fixture son sintéticos y no prueban runtime ni producción.
+
 ## 4. Resultado esperado
 
 Despues de instalar este paquete, el repo contiene una base contractual para construir pruebas reales por vertical. La validacion local debe responder algo como:
 
 ```text
-OK vertical validation fixtures: 10 verticals, 60 scenarios, 490 acceptance checks validated
+OK vertical validation fixtures: 11 verticals, 66 scenarios, 330 acceptance checks validated
 VERIFY OK
 ```
 
