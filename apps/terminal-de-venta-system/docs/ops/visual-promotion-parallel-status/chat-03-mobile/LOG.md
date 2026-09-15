@@ -153,3 +153,237 @@ No updates published yet.
 - Final lane result: `PASS_MOBILE_PROMOTION_READINESS`.
 - Receipt published in `handoff.promotionReadiness`; state is `READY_FOR_INTEGRATION`. Chat 6 may consume the receipt directly. No owner relay or user action is required.
 
+## 2026-09-14T23:30:00Z — OWNER_ASSIGNMENT
+
+# OWNER ASSIGNMENT — AUTHORITY_RECONCILIATION_ANTI_REWORK
+
+**Chat:** 3
+**Lane:** MOBILE_AUTHORITY_RECONCILIATION
+**Assignment basis main:** `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0`
+**Work branch to use/create:** `chat3/authority-reconciliation-mobile-20260914`
+**Exclusive output root:** `prisma-html/governance/visual-promotion/authority-reconciliation/mobile/**`
+
+Esta asignación viene directamente del dueño del repositorio. La fase previa `CANONICAL_PROMOTION_READINESS_RESOLUTION` ya cerró mediante PR #554. **No la repitas.**
+
+## Objetivo
+
+Reconciliar autoridad ya existente alrededor del corpus certificado de **2,097** targets sin recensus, sin broad rediscovery y sin reconstruir GVAE/RIFAT/Identity/NDC.
+
+El resultado que buscamos no es “resolver 2,097 cosas nuevas”. Buscamos demostrar el delta verdadero entre:
+- autoridad que ya existe y puede reutilizarse;
+- concepto existente al que sólo le falta el enlace machine-readable target↔significado;
+- semántica existente a la que le falta binding/aplicación/proyección;
+- conflicto real que requiere curación;
+- drift/projection reconciliation;
+- autoridad genuinamente nueva.
+
+## Verdad anti-retrabajo que debes preservar
+
+PR #529 y Factory Ledger ya certificaron el all-surface physical mapping:
+- 7 surfaces
+- 96 routes
+- 1,978 visual regions
+- 10,575 editable slots
+- 215 component owners
+- 89 CSS owners
+- 4,453 layers
+- 0 blockers / 0 warnings
+
+GVAE Target Index ya contiene 3,915 registros:
+- 4 EXACT_APPLICATION_TARGET / GVAE_ENFORCED
+- 3,911 VISUAL_CONTROL_CENSUS_TARGET / DISCOVERY_ONLY
+
+Nuestros 2,097 son:
+- Tablet 929
+- PC 827
+- Mobile 271
+- Shared UI 70
+
+`DISCOVERY_ONLY` **NO significa undiscovered**.
+
+Factory Ledger: `visual.generic_application_engine_v1 = DONE / SOURCE_READY / doNotRebuild=true`.
+Acción permitida: REUSE / VERIFY / ADVANCE. Nunca BUILD/REBUILD.
+
+## Lecturas obligatorias antes de trabajar
+
+Lee desde GitHub, no desde memoria conversacional:
+1. root `AGENTS.md`
+2. `apps/terminal-de-venta-system/docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md`
+3. `PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER_AGENT_GATE.md`
+4. `PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json`
+5. `PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json`
+6. `prisma-html/docs/ops/PRISMA_VISUAL_CHANGE_MASTER_MAP.md`
+7. parallel interoperability contract + vocabulary
+8. PR #529 evidence and current all-surface authority
+9. PR #554 `promotion-readiness/composed/**`
+10. `apps/terminal-de-venta-system/docs/ndc/**`
+11. `prisma-html/authority/rifat/identity/**`
+12. `prisma-html/authority/rifat/prisma-ui/visual-control/**`
+13. Code Atlas UIMAP/UI Bridge authority/evidence
+14. Atlasfin structured registries only as support/reference
+15. exact history/PRs/commits when necessary to decide existing intent
+
+**Materiality Catalog remains `STANDBY_USER_INVOKED_ONLY`. The owner has NOT authorized it in this assignment. Do not inspect it, consume it, or use it as fallback.**
+
+## GitHub-only operating mode
+
+El dueño no tiene computadora. Todo debe ocurrir directamente en GitHub:
+- no pedir PowerShell;
+- no pedir archivos locales;
+- no pedir localhost;
+- no pedir que levante servidores;
+- no pedir comandos manuales;
+- no tocar puertos/dev servers;
+- no depender de una carpeta local.
+
+Resuelve `main` al inicio. `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0` es sólo el SHA de asignación. Si main avanzó:
+- compara/revalida drift;
+- reutiliza autoridad sólo si sigue válida;
+- si hubo drift relevante, usa el flujo GitHub-only AutoMesh v2 / Authority Mesh correspondiente;
+- jamás “arregles” historia restaurando snapshots viejos.
+
+Antes de cualquier mutación de repo en tu work branch, respeta Factory Ledger anti-rework y la autoridad vigente. Si un gate no puede ejecutarse desde GitHub, sigue read-only, publica el blocker y no inventes PASS.
+
+## Separación semántica obligatoria
+
+Nunca confundas:
+- NDC neutral/business meaning: `ENT.* / EVT.* / ACT.* / STA.* / MET.* / ALT.* / EVD.* / CAP.* / CAN.*`
+- visual meaning/Identity: IDs históricos `identity::...` y futuros `VIS.*`
+- physical location: surface/route/region/slot/component/owner/layer/selector
+- binding/application authority: `BND.* / LYR.* / recipe / adapter`
+
+Un target puede tener un `ACT.sale.checkout` operacional y a la vez un `identity::ACT.primary` visual. Relación no significa igualdad.
+
+## Clasificación final permitida por target
+
+Cada target de superficie debe terminar exactamente en una:
+- `EXISTING_AUTHORITY_EXACT_REUSE`
+- `EXISTING_CONCEPT_LINK_MISSING`
+- `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`
+- `EXISTING_AUTHORITY_CONFLICT_CURATE`
+- `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`
+- `TRUE_NEW_AUTHORITY_REQUIRED`
+- `NOT_APPLICABLE`
+
+`TRUE_NEW_AUTHORITY_REQUIRED` es la clasificación más cara y exige **negative evidence completa**. No basta con que un registry no tenga un campo.
+
+Antes de usar TRUE_NEW debes demostrar búsqueda/reconciliación contra:
+- NDC canon + registries + seeds/examples relevantes;
+- Identity registries + aliases + recipes + bindings + visual stacks;
+- RIFAT/Visual Control/Target Index;
+- Code Atlas/UIMAP/UI Bridge;
+- Atlasfin structured evidence;
+- Factory Ledger/Evidence Index;
+- historia/PRs/commits/docs relevantes cuando exista pista;
+- crosswalk de Chat 5 cuando esté disponible.
+
+Una búsqueda vacía aislada NO prueba ausencia.
+
+## Output contract y archivos grandes
+
+No generes un JSONL monstruoso único.
+
+Para outputs de muchos targets:
+- orden determinista por `targetId`;
+- shards de **máximo 250 filas** y preferentemente **<= 2 MiB** por archivo;
+- nombre sugerido: `resolution/part-0001.jsonl`, `part-0002.jsonl`, etc.;
+- `INDEX.json` pequeño con target ranges/partes;
+- `MANIFEST.json` con inputCount, outputCount, uniqueTargetCount, source pins, blob/hash, shard counts y validaciones;
+- `SUMMARY.md` humano;
+- archivos de subsets/deuda también shardeados si crecen.
+
+Cada row de superficie debe preservar como mínimo:
+`surfaceKey`, `targetId`, `sourceRecordSha256`, autoridad física existente, neutral/business refs existentes, visual meaning refs existentes, Identity/recipe/binding/adapter/application refs existentes, evidenceRefs, negativeEvidenceRefs, classification, blockers, confidence y local proposal key sólo si hace falta.
+
+**No mintas IDs canónicos nuevos.** Si hace falta proponer algo nuevo, usa un `proposal.*` local y no autoritativo.
+
+### Si un archivo fuente es demasiado grande
+
+No intentes traer varios MB enteros al contexto sólo “por si acaso”.
+
+Orden de escape:
+1. usa GitHub code search con `targetId`, ID semántico o path exacto;
+2. usa `fetch_file` por rangos de líneas cuando el formato lo permita;
+3. usa manifiestos/summaries/indexes pequeños para localizar el shard correcto;
+4. consulta el raw exacto por commit SHA sólo del shard necesario;
+5. para agregados, usa procesamiento **streaming línea por línea**, nunca `json.load()` de corpus multi-MB;
+6. si necesitas código auxiliar, colócalo sólo dentro de tu output root y mantenlo determinista;
+7. ejecútalo mediante infraestructura GitHub/CI ya existente cuando esté disponible; no modifiques workflows globales sólo para obtener comodidad;
+8. si no existe una ruta de ejecución GitHub válida, publica `BLOCKED_EXECUTION_PATH` con evidencia. No le pidas al dueño una computadora.
+
+## Playbook de errores inmediatos
+
+- **301 / Moved Permanently:** usa el repo canónico `prismahitech/hitech-os`.
+- **404 de branch/raw/path:** resuelve primero el ref/commit SHA exacto y vuelve a pedir el archivo por ese SHA; URL-encodea espacios cuando aplique.
+- **Response too large / truncation / parse EOF:** no uses contenido parcial. Cambia a search, line ranges, shards o streaming.
+- **403/rate limit:** deja de hacer búsquedas masivas; reduce queries a IDs/paths exactos y reutiliza manifests/hashes ya obtenidos.
+- **409 SHA mismatch al escribir:** re-fetch del archivo y blob SHA actual; integra sólo tu cambio y reintenta. Nunca sobrescribas silenciosamente trabajo ajeno.
+- **422 branch already exists:** inspecciona el branch existente; si parte del main/authority correcto, reutilízalo. No lo borres ni hagas force.
+- **Main avanzó:** AutoMesh v2/revalidación. Drift ajeno puede reanclarse; drift relevante exige autoridad fresca.
+- **Source hash mismatch:** no “corrijas” el hash. Marca drift, recupera la fuente actual, decide si afecta significado y fail closed si no puedes probar continuidad.
+- **Duplicate targetId / missing / extra:** FAIL. Regenera desde input inmutable. Nunca parchees conteos a mano.
+- **Schema/enum desconocido:** FAIL CLOSED. No inventes enum nuevo dentro de una lane.
+- **Ambigüedad NDC/Identity:** conserva ambas hipótesis como evidencia y clasifica conflict/curation; no elijas por nombre de selector.
+- **PR/check falla:** inspecciona job y logs; corrige causa. Re-run sólo si el fallo es realmente transitorio.
+- **FILES_MANIFEST churn:** workers no lo tocan. La integración global es de Chat 6 y sólo cuando corresponda.
+- **Merge conflict:** no fuerces merge ni reescribas otra lane. Rebase/reconcilia sólo después de comparar autoridad y scope.
+- **Empty search:** no lo uses como prueba de inexistencia; completa la checklist negativa.
+- **Generated projection diferente de producto:** no elijas dirección por antigüedad aparente. Revisa authority/history.
+- **Tool no puede ejecutar mutación/gate:** mantén análisis read-only y publica blocker preciso.
+
+## Límites duros
+
+En esta fase NO:
+- recensus;
+- broad rediscovery;
+- rebuild de GVAE/RIFAT/Identity/NDC;
+- product/runtime/CSS/TSX/JSX mutation;
+- generated projection repair;
+- canonical registration;
+- creación de NDC/VIS/BND/TGT/LYR/recipe/adapter canónicos;
+- GVAE APPLY;
+- wildcard mutation;
+- Materiality fallback;
+- `FILES_MANIFEST.json` desde worker lanes;
+- fake green.
+
+Sí puedes escribir únicamente evidencia/herramientas lane-local dentro de tu root exclusivo en la work branch asignada.
+
+## Status/mailbox
+
+Publica START, hallazgos materiales, blockers y HANDOFF en tu propia mailbox/status branch.
+No escribas el mailbox de otro chat.
+No le pidas al dueño copiar receipts: Chat 6 los leerá directamente.
+
+
+## CHAT 3 — ZONA MOBILE
+
+Tu universo exacto son **271 targets Mobile**. No recenses Mobile.
+
+Punto de partida certificado:
+- 271 BLOCKED_MISSING_SEMANTIC_AUTHORITY
+- 133 projection CURRENT
+- 138 projection debt
+- de esas 138: 137 AMBIGUOUS + 1 PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED
+
+Trabajo especial:
+1. No uses `SURF.mb.owner_home` ni el adapter Mobile como sustituto de significado target-level.
+2. Para las 138 filas con deuda de proyección, determina sólo con evidencia si la dirección es autoridad RIFAT vigente, producto más nuevo que exige reconciliación, divergencia intencional o ambigua.
+3. El caso retirado `.multiContextRoot` debe tratarse como historia/autoridad reconciliation, nunca restaurarse por hacer coincidir snapshots.
+4. Busca significado existente en NDC, Identity, Code Atlas/UIMAP y commits/PRs históricos antes de clasificar TRUE_NEW_AUTHORITY_REQUIRED.
+5. No fabriques recipes/bindings por analogía con Tablet o PC.
+
+Objetivo de Mobile: separar “semántica faltante” de “proyección desalineada” y demostrar cuál es el delta semántico verdadero.
+
+## Criterio de cierre
+
+No cierres por “ya revisé bastante”. Cierra sólo cuando:
+- todo tu input exacto está contabilizado;
+- no hay target perdido/extra/duplicado;
+- cada clasificación tiene evidencia;
+- todo TRUE_NEW tiene negative-evidence completa;
+- no hubo canonical minting ni runtime mutation;
+- los outputs están shardeados y son consumibles sin archivos gigantes;
+- publicaste work branch, exact head, counts, hashes/manifest, blockers y handoff.
+
+**No abras ni merges a main por tu cuenta salvo instrucción explícita posterior del dueño.**
