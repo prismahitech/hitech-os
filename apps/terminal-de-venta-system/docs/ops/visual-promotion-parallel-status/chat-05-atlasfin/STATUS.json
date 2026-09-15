@@ -1,130 +1,98 @@
 {
   "schema": "prisma.visual-promotion.chat-status.v1",
   "chatId": 5,
-  "lane": "ATLASFIN_BRIDGE",
+  "lane": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-15T00:38:00Z",
-  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "state": "BLOCKED",
+  "updatedAt": "2026-09-14T18:36:00-06:00",
+  "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for CROSS_AUTHORITY_EVIDENCE_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
-  "blockers": [],
+  "summary": "START + BLOCKER for AUTHORITY_RECONCILIATION_ANTI_REWORK. Chat 5 resolved its owner assignment from the deterministic mailbox and completed the safe GitHub-only read-only preflight. Assignment basis main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 advanced by three commits to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. The drift modifies canonical PRISMA Factory Ledger and PRISMA Evidence Index, so current-head anti-rework / Authority Mesh rebinding is mandatory before governed output-root mutation. The available GitHub connector exposes workflow inspection/rerun but no workflow-dispatch path for /prisma-automesh or the anti-rework request. Per owner playbook, this is BLOCKED_EXECUTION_PATH. No computer or manual command is requested.",
+  "blockers": [
+    {
+      "code": "BLOCKED_EXECUTION_PATH",
+      "scope": "governed output writes only",
+      "detail": "PR #555 changed canonical Factory Ledger/Evidence authority after assignment. The mandatory current-head Factory Ledger anti-rework and AutoMesh/Authority Mesh gate must be rebound before creating or mutating chat5/authority-reconciliation-cross-evidence-20260914 outputs, but the available GitHub-only action surface has no workflow-dispatch operation."
+    }
+  ],
   "findings": [
-    "Certified Atlasfin truth remains 2,421/2,421 valid non-null references over 2,097 source outcomes, hardInvalid=0, representation-only normalizations=341, semanticMutationCount=0.",
-    "Current canonical Identity recipe registry contains one recipe, REC.button.primary; none of the four certified Atlasfin recipe IDs is an exact Identity recipe match, so IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl is intentionally empty.",
-    "Certified corpus SEMANTIC_REVIEW_GROUPS.json reports groupCount=10 and crossSurfaceGroupCount=0; no independent semantic authority exists in the immutable certified evidence to justify a cross-surface canonical coalescing group.",
-    "Atlasfin recipe convergence remains table=171 (Tablet 66 + PC 105), card=95 (41 + 54), panel=47 (20 + 27), overlay=11 Tablet-only. The three cross-surface recipe groups are recorded only as VISUAL_SIMILARITY_ONLY.",
-    "Work branch is exactly 6 commits ahead / 0 behind base and changes exactly the six required files under prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**.",
-    "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 at completion, so no phase-head drift revalidation was required after branch creation.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild.",
-    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
+    "Identity resolved from status contract/index and owner mailbox: Chat 5, lane CROSS_AUTHORITY_EVIDENCE_RECONCILIATION, expected input 2,097 targets, output root prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**.",
+    "Current main is 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Compare 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0..70f381e9b3c0b63ee4c7e445c98e86b3e9211be9 is ahead_by=3, behind_by=0; changed canonical files are PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json.",
+    "Current Factory Ledger still classifies visual.generic_application_engine_v1 as DONE / SOURCE_READY / doNotRebuild=true. The PR #529 all-surface census remains certified at 7 surfaces, 96 routes, 1,978 regions, 10,575 slots, 215 component owners, 89 CSS owners, 4,453 layers, with Target Index 3,915 = 4 GVAE_ENFORCED + 3,911 DISCOVERY_ONLY.",
+    "PR #554 remains the closed prior phase: exact 2,097 inputs, 0 reuse, 0 registration, 2,097 blocked, 0 missing/extra/duplicate/hash mismatch/semantic mutation. It must not be recomputed.",
+    "NDC machine-readable catalog registry currently declares catalog_count=66 and catalog entries status=defined_for_doc1; doctrine/examples already contain operational IDs such as ENT.sale / EVT.sale.created / ACT.sale.checkout / CAN.sale, so missing target links must not be misread as missing concepts.",
+    "Code Atlas/UIMAP evidence already demonstrates an explicit relation pattern where visual neutral meaning ACT.primary is related to NDC ACT.sale.checkout. This proves relation can exist without authority-domain equivalence.",
+    "Atlasfin remains reference-only. Certified Atlasfin truth remains 2,421/2,421 valid non-null references over 2,097 source outcomes with 341 representation-only normalizations and 0 semantic mutations; recipe equality alone cannot authorize semantic coalescing.",
+    "Materiality Catalog was not inspected."
   ],
   "decisions": [
-    "Publish PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE and hand off exact head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d to Chat 6.",
-    "Keep CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl empty because unknown/unsupported semantic equivalence must remain unknown rather than be inferred from Atlasfin recipe equality.",
-    "Keep IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl empty because current Identity authority has no exact recipe-ID reuse for the certified Atlasfin recipe groups.",
-    "Do not open or mutate per-surface readiness, canonical authority, product/runtime, Materiality Catalog, or global manifest ownership from Chat 5.",
-    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat5/authority-reconciliation-cross-evidence-20260914."
+    "Do not recensus, broad-rediscover, rebuild GVAE/RIFAT/Identity/NDC, repair projections, perform GVAE APPLY, mint canonical authority, mutate product/runtime, or inspect Materiality Catalog.",
+    "Preserve DISCOVERY_ONLY as existing physical discovery evidence, not UNDISCOVERED.",
+    "Continue read-only reconciliation only; do not create the work branch or write governed cross-authority outputs until current-head anti-rework/Authority Mesh evidence can be produced through an authorized GitHub execution path.",
+    "Do not classify any TRUE_NEW_AUTHORITY_REQUIRED while the full negative-evidence checklist cannot be materialized target-by-target into governed outputs."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/REFERENCE_ANALYSIS.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/VISUAL_ONLY_EQUIVALENCE.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/MANIFEST.json",
-    "prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/SUMMARY.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/STATUS.json"
   ],
   "validations": [
     {
-      "name": "Exclusive write-scope diff",
+      "name": "Owner assignment resolution",
       "result": "PASS",
-      "detail": "Compare d4b451cc92c597d02cfc65094922bd2c5dd17c12..4ffbf95450de6f19adfa5ed2e5c084edd45ca36d: ahead_by=6, behind_by=0, exactly six added files, all inside Chat 5 atlasfin-evidence ownership."
+      "detail": "Latest OWNER_ASSIGNMENT in own LOG.md resolves Chat 5 / CROSS_AUTHORITY_EVIDENCE_RECONCILIATION / 2,097 targets / assigned work branch and exclusive output root."
     },
     {
-      "name": "Required output presence",
+      "name": "Current main resolution",
       "result": "PASS",
-      "detail": "All six canonical Chat 5 outputs exist at the exact work head. Empty semantic/reuse JSONL files are deliberate zero-row evidence, not missing files."
+      "detail": "main=70f381e9b3c0b63ee4c7e445c98e86b3e9211be9."
     },
     {
-      "name": "Canonical Atlasfin evidence contract parity",
-      "result": "PASS",
-      "detail": "Exact branch bytes satisfy promotion_readiness.py validate_atlasfin_evidence invariants: required files present; materialityCatalogInspected=false; canonicalAuthorityMutationPerformed=false; productRuntimeMutationPerformed=false; semantic evidence contains no recipe-equality-only row; every visual-only row has canonicalCoalescingAllowed=false."
+      "name": "Assignment-base drift check",
+      "result": "BLOCKED_RELEVANT_GOVERNANCE_DRIFT",
+      "detail": "Assignment basis to current main changes PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; owner routing clarification explicitly requires current-head rebinding before output mutation."
     },
     {
-      "name": "Identity recipe exact-match audit",
-      "result": "PASS",
-      "detail": "Canonical Identity recipe registry recipeCount=1 with REC.button.primary; exact match count against REC.table.governed.v2, REC.card.governed.v2, REC.panel.governed.v2, REC.overlay.governed.v2 is zero."
+      "name": "Anti-rework truth",
+      "result": "PASS_READ_ONLY",
+      "detail": "visual.generic_application_engine_v1 remains DONE / SOURCE_READY / doNotRebuild=true; requested governed phase action remains ADVANCE, not BUILD/REBUILD."
     },
     {
-      "name": "Cross-surface semantic authority audit",
+      "name": "Forbidden scope audit",
       "result": "PASS",
-      "detail": "Immutable certified semantic review reports crossSurfaceGroupCount=0, so no canonical semantic coalescing is asserted by Chat 5."
-    },
-    {
-      "name": "Forbidden-scope audit",
-      "result": "PASS",
-      "detail": "Materiality Catalog inspected=false; canonical IDs minted=false; per-surface resolution writes=false; canonical authority mutation=false; product/runtime mutation=false; FILES_MANIFEST mutation=false."
+      "detail": "No Materiality Catalog, product/runtime, canonical authority, projection, GVAE APPLY, recensus, broad rediscovery, or foreign mailbox mutation performed."
     }
   ],
   "unresolved": [
-    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
-    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
+    "Current-head PASS_ANTI_REWORK_GATE / Authority Mesh rebinding cannot be dispatched through the available GitHub-only connector action surface.",
+    "Governed deliverables EXISTING_CONCEPT_INDEX, SEMANTIC_CROSSWALK_EVIDENCE, NDC_MATERIALIZATION_AUDIT, HISTORICAL_AUTHORITY_EVIDENCE, NEGATIVE_EVIDENCE_RULES, shards/INDEX/MANIFEST/SUMMARY remain unwritten because output mutation is correctly held fail-closed."
   ],
   "needsUserAction": false,
-  "userActionRequested": "",
-  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat5/authority-reconciliation-cross-evidence-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
+  "userActionRequested": null,
+  "nextAction": "HANDOFF: BLOCKED_EXECUTION_PATH. Resume automatically when an authorized GitHub-only workflow-dispatch/gate execution path is available; then rebind anti-rework/Authority Mesh to current main and continue only Chat 5's assigned cross-authority evidence lane. No owner relay or computer action requested.",
   "handoff": {
-    "parallelWitness": {
-      "phase": "CORPUS_FINAL_PARALLEL_VERIFICATION",
-      "result": "PASS_ATLASFIN_CORPUS_WITNESS",
-      "certificationHead": "6c7743f55434eb8d3429f286e2f9eae275d93d87"
-    },
-    "promotionReadiness": {
-      "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
-      "role": "ATLASFIN_SEMANTIC_REFERENCE_ANALYST",
-      "result": "PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE",
-      "state": "READY_FOR_INTEGRATION",
-      "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "workBranch": "chat5/canonical-promotion-readiness-atlasfin-20260912",
-      "workHead": "4ffbf95450de6f19adfa5ed2e5c084edd45ca36d",
-      "referenceAnalysisRows": 8,
-      "identityRecipeReuseCandidateRows": 0,
-      "crossSurfaceSemanticEvidenceRows": 0,
-      "visualOnlyEquivalenceRows": 3,
-      "certifiedInputCount": 2097,
-      "certifiedAtlasfinReferences": 2421,
-      "validAtlasfinReferences": 2421,
-      "hardInvalidReferences": 0,
-      "representationOnlyNormalizations": 341,
-      "semanticMutationCount": 0,
-      "canonicalCoalescingGroups": 0,
-      "outputGitBlobShas": {
-        "CROSS_SURFACE_EQUIVALENCE_EVIDENCE.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "IDENTITY_RECIPE_REUSE_CANDIDATES.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "MANIFEST.json": "508b8d0d8b7cbbcc1886e6ca5e7af0e6817682fc",
-        "REFERENCE_ANALYSIS.jsonl": "eee93b03a72965d8b8a7912a9509bd90aef0c1cf",
-        "SUMMARY.md": "8fc54409e297e0e76a7df15c15a381aa0ad2d73f",
-        "VISUAL_ONLY_EQUIVALENCE.jsonl": "ae2fdb5a424058424498da7326f87cce53a358e9"
-      },
+    "authorityReconciliation": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "role": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
+      "result": "BLOCKED_EXECUTION_PATH",
+      "state": "BLOCKED",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
+      "workHead": null,
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**",
+      "expectedInputCount": 2097,
+      "accountedInputCount": 2097,
+      "missingCount": 0,
+      "extraCount": 0,
+      "duplicateTargetCount": 0,
+      "governedOutputsWritten": false,
       "materialityCatalogInspected": false,
       "canonicalAuthorityMutationPerformed": false,
       "productRuntimeMutationPerformed": false,
-      "filesManifestMutationPerformed": false,
-      "defects": []
-    },
-    "authorityReconciliationAssignment": {
-      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
-      "assigned": true,
-      "assignedAt": "2026-09-14T23:30:00Z",
-      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
-      "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
-      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**",
-      "expectedInputCount": 2097,
-      "materialityCatalogAuthorized": false,
-      "githubOnly": true,
-      "status": "ASSIGNED_NOT_STARTED"
+      "projectionRepairPerformed": false,
+      "gvaeApplyPerformed": false,
+      "blockerCode": "BLOCKED_EXECUTION_PATH"
     }
   }
 }
