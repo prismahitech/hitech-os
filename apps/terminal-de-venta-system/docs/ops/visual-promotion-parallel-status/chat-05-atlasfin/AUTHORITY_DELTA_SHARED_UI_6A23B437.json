@@ -1,0 +1,71 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "createdAt": "2026-09-15T10:14:37-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1",
+  "question": "Does html[data-prisma-profile=\"perf\"] imply the Identity semantic concept VIS.identity.profile for this exact Shared UI target?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "html[data-prisma-profile=\"perf\"] body::after, html[data-layer-profile=\"perf\"] body::after",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "identity",
+      "id": "VIS.identity.profile",
+      "bindingId": "BND.IDENTITY.PROFILE.SHAREDUI.V1",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "reason": "An identity profile is neutral meaning, not a concrete UI element.",
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The perf profile selector reduces/changes visual effects (for example opacity/blur behavior) as a performance profile."
+    },
+    {
+      "domain": "historical-governance",
+      "path": "apps/terminal-de-venta-system/docs/design/PRISMA_BLACK_VISUAL_GOVERNANCE_PASS_01D.md",
+      "finding": "data-prisma-profile=\"perf\" is documented with motion/card-blur/product-glow performance toggles."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/portable/examples/identity-profile_prisma.clear-operational.v1.prisma-visual.json",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "apps/terminal-de-venta-system/docs/design/PRISMA_BLACK_VISUAL_GOVERNANCE_PASS_01D.md"
+  ],
+  "relationType": "NAME_COLLISION_NON_EQUIVALENT_PROFILE_DOMAINS",
+  "equivalent": false,
+  "explicitNonEquivalence": "The literal attribute name profile is insufficient. data-prisma-profile=\"perf\" is performance/rendering-mode evidence; VIS.identity.profile is visual identity meaning. They must not be collapsed.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "ndc": "No operational NDC meaning implicated by this selector",
+    "identity": "VIS.identity.profile exists, but its Shared UI binding has zero targets and explicitly says identity profile is not a concrete UI element",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with null semanticMeaningId and bindingId",
+    "codeAtlas": "No exact target crosswalk found in bounded search",
+    "atlasfin": "Not needed to establish this non-equivalence; no semantic inference performed",
+    "ledgerEvidence": "Baseline anti-rework truth reused; no exact target-specific Ledger/Evidence Index row found",
+    "history": "Performance-profile documentation provides independent meaning for perf"
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "unresolvedRemainder": "This evidence rules out VIS.identity.profile as an automatic target meaning but does not prove another existing semantic concept. Keep target-specific semantic classification unresolved until positive concept evidence exists; do not use empty searches to declare TRUE_NEW.",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false
+}
