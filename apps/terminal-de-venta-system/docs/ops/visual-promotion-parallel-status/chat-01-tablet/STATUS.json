@@ -4,8 +4,8 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T09:34:00-06:00",
+  "state": "RESTART_HANDOFF_READY",
+  "updatedAt": "2026-09-15T11:06:40-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat1/authority-reconciliation-tablet-20260914",
   "workHead": null,
@@ -401,7 +401,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Read-only reconciliation is complete and consumable by Chat 6. Do not repeat analysis unless main drifts or a bounded coordinator query arrives. Materialize the prepared governed shards only after WRITE_GATE_PATH_PENDING clears; no PR/main merge without explicit owner instruction.",
+  "nextAction": "Do not rebuild the 929-target baseline or recensus Tablet. Treat the 924 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional, not semantic-final. Perform bounded target-specific qualification: prove the relevant existing NDC/Identity/VIS concept for each target or keep it provisional. Family-level authority existence is insufficient. Preserve the 5 specific classifications already separated: 1 application gap, 2 authority conflicts, 2 physical/projection reconciliation rows. Consume current Chat 5 deltas when relevant and request/publish bounded evidence receipts rather than broad rediscovery. Keep zero-loss 929/929 and TRUE_NEW=0 unless complete target-specific negative evidence exists. WRITE_GATE_PATH_PENDING blocks governed output writes only. Continue read-only evidence work.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -830,6 +830,40 @@
       "blockers": [
         "WRITE_GATE_PATH_PENDING"
       ]
+    },
+    "restartWave": {
+      "generatedAt": "2026-09-15T11:06:40-06:00",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "restartMode": "CONTINUE_IN_NEW_CHAT",
+      "continuationMd": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/CONTINUATION.md",
+      "continuationJson": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/CONTINUATION.json",
+      "role": "TABLET_AUTHORITY_RECONCILIATION_WORKER",
+      "priorAccounting": {
+        "classified": 929,
+        "provisional": 924,
+        "specific": 5,
+        "unresolved": 0
+      },
+      "globalComposerTruth": {
+        "total": 2097,
+        "acceptedSpecific": 313,
+        "provisionalConceptLink": 1744,
+        "unresolvedSharedUi": 40,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "trueNewAccepted": 0
+      },
+      "exactNextActions": [
+        "Do not rebuild the 929-target baseline or recensus Tablet.",
+        "Treat the 924 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional, not semantic-final.",
+        "Perform bounded target-specific qualification: prove the relevant existing NDC/Identity/VIS concept for each target or keep it provisional. Family-level authority existence is insufficient.",
+        "Preserve the 5 specific classifications already separated: 1 application gap, 2 authority conflicts, 2 physical/projection reconciliation rows.",
+        "Consume current Chat 5 deltas when relevant and request/publish bounded evidence receipts rather than broad rediscovery.",
+        "Keep zero-loss 929/929 and TRUE_NEW=0 unless complete target-specific negative evidence exists.",
+        "WRITE_GATE_PATH_PENDING blocks governed output writes only. Continue read-only evidence work."
+      ],
+      "noRebuild": true
     }
   }
 }
