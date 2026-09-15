@@ -4,13 +4,15 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
-  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:14:00Z",
+  "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat3/authority-reconciliation-mobile-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for MOBILE_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
-  "blockers": [],
+  "summary": "START AUTHORITY_RECONCILIATION_ANTI_REWORK for Chat 3 / MOBILE_AUTHORITY_RECONCILIATION. Exact input is 271 certified Mobile targets. Assignment basis main 46c9032... has advanced to 70f381e9... through Factory Ledger/Evidence Index governance changes, so drift is relevant and requires current-head anti-rework/Authority Mesh revalidation before lane output writes.",
+  "blockers": [
+    "GOVERNANCE_SENSITIVE_MAIN_DRIFT_REQUIRES_CURRENT_HEAD_AUTHORITY: assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 -> current main 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9 modifies PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json. This is being resolved GitHub-only; no owner action requested."
+  ],
   "findings": [
     "Current main remains exactly d4b451cc92c597d02cfc65094922bd2c5dd17c12; no phase-base drift occurred during closure.",
     "RESOLUTION.jsonl is materialized at 271 rows / 271 unique targets. Source-record validation against the immutable certified Mobile normalized source is 271/271 with 0 mismatches.",
@@ -19,13 +21,16 @@
     "REUSE.jsonl = 0, REGISTRATION_PROPOSALS.jsonl = 0, BLOCKED.jsonl = 271, PROJECTION_DEBT.jsonl = 138; all four are exact target-set derivatives of RESOLUTION.jsonl.",
     "Latest PR #553 executable-checkout CI at workHead bf99bf782c7b295ee8badd936a4b9078e751ecdf: CI PASS, ForgeOS Quality Gate PASS, Sync Sentinel PASS. VISCORE1 reaches its final committed FILES_MANIFEST equality gate and fails only because these seven new owned outputs are intentionally not written into prisma-html/FILES_MANIFEST.json by Chat 3; that global path is explicitly outside lane ownership.",
     "Materiality Catalog was not inspected. Product/runtime mutation, canonical authority mutation, projection repair and GVAE APPLY were not performed.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild.",
+    "2026-09-15 START: Chat identity resolved from status-channel + STATUS_INDEX as Chat 3, lane MOBILE_AUTHORITY_RECONCILIATION by latest OWNER_ASSIGNMENT, expectedInputCount=271, work branch chat3/authority-reconciliation-mobile-20260914, exclusive output root prisma-html/governance/visual-promotion/authority-reconciliation/mobile/**.",
+    "Assignment basis main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 is 3 commits behind current main 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; only Factory Ledger and Evidence Index changed, but those are governance-sensitive authority inputs."
   ],
   "decisions": [
     "Preserve every existing semantic decision and all 138 DRIFT records as evidence/debt; do not select a projection repair direction.",
     "Treat Atlasfin as support-only and never as semantic authority by visual similarity.",
     "Do not touch prisma-html/FILES_MANIFEST.json or any non-Mobile readiness output to silence an out-of-scope global-manifest CI gate.",
-    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat3/authority-reconciliation-mobile-20260914."
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat3/authority-reconciliation-mobile-20260914.",
+    "Treat current-main drift as relevant because canonical Factory Ledger authority changed; obtain current-head task-exact GitHub-only anti-rework/Authority Mesh evidence before any lane output mutation."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/promotion-readiness/mobile/RESOLUTION.jsonl",
@@ -43,15 +48,16 @@
     "PASS_CANONICAL_VALIDATE_SURFACE_RULESET: exact current promotion_readiness.py validate_surface rules replay against branch bytes returns surfaceKey=mobile,status=PASS,inputCount=271,readyExistingAuthorityReuse=0,readyCanonicalRegistration=0,legitimatelyBlocked=271,notApplicable=0,projectionDebtCount=138,resolutionDigest=f3cd9b87583b0a2a65a9c530b52ee6f7c39b198ff685309e929ab97ea2154f8a.",
     "PASS_SUBSETS: REUSE=0, REGISTRATION_PROPOSALS=0, BLOCKED=271, PROJECTION_DEBT=138 and each target set equals the exact derivative of RESOLUTION.",
     "PASS_MANIFEST_ACCOUNTING: manifest fields match actual Mobile bytes/accounting for all fields enforced by promotion_readiness.py.",
-    "PASS_PROHIBITED_ACTION_GUARD: materialityCatalogInspected=false, productRuntimeMutationPerformed=false, canonicalAuthorityMutationPerformed=false, projectionRepairPerformed=false, gvaeApplyPerformed=false."
+    "PASS_PROHIBITED_ACTION_GUARD: materialityCatalogInspected=false, productRuntimeMutationPerformed=false, canonicalAuthorityMutationPerformed=false, projectionRepairPerformed=false, gvaeApplyPerformed=false.",
+    "PASS_IDENTITY_AND_ASSIGNMENT_DETECTION: Chat 3 / MOBILE_AUTHORITY_RECONCILIATION / 271 targets / exclusive output root and work branch resolved from canonical status files + latest OWNER_ASSIGNMENT."
   ],
   "unresolved": [
-    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
-    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
+    "Obtain current-head anti-rework/Authority Mesh evidence for ADVANCE/VERIFY of visual.generic_application_engine_v1 under the bounded Mobile authority-reconciliation evidence scope.",
+    "Reconcile all 271 Mobile targets into the seven allowed final classifications with exact evidence; TRUE_NEW_AUTHORITY_REQUIRED requires complete negative evidence."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat3/authority-reconciliation-mobile-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
+  "nextAction": "Run GitHub-only current-head authority/anti-rework preflight, then create/reuse the assigned work branch from current main and execute only the 271-target Mobile reconciliation evidence lane.",
   "handoff": {
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
@@ -125,7 +131,8 @@
       "expectedInputCount": 271,
       "materialityCatalogAuthorized": false,
       "githubOnly": true,
-      "status": "ASSIGNED_NOT_STARTED"
+      "status": "IN_PROGRESS_AUTHORITY_PREFLIGHT",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9"
     }
   }
 }
