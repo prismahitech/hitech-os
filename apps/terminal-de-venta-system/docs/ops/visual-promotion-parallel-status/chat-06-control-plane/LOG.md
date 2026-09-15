@@ -617,3 +617,26 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
   - **964** unresolved target-specific rows;
   - total **2,097**.
 - This prevents fake semantic green while preserving worker zero-loss/accounting work.
+
+## 2026-09-15T09:50:00-06:00 — NEW CHAT CONTINUATION SEALED
+
+- Canonical main at handoff: `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- Created/updated:
+  - `CONTINUATION.md`
+  - `CONTINUATION.json`
+  - refreshed `AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json`
+- Zero-loss remains **2,097 / 2,097**, missing=0, extra=0, duplicate=0.
+- Surface structural status:
+  - Tablet 929/929 complete read-only.
+  - PC 827/827 complete read-only.
+  - Mobile 271/271 complete read-only.
+  - Shared UI 30 classified + 40 unresolved.
+- Composer semantic quality gate:
+  - **313** specific gap/conflict/projection-debt classifications accepted.
+  - **1,744** `EXISTING_CONCEPT_LINK_MISSING` rows provisional: Tablet 924 + PC 687 + Mobile 133.
+  - **40** Shared UI targets unresolved and owned by Chat 4.
+- Chat 5 dynamic support has **5 bounded delta receipts** available now.
+- No TRUE_NEW accepted.
+- No Materiality use, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR or merge.
+- `WRITE_GATE_PATH_PENDING` continues to block only governed output materialization.
+- New Chat must read continuation files and current mailboxes before continuing; do not rely only on prose from the old chat.
