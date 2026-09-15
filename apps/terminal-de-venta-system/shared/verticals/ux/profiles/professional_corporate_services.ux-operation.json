@@ -79,7 +79,8 @@
       "administración de permisos",
       "diseño de flujos"
     ],
-    "copy": "Mobile supervisa y permite decisiones acotadas; no sustituye el gobierno de PC."
+    "copy": "Mobile supervisa y permite decisiones acotadas; no sustituye el gobierno de PC.",
+    "role": "supervision"
   },
   "screens": [
     {
