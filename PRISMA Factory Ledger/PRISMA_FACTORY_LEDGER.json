@@ -1919,7 +1919,48 @@
         "promote snapshot/reference evidence into broader authority",
         "claim production, enterprise, paid-pilot, human-usefulness or independent-agent readiness from this adapter"
       ]
+    },
+    {
+      "id": "visual.operating_graph_v1",
+      "displayName": "PRISMA Visual Operating Graph V1",
+      "domain": "visual",
+      "surfaces": [
+        "prisma-html",
+        "governance",
+        "quality"
+      ],
+      "classification": "BUILD",
+      "status": "NOT_STARTED",
+      "stateLabel": "VISUAL_OPERATING_GRAPH_V1_REGISTERED_BUILD_NOT_STARTED",
+      "doNotRebuild": false,
+      "nextGate": "On exact current main, run the universal anti-rework PROPOSAL gate for visual.operating_graph_v1. Then obtain or revalidate a task-exact Authority Mesh for the bounded Foundation docs/schemas/read-only derivation scope and run the anti-rework MUTATION gate before repository source writes. Foundation must remain non-product, non-runtime and non-authorizing.",
+      "evidence": [
+        "Registration-only Authority Mesh run 34911873722 artifact 10374668209; PASS_COMPOSED_AUTHORITY_MESH at main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09; composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e; uploaded artifact sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
+        "Current Promotion Readiness closure remains PR #554 / main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with canonicalMutationAuthorized=false and productRuntimeMutationAuthorized=false",
+        "Existing authorities are reuse dependencies, not rebuild scope: Factory Ledger, Authority Mesh, Code Atlas/UIMAP, NDC, Identity, RIFAT/prisma-ui, Target Index, Visual Promotion Control Plane/Readiness, Universal Visual Work Entry Gate/GVAE, Atlasfin reference bridge, runtime QA and Git/CI evidence"
+      ],
+      "doesNotProve": [
+        "Visual Operating Graph Foundation files or generator tooling exist",
+        "Anti-rework PROPOSAL or MUTATION has passed for this newly registered BUILD capability",
+        "Any canonical visual registration, semantic authority, binding, projection repair or target readiness",
+        "Any product/source/runtime visual mutation or GVAE APPLY",
+        "Any runtime visual, production, distribution or customer deployment certification"
+      ],
+      "allowedActions": [
+        "reuse existing machine-readable authorities without rebuilding them",
+        "run the exact anti-rework and Authority Mesh gates for the bounded Foundation",
+        "after those gates, author docs, schemas, registries and deterministic read-only derivation tooling for the Operating Graph",
+        "represent unresolved authority as explicit gaps and preserve canonical versus live-overlay separation"
+      ],
+      "forbiddenActions": [
+        "touch product or runtime source as part of Foundation",
+        "perform canonical visual registration or semantic coalescing by inference",
+        "run GVAE APPLY or bypass the Universal Visual Work Entry Gate",
+        "run broad visual rediscovery or rebuild existing Target Index, NDC, Identity, RIFAT, Factory Ledger or GVAE",
+        "touch databases, Prisma generation, deployment, processes or ports",
+        "claim runtime or production green from docs, schemas, static checks or absent evidence"
+      ]
     }
   ],
-  "updatedAt": "2026-09-04T12:29:49Z"
+  "updatedAt": "2026-09-15T00:09:22Z"
 }
