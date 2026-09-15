@@ -4,8 +4,8 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T09:32:00-06:00",
+  "state": "RESTART_HANDOFF_READY",
+  "updatedAt": "2026-09-15T11:06:40-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
   "workHead": null,
@@ -42,13 +42,41 @@
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json"
   ],
   "validations": [
-    {"name":"chat5-cross-authority-receipt","result":"PASS_CONSUMED","detail":"Receipt blob e30afdcaf67b44a95453ddbcc236762d8a651173; readOnlyEvidenceConsumableNow=true."},
-    {"name":"shared-ui-zero-loss-accounting","result":"PASS_READ_ONLY","detail":"input=70; accounted=70; missing=0; extra=0; duplicate=0."},
-    {"name":"read-only-classification-progress","result":"PASS_PARTIAL_TARGET_SPECIFIC","detail":"classified=30; unresolved target-specific=40; conflict-curate=11; physical-reconciliation-required=19; true-new=0."},
-    {"name":"semantic-domain-separation","result":"PASS","detail":"Identity/VIS visual meaning was not equated to NDC operational meaning; physical and application authority remain separate."},
-    {"name":"ndc-materialization-semantics","result":"PASS","detail":"DOC1 treated as documentary canon/registries/schemas/seeds/examples, not populated runtime DB/Prisma truth."},
-    {"name":"materiality-policy","result":"PASS","detail":"Materiality Catalog remains uninspected."},
-    {"name":"work-branch-output-write","result":"PENDING_WRITE_GATE_ONLY","detail":"No governed output-root mutation performed; read-only analysis continues independently."}
+    {
+      "name": "chat5-cross-authority-receipt",
+      "result": "PASS_CONSUMED",
+      "detail": "Receipt blob e30afdcaf67b44a95453ddbcc236762d8a651173; readOnlyEvidenceConsumableNow=true."
+    },
+    {
+      "name": "shared-ui-zero-loss-accounting",
+      "result": "PASS_READ_ONLY",
+      "detail": "input=70; accounted=70; missing=0; extra=0; duplicate=0."
+    },
+    {
+      "name": "read-only-classification-progress",
+      "result": "PASS_PARTIAL_TARGET_SPECIFIC",
+      "detail": "classified=30; unresolved target-specific=40; conflict-curate=11; physical-reconciliation-required=19; true-new=0."
+    },
+    {
+      "name": "semantic-domain-separation",
+      "result": "PASS",
+      "detail": "Identity/VIS visual meaning was not equated to NDC operational meaning; physical and application authority remain separate."
+    },
+    {
+      "name": "ndc-materialization-semantics",
+      "result": "PASS",
+      "detail": "DOC1 treated as documentary canon/registries/schemas/seeds/examples, not populated runtime DB/Prisma truth."
+    },
+    {
+      "name": "materiality-policy",
+      "result": "PASS",
+      "detail": "Materiality Catalog remains uninspected."
+    },
+    {
+      "name": "work-branch-output-write",
+      "result": "PENDING_WRITE_GATE_ONLY",
+      "detail": "No governed output-root mutation performed; read-only analysis continues independently."
+    }
   ],
   "unresolved": [
     "40 register-first Shared UI targets still require target-specific semantic joins before a defensible final classification. They are accounted, not missing, and are not TRUE_NEW by default.",
@@ -56,7 +84,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Continue target-specific read-only joins for the remaining 40 register-first Shared UI targets using existing NDC/Identity/RIFAT/Code Atlas/Atlasfin/history evidence. Publish compact mailbox progress; do not wait for the write gate.",
+  "nextAction": "Highest priority: finish the 40 target-specific unresolved Shared UI rows. Do not recensus the 70-target baseline. Consume current Chat 5 Shared UI deltas for 09F96569, BA225641, C2722826, 718C4BEE and 3863084F. They provide positive existing ACT.primary / REC.button.primary evidence and support EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while exact binding/application remains missing. Consume Chat 5 delta 6A23B437 as a non-equivalence guard only: data-prisma-profile=perf is performance/rendering evidence and must not be equated automatically to VIS.identity.profile. Do not equate identity::ACT.primary with ndc::ACT.sale.checkout. Grouped CheckoutButton + ScanButton targets especially forbid that collapse. Classify the 40 rows target-by-target and publish a fresh mailbox receipt with exact counts and zero-loss. Chat 4 owns final Shared UI surface classification. Do not wait for WRITE_GATE_PATH_PENDING; it blocks governed output writes only. Keep TRUE_NEW=0 unless complete target-specific negative evidence across required authority families is assembled.",
   "handoff": {
     "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
     "authorityReconciliation": {
@@ -94,7 +122,11 @@
         "result": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
         "readOnlyEvidenceConsumableNow": true
       },
-      "writeGate": {"status":"WRITE_GATE_PATH_PENDING","blocksReadOnlyAnalysis":false,"blocksGovernedOutputWrites":true},
+      "writeGate": {
+        "status": "WRITE_GATE_PATH_PENDING",
+        "blocksReadOnlyAnalysis": false,
+        "blocksGovernedOutputWrites": true
+      },
       "materialityCatalogInspected": false,
       "recensusPerformed": false,
       "broadRediscoveryPerformed": false,
@@ -102,6 +134,40 @@
       "productRuntimeMutationPerformed": false,
       "projectionRepairPerformed": false,
       "gvaeApplyPerformed": false
+    },
+    "restartWave": {
+      "generatedAt": "2026-09-15T11:06:40-06:00",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "restartMode": "CONTINUE_IN_NEW_CHAT",
+      "continuationMd": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/CONTINUATION.md",
+      "continuationJson": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/CONTINUATION.json",
+      "role": "SHARED_UI_AUTHORITY_RECONCILIATION_WORKER",
+      "priorAccounting": {
+        "classified": 30,
+        "provisional": 0,
+        "specific": 30,
+        "unresolved": 40
+      },
+      "globalComposerTruth": {
+        "total": 2097,
+        "acceptedSpecific": 313,
+        "provisionalConceptLink": 1744,
+        "unresolvedSharedUi": 40,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "trueNewAccepted": 0
+      },
+      "exactNextActions": [
+        "Highest priority: finish the 40 target-specific unresolved Shared UI rows. Do not recensus the 70-target baseline.",
+        "Consume current Chat 5 Shared UI deltas for 09F96569, BA225641, C2722826, 718C4BEE and 3863084F. They provide positive existing ACT.primary / REC.button.primary evidence and support EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while exact binding/application remains missing.",
+        "Consume Chat 5 delta 6A23B437 as a non-equivalence guard only: data-prisma-profile=perf is performance/rendering evidence and must not be equated automatically to VIS.identity.profile.",
+        "Do not equate identity::ACT.primary with ndc::ACT.sale.checkout. Grouped CheckoutButton + ScanButton targets especially forbid that collapse.",
+        "Classify the 40 rows target-by-target and publish a fresh mailbox receipt with exact counts and zero-loss. Chat 4 owns final Shared UI surface classification.",
+        "Do not wait for WRITE_GATE_PATH_PENDING; it blocks governed output writes only.",
+        "Keep TRUE_NEW=0 unless complete target-specific negative evidence across required authority families is assembled."
+      ],
+      "noRebuild": true
     }
   }
 }
