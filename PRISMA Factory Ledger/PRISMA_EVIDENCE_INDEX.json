@@ -1160,9 +1160,43 @@
         "Revalidation run 34993859090 artifact 10405998737 sha256:10b423c412450cefd754b609e51631aa7b21546f01bd671dace23a9297ce332f",
         "PASS_NO_RELEVANT_DRIFT current main 8db4370d579014f8fed6e190ffce45e1589b33d9 revalidationDigest 68d03e535286cc14d77f45e0869e7d5495c8e0e71fbf20d64c78697d9ddc2308 rebound artifact sha256:3cf716ce235816b28041c3f1589189984797d3487600c8e6e9ebc7cc01af0893"
       ]
+    },
+    {
+      "artifact": "PR #558 / Visual Operating Graph V1 Wave 1 read-only core closure",
+      "type": "visual_operating_graph_v1_wave1_source_static_closure",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "prisma-html",
+        "visual-operating-graph",
+        "quality"
+      ],
+      "status": "PASS_WAVE1_SOURCE_READY",
+      "proves": [
+        "Foundation contracts and Wave 1 read-only tooling are present on canonical main after PR #558 merge 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d",
+        "Wave 1 implements the deterministic source-set verifier, canonical Operating Graph builder, generated Master Map projection, Live Phase Truth Reducer and process-level Drift Sentinel",
+        "The source-set verifier correctly failed closed when Factory Ledger/Evidence authority changed, then passed only after fresh current-main Authority Mesh and exact locked-blob rebind",
+        "Final VISCORE1 source validation reports PASS_SOURCESET_VERIFIED, zero blocking findings, an 87-node / 75-edge deterministic graph and canonical/live separation with no observed live overlay",
+        "Final PR #558 VISCORE1, CI, ForgeOS Quality Gate and Sync Sentinel workflows passed",
+        "Wave 1 remains read-only and non-authorizing with productionCertified=false and authorizationGranted=false"
+      ],
+      "doesNotProve": [
+        "Next Safe Action Engine exists or is source-ready",
+        "What-if Digital Twin exists or is source-ready",
+        "Any visual target is authorized for canonical registration, Work Entry mutation or GVAE APPLY",
+        "Any product/runtime source has been mutated or runtime rendered behavior is certified",
+        "Production, distribution or customer deployment readiness"
+      ],
+      "evidence": [
+        "Foundation PR #556 merge 8db4370d579014f8fed6e190ffce45e1589b33d9",
+        "Wave 1 PR #558 merge 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d",
+        "Wave 1 AutoMesh 35000699014 artifact 10409517912 requestId de894f21c1b291df requestDigest 7c2b9b38cf8ae6d215f3ab13e7005d1371d2facdb5b149ad7296c95e20f8b7d7 composed sha256 67f209964b861ae89e9fb712cb9d9137ea8058882e02c056291690f3d5f13664",
+        "Final checks: VISCORE1 35001088119; CI 35001088193; ForgeOS 35001087929; Sync Sentinel 35001088016",
+        "Wave 1 closure AutoMesh 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769 requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466 uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab"
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T16:16:00Z",
+  "updatedAt": "2026-09-15T17:33:23Z",
   "entries": [
     {
       "capabilityId": "runtime.tablet.zero_idle_guard",
@@ -1383,14 +1417,15 @@
     },
     {
       "capabilityId": "visual.operating_graph_v1",
-      "status": "BUILD_NOT_STARTED",
-      "runId": "34911873722",
+      "status": "WAVE1_SOURCE_READY",
+      "runId": "35001765419",
       "evidence": [
-        "registration Authority Mesh artifact 10374668209",
-        "sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
-        "requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09",
-        "composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e",
-        "canonical main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0"
+        "Foundation PR #556 merge 8db4370d579014f8fed6e190ffce45e1589b33d9",
+        "Wave 1 PR #558 merge 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d",
+        "Wave 1 AutoMesh 35000699014 artifact 10409517912 requestDigest 7c2b9b38cf8ae6d215f3ab13e7005d1371d2facdb5b149ad7296c95e20f8b7d7 composed sha256 67f209964b861ae89e9fb712cb9d9137ea8058882e02c056291690f3d5f13664",
+        "Final PR checks VISCORE1 35001088119; CI 35001088193; ForgeOS 35001087929; Sync 35001088016",
+        "Source validator: PASS_SOURCESET_VERIFIED; 0 blocking findings; 87 nodes / 75 edges; live overlay not observed; authorizationGranted=false; productionCertified=false",
+        "Closure AutoMesh 35001765419 artifact 10409673990 requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466"
       ]
     },
     {
