@@ -77,11 +77,11 @@
       ],
       "expectedResult": "El flujo client_intake termina con estado humano claro y trazabilidad verificable.",
       "expectedEvents": [
-        "professional_services.client.intake_captured",
+        "professional_services.intake.completed",
         "audit.event.recorded"
       ],
       "requiredPermissions": [
-        "professional_services.client.intake"
+        "professional_services.intake.capture"
       ],
       "offlineExpectation": "no promueve una accion sensible si falta autoridad",
       "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
@@ -161,7 +161,7 @@
         "audit.event.recorded"
       ],
       "requiredPermissions": [
-        "professional_services.document.receive"
+        "professional_services.document.record"
       ],
       "offlineExpectation": "no promueve una accion sensible si falta autoridad",
       "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
@@ -197,11 +197,11 @@
       ],
       "expectedResult": "El flujo advance_milestone termina con estado humano claro y trazabilidad verificable.",
       "expectedEvents": [
-        "professional_services.service.milestone_completed",
+        "professional_services.task.completed",
         "audit.event.recorded"
       ],
       "requiredPermissions": [
-        "professional_services.task.update"
+        "professional_services.task.manage"
       ],
       "offlineExpectation": "no promueve una accion sensible si falta autoridad",
       "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
@@ -281,7 +281,7 @@
         "audit.event.recorded"
       ],
       "requiredPermissions": [
-        "professional_services.deadline.view"
+        "professional_services.deadline.manage"
       ],
       "offlineExpectation": "no convierte un riesgo o pendiente en completado sin autoridad",
       "failureMessage": "La operacion no se pudo completar. Revisa el dato y vuelve a intentar.",
