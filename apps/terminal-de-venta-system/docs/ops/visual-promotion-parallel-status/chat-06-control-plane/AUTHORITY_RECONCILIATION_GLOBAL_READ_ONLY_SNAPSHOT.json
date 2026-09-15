@@ -4,7 +4,7 @@
   "chatId": 6,
   "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "generatedAt": "2026-09-15T09:44:00-06:00",
+  "generatedAt": "2026-09-15T09:50:00-06:00",
   "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "capability": {
     "id": "visual.generic_application_engine_v1",
@@ -28,20 +28,21 @@
   },
   "workerIntake": {
     "tablet": {
-      "state": "IN_PROGRESS_READ_ONLY",
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
       "input": 929,
-      "classified": 5,
-      "unresolved": 924,
+      "classified": 929,
+      "unresolved": 0,
       "counts": {
         "EXISTING_AUTHORITY_EXACT_REUSE": 0,
-        "EXISTING_CONCEPT_LINK_MISSING": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 924,
         "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
         "EXISTING_AUTHORITY_CONFLICT_CURATE": 2,
         "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 2,
         "TRUE_NEW_AUTHORITY_REQUIRED": 0,
         "NOT_APPLICABLE": 0
       },
-      "chat5BaselineConsumed": true
+      "chat5BaselineConsumed": true,
+      "composerConceptLinkProvisional": 924
     },
     "pc": {
       "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
@@ -57,7 +58,8 @@
         "TRUE_NEW_AUTHORITY_REQUIRED": 0,
         "NOT_APPLICABLE": 0
       },
-      "chat5BaselineConsumed": true
+      "chat5BaselineConsumed": true,
+      "composerConceptLinkProvisional": 687
     },
     "mobile": {
       "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
@@ -73,7 +75,8 @@
         "TRUE_NEW_AUTHORITY_REQUIRED": 0,
         "NOT_APPLICABLE": 0
       },
-      "chat5BaselineConsumed": true
+      "chat5BaselineConsumed": true,
+      "composerConceptLinkProvisional": 133
     },
     "sharedUi": {
       "state": "IN_PROGRESS_READ_ONLY",
@@ -89,7 +92,11 @@
         "TRUE_NEW_AUTHORITY_REQUIRED": 0,
         "NOT_APPLICABLE": 0
       },
-      "chat5BaselineConsumed": true
+      "chat5BaselineConsumed": true,
+      "pendingChat5DeltaTargets": [
+        "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+        "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1"
+      ]
     },
     "crossAuthority": {
       "state": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
@@ -97,14 +104,15 @@
       "baselineResult": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
       "baselineMustNotBeRebuilt": true,
       "trueNewAssertions": 0,
-      "dynamicDeltaSupportActive": true
+      "dynamicDeltaSupportActive": true,
+      "deltaReceiptCount": 5
     }
   },
   "provisionalGlobalCounts": {
-    "classified": 1133,
-    "unresolved": 964,
+    "structurallyClassified": 2057,
+    "unresolved": 40,
     "EXISTING_AUTHORITY_EXACT_REUSE": 0,
-    "EXISTING_CONCEPT_LINK_MISSING": 820,
+    "EXISTING_CONCEPT_LINK_MISSING": 1744,
     "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
     "EXISTING_AUTHORITY_CONFLICT_CURATE": 14,
     "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 298,
@@ -121,13 +129,13 @@
     "projectionRepairObserved": false,
     "gvaeApplyObserved": false,
     "composerFinalSemanticGreen": false,
-    "reasonNotFinal": "820 EXISTING_CONCEPT_LINK_MISSING rows still need target-specific concept qualification; 964 targets remain unresolved in Tablet/Shared UI."
+    "reasonNotFinal": "1,744 concept-link rows need target-specific concept qualification and 40 Shared UI targets remain surface-owned unresolved."
   },
   "priorities": [
-    "Finish the 40 unresolved Shared UI target-specific joins first because the lane is small and bounded.",
-    "Advance Tablet 924 unresolved semantic-link reviews without collapsing NDC operational meaning into Identity/VIS visual meaning.",
-    "Use Chat 5 only for bounded target/concept delta investigations; do not rebuild the 2,097 baseline.",
-    "Preserve PC and Mobile read-only results unless current authority/main materially drifts."
+    "Consume Chat 4 Shared UI progress first, including Chat 5 deltas for 09F96569 and BA225641.",
+    "Use Chat 5 bounded delta support to qualify concept-link rows rather than accepting family-level authority as per-target proof.",
+    "Preserve Tablet/PC/Mobile zero-loss and deterministic target sets while keeping 1,744 concept-link classifications provisional.",
+    "Do not materialize governed composed outputs until WRITE_GATE_PATH_PENDING clears."
   ],
   "blockers": [
     {
@@ -141,10 +149,10 @@
   "prOpened": false,
   "mergePerformed": false,
   "composerAcceptance": {
-    "structurallyClassified": 1133,
+    "structurallyClassified": 2057,
     "semanticallyAcceptedOrDebtClassified": 313,
-    "conceptLinkMissingPendingTargetSpecificConceptQualification": 820,
-    "unresolvedTargetSpecific": 964,
+    "conceptLinkMissingPendingTargetSpecificConceptQualification": 1744,
+    "unresolvedTargetSpecific": 40,
     "total": 2097,
     "rule": "EXISTING_CONCEPT_LINK_MISSING is not composer-final merely because a surface has some NDC/Identity authority family. The relevant existing concept must be target-specifically evidenced or otherwise qualified strongly enough to prove that the gap is the link, not the concept itself."
   },
@@ -152,13 +160,18 @@
     {
       "code": "CONCEPT_LINK_CLASSIFICATION_REQUIRES_TARGET_SPECIFIC_CONCEPT_EVIDENCE",
       "affected": {
+        "tablet": 924,
         "pc": 687,
         "mobile": 133,
-        "total": 820
+        "total": 1744
       },
-      "finding": "PC and Mobile receipts classify CURRENT/current rows as EXISTING_CONCEPT_LINK_MISSING while explicitly stating exact target-level operational/visual meanings remain unresolved. Chat 5 proves authority families exist, but family existence alone does not identify the existing concept for each target.",
-      "disposition": "Accept zero-loss/accounting and deterministic target sets. Hold these 820 semantic classifications as PROVISIONAL pending target-specific existing-concept evidence or a stronger governed rule proving family-level evidence is sufficient.",
+      "finding": "Tablet, PC and Mobile receipts classify rows as EXISTING_CONCEPT_LINK_MISSING while exact target-level operational/visual meanings remain unresolved. Authority-family existence alone does not identify the relevant existing concept for each target.",
+      "disposition": "Accept zero-loss/accounting and deterministic target sets. Hold 1,744 semantic classifications PROVISIONAL pending target-specific existing-concept evidence or a governed rule proving family-level evidence is sufficient.",
       "fakeGreenPrevented": true
     }
+  ],
+  "continuationFiles": [
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.md",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.json"
   ]
 }
