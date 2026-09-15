@@ -1,0 +1,60 @@
+{
+  "schema": "prisma.visual-promotion.mobile-main-drift-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 3,
+  "role": "MOBILE_AUTHORITY_RECONCILIATION_WORKER",
+  "generatedAt": "2026-09-15T11:18:00-06:00",
+  "repository": "prismahitech/hitech-os",
+  "statusBranch": "status/vp-chat-03-mobile",
+  "fromMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "toMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "compare": {
+    "aheadBy": 3,
+    "changedPathCount": 2,
+    "changedPaths": [
+      "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+      "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+    ],
+    "productRuntimePathChanged": false,
+    "ndcPathChanged": false,
+    "identityPathChanged": false,
+    "rifatTargetIndexPathChanged": false,
+    "promotionCandidatePathChanged": false,
+    "mobileMailboxPathChangedByMain": false
+  },
+  "newCapabilityObserved": {
+    "id": "tooling.mamastrophic.universal_screenshot_artifacts",
+    "classification": "BUILD",
+    "status": "NOT_STARTED",
+    "relationToThisLane": "SEPARATE_NON_BLOCKING_CAPABILITY"
+  },
+  "laneCapabilityRevalidation": {
+    "id": "visual.generic_application_engine_v1",
+    "factoryLedgerBlob": "974d4d1ec999442eb0f715d5de984a4d98a9b062",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE",
+    "changedByDriftInRelevantMeaning": false
+  },
+  "mobileEvidencePinsRemainApplicable": {
+    "targetIndexBlob": "dd0d0a33f2b60957438355ab14798aa1888d781e",
+    "provisionalCorpusBlob": "edc991f6359e566db032f6ecd0f14d742735d2a4",
+    "ndcPanelRegistryBlob": "9956caae2001be67719c2d041fb2a9778419fa79",
+    "identityElementBindingsBlob": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8"
+  },
+  "assessment": {
+    "readOnlySemanticEvidenceOverlap": false,
+    "governanceAuthorityPinChanged": true,
+    "disposition": "READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE_CURRENT_HEAD_REPIN_REQUIRED_BEFORE_GOVERNED_OUTPUT_MUTATION",
+    "qualificationResultChanged": false,
+    "mobileComposerProvisional": 133,
+    "mobileSpecificPreserved": 138,
+    "mobileTotal": 271,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "trueNewAccepted": 0
+  },
+  "note": "Main moved during Chat 3 read-only qualification. The drift is governance-sensitive because Factory Ledger/Evidence Index changed, but it does not alter the Mobile target/concept evidence used by this pass. No governed output mutation is attempted. If WRITE_GATE_PATH_PENDING later clears, task-exact current-head Authority Mesh/anti-rework evidence must be repinned before materialization."
+}
