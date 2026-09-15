@@ -143,3 +143,30 @@ No recensus, broad rediscovery, GVAE/RIFAT/Identity/NDC rebuild, Materiality Cat
 7. Do not ask owner for local computer/PowerShell/files.
 8. Keep governed output materialization on hold until the legitimate write gate clears.
 9. When write authority exists, create/reuse Chat 6 work branch from then-current main and materialize only Chat 6 owned composed outputs with hashes/manifests/zero-loss checks.
+
+## Restart wave — 2026-09-15T11:08:30-06:00
+
+The owner requested replacement chats because the prior worker chat instances are considered stale after elapsed time.
+
+All five worker mailboxes now contain fresh `CONTINUATION.md` + `CONTINUATION.json` handoffs pinned to current main `8db4370d579014f8fed6e190ffce45e1589b33d9`.
+
+Fresh worker mailbox heads:
+
+- Chat 1 Tablet: `e16276d1e80c6d6a28eaf7aab00b29c04a19d31a`
+- Chat 2 PC: `2f61c4207eef379934f84b03037e7f80f124bcb0`
+- Chat 3 Mobile: `83c042d19c4128c82f7d1686eaf4c1ee6f708e29`
+- Chat 4 Shared UI: `377e4a358279cddb8aee62e697235ac15749fb8c`
+- Chat 5 cross-authority support: `e2f13271f4b17f093a56126d0e70d859b5f21597`
+
+Replacement chats must **continue**, not rebuild:
+
+1. Tablet: target-specifically qualify 924 composer-provisional concept-link rows.
+2. PC: target-specifically qualify 687 composer-provisional concept-link rows.
+3. Mobile: target-specifically qualify 133 composer-provisional concept-link rows.
+4. Shared UI: finish the 40 unresolved rows, consuming the current five application-gap deltas and the 6A23B437 non-equivalence guard.
+5. Chat 5: continue bounded dynamic support; do not rebuild its accepted 2,097 baseline.
+
+Global truth remains `313 + 1744 + 40 = 2097`, missing/extra/duplicate = 0, TRUE_NEW accepted = 0.
+
+`WRITE_GATE_PATH_PENDING` still blocks governed composed-output writes only. No authority-reconciliation composed materialization is authorized by this restart wave.
+
