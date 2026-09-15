@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "updatedAt": "2026-09-15T09:36:00-06:00",
+  "updatedAt": "2026-09-15T09:44:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
-  "summary": "Chat 6 is actively composing AUTHORITY_RECONCILIATION_ANTI_REWORK read-only. PC 827/827 and Mobile 271/271 are complete read-only; Tablet has 5 classified + 924 unresolved; Shared UI has 30 classified + 40 unresolved. Chat 5 baseline is consumed and dynamic cross-authority support is active. Global provisional composition is 1,133 classified + 964 unresolved = 2,097 exact.",
+  "summary": "Chat 6 active read-only composition: zero-loss 2,097/2,097 is stable. PC and Mobile accounting is accepted, but 820 EXISTING_CONCEPT_LINK_MISSING rows (687 PC + 133 Mobile) are held provisional because worker receipts do not yet identify target-specific existing concepts; authority-family existence alone is insufficient for composer-final semantic acceptance. 313 rows are currently accepted as specific application/conflict/projection-debt classifications; 964 remain unresolved in Tablet/Shared UI.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -116,7 +116,9 @@
     "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work.",
     "GLOBAL_READ_ONLY_SNAPSHOT: 2,097 accounted, 1,133 classified, 964 unresolved, missing=0, extra=0, duplicate=0.",
     "Provisional global classes: EXISTING_CONCEPT_LINK_MISSING=820; EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP=1; EXISTING_AUTHORITY_CONFLICT_CURATE=14; PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED=298; TRUE_NEW=0; EXACT_REUSE=0; NOT_APPLICABLE=0.",
-    "PC and Mobile are read-only complete; Tablet and Shared UI remain the only unresolved surface lanes."
+    "PC and Mobile are read-only complete; Tablet and Shared UI remain the only unresolved surface lanes.",
+    "COMPOSER_QUALITY_GATE: 687 PC + 133 Mobile EXISTING_CONCEPT_LINK_MISSING rows are structurally classified but not composer-final because exact target-level operational/visual meanings remain unresolved and no per-target existing concept ID/evidence is supplied.",
+    "Composer acceptance tiers: 313 specific application/conflict/projection-debt rows accepted; 820 concept-link rows provisional; 964 unresolved; total 2,097."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -542,13 +544,15 @@
     }
   ],
   "unresolved": [
+    "Qualify 687 PC EXISTING_CONCEPT_LINK_MISSING rows with target-specific existing-concept evidence or a governed rule sufficient to prove link-not-concept gap.",
+    "Qualify 133 Mobile EXISTING_CONCEPT_LINK_MISSING rows with target-specific existing-concept evidence or a governed rule sufficient to prove link-not-concept gap.",
     "Tablet: 924 target-specific semantic-link reviews remain.",
     "Shared UI: 40 target-specific semantic joins remain.",
     "Governed composed output materialization remains pending WRITE_GATE_PATH_PENDING."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Continue incremental composition. Accept PC and Mobile as read-only complete unless authority drifts; prioritize Shared UI 40 unresolved then Tablet 924 unresolved; consume Chat 5 delta receipts as they appear; reject any TRUE_NEW without complete target-specific negative evidence.",
+  "nextAction": "Continue composer audit without fake green: preserve PC/Mobile zero-loss target sets, but hold their 820 concept-link rows provisional until target-specific concept qualification arrives. In parallel consume Shared UI/Tablet progress and Chat 5 bounded delta receipts. Do not convert authority-family presence into per-target semantic proof.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
@@ -1152,7 +1156,11 @@
       "extraCount": 0,
       "duplicateTargetCount": 0,
       "governedOutputsWritten": false,
-      "writeGate": "WRITE_GATE_PATH_PENDING"
+      "writeGate": "WRITE_GATE_PATH_PENDING",
+      "structurallyClassifiedCount": 1133,
+      "composerAcceptedCount": 313,
+      "provisionalConceptLinkCount": 820,
+      "semanticFinal": false
     }
   }
 }
