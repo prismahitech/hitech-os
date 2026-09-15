@@ -163,7 +163,7 @@ jobs:
           raw="$RUNNER_TEMP/mamshot/$SURFACE/raw"
           mkdir -p "$raw/reports"
 
-          LICENSE_PATH="$RUNNER_TEMP/mamshot-license-$SURFACE.json"
+          export LICENSE_PATH="$RUNNER_TEMP/mamshot-license-$SURFACE.json"
           echo "PRISMA_LICENSE_PATH=$LICENSE_PATH" >> "$GITHUB_ENV"
           echo "PRISMA_LICENSE_ALLOW_UNSIGNED=1" >> "$GITHUB_ENV"
           echo "PRISMA_RUNTIME_MODE=dev" >> "$GITHUB_ENV"
