@@ -1,0 +1,70 @@
+{
+  "schema": "prisma.visual-promotion.restart-handoff.v1",
+  "generatedAt": "2026-09-15T11:06:40-06:00",
+  "repository": "prismahitech/hitech-os",
+  "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 4,
+  "role": "SHARED_UI_AUTHORITY_RECONCILIATION_WORKER",
+  "statusBranch": "status/vp-chat-04-shared-ui",
+  "restartMode": "CONTINUE_IN_NEW_CHAT",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "unrelatedCapability": {
+    "id": "visual.operating_graph_v1",
+    "note": "PR #556 foundation is not a prerequisite or blocker for this authority-reconciliation phase."
+  },
+  "priorAccounting": {
+    "classified": 30,
+    "provisional": 0,
+    "specific": 30,
+    "unresolved": 40
+  },
+  "currentGlobalComposerTruth": {
+    "expectedTotal": 2097,
+    "acceptedSpecific": 313,
+    "provisionalConceptLink": 1744,
+    "unresolvedSharedUi": 40,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "trueNewAccepted": 0,
+    "equation": "313 + 1744 + 40 = 2097"
+  },
+  "mainDrift": {
+    "from": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+    "to": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "assessment": "NON_OVERLAPPING_FOR_CURRENT_READ_ONLY_AUTHORITY_EVIDENCE",
+    "note": "PR #556 changed visual-operating-graph foundation/docs and FILES_MANIFEST; no NDC, Identity, RIFAT/Target Index, promotion-readiness corpus or candidate authority input changed."
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "blocksReadOnly": false,
+    "blocksGovernedOutputWrites": true
+  },
+  "exactNextActions": [
+    "Highest priority: finish the 40 target-specific unresolved Shared UI rows. Do not recensus the 70-target baseline.",
+    "Consume current Chat 5 Shared UI deltas for 09F96569, BA225641, C2722826, 718C4BEE and 3863084F. They provide positive existing ACT.primary / REC.button.primary evidence and support EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while exact binding/application remains missing.",
+    "Consume Chat 5 delta 6A23B437 as a non-equivalence guard only: data-prisma-profile=perf is performance/rendering evidence and must not be equated automatically to VIS.identity.profile.",
+    "Do not equate identity::ACT.primary with ndc::ACT.sale.checkout. Grouped CheckoutButton + ScanButton targets especially forbid that collapse.",
+    "Classify the 40 rows target-by-target and publish a fresh mailbox receipt with exact counts and zero-loss. Chat 4 owns final Shared UI surface classification.",
+    "Do not wait for WRITE_GATE_PATH_PENDING; it blocks governed output writes only.",
+    "Keep TRUE_NEW=0 unless complete target-specific negative evidence across required authority families is assembled."
+  ],
+  "hardGuardrails": [
+    "no recensus or broad rediscovery",
+    "no GVAE/RIFAT/Identity/NDC rebuild",
+    "no Materiality Catalog",
+    "no canonical ID minting or registration",
+    "no product/runtime mutation",
+    "no projection repair",
+    "no GVAE APPLY",
+    "no PR/merge to main without explicit owner authorization",
+    "no fake green"
+  ]
+}
