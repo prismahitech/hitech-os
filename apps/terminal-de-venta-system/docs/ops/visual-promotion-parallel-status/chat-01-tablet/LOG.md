@@ -641,3 +641,12 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Product/runtime mutation: **false**.
 - Canonical authority mutation: **false**.
 - No user computer/manual action requested. Resume only from repository/GitHub authority once the execution-path blocker is actually cleared.
+
+## 2026-09-15T00:38:00Z — ORCHESTRATOR ROUTING CLARIFICATION
+
+- PR #555 registered `visual.operating_graph_v1` as a separate `BUILD / NOT_STARTED` capability for another Foundation task.
+- **This authority-reconciliation phase does not switch to that capability.**
+- Canonical affected capability remains `visual.generic_application_engine_v1` = `DONE / SOURCE_READY / doNotRebuild=true`.
+- Requested action for governed phase work is `ADVANCE`; strictly read-only verification may use `VERIFY`.
+- PR #555 still counts as governance-sensitive Ledger/Evidence drift and therefore current-head authority/gate evidence must be rebound before repository output mutation.
+- Continue all safe read-only analysis/orchestration. Hold only governed output writes if the correct gate execution path is unavailable.
