@@ -4,8 +4,8 @@
   "lane": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
-  "state": "IN_PROGRESS_READ_ONLY",
-  "updatedAt": "2026-09-15T10:14:37-06:00",
+  "state": "RESTART_HANDOFF_READY_DYNAMIC_SUPPORT",
+  "updatedAt": "2026-09-15T11:06:40-06:00",
   "baseHead": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
@@ -122,7 +122,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT with Chat 4 as first priority: take the next exact Shared UI target whose selector/component has a plausible existing Identity/NDC concept relation, perform bounded evidence review, and publish another delta. Also answer any target-specific qualification request from Chat 6 for the 1,744 provisional concept-link rows. Do not wait for the write gate.",
+  "nextAction": "Do not rebuild the accepted 2,097-target baseline receipt. Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT on current main. First priority is Shared UI: support Chat 4's remaining unresolved targets with bounded exact-target deltas. Existing delta inventory is 10 at this handoff. Second priority is bounded qualification support for Chat 6 on the 1,744 provisional concept-link rows: 924 Tablet, 687 PC, 133 Mobile. Publish compact AUTHORITY_DELTA_*.json receipts only when they add target-specific evidence or an explicit non-equivalence guard. Do not infer semantic equivalence from selector names, recipes, adapters or Atlasfin similarity. Do not rebuild GVAE/RIFAT/Identity/NDC, inspect Materiality Catalog, mint authority, repair projections or mutate product/runtime. WRITE_GATE_PATH_PENDING does not block mailbox delta receipts or read-only analysis.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
@@ -278,6 +278,41 @@
           "unresolvedSharedUi": 40
         }
       }
+    },
+    "restartWave": {
+      "generatedAt": "2026-09-15T11:06:40-06:00",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "restartMode": "CONTINUE_IN_NEW_CHAT",
+      "continuationMd": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/CONTINUATION.md",
+      "continuationJson": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/CONTINUATION.json",
+      "role": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+      "priorAccounting": {
+        "classified": 2097,
+        "provisional": 0,
+        "specific": 0,
+        "unresolved": 0
+      },
+      "globalComposerTruth": {
+        "total": 2097,
+        "acceptedSpecific": 313,
+        "provisionalConceptLink": 1744,
+        "unresolvedSharedUi": 40,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "trueNewAccepted": 0
+      },
+      "exactNextActions": [
+        "Do not rebuild the accepted 2,097-target baseline receipt.",
+        "Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT on current main.",
+        "First priority is Shared UI: support Chat 4's remaining unresolved targets with bounded exact-target deltas. Existing delta inventory is 10 at this handoff.",
+        "Second priority is bounded qualification support for Chat 6 on the 1,744 provisional concept-link rows: 924 Tablet, 687 PC, 133 Mobile.",
+        "Publish compact AUTHORITY_DELTA_*.json receipts only when they add target-specific evidence or an explicit non-equivalence guard.",
+        "Do not infer semantic equivalence from selector names, recipes, adapters or Atlasfin similarity.",
+        "Do not rebuild GVAE/RIFAT/Identity/NDC, inspect Materiality Catalog, mint authority, repair projections or mutate product/runtime.",
+        "WRITE_GATE_PATH_PENDING does not block mailbox delta receipts or read-only analysis."
+      ],
+      "noRebuild": true
     }
   }
 }
