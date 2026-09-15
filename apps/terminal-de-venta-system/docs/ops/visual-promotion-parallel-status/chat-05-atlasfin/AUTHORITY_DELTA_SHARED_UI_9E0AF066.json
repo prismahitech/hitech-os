@@ -1,0 +1,66 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "createdAt": "2026-09-15T11:20:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-9e0af066",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.9E0AF0660DBAC425AB47.V1",
+  "question": "Does a NavItem marked aria-current=page or data-active=true become Identity ACT.primary because it receives an accented active treatment?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "[data-prisma-component=\"NavItem\"][aria-current=\"page\"], [data-prisma-component=\"NavItem\"][data-active=\"true\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The exact rule applies accent color, border, active-surface background and glow to current/active navigation state."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+  ],
+  "relationType": "CURRENT_NAVIGATION_STATE_DOES_NOT_PROVE_PRIMARY_ACTION_SEMANTICS",
+  "equivalent": false,
+  "explicitNonEquivalence": "aria-current=\"page\" and data-active=true identify current/active navigation state for this target. Accent/gold visual treatment does not transform navigation state into Identity ACT.primary, and ACT.primary is not an NDC business-action equivalence.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 exists with zero target bindings; no exact binding points to this NavItem target.",
+    "rifatTargetIndex": "Exact CURRENT target exists with semanticMeaningId=null and bindingId=null.",
+    "sharedUiStyleAuthority": "Exact selector is navigation-current/active state presentation.",
+    "ndc": "No exact target-level operational action relation is registered.",
+    "ledgerEvidence": "Current main preserves visual.generic_application_engine_v1 unchanged through PR #557."
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "disposition": "NON_EQUIVALENCE_GUARD_ONLY",
+  "unresolvedRemainder": "Surface owner still needs positive target-specific semantic evidence. Do not classify by accent color, aria-current, active state, or component name alone."
+}
