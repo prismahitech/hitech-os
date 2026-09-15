@@ -1,0 +1,82 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "createdAt": "2026-09-15T09:40:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-09f96569",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+  "question": "Can the shared CheckoutButton + primary ScanButton background target reuse existing semantic authority, and does it equal NDC ACT.sale.checkout?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "html[data-theme=\"prisma-dark\"] [data-prisma-component=\"CheckoutButton\"], html[data-theme=\"prisma-dark\"] [data-prisma-component=\"ScanButton\"][data-prisma-primary=\"true\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "identity",
+      "id": "prisma.adapter.shared-ui.v1",
+      "readiness": "NEUTRAL_SOURCE_READY",
+      "path": "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json"
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "ndc",
+      "id": "ACT.sale.checkout",
+      "path": "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+      "finding": "Existing operational checkout meaning, but no exact authority links this grouped Shared UI visual target to it."
+    },
+    {
+      "domain": "atlasfin",
+      "id": "ADP.SHARED.NEUTRAL.V2",
+      "finding": "Adapter exists; target-level Atlasfin status is NO_MATCH and supplies no semantic equivalence."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json",
+    "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+    "apps/terminal-de-venta-system/docs/ndc/13_NDC_EXAMPLES_AND_RECIPES.md",
+    "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json"
+  ],
+  "relationType": "EXISTING_SHARED_UI_VISUAL_PRIMARY_SEMANTIC_AUTHORITY_WITHOUT_EXACT_TARGET_BINDING",
+  "equivalent": false,
+  "explicitNonEquivalence": "identity::ACT.primary is not equal to ndc::ACT.sale.checkout. CheckoutButton may be operationally related to checkout, while the same physical style target also spans primary ScanButton.",
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_SEMANTIC_AUTHORITY",
+    "ndc": "ACT.sale.checkout EXISTS; exact target link absent; no canonical scan-action link proven in bounded target-specific search",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 EXISTS but has zero targets and is BLOCKED_BY_MISSING_BINDING",
+    "rifatTargetIndex": "EXACT CURRENT PHYSICAL TARGET EXISTS; semanticMeaningId and bindingId are null",
+    "codeAtlas": "NO EXACT SHARED_UI TARGET CROSSWALK FOUND IN BOUNDED TARGET SEARCH",
+    "atlasfin": "ADAPTER EXISTS; NO_MATCH; SEMANTIC COALESCING FORBIDDEN",
+    "ledgerEvidence": "visual.generic_application_engine_v1 baseline remains DONE/SOURCE_READY/doNotRebuild and does not create semantic linkage",
+    "history": "Shared UI component/visual docs prove CheckoutButton and ScanButton component intent but not canonical NDC equivalence"
+  },
+  "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+  "confidence": "MEDIUM_HIGH",
+  "unresolvedRemainder": "Exact binding/cardinality from this grouped visual background target to ACT.primary remains unproven. Do not assign ACT.sale.checkout to the whole target because the selector also spans ScanButton."
+}
