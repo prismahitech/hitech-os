@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "ciob.crm.rules.v1",
+  "baseline": "baseline/CIOB_CRM_V2_FINAL.xlsx",
+  "output": "output/CIOB_CRM_V3.xlsx",
+  "sourceOfTruth": "Seguimiento comercial",
+  "sheetsRequired": [
+    "Mi día",
+    "Dashboard",
+    "Base de contactos",
+    "Seguimiento comercial",
+    "Configuración",
+    "Instrucciones"
+  ],
+  "capacities": {
+    "prospects": 500,
+    "activities": 1000
+  },
+  "score": {
+    "hotMin": 70,
+    "warmMin": 45,
+    "completenessOk": 0.7
+  },
+  "alerts": {
+    "upcomingDays": 3,
+    "staleDays": 30
+  },
+  "validationPolicy": {
+    "email": "soft",
+    "phone": "soft",
+    "website": "soft",
+    "crossField": "warn-first",
+    "automaticCells": "protected"
+  },
+  "visual": {
+    "inputFill": "#FFFFFF",
+    "automaticFill": "#EEF4F7",
+    "navigation": "#0B1F33",
+    "action": "#C8A24A",
+    "error": "#C44747",
+    "success": "#2E7D60"
+  }
+}
