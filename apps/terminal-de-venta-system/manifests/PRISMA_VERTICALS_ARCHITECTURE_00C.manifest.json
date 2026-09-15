@@ -119,5 +119,32 @@
       "bytes": 3608,
       "sha256": "d7efc4302b2c1ddd76b3f4283ee7c433811f27453c1d31af3f3aea0c4d880916"
     }
+  ],
+  "files": [
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_00C_VERTICAL_ENTITY_MATRIX.md",
+      "sha256": "66c99b4460a48b9a02aba6dcec94005b5447c083c6b08ad7e4e98c614d6e4627",
+      "bytes": 3103
+    },
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00C_VERTICAL_DATA_MODELS.md",
+      "sha256": "9095a3aae76b38f4e08747174ba64264222798fb7faedb938270c01f920e964d",
+      "bytes": 47758
+    },
+    {
+      "path": "shared/verticals/data-models/entity-ownership.v0.json",
+      "sha256": "b55e5f80a4eed795b655c56b4f04db6e3b3109d04e46cd95e2900a2019c26dae",
+      "bytes": 4594
+    },
+    {
+      "path": "shared/verticals/data-models/extensions/professional_corporate_services.data-extension.json",
+      "sha256": "fb655db502419acd397ae1969ea0978595f0a227ec097c0104a51043042a2267",
+      "bytes": 13472
+    },
+    {
+      "path": "tools/verticals/validate_vertical_data_models_00c.py",
+      "sha256": "737901a3f7d35ac0bd4bfe27c125b8685069a00e45586c10872f14ba92c011d3",
+      "bytes": 3642
+    }
   ]
 }
