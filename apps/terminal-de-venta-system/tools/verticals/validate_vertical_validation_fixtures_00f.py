@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 VERTICALS = {
-    'convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck'
+    'convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck','professional_corporate_services'
 }
 REQUIRED_BLOCKS = {'00A_CORE_CONTRACTS','00B_VERTICAL_REGISTRY','00C_VERTICAL_DATA_MODELS','00D_VERTICAL_EVENTS_PERMISSIONS','00E_VERTICAL_UX_OPERATIONS'}
 REQUIRED_STATES = {'empty','loading','ready','error','offline','sync_pending','success'}
