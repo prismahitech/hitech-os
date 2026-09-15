@@ -1,0 +1,83 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "createdAt": "2026-09-15T10:14:37-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-c2722826",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+  "question": "Does the exact Shared UI CheckoutButton visual target require new semantic authority, or does existing visual primary-action authority already exist with a missing target binding?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "[data-prisma-component=\"CheckoutButton\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "identity",
+      "id": "prisma.adapter.shared-ui.v1",
+      "readiness": "NEUTRAL_SOURCE_READY",
+      "path": "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json"
+    },
+    {
+      "domain": "ndc",
+      "id": "ACT.sale.checkout",
+      "path": "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+      "finding": "Operational checkout concept exists independently, but no canonical exact Shared UI target relation is registered."
+    },
+    {
+      "domain": "atlasfin",
+      "id": "ADP.SHARED.NEUTRAL.V2",
+      "finding": "Structured adapter reference exists; target-level Atlasfin semantic authority remains absent and NO_MATCH is not absence proof."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+    "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json",
+    "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+    "apps/terminal-de-venta-system/docs/ndc/13_NDC_EXAMPLES_AND_RECIPES.md",
+    "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json"
+  ],
+  "relationType": "EXISTING_VISUAL_PRIMARY_ACTION_AUTHORITY_WITH_MISSING_EXACT_SHARED_UI_BINDING",
+  "equivalent": false,
+  "explicitNonEquivalence": "identity::ACT.primary is visual Identity meaning. ndc::ACT.sale.checkout is operational meaning. The exact CheckoutButton selector makes a business relation plausible, but the repository does not register them as equivalent for this Shared UI target.",
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_VISUAL_SEMANTIC_AUTHORITY",
+    "ndc": "ACT.sale.checkout exists; exact target relation not registered",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 and REC.button.primary exist; exact target binding absent",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with null semanticMeaningId and null bindingId",
+    "codeAtlas": "Bounded exact target/component searches found no stronger canonical Shared UI crosswalk",
+    "atlasfin": "Shared neutral adapter exists; no semantic authority inferred from visual reference",
+    "ledgerEvidence": "No exact target-specific Ledger/Evidence Index row found; baseline anti-rework capability remains reusable",
+    "history": "CheckoutButton component intent exists in shared/UI design docs, but no canonical target binding was found"
+  },
+  "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+  "confidence": "HIGH",
+  "unresolvedRemainder": "Surface-owner must decide whether this exact target may bind to ACT.primary under governed binding/layer authority. Do not promote ACT.sale.checkout to equivalence and do not mint a new concept."
+}
