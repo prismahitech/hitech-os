@@ -5,7 +5,7 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
+  "updatedAt": "2026-09-15T00:38:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
@@ -18,7 +18,8 @@
     "Atlasfin recipe convergence remains table=171 (Tablet 66 + PC 105), card=95 (41 + 54), panel=47 (20 + 27), overlay=11 Tablet-only. The three cross-surface recipe groups are recorded only as VISUAL_SIMILARITY_ONLY.",
     "Work branch is exactly 6 commits ahead / 0 behind base and changes exactly the six required files under prisma-html/governance/visual-promotion/promotion-readiness/atlasfin-evidence/**.",
     "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 at completion, so no phase-head drift revalidation was required after branch creation.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild.",
+    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
   ],
   "decisions": [
     "Publish PASS_ATLASFIN_PROMOTION_READINESS_EVIDENCE and hand off exact head 4ffbf95450de6f19adfa5ed2e5c084edd45ca36d to Chat 6.",
