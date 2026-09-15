@@ -4,13 +4,15 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:20:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER. Prior promotion-readiness phase remains closed and must not be repeated.",
-  "blockers": [],
+  "summary": "Chat 6 STARTED AUTHORITY_RECONCILIATION_ANTI_REWORK as global composer/orchestrator. Current main advanced to 70f381e9... via PR #555; drift touches canonical Factory Ledger/Evidence Index, so governed output mutation is held pending current-head anti-rework/Authority Mesh revalidation while read-only orchestration and contract preparation proceed.",
+  "blockers": [
+    "GOVERNANCE_DRIFT_REVALIDATION_REQUIRED: assignment basis 46c9032... -> current main 70f381e9... modifies PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json via PR #555. Per anti-rework policy this governance-sensitive drift must be revalidated before governed work-branch output mutation."
+  ],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
     "Current Visual Control census and Target Index are reusable physical truth. DISCOVERY_ONLY is not UNDISCOVERED and broad recensus is not a legal shortcut.",
@@ -102,7 +104,10 @@
     "Post-merge main gates PASS: CI 34905943686, ForgeOS 34905943710 and Sync Sentinel 34905943705.",
     "Fresh post-merge task-exact AutoMesh run 34906005888 passed PASS_COMPOSED_AUTHORITY_MESH on exact main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with both lanes at 100% required-authority coverage, zero missing authority, zero blockers and mandatory Layer Map generation.",
     "Materiality Catalog remained uninspected throughout. Product/runtime mutation=false; canonical authority mutation=false; projection repair=false; GVAE APPLY=false.",
-    "Owner assignment 2026-09-14T23:30:00Z: compose only the true authority delta from the certified 2,097-target corpus; no recensus/rebuild."
+    "Owner assignment 2026-09-14T23:30:00Z: compose only the true authority delta from the certified 2,097-target corpus; no recensus/rebuild.",
+    "AUTHORITY_RECONCILIATION start: current main=70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; compare from assignment basis changes only PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json.",
+    "PR #555 registered visual.operating_graph_v1 as BUILD/NOT_STARTED and did not report product/runtime mutation. Existing GVAE evidence remains discoverable as visual.generic_application_engine_v1 SOURCE_READY/doNotRebuild.",
+    "Worker mailbox snapshot: Chat 3 is IN_PROGRESS; Chats 1,2,4,5 remain NOT_STARTED at this check."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -533,7 +538,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Read latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat6/authority-reconciliation-composer-20260914, perform GitHub-only anti-rework/authority preflight as required, then compose the new phase.",
+  "nextAction": "Continue read-only composer/orchestrator preparation; obtain current-head anti-rework/Authority Mesh revalidation before writing governed authority-reconciliation outputs. Poll worker mailboxes directly and ingest receipts as they arrive.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
@@ -1122,7 +1127,7 @@
       "expectedInputCount": 2097,
       "materialityCatalogAuthorized": false,
       "githubOnly": true,
-      "status": "ASSIGNED_NOT_STARTED"
+      "status": "IN_PROGRESS_READ_ONLY_PREFLIGHT"
     }
   }
 }
