@@ -1,8 +1,8 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00C_VERTICAL_DATA_MODELS",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "generatedAt": "2026-04-29T00:00:00-06:00",
-  "description": "Core vertical data model architecture, contracts, extension declarations, ownership and validators.",
+  "description": "Core vertical data model architecture, contracts, extension declarations, ownership and validators, including professional_corporate_services.",
   "dependsOn": [
     "PRISMA_VERTICALS_ARCHITECTURE_00A_CORE_CONTRACTS",
     "PRISMA_VERTICALS_ARCHITECTURE_00B_VERTICAL_REGISTRY"
@@ -20,13 +20,13 @@
     },
     {
       "path": "docs/architecture/PRISMA_VERTICALS_00C_VERTICAL_ENTITY_MATRIX.md",
-      "bytes": 2679,
-      "sha256": "8f08e9d1a9e06787f3c02ec8d82fc66abe25a65ff6db4621951deb5e6d89385f"
+      "bytes": 3103,
+      "sha256": "66c99b4460a48b9a02aba6dcec94005b5447c083c6b08ad7e4e98c614d6e4627"
     },
     {
       "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00C_VERTICAL_DATA_MODELS.md",
-      "bytes": 46765,
-      "sha256": "e0a6baf4d77f48b15fadd0b035a0d23a48f8008eb073d993ed7bb9cdec5c1760"
+      "bytes": 47758,
+      "sha256": "9095a3aae76b38f4e08747174ba64264222798fb7faedb938270c01f920e964d"
     },
     {
       "path": "docs/qa/PRISMA_VERTICALS_00C_QA_MATRIX.md",
@@ -56,8 +56,8 @@
     },
     {
       "path": "shared/verticals/data-models/entity-ownership.v0.json",
-      "bytes": 3815,
-      "sha256": "4a015c24edaf464839d4787930425467d328f8e56fa19aa8963138729ca7076c"
+      "bytes": 4594,
+      "sha256": "b55e5f80a4eed795b655c56b4f04db6e3b3109d04e46cd95e2900a2019c26dae"
     },
     {
       "path": "shared/verticals/data-models/extensions/apparel.data-extension.json",
@@ -116,8 +116,13 @@
     },
     {
       "path": "tools/verticals/validate_vertical_data_models_00c.py",
-      "bytes": 3608,
-      "sha256": "d7efc4302b2c1ddd76b3f4283ee7c433811f27453c1d31af3f3aea0c4d880916"
+      "bytes": 3642,
+      "sha256": "737901a3f7d35ac0bd4bfe27c125b8685069a00e45586c10872f14ba92c011d3"
+    },
+    {
+      "path": "shared/verticals/data-models/extensions/professional_corporate_services.data-extension.json",
+      "sha256": "fb655db502419acd397ae1969ea0978595f0a227ec097c0104a51043042a2267",
+      "bytes": 13472
     }
   ],
   "files": [
