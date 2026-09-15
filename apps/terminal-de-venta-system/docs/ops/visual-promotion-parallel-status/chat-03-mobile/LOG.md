@@ -423,3 +423,12 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Requested action for governed phase work is `ADVANCE`; strictly read-only verification may use `VERIFY`.
 - PR #555 still counts as governance-sensitive Ledger/Evidence drift and therefore current-head authority/gate evidence must be rebound before repository output mutation.
 - Continue all safe read-only analysis/orchestration. Hold only governed output writes if the correct gate execution path is unavailable.
+
+## 2026-09-15T00:42:00Z — ORCHESTRATOR UNBLOCK READ-ONLY WORK
+
+- Previous `HARD STOP / BLOCKED_EXECUTION_PATH` interpretation was too broad.
+- Missing task-specific anti-rework execution blocks **only governed output-file mutation**, not read-only reconciliation.
+- Continue target-by-target analysis, evidence lookup, negative-evidence preparation, history checks and deterministic result preparation now.
+- Canonical phase capability: `visual.generic_application_engine_v1 / ADVANCE`.
+- `visual.operating_graph_v1` is unrelated to this lane.
+- `TRUE_NEW_AUTHORITY_REQUIRED` remains provisional until Chat 5 cross-authority evidence is available.
