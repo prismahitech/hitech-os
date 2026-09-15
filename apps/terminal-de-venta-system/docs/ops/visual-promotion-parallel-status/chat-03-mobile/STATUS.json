@@ -198,7 +198,8 @@
         "consumableNow": true
       },
       "readOnlyReceipt": {
-        "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json"
+        "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+        "blobSha": "5343e7186871cf2cd48a60a6bb653ce8dff2588a"
       },
       "deterministicShardPreparation": {
         "status": "PREPARED_READ_ONLY_NOT_MATERIALIZED",
