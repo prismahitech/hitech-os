@@ -13,11 +13,11 @@ permissions:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
   PYTHONDONTWRITEBYTECODE: '1'
-  PINNED_BASE: 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d
+  PINNED_BASE: dbefaae0c14ba77aa7619282b4945260b94f65f0
   CAPABILITY_ID: tooling.mamastrophic.universal_screenshot_artifacts
-  AUTHORITY_REQUEST_DIGEST: 059a511dd57a7307bddb68a4e1c0b7ed8e4aacce543cdd84c00b4eeea972dc5c
-  AUTHORITY_ARTIFACT_DIGEST: df4a77c5358145df047737882bf71489dbd9f0657654d8e72d6e07f1b2f0ccc8
-  AUTHORITY_REVALIDATION_DIGEST: 9541f32231e4002ac97cc81a8ff26d4eb786cb7fb83af89da85fa32e989d0af9
+  AUTHORITY_REQUEST_DIGEST: 4d6f9d5e48e1cf4cadcb07cc84dd89c7ce7bf61c26053aa6866250fc7b863c72
+  AUTHORITY_ARTIFACT_DIGEST: 0726055919bab53bec2aa0d80c82f0565eebcba51253b477c70a001e2dd8c3bc
+  AUTHORITY_REVALIDATION_DIGEST: 29352dfd14320618cdabfda97887f73cdd2c42d19a866ca5b6b59511a4a06da0
 
 jobs:
   governed-preflight:
@@ -129,9 +129,9 @@ jobs:
               'revalidationDigest':os.environ['AUTHORITY_REVALIDATION_DIGEST'],
               'originalRunId':35000774363,
               'originalArtifactId':10408689306,
-              'revalidationRunId':35001552040,
-              'revalidationArtifactId':10410041836,
-              'revalidationStatus':'PASS_NO_RELEVANT_DRIFT',
+              'revalidationRunId':35016279270,
+              'revalidationArtifactId':10415169995,
+              'revalidationStatus':'PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT',
               'coveragePct':100,
               'blockers':0,
               'layerMapPresent':True

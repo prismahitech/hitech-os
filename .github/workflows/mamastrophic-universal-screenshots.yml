@@ -299,8 +299,8 @@ jobs:
               ;;
             control-center)
               port=3150
-              strategy=static-web-owner-isolated-ci
-              cmd='python3 -m http.server 3150 --bind 127.0.0.1 --directory apps/terminal-de-venta-system/prisma-control-center/internal/web'
+              strategy=canonical-python-panel-isolated-ci
+              cmd='python3 apps/terminal-de-venta-system/prisma-control-center/internal/py/prisma_control_center.py panel'
               ;;
             *)
               echo "Unsupported surface: $SURFACE" >&2
