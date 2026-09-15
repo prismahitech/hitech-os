@@ -1,0 +1,141 @@
+{
+  "schema": "prisma.visual-promotion.authority-reconciliation.global-read-only-snapshot.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 6,
+  "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
+  "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
+  "generatedAt": "2026-09-15T09:36:00-06:00",
+  "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "accounting": {
+    "expectedTotal": 2097,
+    "surfaces": {
+      "tablet": 929,
+      "pc": 827,
+      "mobile": 271,
+      "sharedUi": 70
+    },
+    "accountedTotal": 2097,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0
+  },
+  "workerIntake": {
+    "tablet": {
+      "state": "IN_PROGRESS_READ_ONLY",
+      "input": 929,
+      "classified": 5,
+      "unresolved": 924,
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 0,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 2,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 2,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "chat5BaselineConsumed": true
+    },
+    "pc": {
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
+      "input": 827,
+      "classified": 827,
+      "unresolved": 0,
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 687,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 1,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 139,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "chat5BaselineConsumed": true
+    },
+    "mobile": {
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
+      "input": 271,
+      "classified": 271,
+      "unresolved": 0,
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 133,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 138,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "chat5BaselineConsumed": true
+    },
+    "sharedUi": {
+      "state": "IN_PROGRESS_READ_ONLY",
+      "input": 70,
+      "classified": 30,
+      "unresolved": 40,
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 0,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 11,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 19,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "chat5BaselineConsumed": true
+    },
+    "crossAuthority": {
+      "state": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+      "baselineInput": 2097,
+      "baselineResult": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
+      "baselineMustNotBeRebuilt": true,
+      "trueNewAssertions": 0,
+      "dynamicDeltaSupportActive": true
+    }
+  },
+  "provisionalGlobalCounts": {
+    "classified": 1133,
+    "unresolved": 964,
+    "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+    "EXISTING_CONCEPT_LINK_MISSING": 820,
+    "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
+    "EXISTING_AUTHORITY_CONFLICT_CURATE": 14,
+    "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 298,
+    "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+    "NOT_APPLICABLE": 0
+  },
+  "validation": {
+    "provisionalCountsSumToClassified": true,
+    "classifiedPlusUnresolvedEquals2097": true,
+    "trueNewAcceptedWithoutCompleteNegativeEvidence": 0,
+    "canonicalIdMintingObserved": false,
+    "materialityCatalogUsed": false,
+    "productRuntimeMutationObserved": false,
+    "projectionRepairObserved": false,
+    "gvaeApplyObserved": false
+  },
+  "priorities": [
+    "Finish the 40 unresolved Shared UI target-specific joins first because the lane is small and bounded.",
+    "Advance Tablet 924 unresolved semantic-link reviews without collapsing NDC operational meaning into Identity/VIS visual meaning.",
+    "Use Chat 5 only for bounded target/concept delta investigations; do not rebuild the 2,097 baseline.",
+    "Preserve PC and Mobile read-only results unless current authority/main materially drifts."
+  ],
+  "blockers": [
+    {
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "governed-composed-output-write-only",
+      "impact": "Does not block read-only composition, receipt validation, global accounting or conflict detection."
+    }
+  ],
+  "governedOutputsWritten": false,
+  "mainMutationPerformed": false,
+  "prOpened": false,
+  "mergePerformed": false
+}
