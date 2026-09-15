@@ -1,0 +1,184 @@
+{
+  "schema": "prisma.visual-promotion.mobile-concept-qualification-receipt.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 3,
+  "role": "MOBILE_AUTHORITY_RECONCILIATION_WORKER",
+  "generatedAt": "2026-09-15T11:16:12-06:00",
+  "repository": "prismahitech/hitech-os",
+  "statusBranch": "status/vp-chat-03-mobile",
+  "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "unrelatedCapability": {
+    "id": "visual.operating_graph_v1",
+    "disposition": "SEPARATE_NON_BLOCKING_CAPABILITY"
+  },
+  "pass": {
+    "code": "MOBILE_CONCEPT_LINK_TARGET_SPECIFIC_QUALIFICATION_PASS_02",
+    "mode": "READ_ONLY_BOUNDED_POSITIVE_CONCEPT_INVESTIGATION",
+    "result": "NO_TARGET_SPECIFIC_QUALIFICATION_GAIN",
+    "semanticFinal": false
+  },
+  "intake": {
+    "mobileTargetCount": 271,
+    "composerProvisionalConceptLinkCount": 133,
+    "acceptedSpecificPhysicalOrProjectionCount": 138,
+    "unresolvedLaneCount": 0,
+    "recensusPerformed": false,
+    "broadRediscoveryPerformed": false
+  },
+  "evidencePins": {
+    "mobileTargetIndex": {
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/mobile.json",
+      "gitBlobSha": "dd0d0a33f2b60957438355ab14798aa1888d781e"
+    },
+    "mobileProvisionalCorpus": {
+      "path": "prisma-html/governance/visual-promotion/candidates/mobile/UNRESOLVED.jsonl",
+      "gitBlobSha": "edc991f6359e566db032f6ecd0f14d742735d2a4"
+    },
+    "mobileCandidateManifest": {
+      "path": "prisma-html/governance/visual-promotion/candidates/mobile/MANIFEST.json",
+      "gitBlobSha": "320c385eb3369539d0ab2a40af879ede200a1e9f"
+    },
+    "ndcPanelRegistry": {
+      "path": "apps/terminal-de-venta-system/docs/ndc/registry/ndc_panel_insight_registry_seed.json",
+      "gitBlobSha": "9956caae2001be67719c2d041fb2a9778419fa79"
+    },
+    "identityElementBindingsRegistry": {
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+      "gitBlobSha": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8"
+    }
+  },
+  "targetIndexJoin": {
+    "provisionalTargetIds": 133,
+    "exactTargetIdsMatched": 133,
+    "missingFromTargetIndex": 0,
+    "semanticMeaningIdNonNull": 0,
+    "bindingIdNonNull": 0,
+    "disposition": "REMAIN_COMPOSER_PROVISIONAL"
+  },
+  "boundedAuthorityFindings": {
+    "ndc": {
+      "supportingSurfaceRef": "SURF.mb.owner_home",
+      "targetPrimaryMeaningResolved": 0,
+      "positiveSurfacePanelEvidence": {
+        "panelId": "PNL.mb.owner.executive_pulse",
+        "neutralTarget": "MET.sales.today"
+      },
+      "targetSpecificCrosswalkProven": false,
+      "finding": "The NDC panel registry proves an existing Mobile owner-home panel concept, but no governed evidence links any of the 133 exact census target IDs to that panel or MET.sales.today. Surface or panel existence is therefore support-only, not target-specific concept proof."
+    },
+    "identity": {
+      "adapterId": "prisma.adapter.mobile.v1",
+      "existingMobileElementBindings": 0,
+      "existingMobileIdentityRecipes": 0,
+      "exactMobileBindingProven": false,
+      "finding": "The Mobile adapter is reusable surface authority, but the current canonical element-binding evidence does not provide a concrete Mobile target binding or recipe for these 133 targets."
+    },
+    "physicalAndProductEvidence": {
+      "exactPhysicalTargetRecordsPreserved": 133,
+      "ownerFileCohorts": [
+        {
+          "ownerFile": "products/mobile/app/app/prisma-app/prisma-app.module.css",
+          "targetCount": 71
+        },
+        {
+          "ownerFile": "products/mobile/app/src/components/prisma-app/prisma-mobile-pwa.module.css",
+          "targetCount": 24
+        },
+        {
+          "ownerFile": "products/mobile/app/src/components/prisma-app/prisma-crystal-command.module.css",
+          "targetCount": 13
+        },
+        {
+          "ownerFile": "products/mobile/app/app/prisma-command/prisma-mobile-command.module.css",
+          "targetCount": 11
+        },
+        {
+          "ownerFile": "products/mobile/app/app/globals.css",
+          "targetCount": 10
+        },
+        {
+          "ownerFile": "products/mobile/app/app/prisma-mobile-pulse-binding.css",
+          "targetCount": 4
+        }
+      ],
+      "businessLabelsObserved": [
+        "Sales Rhythm",
+        "Inventory Risk",
+        "Alert Severity",
+        "Sync Freshness",
+        "Cash Variance",
+        "Daily Brief"
+      ],
+      "targetSpecificNeutralIdCrosswalkProven": false,
+      "finding": "Current product components expose meaningful business labels, but labels/selectors/owners are not canonical semantic crosswalks. No target was promoted by lexical similarity."
+    },
+    "chat5DynamicSupport": {
+      "mailboxHeadAtRead": "e2f13271f4b17f093a56126d0e70d859b5f21597",
+      "mobileSpecificDeltaReceiptsFound": 0,
+      "finding": "Chat 5 has current bounded deltas for Tablet, PC, Shared UI and main-drift revalidation, but no Mobile-specific target delta that adds target-specific concept evidence for this 133-target cohort."
+    },
+    "chat6Composer": {
+      "currentAuditCode": "CONCEPT_LINK_TARGET_SPECIFIC_QUALIFICATION_PASS_01",
+      "currentMobileDisposition": "REMAIN_PROVISIONAL",
+      "currentMobileFinalPromotions": 0,
+      "evidenceAdvancedAfterChat3Handoff": true,
+      "semanticConclusionChanged": false
+    }
+  },
+  "qualityGuards": {
+    "familyLevelAuthorityAcceptedAsTargetConceptProof": false,
+    "selectorNameUsedAsSemanticEquivalence": false,
+    "atlasfinSimilarityUsedAsSemanticEquivalence": false,
+    "identityActPrimaryEquatedToNdcActSaleCheckout": false,
+    "trueNewAssertedWithoutCompleteNegativeEvidence": false
+  },
+  "accountingAfterPass": {
+    "mobileTotal": 271,
+    "composerProvisionalConceptLink": 133,
+    "acceptedSpecificPhysicalOrProjection": 138,
+    "laneMissing": 0,
+    "laneExtra": 0,
+    "laneDuplicate": 0,
+    "trueNewAccepted": 0,
+    "promotedToComposerFinalThisPass": 0
+  },
+  "preservedGlobalTruth": {
+    "total": 2097,
+    "tablet": 929,
+    "pc": 827,
+    "mobile": 271,
+    "sharedUi": 70,
+    "acceptedSpecific": 313,
+    "provisionalConceptLink": 1744,
+    "unresolvedSharedUi": 40,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "trueNewAccepted": 0
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "blocksReadOnly": false,
+    "governedOutputsWritten": false,
+    "mailboxReceiptWriteAllowed": true
+  },
+  "forbiddenActions": {
+    "materialityCatalogInspected": false,
+    "canonicalIdMintingPerformed": false,
+    "canonicalRegistrationPerformed": false,
+    "productRuntimeMutationPerformed": false,
+    "projectionRepairPerformed": false,
+    "gvaeApplyPerformed": false,
+    "filesManifestChanged": false,
+    "pullRequestOpened": false,
+    "mainMergePerformed": false
+  },
+  "nextAction": "Keep all 133 Mobile EXISTING_CONCEPT_LINK_MISSING rows composer-provisional. Continue only bounded target-specific positive-concept investigation when fresh evidence or a Chat 5 Mobile delta appears. Preserve the 138 physical/projection reconciliation rows and 271/271 zero-loss. Do not materialize governed reconciliation outputs until the canonical write gate clears."
+}
