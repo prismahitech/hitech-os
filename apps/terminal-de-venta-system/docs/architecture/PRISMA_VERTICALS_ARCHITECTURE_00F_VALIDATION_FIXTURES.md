@@ -205,7 +205,7 @@ Sin este bloque, PRISMA tendria documentos elegantes, que es muy bonito hasta qu
 Despues de instalar este paquete, el repo contiene una base contractual para construir pruebas reales por vertical. La validacion local debe responder algo como:
 
 ```text
-OK vertical validation fixtures: 11 verticals, 66 scenarios, 330+ acceptance checks validated
+OK vertical validation fixtures: 11 verticals, 66 scenarios, 330 acceptance checks validated
 VERIFY OK
 ```
 
