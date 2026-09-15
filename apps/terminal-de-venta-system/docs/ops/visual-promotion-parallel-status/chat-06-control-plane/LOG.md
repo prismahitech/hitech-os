@@ -652,3 +652,12 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - Zero-loss remains exact: 2,097 accounted, missing 0, extra 0, duplicate 0. Acceptance equation remains `313 + 1744 + 40 = 2097`. TRUE_NEW accepted remains 0.
 - `WRITE_GATE_PATH_PENDING` still blocks only governed composed output writes. No `authority-reconciliation/composed/**` materialization, canonical minting/registration, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge was performed.
 
+## 2026-09-15 10:13 - Provisional concept-link qualification audit, pass 01
+
+- Audited all **1,744** composer-provisional `EXISTING_CONCEPT_LINK_MISSING` rows against the strongest current lane evidence available without recensus or broad rediscovery.
+- **Tablet 924:** remain provisional. Chat 1 reports Tablet NDC unresolved across the corpus; target-specific canonical Identity evidence is confined to the already-separated Cobrar primary/accent special cases, not these 924 rows.
+- **PC 687:** remain provisional. Chat 2 reports `ndcUnresolved=827`, `visualUnresolved=827`, `identityRecipeResolved=0`, `existingBindingResolved=0`. Current physical/projection state plus authority-family existence is not target-specific concept proof.
+- **Mobile 133:** direct target join completed against current Target Index blob `dd0d0a33f2b60957438355ab14798aa1888d781e`. All 133/133 target IDs matched; `semanticMeaningId` non-null = 0 and `bindingId` non-null = 0. Existing NDC `SURF.mb.owner_home` / panel-level references remain supporting-only; canonical Mobile candidate evidence explicitly leaves target primary meaning unresolved.
+- Composer-final promotions from this audit: **0**. Remaining provisional: **1,744**. This prevents a family-level-authority fake green rather than pretending the rows are semantically closed.
+- Global accounting remains **313 accepted specific + 1,744 provisional + 40 Shared UI unresolved = 2,097**, with missing/extra/duplicate all zero and TRUE_NEW accepted = 0.
+
