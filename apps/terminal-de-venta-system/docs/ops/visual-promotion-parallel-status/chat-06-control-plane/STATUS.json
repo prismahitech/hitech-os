@@ -5,7 +5,7 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "updatedAt": "2026-09-15T10:13:00-06:00",
+  "updatedAt": "2026-09-15T10:15:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
@@ -1174,14 +1174,17 @@
           "identityRecipeRegistryBlob": "aaf26182b1637e1bfc6a14bd537af100ed96b1e4"
         },
         "disposition": "UNRELATED_CAPABILITY_DRIFT_NO_RECLASSIFICATION",
-        "note": "PR #556 added visual-operating-graph foundation/docs plus FILES_MANIFEST refresh; it did not change NDC, Identity, RIFAT/Target Index, promotion-readiness evidence, candidate corpora, or worker mailboxes. visual.operating_graph_v1 is not this phase capability."
+        "note": "PR #556 added visual-operating-graph foundation/docs plus FILES_MANIFEST refresh; it did not change NDC, Identity, RIFAT/Target Index, promotion-readiness evidence, candidate corpora, or worker mailboxes. visual.operating_graph_v1 is not this phase capability.",
+        "chat5CorroborationDelta": "AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json",
+        "chat5CorroborationBlob": "83d4a6b558bbddb94d077078dee82971a655ed37",
+        "chat5Disposition": "READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE"
       },
       "sharedUiPriorityIntake": {
         "chat4MailboxHead": "5a1778f9fcf392b9eae0ac0c000007e470ce60d8",
         "chat4Classified": 30,
         "chat4Unresolved": 40,
         "chat5DeltaDirectoryScanned": true,
-        "chat5DeltaReceiptCount": 5,
+        "chat5DeltaReceiptCount": 10,
         "newChat5DeltasAfterHandoff": 0,
         "sharedUiDeltasValidatedByComposer": [
           {
@@ -1200,7 +1203,23 @@
           }
         ],
         "unresolvedCountReducedByComposer": 0,
-        "reason": "Chat 4 retains final Shared UI surface classification ownership; Chat 6 consumes/validates evidence but does not overwrite foreign-lane classifications."
+        "reason": "Chat 4 retains final Shared UI surface classification ownership; Chat 6 consumes/validates evidence but does not overwrite foreign-lane classifications.",
+        "chat5MailboxHead": "c1e5584f3d0633a90b6c93038198ccba34af1347",
+        "newChat5DeltasAfterInitialPass": 5,
+        "sharedUiGapEvidenceTargets": [
+          "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+          "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+          "TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+          "TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+          "TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1"
+        ],
+        "sharedUiNonEquivalenceGuardTargets": [
+          "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1"
+        ],
+        "applicationGapSupportCount": 5,
+        "nonEquivalenceGuardCount": 1,
+        "trueNewSupportedCount": 0,
+        "disposition": "Evidence consumed. Final Shared UI target classification remains owned by Chat 4."
       },
       "conceptLinkAudit": {
         "provisionalTotal": 1744,
