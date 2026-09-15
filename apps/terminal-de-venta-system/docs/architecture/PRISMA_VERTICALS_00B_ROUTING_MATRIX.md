@@ -1,4 +1,4 @@
-# PRISMA Verticales 00B - Matriz de ruteo Tablet/PC
+# PRISMA Verticales 00B - Matriz de ruteo Tablet/PC/Mobile
 
 La ruta visible se decide por vertical, capacidad, permiso y superficie. No por antojo ni por boton sobrante.
 
@@ -27,3 +27,14 @@ La ruta visible se decide por vertical, capacidad, permiso y superficie. No por 
 | Ropa | Cambios | cambio de variante |
 | Taller | Ordenes | orden de trabajo |
 | Ruta | Clientes | venta por visita |
+
+<!-- PRISMA_VERTICAL professional_corporate_services:routing -->
+## Servicios Profesionales y Corporativos
+
+| Superficie | Rutas principales | Motivo |
+|---|---|---|
+| Tablet | Clientes, Diagnóstico, Checklist, Documentos, Avances | captura operativa y trabajo frente al cliente |
+| PC | Dashboard, Clientes, Expedientes, Servicios, Flujos, Documentos, Tareas y vencimientos, Responsables, Auditoría | gobierno profundo y trazabilidad |
+| Mobile | Resumen, Alertas, Aprobaciones, Vencimientos, Clientes en riesgo, Siguientes acciones | supervisión y decisiones acotadas |
+
+Mobile no es una mini-PC. Si una tarea exige configuración profunda, conciliación o edición masiva del expediente, se deriva a PC.
