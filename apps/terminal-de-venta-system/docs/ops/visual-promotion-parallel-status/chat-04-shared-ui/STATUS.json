@@ -4,15 +4,19 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-15T00:20:00Z",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:35:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
   "workHead": null,
-  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK started for Chat 4 / SHARED_UI_AUTHORITY_RECONCILIATION from GitHub-only repository truth. Current main advanced from assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Read-only drift review shows only Factory Ledger and Evidence Index changed, registering visual.operating_graph_v1; Shared UI census/Target Index/Identity/RIFAT/NDC/promotion-readiness inputs did not change in that compare. Lane mutation is blocked before work-branch creation because the mandatory universal anti-rework PROPOSAL decision for the exact task cannot be executed through the available GitHub connector path. Per OWNER_ASSIGNMENT, analysis remains read-only and no PASS is invented.",
+  "summary": "ORCHESTRATOR CORRECTION: AUTHORITY_RECONCILIATION_ANTI_REWORK remains active. PR #555 trust-anchor drift must be revalidated, but visual.operating_graph_v1 is NOT this lane's capability. This phase continues to REUSE/ADVANCE visual.generic_application_engine_v1 (DONE/SOURCE_READY/doNotRebuild=true). Continue read-only reconciliation now; only work-branch output writes remain gated until the correct current-head anti-rework MUTATION decision can be produced.",
   "blockers": [
-    "BLOCKED_EXECUTION_PATH: Factory Ledger Agent Gate requires a task-exact universal anti-rework PROPOSAL decision before any work-branch repository mutation. The repository workflow .github/workflows/prisma-factory-anti-rework-gate.yml exposes workflow_dispatch only for canonical ledger validation/self-test and does not accept a task request; the available GitHub connector exposes no workflow-dispatch action capable of running verify_prisma_anti_rework_gate.py with the required request. Creating the assigned work branch or lane-local outputs before that decision would violate the gate.",
-    "Because the PROPOSAL gate has not run, no task-exact Authority Mesh/AutoMesh mutation authority has been requested and no lane output files have been written."
+    {
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "lane-output-repository-write-only",
+      "detail": "Current-head trust-anchor drift from PR #555 requires a fresh anti-rework decision before work-branch output mutation. The exact capability for this phase is visual.generic_application_engine_v1 with requestedAction=ADVANCE, not visual.operating_graph_v1.",
+      "impact": "Do not stop lane analysis. Continue all read-only target reconciliation, negative-evidence work, history/authority review and deterministic result preparation. Hold only repository output writes until the correct gate evidence is available."
+    }
   ],
   "findings": [
     "START: Identity auto-detection from STATUS_CHANNEL_CONTRACT + STATUS_INDEX resolves Chat 4, status branch status/vp-chat-04-shared-ui and mailbox chat-04-shared-ui; latest OWNER_ASSIGNMENT overrides the stale main-phase fields and assigns SHARED_UI_AUTHORITY_RECONCILIATION.",
@@ -26,7 +30,9 @@
     "NDC canon independently proves operational ACT.sale.checkout and related sale semantics. Code Atlas/UIMAP evidence relates visual ACT.primary to operational ACT.sale.checkout for the certified Tablet golden trace. That relation is evidence of distinct linked domains, not permission to equate a Shared UI selector with ACT.sale.checkout.",
     "Atlasfin structured evidence continues to prove ADP.SHARED.NEUTRAL.V2; prior certified Shared UI review examined 12 Atlasfin recipe target selectors and found zero exact Shared UI selector matches. Adapter presence remains support/reference only and Materiality Catalog remains uninspected.",
     "Read-only target sampling confirms current Shared UI physical rows are CURRENT exact-byte-copy projections and already carry target-index, visual-control, projection-manifest, identity adapter and Atlasfin adapter evidence. This reinforces DISCOVERY_ONLY_IS_NOT_UNDISCOVERED and argues against TRUE_NEW as a default classification.",
-    "No TRUE_NEW_AUTHORITY_REQUIRED classification has been asserted. Negative-evidence completion is therefore not falsely claimed."
+    "No TRUE_NEW_AUTHORITY_REQUIRED classification has been asserted. Negative-evidence completion is therefore not falsely claimed.",
+    "ORCHESTRATOR_CORRECTION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. It is not the affected capability for authority-reconciliation lanes. Canonical affected capability remains visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE.",
+    "PR #555 changed only PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; no lane Target Index/RIFAT/Identity/promotion-readiness source path changed. Treat as governance trust-anchor drift requiring current-head revalidation, not as a new lane scope."
   ],
   "decisions": [
     "Preserve all closed phases and do not recensus, broad-rediscover, rebuild GVAE/RIFAT/Identity/NDC, repair projections, mint canonical IDs, mutate product/runtime, perform GVAE APPLY, inspect Materiality Catalog or touch FILES_MANIFEST.json.",
@@ -86,8 +92,8 @@
     "Run or revalidate task-exact Authority Mesh after PROPOSAL and before any lane mutation if required by the resulting gate decision."
   ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "BLOCKED_EXECUTION_PATH. Coordinator/automation may resume Chat 4 when GitHub exposes a task-exact universal anti-rework PROPOSAL execution path. Do not ask the owner for a computer or manual command. Re-read current main and this mailbox before resuming.",
+  "userActionRequested": "",
+  "nextAction": "Continue the assigned lane read-only immediately. Use visual.generic_application_engine_v1 / ADVANCE for anti-rework classification. Do not gate this lane on visual.operating_graph_v1. Publish progress/receipts in the coordination mailbox; hold only governed work-branch output mutation pending the correct current-head gate.",
   "handoff": {
     "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
     "authorityReconciliation": {
