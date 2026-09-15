@@ -1,0 +1,243 @@
+{
+  "verticalId": "professional_corporate_services",
+  "label": "Servicios Profesionales y Corporativos",
+  "version": 0,
+  "events": [
+    {
+      "topic": "professional_services.client.intake_captured",
+      "scope": "vertical",
+      "source": [
+        "tablet"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.client.intake",
+      "visibleMicrocopy": "Diagnóstico registrado."
+    },
+    {
+      "topic": "professional_services.client.updated",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.client.manage",
+      "visibleMicrocopy": "Cliente actualizado."
+    },
+    {
+      "topic": "professional_services.engagement.opened",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Servicio iniciado."
+    },
+    {
+      "topic": "professional_services.engagement.updated",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Servicio actualizado."
+    },
+    {
+      "topic": "professional_services.document.requested",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.document.manage",
+      "visibleMicrocopy": "Documento solicitado."
+    },
+    {
+      "topic": "professional_services.document.received",
+      "scope": "vertical",
+      "source": [
+        "tablet"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.document.receive",
+      "visibleMicrocopy": "Documento recibido."
+    },
+    {
+      "topic": "professional_services.document.verified",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.document.verify",
+      "visibleMicrocopy": "Documento verificado."
+    },
+    {
+      "topic": "professional_services.task.assigned",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.task.assign",
+      "visibleMicrocopy": "Responsable asignado."
+    },
+    {
+      "topic": "professional_services.task.completed",
+      "scope": "vertical",
+      "source": [
+        "tablet"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.task.update",
+      "visibleMicrocopy": "Tarea completada."
+    },
+    {
+      "topic": "professional_services.deadline.created",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.deadline.manage",
+      "visibleMicrocopy": "Vencimiento registrado."
+    },
+    {
+      "topic": "professional_services.deadline.at_risk",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.deadline.manage",
+      "visibleMicrocopy": "Vencimiento en riesgo."
+    },
+    {
+      "topic": "professional_services.approval.requested",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.approval.request",
+      "visibleMicrocopy": "Aprobación solicitada."
+    },
+    {
+      "topic": "professional_services.approval.completed",
+      "scope": "vertical",
+      "source": [
+        "mobile"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.approval.complete",
+      "visibleMicrocopy": "Aprobación registrada."
+    },
+    {
+      "topic": "professional_services.service.milestone_completed",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.task.update",
+      "visibleMicrocopy": "Hito completado."
+    },
+    {
+      "topic": "professional_services.evidence.recorded",
+      "scope": "vertical",
+      "source": [
+        "tablet"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.evidence.record",
+      "visibleMicrocopy": "Evidencia registrada."
+    },
+    {
+      "topic": "professional_services.evidence.verified",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.evidence.verify",
+      "visibleMicrocopy": "Evidencia verificada."
+    },
+    {
+      "topic": "professional_services.recurring_cycle.opened",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.recurring.manage",
+      "visibleMicrocopy": "Periodo recurrente iniciado."
+    },
+    {
+      "topic": "professional_services.recurring_cycle.completed",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "medium",
+      "requiresPermission": "professional_services.recurring.manage",
+      "visibleMicrocopy": "Periodo recurrente completado."
+    }
+  ],
+  "auditRules": [
+    {
+      "ruleId": "professional_services.audit.client_commitment",
+      "when": "client_commitment_deadline_document_or_approval_changes",
+      "requiredFields": [
+        "actorId",
+        "businessId",
+        "entityType",
+        "entityId",
+        "before",
+        "after",
+        "occurredAt"
+      ]
+    },
+    {
+      "ruleId": "professional_services.audit.sensitive_permission",
+      "when": "sensitive_permission_used",
+      "requiredFields": [
+        "actorId",
+        "permission",
+        "reason",
+        "occurredAt"
+      ]
+    },
+    {
+      "ruleId": "professional_services.audit.mobile_approval",
+      "when": "mobile_bounded_approval_used",
+      "requiredFields": [
+        "actorId",
+        "entityType",
+        "entityId",
+        "decision",
+        "occurredAt"
+      ]
+    }
+  ],
+  "syncRules": [
+    {
+      "topicPattern": "professional_services.*",
+      "offlineAllowed": true,
+      "retry": "automatic_for_operational_capture",
+      "humanStatus": "Pendiente por enviar"
+    },
+    {
+      "topicPattern": "professional_services.approval.*",
+      "offlineAllowed": false,
+      "retry": "manual_after_reconnect",
+      "humanStatus": "Requiere conexión para aprobar"
+    },
+    {
+      "topicPattern": "professional_services.evidence.*",
+      "offlineAllowed": true,
+      "retry": "manual_if_verification_fails",
+      "humanStatus": "Evidencia pendiente de revisión"
+    }
+  ]
+}
