@@ -5,13 +5,18 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T00:20:00Z",
+  "updatedAt": "2026-09-15T00:38:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
   "summary": "Chat 6 STARTED AUTHORITY_RECONCILIATION_ANTI_REWORK as global composer/orchestrator. Current main advanced to 70f381e9... via PR #555; drift touches canonical Factory Ledger/Evidence Index, so governed output mutation is held pending current-head anti-rework/Authority Mesh revalidation while read-only orchestration and contract preparation proceed.",
   "blockers": [
-    "GOVERNANCE_DRIFT_REVALIDATION_REQUIRED: assignment basis 46c9032... -> current main 70f381e9... modifies PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json via PR #555. Per anti-rework policy this governance-sensitive drift must be revalidated before governed work-branch output mutation."
+    {
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "composer-output-repository-write-only",
+      "detail": "PR #555 changed Ledger/Evidence trust anchors. Current-head revalidation is required, but the phase capability remains visual.generic_application_engine_v1 / ADVANCE. Continue read-only orchestration; hold only governed composer output writes until the correct current-head anti-rework MUTATION decision exists.",
+      "impact": "No need to wait idly for workers. Continue mailbox polling, schema/composition preparation and receipt validation read-only."
+    }
   ],
   "findings": [
     "Factory Ledger capability visual.generic_application_engine_v1 is DONE/SOURCE_READY with doNotRebuild=true; Chat 6 reused and advanced existing machinery rather than rebuilding it.",
@@ -107,7 +112,8 @@
     "Owner assignment 2026-09-14T23:30:00Z: compose only the true authority delta from the certified 2,097-target corpus; no recensus/rebuild.",
     "AUTHORITY_RECONCILIATION start: current main=70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; compare from assignment basis changes only PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json.",
     "PR #555 registered visual.operating_graph_v1 as BUILD/NOT_STARTED and did not report product/runtime mutation. Existing GVAE evidence remains discoverable as visual.generic_application_engine_v1 SOURCE_READY/doNotRebuild.",
-    "Worker mailbox snapshot: Chat 3 is IN_PROGRESS; Chats 1,2,4,5 remain NOT_STARTED at this check."
+    "Worker mailbox snapshot: Chat 3 is IN_PROGRESS; Chats 1,2,4,5 remain NOT_STARTED at this check.",
+    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
   ],
   "decisions": [
     "Preserve exactly GVAE_EXACT_APPLY, SURFACE_BATCH_PLAN, REGISTER_TARGET_FIRST and BLOCKED as Work Entry decisions.",
@@ -538,7 +544,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Continue read-only composer/orchestrator preparation; obtain current-head anti-rework/Authority Mesh revalidation before writing governed authority-reconciliation outputs. Poll worker mailboxes directly and ingest receipts as they arrive.",
+  "nextAction": "Continue read-only orchestration and ingest worker receipts as they arrive. Use visual.generic_application_engine_v1 / ADVANCE for the current-head anti-rework path; do not bind this phase to visual.operating_graph_v1.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
