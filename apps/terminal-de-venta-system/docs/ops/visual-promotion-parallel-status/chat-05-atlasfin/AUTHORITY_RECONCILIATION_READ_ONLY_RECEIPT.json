@@ -1,0 +1,228 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-read-only-receipt.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 5,
+  "lane": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
+  "state": "READ_ONLY_EVIDENCE_READY",
+  "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "inputAccounting": {
+    "total": 2097,
+    "tablet": 929,
+    "pc": 827,
+    "mobile": 271,
+    "sharedUi": 70,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "scope": "governed-output-repository-write-only",
+    "blocksReadOnlyAnalysis": false,
+    "governedOutputRootWritten": false
+  },
+  "existingConceptIndex": [
+    {
+      "authorityDomain": "ndc",
+      "ids": ["ENT.sale", "EVT.sale.created", "ACT.sale.checkout", "CAN.sale"],
+      "authorityPaths": [
+        "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+        "apps/terminal-de-venta-system/docs/ndc/04_NDC_NEUTRAL_OBJECT_MODEL.md",
+        "apps/terminal-de-venta-system/docs/ndc/05_NDC_EVENT_ACTION_STATE_MODEL.md",
+        "apps/terminal-de-venta-system/docs/ndc/06_NDC_PROVENANCE_SYNC_LINEAGE.md",
+        "apps/terminal-de-venta-system/docs/ndc/examples/ent_sale_full_trace.example.json"
+      ],
+      "finding": "Existing operational meaning. Missing target links must not be treated as missing concepts."
+    },
+    {
+      "authorityDomain": "identity",
+      "ids": ["ACT.primary", "REC.button.primary", "FAM.button.action", "PRESET.button.primary.clear-operational.v1", "VSTACK.ACT.PRIMARY.TABLET.POS.COBRAR.V1", "BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1", "LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE"],
+      "authorityPaths": [
+        "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+        "prisma-html/authority/rifat/identity/recipes/examples/REC.button.primary.tablet-pos-cobrar.full-stack.json",
+        "prisma-html/authority/rifat/identity/contract/REC.button.primary.compatibility.json"
+      ],
+      "finding": "Existing visual/application authority for the certified Tablet POS Cobrar pilot. Identity recipe registry currently contains exactly one canonical recipe."
+    },
+    {
+      "authorityDomain": "code-atlas",
+      "ids": ["ACT.sale.checkout", "ACT.primary", "BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1"],
+      "authorityPaths": [
+        "tools/code-atlas/src/code_atlas/app_map/uimap/runner.py",
+        "tools/code-atlas/src/code_atlas/ui_bridge/selftest.py"
+      ],
+      "finding": "UI Bridge explicitly models visual ACT.primary as related to NDC ACT.sale.checkout; this is relation evidence, not authority-domain equivalence."
+    },
+    {
+      "authorityDomain": "atlasfin",
+      "ids": ["REC.table.governed.v2", "REC.card.governed.v2", "REC.panel.governed.v2", "REC.overlay.governed.v2", "ADP.TB.TOUCH.V2", "ADP.PC.ADMIN.V2", "ADP.MB.TOUCH.V2", "ADP.SHARED.NEUTRAL.V2"],
+      "authorityPaths": [
+        "prisma-html/extras/atlasfin/assets/data/visual-recipe.registry.json",
+        "prisma-html/extras/atlasfin/assets/data/visual-family.registry.json",
+        "prisma-html/extras/atlasfin/assets/data/visual-preset.registry.json",
+        "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json",
+        "prisma-html/extras/atlasfin/bridge/certification/RECIPE_REVIEW_GROUPS.json"
+      ],
+      "finding": "Structured reference evidence only. Recipe/family/preset/adapter equality is never semantic authority by itself."
+    }
+  ],
+  "semanticCrosswalkEvidence": [
+    {
+      "left": "identity::ACT.primary",
+      "relation": "RELATED_TO",
+      "right": "ndc::ACT.sale.checkout",
+      "evidence": [
+        "tools/code-atlas/src/code_atlas/app_map/uimap/runner.py",
+        "tools/code-atlas/src/code_atlas/ui_bridge/selftest.py"
+      ],
+      "equivalent": false,
+      "reason": "Code Atlas preserves separate visual neutral meaning and related NDC operational action."
+    },
+    {
+      "left": "identity::REC.button.primary",
+      "relation": "APPLIES_VISUAL_MEANING_TO_EXACT_BINDING",
+      "right": "target-index::TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1",
+      "evidence": [
+        "prisma-html/governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
+        "prisma-html/authority/rifat/identity/contract/REC.button.primary.compatibility.json"
+      ],
+      "equivalent": false
+    },
+    {
+      "left": "atlasfin::REC.table.governed.v2|REC.card.governed.v2|REC.panel.governed.v2",
+      "relation": "VISUAL_SIMILARITY_ONLY",
+      "right": "tablet+pc review groups",
+      "evidence": [
+        "prisma-html/extras/atlasfin/bridge/certification/RECIPE_REVIEW_GROUPS.json",
+        "prisma-html/governance/visual-promotion/promotion-readiness/composed/COLLISIONS.json"
+      ],
+      "equivalent": false,
+      "canonicalCoalescingAllowed": false
+    }
+  ],
+  "ndcMaterializationAudit": {
+    "docsetManifest": "apps/terminal-de-venta-system/docs/ndc/manifests/NDC_DOCSET_MANIFEST.json",
+    "docsetFileCount": 39,
+    "catalogCount": 66,
+    "catalogRegistryStatus": "defined_for_doc1",
+    "schemasPresent": true,
+    "seedRegistriesPresent": true,
+    "examplesPresent": true,
+    "databaseMaterialized": false,
+    "prismaSchemaMaterializedByNdcDocset": false,
+    "migrationsMaterializedByNdcDocset": false,
+    "finding": "NDC DOC1 is documentary canon plus registries/schemas/seeds/examples. Its own manifest declares no_db=true and next-iteration contract says no DB/Prisma schema/migrations yet. defined_for_doc1 therefore must not be promoted to populated runtime/database truth."
+  },
+  "historicalAuthorityEvidence": [
+    {
+      "commit": "c8f47ff6b0818a187beea0afb7812af129878388",
+      "meaning": "NDC neutral data contract canon introduced as doctrine, registries, schemas, manifests and examples."
+    },
+    {
+      "commit": "bd68244cb467f897138b7ce1a1c8944272389437",
+      "meaning": "Identity recipe base updated with binding refresh, supporting prior intent/existence rather than new authority inference."
+    },
+    {
+      "commit": "6d2b7b91dc8bbd7fcf494e50aa7f746ccebe9ff3",
+      "pr": 529,
+      "meaning": "Canonical all-surface Visual Control/RIFAT/GVAE Target Index authority restored; existing census must be reused."
+    },
+    {
+      "commit": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "pr": 554,
+      "meaning": "Promotion-readiness phase closed with 2,097 exact inputs and zero semantic mutation; this phase must not recompute it."
+    }
+  ],
+  "negativeEvidenceRules": {
+    "emptySearchProvesAbsence": false,
+    "trueNewAuthorityRequiredMinimum": [
+      "NDC canon, registries, schemas, seeds/examples relevant to the target meaning",
+      "Identity registries, aliases, recipes, bindings, visual stacks and adapters",
+      "RIFAT / Visual Control / Target Index exact physical/application evidence",
+      "Code Atlas / UIMAP / UI Bridge target/meaning evidence",
+      "Atlasfin structured reference evidence",
+      "Factory Ledger / Evidence Index anti-rework evidence",
+      "relevant PR/commit/docs history where any prior-intent clue exists",
+      "available cross-authority evidence from this lane"
+    ],
+    "rules": [
+      "Absence in one registry is insufficient.",
+      "DISCOVERY_ONLY is existing physical evidence and never means UNDISCOVERED.",
+      "NDC documented concept without target link supports EXISTING_CONCEPT_LINK_MISSING, not TRUE_NEW_AUTHORITY_REQUIRED.",
+      "Existing visual meaning with missing binding/application supports EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP.",
+      "Conflicting authorities remain EXISTING_AUTHORITY_CONFLICT_CURATE; do not choose by selector/name similarity.",
+      "Projection/product disagreement requires PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED until authority/history chooses direction.",
+      "TRUE_NEW_AUTHORITY_REQUIRED requires target-specific negative evidence across every minimum source family above."
+    ]
+  },
+  "crossSurfaceEvidence": {
+    "independentCanonicalSemanticGroups": 0,
+    "atlasfinVisualOnlyGroups": 3,
+    "atlasfinVisualOnlyGroupCounts": {
+      "REC.table.governed.v2": 171,
+      "REC.card.governed.v2": 95,
+      "REC.panel.governed.v2": 47
+    },
+    "tabletOnlyOverlayCount": 11,
+    "rule": "Recipe/preset/family/selector equality is VISUAL_SIMILARITY_ONLY unless independent semantic authority proves stronger relation."
+  },
+  "surfaceFactsForConsumers": {
+    "tablet": {
+      "targets": 929,
+      "ndcUnresolved": 929,
+      "existingResolvedIdentityBinding": 1,
+      "physicalDrift": 2
+    },
+    "pc": {
+      "targets": 827,
+      "ndcUnresolved": 827,
+      "identityBindingBlocked": 827,
+      "projectionMissing": 139,
+      "physicalDrift": 1
+    },
+    "mobile": {
+      "targets": 271,
+      "projectionCurrent": 133,
+      "projectionDrift": 138,
+      "supportingNdcSurfaceRef": "SURF.mb.owner_home"
+    },
+    "sharedUi": {
+      "targets": 70,
+      "ndcUnresolved": 70,
+      "atlasfinNoMatch": 70,
+      "noRegionUnresolved": 19,
+      "multiRegionConflicts": 11
+    }
+  },
+  "gaps": [
+    "This receipt does not classify surface targets; surface workers own final per-target classification.",
+    "No TRUE_NEW_AUTHORITY_REQUIRED is asserted by Chat 5.",
+    "Target-specific negative evidence must still be joined by each surface worker before any TRUE_NEW_AUTHORITY_REQUIRED decision.",
+    "Governed output-root materialization remains blocked only by WRITE_GATE_PATH_PENDING."
+  ],
+  "guardrails": {
+    "materialityCatalogInspected": false,
+    "recensusPerformed": false,
+    "broadRediscoveryPerformed": false,
+    "canonicalAuthorityCreated": false,
+    "productRuntimeMutationPerformed": false,
+    "projectionRepairPerformed": false,
+    "gvaeApplyPerformed": false,
+    "foreignMailboxWritten": false,
+    "prOpened": false,
+    "mainMerged": false
+  },
+  "handoff": {
+    "result": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
+    "consumers": ["surface workers", "Chat 6 composer"],
+    "readOnlyEvidenceConsumableNow": true,
+    "governedOutputMaterializationPending": true
+  }
+}
