@@ -628,3 +628,16 @@ Este checklist debe aplicarse a toda extension futura. No es relleno documental:
 78. Una extension vertical nueva debe demostrar por que no cabe en core sin contaminar otros giros; si la respuesta es 'por si acaso', se rechaza. Debe incluir fixture, evento si afecta operacion, owner y criterio de rollback.
 79. Una extension vertical nueva debe demostrar por que no cabe en core sin contaminar otros giros; si la respuesta es 'por si acaso', se rechaza. Debe incluir fixture, evento si afecta operacion, owner y criterio de rollback.
 80. Una extension vertical nueva debe demostrar por que no cabe en core sin contaminar otros giros; si la respuesta es 'por si acaso', se rechaza. Debe incluir fixture, evento si afecta operacion, owner y criterio de rollback.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:data-model -->
+## Vertical: Servicios Profesionales y Corporativos (`professional_corporate_services`)
+
+Modela organizaciones que prestan servicios profesionales o corporativos y necesitan gobernar clientes, expedientes, encargos, documentos, tareas, vencimientos, responsables, aprobaciones y evidencia.
+
+- **Tablet:** captura inicial, recepción documental y avances operativos acotados.
+- **PC:** autoridad sobre expediente, alcance, políticas, responsables, fechas, conciliación, historia y auditoría.
+- **Mobile:** proyecciones de riesgo, aprobaciones, vencimientos y siguientes acciones; no es propietario de la política canónica.
+
+Extensiones: `ClientFile`, `ServiceEngagement`, `DocumentRequirement`, `WorkItem`, `Deadline`, `ResponsibilityAssignment`, `EvidenceRecord`, `RecurringServicePlan`.
+
+Campos jurídicos, fiscales, laborales o de soft landing pertenecen a especializaciones. No se agregan al Core por conveniencia.
