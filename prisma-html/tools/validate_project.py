@@ -433,6 +433,57 @@ def main():
             if not ok:
                 errors.append(f'JS inválido {js_path.relative_to(root)}')
 
+    # PRISMA Visual Operating Graph Wave 1 is a deterministic read-only composition layer.
+    # Validate its locked canonical inputs and reproducibility without granting mutation authority.
+    try:
+        from visual_operating_graph.builder import build_master_map, build_operating_graph
+        from visual_operating_graph.live_phase_reducer import reduce_live_phase_truth
+        from visual_operating_graph.source_set_verifier import canonical_json, verify_source_set
+
+        repo_root = root.parent
+        source_set = verify_source_set(repo_root)
+        graph_a, verification_a = build_operating_graph(repo_root)
+        graph_b, verification_b = build_operating_graph(repo_root)
+        master_a = build_master_map(graph_a, verification_a, repo_root)
+        master_b = build_master_map(graph_b, verification_b, repo_root)
+        reducer = reduce_live_phase_truth(graph_a, verification_a, live_overlay=[])
+
+        operating_ok = (
+            source_set.get('status') == 'PASS_SOURCESET_VERIFIED'
+            and source_set.get('blockingFindingCount') == 0
+            and canonical_json(graph_a) == canonical_json(graph_b)
+            and canonical_json(verification_a) == canonical_json(verification_b)
+            and canonical_json(master_a) == canonical_json(master_b)
+            and graph_a.get('stateClass') == 'CANONICAL_STATE'
+            and graph_a.get('productionCertified') is False
+            and master_a.get('authorizationGranted') is False
+            and master_a.get('productionCertified') is False
+            and reducer.get('authorizationGranted') is False
+            and reducer.get('mutationAllowed') is False
+            and reducer.get('productionCertified') is False
+        )
+        checks.append({
+            'check': 'visual_operating_graph_wave1_read_only',
+            'ok': operating_ok,
+            'details': {
+                'sourceSetStatus': source_set.get('status'),
+                'headDisposition': source_set.get('headDisposition'),
+                'blockingFindingCount': source_set.get('blockingFindingCount'),
+                'nodeCount': len(graph_a.get('nodes', [])),
+                'edgeCount': len(graph_a.get('edges', [])),
+                'liveStatus': reducer.get('status'),
+            },
+        })
+        if not operating_ok:
+            errors.append('Visual Operating Graph Wave 1 no pasó su validación read-only/determinista')
+    except Exception as error:
+        checks.append({
+            'check': 'visual_operating_graph_wave1_read_only',
+            'ok': False,
+            'details': {'error': f'{type(error).__name__}: {error}'},
+        })
+        errors.append('Visual Operating Graph Wave 1 lanzó una excepción durante validación')
+
     status = 'PASS' if not errors else 'FAIL'
     result = {'status': status, 'checks': checks, 'warnings': warnings, 'errors': errors}
     report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
