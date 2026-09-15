@@ -387,3 +387,16 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - publicaste work branch, exact head, counts, hashes/manifest, blockers y handoff.
 
 **No abras ni merges a main por tu cuenta salvo instrucción explícita posterior del dueño.**
+
+## 2026-09-15T00:14:00Z — START / FINDING / DECISION
+
+- Auto-detected identity from the canonical status-channel contract and STATUS_INDEX: Chat 3. Latest OWNER_ASSIGNMENT changes the active lane to `MOBILE_AUTHORITY_RECONCILIATION` under phase `AUTHORITY_RECONCILIATION_ANTI_REWORK`.
+- Exact assigned universe: `271` certified Mobile targets. No recensus or broad rediscovery is authorized.
+- Assigned work branch: `chat3/authority-reconciliation-mobile-20260914`.
+- Exclusive output root: `prisma-html/governance/visual-promotion/authority-reconciliation/mobile/**`.
+- Assignment basis main was `46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0`; current main is `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- Drift classification: governance-sensitive / relevant. The intervening main changes modify only `PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json` and `PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json`, which are explicit anti-rework authority inputs.
+- Decision: do not reuse stale assignment-time authority blindly. Obtain current-head GitHub-only anti-rework / task-exact Authority Mesh evidence before any lane output write.
+- Materiality Catalog remains uninspected and unauthorized. Product/runtime mutation, projection repair, canonical registration, GVAE APPLY, RIFAT/Identity/NDC/GVAE rebuild remain forbidden.
+- No owner action required; GitHub-only preflight continues autonomously.
+
