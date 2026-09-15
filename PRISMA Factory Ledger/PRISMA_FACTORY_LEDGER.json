@@ -2053,7 +2053,50 @@
         "claim SAT, tax, accounting, legal, audit, payroll or regulatory compliance from architecture documents",
         "treat registration-only authority as implementation, runtime certification or production readiness"
       ]
+    },
+    {
+      "id": "verticals.professional_corporate_services",
+      "displayName": "PRISMA Vertical Servicios Profesionales y Corporativos",
+      "domain": "verticals",
+      "surfaces": [
+        "governance",
+        "shared_core",
+        "tablet",
+        "pc",
+        "mobile"
+      ],
+      "classification": "BUILD",
+      "status": "NOT_STARTED",
+      "stateLabel": "PROFESSIONAL_CORPORATE_SERVICES_VERTICAL_REGISTERED_BUILD_NOT_STARTED",
+      "doNotRebuild": false,
+      "nextGate": "On exact current main after this registration is merged, run the universal anti-rework PROPOSAL gate for verticals.professional_corporate_services. Then obtain a fresh task-exact Authority Mesh for the bounded PRISMA VERTICALS documentation/contracts implementation and run the MUTATION gate before repository writes. Reuse the existing Core + Vertical Layer architecture. The first implementation gate is documentation/contracts only and must model Tablet operations, PC governance and Mobile supervision. Keep verticals.accounting_management separate and unchanged.",
+      "evidence": [
+        "Registration-only Authority Mesh run 35014950489 artifact 10414742606; PASS_COMPOSED_AUTHORITY_MESH at main e643fe4b54be214b619805dc4fa0f35fecb82297; requestId eff3221d72f49bb8; requestDigest 65ddf0edc20fc538fbb84a83ce3ec1dfd58bf6358f3839146928f54fa06b78cd; composed sha256 917bd793dff3c669a306c26ab82002d0f936e73c6b84d81fb6594c75b5bc189f; uploaded artifact sha256:f1c6beebc85eb7898f97694692b03a5557cd9d6afdd2f1a302699aed1b50b74c",
+        "The authority request explicitly declares verticals.professional_corporate_services as NEW and SEPARATE from verticals.accounting_management and forbids rename, replacement, supersession or absorption of the accounting vertical.",
+        "Existing PRISMA VERTICALS registry/profile/capability/routing/entity/event/permission/UX/validation authorities are reuse dependencies; this registration authorizes no rebuild of existing verticals or Core."
+      ],
+      "doesNotProve": [
+        "The Servicios Profesionales y Corporativos vertical profile, routes, entities, events, permissions, UX, fixtures or documentation have been implemented",
+        "Any Tablet, PC or Mobile runtime behavior exists for this vertical",
+        "Any legal, accounting, fiscal, labor, financial, compliance or professional-practice certification",
+        "Any CIOB-specific implementation, demo HTML or visual certification exists",
+        "Post-registration PROPOSAL or MUTATION authorization"
+      ],
+      "allowedActions": [
+        "reuse the existing PRISMA Core and PRISMA VERTICALS architecture without rebuilding them",
+        "after post-merge gates, add one draft professional_corporate_services vertical profile and the bounded contract/documentation package",
+        "model consulting, corporate services, accounting/fiscal support, legal/corporate support, HR/labor, finance advisory, back office, compliance/document management and soft-landing/market-entry as configurable specialization families inside the broad vertical",
+        "define Tablet for bounded operational capture, PC for deep governance and Mobile for supervision",
+        "keep all claims at architecture/demo/roadmap maturity until separate runtime evidence exists"
+      ],
+      "forbiddenActions": [
+        "rename, replace, merge into or supersede verticals.accounting_management",
+        "modify Tablet, PC or Mobile product/runtime source as part of registration or the first documentation gate",
+        "mutate Prisma schema, migrations, databases, customer data, processes, ports, dev servers or deployments",
+        "claim certified legal, accounting, fiscal, labor, compliance or regulatory practice from architecture documents",
+        "treat this registration-only authority as runtime implementation or production readiness"
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T18:17:00Z"
+  "updatedAt": "2026-09-15T19:42:00Z"
 }
