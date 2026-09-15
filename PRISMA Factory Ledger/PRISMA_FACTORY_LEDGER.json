@@ -1960,7 +1960,55 @@
         "touch databases, Prisma generation, deployment, processes or ports",
         "claim runtime or production green from docs, schemas, static checks or absent evidence"
       ]
+    },
+    {
+      "id": "tooling.mamastrophic.universal_screenshot_artifacts",
+      "displayName": "PRISMA Mamastrophic Universal Screenshot Artifact Pipeline",
+      "domain": "tooling",
+      "surfaces": [
+        "tooling",
+        "quality",
+        "governance",
+        "pc",
+        "tablet",
+        "mobile",
+        "web",
+        "chart_lab",
+        "control_center"
+      ],
+      "classification": "BUILD",
+      "status": "NOT_STARTED",
+      "stateLabel": "MAMASTROPHIC_UNIVERSAL_SCREENSHOT_ARTIFACTS_REGISTERED_BUILD_NOT_STARTED",
+      "doNotRebuild": false,
+      "nextGate": "On exact current main after this registration is merged, run the universal anti-rework PROPOSAL gate for tooling.mamastrophic.universal_screenshot_artifacts. Then obtain or revalidate a task-exact Authority Mesh for the bounded Mamastrophic/GitHub Actions implementation and run the anti-rework MUTATION gate before repository writes. Reuse the existing Mamastrophic capture/discovery/deep-scroll/per-app packaging engines; build only the missing generic fast GitHub artifact adapter/operator contract across PC, Tablet, Mobile/PWA, Web, Chart Lab and Control Center. Product/runtime source mutation is out of scope.",
+      "evidence": [
+        "Registration-only Authority Mesh run 34993331987 artifact 10405749136; PASS_COMPOSED_AUTHORITY_MESH at main 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; requestDigest 5ae11a42f6689e7254463a89cdf4625b4b40ae763aa31144d7b0df246688df2f; composed sha256 efbb3ad2042ffb805560f3922f78babe90b795ba799f13f1e4f8b6d62a59fcd2; uploaded artifact sha256:8c06e2f915d8a5e3bdcb5f121b8f6cdb4704de2a7673bcd11d163e3d949b0591",
+        "AutoMesh revalidation run 34993859090 artifact 10405998737; PASS_NO_RELEVANT_DRIFT rebound to current main 8db4370d579014f8fed6e190ffce45e1589b33d9; revalidationDigest 68d03e535286cc14d77f45e0869e7d5495c8e0e71fbf20d64c78697d9ddc2308; rebound artifact sha256 3cf716ce235816b28041c3f1589189984797d3487600c8e6e9ebc7cc01af0893",
+        "Existing Mamastrophic source is a reuse dependency: RUN.ps1 already supports screenshots/screenshotsqa and the six runtime surfaces; arr13 already defines one final ZIP per app/surface and live progress. This registration does not authorize rebuilding those owners."
+      ],
+      "doesNotProve": [
+        "A universal GitHub screenshot artifact workflow or adapter has been implemented",
+        "The future fast path is measurably faster than current per-surface evidence workflows",
+        "Any screenshot artifact has been freshly generated for all six runtime apps under this capability",
+        "Anti-rework PROPOSAL or MUTATION has passed for the implementation",
+        "Any product/runtime visual, production, distribution, hosted PWA or customer deployment certification"
+      ],
+      "allowedActions": [
+        "reuse existing Mamastrophic capture, discovery, DeepScroll, screenshots/screenshotsqa, per-app packaging, legal-evidence and progress owners without rebuilding them",
+        "run the exact Factory Ledger and Authority Mesh gates for the bounded universal artifact implementation",
+        "after those gates, add one generic GitHub Actions artifact adapter/operator contract that selects any supported runtime app without six divergent workflows",
+        "preserve one consistent artifact shape with screenshots, manifest/index, provenance, route status, hashes and honest PASS/PARTIAL/FAIL evidence",
+        "use isolated CI runtime/fixtures per surface when required while keeping product/runtime source unchanged"
+      ],
+      "forbiddenActions": [
+        "rebuild or fork Mamastrophic capture/discovery into separate PC, Tablet, Mobile, Web, Chart Lab or Control Center engines",
+        "create six custom screenshot workflows when one parameterized workflow/adapter can reuse the existing surface catalog",
+        "mutate product/runtime source, CSS, visual recipes, databases, Prisma schema, customer data or deployments as part of this capability",
+        "treat an offline/unavailable surface as captured or promote partial evidence to green",
+        "claim runtime/browser or production certification from registration-only authority or source-static checks",
+        "bypass surface-specific fixture, license, auth or runtime prerequisites merely to make screenshots green"
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T00:09:22Z"
+  "updatedAt": "2026-09-15T16:16:00Z"
 }
