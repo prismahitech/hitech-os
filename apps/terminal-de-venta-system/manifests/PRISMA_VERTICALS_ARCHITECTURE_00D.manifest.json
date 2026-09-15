@@ -22,8 +22,8 @@
     },
     {
       "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00D_VERTICAL_EVENTS_PERMISSIONS.md",
-      "bytes": 11203,
-      "sha256": "83d2d12cd5f8a6d63beee35567f09004cecd443521d31977ab91be104b190490"
+      "bytes": 12095,
+      "sha256": "8343cd141766301cbbbad57163c0166a12772950bbe37f7c91949ec91b586aaa"
     },
     {
       "path": "docs/qa/PRISMA_VERTICALS_00D_QA_MATRIX.md",
@@ -162,13 +162,23 @@
     },
     {
       "path": "shared/verticals/sync/vertical-sync-policy.v0.json",
-      "bytes": 5215,
-      "sha256": "4b5029b1ec1e8917e2428ec1910f6e411f5282773b9842628640566e7040f7e7"
+      "bytes": 5861,
+      "sha256": "e3122ffb6943bcd967fab22e7f96b9b7d8d6ad98549903dc7d18aa61919b10d1"
     },
     {
       "path": "tools/verticals/validate_vertical_events_permissions_00d.py",
-      "bytes": 3845,
-      "sha256": "cb1e19e5a06379212a3d9cec00314e2363dbdcd20f7235d9aa32a5dffac66df9"
+      "bytes": 3879,
+      "sha256": "37386bfb75245518e55a02f8607def7160d74a2d96907634b9f36b6e1a5d8ccf"
+    },
+    {
+      "path": "shared/verticals/events/policies/professional_corporate_services.event-policy.json",
+      "bytes": 6276,
+      "sha256": "0eca60c3241cd573fb268b8f4a1cf65e65467e83bd00a460f9d88f98dc81a17b"
+    },
+    {
+      "path": "shared/verticals/permissions/policies/professional_corporate_services.permission-policy.json",
+      "bytes": 4788,
+      "sha256": "6e4d36da4ea2c3332a0aa5ae684744e8b9937c208a4eae70db96e897af4173e8"
     }
   ],
   "verifyCommand": "python tools/verticals/validate_vertical_events_permissions_00d.py <root>",
