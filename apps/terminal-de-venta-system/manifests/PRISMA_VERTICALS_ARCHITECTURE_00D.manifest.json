@@ -172,8 +172,8 @@
     },
     {
       "path": "shared/verticals/events/policies/professional_corporate_services.event-policy.json",
-      "bytes": 6276,
-      "sha256": "0eca60c3241cd573fb268b8f4a1cf65e65467e83bd00a460f9d88f98dc81a17b"
+      "bytes": 7486,
+      "sha256": "056b40f45471e00b0ebb36158edf6854a6620908f99364481abaf3f23fcc7cbe"
     },
     {
       "path": "shared/verticals/permissions/policies/professional_corporate_services.permission-policy.json",
