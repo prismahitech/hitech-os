@@ -1,0 +1,70 @@
+{
+  "schema": "prisma.visual-promotion.restart-handoff.v1",
+  "generatedAt": "2026-09-15T11:06:40-06:00",
+  "repository": "prismahitech/hitech-os",
+  "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 1,
+  "role": "TABLET_AUTHORITY_RECONCILIATION_WORKER",
+  "statusBranch": "status/vp-chat-01-tablet",
+  "restartMode": "CONTINUE_IN_NEW_CHAT",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "unrelatedCapability": {
+    "id": "visual.operating_graph_v1",
+    "note": "PR #556 foundation is not a prerequisite or blocker for this authority-reconciliation phase."
+  },
+  "priorAccounting": {
+    "classified": 929,
+    "provisional": 924,
+    "specific": 5,
+    "unresolved": 0
+  },
+  "currentGlobalComposerTruth": {
+    "expectedTotal": 2097,
+    "acceptedSpecific": 313,
+    "provisionalConceptLink": 1744,
+    "unresolvedSharedUi": 40,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "trueNewAccepted": 0,
+    "equation": "313 + 1744 + 40 = 2097"
+  },
+  "mainDrift": {
+    "from": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+    "to": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "assessment": "NON_OVERLAPPING_FOR_CURRENT_READ_ONLY_AUTHORITY_EVIDENCE",
+    "note": "PR #556 changed visual-operating-graph foundation/docs and FILES_MANIFEST; no NDC, Identity, RIFAT/Target Index, promotion-readiness corpus or candidate authority input changed."
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "blocksReadOnly": false,
+    "blocksGovernedOutputWrites": true
+  },
+  "exactNextActions": [
+    "Do not rebuild the 929-target baseline or recensus Tablet.",
+    "Treat the 924 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional, not semantic-final.",
+    "Perform bounded target-specific qualification: prove the relevant existing NDC/Identity/VIS concept for each target or keep it provisional. Family-level authority existence is insufficient.",
+    "Preserve the 5 specific classifications already separated: 1 application gap, 2 authority conflicts, 2 physical/projection reconciliation rows.",
+    "Consume current Chat 5 deltas when relevant and request/publish bounded evidence receipts rather than broad rediscovery.",
+    "Keep zero-loss 929/929 and TRUE_NEW=0 unless complete target-specific negative evidence exists.",
+    "WRITE_GATE_PATH_PENDING blocks governed output writes only. Continue read-only evidence work."
+  ],
+  "hardGuardrails": [
+    "no recensus or broad rediscovery",
+    "no GVAE/RIFAT/Identity/NDC rebuild",
+    "no Materiality Catalog",
+    "no canonical ID minting or registration",
+    "no product/runtime mutation",
+    "no projection repair",
+    "no GVAE APPLY",
+    "no PR/merge to main without explicit owner authorization",
+    "no fake green"
+  ]
+}
