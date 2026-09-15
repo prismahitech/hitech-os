@@ -1,6 +1,6 @@
 {
   "matrixVersion": "0.0.1",
-  "rowCount": 300,
+  "rowCount": 330,
   "rows": [
     {
       "verticalId": "convenience",
@@ -2099,6 +2099,216 @@
       "verticalId": "food_truck",
       "scenarioId": "food_truck.scenario.06.offline_sale",
       "checkId": "food_truck.scenario.06.offline_sale.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "checkId": "professional_corporate_services.scenario.01.client_intake.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "checkId": "professional_corporate_services.scenario.01.client_intake.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "checkId": "professional_corporate_services.scenario.01.client_intake.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "checkId": "professional_corporate_services.scenario.01.client_intake.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.01.client_intake",
+      "checkId": "professional_corporate_services.scenario.01.client_intake.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "checkId": "professional_corporate_services.scenario.02.open_engagement.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "checkId": "professional_corporate_services.scenario.02.open_engagement.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "checkId": "professional_corporate_services.scenario.02.open_engagement.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "checkId": "professional_corporate_services.scenario.02.open_engagement.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.02.open_engagement",
+      "checkId": "professional_corporate_services.scenario.02.open_engagement.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "checkId": "professional_corporate_services.scenario.03.receive_document.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "checkId": "professional_corporate_services.scenario.03.receive_document.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "checkId": "professional_corporate_services.scenario.03.receive_document.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "checkId": "professional_corporate_services.scenario.03.receive_document.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.03.receive_document",
+      "checkId": "professional_corporate_services.scenario.03.receive_document.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "checkId": "professional_corporate_services.scenario.04.advance_milestone.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "checkId": "professional_corporate_services.scenario.04.advance_milestone.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "checkId": "professional_corporate_services.scenario.04.advance_milestone.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "checkId": "professional_corporate_services.scenario.04.advance_milestone.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.04.advance_milestone",
+      "checkId": "professional_corporate_services.scenario.04.advance_milestone.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "checkId": "professional_corporate_services.scenario.05.review_approval.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "checkId": "professional_corporate_services.scenario.05.review_approval.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "checkId": "professional_corporate_services.scenario.05.review_approval.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "checkId": "professional_corporate_services.scenario.05.review_approval.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.05.review_approval",
+      "checkId": "professional_corporate_services.scenario.05.review_approval.offline",
+      "assertion": "estado offline o pendiente definido",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
+      "checkId": "professional_corporate_services.scenario.06.deadline_risk.screen",
+      "assertion": "pantalla definida para el vertical",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
+      "checkId": "professional_corporate_services.scenario.06.deadline_risk.event",
+      "assertion": "evento auditable declarado",
+      "severity": "blocker"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
+      "checkId": "professional_corporate_services.scenario.06.deadline_risk.permission",
+      "assertion": "permiso declarado cuando aplica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
+      "checkId": "professional_corporate_services.scenario.06.deadline_risk.copy",
+      "assertion": "mensaje humano sin jerga tecnica",
+      "severity": "major"
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "scenarioId": "professional_corporate_services.scenario.06.deadline_risk",
+      "checkId": "professional_corporate_services.scenario.06.deadline_risk.offline",
       "assertion": "estado offline o pendiente definido",
       "severity": "major"
     }
