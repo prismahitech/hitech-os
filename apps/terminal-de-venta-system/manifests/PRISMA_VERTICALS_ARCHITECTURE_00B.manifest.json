@@ -126,5 +126,57 @@
   "fixes": [
     "Installer/manifest now skip SHA comparison for the self-referential manifest file.",
     "Pharmacy blocked capability renamed from bulk_price_change to catalog.bulk_price_change to satisfy namespaced capability validation."
+  ],
+  "files": [
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_00B_CAPABILITY_CATALOG.md",
+      "sha256": "b899e4a472b4c317640a99288d86618a48acf9eacdf861ec6802452c0bc00910",
+      "bytes": 227735
+    },
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_00B_ROUTING_MATRIX.md",
+      "sha256": "7c268e087b222801352e5ea399e9781f0658554925aaf04f209847dc67423b23",
+      "bytes": 1674
+    },
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_00B_VERTICAL_PROFILE_STANDARD.md",
+      "sha256": "60ebb6e3f9bdb5cf8a6998958ca0d81dae63a091a8549fe391da5fe64e8a3a63",
+      "bytes": 1397
+    },
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00B_VERTICAL_REGISTRY.md",
+      "sha256": "66f3cc4a5993dd453416adcf87104747f691c636ef4f898599e367ea188cdc17",
+      "bytes": 16147
+    },
+    {
+      "path": "docs/architecture/PRISMA_VERTICALS_PROFESSIONAL_CORPORATE_SERVICES.md",
+      "sha256": "e06522b086adb8d9d1e00d365678c7e2dd280ea17f441bcd16db8db631a2a2eb",
+      "bytes": 8755
+    },
+    {
+      "path": "shared/contracts/verticals/capabilities.contract.json",
+      "sha256": "2101e5fb1bb0f48700a447c447a7a2f65ade845b1af7e3046e0b695752b64352",
+      "bytes": 4654
+    },
+    {
+      "path": "shared/verticals/professional_corporate_services.manifest.json",
+      "sha256": "16a49ae5fc13162f0010b37d6e9a22dc60cbf59da2c19f1bfc75ac9fe9c53d1a",
+      "bytes": 1728
+    },
+    {
+      "path": "shared/verticals/registry/profiles/professional_corporate_services.vertical-profile.json",
+      "sha256": "ea966a6668a698f60e300246c140f6e53ed077b4f2c2aaaaffa9f23d75d5e0c1",
+      "bytes": 5201
+    },
+    {
+      "path": "shared/verticals/registry/vertical-registry.v0.json",
+      "sha256": "c4dc6e0beb15eb5314b7287d2ed6134d9553585d33078515a69c68bd03158afc",
+      "bytes": 3512
+    },
+    {
+      "path": "tools/verticals/validate_vertical_registry_00b.py",
+      "sha256": "a26b9ca103b7b14e804d3061111a384838b438d07aae3505ce75ffce27bb7043",
+      "bytes": 2139
+    }
   ]
 }
