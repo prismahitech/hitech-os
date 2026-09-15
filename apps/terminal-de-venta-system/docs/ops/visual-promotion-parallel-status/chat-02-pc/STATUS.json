@@ -4,12 +4,12 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "DONE",
-  "updatedAt": "2026-09-13T01:51:00-06:00",
-  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "workBranch": "chat2/canonical-promotion-readiness-pc-20260912",
-  "workHead": "bce748abc169b241627f77b31f5050d22753312b",
-  "summary": "PASS_PC_PROMOTION_READINESS. The seven owned PC promotion-readiness outputs are materialized on the exact work head and independently revalidated against the immutable 2,097-row certified corpus. All 827 PC targets resolve exactly once with exact sourceRecordSha256 equality, unique target IDs, exact subsets, manifest parity, closed vocabulary, zero semantic mutation, preserved selector DRIFT, and all 139 projection-MISSING rows preserved as canonical projection debt. No product/runtime/global-authority mutation and no Materiality Catalog use occurred.",
+  "state": "NOT_STARTED",
+  "updatedAt": "2026-09-14T23:30:00Z",
+  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "workBranch": "chat2/authority-reconciliation-pc-20260914",
+  "workHead": null,
+  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for PC_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
   "blockers": [],
   "findings": [
     "PC promotion-readiness output root now exists on chat2/canonical-promotion-readiness-pc-20260912 at bce748abc169b241627f77b31f5050d22753312b.",
@@ -19,14 +19,16 @@
     "The drift target TGT.CENSUS.PC.097AB2F857F353CA4288.V1 preserves selector .supplier-readable-v07 and PHYSICAL_DRIFT; no repair or reinterpretation occurred.",
     "All 827 readiness sourceRecordSha256 values equal the immutable certified CANDIDATE_CORPUS recordSha256 for the same targetId.",
     "No NDC/VIS/Identity recipe/binding/application authority was minted or silently inferred; current unknowns remain blocked.",
-    "Work-branch delta from base is exactly seven files under prisma-html/governance/visual-promotion/promotion-readiness/pc/**."
+    "Work-branch delta from base is exactly seven files under prisma-html/governance/visual-promotion/promotion-readiness/pc/**.",
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
   ],
   "decisions": [
     "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
     "Accept the seven-file PC derivative as PASS_PC_PROMOTION_READINESS while preserving all legitimately blocked target truth.",
     "Do not repair the selector DRIFT or the 139 projection-MISSING records in this lane.",
     "Do not treat Atlasfin recipe similarity or Tablet similarity as semantic proof.",
-    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and uninspected."
+    "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and uninspected.",
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat2/authority-reconciliation-pc-20260914."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
@@ -57,13 +59,12 @@
     "PASS_PC_PROMOTION_READINESS: PASS"
   ],
   "unresolved": [
-    "All 827 PC targets remain legitimately blocked from canonical promotion under current authority; this is valid readiness accounting, not a lane defect.",
-    "The known selector DRIFT remains unresolved by design.",
-    "The 139 missing canonical projections remain classified debt and unrepaired by design."
+    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
+    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
   ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Chat 6 may consume chat2/canonical-promotion-readiness-pc-20260912@bce748abc169b241627f77b31f5050d22753312b and the handoff.promotionReadiness PASS receipt for canonical composition. Chat 2 requires no further action unless Chat 6 proves an exact-head validation defect.",
+  "userActionRequested": "",
+  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat2/authority-reconciliation-pc-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
@@ -117,6 +118,18 @@
       },
       "projectionMissingPreserved": 139,
       "defects": []
+    },
+    "authorityReconciliationAssignment": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "assigned": true,
+      "assignedAt": "2026-09-14T23:30:00Z",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat2/authority-reconciliation-pc-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/pc/**",
+      "expectedInputCount": 827,
+      "materialityCatalogAuthorized": false,
+      "githubOnly": true,
+      "status": "ASSIGNED_NOT_STARTED"
     }
   }
 }
