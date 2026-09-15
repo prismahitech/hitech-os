@@ -50,12 +50,15 @@ def main() -> int:
             fail(f'verticalId inconsistente en {rel}')
         tablet = profile.get('tablet', {})
         pc = profile.get('pc', {})
+        mobile = profile.get('mobile', {})
         if not tablet.get('primaryEntry'):
             fail(f'{vid}: falta primaryEntry Tablet')
         if not tablet.get('navigation') or len(tablet['navigation']) < 5:
             fail(f'{vid}: navegación Tablet insuficiente')
         if not pc.get('navigation') or len(pc['navigation']) < 5:
             fail(f'{vid}: navegación PC insuficiente')
+        if vid == 'professional_corporate_services' and (not mobile.get('navigation') or len(mobile['navigation']) < 5):
+            fail('professional_corporate_services: falta Mobile supervisión')
         if vid == 'professional_corporate_services':
             mobile = profile.get('mobile', {})
             if not mobile.get('navigation') or len(mobile['navigation']) < 5:
