@@ -4,12 +4,12 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-14T13:45:00-06:00",
-  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "workBranch": "chat3/canonical-promotion-readiness-mobile-20260912",
-  "workHead": "bf99bf782c7b295ee8badd936a4b9078e751ecdf",
-  "summary": "PASS_MOBILE_PROMOTION_READINESS. Mobile readiness is closed at 271/271 certified targets with exact source-hash pins, zero target loss/extra/duplicates, 133 CURRENT + 138 DRIFT, exact derived subsets, manifest accounting parity, and no semantic/runtime/canonical-authority/projection-repair mutation. The work branch differs from phase base only in the seven owned Mobile readiness outputs.",
+  "state": "NOT_STARTED",
+  "updatedAt": "2026-09-14T23:30:00Z",
+  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "workBranch": "chat3/authority-reconciliation-mobile-20260914",
+  "workHead": null,
+  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for MOBILE_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
   "blockers": [],
   "findings": [
     "Current main remains exactly d4b451cc92c597d02cfc65094922bd2c5dd17c12; no phase-base drift occurred during closure.",
@@ -18,12 +18,14 @@
     "All 271 decisions remain BLOCKED_MISSING_SEMANTIC_AUTHORITY. Unknown semantic/Identity/binding/application authority remains unresolved; no authority was invented to obtain green.",
     "REUSE.jsonl = 0, REGISTRATION_PROPOSALS.jsonl = 0, BLOCKED.jsonl = 271, PROJECTION_DEBT.jsonl = 138; all four are exact target-set derivatives of RESOLUTION.jsonl.",
     "Latest PR #553 executable-checkout CI at workHead bf99bf782c7b295ee8badd936a4b9078e751ecdf: CI PASS, ForgeOS Quality Gate PASS, Sync Sentinel PASS. VISCORE1 reaches its final committed FILES_MANIFEST equality gate and fails only because these seven new owned outputs are intentionally not written into prisma-html/FILES_MANIFEST.json by Chat 3; that global path is explicitly outside lane ownership.",
-    "Materiality Catalog was not inspected. Product/runtime mutation, canonical authority mutation, projection repair and GVAE APPLY were not performed."
+    "Materiality Catalog was not inspected. Product/runtime mutation, canonical authority mutation, projection repair and GVAE APPLY were not performed.",
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
   ],
   "decisions": [
     "Preserve every existing semantic decision and all 138 DRIFT records as evidence/debt; do not select a projection repair direction.",
     "Treat Atlasfin as support-only and never as semantic authority by visual similarity.",
-    "Do not touch prisma-html/FILES_MANIFEST.json or any non-Mobile readiness output to silence an out-of-scope global-manifest CI gate."
+    "Do not touch prisma-html/FILES_MANIFEST.json or any non-Mobile readiness output to silence an out-of-scope global-manifest CI gate.",
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat3/authority-reconciliation-mobile-20260914."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/promotion-readiness/mobile/RESOLUTION.jsonl",
@@ -43,10 +45,13 @@
     "PASS_MANIFEST_ACCOUNTING: manifest fields match actual Mobile bytes/accounting for all fields enforced by promotion_readiness.py.",
     "PASS_PROHIBITED_ACTION_GUARD: materialityCatalogInspected=false, productRuntimeMutationPerformed=false, canonicalAuthorityMutationPerformed=false, projectionRepairPerformed=false, gvaeApplyPerformed=false."
   ],
-  "unresolved": [],
+  "unresolved": [
+    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
+    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
+  ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Chat 6 may consume handoff.promotionReadiness from this mailbox and integrate the Mobile receipt under the control-plane ownership rules.",
+  "userActionRequested": "",
+  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat3/authority-reconciliation-mobile-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
   "handoff": {
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
@@ -109,6 +114,18 @@
       "projectionRepairPerformed": false,
       "gvaeApplyPerformed": false,
       "defects": []
+    },
+    "authorityReconciliationAssignment": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "assigned": true,
+      "assignedAt": "2026-09-14T23:30:00Z",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat3/authority-reconciliation-mobile-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/mobile/**",
+      "expectedInputCount": 271,
+      "materialityCatalogAuthorized": false,
+      "githubOnly": true,
+      "status": "ASSIGNED_NOT_STARTED"
     }
   }
 }
