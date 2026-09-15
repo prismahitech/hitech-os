@@ -1,76 +1,129 @@
-# PRISMA Vertical — Servicios Profesionales y Corporativos
+# PRISMA Vertical - Servicios Profesionales y Corporativos
 
-**ID canónico:** `professional_corporate_services`  
-**Capability de Factory Ledger:** `verticals.professional_corporate_services`  
-**Estado:** `draft / architecture-contract only`  
-**Mercado:** `professional_services`
+## Estado
 
-## 1. Propósito
+- verticalId: `professional_corporate_services`
+- nombre visible: **Servicios Profesionales y Corporativos**
+- market: `professional_services`
+- status: `draft`
+- capability authority: `verticals.professional_corporate_services`
+- relación con `verticals.accounting_management`: **vertical separada; no reemplaza, absorbe ni renombra Contabilidad y gestión**
+- alcance actual: arquitectura, contratos y documentación; **sin runtime de producto certificado**
 
-Este vertical adapta PRISMA para firmas que venden conocimiento, acompañamiento y ejecución coordinada en vez de depender de una venta de mostrador como objeto principal.
+## 1. Qué tipo de negocio cubre
 
-Aplica de forma general a consultorías, firmas de servicios corporativos, despachos multidisciplinarios, servicios legales/corporativos, contables/fiscales, laborales/RH, financieros, back office, compliance, gestión documental, soft landing y market entry.
+Este vertical sirve como base para firmas que venden conocimiento, acompañamiento, gestión, cumplimiento documental o servicios corporativos recurrentes.
 
-**No es un vertical específico para CIOB ni para una firma concreta.** CIOB puede ser un caso de uso comercial posterior, pero la autoridad del vertical debe permanecer neutral y reusable.
+Ejemplos no exhaustivos:
 
-## 2. Regla de arquitectura
+- consultoría empresarial;
+- servicios corporativos;
+- despachos multidisciplinarios;
+- asesoría legal/corporativa;
+- contabilidad y soporte fiscal como especialización;
+- recursos humanos y laboral;
+- asesoría financiera;
+- back office administrado;
+- compliance y gestión documental;
+- soft landing / market entry;
+- coordinación de terceros profesionales.
 
-PRISMA Core conserva identidad, negocio, operadores, eventos, auditoría, sincronización, exportación y capacidades comunes. El vertical agrega semántica de cliente profesional, expediente, engagement, documentos, tareas, vencimientos, responsables, entregables, evidencia, aprobaciones y servicios recurrentes.
+La vertical es deliberadamente general. No debe nombrar, codificar ni depender de un cliente específico.
 
-Regla operativa:
+## 2. Regla madre
 
-- **Tablet opera y captura:** intake, datos acotados del cliente, reunión, checklist, recepción documental y avance de servicio.
-- **PC gobierna:** expediente completo, engagement, responsables, workflow, contratos/propuestas como referencia documental, vencimientos, servicios recurrentes, evidencia, configuración y reportes.
-- **Mobile supervisa:** alertas, aprobaciones, riesgo, vencimientos, próximos pasos, carga ejecutiva y resumen.
-- **Core registra:** identidad, actores, auditoría, sync y contratos comunes.
-- **Control audita:** evidencia, autoridad y trazabilidad cuando aplique.
+PRISMA organiza el ciclo operativo del servicio profesional:
 
-## 3. Objeto operativo principal
+`Prospecto / cliente -> diagnóstico -> propuesta -> engagement -> expediente -> tareas y responsables -> documentos -> entregables -> evidencia -> servicio recurrente -> seguimiento`
 
-El recorrido genérico es:
+La especialidad profesional cambia, pero el significado operativo central permanece.
 
-`Prospecto / Cliente → Diagnóstico → Propuesta / Engagement → Onboarding → Expediente → Ejecución → Entregables → Servicio recurrente → Renovación / Cierre`
+## 3. Separación de surfaces
 
-No todos los negocios usan todas las etapas. El perfil vertical habilita capacidades y especializaciones sin obligar a un despacho a usar módulos ajenos a su práctica.
+### Tablet opera y captura
 
-## 4. Familias de especialización
+Tablet sirve para trabajo operativo acotado:
 
-Las siguientes familias viven dentro del vertical. No son certificaciones profesionales ni implican que PRISMA ejecute la práctica regulada:
+- alta o consulta rápida de cliente;
+- intake de reunión;
+- levantamiento de necesidades;
+- checklist;
+- recepción o confirmación de documentos;
+- captura de avance;
+- registro de observaciones;
+- evidencia operativa;
+- tareas asignadas;
+- pendientes por sincronizar.
 
-1. **Consultoría empresarial**
-2. **Servicios corporativos**
-3. **Contabilidad y soporte fiscal**
-4. **Legal y corporativo**
-5. **Recursos humanos y laboral**
-6. **Asesoría financiera**
-7. **Back office administrado**
-8. **Compliance y gestión documental**
-9. **Soft landing / market entry**
-10. **Coordinación de especialistas y aliados externos**
+Tablet no administra configuraciones profundas ni decisiones sensibles de gobierno.
 
-El vertical separado `verticals.accounting_management` continúa existiendo de manera independiente para escenarios donde contabilidad y gestión constituyen el centro del producto. Este vertical no lo reemplaza ni lo absorbe.
+### PC gobierna
 
-## 5. Entidades verticales
+PC es la surface principal de administración:
 
-| Entidad | Significado | Autoridad principal | Tablet | Mobile |
-|---|---|---|---|---|
-| ClientOrganization | Organización cliente atendida | PC | lectura/captura acotada | resumen |
-| ClientContact | Persona de contacto | PC | captura acotada | lectura |
-| ServiceEngagement | Relación de servicio contratada o propuesta | PC | consulta/avance | resumen |
-| CaseFile | Expediente o caso de trabajo | PC | consulta/avance | resumen |
-| DocumentRequirement | Documento requerido, recibido, revisado o pendiente | PC | recepción | alerta |
-| WorkItem | Tarea operativa | PC | ejecutar/actualizar | supervisar |
-| DeadlineCommitment | Fecha límite o compromiso | PC | consultar | alertar |
-| ResponsibilityAssignment | Responsable interno o externo | PC | consultar | supervisar |
-| ApprovalDecision | Aprobación controlada | PC | solicitar | decidir si la política lo permite |
-| EvidenceRecord | Evidencia de ejecución | PC | adjuntar evidencia operativa | consultar |
-| RecurringService | Servicio periódico | PC | consulta | resumen |
-| ExternalAdvisor | Especialista, aliado o tercero coordinado | PC | consulta | resumen |
-| ProposalContractReference | Referencia a propuesta o contrato | PC | consulta | resumen |
+- expediente completo;
+- engagement y servicios contratados;
+- pipeline operativo;
+- propuestas y contratos referenciados;
+- flujos y checklists;
+- documentos y requisitos;
+- responsables internos;
+- terceros y aliados;
+- vencimientos;
+- aprobaciones;
+- servicios recurrentes;
+- evidencia y auditoría;
+- reportes y configuración.
 
-## 6. Capacidades
+### Mobile supervisa
 
-Capacidades mínimas del vertical:
+Mobile no replica PC. Su función es supervisión ejecutiva:
+
+- alertas;
+- vencimientos;
+- aprobaciones permitidas;
+- clientes en riesgo;
+- próximos compromisos;
+- bloqueadores;
+- carga de trabajo resumida;
+- avance de engagements;
+- indicadores ejecutivos.
+
+### Core registra; Control audita
+
+El Core conserva identidades y eventos compartidos. Control conserva trazabilidad y auditoría. La vertical no debe duplicar estos mecanismos.
+
+## 4. Entidades de significado vertical
+
+Las siguientes entidades son extensiones del giro, no campos universales del Core:
+
+- `ClientOrganization`: organización cliente.
+- `ServiceEngagement`: relación o encargo de servicio.
+- `CaseFile`: expediente operativo.
+- `DocumentRequirement`: documento requerido o recibido.
+- `TaskAssignment`: tarea y responsable.
+- `DeadlineCommitment`: fecha límite, compromiso o vencimiento.
+- `DeliverableEvidence`: entregable o evidencia asociada.
+- `ExternalAdvisor`: tercero, especialista o aliado externo.
+
+No implican que PRISMA certifique la profesión de quien presta el servicio.
+
+## 5. Familias de especialización
+
+Una instalación puede activar una o varias familias:
+
+1. `business_consulting`
+2. `corporate_legal_support`
+3. `accounting_fiscal_support`
+4. `hr_labor_support`
+5. `finance_advisory`
+6. `managed_back_office`
+7. `compliance_document_management`
+8. `soft_landing_market_entry`
+
+Estas familias cambian formularios, checklists, lenguaje, documentos y reportes. No cambian la identidad canónica del vertical.
+
+## 6. Capacidades iniciales
 
 - `professional_services.clients`
 - `professional_services.engagements`
@@ -80,179 +133,120 @@ Capacidades mínimas del vertical:
 - `professional_services.approvals`
 - `professional_services.evidence`
 - `professional_services.recurring_services`
+- `professional_services.proposals_contracts`
+- `professional_services.external_advisors`
+- `professional_services.intake`
+- `professional_services.case_management`
 
-Capacidades recomendadas para el perfil completo:
-
-- expedientes y casos;
-- responsables y colaboradores externos;
-- propuestas/contratos como referencias documentales;
-- indicadores de avance y riesgo;
-- historial de actividad;
-- alertas y próximos pasos;
-- seguimiento de renovaciones.
-
-## 7. Navegación por surface
+## 7. Navegación objetivo por surface
 
 ### Tablet
 
-Entrada principal: **Clientes**
-
-Navegación recomendada:
-
-- Clientes
-- Expediente
-- Documentos
-- Tareas
-- Vencimientos
-- Servicios
-- Pendientes por enviar
-
-Tablet **no** debe convertirse en back office. Configuración profunda, matrices de servicio, contratos complejos, reporting consolidado, administración de permisos y gobierno de terceros permanecen fuera.
+`Clientes -> Expedientes -> Diagnóstico -> Checklists -> Documentos -> Tareas -> Pendientes por enviar`
 
 ### PC
 
-- Clientes
-- Expedientes
-- Servicios
-- Documentos
-- Tareas y responsables
-- Vencimientos
-- Propuestas y contratos
-- Servicios recurrentes
-- Aliados externos
-- Evidencia y auditoría
-- Reportes
-- Configuración
+`Clientes -> Expedientes -> Servicios -> Propuestas y contratos -> Flujos -> Documentos -> Responsables -> Vencimientos -> Servicios recurrentes -> Evidencia -> Reportes -> Configuración`
 
 ### Mobile
 
-- Resumen
-- Alertas
-- Aprobaciones
-- Vencimientos
-- Clientes en riesgo
-- Próximas acciones
-- Servicios recurrentes
-- Actividad reciente
-
-Mobile supervisa. No sustituye el gobierno PC.
+`Hoy -> Clientes en riesgo -> Alertas -> Aprobaciones -> Vencimientos -> Próximas acciones -> Resumen ejecutivo`
 
 ## 8. Eventos mínimos
 
-Los eventos verticales usan namespace `professional_services.*`. Como mínimo deben existir eventos para:
+- `professional_services.client.created`
+- `professional_services.intake.completed`
+- `professional_services.engagement.opened`
+- `professional_services.engagement.status_changed`
+- `professional_services.document.received`
+- `professional_services.document.requested`
+- `professional_services.task.assigned`
+- `professional_services.task.completed`
+- `professional_services.deadline.at_risk`
+- `professional_services.approval.requested`
+- `professional_services.approval.completed`
+- `professional_services.deliverable.recorded`
+- `professional_services.recurring_service.scheduled`
+- `professional_services.external_advisor.assigned`
 
-- alta/actualización de cliente;
-- apertura de engagement;
-- apertura de expediente;
-- solicitud y recepción de documento;
-- asignación y cierre de tarea;
-- creación y riesgo de vencimiento;
-- solicitud y resolución de aprobación;
-- adjunto de evidencia;
-- programación de servicio recurrente;
-- asignación de aliado externo.
+## 9. Permisos de referencia
 
-Todo cambio sensible conserva actor, contexto, fecha y rastro auditable.
-
-## 9. Permisos
-
-La autorización se separa de la navegación. Ver un módulo no implica poder ejecutar una acción sensible.
-
-Permisos mínimos:
-
-- ver/editar cliente;
-- ver/administrar engagement;
-- ver/administrar expediente;
-- solicitar/recibir documentos;
-- asignar/completar tareas;
-- administrar vencimientos;
-- solicitar/decidir aprobaciones;
-- adjuntar/ver evidencia;
-- administrar servicios recurrentes;
-- administrar aliados;
-- consultar reportes;
-- exportar cuando la política lo permita.
-
-Tablet nunca otorga permisos.
+- `professional_services.client.view`
+- `professional_services.client.edit`
+- `professional_services.intake.capture`
+- `professional_services.engagement.view`
+- `professional_services.engagement.manage`
+- `professional_services.document.view`
+- `professional_services.document.record`
+- `professional_services.task.manage`
+- `professional_services.deadline.manage`
+- `professional_services.approval.request`
+- `professional_services.approval.complete`
+- `professional_services.evidence.record`
+- `professional_services.recurring_service.manage`
+- `professional_services.external_advisor.manage`
+- `professional_services.audit.view`
 
 ## 10. Offline y sincronización
 
-El vertical es **restricted offline**.
+La política inicial es `restricted`.
 
-Tablet puede continuar únicamente con información local previamente autorizada y con acciones que no dependan de una decisión externa inmediata. Puede:
+Tablet puede conservar localmente intake, checklist, observaciones, recepción documental y progreso cuando la política del engagement lo permita.
 
-- capturar intake;
-- registrar avance;
-- recibir un documento como pendiente de revisión;
-- actualizar tareas permitidas;
-- adjuntar evidencia local;
-- marcar elementos pendientes por enviar.
+No debe concluir offline, por defecto:
 
-Debe bloquear o diferir:
+- aprobaciones sensibles;
+- cambios de responsables con privilegios;
+- cierre contractual;
+- decisiones que impliquen certificación legal/fiscal/laboral;
+- configuración global;
+- acciones cuyo resultado dependa de una fuente externa vigente.
 
-- decisiones que requieran autoridad remota;
-- cambios de permisos;
-- cierre contractual definitivo;
-- aprobación sensible no autorizada;
-- gobierno de configuración;
-- consolidación multi-entidad.
-
-El usuario siempre debe ver si algo está **guardado localmente**, **pendiente por enviar** o **requiere revisión**.
+Toda captura local pendiente debe mostrar estado humano claro y entrar al mecanismo compartido de sincronización.
 
 ## 11. KPIs
 
-KPIs genéricos y no regulatorios:
-
 - clientes activos;
-- engagements abiertos;
-- tiempo promedio de onboarding;
+- engagements activos;
+- tiempo de onboarding;
+- documentos pendientes;
 - tareas vencidas;
-- vencimientos próximos;
-- documentos faltantes;
-- porcentaje de expedientes completos;
-- tiempo de ciclo por servicio;
-- servicios recurrentes por vencer;
-- carga por responsable;
+- compromisos próximos;
 - bloqueadores por cliente;
-- aprobaciones pendientes;
-- tasa de renovación;
-- tiempo desde solicitud hasta entrega.
+- entregables completados;
+- servicios recurrentes próximos;
+- carga por responsable;
+- tiempo de ciclo por tipo de servicio;
+- porcentaje de expedientes completos.
 
 ## 12. Criterios de aceptación
 
-1. El usuario identifica cliente, etapa y siguiente acción sin depender de memoria externa.
-2. Todo expediente muestra responsables, documentos, tareas, vencimientos y evidencia relevante.
-3. Tablet permite operación acotada sin exponer gobierno profundo.
-4. PC concentra autoridad operativa y configuración profunda.
-5. Mobile resume y supervisa sin convertirse en un duplicado de PC.
-6. Los estados empty/loading/error/success/disabled/offline/pending_sync están definidos.
-7. Las acciones sensibles exigen permiso y dejan evidencia.
-8. La pérdida de conexión no convierte pendientes en completados.
-9. Ninguna especialización del vertical se presenta como certificación legal, fiscal, contable, laboral o regulatoria.
-10. El vertical puede deshabilitarse sin contaminar otros giros.
+1. Un usuario entiende en menos de cinco segundos qué requiere atención.
+2. Cada cliente tiene un expediente único y trazable.
+3. Cada engagement declara responsable, estado, próximos pasos y evidencia.
+4. Tablet no expone administración pesada.
+5. PC conserva gobierno profundo.
+6. Mobile resume y supervisa; no duplica PC.
+7. Un documento o tarea puede relacionarse con cliente, engagement, responsable y fecha.
+8. Los estados offline y pendientes son explícitos.
+9. Las especializaciones no contaminan el Core.
+10. No se presentan afirmaciones de certificación profesional que PRISMA no pueda probar.
 
-## 13. No demuestra
+## 13. Lo que este vertical no prueba
 
-Esta especificación **no demuestra**:
+Esta arquitectura no prueba:
 
-- implementación runtime en Tablet, PC o Mobile;
-- cumplimiento legal/fiscal/contable/laboral;
-- certificación profesional;
-- integración SAT/PAC;
-- ejecución de trámites;
-- portal cliente;
-- producción o deployment;
-- readiness de un cliente concreto.
+- que exista hoy una aplicación runtime para este giro;
+- que PRISMA preste servicios legales, contables, fiscales, laborales o financieros;
+- que una firma usuaria tenga licencias o certificaciones profesionales;
+- cumplimiento normativo por sí mismo;
+- presentación, timbrado, declaraciones, trámites o actuaciones ante autoridades;
+- exactitud jurídica o fiscal de contenido capturado.
 
-Es una **fuente de diseño funcional y contractual** para construir o demostrar el vertical posteriormente.
+## 14. Relación con futuras demos
 
-## 14. Guía para demo HTML
+Una demo HTML puede proyectar este vertical usando el lenguaje visual canónico de PRISMA/Atlasfin.
 
-Una demo comercial puede proyectar este vertical sobre el lenguaje visual de Atlasfin sin convertir Atlasfin en navegación pública.
+La demo es una **proyección de producto** y debe permanecer desacoplada del Atlas público: puede reutilizar materiales, patrones y componentes, pero no necesita exponer navegación hacia el cockpit Atlasfin.
 
-Para una primera demo rápida se recomiendan dos vistas:
-
-- **PC — Operations Center:** cliente, etapa, expediente, workstreams, documentos, responsables, vencimientos, evidencia, bloqueadores y siguiente acción.
-- **Mobile — Executive Companion:** alertas, aprobaciones, clientes en riesgo, vencimientos y próximos pasos.
-
-La URL de demo debe ser independiente y no exponer botones o enlaces de regreso a Atlasfin. Atlasfin funciona como backstage visual y biblioteca de patrones, no como destino del prospecto.
+La demo tampoco eleva el estado de la vertical a runtime implementado.
