@@ -576,3 +576,24 @@ Do not mutate product/runtime, projections, NDC, Identity, RIFAT or GVAE.
 - Chat 6 and surface workers can consume the five new `AUTHORITY_DELTA_*.json` files directly.
 - Continue dynamic target-specific support immediately; do not wait for the write gate.
 
+## 2026-09-15T10:14:37-06:00 — PROGRESS / CURRENT-MAIN REVALIDATION
+- Current main advanced to `8db4370d579014f8fed6e190ffce45e1589b33d9`.
+- Exact compare from `70f381e9...` is 8 commits / 13 changed paths.
+- Drift is limited to `prisma-html/FILES_MANIFEST.json`, `prisma-html/docs/ops/README.md`, and the separate visual-operating-graph Foundation docs/governance.
+- No NDC, Identity, RIFAT/Visual Control/Target Index, visual-promotion candidate corpus, Atlasfin registry, Factory Ledger or Evidence Index path changed.
+- Result: prior Chat 5 read-only semantic evidence remains consumable; baseline rebuild is not justified.
+
+## 2026-09-15T10:14:37-06:00 — DELTA RECEIPTS ROUND 2
+- Shared UI `TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1` (exact CheckoutButton): existing `ACT.primary` / `REC.button.primary` authority, exact binding absent. Suggested `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`, HIGH.
+- Shared UI `TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1` (`.actionButton`): existing `ACT.primary` authority, exact binding/application absent. Suggested `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`, HIGH.
+- Shared UI `TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1` (CheckoutButton + primary ScanButton reference-effects group): existing primary visual authority, grouped exact binding absent. Suggested `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`, MEDIUM_HIGH; no NDC equivalence.
+- Topic receipt `AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json`: `READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE`, HIGH.
+- Shared UI `TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1`: `data-prisma-profile="perf"` is a performance/rendering profile, not Identity `VIS.identity.profile`. This receipt is a non-equivalence guard only and intentionally does not fabricate a final classification.
+
+## 2026-09-15T10:14:37-06:00 — VALIDATION / HANDOFF
+- Chat 5 mailbox now exposes 10 dynamic delta receipts total.
+- Chat 1/2/3 are read-only structurally complete; Chat 4 remains the first-priority surface lane with 40 target-specific rows.
+- Chat 6 may consume the current delta list directly from Chat 5 STATUS.
+- `WRITE_GATE_PATH_PENDING` still blocks only governed output-root writes.
+- Materiality uninspected; no canonical minting; no product/runtime mutation; no projection repair; no GVAE APPLY; no PR/merge.
+
