@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 894,
+  "file_count_excluding_manifest": 902,
   "files": [
     {
       "bytes": 156,
@@ -3122,9 +3122,9 @@
       "sha256": "1311DB44F830E46907C63C0FD1A7F90EA9FCC317C40B480E30E6AB5E85F9B020"
     },
     {
-      "bytes": 13117,
+      "bytes": 14206,
       "path": "governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json",
-      "sha256": "4A8211FB9220B6249DE2F439CEBDD1B83E29D50DD5B4D5763753D546BBFCDDD5"
+      "sha256": "C1FBC88AD6DB35FA009C41F37C9D3628379B03C1177017CB49A9961763557B37"
     },
     {
       "bytes": 8119,
@@ -4202,9 +4202,9 @@
       "sha256": "ED76D4A7C5B9808CB65F4284C855D8CA793FB8052093974F8F5B7CC6621197DB"
     },
     {
-      "bytes": 16798,
+      "bytes": 19530,
       "path": "tools/validate_project.py",
-      "sha256": "D812DFF9EEB8DA00B9C9AB989DE7C40745BDECBC27DC9681279AD5DB3368C016"
+      "sha256": "675136C1C6CAA641F009A6AE5048AB860BA1BC7267FDDD000DF2C6F497580E3F"
     },
     {
       "bytes": 12545,
@@ -4380,6 +4380,46 @@
       "bytes": 17203,
       "path": "tools/visual_core.py",
       "sha256": "272D8B00D7BC8FB50907D7521D774BA17F9BF012B5B538EC942184E0A1424203"
+    },
+    {
+      "bytes": 1154,
+      "path": "tools/visual_operating_graph/README.md",
+      "sha256": "4049C3107F3D64DD179B76E0EB629AD97F70A7E228388EE724D861D4105B6752"
+    },
+    {
+      "bytes": 320,
+      "path": "tools/visual_operating_graph/__init__.py",
+      "sha256": "EF1EED34DB77557E5B59412A9DA9EA68AECBBADE72567801D03D8D4D61E684B4"
+    },
+    {
+      "bytes": 21910,
+      "path": "tools/visual_operating_graph/builder.py",
+      "sha256": "232621ABDC7FC90EF08D06542C2356F867991C953A064AB56F310EB52B37160E"
+    },
+    {
+      "bytes": 5824,
+      "path": "tools/visual_operating_graph/graph_contract.py",
+      "sha256": "42D53ECDD1590C35C7648B48D6B14C05F9E930A585614A59A5B366D44BBE84FF"
+    },
+    {
+      "bytes": 9585,
+      "path": "tools/visual_operating_graph/live_phase_reducer.py",
+      "sha256": "BC5483C1AF2B719A4EDB7DA7E56B8AFEB8DB551F41BF87487E130D9C377DE15D"
+    },
+    {
+      "bytes": 11281,
+      "path": "tools/visual_operating_graph/source_set_verifier.py",
+      "sha256": "5FC22A258CCAFD9C9EA94CC39705EB25699B55657C945D33B0485C81EB7BA3FC"
+    },
+    {
+      "bytes": 0,
+      "path": "tools/visual_operating_graph/tests/__init__.py",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "bytes": 5442,
+      "path": "tools/visual_operating_graph/tests/test_wave1.py",
+      "sha256": "BF5FE6050ED1E7DB195645052B3C938271CBBEC87416DE917633663072F65465"
     },
     {
       "bytes": 2781,
