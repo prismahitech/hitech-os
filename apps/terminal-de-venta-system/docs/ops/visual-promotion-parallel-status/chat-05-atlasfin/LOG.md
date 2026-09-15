@@ -474,3 +474,70 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Requested action for governed phase work is `ADVANCE`; strictly read-only verification may use `VERIFY`.
 - PR #555 still counts as governance-sensitive Ledger/Evidence drift and therefore current-head authority/gate evidence must be rebound before repository output mutation.
 - Continue all safe read-only analysis/orchestration. Hold only governed output writes if the correct gate execution path is unavailable.
+
+## 2026-09-15T09:32:00-06:00 — OWNER/ORCHESTRATOR ASSIGNMENT: DYNAMIC_CROSS_AUTHORITY_SUPPORT
+
+Chat 5 baseline work is accepted for read-only consumption:
+
+- baseline receipt: `AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json`;
+- result: `PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING`;
+- exact input accounting: 2,097 / missing 0 / extra 0 / duplicate 0;
+- baseline MUST NOT be rebuilt.
+
+### New operating role
+
+From now on Chat 5 is the **dynamic cross-authority semantic support lane** for Chats 1-4 and Chat 6.
+
+Do not sit idle waiting for the write gate.
+
+Continuously inspect the current surface-worker mailboxes for concrete unresolved items, especially:
+- target IDs awaiting semantic linkage;
+- concept IDs with uncertain NDC vs Identity/VIS relationship;
+- conflict/curation candidates;
+- projection-vs-semantic ambiguity that needs authority/history evidence;
+- any provisional `TRUE_NEW_AUTHORITY_REQUIRED`;
+- any worker claim that depends on negative evidence.
+
+For each concrete question:
+1. narrow the scope to the exact target/concept;
+2. search NDC canon/registries/schemas/seeds/examples;
+3. search Identity registries/aliases/recipes/bindings/stacks/adapters;
+4. inspect RIFAT/Visual Control/Target Index exact evidence;
+5. inspect Code Atlas/UIMAP/UI Bridge;
+6. use Atlasfin as structured reference only, never semantic authority by visual similarity;
+7. inspect Factory Ledger/Evidence Index;
+8. inspect relevant PR/commit/docs history when there is a clue;
+9. publish a compact **delta receipt** in this mailbox with evidence, relation type, negative-evidence coverage, confidence and unresolved remainder.
+
+### Semantic rules remain mandatory
+
+- NDC operational meaning is not visual Identity meaning.
+- `identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout` does not mean equivalent.
+- Existing concept without target link favors `EXISTING_CONCEPT_LINK_MISSING`.
+- Existing semantic authority with missing binding/application favors `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`.
+- Contradictory authority remains `EXISTING_AUTHORITY_CONFLICT_CURATE`.
+- Projection/product disagreement without proven direction remains `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`.
+- `TRUE_NEW_AUTHORITY_REQUIRED` is allowed only after complete target-specific negative evidence across every required authority family.
+- Empty search never proves absence.
+
+### Output behavior
+
+Publish bounded mailbox delta receipts. Suggested naming:
+- `AUTHORITY_DELTA_<target-or-topic>.json` for small bounded investigations, or
+- append structured DELTA/HANDOFF sections to `LOG.md`.
+
+Do not create giant replacement corpora.
+Do not rewrite the baseline receipt unless a factual correction is required and proven.
+Do not write governed output-root files while `WRITE_GATE_PATH_PENDING` remains.
+Do not ask the owner for a computer, PowerShell, localhost, manual workflow dispatch or file relay.
+Do not open or merge PRs.
+Do not inspect Materiality Catalog.
+Do not mint canonical IDs.
+Do not mutate product/runtime, projections, NDC, Identity, RIFAT or GVAE.
+
+### Coordination contract
+
+- Read Chats 1-4 directly; owner relay is not required.
+- Chat 6 will read this mailbox directly.
+- Publish findings as soon as they are useful; do not wait for all four workers to finish.
+- If no concrete unresolved query exists, keep the lane ready and re-check worker receipts rather than recomputing the baseline.
