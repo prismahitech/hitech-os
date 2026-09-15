@@ -36,7 +36,8 @@
     "Chat 1, Chat 2 and Chat 3 now report read-only reconciliation structurally complete. Their 1,744 combined EXISTING_CONCEPT_LINK_MISSING rows remain composer-provisional because Chat 6 requires target-specific concept qualification. Chat 4 remains the only surface lane with 40 target-specific unresolved rows.",
     "Published Shared UI delta TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1: exact CheckoutButton target has existing ACT.primary / REC.button.primary Shared UI semantic authority but no exact binding; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, HIGH confidence, while preserving ACT.primary != ACT.sale.checkout.",
     "Published Shared UI delta TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1: .actionButton base target has existing ACT.primary Shared UI authority but missing governed binding/application; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, HIGH confidence.",
-    "Published Shared UI delta TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1: grouped CheckoutButton + primary ScanButton reference-effects target has existing primary visual authority but no exact binding; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, MEDIUM_HIGH confidence and explicit no NDC equivalence."
+    "Published Shared UI delta TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1: grouped CheckoutButton + primary ScanButton reference-effects target has existing primary visual authority but no exact binding; suggested EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, MEDIUM_HIGH confidence and explicit no NDC equivalence.",
+    "Published Shared UI non-equivalence delta for TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1: data-prisma-profile=\"perf\" is performance/rendering-mode evidence and must not be collapsed into Identity VIS.identity.profile merely because both use the word profile."
   ],
   "decisions": [
     "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
@@ -58,7 +59,8 @@
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_C2722826.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_718C4BEE.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3863084F.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_6A23B437.json"
   ],
   "validations": [
     {
@@ -105,6 +107,11 @@
       "name": "Shared UI dynamic delta round 2",
       "result": "PASS_READ_ONLY",
       "detail": "3 additional bounded Shared UI target receipts published. No foreign mailbox write, baseline rebuild, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
+    },
+    {
+      "name": "Profile-domain collision guard",
+      "result": "PASS_READ_ONLY",
+      "detail": "Exact target review proves perf profile and VIS.identity.profile are non-equivalent domains. No final target classification was fabricated."
     }
   ],
   "unresolved": [
@@ -224,9 +231,17 @@
           "topic": "main-drift",
           "suggestedClassification": "READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE",
           "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_6A23B437.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1",
+          "suggestedClassification": null,
+          "confidence": "HIGH",
+          "disposition": "NON_EQUIVALENCE_GUARD_ONLY"
         }
       ],
-      "deltaReceiptCount": 9,
+      "deltaReceiptCount": 10,
       "lastMailboxScan": {
         "chat1": {
           "state": "READ_ONLY_ANALYSIS_COMPLETE",
