@@ -4,9 +4,19 @@
   "market": "professional_services",
   "status": "draft",
   "priority": "phase_2",
-  "tabletRole": "Captura operativa acotada frente al cliente o durante la prestación del servicio, sin convertir Tablet en backoffice.",
-  "pcRole": "Gobierno profundo de clientes, expedientes, servicios, flujos, responsables, vencimientos, evidencia, reportes y configuración.",
-  "mobileRole": "Supervisión ejecutiva y operativa de alertas, aprobaciones, vencimientos, riesgo de cliente y siguientes acciones.",
+  "tabletRole": "Captura operativa acotada de clientes, intake, checklists, documentos, tareas y avance sin convertir Tablet en backoffice.",
+  "pcRole": "Gobierno profundo de expedientes, engagements, flujos, responsables, vencimientos, contratos/propuestas referenciados, evidencia, servicios recurrentes y reportes.",
+  "mobileRole": "Supervisión ejecutiva de alertas, aprobaciones, vencimientos, riesgo de cliente, próximos pasos y resúmenes.",
+  "specializationFamilies": [
+    "business_consulting",
+    "corporate_legal_support",
+    "accounting_fiscal_support",
+    "hr_labor_support",
+    "finance_advisory",
+    "managed_back_office",
+    "compliance_document_management",
+    "soft_landing_market_entry"
+  ],
   "capabilities": [
     "professional_services.clients",
     "professional_services.engagements",
@@ -16,103 +26,123 @@
     "professional_services.approvals",
     "professional_services.evidence",
     "professional_services.recurring_services",
-    "core.sync"
+    "professional_services.proposals_contracts",
+    "professional_services.external_advisors",
+    "professional_services.intake",
+    "professional_services.case_management"
   ],
   "tabletNavigation": [
     "Clientes",
+    "Expedientes",
     "Diagnóstico",
-    "Checklist",
+    "Checklists",
     "Documentos",
-    "Avances",
+    "Tareas",
     "Pendientes por enviar"
   ],
   "pcNavigation": [
-    "Dashboard",
     "Clientes",
     "Expedientes",
     "Servicios",
+    "Propuestas y contratos",
     "Flujos",
     "Documentos",
-    "Tareas y vencimientos",
     "Responsables",
-    "Auditoría"
+    "Vencimientos",
+    "Servicios recurrentes",
+    "Evidencia",
+    "Reportes",
+    "Configuración"
   ],
   "mobileNavigation": [
-    "Resumen",
+    "Hoy",
+    "Clientes en riesgo",
     "Alertas",
     "Aprobaciones",
     "Vencimientos",
-    "Clientes en riesgo",
-    "Siguientes acciones"
+    "Próximas acciones",
+    "Resumen ejecutivo"
   ],
   "tabletBlockedCapabilities": [
-    "professional_services.workflow_admin.deep",
-    "professional_services.compliance_policy.deep",
-    "professional_services.contract_admin.deep",
-    "professional_services.billing_admin.deep"
+    "professional_services.workflow_admin",
+    "professional_services.permission_admin",
+    "professional_services.contract_template_admin",
+    "professional_services.compliance_policy_admin",
+    "professional_services.global_configuration"
   ],
   "events": [
-    "professional_services.client.intake_captured",
+    "professional_services.client.created",
+    "professional_services.intake.completed",
     "professional_services.engagement.opened",
+    "professional_services.engagement.status_changed",
     "professional_services.document.received",
+    "professional_services.document.requested",
+    "professional_services.task.assigned",
     "professional_services.task.completed",
     "professional_services.deadline.at_risk",
+    "professional_services.approval.requested",
     "professional_services.approval.completed",
-    "professional_services.service.milestone_completed",
-    "professional_services.evidence.recorded"
+    "professional_services.deliverable.recorded",
+    "professional_services.recurring_service.scheduled",
+    "professional_services.external_advisor.assigned"
   ],
   "permissions": [
     "professional_services.client.view",
-    "professional_services.client.intake",
+    "professional_services.client.edit",
+    "professional_services.intake.capture",
     "professional_services.engagement.view",
-    "professional_services.document.receive",
-    "professional_services.task.update",
-    "professional_services.deadline.view",
+    "professional_services.engagement.manage",
+    "professional_services.document.view",
+    "professional_services.document.record",
+    "professional_services.task.manage",
+    "professional_services.deadline.manage",
     "professional_services.approval.request",
-    "professional_services.evidence.view"
+    "professional_services.approval.complete",
+    "professional_services.evidence.record",
+    "professional_services.recurring_service.manage",
+    "professional_services.external_advisor.manage",
+    "professional_services.audit.view"
   ],
   "offlinePolicy": {
     "mode": "restricted",
     "allowed": [
-      "capturar diagnóstico acotado",
-      "registrar recepción de documentos",
-      "actualizar avances operativos",
-      "consultar expediente local previamente disponible"
+      "captura de intake",
+      "avance de checklist",
+      "registro de observaciones",
+      "recepción documental",
+      "avance de tarea"
     ],
     "blocked": [
-      "aprobar decisiones sensibles",
-      "cambiar reglas de cumplimiento",
-      "cerrar encargos de alto impacto",
-      "exportar evidencia sensible sin autorización"
+      "aprobaciones sensibles",
+      "cierre contractual",
+      "cambio de privilegios",
+      "configuración global",
+      "decisiones profesionales que dependan de autoridad externa vigente"
     ],
-    "cashierMessage": "Puedes registrar avances operativos con la información disponible. Las decisiones sensibles esperan conexión y autorización."
+    "operatorMessage": "Puedes seguir capturando avances permitidos; lo pendiente se enviará cuando haya conexión."
   },
   "kpis": [
     "clientes activos",
-    "servicios en curso",
-    "porcentaje de hitos a tiempo",
+    "engagements activos",
+    "tiempo de onboarding",
     "documentos pendientes",
-    "vencimientos en riesgo",
     "tareas vencidas",
-    "servicios recurrentes al día"
-  ],
-  "specializations": [
-    "consultoría empresarial",
-    "servicios corporativos",
-    "contabilidad y fiscal",
-    "legal y corporativo",
-    "recursos humanos y laboral",
-    "consultoría financiera",
-    "back office",
-    "cumplimiento y gestión documental",
-    "soft landing y market entry"
+    "vencimientos próximos",
+    "bloqueadores por cliente",
+    "entregables completados",
+    "servicios recurrentes próximos",
+    "carga por responsable",
+    "tiempo de ciclo",
+    "expedientes completos"
   ],
   "acceptanceCriteria": [
-    "Tablet permite captura operativa sin exponer administración profunda.",
-    "PC conserva el gobierno del expediente, reglas, responsables y reconciliación.",
-    "Mobile permite supervisar sin convertirse en backoffice portátil.",
-    "Cada cambio relevante deja actor, fecha, entidad y evidencia trazable.",
-    "Las especializaciones no implican certificación legal, fiscal, contable ni regulatoria.",
-    "El vertical puede desactivarse sin alterar los diez giros existentes."
+    "El usuario identifica en menos de cinco segundos qué cliente o compromiso requiere atención.",
+    "Cada engagement declara responsable, estado, siguiente acción y evidencia.",
+    "Tablet no muestra administración pesada del vertical.",
+    "PC conserva gobierno profundo del expediente y los flujos.",
+    "Mobile supervisa sin duplicar PC.",
+    "Los estados offline y pendientes son claros.",
+    "Las especializaciones no contaminan el Core.",
+    "La interfaz no afirma certificaciones profesionales que PRISMA no pueda demostrar."
   ]
 }
