@@ -277,7 +277,7 @@ Despues de este registro, toca `PRISMA_VERTICALS_ARCHITECTURE_00C_VERTICAL_DATA_
 
 **Propósito:** administrar el ciclo de relación profesional con un cliente: diagnóstico, expediente, servicio contratado, documentos, tareas, responsables, vencimientos, aprobaciones, evidencia, seguimiento y recurrencia.
 
-**No es exclusivo de CIOB.** La vertical sirve para consultoría empresarial, servicios corporativos, contabilidad/fiscal, legal/corporativo, recursos humanos/laboral, finanzas, back office, cumplimiento documental y soft landing/market entry.
+**Es un vertical general y reutilizable.** Sirve para consultoría empresarial, servicios corporativos, contabilidad/fiscal, legal/corporativo, recursos humanos/laboral, finanzas, back office, cumplimiento documental y soft landing/market entry.
 
 **Rol Tablet:** captura operativa acotada, diagnóstico, checklist, recepción documental y avances.
 
