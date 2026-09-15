@@ -1,0 +1,118 @@
+{
+  "id": "professional_corporate_services",
+  "displayName": "Servicios Profesionales y Corporativos",
+  "market": "professional_services",
+  "status": "draft",
+  "priority": "phase_2",
+  "tabletRole": "Captura operativa acotada frente al cliente o durante la prestación del servicio, sin convertir Tablet en backoffice.",
+  "pcRole": "Gobierno profundo de clientes, expedientes, servicios, flujos, responsables, vencimientos, evidencia, reportes y configuración.",
+  "mobileRole": "Supervisión ejecutiva y operativa de alertas, aprobaciones, vencimientos, riesgo de cliente y siguientes acciones.",
+  "capabilities": [
+    "professional_services.clients",
+    "professional_services.engagements",
+    "professional_services.documents",
+    "professional_services.tasks",
+    "professional_services.deadlines",
+    "professional_services.approvals",
+    "professional_services.evidence",
+    "professional_services.recurring_services",
+    "core.sync"
+  ],
+  "tabletNavigation": [
+    "Clientes",
+    "Diagnóstico",
+    "Checklist",
+    "Documentos",
+    "Avances",
+    "Pendientes por enviar"
+  ],
+  "pcNavigation": [
+    "Dashboard",
+    "Clientes",
+    "Expedientes",
+    "Servicios",
+    "Flujos",
+    "Documentos",
+    "Tareas y vencimientos",
+    "Responsables",
+    "Auditoría"
+  ],
+  "mobileNavigation": [
+    "Resumen",
+    "Alertas",
+    "Aprobaciones",
+    "Vencimientos",
+    "Clientes en riesgo",
+    "Siguientes acciones"
+  ],
+  "tabletBlockedCapabilities": [
+    "professional_services.workflow_admin.deep",
+    "professional_services.compliance_policy.deep",
+    "professional_services.contract_admin.deep",
+    "professional_services.billing_admin.deep"
+  ],
+  "events": [
+    "professional_services.client.intake_captured",
+    "professional_services.engagement.opened",
+    "professional_services.document.received",
+    "professional_services.task.completed",
+    "professional_services.deadline.at_risk",
+    "professional_services.approval.completed",
+    "professional_services.service.milestone_completed",
+    "professional_services.evidence.recorded"
+  ],
+  "permissions": [
+    "professional_services.client.view",
+    "professional_services.client.intake",
+    "professional_services.engagement.view",
+    "professional_services.document.receive",
+    "professional_services.task.update",
+    "professional_services.deadline.view",
+    "professional_services.approval.request",
+    "professional_services.evidence.view"
+  ],
+  "offlinePolicy": {
+    "mode": "restricted",
+    "allowed": [
+      "capturar diagnóstico acotado",
+      "registrar recepción de documentos",
+      "actualizar avances operativos",
+      "consultar expediente local previamente disponible"
+    ],
+    "blocked": [
+      "aprobar decisiones sensibles",
+      "cambiar reglas de cumplimiento",
+      "cerrar encargos de alto impacto",
+      "exportar evidencia sensible sin autorización"
+    ],
+    "cashierMessage": "Puedes registrar avances operativos con la información disponible. Las decisiones sensibles esperan conexión y autorización."
+  },
+  "kpis": [
+    "clientes activos",
+    "servicios en curso",
+    "porcentaje de hitos a tiempo",
+    "documentos pendientes",
+    "vencimientos en riesgo",
+    "tareas vencidas",
+    "servicios recurrentes al día"
+  ],
+  "specializations": [
+    "consultoría empresarial",
+    "servicios corporativos",
+    "contabilidad y fiscal",
+    "legal y corporativo",
+    "recursos humanos y laboral",
+    "consultoría financiera",
+    "back office",
+    "cumplimiento y gestión documental",
+    "soft landing y market entry"
+  ],
+  "acceptanceCriteria": [
+    "Tablet permite captura operativa sin exponer administración profunda.",
+    "PC conserva el gobierno del expediente, reglas, responsables y reconciliación.",
+    "Mobile permite supervisar sin convertirse en backoffice portátil.",
+    "Cada cambio relevante deja actor, fecha, entidad y evidencia trazable.",
+    "Las especializaciones no implican certificación legal, fiscal, contable ni regulatoria.",
+    "El vertical puede desactivarse sin alterar los diez giros existentes."
+  ]
+}
