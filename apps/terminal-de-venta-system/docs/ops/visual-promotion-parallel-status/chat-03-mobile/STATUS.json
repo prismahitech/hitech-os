@@ -4,8 +4,8 @@
   "lane": "MOBILE_PROMOTION",
   "statusBranch": "status/vp-chat-03-mobile",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-14T18:27:00-06:00",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:38:00Z",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat3/authority-reconciliation-mobile-20260914",
   "workHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
@@ -30,7 +30,8 @@
     "Read-only exact-input accounting PASS: 271 certified Mobile targets = 133 projection CURRENT + 138 projection DRIFT; all 271 target IDs were parsed from the immutable certified Mobile NORMALIZED source without recensus. NDC target primary meaning remains unresolved 271/271; visual meaning unresolved 271/271; exact element binding blocked 271/271.",
     "Read-only deterministic classification candidate: the 133 CURRENT rows fit EXISTING_CONCEPT_LINK_MISSING because exact physical/current projection evidence exists plus existing Mobile NDC/Identity surface concepts, but target-level operational/visual meaning links remain unproven. The 138 DRIFT rows fit PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED because projection-hash-drift is certified and no semantic gap may be disguised as projection green.",
     "Projection-debt direction evidence: all 138 DRIFT rows share prisma-mobile-dashboard.module.css. Governed cleanup commit 731574f97dba0ec46420369b777071500ce2f833 proves TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1 intersects a product-newer retired `.multiContextRoot` removal; current RIFAT still contains `.multiContextRoot`. For the other 137 DRIFT targets, existing certified evidence supports file-level drift only, so direction remains AMBIGUOUS and no repair direction is selected.",
-    "TRUE_NEW_AUTHORITY_REQUIRED candidate count is 0. Existing NDC surface/projection concepts, Identity Mobile adapter/binding-source authority, RIFAT physical targets, Code Atlas/UIMAP evidence and Atlasfin Mobile adapter reference exist; what remains missing is exact target-level concept linkage/application authority, not demonstrated total absence of authority."
+    "TRUE_NEW_AUTHORITY_REQUIRED candidate count is 0. Existing NDC surface/projection concepts, Identity Mobile adapter/binding-source authority, RIFAT physical targets, Code Atlas/UIMAP evidence and Atlasfin Mobile adapter reference exist; what remains missing is exact target-level concept linkage/application authority, not demonstrated total absence of authority.",
+    "ORCHESTRATOR ROUTING CLARIFICATION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. AUTHORITY_RECONCILIATION_ANTI_REWORK remains scoped to visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE for governed phase work."
   ],
   "decisions": [
     "Preserve every existing semantic decision and all 138 DRIFT records as evidence/debt; do not select a projection repair direction.",
