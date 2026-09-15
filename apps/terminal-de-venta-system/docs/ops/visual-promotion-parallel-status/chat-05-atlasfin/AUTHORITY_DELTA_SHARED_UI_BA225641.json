@@ -1,0 +1,81 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "createdAt": "2026-09-15T09:40:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-ba225641",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+  "question": "Does .actionButton:hover require a new semantic concept, or is existing Shared UI primary-action authority merely unbound?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": ".actionButton:hover",
+      "visualRegion": "toolbar",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-implementation",
+      "component": "PrismaActionButton",
+      "path": "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaActionButton.tsx",
+      "finding": "Generic shared action component exists; this is implementation evidence, not canonical semantic equivalence."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "identity",
+      "id": "prisma.adapter.shared-ui.v1",
+      "readiness": "NEUTRAL_SOURCE_READY",
+      "path": "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json"
+    },
+    {
+      "domain": "atlasfin",
+      "id": "ADP.SHARED.NEUTRAL.V2",
+      "finding": "Adapter exists; candidate Atlasfin status is NO_MATCH."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json",
+    "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaActionButton.tsx",
+    "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json"
+  ],
+  "relationType": "EXISTING_VISUAL_SEMANTIC_AUTHORITY_WITH_MISSING_EXACT_SHARED_UI_BINDING",
+  "equivalent": false,
+  "explicitNonEquivalence": "Generic PrismaActionButton implementation and .actionButton:hover do not prove operational NDC meaning. ACT.primary remains visual Identity meaning.",
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_SEMANTIC_AUTHORITY",
+    "ndc": "NO OPERATIONAL NDC MEANING REQUIRED OR PROVEN FOR THIS PURE HOVER VISUAL TARGET",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 EXISTS with ACT.primary/REC.button.primary but zero targets",
+    "rifatTargetIndex": "EXACT CURRENT PHYSICAL TARGET EXISTS; semanticMeaningId and bindingId null",
+    "codeAtlas": "NO EXACT TARGET CROSSWALK FOUND IN BOUNDED SEARCH",
+    "atlasfin": "ADAPTER EXISTS; NO_MATCH; NOT SEMANTIC AUTHORITY",
+    "ledgerEvidence": "BASELINE ANTI-REWORK RECEIPT REUSED",
+    "history": "PrismaActionButton shared implementation exists, but no stronger canonical target binding was found"
+  },
+  "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+  "confidence": "HIGH",
+  "unresolvedRemainder": "A governed exact element binding/layer application is missing. Do not infer NDC business meaning from the word actionButton."
+}
