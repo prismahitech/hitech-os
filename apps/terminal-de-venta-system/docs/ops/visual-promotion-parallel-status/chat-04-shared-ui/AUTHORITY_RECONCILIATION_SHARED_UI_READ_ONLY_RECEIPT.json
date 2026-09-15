@@ -1,0 +1,1164 @@
+{
+  "schema": "prisma.visual-promotion.shared-ui-authority-reconciliation-read-only-receipt.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "generatedAt": "2026-09-15T11:18:28-06:00",
+  "repository": "prismahitech/hitech-os",
+  "chatId": 4,
+  "role": "SHARED_UI_AUTHORITY_RECONCILIATION_WORKER",
+  "statusBranch": "status/vp-chat-04-shared-ui",
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "mainDriftAssessment": {
+    "from": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "to": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+    "commits": 3,
+    "changedPaths": [
+      "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+      "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"
+    ],
+    "changeTheme": "universal Mamastrophic screenshot/artifact capability registration",
+    "gvaeCurrentTruthRechecked": true,
+    "relevantSharedUiTargetEvidenceDrift": false,
+    "disposition": "CONTINUE_READ_ONLY_WITH_CURRENT_MAIN_REBOUND"
+  },
+  "sourcePins": {
+    "sharedUiTargetIndex": {
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+      "gitBlobSha": "d68dc901c8985fb4731877e5a37a4c130c957ad9",
+      "count": 70
+    },
+    "sharedUiCandidates": {
+      "path": "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+      "gitBlobSha": "9c351af0fb8111f347762ea766af8699fb25452f",
+      "count": 40
+    },
+    "sharedUiCertification": {
+      "path": "prisma-html/governance/visual-promotion/candidates/shared-ui/certification/CERTIFICATION.jsonl",
+      "gitBlobSha": "b7c7e1a281640b058061ada51d051c38c929cf4c",
+      "count": 70
+    },
+    "visualOsLayers": {
+      "path": "apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+      "gitBlobSha": "48428e265741a3a983ecbcf2136d1bd3ab3bac89",
+      "requiredRoles": [
+        "background",
+        "atmosphere"
+      ]
+    },
+    "identityElementBindings": {
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+      "gitBlobSha": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8",
+      "sharedUiPrimaryBinding": "BND.ACT.PRIMARY.SHAREDUI.V1"
+    },
+    "chat5Branch": {
+      "ref": "status/vp-chat-05-atlasfin",
+      "head": "e2f13271f4b17f093a56126d0e70d859b5f21597"
+    }
+  },
+  "classificationRule": {
+    "composerQualityGuardPreserved": true,
+    "rule": "EXISTING_CONCEPT_LINK_MISSING is used only where the exact target has target-specific RIFAT/Visual Control role evidence and that role is an existing governed Visual OS layer concept. Family-level adapter/recipe existence alone is never sufficient.",
+    "applicationGapRule": "The five ACT.primary rows use Chat 5 target-specific positive evidence plus BND.ACT.PRIMARY.SHAREDUI.V1 / REC.button.primary and remain missing exact target binding/application.",
+    "semanticSeparation": [
+      "NDC operational/business meaning != Identity/VIS visual meaning",
+      "RIFAT physical location != semantic meaning",
+      "BND/LYR/recipe/adapter authority != concept equivalence",
+      "identity ACT.primary != ndc ACT.sale.checkout"
+    ]
+  },
+  "unresolved40Resolution": {
+    "inputCount": 40,
+    "outputCount": 40,
+    "uniqueTargetCount": 40,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "classificationCounts": {
+      "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+      "EXISTING_CONCEPT_LINK_MISSING": 35,
+      "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 5,
+      "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+      "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 0,
+      "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+      "NOT_APPLICABLE": 0
+    },
+    "targetSpecificRows": [
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.013CB5D8F06D59666BB8.V1",
+        "sourceRecordSha256": "e8befe776b193ce51fb7242984013470f95c79e2f92c2e7471ade211778923aa",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.013CB5D8F06D59666BB8.V1",
+          "certification-source-record-sha256::e8befe776b193ce51fb7242984013470f95c79e2f92c2e7471ade211778923aa",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.06EC80B4C3FCDC6CD488.V1",
+        "sourceRecordSha256": "997402a2c944de5212f882ac7580f7d41472ee3d4656d53ec9dc58e4732f752c",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.06EC80B4C3FCDC6CD488.V1",
+          "certification-source-record-sha256::997402a2c944de5212f882ac7580f7d41472ee3d4656d53ec9dc58e4732f752c",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+        "sourceRecordSha256": "b76c91b0bbc8687ed775434a1270bf351a2cc716b5040f4bea11467a912affa6",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "identity-visual",
+          "neutralMeaningId": "ACT.primary",
+          "recipePresetId": "REC.button.primary"
+        },
+        "classification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+        "confidence": "MEDIUM_HIGH",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+          "certification-source-record-sha256::b76c91b0bbc8687ed775434a1270bf351a2cc716b5040f4bea11467a912affa6",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_09F96569.json",
+          "identity-binding::BND.ACT.PRIMARY.SHAREDUI.V1"
+        ],
+        "guards": [
+          "ACT.primary is visual/Identity meaning and is NOT equivalent to NDC ACT.sale.checkout.",
+          "No exact target binding/application is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.0FB6393E3F8E351B8A43.V1",
+        "sourceRecordSha256": "2bcdbc7541226cfa495bdc0219f61e7b3c8ac426d5db9b0c0c4acf3bbc83ab22",
+        "exactVisualHumanId": "shared-ui atmospheric layer",
+        "targetIndexVisualRegion": "atmospheric",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "atmosphere"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.0FB6393E3F8E351B8A43.V1",
+          "certification-source-record-sha256::2bcdbc7541226cfa495bdc0219f61e7b3c8ac426d5db9b0c0c4acf3bbc83ab22",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.12E058B05B1C3E34845F.V1",
+        "sourceRecordSha256": "45bcaf8316a14e13d770e4ed36869c77984f91bc622206bb67925a78dc1a9b8a",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.12E058B05B1C3E34845F.V1",
+          "certification-source-record-sha256::45bcaf8316a14e13d770e4ed36869c77984f91bc622206bb67925a78dc1a9b8a",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.12FB791E14763F088D9D.V1",
+        "sourceRecordSha256": "14d4eb0e9ff5a75a1d8bbf12e39855c9d93647bf87b4023a58b58a8b99c2dbe9",
+        "exactVisualHumanId": "shared-ui atmospheric layer",
+        "targetIndexVisualRegion": "atmospheric",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "atmosphere"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.12FB791E14763F088D9D.V1",
+          "certification-source-record-sha256::14d4eb0e9ff5a75a1d8bbf12e39855c9d93647bf87b4023a58b58a8b99c2dbe9",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.2183720171C468C9C736.V1",
+        "sourceRecordSha256": "461861ed6df6c996f4806034e2186cccae5ff8ee0547f41d4c6c066c355cd7f8",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.2183720171C468C9C736.V1",
+          "certification-source-record-sha256::461861ed6df6c996f4806034e2186cccae5ff8ee0547f41d4c6c066c355cd7f8",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.268F536652BEAB92457C.V1",
+        "sourceRecordSha256": "6024eb8e303d7d108a78f807320e9de1cd8ebed4f043e444753ff0ac910f6cd9",
+        "exactVisualHumanId": "shared-ui atmospheric layer",
+        "targetIndexVisualRegion": "atmospheric",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "atmosphere"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.268F536652BEAB92457C.V1",
+          "certification-source-record-sha256::6024eb8e303d7d108a78f807320e9de1cd8ebed4f043e444753ff0ac910f6cd9",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.358B9A906E6AC9537908.V1",
+        "sourceRecordSha256": "99aabf55d19ee5411ea8f55ed8a960de982e072c5425291d83158d69d756b763",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.358B9A906E6AC9537908.V1",
+          "certification-source-record-sha256::99aabf55d19ee5411ea8f55ed8a960de982e072c5425291d83158d69d756b763",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3610E6221C67BFD5673D.V1",
+        "sourceRecordSha256": "451db294dbe59aaa6117a716b83bac4d7b83fb169f7e2f11c134a9a4df946ae4",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3610E6221C67BFD5673D.V1",
+          "certification-source-record-sha256::451db294dbe59aaa6117a716b83bac4d7b83fb169f7e2f11c134a9a4df946ae4",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1",
+        "sourceRecordSha256": "9bf21c0f64d3eb298ac248d4c961f1aa2c8da5a62b005da5806ac31ba7614088",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "identity-visual",
+          "neutralMeaningId": "ACT.primary",
+          "recipePresetId": "REC.button.primary"
+        },
+        "classification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+        "confidence": "MEDIUM_HIGH",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1",
+          "certification-source-record-sha256::9bf21c0f64d3eb298ac248d4c961f1aa2c8da5a62b005da5806ac31ba7614088",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3863084F.json",
+          "identity-binding::BND.ACT.PRIMARY.SHAREDUI.V1"
+        ],
+        "guards": [
+          "ACT.primary is visual/Identity meaning and is NOT equivalent to NDC ACT.sale.checkout.",
+          "No exact target binding/application is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3B330A6CE762E928D2AA.V1",
+        "sourceRecordSha256": "a784e6426619a7ca672584bc9d6bd53a318c3b79f7ea19c863aaaa360324022f",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3B330A6CE762E928D2AA.V1",
+          "certification-source-record-sha256::a784e6426619a7ca672584bc9d6bd53a318c3b79f7ea19c863aaaa360324022f",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3BCDDF70103B18A9F725.V1",
+        "sourceRecordSha256": "8a23bf7c45825e0ea5c0933a908738dddeedc3caddba5ab0dac3cb6a2e211623",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3BCDDF70103B18A9F725.V1",
+          "certification-source-record-sha256::8a23bf7c45825e0ea5c0933a908738dddeedc3caddba5ab0dac3cb6a2e211623",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3F880642E60DE0955067.V1",
+        "sourceRecordSha256": "0b088533ee872020051507a246804019ef7d05fbbc62236452484376fb57d262",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3F880642E60DE0955067.V1",
+          "certification-source-record-sha256::0b088533ee872020051507a246804019ef7d05fbbc62236452484376fb57d262",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.3F9B003C100181C7E245.V1",
+        "sourceRecordSha256": "95651c6e61f6dcdf7a6481fe80fda37559f338cdbb828143c706099d283be279",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.3F9B003C100181C7E245.V1",
+          "certification-source-record-sha256::95651c6e61f6dcdf7a6481fe80fda37559f338cdbb828143c706099d283be279",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.495D405071F8555FC432.V1",
+        "sourceRecordSha256": "9b152afd217a22571c37960b6af3421c93717fe072674d4702cb0515b84c4071",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.495D405071F8555FC432.V1",
+          "certification-source-record-sha256::9b152afd217a22571c37960b6af3421c93717fe072674d4702cb0515b84c4071",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.4F50F976F34D433D05D8.V1",
+        "sourceRecordSha256": "4f5d2055a87073a7351cbf1a3063b8f5afe5cfb734efdb556efd8d18a15c5652",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.4F50F976F34D433D05D8.V1",
+          "certification-source-record-sha256::4f5d2055a87073a7351cbf1a3063b8f5afe5cfb734efdb556efd8d18a15c5652",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1",
+        "sourceRecordSha256": "315cbb7a0e048245212134de91f9d7744480987d069db8e4e19a7603b6c7876c",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1",
+          "certification-source-record-sha256::315cbb7a0e048245212134de91f9d7744480987d069db8e4e19a7603b6c7876c",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_6A23B437.json"
+        ],
+        "guards": [
+          "data-prisma-profile=perf is performance/rendering evidence and is NOT VIS.identity.profile.",
+          "This row is linked only to the exact existing Visual OS background-layer concept; no Identity-profile or NDC equivalence is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+        "sourceRecordSha256": "84c2596dea44e30ad6226bf97baeb8c6ad23920c432b3ca1547649b9fd8782e0",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "identity-visual",
+          "neutralMeaningId": "ACT.primary",
+          "recipePresetId": "REC.button.primary"
+        },
+        "classification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+        "confidence": "MEDIUM_HIGH",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+          "certification-source-record-sha256::84c2596dea44e30ad6226bf97baeb8c6ad23920c432b3ca1547649b9fd8782e0",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_718C4BEE.json",
+          "identity-binding::BND.ACT.PRIMARY.SHAREDUI.V1"
+        ],
+        "guards": [
+          "ACT.primary is visual/Identity meaning and is NOT equivalent to NDC ACT.sale.checkout.",
+          "No exact target binding/application is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.79E34B6A18674393C76D.V1",
+        "sourceRecordSha256": "a9eabd4d0e66e0a341e86de350a0ca13dd661e118e7ec004b8dbf2ac99839c38",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.79E34B6A18674393C76D.V1",
+          "certification-source-record-sha256::a9eabd4d0e66e0a341e86de350a0ca13dd661e118e7ec004b8dbf2ac99839c38",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.90013DB0F87D902E564D.V1",
+        "sourceRecordSha256": "3cc38475877575341ac47ed0b4d62b51b90ab624d17e727589895253281d6ef0",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.90013DB0F87D902E564D.V1",
+          "certification-source-record-sha256::3cc38475877575341ac47ed0b4d62b51b90ab624d17e727589895253281d6ef0",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.96CED34CB51E8511F178.V1",
+        "sourceRecordSha256": "1c9a29c822cb22b709cbe46fdf6ad2b7459cbe859693b90b44f09ed9fc17eca0",
+        "exactVisualHumanId": "shared-ui atmospheric layer",
+        "targetIndexVisualRegion": "atmospheric",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "atmosphere"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.96CED34CB51E8511F178.V1",
+          "certification-source-record-sha256::1c9a29c822cb22b709cbe46fdf6ad2b7459cbe859693b90b44f09ed9fc17eca0",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.9C6E34292E570C801BC8.V1",
+        "sourceRecordSha256": "1a1bd3b5f5232dba35d130abe5a5c733c0f04889008b23f4481f91e650831adf",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.9C6E34292E570C801BC8.V1",
+          "certification-source-record-sha256::1a1bd3b5f5232dba35d130abe5a5c733c0f04889008b23f4481f91e650831adf",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.9E0AF0660DBAC425AB47.V1",
+        "sourceRecordSha256": "70a51374af8317619e96b660a48c120e2bb63914e792bfcef1f511a9ea132b8b",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.9E0AF0660DBAC425AB47.V1",
+          "certification-source-record-sha256::70a51374af8317619e96b660a48c120e2bb63914e792bfcef1f511a9ea132b8b",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.A232143E1C70C3001262.V1",
+        "sourceRecordSha256": "d2a3193b85b840a722376d5c57977e4e253bf7ec4c938e80ac971108eeea07cc",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.A232143E1C70C3001262.V1",
+          "certification-source-record-sha256::d2a3193b85b840a722376d5c57977e4e253bf7ec4c938e80ac971108eeea07cc",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.AB26FFC1511645A478FB.V1",
+        "sourceRecordSha256": "cd393c6f3df2ec873ca09f05d41abba28bb898d620ed4ecb7f59f0bf6e11d101",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.AB26FFC1511645A478FB.V1",
+          "certification-source-record-sha256::cd393c6f3df2ec873ca09f05d41abba28bb898d620ed4ecb7f59f0bf6e11d101",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+        "sourceRecordSha256": "ea2df717bf04b04950b36e1dca93ca601ee05a7a00a94227352f82c25c10079e",
+        "exactVisualHumanId": "shared-ui toolbar layer",
+        "targetIndexVisualRegion": "toolbar",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "identity-visual",
+          "neutralMeaningId": "ACT.primary",
+          "recipePresetId": "REC.button.primary"
+        },
+        "classification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+        "confidence": "MEDIUM_HIGH",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+          "certification-source-record-sha256::ea2df717bf04b04950b36e1dca93ca601ee05a7a00a94227352f82c25c10079e",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_BA225641.json",
+          "identity-binding::BND.ACT.PRIMARY.SHAREDUI.V1"
+        ],
+        "guards": [
+          "ACT.primary is visual/Identity meaning and is NOT equivalent to NDC ACT.sale.checkout.",
+          "No exact target binding/application is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+        "sourceRecordSha256": "8326d46acfb0450f829c78d72475dffee233134676beaf10011c55b365f40f95",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "identity-visual",
+          "neutralMeaningId": "ACT.primary",
+          "recipePresetId": "REC.button.primary"
+        },
+        "classification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+        "confidence": "MEDIUM_HIGH",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+          "certification-source-record-sha256::8326d46acfb0450f829c78d72475dffee233134676beaf10011c55b365f40f95",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json",
+          "chat5-delta::apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_C2722826.json",
+          "identity-binding::BND.ACT.PRIMARY.SHAREDUI.V1"
+        ],
+        "guards": [
+          "ACT.primary is visual/Identity meaning and is NOT equivalent to NDC ACT.sale.checkout.",
+          "No exact target binding/application is asserted."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.C692BBA94D6F24549DCF.V1",
+        "sourceRecordSha256": "c967acb4f3cfb87841d6b2a64f38da8693c3780760a6c7a1fdccf5139a1c79ee",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.C692BBA94D6F24549DCF.V1",
+          "certification-source-record-sha256::c967acb4f3cfb87841d6b2a64f38da8693c3780760a6c7a1fdccf5139a1c79ee",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.C70C867784FF806531B9.V1",
+        "sourceRecordSha256": "7b8e5a4bd9904e486cca3f315862a17207aa00652afa4b68cdd0f4ef848172f2",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.C70C867784FF806531B9.V1",
+          "certification-source-record-sha256::7b8e5a4bd9904e486cca3f315862a17207aa00652afa4b68cdd0f4ef848172f2",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.CC97A016C20A2F6436AD.V1",
+        "sourceRecordSha256": "c51665ae3c397c86ad01bf24a9ca7fc51c2ce45c6f87ba2ceb19e710d4c7b96a",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.CC97A016C20A2F6436AD.V1",
+          "certification-source-record-sha256::c51665ae3c397c86ad01bf24a9ca7fc51c2ce45c6f87ba2ceb19e710d4c7b96a",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.D374D7BA69B157419EDA.V1",
+        "sourceRecordSha256": "0c4a5011a477d0a31cb5ed9ddeff000c1ce9ff85b42d92380fe86b0026f7ee74",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.D374D7BA69B157419EDA.V1",
+          "certification-source-record-sha256::0c4a5011a477d0a31cb5ed9ddeff000c1ce9ff85b42d92380fe86b0026f7ee74",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.D3AEDBC66337719F150A.V1",
+        "sourceRecordSha256": "4ce4069ff69c3649fa766196cca88b5b58a7f5a06e5fde5c58890a054b0930ad",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.D3AEDBC66337719F150A.V1",
+          "certification-source-record-sha256::4ce4069ff69c3649fa766196cca88b5b58a7f5a06e5fde5c58890a054b0930ad",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.D4D25E9C337ADFA535F1.V1",
+        "sourceRecordSha256": "67b7a9fbaaab701e8534a925296647ae88463125ccbc872408c262656d35be53",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.D4D25E9C337ADFA535F1.V1",
+          "certification-source-record-sha256::67b7a9fbaaab701e8534a925296647ae88463125ccbc872408c262656d35be53",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.DA1D5C29A2C0255751E4.V1",
+        "sourceRecordSha256": "dc53a24d07b703d3b7ec00e3d8bc529a3cb7d84fb87e8426d64cab5c6aafcf34",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.DA1D5C29A2C0255751E4.V1",
+          "certification-source-record-sha256::dc53a24d07b703d3b7ec00e3d8bc529a3cb7d84fb87e8426d64cab5c6aafcf34",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.E068F25F1C7423969B65.V1",
+        "sourceRecordSha256": "7cff574b25a07b6ea5e90426fee096c57452cf971f1f5f4e56d5abb335098a13",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.E068F25F1C7423969B65.V1",
+          "certification-source-record-sha256::7cff574b25a07b6ea5e90426fee096c57452cf971f1f5f4e56d5abb335098a13",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.E2FD81AE5F72EDEAA919.V1",
+        "sourceRecordSha256": "37b9fe5c5f6dea4fb5ea6ae259576ac76f076d4841514405346474d61342c8d4",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.E2FD81AE5F72EDEAA919.V1",
+          "certification-source-record-sha256::37b9fe5c5f6dea4fb5ea6ae259576ac76f076d4841514405346474d61342c8d4",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.E4C898EC27EA177E5BE5.V1",
+        "sourceRecordSha256": "6fd16c1a2042f0b339444526165a4c76bf12ca86006187e5670d68697d52a294",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.E4C898EC27EA177E5BE5.V1",
+          "certification-source-record-sha256::6fd16c1a2042f0b339444526165a4c76bf12ca86006187e5670d68697d52a294",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.E95D4F536F4F09E21E80.V1",
+        "sourceRecordSha256": "97a619279a5682b514eadb2d3d03181cacf2d125eed76af3ba666a5e8e9b1445",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.E95D4F536F4F09E21E80.V1",
+          "certification-source-record-sha256::97a619279a5682b514eadb2d3d03181cacf2d125eed76af3ba666a5e8e9b1445",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      },
+      {
+        "surfaceKey": "shared-ui",
+        "targetId": "TGT.CENSUS.SHARED_UI.EA65C3A5CAB81BE75525.V1",
+        "sourceRecordSha256": "6a6cec922b986b035a23db0ec93289090742472b5d80ab29d0fd469e53520237",
+        "exactVisualHumanId": "shared-ui background layer",
+        "targetIndexVisualRegion": "background",
+        "targetIndexStatus": "BLOCKED",
+        "targetIndexSemanticMeaningId": null,
+        "targetIndexBindingId": null,
+        "existingConcept": {
+          "domain": "visual-os-layer",
+          "role": "background"
+        },
+        "classification": "EXISTING_CONCEPT_LINK_MISSING",
+        "confidence": "HIGH_TARGET_ROLE_LOW_SEMANTIC_SCOPE",
+        "evidenceRefs": [
+          "target-index::TGT.CENSUS.SHARED_UI.EA65C3A5CAB81BE75525.V1",
+          "certification-source-record-sha256::6a6cec922b986b035a23db0ec93289090742472b5d80ab29d0fd469e53520237",
+          "visual-os-layers::apps/terminal-de-venta-system/products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json"
+        ],
+        "guards": [
+          "Classification proves only the exact existing Visual OS layer concept from target-specific RIFAT evidence.",
+          "No NDC, Identity recipe, binding, application or operational equivalence is inferred."
+        ]
+      }
+    ]
+  },
+  "fullSharedUiLane": {
+    "inputCount": 70,
+    "accountedCount": 70,
+    "uniqueTargetCount": 70,
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0,
+    "classificationCounts": {
+      "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+      "EXISTING_CONCEPT_LINK_MISSING": 35,
+      "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 5,
+      "EXISTING_AUTHORITY_CONFLICT_CURATE": 11,
+      "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 19,
+      "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+      "NOT_APPLICABLE": 0
+    },
+    "priorCertifiedRowsPreserved": {
+      "existingAuthorityConflictCurate": 11,
+      "physicalOrProjectionReconciliationRequired": 19,
+      "recensusPerformed": false
+    },
+    "trueNewAccepted": 0,
+    "chat4SurfaceClassificationComplete": true,
+    "composerAcceptance": "PENDING_CHAT6_QUALITY_GATE_CONSUMPTION"
+  },
+  "nonEquivalenceGuard": {
+    "targetId": "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1",
+    "evidence": "Chat 5 target-specific delta proves perf is a performance/rendering profile, not VIS.identity.profile.",
+    "finalChat4Classification": "EXISTING_CONCEPT_LINK_MISSING",
+    "exactExistingConcept": "visual-os-layer::background",
+    "prohibitedInference": "VIS.identity.profile"
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "blocksReadOnly": false,
+    "blocksMailboxReceipt": false,
+    "blocksGovernedOutputWrites": true,
+    "governedAuthorityReconciliationOutputsWritten": false
+  },
+  "safety": {
+    "materialityCatalogInspected": false,
+    "broadRediscoveryPerformed": false,
+    "recensusPerformed": false,
+    "canonicalIdMintingPerformed": false,
+    "canonicalRegistrationPerformed": false,
+    "productRuntimeMutationPerformed": false,
+    "projectionRepairPerformed": false,
+    "gvaeApplyPerformed": false,
+    "filesManifestMutationPerformed": false,
+    "prOpened": false,
+    "mergeToMainPerformed": false,
+    "fakeGreen": false
+  },
+  "handoff": "Chat 6 may consume this mailbox receipt directly. Chat 4 owns and has completed the Shared UI surface classification; Chat 6 retains composer-final acceptance authority for the 35 target-specific concept-link rows."
+}
