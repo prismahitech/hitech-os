@@ -1194,6 +1194,40 @@
         "Final checks: VISCORE1 35001088119; CI 35001088193; ForgeOS 35001087929; Sync Sentinel 35001088016",
         "Wave 1 closure AutoMesh 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769 requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466 uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab"
       ]
+    },
+    {
+      "artifact": "PRISMA accounting_management vertical registration authority — AutoMesh run 35006282287 / artifact 10411488668",
+      "type": "accounting_management_vertical_registration_authority",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "verticals",
+        "tablet",
+        "pc",
+        "mobile"
+      ],
+      "status": "PASS_REGISTRATION_AUTHORITY_ONLY",
+      "proves": [
+        "The missing verticals.accounting_management capability is classified for canonical Factory Ledger registration as BUILD / NOT_STARTED / doNotRebuild=false",
+        "Task-exact three-lane Authority Mesh passed on main 5f7cddebb7316597e95c0663d3a3638e826885fd with the requested Factory Ledger, PRISMA VERTICALS and cross-surface boundary authorities",
+        "The future documentation scope explicitly preserves Tablet operates, PC governs, Mobile supervises, Core records and Control audits",
+        "Registration is governance-only and excludes product runtime, database/schema, Prisma generation, processes, ports, deployment and visual mutation"
+      ],
+      "doesNotProve": [
+        "The Contabilidad y gestión vertical has been implemented in registry/profile/contracts",
+        "Any accounting workflow is available in Tablet, PC or Mobile runtime",
+        "Any accounting, fiscal, legal or regulatory certification",
+        "Any demo HTML or visual surface exists",
+        "Post-registration anti-rework PROPOSAL or MUTATION authorization"
+      ],
+      "evidence": [
+        "Authority Mesh run 35006282287",
+        "artifact 10411488668",
+        "requestId f0ed8a1139733546",
+        "requestDigest 02014742b76b17a9c7494f64f6117d9e06cbf34e146b3370fa7cf5f4b951fffa",
+        "composed sha256:f3681d2f4158a03bf1bd5b99c90346c8ad05abc0869a40a5bdef8ac14669e19b",
+        "uploaded artifact sha256:8b3bdcc7f57ce16c5426fb40a65098214e61e4cc3b3f6566cd257c1aa14cd960"
+      ]
     }
   ],
   "updatedAt": "2026-09-15T17:33:23Z",
