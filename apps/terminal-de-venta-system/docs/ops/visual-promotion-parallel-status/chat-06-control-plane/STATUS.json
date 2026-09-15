@@ -4,8 +4,8 @@
   "lane": "VISUAL_PROMOTION_CONTROL_PLANE",
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
-  "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "updatedAt": "2026-09-15T10:15:00-06:00",
+  "state": "IN_PROGRESS_READ_ONLY_COMPOSITION_RESTART_WAVE_READY",
+  "updatedAt": "2026-09-15T11:08:30-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
@@ -553,7 +553,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "NEW CHAT: read CONTINUATION.md and CONTINUATION.json in Chat 6 mailbox, resolve current main and all six mailbox states fresh, then continue read-only composer audit. Prioritize Shared UI 40 unresolved and Chat 5 new deltas; preserve 2,097 zero-loss; keep 1,744 concept-link rows provisional until target-specific concept qualification or governed rule exists.",
+  "nextAction": "Worker mailboxes 1-5 have been refreshed with new-chat continuation handoffs on current main. Continue composer intake as the replacement chats publish fresh receipts. Priorities: Chat 4 close 40 Shared UI unresolved; Chat 5 provide bounded Shared UI and provisional concept-link support; Chats 1-3 target-specifically qualify 924/687/133 provisional concept-link rows. Preserve 2,097 zero-loss and do not materialize governed composed outputs while WRITE_GATE_PATH_PENDING remains.",
   "handoff": {
     "ready": true,
     "workBranch": "chat6/canonical-promotion-readiness-control-plane-20260912",
@@ -1290,6 +1290,38 @@
       "unresolvedCount": 40,
       "semanticFinal": false,
       "writeGate": "WRITE_GATE_PATH_PENDING"
+    },
+    "restartWave": {
+      "generatedAt": "2026-09-15T11:08:30-06:00",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "reason": "Owner requested fresh new-chat continuity because prior chat instances are assumed stale/stuck after elapsed time.",
+      "workerMailboxHeads": {
+        "chat1": "e16276d1e80c6d6a28eaf7aab00b29c04a19d31a",
+        "chat2": "2f61c4207eef379934f84b03037e7f80f124bcb0",
+        "chat3": "83c042d19c4128c82f7d1686eaf4c1ee6f708e29",
+        "chat4": "377e4a358279cddb8aee62e697235ac15749fb8c",
+        "chat5": "e2f13271f4b17f093a56126d0e70d859b5f21597"
+      },
+      "workerContinuationFiles": {
+        "chat1": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/CONTINUATION.md",
+        "chat2": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/CONTINUATION.md",
+        "chat3": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/CONTINUATION.md",
+        "chat4": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/CONTINUATION.md",
+        "chat5": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/CONTINUATION.md"
+      },
+      "globalTruth": {
+        "total": 2097,
+        "acceptedSpecific": 313,
+        "provisionalConceptLink": 1744,
+        "unresolvedSharedUi": 40,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "trueNewAccepted": 0
+      },
+      "ownerAuthorizedMailboxRefresh": true,
+      "governedOutputMaterializationAuthorized": false,
+      "mainMutationAuthorized": false
     }
   }
 }
