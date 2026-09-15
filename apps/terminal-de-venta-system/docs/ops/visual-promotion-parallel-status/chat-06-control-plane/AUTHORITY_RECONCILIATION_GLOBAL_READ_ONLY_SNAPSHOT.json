@@ -4,7 +4,7 @@
   "chatId": 6,
   "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "generatedAt": "2026-09-15T10:13:00-06:00",
+  "generatedAt": "2026-09-15T10:15:00-06:00",
   "main": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "capability": {
     "id": "visual.generic_application_engine_v1",
@@ -118,8 +118,9 @@
       "baselineMustNotBeRebuilt": true,
       "trueNewAssertions": 0,
       "dynamicDeltaSupportActive": true,
-      "deltaReceiptCount": 5,
-      "newDeltaReceiptCountAfterHandoff": 0
+      "deltaReceiptCount": 10,
+      "newDeltaReceiptCountAfterHandoff": 5,
+      "latestMailboxHead": "c1e5584f3d0633a90b6c93038198ccba34af1347"
     }
   },
   "provisionalGlobalCounts": {
@@ -149,7 +150,10 @@
     "conceptLinkQualificationAuditCompleteForCurrentEvidence": true,
     "provisionalConceptLinksRemaining": 1744,
     "provisionalConceptLinksPromotedThisPass": 0,
-    "semanticFinal": false
+    "semanticFinal": false,
+    "chat5DeltaReceiptCount": 10,
+    "sharedUiCrossAuthorityEvidenceConsumed": true,
+    "sharedUiUnresolvedStillSurfaceOwned": 40
   },
   "priorities": [
     "Consume Chat 4 Shared UI progress first, including Chat 5 deltas for 09F96569 and BA225641.",
@@ -265,5 +269,24 @@
     "result": "NO_TARGET_SPECIFIC_QUALIFICATION_GAIN",
     "trueNewAccepted": 0,
     "fakeGreenPrevented": true
+  },
+  "sharedUiCrossAuthorityIntake": {
+    "chat4MailboxHead": "5a1778f9fcf392b9eae0ac0c000007e470ce60d8",
+    "chat4Classified": 30,
+    "chat4Unresolved": 40,
+    "applicationGapEvidenceTargets": [
+      "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+      "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+      "TGT.CENSUS.SHARED_UI.C27228263069C7175BA1.V1",
+      "TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+      "TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1"
+    ],
+    "nonEquivalenceGuardTargets": [
+      "TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1"
+    ],
+    "applicationGapEvidenceCount": 5,
+    "nonEquivalenceGuardCount": 1,
+    "trueNewSupportedCount": 0,
+    "composerDisposition": "Cross-authority evidence accepted for quality gating only. Chat 4 still owns final Shared UI classification, so unresolved remains 40."
   }
 }
