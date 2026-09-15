@@ -1,0 +1,66 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "createdAt": "2026-09-15T11:20:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-cc97a016",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.CC97A016C20A2F6436AD.V1",
+  "question": "Does an active CategoryButton styled with the gold treatment become Identity ACT.primary or an NDC primary business action?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "[data-prisma-component=\"CategoryButton\"][data-active=\"true\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The exact rule styles the active category state with gold text/background/border/shadow. data-active=true marks component state in this selector; it is not an ACT.primary binding."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+  ],
+  "relationType": "ACTIVE_SELECTION_STATE_DOES_NOT_PROVE_PRIMARY_ACTION_SEMANTICS",
+  "equivalent": false,
+  "explicitNonEquivalence": "Gold styling and data-active=true on CategoryButton describe an active/selected category visual state. They do not establish Identity ACT.primary, and visual ACT.primary must not be collapsed into any NDC business action by styling resemblance.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "identity": "ACT.primary Shared UI authority exists globally but has zero bound targets; this exact target has bindingId=null.",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with semanticMeaningId=null and bindingId=null.",
+    "sharedUiStyleAuthority": "Exact source rule is active CategoryButton presentation, not a canonical semantic crosswalk.",
+    "ndc": "No exact target-specific NDC action relation is registered.",
+    "ledgerEvidence": "visual.generic_application_engine_v1 remains DONE/SOURCE_READY/doNotRebuild=true on current main; PR #557 does not add semantic linkage."
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "disposition": "NON_EQUIVALENCE_GUARD_ONLY",
+  "unresolvedRemainder": "A positive target-specific semantic join is still required. Do not infer ACT.primary, a business action, EXISTING_CONCEPT_LINK_MISSING, or TRUE_NEW from active-state styling."
+}
