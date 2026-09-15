@@ -10,7 +10,7 @@ CORE = ROOT / 'shared' / 'verticals' / 'data-models' / 'core-data-model.v0.json'
 EXT_DIR = ROOT / 'shared' / 'verticals' / 'data-models' / 'extensions'
 OWNERSHIP = ROOT / 'shared' / 'verticals' / 'data-models' / 'entity-ownership.v0.json'
 MIGRATIONS = ROOT / 'shared' / 'verticals' / 'data-models' / 'migration-boundaries.v0.json'
-EXPECTED = {'convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck'}
+EXPECTED = {'convenience','restaurant','pharmacy','beauty','hardware','apparel','repair','field_route','grocery_scale','food_truck','professional_corporate_services'}
 REQUIRED_EXTENSION_FIELDS = {'extensionId','entityName','extensionType','ownerSurface','storagePolicy','tabletAccess','pcAuthority','syncPolicy','auditImpact','offlineImpact','coreRelations','requiredEvents','fixtures','acceptanceCriteria'}
 FORBIDDEN_CORE_HINTS = {'tableNumber','appointmentTime','prescriptionId','repairOrderId','routeStopId','scaleWeight','kitchenStation','colorSizeGrid','sizeColorMatrix'}
 
