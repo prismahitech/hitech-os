@@ -144,9 +144,46 @@ Change Assurance remains the evidence lifecycle and authorization-oriented chang
 
 ### PRISMO Learning
 
-PRISMO Learning remains a read-only pattern/evidence consumer. Its pattern recommendations are not source authority for Operating Graph state.
+PRISMO Learning remains a read-only pattern/evidence consumer. Its pattern recommendations are not source authority for Operating Graph state. Its existing UI-level `next_action` suggestions are heuristic/operator guidance and MUST NOT be treated as the canonical Next Safe Action result for visual governance.
 
-## 11. Regeneration
+## 11. Collision and reuse matrix
+
+The Foundation has an explicit anti-duplication boundary:
+
+| Existing owner | Reused truth/capability | Operating Graph may do | Operating Graph must not do |
+|---|---|---|---|
+| Factory Ledger | capability classification, maturity, `nextGate`, `doNotRebuild` | reference and explain | create a second maturity registry or override `nextGate` |
+| Authority Mesh / AutoMesh | task-exact authority, protected scope, relevant-drift decision | consume PASS/BLOCKED evidence and request revalidation | independently authorize mutation after drift |
+| Code Atlas | repository inventory, authority/evidence/dependency/ownership graphs, snapshots/freshness | import facts by provenance | re-scan/rebuild the repository graph or turn Impact Radius into authority |
+| NDC | neutral IDs, scope, curation, authority order, registered semantic edge vocabulary | reference canonical neutral meaning and NDC edges | mint neutral meaning, duplicate NDC curation, or publish process edges as NDC canon |
+| NDC generated matrices | Tool/Authority/Factory-Ledger/Risk/Drift and other governed views | link to or consume those views where they answer the same question | create competing matrices with different truth semantics |
+| Identity | visual meaning, recipes, adapters and bindings | reference exact authority records | infer recipes/meaning from similarity or write Identity |
+| RIFAT / prisma-ui | exact visual location and projection truth | reference route/owner/slot/layer/projection | create a competing location registry |
+| Target Index | generated persistent target addressing | use target IDs and current blocker fields | mint target IDs or hand-edit the generated index |
+| Visual Promotion Control Plane | candidate/current-truth/readiness/collision decisions | compose current promotion state and blockers | re-decide promotion readiness from raw similarity |
+| Status Channel | worker/composer coordination facts | read as `LIVE_OVERLAY` | promote mailbox state to canonical authority |
+| Change Assurance | change evidence lifecycle, Agent Authority Pack, verification/proof boundary | route to existing authorization/evidence stages | issue a second Authority Pack or redefine editable scope |
+| Work Entry / GVAE | legal visual-work admission and exact governed mutation | explain when those gates become reachable | bypass admission, apply a patch or claim APPLY authorization |
+| Atlasfin | cockpit/reference/comparison evidence | attach reference evidence | become semantic writer, product writer or `surfaceKey` |
+| PRISMO Learning | local read-only evidence/pattern suggestions | optionally consume as reference-only operator context | treat learned patterns or `next_action` as canonical process truth |
+
+### Drift ownership
+
+The Drift Sentinel owns **process-level staleness and disagreement composition**, not every underlying drift algorithm.
+
+- Repository snapshot/freshness facts SHOULD reuse Code Atlas.
+- Task authorization after repository/authority drift MUST reuse Authority Mesh / AutoMesh revalidation.
+- NDC data/canonical drift remains NDC-owned.
+- Visual projection drift remains RIFAT/Visual Promotion/Work Entry-owned as applicable.
+- The Operating Graph may label these facts in one operational view, but does not become their writer.
+
+### Edge namespace rule
+
+Several Operating Graph relation names intentionally overlap NDC vocabulary such as `requires`, `writes`, `reads`, `projects_to`, `represented_by`, `derived_from`, `evidenced_by`, `observed_by`, `owned_by`, `blocks`, `conflicts_with`, `reconciles` and `supersedes`.
+
+That overlap is for interoperable meaning, not shared write ownership. An Operating Graph edge is a **process graph assertion** unless its provenance points to a canonical NDC edge record. It MUST NOT be exported back into NDC canon automatically.
+
+## 12. Regeneration
 
 Canonical graph generation must be deterministic from:
 
@@ -154,7 +191,7 @@ Canonical graph generation must be deterministic from:
 
 Generated operational views are disposable projections. Manual corrections belong in the owning canonical authority or curation source, never in generated output.
 
-## 12. What the graph does not authorize
+## 13. What the graph does not authorize
 
 A graph result, generated Master Map, Next Safe Action result or what-if simulation does not by itself authorize:
 
