@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
-  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:15:00Z",
+  "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat1/authority-reconciliation-tablet-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for TABLET_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
+  "summary": "Chat 1 started AUTHORITY_RECONCILIATION_ANTI_REWORK as TABLET_AUTHORITY_RECONCILIATION. Exact input is the immutable 929-target Tablet cohort. Current main advanced from assignment basis 46c9032d... to 70f381e9... only through Factory Ledger/Evidence Index registration of visual.operating_graph_v1, which is governance-sensitive drift and must be revalidated before lane-source writes.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -72,7 +72,12 @@
     "REUSE.jsonl and REGISTRATION_PROPOSALS.jsonl are intentionally empty; current authority does not justify a READY row.",
     "PROJECTION_DEBT.jsonl contains exactly two Cobrar accent targets with CANONICAL_PROJECTION_REQUIRED_MISSING.",
     "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 throughout materialization and validation; no revalidation event was triggered.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild.",
+    "Latest OWNER_ASSIGNMENT resolves Chat 1 lane as TABLET_AUTHORITY_RECONCILIATION, work branch chat1/authority-reconciliation-tablet-20260914, exclusive output root prisma-html/governance/visual-promotion/authority-reconciliation/tablet/**, exact inputCount=929.",
+    "Current canonical main is 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9, three commits/topology steps ahead of assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; effective file delta is limited to PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json.",
+    "The current-head delta registers visual.operating_graph_v1 as BUILD/NOT_STARTED without changing Tablet product/runtime or visual authority bytes, but Factory Ledger/Evidence Index are AutoMesh trust anchors, so mutation authority cannot be assumed stale-safe.",
+    "PR #529 remains authoritative anti-rework evidence for existing all-surface physical mapping and GVAE Target Index; DISCOVERY_ONLY remains mapped discovery evidence, not undiscovered scope.",
+    "PR #554 remains the closed promotion-readiness baseline: Tablet 929 = 924 semantic-blocked + 1 application-gap + 2 binding-gap + 2 physical-drift, with zero canonical mutation authorization."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -102,7 +107,11 @@
     "Do not declare any Tablet row READY in this phase unless the existing exact authority satisfies the promotion-readiness contract. Preserve Cobrar reuse as evidence while retaining its application-authority blockers.",
     "For the two existing accent exact targets, reuse TOK.color.accent only as proven semantic authority; do not treat the ambiguous multi-binding as resolved or create a recipe/layer/projection.",
     "Emit 138 deterministic local proposal keys from certified visualMeaningCandidate evidence; these are proposal evidence only, never canonical IDs.",
-    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat1/authority-reconciliation-tablet-20260914."
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat1/authority-reconciliation-tablet-20260914.",
+    "Do not repeat CANONICAL_PROMOTION_READINESS_RESOLUTION; consume PR #554 outputs as immutable prior evidence.",
+    "Perform GitHub-only Authority Mesh/AutoMesh revalidation or fresh task-exact Mesh before any work-branch write because current main changed Factory Ledger trust-anchor bytes.",
+    "Continue read-only reconciliation while governance evidence is being refreshed; do not create or mutate the assigned work branch until the mutation gates are actually satisfied.",
+    "Never classify TRUE_NEW_AUTHORITY_REQUIRED from an empty search; require the complete negative-evidence checklist."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
@@ -298,7 +307,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat1/authority-reconciliation-tablet-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
+  "nextAction": "Run GitHub-only task-exact Authority Mesh/anti-rework preflight for the 929-target Tablet authority-reconciliation lane, continue bounded read-only semantic reconciliation, then write only lane-local sharded evidence if mutation authority passes. Otherwise publish BLOCKED_EXECUTION_PATH.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -581,6 +590,20 @@
       "materialityCatalogAuthorized": false,
       "githubOnly": true,
       "status": "ASSIGNED_NOT_STARTED"
+    },
+    "authorityReconciliation": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "lane": "TABLET_AUTHORITY_RECONCILIATION",
+      "state": "IN_PROGRESS",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat1/authority-reconciliation-tablet-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/tablet/**",
+      "expectedInputCount": 929,
+      "githubOnly": true,
+      "materialityCatalogInspected": false,
+      "productRuntimeMutationPerformed": false,
+      "canonicalAuthorityMutationPerformed": false
     }
   }
 }
