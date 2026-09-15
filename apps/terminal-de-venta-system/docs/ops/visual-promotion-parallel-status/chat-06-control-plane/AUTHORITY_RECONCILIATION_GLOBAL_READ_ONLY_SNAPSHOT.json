@@ -4,7 +4,7 @@
   "chatId": 6,
   "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "generatedAt": "2026-09-15T09:36:00-06:00",
+  "generatedAt": "2026-09-15T09:44:00-06:00",
   "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "capability": {
     "id": "visual.generic_application_engine_v1",
@@ -119,7 +119,9 @@
     "materialityCatalogUsed": false,
     "productRuntimeMutationObserved": false,
     "projectionRepairObserved": false,
-    "gvaeApplyObserved": false
+    "gvaeApplyObserved": false,
+    "composerFinalSemanticGreen": false,
+    "reasonNotFinal": "820 EXISTING_CONCEPT_LINK_MISSING rows still need target-specific concept qualification; 964 targets remain unresolved in Tablet/Shared UI."
   },
   "priorities": [
     "Finish the 40 unresolved Shared UI target-specific joins first because the lane is small and bounded.",
@@ -137,5 +139,26 @@
   "governedOutputsWritten": false,
   "mainMutationPerformed": false,
   "prOpened": false,
-  "mergePerformed": false
+  "mergePerformed": false,
+  "composerAcceptance": {
+    "structurallyClassified": 1133,
+    "semanticallyAcceptedOrDebtClassified": 313,
+    "conceptLinkMissingPendingTargetSpecificConceptQualification": 820,
+    "unresolvedTargetSpecific": 964,
+    "total": 2097,
+    "rule": "EXISTING_CONCEPT_LINK_MISSING is not composer-final merely because a surface has some NDC/Identity authority family. The relevant existing concept must be target-specifically evidenced or otherwise qualified strongly enough to prove that the gap is the link, not the concept itself."
+  },
+  "auditFindings": [
+    {
+      "code": "CONCEPT_LINK_CLASSIFICATION_REQUIRES_TARGET_SPECIFIC_CONCEPT_EVIDENCE",
+      "affected": {
+        "pc": 687,
+        "mobile": 133,
+        "total": 820
+      },
+      "finding": "PC and Mobile receipts classify CURRENT/current rows as EXISTING_CONCEPT_LINK_MISSING while explicitly stating exact target-level operational/visual meanings remain unresolved. Chat 5 proves authority families exist, but family existence alone does not identify the existing concept for each target.",
+      "disposition": "Accept zero-loss/accounting and deterministic target sets. Hold these 820 semantic classifications as PROVISIONAL pending target-specific existing-concept evidence or a stronger governed rule proving family-level evidence is sufficient.",
+      "fakeGreenPrevented": true
+    }
+  ]
 }
