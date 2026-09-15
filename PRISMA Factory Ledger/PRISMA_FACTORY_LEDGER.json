@@ -1930,35 +1930,38 @@
         "quality"
       ],
       "classification": "BUILD",
-      "status": "NOT_STARTED",
-      "stateLabel": "VISUAL_OPERATING_GRAPH_V1_REGISTERED_BUILD_NOT_STARTED",
+      "status": "WAVE1_SOURCE_READY",
+      "stateLabel": "VISUAL_OPERATING_GRAPH_WAVE1_READ_ONLY_SOURCE_READY",
       "doNotRebuild": false,
-      "nextGate": "On exact current main, run the universal anti-rework PROPOSAL gate for visual.operating_graph_v1. Then obtain or revalidate a task-exact Authority Mesh for the bounded Foundation docs/schemas/read-only derivation scope and run the anti-rework MUTATION gate before repository source writes. Foundation must remain non-product, non-runtime and non-authorizing.",
+      "nextGate": "On exact current main after this Wave 1 closure, run the universal anti-rework PROPOSAL gate and a fresh task-exact Authority Mesh for the bounded read-only Next Safe Action Engine + What-if Digital Twin scope. Then run the anti-rework MUTATION gate before repository source writes. Preserve authorizationGranted=false, productionCertified=false, no semantic minting, no canonical visual registration, no Work Entry mutation, no GVAE APPLY and no product/runtime mutation.",
       "evidence": [
         "Registration-only Authority Mesh run 34911873722 artifact 10374668209; PASS_COMPOSED_AUTHORITY_MESH at main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09; composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e; uploaded artifact sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
-        "Current Promotion Readiness closure remains PR #554 / main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with canonicalMutationAuthorized=false and productRuntimeMutationAuthorized=false",
-        "Existing authorities are reuse dependencies, not rebuild scope: Factory Ledger, Authority Mesh, Code Atlas/UIMAP, NDC, Identity, RIFAT/prisma-ui, Target Index, Visual Promotion Control Plane/Readiness, Universal Visual Work Entry Gate/GVAE, Atlasfin reference bridge, runtime QA and Git/CI evidence"
+        "Foundation PR #556 merged at 8db4370d579014f8fed6e190ffce45e1589b33d9 with VISCORE1, CI, ForgeOS Quality Gate and Sync Sentinel green; Foundation establishes collision/reuse boundaries and machine-readable contracts without product/runtime mutation",
+        "Wave 1 implementation PR #558 merged at 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d after source-set fail-closed rebind to current authority; final PR checks: VISCORE1 35001088119 PASS, CI 35001088193 PASS, ForgeOS 35001087929 PASS, Sync Sentinel 35001088016 PASS",
+        "Wave 1 current-main Authority Mesh run 35000699014 artifact 10409517912 requestId de894f21c1b291df; PASS_COMPOSED_AUTHORITY_MESH; 100% required authority coverage; blockers 0; requestDigest 7c2b9b38cf8ae6d215f3ab13e7005d1371d2facdb5b149ad7296c95e20f8b7d7; composed sha256 67f209964b861ae89e9fb712cb9d9137ea8058882e02c056291690f3d5f13664; uploaded sha256 5696d219f0802dac14a6fa509acaf97089fd12541eed229ee576d533606cf560",
+        "Final VISCORE1 source validator on PR #558: PASS_SOURCESET_VERIFIED; 0 blocking findings; deterministic canonical graph 87 nodes / 75 edges; canonical/live separation preserved; live overlay not observed; productionCertified=false and authorizationGranted=false",
+        "Wave 1 closure Authority Mesh run 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769; PASS_COMPOSED_AUTHORITY_MESH on exact main 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d; requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b; composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466; uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab"
       ],
       "doesNotProve": [
-        "Visual Operating Graph Foundation files or generator tooling exist",
-        "Anti-rework PROPOSAL or MUTATION has passed for this newly registered BUILD capability",
-        "Any canonical visual registration, semantic authority, binding, projection repair or target readiness",
-        "Any product/source/runtime visual mutation or GVAE APPLY",
+        "Next Safe Action Engine is implemented or source-ready",
+        "What-if Digital Twin is implemented or source-ready",
+        "Any canonical visual registration, semantic authority minting, binding repair, Work Entry mutation or GVAE APPLY is authorized",
+        "Any product/runtime source mutation or rendered visual behavior",
         "Any runtime visual, production, distribution or customer deployment certification"
       ],
       "allowedActions": [
-        "reuse existing machine-readable authorities without rebuilding them",
-        "run the exact anti-rework and Authority Mesh gates for the bounded Foundation",
-        "after those gates, author docs, schemas, registries and deterministic read-only derivation tooling for the Operating Graph",
-        "represent unresolved authority as explicit gaps and preserve canonical versus live-overlay separation"
+        "reuse the Wave 1 source-set verifier, canonical graph builder, generated Master Map projection, Live Phase Truth Reducer and Drift Sentinel without rebuilding them",
+        "run the exact anti-rework and Authority Mesh gates for the bounded Next Safe Action + What-if Wave 2",
+        "after those gates, implement only deterministic read-only planner/simulator tooling against existing Operating Graph authority and provenance",
+        "represent unresolved authority, staleness and conflicts explicitly; preserve source blocker codes and canonical versus live-overlay separation"
       ],
       "forbiddenActions": [
-        "touch product or runtime source as part of Foundation",
-        "perform canonical visual registration or semantic coalescing by inference",
-        "run GVAE APPLY or bypass the Universal Visual Work Entry Gate",
-        "run broad visual rediscovery or rebuild existing Target Index, NDC, Identity, RIFAT, Factory Ledger or GVAE",
+        "touch product or runtime source as part of Operating Graph Wave 2",
+        "mint NDC or visual semantic authority, infer canonical identity from similarity, or perform canonical visual registration",
+        "bypass the Universal Visual Work Entry Gate or run GVAE APPLY",
+        "rebuild existing Factory Ledger, Authority Mesh, Code Atlas, NDC, Identity, RIFAT, Target Index or Visual Promotion authorities",
         "touch databases, Prisma generation, deployment, processes or ports",
-        "claim runtime or production green from docs, schemas, static checks or absent evidence"
+        "claim authorization, runtime visual green or production readiness from planner/simulator output"
       ]
     },
     {
