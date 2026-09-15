@@ -1,0 +1,165 @@
+{
+  "schema": "prisma.visual-promotion.tablet-target-specific-qualification.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 1,
+  "role": "TABLET_AUTHORITY_RECONCILIATION_WORKER",
+  "observedAt": "2026-09-15T11:15:14-06:00",
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "unrelatedCapability": {
+    "id": "visual.operating_graph_v1",
+    "disposition": "SEPARATE_NOT_PREREQUISITE_NOT_BLOCKER"
+  },
+  "branchObservations": {
+    "chat1StatusHeadBeforePass": "e16276d1e80c6d6a28eaf7aab00b29c04a19d31a",
+    "chat5StatusHead": "e2f13271f4b17f093a56126d0e70d859b5f21597",
+    "chat6StatusHead": "e21a7ed5f9b05f615fbc559b994a7869c48d9637",
+    "mainChangedSinceRestartHandoff": false
+  },
+  "inputAccounting": {
+    "expectedTabletTargets": 929,
+    "priorComposerProvisionalConceptLink": 924,
+    "preservedSpecific": 5,
+    "preservedSpecificBreakdown": {
+      "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
+      "EXISTING_AUTHORITY_CONFLICT_CURATE": 2,
+      "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 2
+    },
+    "missing": 0,
+    "extra": 0,
+    "duplicate": 0
+  },
+  "qualificationRule": "EXISTING_CONCEPT_LINK_MISSING is not composer-final unless target-specific evidence proves the relevant existing NDC/Identity/VIS concept, or a governed rule proves that only the link is missing. Family-level authority, recipe, adapter, selector or generic surface evidence is insufficient.",
+  "freshEvidence": {
+    "currentTabletCandidateSummary": {
+      "path": "prisma-html/governance/visual-promotion/candidates/tablet/SUMMARY.md",
+      "gitBlobSha": "194d8d1def4609cb95f6660279bd2930b5a5642e",
+      "ndcResolution": {
+        "UNRESOLVED": 929
+      },
+      "visualMeaning": {
+        "UNRESOLVED": 790,
+        "CANDIDATE_REVIEW_REQUIRED": 138,
+        "RESOLVED_EXISTING": 1
+      },
+      "binding": {
+        "BLOCKED": 790,
+        "CANDIDATE": 138,
+        "EXISTING_RESOLVED": 1
+      },
+      "note": "The one RESOLVED_EXISTING target is the already-separated Cobrar primary target."
+    },
+    "certifiedCorpusSummary": {
+      "path": "prisma-html/governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
+      "gitBlobSha": "6027ecdf748a5fd19b99c2bbcfe6039ec9b80307",
+      "targetCount": 929,
+      "sourceBuckets": {
+        "CANDIDATES": 139,
+        "UNRESOLVED": 788,
+        "CONFLICTS": 2
+      },
+      "semanticMutationCount": 0,
+      "populatedNdcIdsOrRefs": 0,
+      "exactExistingBindingCount": 1
+    },
+    "freshCandidateSubsetAudit": {
+      "source": "prisma-html/governance/visual-promotion/candidates/tablet/CANDIDATES.jsonl",
+      "candidateRowsRead": 139,
+      "provisionalRowsAfterExcludingCobrarPrimary": 138,
+      "ndcPrimaryIdNonNull": 0,
+      "ndcRefsNonEmpty": 0,
+      "visualMeaningIdNonNull": 0,
+      "existingBindingIdNonNull": 0,
+      "identityRecipeIdNonNull": 0,
+      "applicationLayerIdNonNull": 0,
+      "atlasfinRecipeCandidateCounts": {
+        "REC.table.governed.v2": 66,
+        "REC.card.governed.v2": 41,
+        "REC.overlay.governed.v2": 11,
+        "REC.panel.governed.v2": 20
+      },
+      "disposition": "REMAIN_PROVISIONAL",
+      "reason": "Generic Atlasfin recipe matches and visualMeaningCandidate values are candidate/similarity evidence, not target-specific canonical concept proof."
+    },
+    "remainingProvisionalDerivation": {
+      "candidateReviewRowsRemaining": 138,
+      "unresolvedBucketRows": 788,
+      "accentRowsRemovedFromProvisionalAsSpecificAuthorityConflicts": 2,
+      "unresolvedRowsRemainingProvisional": 786,
+      "totalProvisional": 924,
+      "note": "No new current-main or Chat 5 target-specific evidence was found for these 786 rows; they remain provisional rather than being upgraded by absence or by family-level authority."
+    },
+    "chat5CurrentDeltaInventory": {
+      "totalDeltaReceipts": 10,
+      "tabletDeltaReceipts": 2,
+      "tabletDeltas": [
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_0A305145.json",
+          "gitBlobSha": "60e63cb933e6586962de23b4a7d223fad3b0ceb6",
+          "targetId": "TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1",
+          "disposition": "ALREADY_IN_PRESERVED_SPECIFIC_CONFLICT_SET"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_2E41F7A9.json",
+          "gitBlobSha": "d0a1a2828eaf3620dfad5910fb08aa1383feb63b",
+          "targetId": "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1",
+          "disposition": "ALREADY_IN_PRESERVED_SPECIFIC_CONFLICT_SET"
+        }
+      ],
+      "provisional924DeltaGain": 0
+    },
+    "composerSnapshot": {
+      "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json",
+      "gitBlobSha": "12bb471ac3c860741f17fc7591c7f7b2505ed36e",
+      "tabletProvisional": 924,
+      "composerFinalPromotionsForTablet": 0,
+      "evidenceQuality": "INSUFFICIENT_TARGET_SPECIFIC_CONCEPT_PROOF"
+    }
+  },
+  "result": {
+    "code": "PASS_TABLET_TARGET_SPECIFIC_QUALIFICATION_NO_GAIN_01",
+    "auditedProvisionalTargets": 924,
+    "newlyQualifiedComposerFinal": 0,
+    "remainingComposerProvisional": 924,
+    "trueNewAccepted": 0,
+    "semanticFinal": false,
+    "zeroLoss": {
+      "expected": 929,
+      "accounted": 929,
+      "missing": 0,
+      "extra": 0,
+      "duplicate": 0
+    },
+    "preservedSpecificCount": 5
+  },
+  "writeGate": {
+    "status": "WRITE_GATE_PATH_PENDING",
+    "blocksReadOnly": false,
+    "blocksMailboxReceipts": false,
+    "blocksGovernedOutputWrites": true
+  },
+  "guardrailsHeld": {
+    "recensus": false,
+    "broadRediscovery": false,
+    "gvaeRebuild": false,
+    "rifatRebuild": false,
+    "identityRebuild": false,
+    "ndcRebuild": false,
+    "materialityCatalogInspected": false,
+    "canonicalIdsMinted": false,
+    "canonicalRegistrationPerformed": false,
+    "productRuntimeMutation": false,
+    "projectionRepair": false,
+    "gvaeApply": false,
+    "filesManifestTouched": false,
+    "prOpened": false,
+    "mergeToMain": false
+  },
+  "nextAction": "Continue bounded target-specific evidence intake. Promote a provisional row only when a fresh exact-target receipt proves the relevant existing concept or a governed link-only rule. Otherwise preserve provisional state and zero-loss."
+}
