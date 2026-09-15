@@ -2,7 +2,7 @@
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00D_VERTICAL_EVENTS_PERMISSIONS",
   "version": "00D",
   "createdAt": "2026-04-29T18:52:30.756029Z",
-  "description": "Vertical events, permissions, audit and sync policies for PRISMA multi-business architecture.",
+  "description": "Vertical events, permissions, audit and sync policies for PRISMA multi-business architecture, including professional_corporate_services.",
   "selfHashPolicy": "manifest is intentionally not self-hashed; installer verifies listed payload files and manifest readability.",
   "files": [
     {
