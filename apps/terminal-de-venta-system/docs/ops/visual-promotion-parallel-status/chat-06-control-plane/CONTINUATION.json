@@ -1,0 +1,262 @@
+{
+  "schema": "prisma.visual-promotion.chat6-continuation.v1",
+  "generatedAt": "2026-09-15T09:50:00-06:00",
+  "repository": "prismahitech/hitech-os",
+  "canonicalMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "chatId": 6,
+  "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
+  "operatingMode": "READ_ONLY_COMPOSITION_AND_SEMANTIC_QUALITY_GATE",
+  "capability": {
+    "id": "visual.generic_application_engine_v1",
+    "classification": "DONE",
+    "status": "SOURCE_READY",
+    "doNotRebuild": true,
+    "requestedAction": "ADVANCE"
+  },
+  "unrelatedCapability": {
+    "id": "visual.operating_graph_v1",
+    "note": "Registered by PR #555 for another Foundation task. It is not this phase capability and must not block/redirect this reconciliation."
+  },
+  "immutablePriorTruth": {
+    "pr529": {
+      "merge": "6d2b7b91dc8bbd7fcf494e50aa7f746ccebe9ff3",
+      "surfaces": 7,
+      "routes": 96,
+      "visualRegions": 1978,
+      "editableSlots": 10575,
+      "componentOwners": 215,
+      "cssOwners": 89,
+      "layers": 4453,
+      "targetIndexRecords": 3915,
+      "exactApplicationTargets": 4,
+      "visualControlCensusTargets": 3911,
+      "blockers": 0,
+      "warnings": 0
+    },
+    "pr554": {
+      "merge": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "result": "READY_FOR_CANONICAL_PROMOTION_INTEGRATION",
+      "cohort": 2097,
+      "surfaces": {
+        "tablet": 929,
+        "pc": 827,
+        "mobile": 271,
+        "sharedUi": 70
+      },
+      "blocked": 2097,
+      "projectionDebt": 279,
+      "resolutionDigest": "10724899c2f2fce4248375e44d51632fc8b63012eaa85487f8589979ddf7a03b",
+      "canonicalRegistrationAuthorized": false,
+      "productRuntimeMutationAuthorized": false
+    },
+    "pr555": {
+      "merge": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "changedOnly": [
+        "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+        "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+      ],
+      "registered": "visual.operating_graph_v1",
+      "effectOnThisPhase": "governance trust-anchor drift only; does not change phase capability"
+    }
+  },
+  "workerStatus": {
+    "chat1Tablet": {
+      "statusBranch": "status/vp-chat-01-tablet",
+      "workBranch": "chat1/authority-reconciliation-tablet-20260914",
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
+      "input": 929,
+      "zeroLoss": {
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0
+      },
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 924,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 1,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 2,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 2,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "classificationDigest": "de9d9305ec2bd3a1fc8d5c827e93620ae222e81c838af6bb97e2b92961892ccc",
+      "composerDisposition": "924 concept-link rows are PROVISIONAL pending target-specific existing-concept qualification; 5 non-concept-link rows accepted structurally/semantically as specific gap/conflict/debt classes.",
+      "writeGate": "WRITE_GATE_PATH_PENDING"
+    },
+    "chat2Pc": {
+      "statusBranch": "status/vp-chat-02-pc",
+      "workBranch": "chat2/authority-reconciliation-pc-20260914",
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
+      "input": 827,
+      "zeroLoss": {
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0
+      },
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 687,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 1,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 139,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "composerDisposition": "687 concept-link rows are PROVISIONAL pending target-specific existing-concept qualification; 140 conflict/projection-debt rows accepted as specific non-semantic-link classifications.",
+      "writeGate": "WRITE_GATE_PATH_PENDING"
+    },
+    "chat3Mobile": {
+      "statusBranch": "status/vp-chat-03-mobile",
+      "workBranch": "chat3/authority-reconciliation-mobile-20260914",
+      "workHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "state": "PASS_READ_ONLY_WITH_WRITE_GATE_PENDING",
+      "input": 271,
+      "zeroLoss": {
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0
+      },
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 133,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 138,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "composerDisposition": "133 concept-link rows are PROVISIONAL pending target-specific existing-concept qualification; 138 projection-debt rows accepted as specific debt classification.",
+      "receipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+      "writeGate": "WRITE_GATE_PATH_PENDING"
+    },
+    "chat4SharedUi": {
+      "statusBranch": "status/vp-chat-04-shared-ui",
+      "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
+      "state": "IN_PROGRESS_READ_ONLY",
+      "input": 70,
+      "accounted": 70,
+      "counts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 0,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 11,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 19,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0,
+        "UNRESOLVED_TARGET_SPECIFIC": 40
+      },
+      "composerDisposition": "30 specific conflict/debt rows accepted; 40 targets still need surface-owner classification. Two Chat 5 Shared UI deltas are available and should be consumed by Chat 4 before composer acceptance.",
+      "writeGate": "WRITE_GATE_PATH_PENDING"
+    },
+    "chat5CrossAuthority": {
+      "statusBranch": "status/vp-chat-05-atlasfin",
+      "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
+      "state": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+      "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+      "baselineResult": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
+      "baselineInput": 2097,
+      "baselineMustNotBeRebuilt": true,
+      "dynamicDeltas": [
+        {
+          "file": "AUTHORITY_DELTA_PC_6CC072FF.json",
+          "targetId": "TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1",
+          "suggestion": "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
+          "note": "Historical VIS.SURFACE.CONTENT.PRIMARY candidate exists but is not canonical Identity authority; projection direction unresolved."
+        },
+        {
+          "file": "AUTHORITY_DELTA_SHARED_UI_09F96569.json",
+          "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+          "suggestion": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "note": "ACT.primary/REC.button.primary existing Shared UI semantic authority, exact grouped target binding missing; do not equate to NDC ACT.sale.checkout."
+        },
+        {
+          "file": "AUTHORITY_DELTA_SHARED_UI_BA225641.json",
+          "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+          "suggestion": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "note": "Existing ACT.primary authority but exact binding/application missing."
+        },
+        {
+          "file": "AUTHORITY_DELTA_TABLET_0A305145.json",
+          "targetId": "TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1",
+          "suggestion": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+          "note": "Existing TOK.color.accent and ambiguous one-to-many binding; TRUE_NEW rejected."
+        },
+        {
+          "file": "AUTHORITY_DELTA_TABLET_2E41F7A9.json",
+          "targetId": "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1",
+          "suggestion": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+          "note": "Existing TOK.color.accent and ambiguous one-to-many binding; TRUE_NEW rejected."
+        }
+      ],
+      "writeGate": "WRITE_GATE_PATH_PENDING"
+    }
+  },
+  "composerQualityGate": {
+    "zeroLoss": {
+      "expected": 2097,
+      "accounted": 2097,
+      "missing": 0,
+      "extra": 0,
+      "duplicate": 0
+    },
+    "acceptedSpecificClassifications": 313,
+    "provisionalConceptLinkMissing": 1744,
+    "unresolvedSurfaceOwned": 40,
+    "equation": "313 + 1744 + 40 = 2097",
+    "provisionalBreakdown": {
+      "tablet": 924,
+      "pc": 687,
+      "mobile": 133
+    },
+    "rule": "EXISTING_CONCEPT_LINK_MISSING is composer-final only when the relevant existing concept is target-specifically evidenced or a governed rule proves the missing object is the link rather than the concept. Surface/family-level authority existence alone is insufficient.",
+    "trueNewAccepted": 0,
+    "semanticFinal": false
+  },
+  "semanticSeparation": {
+    "ndcOperational": "ENT.* EVT.* ACT.* STA.* MET.* ALT.* EVD.* CAP.* CAN.*",
+    "identityVisual": "identity:: historical visual IDs and VIS.* future visual IDs",
+    "rifatPhysical": "surface/route/region/slot/component/owner/layer/selector",
+    "application": "BND.* LYR.* recipe adapter",
+    "keyRule": "identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout is not equivalence"
+  },
+  "writeGate": {
+    "code": "WRITE_GATE_PATH_PENDING",
+    "scope": "governed-output-repository-write-only",
+    "reason": "Canonical task-specific verify_prisma_anti_rework_gate.py --request PROPOSAL/MUTATION execution path is not currently exposed through connected GitHub action surface.",
+    "blocksReadOnly": false,
+    "governedComposerOutputsWritten": false
+  },
+  "forbidden": [
+    "recensus or broad rediscovery",
+    "rebuild GVAE/RIFAT/Identity/NDC/Target Index",
+    "Materiality Catalog inspection without explicit owner authorization",
+    "canonical ID minting or canonical registration",
+    "product/runtime/CSS/TSX/JS mutation",
+    "projection repair",
+    "GVAE APPLY",
+    "FILES_MANIFEST churn from worker lanes",
+    "PR or merge to main without explicit owner instruction",
+    "fake green or treating empty search as absence proof"
+  ],
+  "nextChatReadOrder": [
+    "apps/terminal-de-venta-system/docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.md",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json",
+    "Chat 1-5 STATUS.json files at their status branches",
+    "Chat 5 baseline receipt and dynamic delta receipts"
+  ],
+  "exactNextActions": [
+    "Re-read current main and all six mailboxes first; do not assume no drift.",
+    "Consume any newer Chat 4 result, especially the two Shared UI targets covered by Chat 5 deltas.",
+    "Consume new Chat 5 delta receipts and validate relation/evidence without allowing Chat 5 to decide foreign-lane classifications.",
+    "Maintain zero-loss 2,097 accounting.",
+    "Keep Tablet/PC/Mobile concept-link rows provisional until target-specific existing-concept qualification is proven or a governed rule justifies the class.",
+    "Do not ask owner for local commands/files; work GitHub-only.",
+    "Do not materialize governed composed outputs until WRITE_GATE_PATH_PENDING is legitimately cleared.",
+    "When write authority exists, create/reuse chat6/authority-reconciliation-composer-20260914 from then-current main and materialize only Chat 6 owned composed outputs, then validate manifests/hashes/zero-loss."
+  ],
+  "noUserActionCurrentlyRequired": true
+}
