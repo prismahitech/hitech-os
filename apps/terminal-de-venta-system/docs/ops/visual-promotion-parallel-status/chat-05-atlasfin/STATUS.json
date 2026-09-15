@@ -4,79 +4,85 @@
   "lane": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-14T18:36:00-06:00",
+  "state": "IN_PROGRESS_READ_ONLY",
+  "updatedAt": "2026-09-15T01:06:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "START + BLOCKER for AUTHORITY_RECONCILIATION_ANTI_REWORK. Chat 5 resolved its owner assignment from the deterministic mailbox and completed the safe GitHub-only read-only preflight. Assignment basis main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 advanced by three commits to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. The drift modifies canonical PRISMA Factory Ledger and PRISMA Evidence Index, so current-head anti-rework / Authority Mesh rebinding is mandatory before governed output-root mutation. The available GitHub connector exposes workflow inspection/rerun but no workflow-dispatch path for /prisma-automesh or the anti-rework request. Per owner playbook, this is BLOCKED_EXECUTION_PATH. No computer or manual command is requested.",
+  "summary": "Read-only cross-authority reconciliation resumed. BLOCKED_EXECUTION_PATH was narrowed correctly to WRITE_GATE_PATH_PENDING for governed output-root writes only. Cross-authority concepts, semantic relation rules, NDC materialization truth, historical authority and negative-evidence rules are now published in this mailbox for surface workers and Chat 6. No governed output-root write was attempted.",
   "blockers": [
     {
-      "code": "BLOCKED_EXECUTION_PATH",
-      "scope": "governed output writes only",
-      "detail": "PR #555 changed canonical Factory Ledger/Evidence authority after assignment. The mandatory current-head Factory Ledger anti-rework and AutoMesh/Authority Mesh gate must be rebound before creating or mutating chat5/authority-reconciliation-cross-evidence-20260914 outputs, but the available GitHub-only action surface has no workflow-dispatch operation."
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "governed-output-repository-write-only",
+      "detail": "Current-head Factory Ledger/Authority Mesh write gate cannot be dispatched through the available GitHub connector. This does not block read-only analysis or mailbox receipts."
     }
   ],
   "findings": [
-    "Identity resolved from status contract/index and owner mailbox: Chat 5, lane CROSS_AUTHORITY_EVIDENCE_RECONCILIATION, expected input 2,097 targets, output root prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**.",
-    "Current main is 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Compare 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0..70f381e9b3c0b63ee4c7e445c98e86b3e9211be9 is ahead_by=3, behind_by=0; changed canonical files are PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json.",
-    "Current Factory Ledger still classifies visual.generic_application_engine_v1 as DONE / SOURCE_READY / doNotRebuild=true. The PR #529 all-surface census remains certified at 7 surfaces, 96 routes, 1,978 regions, 10,575 slots, 215 component owners, 89 CSS owners, 4,453 layers, with Target Index 3,915 = 4 GVAE_ENFORCED + 3,911 DISCOVERY_ONLY.",
-    "PR #554 remains the closed prior phase: exact 2,097 inputs, 0 reuse, 0 registration, 2,097 blocked, 0 missing/extra/duplicate/hash mismatch/semantic mutation. It must not be recomputed.",
-    "NDC machine-readable catalog registry currently declares catalog_count=66 and catalog entries status=defined_for_doc1; doctrine/examples already contain operational IDs such as ENT.sale / EVT.sale.created / ACT.sale.checkout / CAN.sale, so missing target links must not be misread as missing concepts.",
-    "Code Atlas/UIMAP evidence already demonstrates an explicit relation pattern where visual neutral meaning ACT.primary is related to NDC ACT.sale.checkout. This proves relation can exist without authority-domain equivalence.",
-    "Atlasfin remains reference-only. Certified Atlasfin truth remains 2,421/2,421 valid non-null references over 2,097 source outcomes with 341 representation-only normalizations and 0 semantic mutations; recipe equality alone cannot authorize semantic coalescing.",
-    "Materiality Catalog was not inspected."
+    "Factory Ledger capability for this lane is visual.generic_application_engine_v1 = DONE / SOURCE_READY / doNotRebuild=true; requested action ADVANCE. visual.operating_graph_v1 is not a prerequisite or blocker for this lane.",
+    "NDC DOC1 is documentary canon plus registries/schemas/seeds/examples, not populated DB truth. NDC_DOCSET_MANIFEST declares no_db=true; 66 catalog definitions remain defined_for_doc1; next-iteration contract explicitly says no DB/Prisma schema/migrations yet.",
+    "Existing NDC concepts include ENT.sale, EVT.sale.created, ACT.sale.checkout and CAN.sale. A missing target link to these concepts is not evidence that the concept is new.",
+    "Identity currently has one canonical recipe REC.button.primary with FAM.button.action, PRESET.button.primary.clear-operational.v1 and VSTACK.ACT.PRIMARY.TABLET.POS.COBRAR.V1; the certified Tablet Cobrar target has existing BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 and LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE.",
+    "Code Atlas/UI Bridge explicitly models identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout. The domains remain distinct; relation is not equivalence.",
+    "Atlasfin table/card/panel recipe convergence remains VISUAL_SIMILARITY_ONLY. Independent canonical cross-surface semantic groups remain zero.",
+    "Surface corpus facts remain exact: Tablet 929, PC 827, Mobile 271, Shared UI 70 = 2,097; no recensus or prior-phase recomputation performed."
   ],
   "decisions": [
-    "Do not recensus, broad-rediscover, rebuild GVAE/RIFAT/Identity/NDC, repair projections, perform GVAE APPLY, mint canonical authority, mutate product/runtime, or inspect Materiality Catalog.",
-    "Preserve DISCOVERY_ONLY as existing physical discovery evidence, not UNDISCOVERED.",
-    "Continue read-only reconciliation only; do not create the work branch or write governed cross-authority outputs until current-head anti-rework/Authority Mesh evidence can be produced through an authorized GitHub execution path.",
-    "Do not classify any TRUE_NEW_AUTHORITY_REQUIRED while the full negative-evidence checklist cannot be materialized target-by-target into governed outputs."
+    "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
+    "Do not assert TRUE_NEW_AUTHORITY_REQUIRED from Chat 5. Surface workers must join target-specific negative evidence across the full checklist before that classification.",
+    "Treat NDC operational meaning, Identity visual meaning, physical location and binding/application authority as separate domains; never collapse by name similarity.",
+    "Do not use visual.operating_graph_v1 as this lane's capability, prerequisite or blocker.",
+    "Do not inspect Materiality Catalog, recensus, broad-rediscover, rebuild authority systems, repair projection, mutate product/runtime, mint canonical IDs, or perform GVAE APPLY."
   ],
   "changedPaths": [
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/STATUS.json"
   ],
   "validations": [
     {
-      "name": "Owner assignment resolution",
+      "name": "Read-only execution interpretation",
       "result": "PASS",
-      "detail": "Latest OWNER_ASSIGNMENT in own LOG.md resolves Chat 5 / CROSS_AUTHORITY_EVIDENCE_RECONCILIATION / 2,097 targets / assigned work branch and exclusive output root."
+      "detail": "Owner assignment explicitly says an unavailable GitHub gate permits continued read-only analysis and precise blocker publication."
     },
     {
-      "name": "Current main resolution",
+      "name": "Input accounting",
       "result": "PASS",
-      "detail": "main=70f381e9b3c0b63ee4c7e445c98e86b3e9211be9."
+      "detail": "929 + 827 + 271 + 70 = 2,097; prior certified corpus has zero missing/extra/duplicate and is reused without recomputation."
     },
     {
-      "name": "Assignment-base drift check",
-      "result": "BLOCKED_RELEVANT_GOVERNANCE_DRIFT",
-      "detail": "Assignment basis to current main changes PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; owner routing clarification explicitly requires current-head rebinding before output mutation."
-    },
-    {
-      "name": "Anti-rework truth",
+      "name": "NDC materialization audit",
       "result": "PASS_READ_ONLY",
-      "detail": "visual.generic_application_engine_v1 remains DONE / SOURCE_READY / doNotRebuild=true; requested governed phase action remains ADVANCE, not BUILD/REBUILD."
+      "detail": "Documentary canon, schemas, seed registries and examples exist; NDC docset itself is explicitly no_db and not Prisma/migration materialized."
+    },
+    {
+      "name": "Cross-domain semantic separation",
+      "result": "PASS_READ_ONLY",
+      "detail": "ACT.primary vs ACT.sale.checkout preserved as RELATED_TO across Identity/NDC authority domains, not EQUIVALENT_TO."
+    },
+    {
+      "name": "Cross-surface evidence",
+      "result": "PASS_READ_ONLY",
+      "detail": "Independent canonical semantic groups remain 0; Atlasfin table/card/panel groups remain visual-only evidence."
     },
     {
       "name": "Forbidden scope audit",
       "result": "PASS",
-      "detail": "No Materiality Catalog, product/runtime, canonical authority, projection, GVAE APPLY, recensus, broad rediscovery, or foreign mailbox mutation performed."
+      "detail": "Materiality uninspected; no governed output-root, canonical authority, product/runtime, projection repair, GVAE APPLY, PR or main merge."
     }
   ],
   "unresolved": [
-    "Current-head PASS_ANTI_REWORK_GATE / Authority Mesh rebinding cannot be dispatched through the available GitHub-only connector action surface.",
-    "Governed deliverables EXISTING_CONCEPT_INDEX, SEMANTIC_CROSSWALK_EVIDENCE, NDC_MATERIALIZATION_AUDIT, HISTORICAL_AUTHORITY_EVIDENCE, NEGATIVE_EVIDENCE_RULES, shards/INDEX/MANIFEST/SUMMARY remain unwritten because output mutation is correctly held fail-closed."
+    "WRITE_GATE_PATH_PENDING blocks only materialization under prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**.",
+    "Surface workers still own target-specific joins and final classification; Chat 5 supplies the transversal evidence and negative-evidence contract.",
+    "Any TRUE_NEW_AUTHORITY_REQUIRED still requires complete target-specific negative evidence across every required authority family."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "HANDOFF: BLOCKED_EXECUTION_PATH. Resume automatically when an authorized GitHub-only workflow-dispatch/gate execution path is available; then rebind anti-rework/Authority Mesh to current main and continue only Chat 5's assigned cross-authority evidence lane. No owner relay or computer action requested.",
+  "nextAction": "Surface workers and Chat 6 may consume AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json immediately. Continue bounded read-only cross-authority queries as concrete target IDs are surfaced; materialize governed cross-authority outputs only after WRITE_GATE_PATH_PENDING clears.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
       "role": "CROSS_AUTHORITY_EVIDENCE_RECONCILIATION",
-      "result": "BLOCKED_EXECUTION_PATH",
-      "state": "BLOCKED",
-      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "result": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
+      "state": "IN_PROGRESS_READ_ONLY",
       "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
       "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
       "workHead": null,
@@ -86,13 +92,17 @@
       "missingCount": 0,
       "extraCount": 0,
       "duplicateTargetCount": 0,
+      "readOnlyReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+      "readOnlyEvidenceConsumableNow": true,
       "governedOutputsWritten": false,
+      "writeGate": "WRITE_GATE_PATH_PENDING",
+      "writeGateScope": "governed-output-repository-write-only",
       "materialityCatalogInspected": false,
       "canonicalAuthorityMutationPerformed": false,
       "productRuntimeMutationPerformed": false,
       "projectionRepairPerformed": false,
       "gvaeApplyPerformed": false,
-      "blockerCode": "BLOCKED_EXECUTION_PATH"
+      "trueNewAuthorityAssertionsByChat5": 0
     }
   }
 }
