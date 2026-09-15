@@ -3,7 +3,7 @@
   "generated": true,
   "manualEditsForbidden": true,
   "generator": "visual-operating-graph-wave1-sourceset-lock",
-  "observedMainSha": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "observedMainSha": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
   "promotionReadinessClosure": {
     "pr": 554,
     "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
@@ -15,14 +15,14 @@
     "capabilityId": "visual.operating_graph_v1"
   },
   "authorityMesh": {
-    "runId": 34993688875,
-    "artifactId": 10406088450,
-    "requestId": "b39e7b01bea59254",
+    "runId": 35000699014,
+    "artifactId": 10409517912,
+    "requestId": "de894f21c1b291df",
     "status": "PASS_COMPOSED_AUTHORITY_MESH",
     "requiredAuthorityCoveragePct": 100,
     "blockers": 0,
-    "requestDigest": "e890230f8e6f7fc15bbb9b96d650e664680362c0b81d604d7b0a78d967c70452",
-    "composedArtifactSha256": "62e1c3d8a457269d0e7f8fd121ca5388af885c7358394f3f148f415e1272ff84"
+    "requestDigest": "7c2b9b38cf8ae6d215f3ab13e7005d1371d2facdb5b149ad7296c95e20f8b7d7",
+    "composedArtifactSha256": "67f209964b861ae89e9fb712cb9d9137ea8058882e02c056291690f3d5f13664"
   },
   "sourceCount": 42,
   "sources": [
@@ -142,7 +142,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-evidence-index",
-      "gitBlobSha": "8932a0f7a00d94672e4526b056e072ab65096e30",
+      "gitBlobSha": "1114631773c1c99b4751a22fe390de5f4c012b23",
       "schema": "1.0.0",
       "version": null
     },
@@ -158,7 +158,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-authority",
-      "gitBlobSha": "ce4a333ac982b601816877b1c7524850f4090a94",
+      "gitBlobSha": "974d4d1ec999442eb0f715d5de984a4d98a9b062",
       "schema": "1.0.0",
       "version": null
     },
