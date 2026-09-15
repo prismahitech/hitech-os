@@ -5,7 +5,7 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "updatedAt": "2026-09-15T09:50:00-06:00",
+  "updatedAt": "2026-09-15T10:11:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
@@ -1147,25 +1147,88 @@
     "authorityReconciliationComposer": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
       "result": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
       "snapshot": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json",
       "expectedInputCount": 2097,
       "accountedInputCount": 2097,
-      "classifiedCount": 1133,
-      "unresolvedCount": 964,
+      "classifiedCount": 2057,
+      "unresolvedCount": 40,
       "missingCount": 0,
       "extraCount": 0,
       "duplicateTargetCount": 0,
       "governedOutputsWritten": false,
       "writeGate": "WRITE_GATE_PATH_PENDING",
-      "structurallyClassifiedCount": 1133,
+      "structurallyClassifiedCount": 2057,
       "composerAcceptedCount": 313,
-      "provisionalConceptLinkCount": 820,
-      "semanticFinal": false
+      "provisionalConceptLinkCount": 1744,
+      "semanticFinal": false,
+      "mainDriftAssessment": {
+        "priorHandoffMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+        "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+        "aheadBy": 8,
+        "driftSource": "PR #556 visual operating graph foundation",
+        "relevantAuthorityOverlap": false,
+        "changedAuthorityFamilies": [],
+        "unchangedPinnedAuthority": {
+          "identityElementBindingsBlob": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8",
+          "identityRecipeRegistryBlob": "aaf26182b1637e1bfc6a14bd537af100ed96b1e4"
+        },
+        "disposition": "UNRELATED_CAPABILITY_DRIFT_NO_RECLASSIFICATION",
+        "note": "PR #556 added visual-operating-graph foundation/docs plus FILES_MANIFEST refresh; it did not change NDC, Identity, RIFAT/Target Index, promotion-readiness evidence, candidate corpora, or worker mailboxes. visual.operating_graph_v1 is not this phase capability."
+      },
+      "sharedUiPriorityIntake": {
+        "chat4MailboxHead": "5a1778f9fcf392b9eae0ac0c000007e470ce60d8",
+        "chat4Classified": 30,
+        "chat4Unresolved": 40,
+        "chat5DeltaDirectoryScanned": true,
+        "chat5DeltaReceiptCount": 5,
+        "newChat5DeltasAfterHandoff": 0,
+        "sharedUiDeltasValidatedByComposer": [
+          {
+            "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+            "deltaBlob": "723afa13a5cdd2014676d3e2cbcf6ec55d50a71d",
+            "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+            "composerEvidenceDisposition": "SUPPORTED_AS_CROSS_AUTHORITY_EVIDENCE_PENDING_SURFACE_OWNER_CLASSIFICATION",
+            "trueNewRejected": true
+          },
+          {
+            "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+            "deltaBlob": "4834ce76bf6f5d6b661c20325f57eb601858e54f",
+            "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+            "composerEvidenceDisposition": "SUPPORTED_AS_CROSS_AUTHORITY_EVIDENCE_PENDING_SURFACE_OWNER_CLASSIFICATION",
+            "trueNewRejected": true
+          }
+        ],
+        "unresolvedCountReducedByComposer": 0,
+        "reason": "Chat 4 retains final Shared UI surface classification ownership; Chat 6 consumes/validates evidence but does not overwrite foreign-lane classifications."
+      },
+      "conceptLinkAudit": {
+        "provisionalTotal": 1744,
+        "breakdown": {
+          "tablet": 924,
+          "pc": 687,
+          "mobile": 133
+        },
+        "currentMainRelevantAuthorityDrift": false,
+        "newlyQualifiedByMainDrift": 0,
+        "promotedToComposerFinalThisPass": 0,
+        "remainingProvisional": 1744,
+        "qualityRule": "Target-specific relevant concept evidence or a governed rule proving link-only absence is required. Surface/family-level NDC or Identity existence is insufficient.",
+        "currentIdentityRegistryFinding": "Current canonical element-bindings registry has one resolved exact Tablet Cobrar binding, one ambiguous Tablet accent binding family, and zero concrete PC/Mobile bindings; no PR #556 drift adds target-specific semantic evidence for the 1,744 provisional rows.",
+        "fakeGreenPrevented": true
+      },
+      "zeroLoss": {
+        "expected": 2097,
+        "accounted": 2097,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0
+      },
+      "trueNewAccepted": 0
     },
     "newChatContinuation": {
-      "generatedAt": "2026-09-15T09:50:00-06:00",
-      "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "generatedAt": "2026-09-15T10:11:00-06:00",
+      "main": "8db4370d579014f8fed6e190ffce45e1589b33d9",
       "continuationMd": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.md",
       "continuationJson": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.json",
       "globalSnapshot": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json",
