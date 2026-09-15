@@ -659,3 +659,15 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Canonical phase capability: `visual.generic_application_engine_v1 / ADVANCE`.
 - `visual.operating_graph_v1` is unrelated to this lane.
 - `TRUE_NEW_AUTHORITY_REQUIRED` remains provisional until Chat 5 cross-authority evidence is available.
+
+## 2026-09-15T09:33:00-06:00 — BLOCKER_CLEARED / PROGRESS
+
+- Consumed Chat 5 read-only receipt: `apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json`.
+- Receipt result: `PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING`.
+- `readOnlyEvidenceConsumableNow=true`; total cross-authority accounting **2,097**, missing **0**, extra **0**, duplicate **0**.
+- **CROSS_AUTHORITY_EVIDENCE_PENDING is cleared and no longer governs Chat 1.**
+- Remaining blocker: `WRITE_GATE_PATH_PENDING`, scoped **only** to governed output-root repository writes.
+- Read-only target analysis, target-specific joins, history checks, negative evidence, zero-loss validation and mailbox receipts continue now.
+- Semantic separation preserved: `identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout` is not equivalence.
+- NDC DOC1 is documentary canon/registries/schemas/seeds/examples; `defined_for_doc1` is not a populated runtime/DB claim.
+- Capability remains `visual.generic_application_engine_v1 = DONE / SOURCE_READY / doNotRebuild=true`, action `ADVANCE`.
