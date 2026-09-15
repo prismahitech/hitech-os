@@ -268,3 +268,23 @@ Un vertical queda aceptable cuando tiene manifiesto valido, navegacion Tablet/PC
 ## 8. Siguiente paquete
 
 Despues de este registro, toca `PRISMA_VERTICALS_ARCHITECTURE_00C_VERTICAL_DATA_MODELS`, para definir extensiones de datos por giro sin meter campos mutantes al core.
+
+<!-- PRISMA_VERTICAL professional_corporate_services:registry -->
+## 9. Servicios Profesionales y Corporativos (`professional_corporate_services`)
+
+**Estado:** `draft`  
+**Mercado:** firmas de consultoría, despachos y proveedores de servicios corporativos multidisciplinarios.
+
+**Propósito:** administrar el ciclo de relación profesional con un cliente: diagnóstico, expediente, servicio contratado, documentos, tareas, responsables, vencimientos, aprobaciones, evidencia, seguimiento y recurrencia.
+
+**No es exclusivo de CIOB.** La vertical sirve para consultoría empresarial, servicios corporativos, contabilidad/fiscal, legal/corporativo, recursos humanos/laboral, finanzas, back office, cumplimiento documental y soft landing/market entry.
+
+**Rol Tablet:** captura operativa acotada, diagnóstico, checklist, recepción documental y avances.
+
+**Rol PC:** gobierno del expediente completo, servicios, flujos, responsabilidades, contratos/propuestas, vencimientos, evidencia, auditoría y reportes.
+
+**Rol Mobile:** supervisión de alertas, aprobaciones acotadas, vencimientos, clientes en riesgo y siguientes acciones.
+
+**Regla operativa:** `Cliente → Servicio → Expediente → Proceso → Entregable → Evidencia → Seguimiento → Recurrencia`.
+
+Las especializaciones no implican certificación legal, fiscal, contable, laboral ni regulatoria.
