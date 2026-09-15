@@ -566,3 +566,12 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - Decision: continue all safe read-only orchestration/preparation now; hold governed output mutation until current-head anti-rework/Authority Mesh revalidation because Factory Ledger authority changed.
 - Worker status snapshot: Chat 3 IN_PROGRESS; Chats 1, 2, 4, 5 NOT_STARTED.
 - No recensus, rebuild, canonical minting, product/runtime mutation, projection repair, GVAE APPLY or Materiality Catalog use.
+
+## 2026-09-15T00:38:00Z — ORCHESTRATOR ROUTING CLARIFICATION
+
+- PR #555 registered `visual.operating_graph_v1` as a separate `BUILD / NOT_STARTED` capability for another Foundation task.
+- **This authority-reconciliation phase does not switch to that capability.**
+- Canonical affected capability remains `visual.generic_application_engine_v1` = `DONE / SOURCE_READY / doNotRebuild=true`.
+- Requested action for governed phase work is `ADVANCE`; strictly read-only verification may use `VERIFY`.
+- PR #555 still counts as governance-sensitive Ledger/Evidence drift and therefore current-head authority/gate evidence must be rebound before repository output mutation.
+- Continue all safe read-only analysis/orchestration. Hold only governed output writes if the correct gate execution path is unavailable.
