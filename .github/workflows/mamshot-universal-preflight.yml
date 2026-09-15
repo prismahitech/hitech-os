@@ -1,0 +1,150 @@
+name: Mamastrophic Universal Artifact Preflight
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/mamshot-universal-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  PYTHONDONTWRITEBYTECODE: '1'
+  PINNED_BASE: 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d
+  CAPABILITY_ID: tooling.mamastrophic.universal_screenshot_artifacts
+  AUTHORITY_REQUEST_DIGEST: 059a511dd57a7307bddb68a4e1c0b7ed8e4aacce543cdd84c00b4eeea972dc5c
+  AUTHORITY_ARTIFACT_DIGEST: df4a77c5358145df047737882bf71489dbd9f0657654d8e72d6e07f1b2f0ccc8
+  AUTHORITY_REVALIDATION_DIGEST: 9541f32231e4002ac97cc81a8ff26d4eb786cb7fb83af89da85fa32e989d0af9
+
+jobs:
+  governed-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Verify canonical main is still pinned
+        shell: bash
+        run: |
+          set -euo pipefail
+          current="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$current" = "$PINNED_BASE"
+          git worktree add --detach "$RUNNER_TEMP/base" "$PINNED_BASE"
+
+      - name: Run universal Factory Ledger PROPOSAL gate
+        shell: bash
+        working-directory: ${{ runner.temp }}/base
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/proposal.request.json" <<JSON
+          {
+            "schemaVersion": "prisma.factory-ledger.anti-rework-gate.v1",
+            "mode": "PROPOSAL",
+            "expectedHead": "$PINNED_BASE",
+            "task": "Implement the registered Mamastrophic universal screenshot artifact fast path as one parameterized GitHub Actions adapter across PC, Tablet, Mobile/PWA, Web, Chart Lab and Control Center. Reuse existing Mamastrophic capture/discovery/deep-scroll/per-app packaging and do not rebuild product/runtime owners.",
+            "capabilities": [
+              {"id": "$CAPABILITY_ID", "requestedAction": "BUILD"}
+            ],
+            "visualMutation": false
+          }
+          JSON
+          python "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py" --request "$RUNNER_TEMP/proposal.request.json" > "$RUNNER_TEMP/proposal.result.json"
+          python - "$RUNNER_TEMP/proposal.result.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert d.get('result') == 'PASS_ANTI_REWORK_GATE', d
+          assert d.get('errors') == [], d
+          assert d.get('mode') == 'PROPOSAL', d
+          print('PROPOSAL_DECISION_DIGEST=' + str(d.get('decisionDigest')))
+          PY
+
+      - name: Run universal Factory Ledger MUTATION gate
+        shell: bash
+        working-directory: ${{ runner.temp }}/base
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/mutation.request.json" <<JSON
+          {
+            "schemaVersion": "prisma.factory-ledger.anti-rework-gate.v1",
+            "mode": "MUTATION",
+            "expectedHead": "$PINNED_BASE",
+            "task": "Implement the registered Mamastrophic universal screenshot artifact fast path as one parameterized GitHub Actions adapter across PC, Tablet, Mobile/PWA, Web, Chart Lab and Control Center. Reuse existing Mamastrophic capture/discovery/deep-scroll/per-app packaging and do not rebuild product/runtime owners.",
+            "capabilities": [
+              {"id": "$CAPABILITY_ID", "requestedAction": "BUILD"}
+            ],
+            "authorityMesh": {
+              "status": "PASS_COMPOSED_AUTHORITY_MESH",
+              "repoHead": "$PINNED_BASE",
+              "requiredAuthorityCoveragePct": 100,
+              "blockers": 0,
+              "requestDigest": "$AUTHORITY_REQUEST_DIGEST",
+              "artifactDigest": "$AUTHORITY_ARTIFACT_DIGEST",
+              "layerMapPresent": true
+            },
+            "visualMutation": false
+          }
+          JSON
+          python "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py" --request "$RUNNER_TEMP/mutation.request.json" > "$RUNNER_TEMP/mutation.result.json"
+          python - "$RUNNER_TEMP/mutation.result.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert d.get('result') == 'PASS_ANTI_REWORK_GATE', d
+          assert d.get('errors') == [], d
+          assert d.get('mode') == 'MUTATION', d
+          print('MUTATION_DECISION_DIGEST=' + str(d.get('decisionDigest')))
+          PY
+
+      - name: Stage governed preflight evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/evidence"
+          for f in proposal.request.json proposal.result.json mutation.request.json mutation.result.json; do
+            if [ -f "$RUNNER_TEMP/$f" ]; then cp "$RUNNER_TEMP/$f" "$RUNNER_TEMP/evidence/$f"; fi
+          done
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'evidence'
+          summary={
+            'schema':'prisma.mamastrophic.universal_artifact.preflight.v1',
+            'capability':'tooling.mamastrophic.universal_screenshot_artifacts',
+            'pinnedBase':os.environ['PINNED_BASE'],
+            'authorityMesh':{
+              'status':'PASS_COMPOSED_AUTHORITY_MESH',
+              'requestDigest':os.environ['AUTHORITY_REQUEST_DIGEST'],
+              'artifactDigest':os.environ['AUTHORITY_ARTIFACT_DIGEST'],
+              'revalidationDigest':os.environ['AUTHORITY_REVALIDATION_DIGEST'],
+              'originalRunId':35000774363,
+              'originalArtifactId':10408689306,
+              'revalidationRunId':35001552040,
+              'revalidationArtifactId':10410041836,
+              'revalidationStatus':'PASS_NO_RELEVANT_DRIFT',
+              'coveragePct':100,
+              'blockers':0,
+              'layerMapPresent':True
+            }
+          }
+          (root/'PREFLIGHT_SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Upload governed preflight evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: mamshot-universal-governed-preflight
+          path: ${{ runner.temp }}/evidence/**
+          if-no-files-found: error
+          retention-days: 14
