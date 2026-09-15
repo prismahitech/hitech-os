@@ -145,8 +145,9 @@
       "expectedInputCount": 271,
       "materialityCatalogAuthorized": false,
       "githubOnly": true,
-      "status": "IN_PROGRESS_AUTHORITY_PREFLIGHT",
-      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9"
+      "status": "BLOCKED_EXECUTION_PATH",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "workHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9"
     },
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
