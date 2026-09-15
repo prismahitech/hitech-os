@@ -688,7 +688,7 @@ try {
   Add-RunLog "originalSpecPath=$originalSpecPath"
   Add-RunLog "bridgeConfigPath=$bridgeConfigPath"
   $env:PYTHONDONTWRITEBYTECODE = '1'
-  $py = Get-PythonLauncher
+  $py = @(Get-PythonLauncher)
   $discArgs = @()
   if ($py.Count -gt 1) { $discArgs += @($py[1..($py.Count-1)] | Where-Object { $_ }) }
   $discArgs += @($discovery, '--repo-root', $termRoot, '--out', $plan, '--mode', $DiscoveryMode, '--surface', $SurfaceKey, '--workers', [string]$Workers)

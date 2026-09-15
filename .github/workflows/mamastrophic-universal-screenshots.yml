@@ -148,6 +148,55 @@ jobs:
       - name: Install repository dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install active terminal runtime dependencies
+        if: matrix.surface == 'pc' || matrix.surface == 'tablet' || matrix.surface == 'mobile' || matrix.surface == 'chart-lab'
+        run: pnpm -C apps/terminal-de-venta-system install --frozen-lockfile
+
+      - name: Prepare isolated off-release Web runtime dependencies
+        if: matrix.surface == 'web'
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$GITHUB_WORKSPACE/apps/terminal-de-venta-system/products/web/app"
+          runtime="$RUNNER_TEMP/mamshot-web-runtime"
+          raw="$RUNNER_TEMP/mamshot/web/raw"
+          mkdir -p "$runtime" "$raw/reports"
+          (
+            cd "$runtime"
+            npm init -y >/dev/null
+            npm install --no-save --package-lock=false \
+              next@16.1.6 \
+              @next/env@16.1.6 \
+              react@18.3.1 \
+              react-dom@18.3.1 \
+              zod@3.23.8 \
+              typescript@5.8.2 \
+              @types/node@22.13.9 \
+              @types/react@19.2.14
+          )
+          if [ -e "$app/node_modules" ] || [ -L "$app/node_modules" ]; then
+            echo "Unexpected Web node_modules already exists; refusing to replace it." >&2
+            exit 4
+          fi
+          ln -s "$runtime/node_modules" "$app/node_modules"
+          cat > "$raw/reports/web-ci-dependencies.json" <<'JSON'
+          {
+            "strategy": "isolated-off-release-ci-dependencies",
+            "promotesWebToActiveWorkspace": false,
+            "mutatesTrackedProductSource": false,
+            "versions": {
+              "next": "16.1.6",
+              "@next/env": "16.1.6",
+              "react": "18.3.1",
+              "react-dom": "18.3.1",
+              "zod": "3.23.8",
+              "typescript": "5.8.2",
+              "@types/node": "22.13.9",
+              "@types/react": "19.2.14"
+            }
+          }
+          JSON
+
       - name: Verify universal artifact packager
         run: python -m unittest -v "tools/Plawright Mamastrophic/tests/test_universal_artifact.py"
 
@@ -201,7 +250,10 @@ jobs:
             pnpm -C apps/terminal-de-venta-system/products/pc/app run prisma:generate
             pnpm -C apps/terminal-de-venta-system/products/pc/app run db:canonical:migrate
           elif [ "$SURFACE" = "tablet" ]; then
-            mkdir -p apps/terminal-de-venta-system/products/tablet/app/data
+            db="$RUNNER_TEMP/mamshot/$SURFACE/tablet-ci.db"
+            mkdir -p "$(dirname "$db")"
+            echo "DATABASE_URL=file:$db" >> "$GITHUB_ENV"
+            export DATABASE_URL="file:$db"
             pnpm -C apps/terminal-de-venta-system/products/tablet/app run prisma:generate
             pnpm -C apps/terminal-de-venta-system/products/tablet/app exec prisma db push --schema prisma/schema.prisma
           fi
