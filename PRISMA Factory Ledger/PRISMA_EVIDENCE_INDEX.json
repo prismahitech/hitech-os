@@ -1092,9 +1092,38 @@
         "Post-merge Authority Mesh 33871295636 / artifact 9936027165 / sha256:c44cb6bb238d66616ab973981de26f6bd27b82f31152f334a6fb23e4d8d01b14 / requestDigest 39deab19eb402ce2bd8433f60518c4d2beaf4215763ec4e9d40366b5b45b212c",
         "Factory Anti-Rework MUTATION PASS with requestedAction VERIFY on canonical main 6146186c5fbd89f7429eabc78e0f0668542a0b2d"
       ]
+    },
+    {
+      "artifact": "Visual Operating Graph V1 registration authority",
+      "type": "visual_operating_graph_v1_capability_registration_authority",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "prisma-html",
+        "visual-operating-graph"
+      ],
+      "status": "PASS_REGISTRATION_AUTHORITY_ONLY",
+      "proves": [
+        "The missing visual.operating_graph_v1 capability is classified for canonical Factory Ledger registration as BUILD / NOT_STARTED",
+        "Task-exact composed Authority Mesh passed at main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 with required authority coverage and zero blockers",
+        "The registration is bounded to Operating Graph governance and explicitly reuses existing visual authority systems rather than rebuilding or competing with them",
+        "Foundation implementation remains gated by a fresh universal anti-rework PROPOSAL decision and subsequent task-exact mutation authority"
+      ],
+      "doesNotProve": [
+        "Operating Graph Foundation source/docs/schema implementation exists",
+        "Anti-rework PROPOSAL or MUTATION has passed for visual.operating_graph_v1",
+        "Any canonical visual registration, Work Entry mutation or GVAE APPLY is authorized",
+        "Any product/runtime mutation or runtime visual/production certification"
+      ],
+      "evidence": [
+        "Authority Mesh run 34911873722 artifact 10374668209 sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
+        "composed sha256:116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e",
+        "requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09",
+        "canonical main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0"
+      ]
     }
   ],
-  "updatedAt": "2026-09-04T12:10:01Z",
+  "updatedAt": "2026-09-15T00:09:22Z",
   "entries": [
     {
       "capabilityId": "runtime.tablet.zero_idle_guard",
@@ -1311,6 +1340,18 @@
         "Target Index d41c0b2f0f9a8f5d691f9f1dfcb2fa0dfa3e6b8bef9372d8b267b7d7b65e563e / 3915 records / seven surfaces represented / wholeSurfaceApplyReadyCount=0",
         "Post-merge Authority Mesh 33871295636 / artifact 9936027165 / requestDigest 39deab19eb402ce2bd8433f60518c4d2beaf4215763ec4e9d40366b5b45b212c",
         "Closure evidence PRISMA Factory Ledger/evidence/GVAE_V1_VISUAL_WORK_ENTRY_GATE_CLOSURE_20260904.md"
+      ]
+    },
+    {
+      "capabilityId": "visual.operating_graph_v1",
+      "status": "BUILD_NOT_STARTED",
+      "runId": "34911873722",
+      "evidence": [
+        "registration Authority Mesh artifact 10374668209",
+        "sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
+        "requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09",
+        "composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e",
+        "canonical main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0"
       ]
     }
   ]
