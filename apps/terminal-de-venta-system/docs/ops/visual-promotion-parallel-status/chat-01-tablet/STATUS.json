@@ -5,14 +5,24 @@
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T00:38:00Z",
+  "updatedAt": "2026-09-15T00:42:00Z",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat1/authority-reconciliation-tablet-20260914",
   "workHead": null,
-  "summary": "Chat 1 reached a real GitHub-only hard stop in AUTHORITY_RECONCILIATION_ANTI_REWORK. Fresh current-head Authority Mesh passed, and the immutable 929-target Tablet input is fully accounted read-only, but the canonical task-specific Factory Ledger PROPOSAL/MUTATION verifier has no valid GitHub execution path exposed by current workflows/tools. Work-branch mutation is therefore forbidden and no fake PASS is declared.",
+  "summary": "ORCHESTRATOR CORRECTION: Tablet authority reconciliation remains IN_PROGRESS. Lack of a task-specific anti-rework execution primitive blocks only governed work-branch output writes, not read-only reconciliation. Capability remains visual.generic_application_engine_v1 / ADVANCE; visual.operating_graph_v1 is unrelated.",
   "blockers": [
-    "BLOCKED_EXECUTION_PATH: canonical PRISMA Factory Ledger anti-rework gate requires verify_prisma_anti_rework_gate.py --request <task-exact request> in PROPOSAL and MUTATION modes. The GitHub-only prisma-factory-anti-rework-gate workflow runs only --validate/--self-test and accepts no task request; no issue_comment/task gateway for this verifier exists; available GitHub connector actions cannot dispatch an arbitrary task-specific workflow. Hardcoded historical workflows carry unrelated/stale task/head/digests and are not reusable authority.",
-    "CROSS_AUTHORITY_EVIDENCE_PENDING: Chat 5 new-phase CROSS_AUTHORITY_EVIDENCE_RECONCILIATION remains NOT_STARTED. Therefore Chat 1 will not declare any TRUE_NEW_AUTHORITY_REQUIRED row because the owner-mandated complete negative-evidence checklist is not yet satisfiable."
+    {
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "lane-output-repository-write-only",
+      "detail": "The canonical task-specific anti-rework request gate is not currently executable through the connected GitHub action surface. This does not block read-only reconciliation. Capability is visual.generic_application_engine_v1 / ADVANCE.",
+      "impact": "Continue target-by-target evidence analysis, negative-evidence review, authority/history reconciliation and deterministic result preparation. Do not write governed lane output files until the correct gate evidence exists."
+    },
+    {
+      "code": "CROSS_AUTHORITY_EVIDENCE_PENDING",
+      "scope": "TRUE_NEW_AUTHORITY_REQUIRED-only",
+      "detail": "Chat 5 cross-authority evidence is not yet available.",
+      "impact": "Do not finalize TRUE_NEW_AUTHORITY_REQUIRED rows yet; all other evidence work continues."
+    }
   ],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -346,7 +356,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "HARD STOP: BLOCKED_EXECUTION_PATH. Resume only when a repository-authorized GitHub-only task-specific Factory Ledger anti-rework execution path exists and/or the required cross-authority evidence becomes available. Do not ask the owner for a computer or manual command.",
+  "nextAction": "Continue the assigned lane read-only immediately. Prepare the full reconciliation deterministically, publish compact progress/receipts in the mailbox, defer only governed output-file writes and final TRUE_NEW closure until the correct gate and Chat 5 evidence exist.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
