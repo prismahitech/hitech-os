@@ -225,7 +225,7 @@ No requiere modificar runtime de Tablet ni PC. Instala contratos, docs, matrices
 ## 12. Criterio de aceptacion del 00C
 
 - Existen contratos de datos verticales.
-- Existen extensiones por los 10 verticales registrados.
+- Existen extensiones por los 11 verticales registrados.
 - Existe matriz de entidad/propiedad.
 - Existe validador local.
 - Ningun perfil vertical mete campos especializados al core.
