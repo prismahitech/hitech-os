@@ -5,7 +5,7 @@
   "statusBranch": "status/vp-chat-06-control-plane",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "updatedAt": "2026-09-15T10:11:00-06:00",
+  "updatedAt": "2026-09-15T10:13:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat6/authority-reconciliation-composer-20260914",
   "workHead": null,
@@ -1213,9 +1213,33 @@
         "newlyQualifiedByMainDrift": 0,
         "promotedToComposerFinalThisPass": 0,
         "remainingProvisional": 1744,
-        "qualityRule": "Target-specific relevant concept evidence or a governed rule proving link-only absence is required. Surface/family-level NDC or Identity existence is insufficient.",
+        "qualityRule": "Target-specific relevant-concept evidence or a governed rule proving link-only absence is required. Surface/family-level NDC or Identity existence is insufficient.",
         "currentIdentityRegistryFinding": "Current canonical element-bindings registry has one resolved exact Tablet Cobrar binding, one ambiguous Tablet accent binding family, and zero concrete PC/Mobile bindings; no PR #556 drift adds target-specific semantic evidence for the 1,744 provisional rows.",
-        "fakeGreenPrevented": true
+        "fakeGreenPrevented": true,
+        "tabletEvidenceQuality": {
+          "audited": 924,
+          "disposition": "REMAIN_PROVISIONAL",
+          "evidence": "Chat 1 reports all 929 Tablet rows NDC-unresolved; the only target-specific Identity authority singled out in the lane is confined to the Cobrar primary and accent special cases, which are already outside the 924 concept-link bucket.",
+          "reason": "No target-specific relevant concept proof was supplied for the 924 concept-link rows."
+        },
+        "pcEvidenceQuality": {
+          "audited": 687,
+          "disposition": "REMAIN_PROVISIONAL",
+          "evidence": "Chat 2 receipt reports ndcUnresolved=827, visualUnresolved=827, identityRecipeResolved=0, existingBindingResolved=0; the 687 concept-link bucket is therefore not target-specifically qualified by canonical semantic/application authority.",
+          "reason": "Current projection plus family-level authority does not prove which existing concept is relevant to each target."
+        },
+        "mobileEvidenceQuality": {
+          "audited": 133,
+          "disposition": "REMAIN_PROVISIONAL",
+          "targetIndexBlob": "dd0d0a33f2b60957438355ab14798aa1888d781e",
+          "exactTargetIdsMatched": 133,
+          "semanticMeaningNonNull": 0,
+          "bindingNonNull": 0,
+          "ndcSupportingSurfaceRef": "SURF.mb.owner_home",
+          "ndcTargetPrimaryMeaningResolved": 0,
+          "evidence": "Direct join of the 133 Chat 3 concept-link target IDs to current Mobile Target Index matched 133/133 and found semanticMeaningId=null and bindingId=null for every row. Canonical Mobile candidate evidence explicitly says SURF.mb.owner_home is supporting-only and does not resolve target-level neutral meaning.",
+          "reason": "The Mobile surface/panel NDC reference is not an exact census-target semantic crosswalk."
+        }
       },
       "zeroLoss": {
         "expected": 2097,
@@ -1224,7 +1248,15 @@
         "extra": 0,
         "duplicate": 0
       },
-      "trueNewAccepted": 0
+      "trueNewAccepted": 0,
+      "auditPass": {
+        "code": "CONCEPT_LINK_TARGET_SPECIFIC_QUALIFICATION_PASS_01",
+        "audited": 1744,
+        "composerFinalPromotions": 0,
+        "remainingProvisional": 1744,
+        "result": "NO_TARGET_SPECIFIC_QUALIFICATION_GAIN",
+        "note": "This is a read-only evidence-quality result, not a semantic PASS for the rows."
+      }
     },
     "newChatContinuation": {
       "generatedAt": "2026-09-15T10:11:00-06:00",
