@@ -4,8 +4,8 @@
   "chatId": 6,
   "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
   "state": "IN_PROGRESS_READ_ONLY_COMPOSITION",
-  "generatedAt": "2026-09-15T09:50:00-06:00",
-  "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "generatedAt": "2026-09-15T10:11:00-06:00",
+  "main": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "capability": {
     "id": "visual.generic_application_engine_v1",
     "classification": "DONE",
@@ -96,6 +96,19 @@
       "pendingChat5DeltaTargets": [
         "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
         "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1"
+      ],
+      "chat4MailboxHead": "5a1778f9fcf392b9eae0ac0c000007e470ce60d8",
+      "composerValidatedDeltaEvidence": [
+        {
+          "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "evidenceDisposition": "SUPPORTED_PENDING_CHAT4_FINAL_CLASSIFICATION"
+        },
+        {
+          "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "evidenceDisposition": "SUPPORTED_PENDING_CHAT4_FINAL_CLASSIFICATION"
+        }
       ]
     },
     "crossAuthority": {
@@ -105,7 +118,8 @@
       "baselineMustNotBeRebuilt": true,
       "trueNewAssertions": 0,
       "dynamicDeltaSupportActive": true,
-      "deltaReceiptCount": 5
+      "deltaReceiptCount": 5,
+      "newDeltaReceiptCountAfterHandoff": 0
     }
   },
   "provisionalGlobalCounts": {
@@ -129,7 +143,9 @@
     "projectionRepairObserved": false,
     "gvaeApplyObserved": false,
     "composerFinalSemanticGreen": false,
-    "reasonNotFinal": "1,744 concept-link rows need target-specific concept qualification and 40 Shared UI targets remain surface-owned unresolved."
+    "reasonNotFinal": "1,744 concept-link rows still require target-specific relevant-concept qualification; 40 Shared UI targets remain surface-owner unresolved. Chat 5 Shared UI evidence is consumed but not substituted for Chat 4 final classification.",
+    "currentMainRelevantAuthorityDrift": false,
+    "chat5DeltaDirectoryFullyScanned": true
   },
   "priorities": [
     "Consume Chat 4 Shared UI progress first, including Chat 5 deltas for 09F96569 and BA225641.",
@@ -154,7 +170,8 @@
     "conceptLinkMissingPendingTargetSpecificConceptQualification": 1744,
     "unresolvedTargetSpecific": 40,
     "total": 2097,
-    "rule": "EXISTING_CONCEPT_LINK_MISSING is not composer-final merely because a surface has some NDC/Identity authority family. The relevant existing concept must be target-specifically evidenced or otherwise qualified strongly enough to prove that the gap is the link, not the concept itself."
+    "trueNewAccepted": 0,
+    "rule": "EXISTING_CONCEPT_LINK_MISSING is composer-final only with target-specific evidence of the relevant existing concept or a governed rule proving that only the link is missing. Family-level authority existence alone is insufficient."
   },
   "auditFindings": [
     {
@@ -168,10 +185,46 @@
       "finding": "Tablet, PC and Mobile receipts classify rows as EXISTING_CONCEPT_LINK_MISSING while exact target-level operational/visual meanings remain unresolved. Authority-family existence alone does not identify the relevant existing concept for each target.",
       "disposition": "Accept zero-loss/accounting and deterministic target sets. Hold 1,744 semantic classifications PROVISIONAL pending target-specific existing-concept evidence or a governed rule proving family-level evidence is sufficient.",
       "fakeGreenPrevented": true
+    },
+    {
+      "code": "CURRENT_MAIN_DRIFT_DOES_NOT_QUALIFY_PROVISIONAL_CONCEPT_LINK_ROWS",
+      "affected": {
+        "tablet": 924,
+        "pc": 687,
+        "mobile": 133,
+        "total": 1744
+      },
+      "finding": "Main advanced by PR #556, but the diff is confined to the visual-operating-graph foundation/docs and FILES_MANIFEST refresh. No NDC, Identity, RIFAT/Target Index, promotion-readiness evidence, candidate corpus or worker mailbox bytes changed.",
+      "disposition": "Keep all 1,744 concept-link classifications provisional. Newly qualified this pass: 0.",
+      "fakeGreenPrevented": true
+    },
+    {
+      "code": "SHARED_UI_CHAT5_DELTAS_CONSUMED_WITHOUT_FOREIGN_LANE_OVERRIDE",
+      "affected": {
+        "sharedUiTargets": 2
+      },
+      "finding": "Chat 5 provides positive existing ACT.primary/REC.button.primary Shared UI authority evidence for targets 09F96569 and BA225641, while exact target binding/application remains missing. TRUE_NEW is not supported.",
+      "disposition": "Composer accepts these as cross-authority evidence supporting EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, but leaves the 40-target Shared UI unresolved count unchanged until Chat 4 publishes final surface classification.",
+      "fakeGreenPrevented": true
     }
   ],
   "continuationFiles": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.md",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-06-control-plane/CONTINUATION.json"
-  ]
+  ],
+  "mainDriftAssessment": {
+    "priorHandoffMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+    "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "aheadBy": 8,
+    "merge": "PR #556",
+    "capabilityIntroduced": "visual.operating_graph_v1",
+    "effectOnThisPhase": "NONE_AS_PREREQUISITE_OR_BLOCKER",
+    "relevantAuthorityOverlap": false,
+    "changedPathsClass": "visual-operating-graph foundation/docs + prisma-html/FILES_MANIFEST.json",
+    "unchangedRelevantPins": {
+      "identityElementBindingsBlob": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8",
+      "identityRecipeRegistryBlob": "aaf26182b1637e1bfc6a14bd537af100ed96b1e4"
+    },
+    "disposition": "UNRELATED_CAPABILITY_DRIFT_NO_RECLASSIFICATION"
+  }
 }
