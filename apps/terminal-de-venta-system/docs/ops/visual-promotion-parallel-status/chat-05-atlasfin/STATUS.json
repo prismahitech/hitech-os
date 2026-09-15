@@ -5,16 +5,17 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "IN_PROGRESS_READ_ONLY",
-  "updatedAt": "2026-09-15T01:06:00-06:00",
+  "updatedAt": "2026-09-15T09:32:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "Read-only cross-authority reconciliation resumed. BLOCKED_EXECUTION_PATH was narrowed correctly to WRITE_GATE_PATH_PENDING for governed output-root writes only. Cross-authority concepts, semantic relation rules, NDC materialization truth, historical authority and negative-evidence rules are now published in this mailbox for surface workers and Chat 6. No governed output-root write was attempted.",
+  "summary": "Chat 5 enters DYNAMIC_CROSS_AUTHORITY_SUPPORT for AUTHORITY_RECONCILIATION_ANTI_REWORK. Baseline 2,097-target cross-authority receipt is already delivered and must not be rebuilt. From now on, consume concrete target/concept questions emerging from Chats 1-4 and publish bounded delta evidence/negative-evidence receipts in this mailbox. Governed output-root writes remain gated by WRITE_GATE_PATH_PENDING only.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
       "scope": "governed-output-repository-write-only",
-      "detail": "Current-head Factory Ledger/Authority Mesh write gate cannot be dispatched through the available GitHub connector. This does not block read-only analysis or mailbox receipts."
+      "detail": "Task-specific Factory Ledger write gate is still unavailable through the connected GitHub execution path. This blocks only governed output-root writes, not mailbox receipts or read-only cross-authority analysis.",
+      "impact": "Continue dynamic target-specific semantic support and publish compact delta receipts in this mailbox."
     }
   ],
   "findings": [
@@ -70,13 +71,14 @@
     }
   ],
   "unresolved": [
-    "WRITE_GATE_PATH_PENDING blocks only materialization under prisma-html/governance/visual-promotion/authority-reconciliation/cross-authority-evidence/**.",
-    "Surface workers still own target-specific joins and final classification; Chat 5 supplies the transversal evidence and negative-evidence contract.",
-    "Any TRUE_NEW_AUTHORITY_REQUIRED still requires complete target-specific negative evidence across every required authority family."
+    "Monitor Chats 1-4 for concrete target IDs, concept IDs, unresolved semantic links, conflict/curation candidates and TRUE_NEW candidates requiring cross-authority evidence.",
+    "Answer only bounded questions with source-backed delta evidence; do not rebuild the 2,097-target baseline receipt.",
+    "For any TRUE_NEW candidate, complete or reject the required target-specific negative-evidence chain across NDC, Identity, RIFAT/Target Index, Code Atlas/UIMAP/UI Bridge, Atlasfin reference evidence, Factory Ledger/Evidence Index and relevant history.",
+    "Publish incremental DELTA receipts in this mailbox so Chat 6 can consume them without owner relay."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Surface workers and Chat 6 may consume AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json immediately. Continue bounded read-only cross-authority queries as concrete target IDs are surfaced; materialize governed cross-authority outputs only after WRITE_GATE_PATH_PENDING clears.",
+  "nextAction": "Begin DYNAMIC_CROSS_AUTHORITY_SUPPORT now: read current surface-worker mailboxes, identify concrete unresolved targets/concepts, investigate them read-only, and publish bounded delta receipts here. Reuse AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json as baseline; do not recompute it.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
@@ -103,6 +105,26 @@
       "projectionRepairPerformed": false,
       "gvaeApplyPerformed": false,
       "trueNewAuthorityAssertionsByChat5": 0
+    },
+    "dynamicCrossAuthoritySupport": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+      "activatedAt": "2026-09-15T09:32:00-06:00",
+      "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+      "baselineReceiptState": "READ_ONLY_EVIDENCE_READY",
+      "baselineInputCount": 2097,
+      "baselineMustNotBeRebuilt": true,
+      "consumers": [
+        "Chats 1-4 surface workers",
+        "Chat 6 composer"
+      ],
+      "mailboxDeltaReceiptsAllowed": true,
+      "governedOutputWritesAllowed": false,
+      "materialityCatalogAuthorized": false,
+      "canonicalAuthorityMutationAllowed": false,
+      "productRuntimeMutationAllowed": false,
+      "trueNewAuthorityRequiresCompleteNegativeEvidence": true
     }
   }
 }
