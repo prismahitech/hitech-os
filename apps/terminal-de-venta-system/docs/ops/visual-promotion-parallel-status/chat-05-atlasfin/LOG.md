@@ -541,3 +541,38 @@ Do not mutate product/runtime, projections, NDC, Identity, RIFAT or GVAE.
 - Chat 6 will read this mailbox directly.
 - Publish findings as soon as they are useful; do not wait for all four workers to finish.
 - If no concrete unresolved query exists, keep the lane ready and re-check worker receipts rather than recomputing the baseline.
+
+## 2026-09-15T09:40:00-06:00 — START / DYNAMIC CROSS-AUTHORITY SUPPORT
+- Re-read current STATUS mailboxes for Chats 1-4 directly from their status branches.
+- Baseline `AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json` remains accepted and was not rebuilt.
+- Current main remains `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- `WRITE_GATE_PATH_PENDING` remains scoped only to governed output-root writes.
+
+## 2026-09-15T09:40:00-06:00 — FINDING
+- Chat 1 still has 924 Tablet semantic-link reviews pending. Chat 2 and Chat 3 have complete read-only classification with `TRUE_NEW_AUTHORITY_REQUIRED=0`. Chat 4 still has 40 target-specific Shared UI semantic joins pending.
+- Identity has an existing Shared UI semantic binding authority: `BND.ACT.PRIMARY.SHAREDUI.V1` -> `ACT.primary` / `REC.button.primary`, status `BLOCKED_BY_MISSING_BINDING`, zero targets.
+- This positive authority means bounded Shared UI primary-action targets must not default to TRUE_NEW merely because exact target linkage is missing.
+- `identity::ACT.primary` remains visual meaning and is not equivalent to `ndc::ACT.sale.checkout`.
+
+## 2026-09-15T09:40:00-06:00 — DELTA RECEIPTS
+- Tablet `TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1`: existing `TOK.color.accent` + `BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1` one-to-many ambiguity. Suggested `EXISTING_AUTHORITY_CONFLICT_CURATE`, HIGH.
+- Tablet `TGT.CENSUS.TABLET.2E41F7A945432E762571.V1`: same existing ambiguous accent authority. Suggested `EXISTING_AUTHORITY_CONFLICT_CURATE`, HIGH.
+- Shared UI `TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1`: exact CURRENT physical target spans CheckoutButton + primary ScanButton; existing Shared UI `ACT.primary` semantic authority has no exact target binding. Suggested `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`, MEDIUM_HIGH. Do not map the whole grouped target to NDC `ACT.sale.checkout`.
+- Shared UI `TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1`: exact CURRENT `.actionButton:hover` target; existing Shared UI `ACT.primary` semantic authority remains unbound. Suggested `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`, HIGH.
+- PC `TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1`: exact ProductMediaWorkspace `.workspace` target has projection MISSING and historical `VIS.SURFACE.CONTENT.PRIMARY` candidate intent. Suggested final `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`, HIGH; historical intent is anti-TRUE_NEW evidence, not canonical Identity authority.
+
+## 2026-09-15T09:40:00-06:00 — VALIDATION
+- Published five bounded JSON delta receipts in Chat 5's own mailbox.
+- No foreign mailbox write.
+- No recensus or baseline reconstruction.
+- No Materiality Catalog access.
+- No canonical registration/minting.
+- No product/runtime mutation.
+- No projection repair.
+- No GVAE APPLY.
+- No PR or merge.
+
+## 2026-09-15T09:40:00-06:00 — HANDOFF
+- Chat 6 and surface workers can consume the five new `AUTHORITY_DELTA_*.json` files directly.
+- Continue dynamic target-specific support immediately; do not wait for the write gate.
+
