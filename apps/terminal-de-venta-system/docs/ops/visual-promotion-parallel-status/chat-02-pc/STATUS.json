@@ -4,8 +4,8 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T09:32:00-06:00",
+  "state": "RESTART_HANDOFF_READY",
+  "updatedAt": "2026-09-15T11:06:40-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat2/authority-reconciliation-pc-20260914",
   "workHead": null,
@@ -155,7 +155,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Read-only reconciliation is complete. Hold only governed output materialization. When the correct current-head write gate is available, create/reuse chat2/authority-reconciliation-pc-20260914 and materialize the prepared 4 shards + index/manifest/summary exactly from this receipt; otherwise do not redo analysis.",
+  "nextAction": "Do not rebuild the 827-target PC baseline or recensus PC. Treat the 687 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional. Qualify rows only with target-specific relevant concept evidence or a governed rule proving link-only absence; projection-current plus family-level authority is not enough. Preserve 139 physical/projection reconciliation rows and the 1 authority-conflict row unless new bounded evidence changes them. Consume Chat 5 PC delta 6CC072FF and any newer bounded PC deltas. Keep zero-loss 827/827 and TRUE_NEW=0 absent complete target-specific negative evidence. WRITE_GATE_PATH_PENDING blocks governed output writes only.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
@@ -485,6 +485,40 @@
         "mainMerged": false
       },
       "result": "PASS_PC_READ_ONLY_AUTHORITY_RECONCILIATION_WITH_WRITE_GATE_PENDING"
+    },
+    "restartWave": {
+      "generatedAt": "2026-09-15T11:06:40-06:00",
+      "currentMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "restartMode": "CONTINUE_IN_NEW_CHAT",
+      "continuationMd": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/CONTINUATION.md",
+      "continuationJson": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/CONTINUATION.json",
+      "role": "PC_AUTHORITY_RECONCILIATION_WORKER",
+      "priorAccounting": {
+        "classified": 827,
+        "provisional": 687,
+        "specific": 140,
+        "unresolved": 0
+      },
+      "globalComposerTruth": {
+        "total": 2097,
+        "acceptedSpecific": 313,
+        "provisionalConceptLink": 1744,
+        "unresolvedSharedUi": 40,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "trueNewAccepted": 0
+      },
+      "exactNextActions": [
+        "Do not rebuild the 827-target PC baseline or recensus PC.",
+        "Treat the 687 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional.",
+        "Qualify rows only with target-specific relevant concept evidence or a governed rule proving link-only absence; projection-current plus family-level authority is not enough.",
+        "Preserve 139 physical/projection reconciliation rows and the 1 authority-conflict row unless new bounded evidence changes them.",
+        "Consume Chat 5 PC delta 6CC072FF and any newer bounded PC deltas.",
+        "Keep zero-loss 827/827 and TRUE_NEW=0 absent complete target-specific negative evidence.",
+        "WRITE_GATE_PATH_PENDING blocks governed output writes only."
+      ],
+      "noRebuild": true
     }
   }
 }
