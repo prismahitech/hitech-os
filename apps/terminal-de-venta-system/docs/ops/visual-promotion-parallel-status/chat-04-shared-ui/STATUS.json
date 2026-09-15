@@ -4,12 +4,12 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "RESTART_HANDOFF_READY",
-  "updatedAt": "2026-09-15T11:06:40-06:00",
+  "state": "READ_ONLY_RECONCILIATION_COMPLETE_WRITE_GATE_SEPARATE",
+  "updatedAt": "2026-09-15T11:18:28-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
   "workHead": null,
-  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK read-only analysis continues. Chat 5 cross-authority receipt is consumed and CROSS_AUTHORITY_EVIDENCE_PENDING is cleared. WRITE_GATE_PATH_PENDING blocks only governed work-branch output writes, not analysis. Capability remains visual.generic_application_engine_v1 DONE/SOURCE_READY/doNotRebuild=true with ADVANCE.",
+  "summary": "Shared UI target-specific read-only reconciliation is complete: 70/70 accounted with zero loss. The prior 11 conflict-curate and 19 physical-reconciliation rows remain unchanged; the previously unresolved 40 now classify as 35 target-specific EXISTING_CONCEPT_LINK_MISSING (exact RIFAT/Visual Control background/atmosphere role + governed Visual OS role proof) and 5 EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP from current Chat 5 ACT.primary / REC.button.primary deltas. TRUE_NEW remains 0. Governed authority-reconciliation output materialization remains separately blocked by WRITE_GATE_PATH_PENDING.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -28,7 +28,12 @@
     "The 11 multi-region records are target-specific existing-authority conflicts and classify EXISTING_AUTHORITY_CONFLICT_CURATE. Current RIFAT evidence contains multiple region rows per implementation layer and provides no unequivocal selector for one region.",
     "The 19 no-region records carry existing Target Index/Visual Control physical records, exact-byte-copy CURRENT projection, Shared UI Identity adapter and Atlasfin adapter evidence but no proven RIFAT region row. They classify PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED on the physical-reconciliation side; this does not assert semantic absence or projection drift.",
     "The remaining 40 register-first records are fully accounted but are not force-classified from cross-surface concepts alone. Their prior MISSING_SEMANTIC_AUTHORITY state plus general NDC/Identity concept existence is insufficient to choose a target-specific concept without a direct semantic join. They remain target-specific reconciliation debt rather than TRUE_NEW.",
-    "TRUE_NEW_AUTHORITY_REQUIRED remains zero. No target has complete negative evidence across every mandatory family, and no absence claim is inferred from an empty search or missing direct target link."
+    "TRUE_NEW_AUTHORITY_REQUIRED remains zero. No target has complete negative evidence across every mandatory family, and no absence claim is inferred from an empty search or missing direct target link.",
+    "Fresh main recheck advanced from 8db4370d579014f8fed6e190ffce45e1589b33d9 to d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200 by three Ledger/Evidence commits registering Mamastrophic screenshot/artifact capability. Current visual.generic_application_engine_v1 remains DONE/SOURCE_READY/doNotRebuild=true; no Shared UI Target Index/candidate/certification/Identity/Visual OS layer path changed.",
+    "Exact current-main Shared UI Target Index is still 70 rows and exact candidate semantic-gap corpus is 40 rows. All 40 candidate target IDs join 40/40 to certification source-record hashes and 40/40 to Target Index records with no duplicates.",
+    "Target-specific visual role evidence resolves 35 of the 40 to existing governed Visual OS concepts without inventing NDC/Identity meaning: 31 exact background-role rows plus 4 exact atmosphere-role rows. Their semanticMeaningId/bindingId remain null, so classification is EXISTING_CONCEPT_LINK_MISSING rather than exact reuse or application-ready.",
+    "Five targets 09F96569, BA225641, C2722826, 718C4BEE and 3863084F consume current Chat 5 positive ACT.primary / REC.button.primary evidence and classify EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP; BND.ACT.PRIMARY.SHAREDUI.V1 exists but exact target binding/application remains missing.",
+    "Target 6A23B437 is classified only against its exact existing Visual OS background-layer concept. Chat 5 non-equivalence evidence is preserved: data-prisma-profile=perf is performance/rendering evidence and is not VIS.identity.profile."
   ],
   "decisions": [
     "Remove CROSS_AUTHORITY_EVIDENCE_PENDING from all current analysis; Chat 5 evidence is immediately consumable.",
@@ -36,7 +41,11 @@
     "Classify the 11 multi-region records as EXISTING_AUTHORITY_CONFLICT_CURATE and the 19 no-region records as PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED, preserving projection=CURRENT and avoiding semantic inference.",
     "Do not force the 40 semantic-gap rows into EXISTING_CONCEPT_LINK_MISSING until target-specific evidence proves which existing concept applies. General component names, neutral adapter presence or cross-surface relation evidence are insufficient.",
     "Do not assert TRUE_NEW_AUTHORITY_REQUIRED without complete target-specific negative evidence across the receipt checklist.",
-    "No recensus, broad rediscovery, GVAE/RIFAT/Identity/NDC rebuild, Materiality inspection, canonical registration, GVAE APPLY, projection repair or product/runtime mutation."
+    "No recensus, broad rediscovery, GVAE/RIFAT/Identity/NDC rebuild, Materiality inspection, canonical registration, GVAE APPLY, projection repair or product/runtime mutation.",
+    "Finish all 40 previously unresolved Shared UI rows target-by-target without recensus: 35 EXISTING_CONCEPT_LINK_MISSING + 5 EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP.",
+    "For the 35 concept-link rows, accept only exact target-specific RIFAT/Visual Control role evidence joined to canonical Visual OS layer roles background/atmosphere. Do not use adapter, recipe-family existence or selector naming by itself as proof.",
+    "Keep NDC/Identity/RIFAT/application domains separate. In particular ACT.primary is not ACT.sale.checkout, and perf profile is not VIS.identity.profile.",
+    "Publish mailbox evidence only. Do not materialize governed authority-reconciliation/shared-ui outputs while WRITE_GATE_PATH_PENDING remains."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json"
@@ -46,16 +55,6 @@
       "name": "chat5-cross-authority-receipt",
       "result": "PASS_CONSUMED",
       "detail": "Receipt blob e30afdcaf67b44a95453ddbcc236762d8a651173; readOnlyEvidenceConsumableNow=true."
-    },
-    {
-      "name": "shared-ui-zero-loss-accounting",
-      "result": "PASS_READ_ONLY",
-      "detail": "input=70; accounted=70; missing=0; extra=0; duplicate=0."
-    },
-    {
-      "name": "read-only-classification-progress",
-      "result": "PASS_PARTIAL_TARGET_SPECIFIC",
-      "detail": "classified=30; unresolved target-specific=40; conflict-curate=11; physical-reconciliation-required=19; true-new=0."
     },
     {
       "name": "semantic-domain-separation",
@@ -76,42 +75,67 @@
       "name": "work-branch-output-write",
       "result": "PENDING_WRITE_GATE_ONLY",
       "detail": "No governed output-root mutation performed; read-only analysis continues independently."
+    },
+    {
+      "name": "shared-ui-zero-loss-accounting",
+      "result": "PASS_READ_ONLY",
+      "detail": "input=70; accounted=70; unique=70; missing=0; extra=0; duplicate=0."
+    },
+    {
+      "name": "read-only-classification-progress",
+      "result": "PASS_TARGET_SPECIFIC_COMPLETE",
+      "detail": "classified=70; unresolved=0; concept-link-missing=35; semantic-authority-application-gap=5; conflict-curate=11; physical-reconciliation-required=19; true-new=0."
+    },
+    {
+      "name": "target-specific-concept-quality-gate",
+      "result": "PASS",
+      "detail": "35 concept-link rows each carry exact target-specific RIFAT/Visual Control role evidence joined to an existing governed Visual OS background/atmosphere role; no family-only inference was accepted."
+    },
+    {
+      "name": "chat5-shared-ui-delta-intake",
+      "result": "PASS_CONSUMED",
+      "detail": "Positive deltas consumed for 09F96569, BA225641, C2722826, 718C4BEE, 3863084F; 6A23B437 consumed as non-equivalence guard."
+    },
+    {
+      "name": "current-main-drift-recheck",
+      "result": "PASS_NO_TARGET_CLASSIFICATION_RELEVANT_DRIFT",
+      "detail": "main=d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200; drift is Ledger/Evidence registration for Mamastrophic; GVAE capability truth unchanged."
     }
   ],
   "unresolved": [
-    "40 register-first Shared UI targets still require target-specific semantic joins before a defensible final classification. They are accounted, not missing, and are not TRUE_NEW by default.",
-    "Governed shard materialization under authority-reconciliation/shared-ui/** remains pending WRITE_GATE_PATH_PENDING after read-only reconciliation is complete."
+    "Governed shard materialization under prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/** remains pending WRITE_GATE_PATH_PENDING. This does not reopen the completed 70/70 read-only surface classification.",
+    "Chat 6 retains composer-final acceptance authority for the 35 target-specific EXISTING_CONCEPT_LINK_MISSING rows and should consume the fresh Chat 4 mailbox receipt directly."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Highest priority: finish the 40 target-specific unresolved Shared UI rows. Do not recensus the 70-target baseline. Consume current Chat 5 Shared UI deltas for 09F96569, BA225641, C2722826, 718C4BEE and 3863084F. They provide positive existing ACT.primary / REC.button.primary evidence and support EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while exact binding/application remains missing. Consume Chat 5 delta 6A23B437 as a non-equivalence guard only: data-prisma-profile=perf is performance/rendering evidence and must not be equated automatically to VIS.identity.profile. Do not equate identity::ACT.primary with ndc::ACT.sale.checkout. Grouped CheckoutButton + ScanButton targets especially forbid that collapse. Classify the 40 rows target-by-target and publish a fresh mailbox receipt with exact counts and zero-loss. Chat 4 owns final Shared UI surface classification. Do not wait for WRITE_GATE_PATH_PENDING; it blocks governed output writes only. Keep TRUE_NEW=0 unless complete target-specific negative evidence across required authority families is assembled.",
+  "nextAction": "Chat 6 should consume AUTHORITY_RECONCILIATION_SHARED_UI_READ_ONLY_RECEIPT.json directly and run its composer quality gate. Chat 4 remains complete read-only at 70/70 and must not write governed authority-reconciliation outputs until WRITE_GATE_PATH_PENDING clears.",
   "handoff": {
     "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
     "authorityReconciliation": {
-      "result": "READ_ONLY_RECONCILIATION_IN_PROGRESS_WRITE_GATE_SEPARATE",
+      "result": "PASS_SHARED_UI_READ_ONLY_TARGET_SPECIFIC_RECONCILIATION_WRITE_GATE_SEPARATE",
       "chatId": 4,
       "lane": "SHARED_UI_AUTHORITY_RECONCILIATION",
       "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
-      "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
       "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
       "workHead": null,
       "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/**",
       "inputCount": 70,
       "accountedCount": 70,
-      "classifiedCount": 30,
-      "unresolvedTargetSpecificCount": 40,
+      "classifiedCount": 70,
+      "unresolvedTargetSpecificCount": 0,
       "missingCount": 0,
       "extraCount": 0,
       "duplicateTargetIds": 0,
       "classificationCounts": {
         "EXISTING_AUTHORITY_EXACT_REUSE": 0,
-        "EXISTING_CONCEPT_LINK_MISSING": 0,
-        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 35,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 5,
         "EXISTING_AUTHORITY_CONFLICT_CURATE": 11,
         "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 19,
         "TRUE_NEW_AUTHORITY_REQUIRED": 0,
         "NOT_APPLICABLE": 0,
-        "UNRESOLVED_TARGET_SPECIFIC": 40
+        "UNRESOLVED_TARGET_SPECIFIC": 0
       },
       "trueNewAuthorityCount": 0,
       "trueNewWithCompleteNegativeEvidenceCount": 0,
@@ -125,6 +149,7 @@
       "writeGate": {
         "status": "WRITE_GATE_PATH_PENDING",
         "blocksReadOnlyAnalysis": false,
+        "blocksMailboxReceipts": false,
         "blocksGovernedOutputWrites": true
       },
       "materialityCatalogInspected": false,
@@ -133,7 +158,14 @@
       "canonicalAuthorityMutationPerformed": false,
       "productRuntimeMutationPerformed": false,
       "projectionRepairPerformed": false,
-      "gvaeApplyPerformed": false
+      "gvaeApplyPerformed": false,
+      "readOnlyReceipt": {
+        "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/AUTHORITY_RECONCILIATION_SHARED_UI_READ_ONLY_RECEIPT.json",
+        "gitBlobSha": "657159856debc488b5261f2f7089edb411fc90b0",
+        "statusBranch": "status/vp-chat-04-shared-ui"
+      },
+      "currentChat5Head": "e2f13271f4b17f093a56126d0e70d859b5f21597",
+      "composerAcceptance": "PENDING_CHAT6_QUALITY_GATE_CONSUMPTION"
     },
     "restartWave": {
       "generatedAt": "2026-09-15T11:06:40-06:00",
@@ -169,5 +201,6 @@
       ],
       "noRebuild": true
     }
-  }
+  },
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200"
 }
