@@ -60,3 +60,12 @@ Tambien registra `navigation.softNavigation=true` cuando una ruta reporta timeou
 ## arr8 installer parser guard
 
 El bundle de instalacion corrige el falso `powershell_parse` en rutas con espacios usando un parser temporal invocado por `-File -Path`.
+
+<!-- MAMSHOT_UNIVERSAL_SURF8_CI_V1 -->
+## Hosted CI adapter
+
+The universal GitHub workflow may start isolated ephemeral runtimes in its own runner, while surf8 itself keeps the no-start/no-kill contract. Runtime ownership stays outside the capture engine.
+
+Canonical CI runtime mapping: Chart Lab 3000, Web 3110, Tablet 3120, PC 3130, Mobile/PWA 3140, Control Center 3150. Tablet and PC may use runner-local ephemeral SQLite only. Mobile means the existing PWA/Web app, not native Android/iOS tooling. Control Center uses its canonical local Python panel on 3150, not a static-file-only server, because the real UI depends on local API routes.
+
+Cross-platform rule: when `-ArtifactRoot` is supplied, all output placement must remain under that root. Windows-only defaults are local fallback behavior, not a hosted CI contract.

@@ -94,3 +94,16 @@ Historical Code Atlas external-replay/usefulness/rental workflows may remain man
 A normal unrelated PR should no longer wake placeholder jobs, the four-job Repo Analyzer Qt suite, or the completed PC Wave 1 / Wave 2 three-job certification suite. Routine hosted CI should be dominated by the consolidated `CI` job plus the branch-protection-required ForgeOS compatibility job, with specialist workflows activating only for their owned paths.
 
 This catalog describes workflow intent. The YAML files remain the executable source of truth.
+
+<!-- MAMSHOT_UNIVERSAL_WORKFLOW_CATALOG_V1 -->
+## Mamastrophic universal screenshot evidence
+
+### `mamastrophic-universal-screenshots.yml`
+One parameterized evidence workflow reuses the existing PRISMA Plawright Mamastrophic engine for PC, Tablet, Mobile/PWA, Web, Chart Lab and Control Center. `surface=all` expands to six parallel jobs, each publishing the same versioned artifact shape with screenshots, manifest/index, route status, provenance, hashes and original non-PNG evidence.
+
+It supports `screenshots` and `screenshotsqa`. Pull requests that change this workflow or `tools/Plawright Mamastrophic/**` intentionally certify all six surfaces. Manual/called runs can select a single surface. Superseded runs are cancellation-enabled.
+
+This is an evidence workflow, not production certification. It starts only isolated runner-local runtimes, never customer services, and does not deploy or mutate customer databases.
+
+### `mamshot-universal-preflight.yml`
+This path-scoped governance preflight binds `tooling.mamastrophic.universal_screenshot_artifacts` to current Factory Ledger anti-rework decisions and task-exact Authority Mesh evidence. It fails closed when canonical main or authority bindings move until revalidation/full refresh is completed.

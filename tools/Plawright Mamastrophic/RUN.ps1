@@ -55,6 +55,14 @@ if (!(Test-Path -LiteralPath $CoreRunner)) { throw "No encontre core runner: $Co
 $PointProbeRunner = Join-Path $Here 'core\run-point-probe.ps1'
 $StateFixtureRunner = Join-Path $Here 'tests\cobrar-state-fixture.cjs'
 
+function Resolve-MamPowerShell {
+  foreach ($candidate in @('powershell.exe','pwsh.exe','powershell','pwsh')) {
+    $cmd = Get-Command $candidate -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($cmd) { return $cmd.Source }
+  }
+  throw 'No encontre powershell/pwsh para Mamastrophic.'
+}
+
 function Normalize-MamSurface {
   param([string]$Value)
   $k = ([string]$Value).Trim().ToLowerInvariant().Replace(' ', '_').Replace('-', '_')
@@ -165,7 +173,8 @@ function Build-CoreArgs {
 function Invoke-SingleSurfaceCore {
   $surfaceKey = Normalize-MamSurface $Surface
   $args = Build-CoreArgs -SurfaceName $surfaceKey -ChildWorkers $Workers -ChildArtifactRoot $ArtifactRoot -ChildNoZip ([bool]$NoZip)
-  & powershell @args
+  $ps = Resolve-MamPowerShell
+  & $ps @args
   exit $LASTEXITCODE
 }
 
@@ -200,9 +209,8 @@ function Invoke-MamAllSurfacesParallel {
   Write-Host "Artifact root: $runDir" -ForegroundColor DarkCyan
   Write-Host 'Regla: maximo 6 ZIPs finales, uno por app. No ZIP padre por fase.' -ForegroundColor DarkCyan
 
-  $psExe = (Get-Command powershell -ErrorAction SilentlyContinue)
-  if (-not $psExe) { $psExe = Get-Command pwsh -ErrorAction SilentlyContinue }
-  if (-not $psExe) { throw 'No encontre powershell/pwsh para lanzar workers por superficie.' }
+  $psPath = Resolve-MamPowerShell
+  $psExe = Get-Command $psPath -ErrorAction Stop
 
   while ($queue.Count -gt 0 -or $running.Count -gt 0) {
     while ($queue.Count -gt 0 -and $running.Count -lt $maxParallel) {
@@ -315,7 +323,8 @@ if ($Mode -eq 'point-probe') {
   if (-not [string]::IsNullOrWhiteSpace($ComponentUiId)) { $ppArgs += @('-ComponentUiId', $ComponentUiId) }
   if (-not [string]::IsNullOrWhiteSpace($EvidencePhase)) { $ppArgs += @('-EvidencePhase', $EvidencePhase) }
   if ($NoZip) { $ppArgs += '-NoZip' }
-  & powershell @ppArgs
+  $ps = Resolve-MamPowerShell
+  & $ps @ppArgs
   exit $LASTEXITCODE
 }
 
