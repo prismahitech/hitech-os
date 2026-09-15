@@ -1,8 +1,8 @@
 {
   "schema": "prisma.visual-promotion.chat6-continuation.v1",
-  "generatedAt": "2026-09-15T09:50:00-06:00",
+  "generatedAt": "2026-09-15T11:08:30-06:00",
   "repository": "prismahitech/hitech-os",
-  "canonicalMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "canonicalMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
   "chatId": 6,
   "role": "GLOBAL_AUTHORITY_RECONCILIATION_COMPOSER",
@@ -258,5 +258,25 @@
     "Do not materialize governed composed outputs until WRITE_GATE_PATH_PENDING is legitimately cleared.",
     "When write authority exists, create/reuse chat6/authority-reconciliation-composer-20260914 from then-current main and materialize only Chat 6 owned composed outputs, then validate manifests/hashes/zero-loss."
   ],
-  "noUserActionCurrentlyRequired": true
+  "noUserActionCurrentlyRequired": true,
+  "restartWave": {
+    "generatedAt": "2026-09-15T11:08:30-06:00",
+    "workerMailboxHeads": {
+      "chat1": "e16276d1e80c6d6a28eaf7aab00b29c04a19d31a",
+      "chat2": "2f61c4207eef379934f84b03037e7f80f124bcb0",
+      "chat3": "83c042d19c4128c82f7d1686eaf4c1ee6f708e29",
+      "chat4": "377e4a358279cddb8aee62e697235ac15749fb8c",
+      "chat5": "e2f13271f4b17f093a56126d0e70d859b5f21597"
+    },
+    "allWorkerMailboxesRefreshed": true,
+    "mode": "NEW_CHAT_CONTINUATION",
+    "exactPriorities": [
+      "Chat 1 qualify 924 provisional Tablet concept-link rows target-specifically.",
+      "Chat 2 qualify 687 provisional PC concept-link rows target-specifically.",
+      "Chat 3 qualify 133 provisional Mobile concept-link rows target-specifically.",
+      "Chat 4 close 40 Shared UI unresolved using current Chat 5 deltas and bounded evidence.",
+      "Chat 5 continue dynamic bounded cross-authority support without rebuilding the 2,097 baseline.",
+      "Chat 6 compose fresh receipts, preserve 2,097 zero-loss and refuse family-level semantic fake green."
+    ]
+  }
 }
