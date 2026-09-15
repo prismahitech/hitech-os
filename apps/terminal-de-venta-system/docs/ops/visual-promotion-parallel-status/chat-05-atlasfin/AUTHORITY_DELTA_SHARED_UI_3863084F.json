@@ -1,0 +1,74 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "createdAt": "2026-09-15T10:14:37-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-3863084f",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.3863084F2D7188E87D08.V1",
+  "question": "Does the reference-effects target spanning CheckoutButton and primary ScanButton require new authority, or is it another existing-primary-authority application gap?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "html[data-theme] [data-prisma-component=\"CheckoutButton\"], html[data-theme] [data-prisma-component=\"ScanButton\"][data-prisma-primary=\"true\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "ndc",
+      "id": "ACT.sale.checkout",
+      "finding": "Existing operational checkout action; not equivalent to the grouped visual target because that target also styles ScanButton."
+    },
+    {
+      "domain": "atlasfin",
+      "id": "ADP.SHARED.NEUTRAL.V2",
+      "finding": "Reference-only adapter; no semantic coalescing authority."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+    "apps/terminal-de-venta-system/docs/ndc/01_NDC_CANON_AND_DOCTRINE.md",
+    "prisma-html/extras/atlasfin/assets/data/surface-adapter.registry.json"
+  ],
+  "relationType": "EXISTING_SHARED_UI_VISUAL_PRIMARY_SEMANTIC_AUTHORITY_WITH_GROUPED_TARGET_BINDING_MISSING",
+  "equivalent": false,
+  "explicitNonEquivalence": "The grouped target spans CheckoutButton and ScanButton, so assigning NDC ACT.sale.checkout to the whole target would collapse operational and visual domains incorrectly.",
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_VISUAL_SEMANTIC_AUTHORITY",
+    "ndc": "ACT.sale.checkout exists; exact grouped target relation is not canonical",
+    "identity": "ACT.primary/REC.button.primary Shared UI authority exists but has zero exact bindings",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with null semanticMeaningId/bindingId",
+    "codeAtlas": "No stronger exact Shared UI grouped-target crosswalk found",
+    "atlasfin": "Reference-only neutral adapter; no semantic equivalence",
+    "ledgerEvidence": "No exact target-specific Ledger/Evidence Index row found; baseline capability remains reusable",
+    "history": "Shared UI component vocabulary includes CheckoutButton/ScanButton, but no canonical element binding was found"
+  },
+  "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+  "confidence": "MEDIUM_HIGH",
+  "unresolvedRemainder": "Exact cardinality/binding for the grouped style target must be curated by the surface owner. Do not split or bind by name inference in this lane."
+}
