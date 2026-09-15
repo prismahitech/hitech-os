@@ -4,143 +4,125 @@
   "lane": "SHARED_UI_PROMOTION",
   "statusBranch": "status/vp-chat-04-shared-ui",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
+  "state": "BLOCKED",
+  "updatedAt": "2026-09-15T00:20:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for SHARED_UI_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
-  "blockers": [],
+  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK started for Chat 4 / SHARED_UI_AUTHORITY_RECONCILIATION from GitHub-only repository truth. Current main advanced from assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Read-only drift review shows only Factory Ledger and Evidence Index changed, registering visual.operating_graph_v1; Shared UI census/Target Index/Identity/RIFAT/NDC/promotion-readiness inputs did not change in that compare. Lane mutation is blocked before work-branch creation because the mandatory universal anti-rework PROPOSAL decision for the exact task cannot be executed through the available GitHub connector path. Per OWNER_ASSIGNMENT, analysis remains read-only and no PASS is invented.",
+  "blockers": [
+    "BLOCKED_EXECUTION_PATH: Factory Ledger Agent Gate requires a task-exact universal anti-rework PROPOSAL decision before any work-branch repository mutation. The repository workflow .github/workflows/prisma-factory-anti-rework-gate.yml exposes workflow_dispatch only for canonical ledger validation/self-test and does not accept a task request; the available GitHub connector exposes no workflow-dispatch action capable of running verify_prisma_anti_rework_gate.py with the required request. Creating the assigned work branch or lane-local outputs before that decision would violate the gate.",
+    "Because the PROPOSAL gate has not run, no task-exact Authority Mesh/AutoMesh mutation authority has been requested and no lane output files have been written."
+  ],
   "findings": [
-    "Current canonical main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 throughout this phase write.",
-    "The current Shared UI certified subset contains 70 targets and all 70 are accounted exactly once by promotion readiness.",
-    "The canonical Identity adapter prisma.adapter.shared-ui.v1 is reusable neutral-source authority, but it does not establish target-level NDC meaning, visual meaning, recipe, binding, route/slot/component/owner or application-layer authority.",
-    "All 70 certified projections remain CURRENT under the existing exact-byte-copy projection policy; PROJECTION_DEBT.jsonl is therefore empty.",
-    "The 19 no-region records remain blocked without inferred regions and the 11 multi-region records remain explicit conflicts.",
-    "Target-level NDC/visual meaning/Identity recipe/binding authority remains unresolved for all 70; Atlasfin remains support-only and no target-level match was promoted.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
+    "START: Identity auto-detection from STATUS_CHANNEL_CONTRACT + STATUS_INDEX resolves Chat 4, status branch status/vp-chat-04-shared-ui and mailbox chat-04-shared-ui; latest OWNER_ASSIGNMENT overrides the stale main-phase fields and assigns SHARED_UI_AUTHORITY_RECONCILIATION.",
+    "OWNER_ASSIGNMENT exact lane scope: work branch chat4/authority-reconciliation-shared-ui-20260914; exclusive output root prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/**; exact input count 70.",
+    "Current main is 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 is its ancestor; compare is ahead by 3 commits and changes only PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json.",
+    "The main drift registers visual.operating_graph_v1 as BUILD / NOT_STARTED and explicitly names existing Factory Ledger, Authority Mesh, Code Atlas/UIMAP, NDC, Identity, RIFAT/prisma-ui, Target Index, Visual Promotion readiness, Work Entry/GVAE, Atlasfin and runtime evidence as reuse dependencies, not rebuild scope.",
+    "PR #529 evidence remains the anti-rework physical baseline: 7 surfaces, 96 routes, 1,978 visual regions, 10,575 editable slots, 215 component owners, 89 CSS owners and 4,453 layers with zero blockers/warnings; Target Index remains 3,915 records = 4 EXACT_APPLICATION_TARGET/GVAE_ENFORCED + 3,911 VISUAL_CONTROL_CENSUS_TARGET/DISCOVERY_ONLY.",
+    "PR #554 remains closed/integrated with exact composed corpus 2,097 and zero missing/extra/duplicate/source-hash mismatch; Shared UI exact lane input remains 70 and prior readiness remains closed rather than rerun.",
+    "Shared UI Identity bindings registry is stronger than the prior readiness summary alone: shared-ui is NEUTRAL_SOURCE_READY with 362 editable slots, 101 layers and 72 region owners; element-bindings registry already contains BND.ACT.PRIMARY.SHAREDUI.V1 and BND.IDENTITY.PROFILE.SHAREDUI.V1, both blocked by missing concrete Shared UI binding rather than absent semantic concepts.",
+    "Canonical Identity recipe registry contains REC.button.primary / FAM.button.action / PRESET.button.primary.clear-operational.v1, while Shared UI product documentation names normalized components including CheckoutButton, ScanButton, Sidebar, TopBar, SearchBar, ProductCard and CartPanel and states COBRAR is the dominant CTA. These are existing concept/intent evidence only; they do not by themselves prove target-level semantic equivalence or binding.",
+    "NDC canon independently proves operational ACT.sale.checkout and related sale semantics. Code Atlas/UIMAP evidence relates visual ACT.primary to operational ACT.sale.checkout for the certified Tablet golden trace. That relation is evidence of distinct linked domains, not permission to equate a Shared UI selector with ACT.sale.checkout.",
+    "Atlasfin structured evidence continues to prove ADP.SHARED.NEUTRAL.V2; prior certified Shared UI review examined 12 Atlasfin recipe target selectors and found zero exact Shared UI selector matches. Adapter presence remains support/reference only and Materiality Catalog remains uninspected.",
+    "Read-only target sampling confirms current Shared UI physical rows are CURRENT exact-byte-copy projections and already carry target-index, visual-control, projection-manifest, identity adapter and Atlasfin adapter evidence. This reinforces DISCOVERY_ONLY_IS_NOT_UNDISCOVERED and argues against TRUE_NEW as a default classification.",
+    "No TRUE_NEW_AUTHORITY_REQUIRED classification has been asserted. Negative-evidence completion is therefore not falsely claimed."
   ],
   "decisions": [
-    "Do not rebuild closed census, certification or witness phases.",
-    "Classify readiness conservatively from current machine-readable authority and preserve unknown/ambiguous states rather than inventing meaning or coordinates.",
-    "Keep Materiality Catalog STANDBY_USER_INVOKED_ONLY and uninspected.",
-    "Do not perform product/runtime mutation, projection repair, canonical registration, GVAE apply or global authority writes in Chat 4.",
-    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat4/authority-reconciliation-shared-ui-20260914."
+    "Preserve all closed phases and do not recensus, broad-rediscover, rebuild GVAE/RIFAT/Identity/NDC, repair projections, mint canonical IDs, mutate product/runtime, perform GVAE APPLY, inspect Materiality Catalog or touch FILES_MANIFEST.json.",
+    "Treat the 70-target immutable Shared UI input as existing physical authority. Separate operational NDC meaning, visual Identity meaning, physical location and application/binding authority.",
+    "Do not infer Shared UI target semantics from component names, shared ownership, visual reuse or the existence of neutral adapters. Existing concept evidence may support EXISTING_CONCEPT_LINK_MISSING or EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP only after exact per-target evidence reconciliation.",
+    "Preserve all 11 multi-region records as conflict/curation unless current authority selects one region unequivocally; do not collapse the 19 no-region records into semantic absence.",
+    "Fail closed before creating the work branch or writing authority-reconciliation outputs because the mandatory task-exact anti-rework PROPOSAL execution path is unavailable through the current GitHub connector."
   ],
   "changedPaths": [
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/RESOLUTION.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/REUSE.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/REGISTRATION_PROPOSALS.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/BLOCKED.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/PROJECTION_DEBT.jsonl",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/MANIFEST.json",
-    "prisma-html/governance/visual-promotion/promotion-readiness/shared-ui/SUMMARY.md",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/LOG.md"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-04-shared-ui/STATUS.json"
   ],
   "validations": [
     {
-      "name": "phase-assignment",
+      "name": "identity-and-owner-assignment",
       "result": "PASS",
-      "detail": "Canonical prompt and STATUS_INDEX assign Chat 4 to SHARED_UI_PROMOTION_READINESS_RESOLVER with expected receipt PASS_SHARED_UI_PROMOTION_READINESS."
+      "detail": "Chat 4 / SHARED_UI_AUTHORITY_RECONCILIATION / 70 targets / assigned branch and output root resolved from current mailbox OWNER_ASSIGNMENT."
     },
     {
-      "name": "zero-loss-readiness-accounting",
+      "name": "current-main-resolution",
       "result": "PASS",
-      "detail": "70 input = 70 resolution = 70 unique = 0 reuse + 0 canonical registration ready + 70 blocked + 0 not applicable; missing=0, extra=0, duplicates=0."
+      "detail": "Canonical main resolved to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9."
     },
     {
-      "name": "decision-partition",
-      "result": "PASS",
-      "detail": "40 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 19 BLOCKED_MISSING_APPLICATION_AUTHORITY + 11 BLOCKED_MULTI_REGION_CONFLICT = 70."
+      "name": "assignment-basis-drift-review",
+      "result": "PASS_RELEVANT_GOVERNANCE_DRIFT_IDENTIFIED",
+      "detail": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0..70f381e9b3c0b63ee4c7e445c98e86b3e9211be9 changes only Factory Ledger and Evidence Index, registering visual.operating_graph_v1; this governance-sensitive drift must be respected rather than silently ignored."
     },
     {
-      "name": "projection-debt",
-      "result": "PASS",
-      "detail": "All 70 projectionDebtClassification=CURRENT; PROJECTION_DEBT.jsonl has zero rows."
+      "name": "anti-rework-baseline",
+      "result": "PASS_READ_ONLY",
+      "detail": "PR #529 physical authority and PR #554 composed readiness remain reusable closed evidence; no prior phase was rebuilt."
     },
     {
-      "name": "schema-vocabulary-source-pins",
-      "result": "PASS",
-      "detail": "All 70 rows use the current promotion-readiness schema/vocabulary and pin their immutable certified sourceRecordSha256."
+      "name": "semantic-domain-separation",
+      "result": "PASS_READ_ONLY",
+      "detail": "NDC operational meaning, Identity visual meaning, RIFAT/Target Index physical location and binding/application authority were kept distinct."
     },
     {
-      "name": "work-branch-scope",
+      "name": "materiality-policy",
       "result": "PASS",
-      "detail": "d4b451cc92c597d02cfc65094922bd2c5dd17c12..3b7f7e285867818bf88708ae6e28df6c5aeec763 is exactly one commit and exactly seven files, all under promotion-readiness/shared-ui/**."
+      "detail": "Materiality Catalog was not inspected or used."
     },
     {
-      "name": "current-main-revalidation",
-      "result": "PASS_ALREADY_CURRENT",
-      "detail": "Canonical main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 after the phase write."
+      "name": "universal-anti-rework-proposal",
+      "result": "BLOCKED_EXECUTION_PATH",
+      "detail": "Required task-exact PROPOSAL gate cannot be invoked with the available GitHub connector; the repository's existing anti-rework workflow does not accept the task request shape."
     },
     {
-      "name": "safety-invariants",
-      "result": "PASS",
-      "detail": "semanticMutationCount=0; materialityCatalogInspected=false; productRuntimeMutationPerformed=false; canonicalAuthorityMutationPerformed=false."
+      "name": "work-branch-mutation",
+      "result": "NOT_RUN_FAIL_CLOSED",
+      "detail": "Assigned work branch does not exist and was not created because mutation is gated by the missing PROPOSAL decision."
     }
   ],
   "unresolved": [
-    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
-    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
+    "Complete deterministic per-target reconciliation for all 70 Shared UI targets once a GitHub-executable task-exact anti-rework PROPOSAL path exists.",
+    "Produce resolution/part-0001.jsonl, INDEX.json, MANIFEST.json, SUMMARY.md and any bounded debt/subset shards under the exclusive output root with zero missing/extra/duplicate targets.",
+    "Run or revalidate task-exact Authority Mesh after PROPOSAL and before any lane mutation if required by the resulting gate decision."
   ],
   "needsUserAction": false,
-  "userActionRequested": "",
-  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat4/authority-reconciliation-shared-ui-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
+  "userActionRequested": null,
+  "nextAction": "BLOCKED_EXECUTION_PATH. Coordinator/automation may resume Chat 4 when GitHub exposes a task-exact universal anti-rework PROPOSAL execution path. Do not ask the owner for a computer or manual command. Re-read current main and this mailbox before resuming.",
   "handoff": {
-    "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
+    "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+    "authorityReconciliation": {
+      "result": "BLOCKED_EXECUTION_PATH",
+      "chatId": 4,
+      "lane": "SHARED_UI_AUTHORITY_RECONCILIATION",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
+      "workHead": null,
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/**",
+      "inputCount": 70,
+      "outputCount": 0,
+      "uniqueTargetCount": 0,
+      "missingCount": 70,
+      "extraCount": 0,
+      "duplicateTargetIds": 0,
+      "classificationCounts": null,
+      "trueNewAuthorityCount": 0,
+      "materialityCatalogInspected": false,
+      "recensusPerformed": false,
+      "broadRediscoveryPerformed": false,
+      "canonicalAuthorityMutationPerformed": false,
+      "productRuntimeMutationPerformed": false,
+      "projectionRepairPerformed": false,
+      "gvaeApplyPerformed": false,
+      "blockers": [
+        "TASK_EXACT_ANTI_REWORK_PROPOSAL_EXECUTION_UNAVAILABLE_IN_GITHUB_CONNECTOR"
+      ]
+    },
     "promotionReadiness": {
       "phase": "CANONICAL_PROMOTION_READINESS_RESOLUTION",
       "result": "PASS_SHARED_UI_PROMOTION_READINESS",
-      "workBranch": "chat4/canonical-promotion-readiness-shared-ui-20260912",
       "workHead": "3b7f7e285867818bf88708ae6e28df6c5aeec763",
-      "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-      "certifiedCorpusManifestBlob": "6246e92d7b38750d45b2d74e6adf1b61fcd43a56",
-      "inputCount": 70,
-      "resolutionCount": 70,
-      "uniqueTargetCount": 70,
-      "readyExistingAuthorityReuse": 0,
-      "readyCanonicalRegistration": 0,
-      "legitimatelyBlocked": 70,
-      "notApplicable": 0,
-      "decisionCounts": {
-        "BLOCKED_MISSING_SEMANTIC_AUTHORITY": 40,
-        "BLOCKED_MISSING_APPLICATION_AUTHORITY": 19,
-        "BLOCKED_MULTI_REGION_CONFLICT": 11
-      },
-      "projectionDebtCount": 0,
-      "resolutionDigest": "8c2649eb16ec45330107a2334e6eb2b283b23d49bee66f91760295afcfa13a68",
-      "outputGitBlobShas": {
-        "RESOLUTION.jsonl": "73f38b2e7bc2b6f073e3791b70b05134034f42cc",
-        "REUSE.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "REGISTRATION_PROPOSALS.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "BLOCKED.jsonl": "387f6f78cdb9864c37220361698716f3a338eb9a",
-        "PROJECTION_DEBT.jsonl": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
-        "MANIFEST.json": "649e46e6a6d8761583c0792f2eb75dc500763eea",
-        "SUMMARY.md": "085dc1d31aee44a81db58b6dd64333c6a9453856"
-      },
-      "materialityCatalogInspected": false,
-      "broadRediscoveryPerformed": false,
-      "productRuntimeMutationPerformed": false,
-      "canonicalAuthorityMutationPerformed": false,
-      "canonicalPromotionPerformed": false,
-      "defects": []
-    },
-    "priorParallelWitness": {
-      "result": "PASS_SHARED_UI_CORPUS_WITNESS",
-      "certificationHead": "553577aa74045c73ab9c92d1f81538e7e0a8c65a"
-    },
-    "authorityReconciliationAssignment": {
-      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
-      "assigned": true,
-      "assignedAt": "2026-09-14T23:30:00Z",
-      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
-      "workBranch": "chat4/authority-reconciliation-shared-ui-20260914",
-      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/shared-ui/**",
-      "expectedInputCount": 70,
-      "materialityCatalogAuthorized": false,
-      "githubOnly": true,
-      "status": "ASSIGNED_NOT_STARTED"
+      "closed": true
     }
   }
 }
