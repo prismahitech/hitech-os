@@ -141,6 +141,20 @@
         "stock insuficiente",
         "turno cerrado si la politica lo exige"
       ]
+    },
+    "professional_corporate_services": {
+      "localSalesAllowed": false,
+      "localReturnsAllowed": false,
+      "localSensitiveOverridesAllowed": false,
+      "defaultFailureCopy": "No pudimos enviar este avance. Se conservará para reintentar cuando haya conexión.",
+      "pendingCopy": "Avance guardado. Pendiente por enviar.",
+      "conflictCopy": "Este expediente requiere revisión antes de continuar.",
+      "blockingExamples": [
+        "aprobación sensible sin autorización",
+        "documento obligatorio faltante",
+        "vencimiento bloqueado por dependencia",
+        "cambio de política reservado a PC"
+      ]
     }
   }
 }
