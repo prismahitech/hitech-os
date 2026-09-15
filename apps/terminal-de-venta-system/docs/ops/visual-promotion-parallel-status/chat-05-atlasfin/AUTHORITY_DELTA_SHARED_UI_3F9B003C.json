@@ -1,0 +1,66 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "createdAt": "2026-09-15T11:20:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-3f9b003c",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.3F9B003C100181C7E245.V1",
+  "question": "Does the prisma-light NavItem current/active style establish ACT.primary or another action semantic for this exact target?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "[data-theme=\"prisma-light\"] [data-prisma-component=\"NavItem\"][aria-current=\"page\"], [data-theme=\"prisma-light\"] [data-prisma-component=\"NavItem\"][data-active=\"true\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The prisma-light rule applies a themed current-navigation visual treatment with accent color, layered background, gold border and shadow."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+  ],
+  "relationType": "THEMED_CURRENT_NAVIGATION_STATE_DOES_NOT_PROVE_PRIMARY_ACTION_SEMANTICS",
+  "equivalent": false,
+  "explicitNonEquivalence": "Theme-specific current/active navigation styling is not semantic evidence for Identity ACT.primary. The target's theme qualifier changes presentation, not the semantic domain, and ACT.primary remains non-equivalent to NDC business actions.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "identity": "Existing ACT.primary Shared UI authority has zero bound targets and does not bind this exact themed NavItem target.",
+    "rifatTargetIndex": "Exact CURRENT target exists with semanticMeaningId=null and bindingId=null.",
+    "sharedUiStyleAuthority": "Exact rule is explicitly scoped to prisma-light current/active navigation state.",
+    "ndc": "No exact target-specific operational action crosswalk is registered.",
+    "ledgerEvidence": "Current main PR #557 does not alter relevant visual authority."
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "disposition": "NON_EQUIVALENCE_GUARD_ONLY",
+  "unresolvedRemainder": "A positive target-specific semantic join remains required. Do not infer semantic equivalence from theme, accent treatment, aria-current, or data-active."
+}
