@@ -4,12 +4,12 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "NOT_STARTED",
-  "updatedAt": "2026-09-14T23:30:00Z",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-14T18:18:00-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat2/authority-reconciliation-pc-20260914",
   "workHead": null,
-  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for PC_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
+  "summary": "START AUTHORITY_RECONCILIATION_ANTI_REWORK / PC_AUTHORITY_RECONCILIATION. Chat identity resolved from status contract + STATUS_INDEX; own inbox assignment loaded. Canonical main resolved to 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9. Mandatory authority reads and drift revalidation are in progress before any work-branch mutation.",
   "blockers": [],
   "findings": [
     "PC promotion-readiness output root now exists on chat2/canonical-promotion-readiness-pc-20260912 at bce748abc169b241627f77b31f5050d22753312b.",
@@ -20,7 +20,10 @@
     "All 827 readiness sourceRecordSha256 values equal the immutable certified CANDIDATE_CORPUS recordSha256 for the same targetId.",
     "No NDC/VIS/Identity recipe/binding/application authority was minted or silently inferred; current unknowns remain blocked.",
     "Work-branch delta from base is exactly seven files under prisma-html/governance/visual-promotion/promotion-readiness/pc/**.",
-    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild.",
+    "AUTHORITY_RECONCILIATION identity auto-resolved: Chat 2 / PC_AUTHORITY_RECONCILIATION / 827 exact targets / exclusive output root prisma-html/governance/visual-promotion/authority-reconciliation/pc/**.",
+    "Canonical main at START is 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9; assignment basis 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0 is 3 commits behind.",
+    "Assignment work branch does not yet exist; no work-branch mutation has been made."
   ],
   "decisions": [
     "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
@@ -28,7 +31,9 @@
     "Do not repair the selector DRIFT or the 139 projection-MISSING records in this lane.",
     "Do not treat Atlasfin recipe similarity or Tablet similarity as semantic proof.",
     "Materiality Catalog remains STANDBY_USER_INVOKED_ONLY and uninspected.",
-    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat2/authority-reconciliation-pc-20260914."
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat2/authority-reconciliation-pc-20260914.",
+    "Do not repeat CANONICAL_PROMOTION_READINESS_RESOLUTION; PR #554 is treated as closed integrated input.",
+    "Perform mandatory GitHub-only authority reads and classify main drift before creating/mutating the work branch."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
@@ -56,15 +61,21 @@
     "MATERIALITY_CATALOG_INSPECTED: false",
     "PRODUCT_RUNTIME_MUTATION_PERFORMED: false",
     "CANONICAL_AUTHORITY_MUTATION_PERFORMED: false",
-    "PASS_PC_PROMOTION_READINESS: PASS"
+    "PASS_PC_PROMOTION_READINESS: PASS",
+    "CHAT_IDENTITY_RESOLUTION: PASS:CHAT_2_PC",
+    "OWNER_ASSIGNMENT_READ: PASS:AUTHORITY_RECONCILIATION_ANTI_REWORK",
+    "EXPECTED_INPUT_COUNT: PASS:827",
+    "CURRENT_MAIN_RESOLVED: PASS:70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+    "WORK_BRANCH_PRESENT: false"
   ],
   "unresolved": [
-    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
-    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
+    "Finish mandatory authority reads and classify assignment-base -> current-main drift.",
+    "Run/resolve the applicable anti-rework/Authority Mesh path before any work-branch evidence mutation.",
+    "Reconcile all 827 PC targets into the owner-approved final classification enum."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat2/authority-reconciliation-pc-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
+  "nextAction": "Complete mandatory GitHub authority reads, drift classification, and anti-rework/Authority Mesh preflight. If mutation is authorized, create/reuse chat2/authority-reconciliation-pc-20260914 from current main and write only lane-local evidence under the assigned output root.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
