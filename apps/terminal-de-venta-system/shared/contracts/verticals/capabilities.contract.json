@@ -159,6 +159,26 @@
       "id": "professional_services.recurring_services",
       "vertical": "professional_corporate_services",
       "displayName": "Servicios recurrentes"
+    },
+    {
+      "id": "professional_services.proposals_contracts",
+      "vertical": "professional_corporate_services",
+      "displayName": "Propuestas y contratos"
+    },
+    {
+      "id": "professional_services.external_advisors",
+      "vertical": "professional_corporate_services",
+      "displayName": "Aliados y especialistas externos"
+    },
+    {
+      "id": "professional_services.intake",
+      "vertical": "professional_corporate_services",
+      "displayName": "Diagnóstico e intake"
+    },
+    {
+      "id": "professional_services.case_management",
+      "vertical": "professional_corporate_services",
+      "displayName": "Gestión de expediente"
     }
   ]
 }
