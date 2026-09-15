@@ -391,3 +391,14 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - publicaste work branch, exact head, counts, hashes/manifest, blockers y handoff.
 
 **No abras ni merges a main por tu cuenta salvo instrucción explícita posterior del dueño.**
+
+## 2026-09-15T00:35:00Z — ORCHESTRATOR CORRECTION
+
+- **Do not bind this lane to `visual.operating_graph_v1`.** PR #555 registered that as a separate `BUILD / NOT_STARTED` capability for the Operating Graph Foundation; it is unrelated to this authority-reconciliation assignment.
+- The affected canonical capability for this phase remains `visual.generic_application_engine_v1` with `DONE / SOURCE_READY / doNotRebuild=true`.
+- Requested anti-rework action for this phase: `ADVANCE` (or `VERIFY` for a strictly read-only check), never BUILD/REBUILD.
+- PR #555 is still governance-sensitive drift because the Ledger/Evidence Index changed, so current-head authority must be rebound/revalidated.
+- Continue all read-only reconciliation immediately. **Do not stop the whole lane.**
+- If the exact current-head anti-rework MUTATION execution path is unavailable, hold only work-branch output writes and report `WRITE_GATE_PATH_PENDING`.
+- Do not list `visual.operating_graph_v1` as a blocker, prerequisite or target capability for this lane.
+- No product/runtime mutation, canonical registration, projection repair, GVAE APPLY or Materiality use is authorized.
