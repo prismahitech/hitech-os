@@ -1,0 +1,57 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "createdAt": "2026-09-15T10:14:37-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-main-drift-8db4370d",
+  "topic": "current-main-drift-revalidation",
+  "question": "Does main advance from 70f381e9... to 8db4370d... invalidate Chat 5's accepted baseline or existing target-specific semantic deltas?",
+  "authorityFound": [
+    {
+      "domain": "git-compare",
+      "base": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "head": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+      "aheadBy": 8,
+      "changedPathCount": 13
+    },
+    {
+      "domain": "drift-scope",
+      "finding": "Changed paths are prisma-html/FILES_MANIFEST.json plus visual-operating-graph docs/governance foundation files and docs/ops README."
+    },
+    {
+      "domain": "nonOverlap",
+      "finding": "No NDC canon/registries, Identity registries/adapters, RIFAT/Visual Control/Target Index, visual-promotion candidate corpus, Atlasfin structured registries, Factory Ledger, or Evidence Index path changed in this compare."
+    },
+    {
+      "domain": "capability-separation",
+      "finding": "visual.operating_graph_v1 remains a separate capability from this lane's visual.generic_application_engine_v1 anti-rework baseline."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/FILES_MANIFEST.json",
+    "prisma-html/docs/ops/visual-operating-graph/**",
+    "prisma-html/governance/visual-operating-graph/**",
+    "prisma-html/docs/ops/README.md"
+  ],
+  "relationType": "NON_OVERLAPPING_MAIN_DRIFT_FOR_CURRENT_READ_ONLY_SEMANTIC_SUPPORT",
+  "equivalent": false,
+  "negativeEvidenceCoverage": {
+    "status": "REVALIDATED_BY_EXACT_COMPARE_PATH_SET",
+    "baselineRebuildRequired": false,
+    "targetDeltaReanalysisRequired": false,
+    "governedWriteAuthorityAffected": "YES_IF_WRITES_ARE_ATTEMPTED_AT_CURRENT_HEAD; WRITE_GATE_PATH_PENDING ALREADY HOLDS THEM",
+    "readOnlySupportAffected": false
+  },
+  "suggestedClassification": "READ_ONLY_EVIDENCE_REMAINS_CONSUMABLE",
+  "confidence": "HIGH",
+  "unresolvedRemainder": "If any governed output write becomes authorized later, re-pin write-gate/Authority Mesh at then-current main. No semantic baseline recensus or rebuild is justified by this drift."
+}
