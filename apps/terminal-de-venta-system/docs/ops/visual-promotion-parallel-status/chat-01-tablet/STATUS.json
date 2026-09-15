@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
   "state": "IN_PROGRESS_READ_ONLY_TARGET_SPECIFIC_QUALIFICATION",
-  "updatedAt": "2026-09-15T11:15:14-06:00",
+  "updatedAt": "2026-09-15T11:17:52-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat1/authority-reconciliation-tablet-20260914",
   "workHead": null,
-  "summary": "Tablet target-specific qualification pass 01 completed on current main 8db4370d579014f8fed6e190ffce45e1589b33d9. Zero-loss remains 929/929; the 5 specific rows are preserved; all 924 EXISTING_CONCEPT_LINK_MISSING rows remain composer-provisional because current evidence still lacks target-specific relevant-concept proof. TRUE_NEW remains 0. WRITE_GATE_PATH_PENDING blocks governed output writes only.",
+  "summary": "Tablet target-specific qualification remains read-only and current after main advanced to d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200 via unrelated Mamastrophic tooling registration. Zero-loss remains 929/929; the 5 specific rows are preserved; all 924 concept-link rows remain composer-provisional with 0 target-specific qualification gain and TRUE_NEW=0. WRITE_GATE_PATH_PENDING still blocks governed output writes only.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -110,7 +110,10 @@
     "Fresh read of the 139-row Tablet CANDIDATES corpus found 138 provisional candidate rows after excluding Cobrar primary. Across those 138 rows: ndcPrimaryId=0, non-empty ndcRefs=0, visualMeaningId=0, existingBindingId=0, identityRecipeId=0 and applicationLayerId=0. Their Atlasfin recipe matches remain candidate/similarity evidence only.",
     "Certified Tablet corpus still reports NDC UNRESOLVED=929, visual meaning RESOLVED_EXISTING=1 and binding EXISTING_RESOLVED=1; that single exact existing authority row is the already-separated Cobrar primary target.",
     "Bounded target-specific qualification result: 924 audited, 0 promoted to composer-final, 924 remain provisional, TRUE_NEW accepted=0. This is an evidence-quality result, not a semantic green for those rows.",
-    "Tablet zero-loss remains exact: 929 expected = 924 provisional + 1 semantic/application gap + 2 authority conflicts + 2 physical/projection reconciliation rows; missing=0, extra=0, duplicate=0."
+    "Tablet zero-loss remains exact: 929 expected = 924 provisional + 1 semantic/application gap + 2 authority conflicts + 2 physical/projection reconciliation rows; missing=0, extra=0, duplicate=0.",
+    "Post-pass main drift detected: main advanced from 8db4370d579014f8fed6e190ffce45e1589b33d9 to d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200 by PR #557.",
+    "Exact 8db4370d..d0e6d0a7 compare changes only PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json and PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json to register tooling.mamastrophic.universal_screenshot_artifacts BUILD/NOT_STARTED; no Tablet candidate corpus, Target Index, Identity, NDC, Atlasfin, promotion-readiness or mailbox evidence path changed.",
+    "Current Factory Ledger still records visual.generic_application_engine_v1 as DONE / SOURCE_READY / doNotRebuild=true. Therefore the new main drift is non-overlapping for this read-only qualification pass, while any future governed mutation must re-pin write authority to then-current main."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -159,7 +162,9 @@
     "Supersede any earlier wording that treated the 924 EXISTING_CONCEPT_LINK_MISSING rows as semantic-final: under the current composer quality rule they remain provisional until target-specific existing-concept proof or a governed link-only rule exists.",
     "Do not promote generic NDC family existence, Identity family existence, Atlasfin recipe similarity, adapters, selectors or physical census presence into target-specific semantic concept proof.",
     "Preserve the five already-separated Tablet classifications without reclassification: Cobrar primary application gap, two accent authority conflicts, two physical/projection reconciliation rows.",
-    "Continue read-only bounded evidence intake despite WRITE_GATE_PATH_PENDING; mailbox receipts are allowed, governed authority-reconciliation output-root writes remain blocked."
+    "Continue read-only bounded evidence intake despite WRITE_GATE_PATH_PENDING; mailbox receipts are allowed, governed authority-reconciliation output-root writes remain blocked.",
+    "Treat d0e6d0a7 main drift as read-only non-overlap only; do not confuse that with governed mutation authorization.",
+    "Keep all 924 Tablet concept-link rows provisional after the d0e6d0a7 drift because the changed trust-anchor files add no target-specific Tablet semantic evidence."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
@@ -176,7 +181,8 @@
     "prisma-html/governance/visual-promotion/promotion-readiness/tablet/PROJECTION_DEBT.jsonl",
     "prisma-html/governance/visual-promotion/promotion-readiness/tablet/MANIFEST.json",
     "prisma-html/governance/visual-promotion/promotion-readiness/tablet/SUMMARY.md",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/AUTHORITY_RECONCILIATION_TABLET_QUALIFICATION_PASS_01.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/AUTHORITY_RECONCILIATION_TABLET_QUALIFICATION_PASS_01.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/AUTHORITY_RECONCILIATION_TABLET_MAIN_DRIFT_D0E6D0A7.json"
   ],
   "validations": [
     {
@@ -901,6 +907,24 @@
       "provisional924Gain": 0
     },
     "semanticFinal": false,
-    "writeGate": "WRITE_GATE_PATH_PENDING"
+    "writeGate": "WRITE_GATE_PATH_PENDING",
+    "currentMainAfterDrift": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+    "driftRevalidated": true
+  },
+  "mainDriftRevalidation": {
+    "priorMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+    "merge": "PR #557",
+    "changedPaths": [
+      "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+      "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+    ],
+    "introducedCapability": "tooling.mamastrophic.universal_screenshot_artifacts",
+    "relevantReadOnlyTabletAuthorityOverlap": false,
+    "gvaeCapabilityPreserved": "DONE/SOURCE_READY/doNotRebuild=true",
+    "receipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet/AUTHORITY_RECONCILIATION_TABLET_MAIN_DRIFT_D0E6D0A7.json",
+    "receiptCommit": "8f8cd44502926b5e910ffe185ea8dcceb5aa6d67",
+    "result": "PASS_READ_ONLY_NON_OVERLAP_DRIFT_REVALIDATION_D0E6D0A7",
+    "fakeGreenScope": "Read-only non-overlap only; not semantic-final and not mutation authorization."
   }
 }
