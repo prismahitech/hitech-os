@@ -1,0 +1,76 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+  "createdAt": "2026-09-15T10:14:37-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-shared-ui-718c4bee",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.718C4BEE50BF4F4078A8.V1",
+  "question": "Does the base .actionButton Shared UI target need a new semantic concept, or is existing ACT.primary authority merely unbound?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": ".actionButton",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "shared-ui-implementation",
+      "component": "PrismaActionButton",
+      "path": "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaActionButton.tsx",
+      "finding": "Generic Shared UI action component uses the actionButton class; implementation evidence only."
+    },
+    {
+      "domain": "identity",
+      "id": "BND.ACT.PRIMARY.SHAREDUI.V1",
+      "neutralMeaningId": "ACT.primary",
+      "recipePresetId": "REC.button.primary",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "identity",
+      "id": "prisma.adapter.shared-ui.v1",
+      "readiness": "NEUTRAL_SOURCE_READY",
+      "path": "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json"
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+    "prisma-html/authority/rifat/identity/adapters/shared-ui.adapter.json",
+    "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaActionButton.tsx"
+  ],
+  "relationType": "EXISTING_VISUAL_PRIMARY_ACTION_AUTHORITY_WITH_MISSING_EXACT_SHARED_UI_BINDING",
+  "equivalent": false,
+  "explicitNonEquivalence": "The generic class/action component does not prove any NDC business action. ACT.primary remains visual Identity meaning only.",
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_EXISTING_VISUAL_SEMANTIC_AUTHORITY",
+    "ndc": "No operational NDC meaning is required or proven for this generic base action visual target",
+    "identity": "BND.ACT.PRIMARY.SHAREDUI.V1 exists with ACT.primary/REC.button.primary but zero bound targets",
+    "rifatTargetIndex": "Exact CURRENT physical target exists; semanticMeaningId and bindingId remain null",
+    "codeAtlas": "No exact Shared UI target crosswalk found in bounded search",
+    "atlasfin": "No semantic authority inferred from Shared UI neutral adapter/reference",
+    "ledgerEvidence": "No exact target-specific Ledger/Evidence Index row found; baseline anti-rework receipt reused",
+    "history": "PrismaActionButton implementation proves existing component intent but not a governed element binding"
+  },
+  "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+  "confidence": "HIGH",
+  "unresolvedRemainder": "Exact owner/route/region/slot/layer binding remains missing under Identity's own binding contract. Surface owner should consume this as positive existing semantic authority, not TRUE_NEW."
+}
