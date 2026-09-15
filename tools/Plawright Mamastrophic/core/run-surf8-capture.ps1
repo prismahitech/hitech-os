@@ -665,8 +665,10 @@ module.exports = {
   Write-JsonFile (Join-Path $reports 'gpu-profile.json') $GpuProfile 10
 Write-Utf8 (Join-Path $reports 'gpu-profile.md') (New-Surf8GpuMarkdown $GpuProfile)
 $plan = Join-Path $reports 'surf8.capture-plan.json'
-$resultZip = Join-Path 'F:\descargasf' ("$runStem result.zip")
-$failZip = Join-Path 'F:\descargasf' ("$runStem fail.zip")
+$zipRoot = if ([string]::IsNullOrWhiteSpace($ArtifactRoot)) { 'F:\descargasf' } else { Split-Path -Parent $outDir }
+if ([string]::IsNullOrWhiteSpace($zipRoot)) { $zipRoot = $outDir }
+$resultZip = Join-Path $zipRoot ("$runStem result.zip")
+$failZip = Join-Path $zipRoot ("$runStem fail.zip")
 $logPath = if ($visualQaMode) { Join-Path $logs 'run.log' } else { Join-Path $reports 'run.log' }
 $runLines = New-Object System.Collections.Generic.List[string]
 function Add-RunLog([string]$line) {
