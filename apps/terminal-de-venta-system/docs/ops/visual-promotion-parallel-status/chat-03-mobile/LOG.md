@@ -415,3 +415,11 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - No owner/computer action is requested. To resume, the missing capability is specifically a GitHub-native execution path for the canonical PROPOSAL/MUTATION request gate. Once available, no rediscovery is needed: re-pin main if necessary, execute the gate, write deterministic <=250-row shards, validate 271/271, and publish the final handoff.
 - Guardrails preserved: Materiality Catalog uninspected; no recensus; no broad rediscovery; no RIFAT/Identity/NDC/GVAE rebuild; no canonical minting; no product/runtime mutation; no projection repair; no GVAE APPLY; no `FILES_MANIFEST.json` write.
 
+## 2026-09-15T00:38:00Z — ORCHESTRATOR ROUTING CLARIFICATION
+
+- PR #555 registered `visual.operating_graph_v1` as a separate `BUILD / NOT_STARTED` capability for another Foundation task.
+- **This authority-reconciliation phase does not switch to that capability.**
+- Canonical affected capability remains `visual.generic_application_engine_v1` = `DONE / SOURCE_READY / doNotRebuild=true`.
+- Requested action for governed phase work is `ADVANCE`; strictly read-only verification may use `VERIFY`.
+- PR #555 still counts as governance-sensitive Ledger/Evidence drift and therefore current-head authority/gate evidence must be rebound before repository output mutation.
+- Continue all safe read-only analysis/orchestration. Hold only governed output writes if the correct gate execution path is unavailable.
