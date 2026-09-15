@@ -4,24 +4,18 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "BLOCKED",
-  "updatedAt": "2026-09-14T18:26:00-06:00",
+  "state": "IN_PROGRESS",
+  "updatedAt": "2026-09-15T00:35:00Z",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat2/authority-reconciliation-pc-20260914",
   "workHead": null,
-  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK / PC_AUTHORITY_RECONCILIATION is blocked at the mandatory universal anti-rework execution gate, not at repository discovery. GitHub-only mandatory reads and current-main drift revalidation are complete. A fresh exact-head AutoMesh passed on current main 70f381e9b3c0b63ee4c7e445c98e86b3e9211be9, but the canonical Factory Ledger PROPOSAL/MUTATION runner is only workflow_dispatch or pull_request. This connected GitHub toolset exposes no workflow-dispatch primitive, and the owner explicitly forbids opening a PR without later instruction. Therefore no work branch or lane output may be legally mutated. No fake-green classification corpus was published.",
+  "summary": "ORCHESTRATOR CORRECTION: AUTHORITY_RECONCILIATION_ANTI_REWORK remains active. PR #555 trust-anchor drift must be revalidated, but visual.operating_graph_v1 is NOT this lane's capability. This phase continues to REUSE/ADVANCE visual.generic_application_engine_v1 (DONE/SOURCE_READY/doNotRebuild=true). Continue read-only reconciliation now; only work-branch output writes remain gated until the correct current-head anti-rework MUTATION decision can be produced.",
   "blockers": [
     {
-      "code": "BLOCKED_EXECUTION_PATH",
-      "scope": "mandatory-universal-anti-rework-gate",
-      "detail": "Current canonical capability visual.operating_graph_v1 is BUILD / NOT_STARTED and its recorded nextGate requires the universal anti-rework PROPOSAL gate before Foundation/source writes, then current-head Authority Mesh, then MUTATION. Fresh Authority Mesh is PASS, but .github/workflows/prisma-factory-anti-rework-gate.yml exposes only pull_request and workflow_dispatch. The connected GitHub action surface has no workflow_dispatch action, and opening a PR is explicitly forbidden absent later owner instruction.",
-      "impact": "Do not create/mutate chat2/authority-reconciliation-pc-20260914 and do not publish final reconciliation shards until exact-task PROPOSAL and MUTATION gate evidence can be produced through an authorized GitHub path."
-    },
-    {
-      "code": "CROSS_AUTHORITY_EVIDENCE_NOT_YET_AVAILABLE",
-      "scope": "TRUE_NEW_AUTHORITY_REQUIRED-negative-evidence",
-      "detail": "Chat 5 / CROSS_AUTHORITY_EVIDENCE_RECONCILIATION is still NOT_STARTED and has no authorityReconciliation/crosswalk receipt. The owner requires transverse evidence when available before TRUE_NEW_AUTHORITY_REQUIRED.",
-      "impact": "TRUE_NEW_AUTHORITY_REQUIRED count remains unclaimed; empty searches are not treated as nonexistence proof."
+      "code": "WRITE_GATE_PATH_PENDING",
+      "scope": "lane-output-repository-write-only",
+      "detail": "Current-head trust-anchor drift from PR #555 requires a fresh anti-rework decision before work-branch output mutation. The exact capability for this phase is visual.generic_application_engine_v1 with requestedAction=ADVANCE, not visual.operating_graph_v1.",
+      "impact": "Do not stop lane analysis. Continue all read-only target reconciliation, negative-evidence work, history/authority review and deterministic result preparation. Hold only repository output writes until the correct gate evidence is available."
     }
   ],
   "findings": [
@@ -47,7 +41,9 @@
     "Historical exact-target evidence maps /catalog ProductMediaWorkspace .workspace to TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1. Historical governance records VIS.SURFACE.CONTENT.PRIMARY only as a semantic candidate and says the Identity layer/element-binding contract is pending; current certified target also has projection MISSING. This is evidence for EXISTING_CONCEPT_LINK_MISSING review, not proof of canonical Identity/NDC authority.",
     "Known selector drift target TGT.CENSUS.PC.097AB2F857F353CA4288.V1 remains .supplier-readable-v07 vs expanded .supplier-readable-v07 * and is preserved for PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED review.",
     "All 139 projection-MISSING rows remain a projection-debt dimension; projection absence is not used as a substitute for operational or visual semantic meaning.",
-    "No complete negative-evidence package exists yet for any PC target; therefore TRUE_NEW_AUTHORITY_REQUIRED is not declared for any target."
+    "No complete negative-evidence package exists yet for any PC target; therefore TRUE_NEW_AUTHORITY_REQUIRED is not declared for any target.",
+    "ORCHESTRATOR_CORRECTION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. It is not the affected capability for authority-reconciliation lanes. Canonical affected capability remains visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE.",
+    "PR #555 changed only PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; no lane Target Index/RIFAT/Identity/promotion-readiness source path changed. Treat as governance trust-anchor drift requiring current-head revalidation, not as a new lane scope."
   ],
   "decisions": [
     "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
@@ -127,7 +123,7 @@
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "BLOCKED_EXECUTION_PATH. Resume automatically when the repository exposes an authorized GitHub-only way to execute the exact-task Factory Ledger anti-rework PROPOSAL/MUTATION gates, or when the owner later explicitly authorizes a PR-based gate carrier. Do not request a computer, local command, PowerShell, localhost, server, or file upload.",
+  "nextAction": "Continue the assigned lane read-only immediately. Use visual.generic_application_engine_v1 / ADVANCE for anti-rework classification. Do not gate this lane on visual.operating_graph_v1. Publish progress/receipts in the coordination mailbox; hold only governed work-branch output mutation pending the correct current-head gate.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
