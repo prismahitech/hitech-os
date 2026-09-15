@@ -116,5 +116,196 @@
     "whatIfWritesAuthority": false,
     "atlasfinIsSurfaceKey": false,
     "unknownMayBecomeGreenWithoutAuthority": false
+  },
+  "collisionReuseBoundaries": [
+    {
+      "owner": "factory-ledger",
+      "reuse": [
+        "classification",
+        "status",
+        "nextGate",
+        "doNotRebuild"
+      ],
+      "forbidden": [
+        "second-maturity-registry",
+        "override-nextGate"
+      ]
+    },
+    {
+      "owner": "authority-mesh",
+      "reuse": [
+        "task-exact-authority",
+        "protected-scope",
+        "relevant-drift-revalidation"
+      ],
+      "forbidden": [
+        "self-authorize-mutation-after-drift"
+      ]
+    },
+    {
+      "owner": "code-atlas",
+      "reuse": [
+        "repository-inventory",
+        "authority-graph",
+        "evidence-graph",
+        "dependency-graph",
+        "ownership-graph",
+        "snapshot-freshness"
+      ],
+      "forbidden": [
+        "duplicate-repository-scan",
+        "impact-radius-as-authorization"
+      ]
+    },
+    {
+      "owner": "ndc",
+      "reuse": [
+        "neutral-meaning",
+        "scope",
+        "curation",
+        "authority-order",
+        "registered-edge-vocabulary"
+      ],
+      "forbidden": [
+        "mint-neutral-meaning",
+        "duplicate-curation",
+        "auto-promote-process-edge-to-ndc"
+      ]
+    },
+    {
+      "owner": "identity",
+      "reuse": [
+        "visual-meaning",
+        "recipe",
+        "adapter",
+        "binding"
+      ],
+      "forbidden": [
+        "similarity-semantic-inference",
+        "write-identity"
+      ]
+    },
+    {
+      "owner": "rifat-prisma-ui",
+      "reuse": [
+        "location",
+        "projection"
+      ],
+      "forbidden": [
+        "competing-location-registry"
+      ]
+    },
+    {
+      "owner": "target-index",
+      "reuse": [
+        "target-id",
+        "generated-addressing",
+        "source-blockers"
+      ],
+      "forbidden": [
+        "mint-target-id",
+        "manual-edit-generated-index"
+      ]
+    },
+    {
+      "owner": "visual-promotion",
+      "reuse": [
+        "current-truth",
+        "surface-readiness",
+        "promotion-readiness",
+        "collision-evidence"
+      ],
+      "forbidden": [
+        "re-decide-readiness-from-similarity"
+      ]
+    },
+    {
+      "owner": "status-channel",
+      "reuse": [
+        "worker-status",
+        "composer-status",
+        "handoff-receipts"
+      ],
+      "canonicality": "LIVE_OVERLAY",
+      "forbidden": [
+        "mailbox-overrides-canonical"
+      ]
+    },
+    {
+      "owner": "change-assurance",
+      "reuse": [
+        "evidence-lifecycle",
+        "agent-authority-pack",
+        "verify",
+        "prove"
+      ],
+      "forbidden": [
+        "second-authority-pack",
+        "redefine-editable-scope"
+      ]
+    },
+    {
+      "owner": "work-entry-gvae",
+      "reuse": [
+        "visual-work-admission",
+        "governed-mutation"
+      ],
+      "forbidden": [
+        "bypass-admission",
+        "apply-from-operating-graph"
+      ]
+    },
+    {
+      "owner": "atlasfin",
+      "reuse": [
+        "reference-evidence",
+        "cockpit"
+      ],
+      "forbidden": [
+        "semantic-writer",
+        "product-writer",
+        "surface-key"
+      ]
+    },
+    {
+      "owner": "prismo-learning",
+      "reuse": [
+        "reference-only-pattern-context"
+      ],
+      "forbidden": [
+        "learned-pattern-as-canonical-truth",
+        "ui-next-action-as-governance-authorization"
+      ]
+    }
+  ],
+  "edgeNamespaceRule": {
+    "overlappingWithNdc": [
+      "requires",
+      "writes",
+      "reads",
+      "projects_to",
+      "represented_by",
+      "derived_from",
+      "evidenced_by",
+      "observed_by",
+      "owned_by",
+      "blocks",
+      "conflicts_with",
+      "reconciles",
+      "supersedes"
+    ],
+    "rule": "OPERATING_GRAPH_EDGE_IS_PROCESS_ASSERTION_UNLESS_PROVENANCE_BINDS_A_CANONICAL_NDC_EDGE_RECORD",
+    "automaticExportToNdc": false
+  },
+  "driftOwnership": {
+    "repositorySnapshotFreshnessOwner": "code-atlas",
+    "taskAuthorizationRelevantDriftOwner": "authority-mesh-automesh",
+    "ndcCanonicalDriftOwner": "ndc",
+    "visualProjectionDriftOwners": [
+      "rifat-prisma-ui",
+      "visual-promotion",
+      "work-entry-gvae"
+    ],
+    "operatingGraphOwner": "process-level-staleness-disagreement-composition"
   }
 }
