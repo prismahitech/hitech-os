@@ -599,3 +599,21 @@ Publica START/progress/blockers/HANDOFF en tu mailbox. No abras ni merges a main
 - Priority order: Shared UI 40 unresolved first, then Tablet 924 unresolved. PC and Mobile are held stable unless authority/main drifts.
 - Governed composed outputs remain unwritten while `WRITE_GATE_PATH_PENDING` persists.
 - Machine-readable snapshot: `AUTHORITY_RECONCILIATION_GLOBAL_READ_ONLY_SNAPSHOT.json`.
+
+## 2026-09-15T09:44:00-06:00 — COMPOSER SEMANTIC QUALITY GATE
+
+- Zero-loss/accounting remains stable at **2,097 / 2,097**.
+- PC and Mobile read-only target sets/counts are accepted structurally.
+- Composer does **not** yet accept all `EXISTING_CONCEPT_LINK_MISSING` rows as final semantic truth.
+- Affected provisional rows:
+  - PC: **687**
+  - Mobile: **133**
+  - total: **820**
+- Reason: both worker receipts explicitly say exact target-level NDC/visual meaning remains unresolved. Chat 5 proves existing authority families and some known concepts, but family-level existence alone does not identify the relevant existing concept for each target.
+- Composer rule: to finalize `EXISTING_CONCEPT_LINK_MISSING`, prove the relevant existing concept target-specifically, or provide a governed rule strong enough to establish that the missing thing is the link rather than the concept.
+- Current acceptance tiers:
+  - **313** specific application/conflict/projection-debt rows accepted;
+  - **820** concept-link rows provisional;
+  - **964** unresolved target-specific rows;
+  - total **2,097**.
+- This prevents fake semantic green while preserving worker zero-loss/accounting work.
