@@ -1,0 +1,94 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+  "createdAt": "2026-09-15T11:17:28-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "mainDriftContext": {
+    "priorMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
+    "changedPaths": [
+      "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+      "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"
+    ],
+    "exactRelevantCapabilityUnchanged": true,
+    "exactRelevantEvidenceEntriesUnchanged": true,
+    "disposition": "UNRELATED_TOOLING_CAPABILITY_APPEND_NO_RECLASSIFICATION",
+    "note": "PR #557 registered tooling.mamastrophic.universal_screenshot_artifacts. The visual.generic_application_engine_v1 capability object and all its Evidence Index entries are byte-equivalent as parsed JSON across the drift."
+  },
+  "deltaId": "chat5-delta-shared-ui-ea65c3a5",
+  "surface": "shared-ui",
+  "targetId": "TGT.CENSUS.SHARED_UI.EA65C3A5CAB81BE75525.V1",
+  "question": "Does the ProductCard target under perf/card-blur-off selectors imply VIS.identity.profile or a product business concept?",
+  "authorityFound": [
+    {
+      "domain": "rifat-target-index",
+      "status": "BLOCKED",
+      "enforcement": "DISCOVERY_ONLY",
+      "selector": "html[data-layer-card-blur=\"0\"] [data-prisma-component=\"ProductCard\"], html[data-layer-card-blur=\"off\"] [data-prisma-component=\"ProductCard\"], html[data-layer-card-blur=\"false\"] [data-prisma-component=\"ProductCard\"], html[data-prisma-profile=\"perf\"] [data-prisma-component=\"ProductCard\"], html[data-layer-profile=\"perf\"] [data-prisma-component=\"ProductCard\"]",
+      "visualRegion": "background",
+      "semanticMeaningId": null,
+      "bindingId": null,
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json"
+    },
+    {
+      "domain": "identity",
+      "id": "BND.IDENTITY.PROFILE.SHAREDUI.V1",
+      "neutralMeaningId": "VIS.identity.profile",
+      "status": "BLOCKED_BY_MISSING_BINDING",
+      "targets": 0,
+      "reason": "An identity profile is neutral meaning, not a concrete UI element.",
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+    },
+    {
+      "domain": "shared-ui-style-authority",
+      "path": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+      "finding": "The exact selectors disable backdrop blur and use a fallback background under explicit card-blur/perf rendering controls."
+    },
+    {
+      "domain": "layer-governance",
+      "path": "docs/design/layers/LAYER_FLAGS_SYSTEM.md",
+      "finding": "layerProfile=neutral|fx|perf and data-layer-card-blur are rendering/layer control vocabulary."
+    },
+    {
+      "domain": "shared-ui-implementation",
+      "path": "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaProductCard.tsx",
+      "finding": "PrismaProductCard implementation exists, but a component name is not a canonical NDC target binding."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
+    "prisma-html/governance/visual-promotion/candidates/shared-ui/CANDIDATES.jsonl",
+    "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "apps/terminal-de-venta-system/products/shared-ui/prisma/components/prisma-components.css",
+    "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+    "docs/design/layers/LAYER_FLAGS_SYSTEM.md",
+    "docs/ui/LAYERS.md",
+    "apps/terminal-de-venta-system/docs/design/PRISMA_BLACK_VISUAL_GOVERNANCE_PASS_01D.md",
+    "apps/terminal-de-venta-system/products/shared-ui/prisma/components/PrismaProductCard.tsx"
+  ],
+  "relationType": "PERFORMANCE_PROFILE_AND_COMPONENT_NAME_DO_NOT_PROVE_SEMANTIC_EQUIVALENCE",
+  "equivalent": false,
+  "explicitNonEquivalence": "data-prisma-profile=\"perf\" and data-layer-profile=\"perf\" are performance/rendering controls, not VIS.identity.profile. Likewise ProductCard names a component coordinate/implementation and does not by itself establish a canonical NDC product meaning for this visual target.",
+  "negativeEvidenceCoverage": {
+    "status": "POSITIVE_NON_EQUIVALENCE_EVIDENCE",
+    "identity": "VIS.identity.profile exists, but its Shared UI binding has zero targets and explicitly says identity profile is not a concrete UI element.",
+    "rifatTargetIndex": "Exact CURRENT physical target exists with semanticMeaningId=null and bindingId=null.",
+    "layerGovernance": "perf and card.blur are documented rendering controls; exact CSS disables backdrop-filter for performance/fallback behavior.",
+    "ndc": "No exact target-specific NDC product meaning is established by the ProductCard selector name.",
+    "atlasfin": "Recipe/family similarity is not semantic authority and is not used to classify this target.",
+    "ledgerEvidence": "visual.generic_application_engine_v1 remains unchanged through current main drift; no semantic link is introduced by PR #557."
+  },
+  "suggestedClassification": null,
+  "confidence": "HIGH",
+  "disposition": "NON_EQUIVALENCE_GUARD_ONLY",
+  "unresolvedRemainder": "This target remains target-specific semantic debt. Positive semantic evidence is still required before Chat 4 assigns a final class; do not map perf to VIS.identity.profile or ProductCard to a business concept by name, and do not default to TRUE_NEW."
+}
