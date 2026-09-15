@@ -432,3 +432,21 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Canonical phase capability: `visual.generic_application_engine_v1 / ADVANCE`.
 - `visual.operating_graph_v1` is unrelated to this lane.
 - `TRUE_NEW_AUTHORITY_REQUIRED` remains provisional until Chat 5 cross-authority evidence is available.
+
+## 2026-09-15T09:32:00-06:00 — FINDING / DECISION / VALIDATION / HANDOFF
+
+- Re-read own mailbox and consumed Chat 5 cross-authority receipt `apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json` at blob `e30afdcaf67b44a95453ddbcc236762d8a651173`.
+- Chat 5 result is `PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING` with `readOnlyEvidenceConsumableNow=true`; therefore `CROSS_AUTHORITY_EVIDENCE_PENDING` is cleared and is no longer a blocker.
+- Cross-authority rules consumed exactly as published: NDC operational meaning, Identity/VIS visual meaning, RIFAT/Target Index physical location, and BND/LYR/recipe/adapter application authority remain separate domains. `identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout` is relation evidence only, never equivalence.
+- NDC DOC1 is treated as documentary canon + registries + schemas + seeds/examples. `defined_for_doc1` is not promoted into a populated runtime/Prisma semantic database.
+- Read-only target-by-target reconciliation is now complete for the exact Mobile universe: `271/271` classified, unique `271`, missing `0`, extra `0`, duplicate `0`.
+- Final read-only classification counts: `EXISTING_CONCEPT_LINK_MISSING=133`; `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED=138`; `EXISTING_AUTHORITY_EXACT_REUSE=0`; `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP=0`; `EXISTING_AUTHORITY_CONFLICT_CURATE=0`; `TRUE_NEW_AUTHORITY_REQUIRED=0`; `NOT_APPLICABLE=0`.
+- The 133 CURRENT rows have certified physical/current projection evidence and existing cross-authority families, but exact target-level operational and visual semantic links remain unresolved. No selector/name similarity was used to choose a semantic ID.
+- Of 138 DRIFT rows, 137 remain projection-direction ambiguous. `TGT.CENSUS.MOBILE.C30F6FBF52AEFF7B5E02.V1` remains `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED` with governed product-newer history from `731574f97dba0ec46420369b777071500ce2f833`; current RIFAT still retains retired `.multiContextRoot`. No restoration or repair is performed.
+- `TRUE_NEW_AUTHORITY_REQUIRED=0`; negative-evidence-complete TRUE_NEW rows = `0` because no row reaches TRUE_NEW. Missing exact target links are not treated as evidence that concepts do not exist.
+- Deterministic governed-output preparation is complete read-only: two planned resolution shards (`250 + 21` rows), planned digest `0a455ae811690a52f8a8592836bb0afcb91d1386718ead7ab4179382a1ab324a`. They are not written under the governed output root while `WRITE_GATE_PATH_PENDING` remains.
+- Published own-mailbox receipt `apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-03-mobile/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json` at blob `undefined` with exact target sets, counts, zero-loss validation, Chat 5 references, TRUE_NEW accounting and shard plan.
+- Lane state is `IN_PROGRESS`, not globally blocked. The only remaining blocker is `WRITE_GATE_PATH_PENDING`, scoped strictly to governed repository output materialization.
+- Guardrails preserved: no recensus, no broad rediscovery, no GVAE/RIFAT/Identity/NDC rebuild, no Materiality Catalog, no canonical registration/minting, no product/runtime mutation, no projection repair, no GVAE APPLY, no foreign mailbox write, no PR, no merge.
+- **HANDOFF:** `PASS_MOBILE_AUTHORITY_RECONCILIATION_READ_ONLY_WITH_WRITE_GATE_PENDING`. Chat 6 may consume the mailbox receipt now; final governed output materialization waits only for the canonical write gate.
+
