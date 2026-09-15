@@ -1,8 +1,8 @@
 {
   "registryVersion": "0.0.1",
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00F_VERTICAL_VALIDATION_FIXTURES",
-  "fixtureCount": 10,
-  "scenarioCount": 60,
+  "fixtureCount": 11,
+  "scenarioCount": 66,
   "fixtures": [
     {
       "verticalId": "convenience",
@@ -52,6 +52,11 @@
     {
       "verticalId": "food_truck",
       "path": "shared/verticals/validation/fixtures/food_truck.validation-fixture.json",
+      "scenarioCount": 6
+    },
+    {
+      "verticalId": "professional_corporate_services",
+      "path": "shared/verticals/validation/fixtures/professional_corporate_services.validation-fixture.json",
       "scenarioCount": 6
     }
   ],
