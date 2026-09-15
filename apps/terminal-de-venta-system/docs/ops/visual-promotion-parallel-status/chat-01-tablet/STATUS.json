@@ -4,12 +4,12 @@
   "lane": "TABLET_PROMOTION",
   "statusBranch": "status/vp-chat-01-tablet",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-01-tablet",
-  "state": "READY_FOR_INTEGRATION",
-  "updatedAt": "2026-09-12T16:31:00-06:00",
-  "baseHead": "d4b451cc92c597d02cfc65094922bd2c5dd17c12",
-  "workBranch": "chat1/canonical-promotion-readiness-tablet-20260912",
-  "workHead": "535b4f002a830a84c6dfd4b166b032adaf91409a",
-  "summary": "Chat 1 completed CANONICAL_PROMOTION_READINESS_RESOLUTION for Tablet with PASS_TABLET_PROMOTION_READINESS. All 929 certified targets were resolved exactly once; current authority supports 0 READY reuse, 0 READY registration and 929 legitimately blocked outcomes without fake green.",
+  "state": "NOT_STARTED",
+  "updatedAt": "2026-09-14T23:30:00Z",
+  "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+  "workBranch": "chat1/authority-reconciliation-tablet-20260914",
+  "workHead": null,
+  "summary": "OWNER ASSIGNED AUTHORITY_RECONCILIATION_ANTI_REWORK for TABLET_AUTHORITY_RECONCILIATION. Prior CANONICAL_PROMOTION_READINESS_RESOLUTION remains closed and must not be repeated.",
   "blockers": [],
   "findings": [
     "Tablet Target Index contained 933 records at the lane base: 929 VISUAL_CONTROL_CENSUS_TARGET inputs and 4 existing non-census exact targets excluded from worker input.",
@@ -71,7 +71,8 @@
     "Final decision partition remains 924 BLOCKED_MISSING_SEMANTIC_AUTHORITY + 1 BLOCKED_MISSING_APPLICATION_AUTHORITY + 2 BLOCKED_MISSING_BINDING + 2 BLOCKED_PHYSICAL_DRIFT.",
     "REUSE.jsonl and REGISTRATION_PROPOSALS.jsonl are intentionally empty; current authority does not justify a READY row.",
     "PROJECTION_DEBT.jsonl contains exactly two Cobrar accent targets with CANONICAL_PROJECTION_REQUIRED_MISSING.",
-    "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 throughout materialization and validation; no revalidation event was triggered."
+    "Current main remained d4b451cc92c597d02cfc65094922bd2c5dd17c12 throughout materialization and validation; no revalidation event was triggered.",
+    "Owner assignment 2026-09-14T23:30:00Z: reuse certified 2,097-target physical corpus; no recensus/broad rediscovery/rebuild."
   ],
   "decisions": [
     "Reuse current Target Index and expanded Visual Control evidence; do not run broad rediscovery.",
@@ -100,7 +101,8 @@
     "Reuse the immutable certified corpus and current canonical authority only. No recensus, broad rediscovery, Materiality Catalog, product/runtime mutation, projection repair, canonical-ID minting or global authority writes.",
     "Do not declare any Tablet row READY in this phase unless the existing exact authority satisfies the promotion-readiness contract. Preserve Cobrar reuse as evidence while retaining its application-authority blockers.",
     "For the two existing accent exact targets, reuse TOK.color.accent only as proven semantic authority; do not treat the ambiguous multi-binding as resolved or create a recipe/layer/projection.",
-    "Emit 138 deterministic local proposal keys from certified visualMeaningCandidate evidence; these are proposal evidence only, never canonical IDs."
+    "Emit 138 deterministic local proposal keys from certified visualMeaningCandidate evidence; these are proposal evidence only, never canonical IDs.",
+    "New owner-assigned phase AUTHORITY_RECONCILIATION_ANTI_REWORK. Read the latest OWNER_ASSIGNMENT block in LOG.md and execute GitHub-only on chat1/authority-reconciliation-tablet-20260914."
   ],
   "changedPaths": [
     "prisma-html/governance/visual-promotion/candidates/tablet/certification/MANIFEST.json",
@@ -291,15 +293,12 @@
     }
   ],
   "unresolved": [
-    "924 Tablet targets remain blocked by missing canonical semantic authority and downstream exact application authority.",
-    "Cobrar primary reuses ACT.primary / REC.button.primary / BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 but remains blocked by exact-target adapter/layer-application-policy reconciliation.",
-    "Two Cobrar accent exact targets reuse TOK.color.accent semantic evidence but remain blocked by ambiguous binding, missing Identity recipe/application layer and missing canonical projection policy.",
-    "Two certified physical DRIFT targets remain blocked and unrepaired.",
-    "No Tablet target is currently READY_REUSE_EXISTING_AUTHORITY or READY_FOR_CANONICAL_REGISTRATION."
+    "Determine exact existing-authority reuse versus missing-link versus true-new-authority delta for the assigned lane.",
+    "Do not classify TRUE_NEW_AUTHORITY_REQUIRED without complete negative-evidence checklist."
   ],
   "needsUserAction": false,
-  "userActionRequested": null,
-  "nextAction": "Handoff to Chat 6 via handoff.promotionReadiness. Consume chat1/canonical-promotion-readiness-tablet-20260912@535b4f002a830a84c6dfd4b166b032adaf91409a. Chat 1 should resume only for a bounded evidence-backed correction request.",
+  "userActionRequested": "",
+  "nextAction": "Read the latest OWNER_ASSIGNMENT in LOG.md, resolve current main, create/reuse chat1/authority-reconciliation-tablet-20260914, run GitHub-only anti-rework/authority preflight as required, and execute only the assigned lane.",
   "handoff": {
     "ready": true,
     "classification": "TABLET_CANDIDATE_CORPUS_CERTIFIED",
@@ -570,6 +569,18 @@
       "gvaeApplyPerformed": false,
       "filesManifestTouched": false,
       "defects": []
+    },
+    "authorityReconciliationAssignment": {
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "assigned": true,
+      "assignedAt": "2026-09-14T23:30:00Z",
+      "assignmentBasisMain": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "workBranch": "chat1/authority-reconciliation-tablet-20260914",
+      "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/tablet/**",
+      "expectedInputCount": 929,
+      "materialityCatalogAuthorized": false,
+      "githubOnly": true,
+      "status": "ASSIGNED_NOT_STARTED"
     }
   }
 }
