@@ -1228,6 +1228,41 @@
         "composed sha256:f3681d2f4158a03bf1bd5b99c90346c8ad05abc0869a40a5bdef8ac14669e19b",
         "uploaded artifact sha256:8b3bdcc7f57ce16c5426fb40a65098214e61e4cc3b3f6566cd257c1aa14cd960"
       ]
+    },
+    {
+      "artifact": "PRISMA Professional & Corporate Services vertical registration authority — AutoMesh run 35014950489 / artifact 10414742606",
+      "type": "professional_corporate_services_vertical_registration_authority",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "verticals",
+        "tablet",
+        "pc",
+        "mobile"
+      ],
+      "status": "PASS_REGISTRATION_AUTHORITY_ONLY",
+      "proves": [
+        "A new canonical capability verticals.professional_corporate_services is authorized for separate Factory Ledger registration",
+        "The new capability is distinct from verticals.accounting_management and does not rename, replace, supersede or absorb it",
+        "Task-exact three-lane Authority Mesh passed on main e643fe4b54be214b619805dc4fa0f35fecb82297 with 100% requested authority coverage and zero composed blockers",
+        "The future vertical is general, not CIOB-specific, and is bounded to documentation/contracts first",
+        "Tablet operates/captures, PC governs, Mobile supervises; Core records and Control audits"
+      ],
+      "doesNotProve": [
+        "The vertical documentation/contracts package has been implemented",
+        "Any CIOB-specific workflow, runtime application or HTML demo exists",
+        "Any legal/accounting/fiscal/labor/compliance certification",
+        "Any product runtime or database mutation",
+        "Post-registration anti-rework PROPOSAL or MUTATION authorization"
+      ],
+      "evidence": [
+        "Authority Mesh run 35014950489",
+        "artifact 10414742606",
+        "requestId eff3221d72f49bb8",
+        "requestDigest 65ddf0edc20fc538fbb84a83ce3ec1dfd58bf6358f3839146928f54fa06b78cd",
+        "composed sha256:917bd793dff3c669a306c26ab82002d0f936e73c6b84d81fb6594c75b5bc189f",
+        "uploaded artifact sha256:f1c6beebc85eb7898f97694692b03a5557cd9d6afdd2f1a302699aed1b50b74c"
+      ]
     }
   ],
   "updatedAt": "2026-09-15T17:33:23Z",
