@@ -1,0 +1,120 @@
+{
+  "schema": "prisma.visual-operating-graph.process-model.v1",
+  "status": "FOUNDATION_V1_CANONICAL_CONTRACT",
+  "capabilityId": "visual.operating_graph_v1",
+  "phaseHeadFields": {
+    "phaseBootstrapHead": "Canonical main used to start the phase.",
+    "currentCanonicalMain": "Current canonical main at observation time.",
+    "workerBaseHead": "Canonical/source head a worker started from.",
+    "workerHead": "Worker output head.",
+    "composerHead": "Head containing composed phase output.",
+    "receiptHead": "Head actually proven by a receipt.",
+    "statusBranchHead": "Current coordination branch head.",
+    "ciHead": "Commit tested by a CI run.",
+    "runtimeObservedHead": "Source commit tied to runtime proof when known."
+  },
+  "blockerTaxonomy": {
+    "preserveSourceCode": true,
+    "unmappedPolicy": "UNCLASSIFIED_SOURCE_BLOCKER",
+    "unmappedRequiresTaxonomyUpdate": true,
+    "mappings": [
+      {
+        "family": "SEMANTIC_AUTHORITY_GAP",
+        "sourceDomain": "visual-promotion",
+        "sourceCode": "BLOCKED_MISSING_SEMANTIC_AUTHORITY"
+      },
+      {
+        "family": "APPLICATION_AUTHORITY_GAP",
+        "sourceDomain": "visual-promotion",
+        "sourceCode": "BLOCKED_MISSING_APPLICATION_AUTHORITY"
+      },
+      {
+        "family": "BINDING_GAP",
+        "sourceDomain": "visual-promotion",
+        "sourceCode": "BLOCKED_MISSING_BINDING"
+      },
+      {
+        "family": "PHYSICAL_DRIFT",
+        "sourceDomain": "visual-promotion",
+        "sourceCode": "BLOCKED_PHYSICAL_DRIFT"
+      },
+      {
+        "family": "LOCATION_CONFLICT",
+        "sourceDomain": "visual-promotion",
+        "sourceCode": "BLOCKED_MULTI_REGION_CONFLICT"
+      },
+      {
+        "family": "PROJECTION_DEBT",
+        "sourceDomain": "promotion-projection-readiness",
+        "sourceCode": "CANONICAL_PROJECTION_REQUIRED_MISSING"
+      },
+      {
+        "family": "PROJECTION_AMBIGUITY",
+        "sourceDomain": "promotion-projection-readiness",
+        "sourceCode": "AMBIGUOUS"
+      },
+      {
+        "family": "AUTHORITY_RECONCILIATION_REQUIRED",
+        "sourceDomain": "promotion-projection-readiness",
+        "sourceCode": "PRODUCT_CANDIDATE_AUTHORITY_RECONCILIATION_REQUIRED"
+      }
+    ]
+  },
+  "surfaceCohorts": [
+    {
+      "id": "VISUAL_CONTROL_ALL",
+      "membershipSource": "apps/terminal-de-venta-system/.prisma-ui/surfaces.json#/surfaces/*/id",
+      "membershipMode": "DERIVED",
+      "authorityDomain": "visual-control"
+    },
+    {
+      "id": "PROMOTION_READINESS_V1",
+      "membershipSource": "prisma-html/governance/visual-promotion/contracts/control-plane.contract.json#/surfaceKeys",
+      "membershipMode": "DERIVED",
+      "authorityDomain": "visual-promotion"
+    },
+    {
+      "id": "PROMOTION_PROTECTED_V1",
+      "membershipSource": "prisma-html/governance/visual-promotion/contracts/control-plane.contract.json#/protectedSurfaces",
+      "membershipMode": "DERIVED",
+      "authorityDomain": "visual-promotion"
+    }
+  ],
+  "referenceRoles": [
+    {
+      "id": "ATLASFIN_REFERENCE",
+      "entity": "Atlasfin",
+      "surfaceKey": false,
+      "role": "REFERENCE_COCKPIT_EVIDENCE",
+      "semanticWriter": false,
+      "productWriter": false
+    }
+  ],
+  "writerRoles": [
+    "CANONICAL_WRITER",
+    "GENERATED_WRITER",
+    "RUNTIME_WRITER",
+    "STATUS_WRITER",
+    "EVIDENCE_WRITER",
+    "PROTECTED_CONSUMER"
+  ],
+  "driftClasses": [
+    "CANONICAL_AUTHORITY_DRIFT",
+    "RELEVANT_DRIFT",
+    "NON_RELEVANT_DRIFT",
+    "STALE_DERIVED_ARTIFACT",
+    "LIVE_OVERLAY_DRIFT",
+    "TEMPORAL_STALENESS",
+    "WRITER_DRIFT"
+  ],
+  "invariants": {
+    "candidateIsAuthority": false,
+    "derivedGraphIsAuthority": false,
+    "liveOverlayOverridesCanonical": false,
+    "scoreAuthorizesMutation": false,
+    "nextSafeActionAuthorizesMutation": false,
+    "whatIfWritesAuthority": false,
+    "atlasfinIsSurfaceKey": false,
+    "unknownMayBecomeGreenWithoutAuthority": false
+  }
+}

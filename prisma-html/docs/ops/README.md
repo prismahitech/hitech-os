@@ -5,6 +5,7 @@ Use this directory for operator-facing runbooks and learned operational rules. M
 ## Start here
 
 - [`PRISMA_VISUAL_AUTHORITY_RUNBOOK.md`](PRISMA_VISUAL_AUTHORITY_RUNBOOK.md): canonical operating guide for VISCORE1, Identity Dictionary, RIFAT/prisma-ui, Atlasfin, projection drift, `FILES_MANIFEST.json`, certification and PR closure.
+- [`visual-operating-graph/README.md`](visual-operating-graph/README.md): Foundation contract for the PRISMA Visual Operating Graph, canonical-vs-live process state, blocker/phase/cohort/write-ownership model, derived Master Map, drift reducer, next-safe-action explanation and non-mutating what-if simulation.
 - [`PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md`](PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md): practical lessons and traps already paid for.
 - [`visual-promotion-parallel/README.md`](visual-promotion-parallel/README.md): canonical startup for the Tablet/PC/Mobile/Shared UI parallel semantic-promotion cohort, Atlasfin-first policy, interoperability contract, vocabulary and six chat prompts.
 

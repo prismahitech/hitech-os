@@ -1,0 +1,49 @@
+{
+  "schema": "prisma.visual-operating-graph.foundation-manifest.v1",
+  "capabilityId": "visual.operating_graph_v1",
+  "status": "FOUNDATION_V1_SOURCE_PROPOSED",
+  "baseCanonicalMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "scope": "docs + schemas + read-only derivation contracts",
+  "manualCanonicalDocs": [
+    "prisma-html/docs/ops/visual-operating-graph/README.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_SPEC.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_VISUAL_CHANGE_DOCTRINE.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_PROCESS_PHASE_AND_BLOCKER_MODEL.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_MASTER_MAP_GENERATION_CONTRACT.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_LIVE_PHASE_TRUTH_REDUCER_SPEC.md",
+    "prisma-html/docs/ops/visual-operating-graph/PRISMA_NEXT_SAFE_ACTION_AND_WHAT_IF_SPEC.md"
+  ],
+  "machineCanonicalContracts": [
+    "prisma-html/governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_SCHEMA.json",
+    "prisma-html/governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_PROCESS_MODEL.registry.json"
+  ],
+  "generatedFoundationEvidence": [
+    "prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json"
+  ],
+  "authorityMesh": {
+    "runId": 34912414009,
+    "artifactId": 10375096790,
+    "status": "PASS_COMPOSED_AUTHORITY_MESH",
+    "repoHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9"
+  },
+  "reuseBoundaries": {
+    "codeAtlas": "REUSE_REPOSITORY_INTELLIGENCE_AND_PROVENANCE_NO_REBUILD",
+    "ndc": "REUSE_NEUTRAL_MEANING_AND_CURATION_NO_DUPLICATION",
+    "factoryLedger": "REUSE_CAPABILITY_MATURITY_AND_NEXT_GATE",
+    "identity": "REUSE_VISUAL_MEANING_RECIPE_ADAPTER_AUTHORITY",
+    "rifat": "REUSE_EXACT_LOCATION_AND_PROJECTION_AUTHORITY",
+    "targetIndex": "REUSE_GENERATED_PERSISTENT_TARGET_ADDRESSING",
+    "visualPromotion": "REUSE_CURRENT_TRUTH_READINESS_AND_COMPOSED_PROMOTION_EVIDENCE",
+    "workEntryGvae": "REUSE_ADMISSION_AND_MUTATION_ENGINE_NO_APPLY_IN_FOUNDATION",
+    "atlasfin": "REFERENCE_COCKPIT_EVIDENCE_ONLY",
+    "changeAssurance": "REUSE_EVIDENCE_LIFECYCLE_NO_SECOND_AUTHORITY_PACK"
+  },
+  "forbiddenClaims": [
+    "productRuntimeMutationAuthorized",
+    "canonicalVisualRegistrationAuthorized",
+    "gvaeApplyAuthorized",
+    "runtimeVisualGreen",
+    "productionCertified"
+  ],
+  "nextAllowedGate": "IMPLEMENT_READ_ONLY_GRAPH_BUILDER_SOURCESET_VERIFIER_AND_LIVE_PHASE_TRUTH_REDUCER_AFTER_FOUNDATION_REVIEW"
+}

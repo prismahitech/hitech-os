@@ -1,0 +1,296 @@
+{
+  "schema": "prisma.visual-operating-graph.sourceset-lock.v1",
+  "generated": true,
+  "manualEditsForbidden": true,
+  "generator": "visual-operating-graph-foundation-bootstrap",
+  "observedMainSha": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "promotionReadinessClosure": {
+    "pr": 554,
+    "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+    "status": "CANONICAL_PROMOTION_READINESS_RESOLUTION_CLOSED"
+  },
+  "operatingGraphRegistration": {
+    "pr": 555,
+    "mergeSha": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+    "capabilityId": "visual.operating_graph_v1"
+  },
+  "authorityMesh": {
+    "runId": 34912414009,
+    "artifactId": 10375096790,
+    "requestId": "17f8f8c7dbea5b0d",
+    "status": "PASS_COMPOSED_AUTHORITY_MESH",
+    "requiredAuthorityCoveragePct": 100,
+    "blockers": 0,
+    "requestDigest": "269e4857f56afae95abf600876838598f4bebf1e5999b0dbf633360d9b2d7f44",
+    "composedArtifactSha256": "a6f6dbb59b1556c0bf8c77d0d0b13eb7f9b482d090978cac3cafd1069b0ea73d"
+  },
+  "sourceCount": 33,
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "authorityDomain": "governance",
+      "role": "manual-doctrine",
+      "gitBlobSha": "80f3f450e376857b5da952bcabdbf932cae32bdb",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+      "authorityDomain": "factory-ledger",
+      "role": "canonical-authority",
+      "gitBlobSha": "ce4a333ac982b601816877b1c7524850f4090a94",
+      "schema": "1.0.0",
+      "version": null
+    },
+    {
+      "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+      "authorityDomain": "factory-ledger",
+      "role": "canonical-evidence-index",
+      "gitBlobSha": "8932a0f7a00d94672e4526b056e072ab65096e30",
+      "schema": "1.0.0",
+      "version": null
+    },
+    {
+      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER_AGENT_GATE.md",
+      "authorityDomain": "factory-ledger",
+      "role": "manual-doctrine",
+      "gitBlobSha": "158319c7f5904acb1dc176cbc42665fd131edcf1",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md",
+      "authorityDomain": "ops",
+      "role": "manual-doctrine",
+      "gitBlobSha": "cfd3fa7dcfe949342a62d1576bc4896326eb4655",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/ops/PRISMA_AUTHORITY_MESH_AUTOMESH_V2_RUNBOOK.md",
+      "authorityDomain": "authority-mesh",
+      "role": "manual-doctrine",
+      "gitBlobSha": "845a4c6027d0a5a58f88b6b523be654987dbc6a9",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/visual-layer-map/LAYER_MAP.md",
+      "authorityDomain": "layer-map",
+      "role": "canonical-location-authority",
+      "gitBlobSha": "129db8023a747e1960fa9c6a1c9ea4f597243582",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/.prisma-ui/surfaces.json",
+      "authorityDomain": "visual-control",
+      "role": "canonical-surface-registry",
+      "gitBlobSha": "7a38d0a66e13967b13744b9f729e52bae0f48fc3",
+      "schema": "prisma.ui.surfaces.v5",
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/ndc/00_NDC_README.md",
+      "authorityDomain": "ndc",
+      "role": "manual-canon",
+      "gitBlobSha": "0abaf3b9d335a28f072c7a16c8c607a3ad97cf77",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/ndc/11_NDC_MATRIX_AND_CATALOG_VIEW_SYSTEM.md",
+      "authorityDomain": "ndc",
+      "role": "manual-canon",
+      "gitBlobSha": "ab52b425bd6c4f35116d9660339ad3b47ecbc117",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/docs/ops/PRISMA_VISUAL_CHANGE_MASTER_MAP.md",
+      "authorityDomain": "visual-ops",
+      "role": "manual-doctrine",
+      "gitBlobSha": "e2c58d5dd6d2e8a380211bebcde5525fb982d82c",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
+      "authorityDomain": "visual-promotion",
+      "role": "manual-contract",
+      "gitBlobSha": "3d80060334777156c0e9398057cffc4ad61c2372",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
+      "authorityDomain": "visual-promotion",
+      "role": "canonical-registry",
+      "gitBlobSha": "82373a57e4cfd6233c06e2bcd9ddaed5999d0054",
+      "schema": "prisma.visual-promotion.interoperability-vocabulary.v1",
+      "version": "1.1.0"
+    },
+    {
+      "path": "prisma-html/docs/ops/visual-promotion-parallel/status-channel/STATUS_CHANNEL_CONTRACT.json",
+      "authorityDomain": "live-overlay",
+      "role": "canonical-coordination-contract",
+      "gitBlobSha": "ef635e787d10b97ce2679bb4c6e9c91e3b5e2168",
+      "schema": "prisma.visual-promotion.status-channel.v1",
+      "version": "1.2.0"
+    },
+    {
+      "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/STATUS_INDEX.json",
+      "authorityDomain": "live-overlay",
+      "role": "canonical-coordination-index",
+      "gitBlobSha": "a9469d81e19b6f1279fb93a5f75109987f434525",
+      "schema": "prisma.visual-promotion.status-index.v1",
+      "version": "1.2.0"
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/contracts/control-plane.contract.json",
+      "authorityDomain": "visual-promotion",
+      "role": "canonical-contract",
+      "gitBlobSha": "dbdd3b2ccc30a09f34f9de7ea931ac4b1049ed30",
+      "schema": "prisma.visual-promotion.control-plane.contract.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/contracts/corpus-certification/CURRENT_TRUTH.json",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "1e36a9d7eebfcf8976db9458dd2f530ebca364b4",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/contracts/corpus-certification/SURFACE_READINESS.json",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "a0901b9633eb349601335212f188c2b84ce30534",
+      "schema": "prisma.visual-promotion.certified-surface-readiness.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.json",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "9f4cfdc32ae9916221040e2af9975b2b27411a84",
+      "schema": "prisma.visual-promotion.canonical-promotion-plan.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/promotion-readiness/composed/ZERO_LOSS.json",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "36d3cf6bacf1734d04e9181dbbf5a45c44420c86",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/promotion-readiness/composed/PHASE_BASELINE.json",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "e980636c8b41f49e04b94d0f38b5fbfa6358ae55",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-promotion/promotion-readiness/composed/SUMMARY.md",
+      "authorityDomain": "visual-promotion",
+      "role": "generated-canonical-evidence",
+      "gitBlobSha": "3fc3dfedf9c28412034b9b7ce889dd861614ba11",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/registry.json",
+      "authorityDomain": "rifat",
+      "role": "canonical-location-authority",
+      "gitBlobSha": "24b45f76d8e1d1464141e3b60e5ea582b0f78460",
+      "schema": "prisma.ui.visual-control.registry.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/manifest.json",
+      "authorityDomain": "target-index",
+      "role": "generated-canonical-address-book",
+      "gitBlobSha": "75a9d8fc39785c01699c12ee1ecb3bacf1ce3049",
+      "schema": "prisma.visual.application.target-index.v1",
+      "version": "2.0.0"
+    },
+    {
+      "path": "prisma-html/authority/rifat/identity/registries/visual-authority.registry.json",
+      "authorityDomain": "identity",
+      "role": "canonical-authority",
+      "gitBlobSha": "81dc0dabe32b2fb7d966e1a58e09b5e9856505b0",
+      "schema": "prisma.visual.authority.registry.v1",
+      "version": "1.0.0"
+    },
+    {
+      "path": "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
+      "authorityDomain": "identity",
+      "role": "canonical-authority",
+      "gitBlobSha": "aaf26182b1637e1bfc6a14bd537af100ed96b1e4",
+      "schema": "prisma.identity.recipe.registry.v1",
+      "version": "1.0.0"
+    },
+    {
+      "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
+      "authorityDomain": "identity",
+      "role": "canonical-authority",
+      "gitBlobSha": "88c3a7e8736d637e07ae1fd7dab377867e2b5ca8",
+      "schema": "prisma.identity.element-bindings.registry.v1",
+      "version": "1.1.0"
+    },
+    {
+      "path": "prisma-html/authority/rifat/visual-source-manifest.json",
+      "authorityDomain": "rifat",
+      "role": "canonical-projection-authority",
+      "gitBlobSha": "82c9a080928ccf9d3f3c00aacb3d28feb2d91ad2",
+      "schema": "prisma.rifat.visual-source-manifest.v2",
+      "version": "2.0.0-rifat-canonical"
+    },
+    {
+      "path": "prisma-html/tools/visual_application/README.md",
+      "authorityDomain": "work-entry-gvae",
+      "role": "manual-contract",
+      "gitBlobSha": "5e15db72f8e76374f2c634924f6c59eece5251eb",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/tools/visual_application/visual_work_entry_gate.py",
+      "authorityDomain": "work-entry-gvae",
+      "role": "canonical-tool-contract",
+      "gitBlobSha": "909b0e661282ed54c45252fcb54c9d70f158dd2c",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/extras/atlasfin/bridge/README.md",
+      "authorityDomain": "atlasfin",
+      "role": "reference-evidence-contract",
+      "gitBlobSha": "b37d9021c487cfbd1fe416a2ec262352984d6e26",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "tools/code-atlas/CODE_ATLAS_NEUTRALITY_CONTRACT.json",
+      "authorityDomain": "code-atlas",
+      "role": "canonical-contract",
+      "gitBlobSha": "9ad7af19e8423ee37f4a021a8f797c952d363a03",
+      "schema": "code_atlas_neutrality_contract.v8",
+      "version": null
+    },
+    {
+      "path": "tools/code-atlas/CODE_ATLAS_CHANGE_ASSURANCE_CONTRACT.json",
+      "authorityDomain": "change-assurance",
+      "role": "canonical-contract",
+      "gitBlobSha": "643f2362323633b858eda69d96a4e9b5c05e0b22",
+      "schema": "code_atlas.change_assurance.product_contract.v1",
+      "version": null
+    }
+  ],
+  "liveOverlayIncluded": false,
+  "liveOverlayRule": "Live status branches, unintegrated receipts and in-progress CI are observed at runtime and never locked as canonical state."
+}
