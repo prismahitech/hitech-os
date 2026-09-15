@@ -26,3 +26,10 @@ Adds `RUN.ps1 -Mode visualqa -Surface <surface>` without renaming the tool or ch
 ## Policy
 
 This phase observes only. It does not modify CSS, TSX, assets, databases, services, or deployment state.
+
+<!-- MAMSHOT_UNIVERSAL_VISUALQA_V1 -->
+## Universal `screenshotsqa` mode
+
+The hosted universal workflow exposes `screenshotsqa` through the same Mamastrophic VisualQA/deep-capture path, then normalizes its output into the universal artifact contract. VisualQA DOM/computed/network/console evidence remains under `evidence/`; PNGs are normalized under `screenshots/`.
+
+The adapter does not reinterpret VisualQA findings as mutation authority or human visual approval. It does not change CSS, TSX, assets, databases, services, recipes, or deployment state. A hosted artifact is evidence only.

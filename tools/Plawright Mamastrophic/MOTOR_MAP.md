@@ -75,3 +75,25 @@ hover. `RUN.ps1 -Mode state-fixture -ArtifactRoot <output-directory>` opens a
 script-free local fixture and certifies enabled normal, enabled hover, keyboard
 focus-visible, loading, reduced-motion, and disabled without product handlers,
 navigation, sale, payment, API, or database work.
+
+<!-- MAMSHOT_UNIVERSAL_GITHUB_FAST_PATH_V1 -->
+## Universal GitHub screenshot artifact fast path
+
+The hosted fast path is `.github/workflows/mamastrophic-universal-screenshots.yml`. It is a thin operator/packaging adapter around this same Mamastrophic motor, not a second capture engine.
+
+- surfaces: `pc`, `tablet`, `mobile` (existing Web/PWA surface), `web`, `chart-lab`, `control-center`, and `all`;
+- modes: `screenshots` and `screenshotsqa`;
+- `all` expands to six parallel surface jobs with one uploaded artifact per surface;
+- Mamastrophic still owns discovery, Playwright capture, DeepScroll, route status and raw evidence;
+- GitHub Actions owns only isolated CI runtime startup/prerequisites and artifact upload;
+- `ci/build_universal_artifact.py` normalizes evidence without capturing, discovering routes or starting apps.
+
+Portable runner rules:
+- `RUN.ps1` resolves `powershell.exe`, `pwsh.exe`, `powershell`, or `pwsh`;
+- when `ArtifactRoot` is provided, output paths derive from it and must not assume `F:\descargasf`;
+- the Python launcher returned by `Get-PythonLauncher` is preserved as an argument array;
+- normalized screenshot filenames are bounded and deterministic to avoid filesystem path-length failures.
+
+The workflow is fail-closed: invalid/missing summary, nonzero capture exit, or screenshot-mode PASS/PARTIAL without PNG evidence becomes `FAIL`. Bounded partial scroll coverage is represented as `PARTIAL_PASS`, never silently upgraded to PASS.
+
+See `docs/README_universal_screenshot_artifacts.md`.

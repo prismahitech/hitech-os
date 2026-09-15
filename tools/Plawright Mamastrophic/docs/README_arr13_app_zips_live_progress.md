@@ -65,3 +65,12 @@ DeepScroll remains on by default because the tool is built for complete evidence
 ## Partial policy
 
 `AllowPartial` now matters for scroll coverage. If a route needs more tiles than the configured limit, that is treated as partial coverage. With `-AllowPartial`, partial coverage can pass as operational evidence instead of becoming a false fail. Hard failures, missing records, Playwright failures, and failed scroll coverage still fail.
+
+<!-- MAMSHOT_UNIVERSAL_ARR13_BRIDGE_V1 -->
+## GitHub universal artifact bridge
+
+arr13 remains the local per-app ZIP owner. The GitHub universal fast path reuses the same `screenshots` / `screenshotsqa` engine but publishes one uniform Actions artifact per selected surface instead of the local `F:\descargasf` ZIP convention.
+
+Each hosted bundle contains normalized PNGs under `screenshots/`; `MANIFEST.json`, `INDEX.csv`, `ROUTE_STATUS.json`, `PROVENANCE.json`, `SHA256SUMS.txt`, and `README.md`; plus original Mamastrophic non-PNG reports/logs under `evidence/`.
+
+FAIL evidence is preserved. Internal `continue-on-error` exists only long enough to package diagnostics; the final manifest gate remains red on `FAIL`. `PARTIAL_PASS` is explicit evidence state for bounded partial scroll coverage when allowed and is never relabeled PASS.

@@ -29,3 +29,10 @@ Ahora acepta:
 - No DB.
 - No deploy.
 - Sólo instala `MENU.ps1` y esta documentación.
+
+<!-- MAMSHOT_UNIVERSAL_MENU_NOTE_V1 -->
+## GitHub fast path
+
+The interactive local menu is unchanged. Hosted CI uses `.github/workflows/mamastrophic-universal-screenshots.yml` directly with typed inputs for surface, mode, workers, partial policy, and DeepScroll.
+
+Do not add a second per-surface menu/engine for CI. Local menu orchestration and hosted GitHub orchestration are two entry surfaces over the same Mamastrophic core.

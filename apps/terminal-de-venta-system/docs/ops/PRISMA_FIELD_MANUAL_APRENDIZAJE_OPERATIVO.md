@@ -4,8 +4,8 @@ path: docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md
 status: LIVING
 owner: PRISMA Ops / Engineering
 created: 2026-06-10
-last_updated: 2026-08-30
-version: 00B
+last_updated: 2026-09-15
+version: 00C
 scope:
   - hot-injection
   - rollback
@@ -1111,3 +1111,36 @@ Operational rules:
 - CI and VISCORE must run the universal PR diff gate in addition to the existing exact-target receipt gate.
 
 This source/static governance gate does not prove browser/runtime visual certification, whole-surface APPLY readiness, production readiness, distribution readiness, or customer deployment readiness.
+
+<!-- MAMSHOT_UNIVERSAL_CI_LEARNING_20260915 -->
+### 2026-09-15 - Mamastrophic universal artifacts: CI cross-platform y evidencia fail-closed
+
+**Tipo:** ROOT_CAUSE_FIX / CI_PORTABILITY / EVIDENCE_LEARNING / GOVERNANCE_LEARNING  
+**Superficie:** Tooling / PC / Tablet / Mobile-PWA / Web / Chart Lab / Control Center
+
+**Contexto:** Se construyó un único fast path parametrizado de GitHub Actions alrededor del motor Mamastrophic existente. Los primeros runs fallaron de forma honesta en distintas capas; los FAIL artifacts permitieron separar prerequisites, runtime, capture y packaging sin inventar seis motores.
+
+**Fallas confirmadas y causa real:**
+- Tablet: `prisma db push` devolvió P1012 porque `DATABASE_URL` no existía. La corrección usa SQLite efímero del runner y nunca DB de cliente.
+- Web/Mobile/Chart Lab: `next: not found` porque el workspace activo no estaba instalado en CI. Web además es off-release y Turbopack rechazó un `node_modules` symlink fuera del filesystem root; la dependencia aislada debe materializarse dentro del checkout.
+- PC/Control Center: PowerShell aplanó la salida de `Get-PythonLauncher`; el runner terminó intentando ejecutar `/`. La salida debe conservarse como array.
+- Chart Lab: el packager generó un filename normalizado mayor al límite del filesystem. Los nombres del bundle ahora se acotan por bytes y conservan unicidad con hash determinista.
+- Control Center: `python -m http.server` servía HTML pero no sus APIs locales. Runtime ready no significa capture ready. El owner CI correcto es el panel Python canónico en 3150.
+- `allow_partial`: una expresión de Actions convertía el default PR en false. Partial permitido debe resolverse explícitamente y exponerse como `PARTIAL_PASS`, no PASS.
+
+**Runs/fallos que dejaron evidencia útil:** Universal Screenshots `35002784469`, `35005429129` y `35006582298`. Los artifacts FAIL se preservaron y se usaron como fuente de diagnóstico.
+
+**Authority drift:** Factory Ledger cambió durante la implementación. AutoMesh v2 detectó drift relevante y ejecutó full refresh: run `35016279270`, artifact `10415169995`, `PASS_FULL_MESH_REFRESH_AFTER_RELEVANT_DRIFT`, requestDigest `4d6f9d5e48e1cf4cadcb07cc84dd89c7ce7bf61c26053aa6866250fc7b863c72`, composed sha256 `0726055919bab53bec2aa0d80c82f0565eebcba51253b477c70a001e2dd8c3bc`.
+
+**Reglas nuevas:**
+1. `F:\descargasf` es convención local Windows, nunca supuesto de runner Linux cuando existe `ArtifactRoot`.
+2. PowerShell y Python launchers conservan exe + argumentos como estructura, no string aplanado.
+3. HTTP 200 no certifica capture; ejecutar el owner real cuando la UI depende de APIs.
+4. Los artifacts FAIL se suben siempre que sea posible y el gate final sigue rojo.
+5. Screenshot mode sin PNG o sin summary válido es FAIL.
+6. Partial scroll coverage permitido se llama `PARTIAL_PASS`; jamás se promociona a PASS.
+7. Mobile en este contrato significa la PWA/Web existente de 3140, no un motor nativo.
+8. Un adapter GitHub puede iniciar runtimes efímeros fuera del motor sin romper la regla no-start/no-kill del motor Mamastrophic.
+
+**Rollback:** Git/PR; no se mutó producto/runtime source, CSS, recetas visuales, customer DB ni deploy.  
+**Deuda pendiente al escribir esta entrada:** completar el cierre CI de las seis superficies, actualizar Factory Ledger/Evidence y congelar la capability sólo con evidencia verde final.
