@@ -180,13 +180,13 @@
     },
     {
       "path": "shared/verticals/validation/fixtures/professional_corporate_services.validation-fixture.json",
-      "bytes": 18774,
-      "sha256": "cc2969fd20ce63813e0ce8fc5530919a7ca494ec3224fc5b3ec6f7bd09838747"
+      "bytes": 18757,
+      "sha256": "8f6b78c3098ba31e390faca26ae671279f6443604fb2d0e0325055264b8996e1"
     },
     {
       "path": "shared/verticals/validation/scenarios/professional_corporate_services.validation-scenarios.json",
-      "bytes": 10241,
-      "sha256": "2c40109248cc6df55dda75b4d0f3b01707e703c0ef3efa03035d739f2f10a2b2"
+      "bytes": 10224,
+      "sha256": "a641d5177a84cc955f80d1bc727b4f49922c65a2db840db4ba6197b754d988ee"
     }
   ],
   "manifestSelfHash": null,
