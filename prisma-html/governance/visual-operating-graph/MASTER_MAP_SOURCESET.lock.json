@@ -2,8 +2,8 @@
   "schema": "prisma.visual-operating-graph.sourceset-lock.v1",
   "generated": true,
   "manualEditsForbidden": true,
-  "generator": "visual-operating-graph-foundation-bootstrap",
-  "observedMainSha": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "generator": "visual-operating-graph-wave1-sourceset-lock",
+  "observedMainSha": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "promotionReadinessClosure": {
     "pr": 554,
     "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
@@ -15,46 +15,22 @@
     "capabilityId": "visual.operating_graph_v1"
   },
   "authorityMesh": {
-    "runId": 34912414009,
-    "artifactId": 10375096790,
-    "requestId": "17f8f8c7dbea5b0d",
+    "runId": 34993688875,
+    "artifactId": 10406088450,
+    "requestId": "b39e7b01bea59254",
     "status": "PASS_COMPOSED_AUTHORITY_MESH",
     "requiredAuthorityCoveragePct": 100,
     "blockers": 0,
-    "requestDigest": "269e4857f56afae95abf600876838598f4bebf1e5999b0dbf633360d9b2d7f44",
-    "composedArtifactSha256": "a6f6dbb59b1556c0bf8c77d0d0b13eb7f9b482d090978cac3cafd1069b0ea73d"
+    "requestDigest": "e890230f8e6f7fc15bbb9b96d650e664680362c0b81d604d7b0a78d967c70452",
+    "composedArtifactSha256": "62e1c3d8a457269d0e7f8fd121ca5388af885c7358394f3f148f415e1272ff84"
   },
-  "sourceCount": 39,
+  "sourceCount": 42,
   "sources": [
     {
       "path": "AGENTS.md",
       "authorityDomain": "governance",
       "role": "manual-doctrine",
       "gitBlobSha": "80f3f450e376857b5da952bcabdbf932cae32bdb",
-      "schema": null,
-      "version": null
-    },
-    {
-      "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
-      "authorityDomain": "factory-ledger",
-      "role": "canonical-evidence-index",
-      "gitBlobSha": "8932a0f7a00d94672e4526b056e072ab65096e30",
-      "schema": "1.0.0",
-      "version": null
-    },
-    {
-      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
-      "authorityDomain": "factory-ledger",
-      "role": "canonical-authority",
-      "gitBlobSha": "ce4a333ac982b601816877b1c7524850f4090a94",
-      "schema": "1.0.0",
-      "version": null
-    },
-    {
-      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER_AGENT_GATE.md",
-      "authorityDomain": "factory-ledger",
-      "role": "manual-doctrine",
-      "gitBlobSha": "158319c7f5904acb1dc176cbc42665fd131edcf1",
       "schema": null,
       "version": null
     },
@@ -163,6 +139,30 @@
       "version": null
     },
     {
+      "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+      "authorityDomain": "factory-ledger",
+      "role": "canonical-evidence-index",
+      "gitBlobSha": "8932a0f7a00d94672e4526b056e072ab65096e30",
+      "schema": "1.0.0",
+      "version": null
+    },
+    {
+      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER_AGENT_GATE.md",
+      "authorityDomain": "factory-ledger",
+      "role": "manual-doctrine",
+      "gitBlobSha": "158319c7f5904acb1dc176cbc42665fd131edcf1",
+      "schema": null,
+      "version": null
+    },
+    {
+      "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+      "authorityDomain": "factory-ledger",
+      "role": "canonical-authority",
+      "gitBlobSha": "ce4a333ac982b601816877b1c7524850f4090a94",
+      "schema": "1.0.0",
+      "version": null
+    },
+    {
       "path": "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
       "authorityDomain": "identity",
       "role": "canonical-authority",
@@ -248,6 +248,30 @@
       "role": "reference-evidence-contract",
       "gitBlobSha": "b37d9021c487cfbd1fe416a2ec262352984d6e26",
       "schema": null,
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-operating-graph/FOUNDATION_MANIFEST.json",
+      "authorityDomain": "visual-operating-graph",
+      "role": "canonical-foundation-manifest",
+      "gitBlobSha": "9eddb5e38ef3062881bc1935065a5ba77571d867",
+      "schema": "prisma.visual-operating-graph.foundation-manifest.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_PROCESS_MODEL.registry.json",
+      "authorityDomain": "visual-operating-graph",
+      "role": "canonical-process-model",
+      "gitBlobSha": "9b1c0f0e27a6c7d7db6169952f3901bbc2086808",
+      "schema": "prisma.visual-operating-graph.process-model.v1",
+      "version": null
+    },
+    {
+      "path": "prisma-html/governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_SCHEMA.json",
+      "authorityDomain": "visual-operating-graph",
+      "role": "canonical-graph-schema",
+      "gitBlobSha": "0b2ffab6b2edbd9809d7b044abf2a1097c522e39",
+      "schema": "prisma.visual-operating-graph.schema.v1",
       "version": null
     },
     {
