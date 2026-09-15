@@ -4,12 +4,12 @@
   "lane": "PC_PROMOTION",
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
-  "state": "RESTART_HANDOFF_READY",
-  "updatedAt": "2026-09-15T11:06:40-06:00",
+  "state": "IN_PROGRESS_READ_ONLY_NO_QUALIFICATION_GAIN",
+  "updatedAt": "2026-09-15T11:14:46-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat2/authority-reconciliation-pc-20260914",
   "workHead": null,
-  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK read-only analysis is complete for all 827 PC targets. Chat 5 cross-authority receipt is consumed and CROSS_AUTHORITY_EVIDENCE_PENDING is cleared. Final read-only classification: 687 EXISTING_CONCEPT_LINK_MISSING, 139 PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED, 1 EXISTING_AUTHORITY_CONFLICT_CURATE; all other categories 0. TRUE_NEW=0 and complete negative-evidence packages=0. WRITE_GATE_PATH_PENDING blocks only governed work-branch output materialization.",
+  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK resumed from the canonical restart handoff on current main 8db4370d579014f8fed6e190ffce45e1589b33d9. Chat 5 PC delta 6CC072FF was consumed and target-specifically rechecked against current main. It confirms existing physical/historical concept intent but unresolved projection and no canonical Identity/NDC target link, so TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1 remains PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED. No newer bounded PC delta exists in the current Chat 5 mailbox. PC accounting remains 827/827 with 687 composer-provisional EXISTING_CONCEPT_LINK_MISSING, 139 physical/projection reconciliation rows, 1 authority conflict, TRUE_NEW=0, missing/extra/duplicate=0.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -50,7 +50,12 @@
     "Classification result: EXISTING_CONCEPT_LINK_MISSING=687; PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED=139; EXISTING_AUTHORITY_CONFLICT_CURATE=1; EXISTING_AUTHORITY_EXACT_REUSE=0; EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP=0; TRUE_NEW_AUTHORITY_REQUIRED=0; NOT_APPLICABLE=0.",
     "All 827 PC targets remain NDC unresolved, visual-meaning unresolved and Identity binding blocked; Identity recipe/existing binding exact reuse is proven for 0 PC targets.",
     "Atlasfin split inside current/current concept-link-missing set is 170 MATCHED_RECIPE + 517 NO_MATCH. Both remain non-equivalent reference states; Atlasfin recipe equality is not semantic authority and NO_MATCH is not absence proof.",
-    "NDC DOC1 is consumed as documentary canon + registries + schemas + seeds/examples; it is not treated as a populated DB/Prisma semantic runtime."
+    "NDC DOC1 is consumed as documentary canon + registries + schemas + seeds/examples; it is not treated as a populated DB/Prisma semantic runtime.",
+    "FRESH_RESTART_AUDIT: canonical main resolves to 8db4370d579014f8fed6e190ffce45e1589b33d9, identical to the restart handoff main; no new main drift requires lane reclassification.",
+    "CURRENT_COMPOSER_READ: Chat 6 status branch head e21a7ed5f9b05f615fbc559b994a7869c48d9637 preserves global zero-loss 2,097/2,097 and keeps the 687 PC EXISTING_CONCEPT_LINK_MISSING rows composer-provisional under the target-specific concept-evidence quality rule.",
+    "CHAT5_PC_DELTA_INVENTORY: current Chat 5 status branch head e2f13271f4b17f093a56126d0e70d859b5f21597 contains AUTHORITY_DELTA_PC_6CC072FF.json as the only bounded PC authority delta; no newer bounded PC delta is present.",
+    "TARGET_SPECIFIC_6CC072FF: current candidate row is physical CURRENT, projection MISSING, NDC UNRESOLVED, visual meaning UNRESOLVED, Identity binding BLOCKED, Atlasfin REC.panel.governed.v2 visual-only. Historical PC Atlasfin handoff records semantic candidate VIS.SURFACE.CONTENT.PRIMARY for /catalog -> ProductMediaWorkspace -> .workspace but explicitly leaves canonical identity-layer/element-binding pending. Classification remains PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED; TRUE_NEW is rejected, but no canonical semantic equivalence/link is inferred.",
+    "PC_CONCEPT_LINK_QUALIFICATION_PASS_02: current evidence produces zero target-specific qualification gain for the 687 composer-provisional concept-link rows. Projection-current plus family-level NDC/Identity/Atlasfin authority remains insufficient by composer quality rule."
   ],
   "decisions": [
     "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
@@ -147,15 +152,27 @@
     "PRODUCT_RUNTIME_MUTATION: false",
     "CANONICAL_REGISTRATION: false",
     "PROJECTION_REPAIR: false",
-    "GVAE_APPLY: false"
+    "GVAE_APPLY: false",
+    "CURRENT_MAIN_RESOLVED_FRESH: PASS:8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "CHAT6_COMPOSER_HEAD_FRESH: PASS:e21a7ed5f9b05f615fbc559b994a7869c48d9637",
+    "CHAT5_STATUS_HEAD_FRESH: PASS:e2f13271f4b17f093a56126d0e70d859b5f21597",
+    "CHAT5_PC_DELTA_6CC072FF_CONSUMED: PASS",
+    "CHAT5_NEWER_BOUNDED_PC_DELTAS_AFTER_6CC072FF: 0",
+    "TARGET_6CC072FF_CURRENT_MAIN_RECHECK: PASS:PHYSICAL_CURRENT/PROJECTION_MISSING/NDC_UNRESOLVED/VISUAL_UNRESOLVED/IDENTITY_BLOCKED",
+    "TARGET_6CC072FF_CLASSIFICATION_PRESERVED: PASS:PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
+    "PC_CONCEPT_LINK_TARGET_SPECIFIC_QUALIFICATION_GAIN: 0",
+    "PC_PROVISIONAL_CONCEPT_LINK_REMAINING: 687",
+    "PC_ZERO_LOSS_AFTER_RESTART_AUDIT: PASS:827/827;MISSING=0;EXTRA=0;DUPLICATE=0",
+    "TRUE_NEW_AUTHORITY_REQUIRED_AFTER_RESTART_AUDIT: 0"
   ],
   "unresolved": [
     "WRITE_GATE_PATH_PENDING for governed output materialization under prisma-html/governance/visual-promotion/authority-reconciliation/pc/**.",
-    "After write authorization, materialize the already-prepared four deterministic shards and manifest without changing the read-only classifications unless main/input authority has drifted."
+    "687 PC EXISTING_CONCEPT_LINK_MISSING rows remain composer-provisional until target-specific relevant-concept evidence or a governed link-only rule exists.",
+    "After write authorization, materialize the already-prepared four deterministic shards and manifest without changing classifications unless current authority evidence legitimately changes."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Do not rebuild the 827-target PC baseline or recensus PC. Treat the 687 EXISTING_CONCEPT_LINK_MISSING rows as composer-provisional. Qualify rows only with target-specific relevant concept evidence or a governed rule proving link-only absence; projection-current plus family-level authority is not enough. Preserve 139 physical/projection reconciliation rows and the 1 authority-conflict row unless new bounded evidence changes them. Consume Chat 5 PC delta 6CC072FF and any newer bounded PC deltas. Keep zero-loss 827/827 and TRUE_NEW=0 absent complete target-specific negative evidence. WRITE_GATE_PATH_PENDING blocks governed output writes only.",
+  "nextAction": "Continue bounded target-specific qualification of the 687 composer-provisional PC concept-link rows only when fresh exact-target evidence exists. Do not recensus or broadly rediscover PC. Preserve the 139 projection/physical reconciliation rows and the 1 authority conflict. Keep zero-loss 827/827 and TRUE_NEW=0 absent complete target-specific negative evidence. WRITE_GATE_PATH_PENDING blocks governed output writes only.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
@@ -520,5 +537,30 @@
       ],
       "noRebuild": true
     }
+  },
+  "latestReadOnlyProgress": {
+    "at": "2026-09-15T11:14:46-06:00",
+    "main": "8db4370d579014f8fed6e190ffce45e1589b33d9",
+    "chat6Head": "e21a7ed5f9b05f615fbc559b994a7869c48d9637",
+    "chat5Head": "e2f13271f4b17f093a56126d0e70d859b5f21597",
+    "consumedDelta": "AUTHORITY_DELTA_PC_6CC072FF.json",
+    "newerBoundedPcDeltaCount": 0,
+    "classificationGain": 0,
+    "counts": {
+      "classified": 827,
+      "provisionalConceptLink": 687,
+      "physicalOrProjectionReconciliationRequired": 139,
+      "existingAuthorityConflictCurate": 1,
+      "trueNew": 0,
+      "missing": 0,
+      "extra": 0,
+      "duplicate": 0
+    },
+    "governedOutputWritten": false,
+    "foreignMailboxWritten": false,
+    "productRuntimeMutation": false,
+    "canonicalAuthorityMutation": false,
+    "projectionRepair": false,
+    "gvaeApply": false
   }
 }
