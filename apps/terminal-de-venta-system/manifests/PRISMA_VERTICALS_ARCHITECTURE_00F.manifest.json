@@ -1,8 +1,8 @@
 {
   "package": "PRISMA_VERTICALS_ARCHITECTURE_00F_VERTICAL_VALIDATION_FIXTURES",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "createdAt": "2026-04-30T04:06:21Z",
-  "description": "Validation fixtures, smoke suite, acceptance matrix and cross-coverage for PRISMA vertical architecture.",
+  "description": "Validation fixtures, smoke suite and acceptance matrix for 11 PRISMA vertical contracts; generated cross-coverage/evidence corpora remain a separate historical package concern.",
   "installer": "install_prisma_verticals_00f.py",
   "manifestPath": "manifests/PRISMA_VERTICALS_ARCHITECTURE_00F.manifest.json",
   "requires": [
