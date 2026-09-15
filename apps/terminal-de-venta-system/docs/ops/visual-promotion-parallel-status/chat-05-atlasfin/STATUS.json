@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "IN_PROGRESS_READ_ONLY",
-  "updatedAt": "2026-09-15T09:32:00-06:00",
+  "updatedAt": "2026-09-15T09:40:00-06:00",
   "baseHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "Chat 5 enters DYNAMIC_CROSS_AUTHORITY_SUPPORT for AUTHORITY_RECONCILIATION_ANTI_REWORK. Baseline 2,097-target cross-authority receipt is already delivered and must not be rebuilt. From now on, consume concrete target/concept questions emerging from Chats 1-4 and publish bounded delta evidence/negative-evidence receipts in this mailbox. Governed output-root writes remain gated by WRITE_GATE_PATH_PENDING only.",
+  "summary": "DYNAMIC_CROSS_AUTHORITY_SUPPORT active. Current mailboxes Chats 1-4 were re-read. Five bounded target-specific delta receipts are now published in Chat 5's mailbox without rebuilding the accepted 2,097-target baseline. WRITE_GATE_PATH_PENDING still blocks only governed output-root writes.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -25,7 +25,12 @@
     "Identity currently has one canonical recipe REC.button.primary with FAM.button.action, PRESET.button.primary.clear-operational.v1 and VSTACK.ACT.PRIMARY.TABLET.POS.COBRAR.V1; the certified Tablet Cobrar target has existing BND.ACT.PRIMARY.TABLET.POS.COBRAR.V1 and LYR.ACT.PRIMARY.TABLET.POS.COBRAR.BASE.",
     "Code Atlas/UI Bridge explicitly models identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout. The domains remain distinct; relation is not equivalence.",
     "Atlasfin table/card/panel recipe convergence remains VISUAL_SIMILARITY_ONLY. Independent canonical cross-surface semantic groups remain zero.",
-    "Surface corpus facts remain exact: Tablet 929, PC 827, Mobile 271, Shared UI 70 = 2,097; no recensus or prior-phase recomputation performed."
+    "Surface corpus facts remain exact: Tablet 929, PC 827, Mobile 271, Shared UI 70 = 2,097; no recensus or prior-phase recomputation performed.",
+    "Dynamic mailbox scan: Chat 1 remains at 924 Tablet semantic-link reviews plus already-separated Cobrar application/conflict/drift cases; Chat 2 and Chat 3 have complete read-only classifications with TRUE_NEW=0; Chat 4 still has 40 target-specific Shared UI semantic joins pending.",
+    "Shared UI exact Identity authority contains BND.ACT.PRIMARY.SHAREDUI.V1 -> ACT.primary / REC.button.primary with status BLOCKED_BY_MISSING_BINDING and zero targets. This is positive existing semantic authority and is directly relevant to bounded Shared UI primary-action visual targets.",
+    "Published target-specific Shared UI deltas for TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1 and TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1 suggesting EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP, while explicitly preserving ACT.primary != ACT.sale.checkout.",
+    "Published Tablet accent deltas for TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1 and TGT.CENSUS.TABLET.2E41F7A945432E762571.V1 confirming existing TOK.color.accent / BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1 ambiguity and suggesting EXISTING_AUTHORITY_CONFLICT_CURATE.",
+    "Published PC delta for TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1 preserving PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED because projection is MISSING, while recording historical VIS.SURFACE.CONTENT.PRIMARY intent as positive anti-TRUE_NEW evidence rather than canonical Identity authority."
   ],
   "decisions": [
     "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
@@ -36,7 +41,12 @@
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/STATUS.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/STATUS.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_0A305145.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_2E41F7A9.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_09F96569.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_BA225641.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_PC_6CC072FF.json"
   ],
   "validations": [
     {
@@ -68,17 +78,22 @@
       "name": "Forbidden scope audit",
       "result": "PASS",
       "detail": "Materiality uninspected; no governed output-root, canonical authority, product/runtime, projection repair, GVAE APPLY, PR or main merge."
+    },
+    {
+      "name": "Dynamic cross-authority delta publication",
+      "result": "PASS_READ_ONLY",
+      "detail": "5 bounded receipts published from current worker-mailbox questions. No baseline rebuild, governed output-root write, foreign mailbox mutation, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
     }
   ],
   "unresolved": [
-    "Monitor Chats 1-4 for concrete target IDs, concept IDs, unresolved semantic links, conflict/curation candidates and TRUE_NEW candidates requiring cross-authority evidence.",
-    "Answer only bounded questions with source-backed delta evidence; do not rebuild the 2,097-target baseline receipt.",
-    "For any TRUE_NEW candidate, complete or reject the required target-specific negative-evidence chain across NDC, Identity, RIFAT/Target Index, Code Atlas/UIMAP/UI Bridge, Atlasfin reference evidence, Factory Ledger/Evidence Index and relevant history.",
-    "Publish incremental DELTA receipts in this mailbox so Chat 6 can consume them without owner relay."
+    "Continue target-specific support for Chat 1's remaining 924 semantic-link reviews and Chat 4's remaining target-specific Shared UI joins. Do not globalize or rebuild the baseline corpus.",
+    "Surface workers retain final per-target classification ownership; Chat 5 delta receipts are evidence inputs, not foreign-lane decisions.",
+    "WRITE_GATE_PATH_PENDING remains only for governed output-root writes under Chat 5's assigned work branch.",
+    "Any future TRUE_NEW candidate still requires complete target-specific negative evidence across NDC, Identity, RIFAT/Target Index, Code Atlas/UIMAP/UI Bridge, Atlasfin structured reference, Factory Ledger/Evidence Index, relevant history, and current cross-authority deltas."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Begin DYNAMIC_CROSS_AUTHORITY_SUPPORT now: read current surface-worker mailboxes, identify concrete unresolved targets/concepts, investigate them read-only, and publish bounded delta receipts here. Reuse AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json as baseline; do not recompute it.",
+  "nextAction": "Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT by re-reading current Chats 1-4 mailboxes, taking the next exact target/concept question, performing bounded cross-authority analysis, and publishing another compact delta receipt. Do not wait for WRITE_GATE_PATH_PENDING.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
@@ -124,7 +139,67 @@
       "materialityCatalogAuthorized": false,
       "canonicalAuthorityMutationAllowed": false,
       "productRuntimeMutationAllowed": false,
-      "trueNewAuthorityRequiresCompleteNegativeEvidence": true
+      "trueNewAuthorityRequiresCompleteNegativeEvidence": true,
+      "deltaReceipts": [
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_0A305145.json",
+          "surface": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.0A305145467F0C5CF3E3.V1",
+          "suggestedClassification": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+          "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_TABLET_2E41F7A9.json",
+          "surface": "tablet",
+          "targetId": "TGT.CENSUS.TABLET.2E41F7A945432E762571.V1",
+          "suggestedClassification": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+          "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_09F96569.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.09F96569FF3A6B805D9C.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "confidence": "MEDIUM_HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_BA225641.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.BA2256417613E877ABEE.V1",
+          "suggestedClassification": "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP",
+          "confidence": "HIGH"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_PC_6CC072FF.json",
+          "surface": "pc",
+          "targetId": "TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1",
+          "suggestedClassification": "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
+          "confidence": "HIGH"
+        }
+      ],
+      "deltaReceiptCount": 5,
+      "lastMailboxScan": {
+        "chat1": {
+          "state": "IN_PROGRESS",
+          "pendingSemanticReview": 924,
+          "trueNewDeclared": 0
+        },
+        "chat2": {
+          "state": "IN_PROGRESS",
+          "readOnlyAnalysisComplete": true,
+          "trueNewDeclared": 0
+        },
+        "chat3": {
+          "state": "IN_PROGRESS",
+          "readOnlyAnalysisComplete": true,
+          "trueNewDeclared": 0
+        },
+        "chat4": {
+          "state": "IN_PROGRESS",
+          "unresolvedTargetSpecific": 40,
+          "trueNewDeclared": 0
+        }
+      }
     }
   }
 }
