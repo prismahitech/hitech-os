@@ -1,0 +1,62 @@
+{
+  "schema": "prisma.visual-promotion.cross-authority-delta.v1",
+  "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+  "mode": "DYNAMIC_CROSS_AUTHORITY_SUPPORT",
+  "chatId": 5,
+  "observedMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+  "createdAt": "2026-09-15T09:40:00-06:00",
+  "baselineReceipt": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+  "writeGate": "WRITE_GATE_PATH_PENDING",
+  "materialityCatalogInspected": false,
+  "canonicalAuthorityMutationPerformed": false,
+  "productRuntimeMutationPerformed": false,
+  "projectionRepairPerformed": false,
+  "gvaeApplyPerformed": false,
+  "deltaId": "chat5-delta-pc-6cc072ff",
+  "surface": "pc",
+  "targetId": "TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1",
+  "question": "Does ProductMediaWorkspace .workspace represent genuinely new semantic authority, or is there prior concept intent plus unresolved projection/application authority?",
+  "authorityFound": [
+    {
+      "domain": "physical-candidate",
+      "selector": ".workspace",
+      "owner": "products/pc/app/components/catalog/product-media-workspace.module.css",
+      "projectionStatus": "MISSING",
+      "path": "prisma-html/governance/visual-promotion/candidates/pc/CANDIDATES.jsonl"
+    },
+    {
+      "domain": "history-doc",
+      "conceptId": "VIS.SURFACE.CONTENT.PRIMARY",
+      "path": "apps/terminal-de-venta-system/docs/ops/PRISMA_PC_ATLASFIN_CONTINUATION.md",
+      "finding": "Exact /catalog -> ProductMediaWorkspace -> .workspace target was previously identified with this semantic candidate; document explicitly says canonical Identity layer/element-binding contract is still missing."
+    },
+    {
+      "domain": "atlasfin",
+      "recipeId": "REC.panel.governed.v2",
+      "finding": "Current target recipe match is visual-only support and cannot promote the historical semantic candidate to canonical authority."
+    }
+  ],
+  "evidencePaths": [
+    "prisma-html/governance/visual-promotion/candidates/pc/CANDIDATES.jsonl",
+    "apps/terminal-de-venta-system/docs/ops/PRISMA_PC_ATLASFIN_CONTINUATION.md",
+    "apps/terminal-de-venta-system/docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md",
+    "prisma-html/extras/atlasfin/assets/data/visual.recipe.registry.json",
+    "prisma-html/governance/visual-promotion/promotion-readiness/composed/CANONICAL_PROMOTION_PLAN.json"
+  ],
+  "relationType": "HISTORICAL_SEMANTIC_CANDIDATE_RELATED_TO_EXACT_TARGET_WITH_CURRENT_PROJECTION_DEBT",
+  "equivalent": false,
+  "negativeEvidenceCoverage": {
+    "status": "TRUE_NEW_REJECTED_BY_POSITIVE_HISTORICAL_CONCEPT_INTENT_AND_EXISTING_PHYSICAL_TARGET",
+    "ndc": "NO EXACT NDC TARGET LINK PROVEN",
+    "identity": "NO EXACT IDENTITY BINDING/RECIPE AUTHORITY PROVEN FOR THIS TARGET",
+    "rifatTargetIndex": "PHYSICAL TARGET EXISTS; CURRENT CANDIDATE REPORTS PROJECTION MISSING",
+    "codeAtlas": "NO STRONGER EXACT TARGET SEMANTIC CROSSWALK FOUND IN BOUNDED SEARCH",
+    "atlasfin": "REC.panel.governed.v2 MATCH IS VISUAL_SIMILARITY_ONLY",
+    "ledgerEvidence": "BASELINE ANTI-REWORK RECEIPT REUSED",
+    "history": "POSITIVE EXACT TARGET + VIS.SURFACE.CONTENT.PRIMARY CANDIDATE INTENT EXISTS"
+  },
+  "suggestedClassification": "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
+  "confidence": "HIGH",
+  "secondarySemanticDisposition": "After projection authority is reconciled, semantic debt should be reviewed as existing-concept linkage/application debt rather than TRUE_NEW unless stronger negative evidence disproves the historical concept intent.",
+  "unresolvedRemainder": "Projection authority direction is unresolved and the historical VIS.SURFACE.CONTENT.PRIMARY candidate is not canonical Identity authority. No binding may be minted from naming intuition."
+}
