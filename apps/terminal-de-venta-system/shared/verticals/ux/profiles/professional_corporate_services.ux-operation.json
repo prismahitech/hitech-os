@@ -1,0 +1,384 @@
+{
+  "verticalId": "professional_corporate_services",
+  "name": "Servicios Profesionales y Corporativos",
+  "tablet": {
+    "primaryEntry": "Clientes",
+    "navigation": [
+      "Clientes",
+      "Diagnóstico",
+      "Checklist",
+      "Documentos",
+      "Avances",
+      "Pendientes por enviar"
+    ],
+    "blockedModules": [
+      "configuración profunda de flujos",
+      "políticas de cumplimiento",
+      "administración completa de contratos",
+      "reportes consolidados"
+    ],
+    "offlinePolicy": {
+      "canContinueSelling": false,
+      "canContinueOperationalCapture": true,
+      "copy": "Puedes registrar avances operativos permitidos con la información disponible.",
+      "mustShowPending": true
+    }
+  },
+  "pc": {
+    "navigation": [
+      "Dashboard",
+      "Clientes",
+      "Expedientes",
+      "Servicios",
+      "Flujos",
+      "Documentos",
+      "Tareas y vencimientos",
+      "Responsables",
+      "Auditoría"
+    ],
+    "governanceModules": [
+      "Expedientes",
+      "Servicios",
+      "Flujos",
+      "Tareas y vencimientos",
+      "Responsables",
+      "Auditoría",
+      "Dashboard"
+    ],
+    "copy": "PC gobierna expedientes, reglas, responsables, evidencia, conciliación y seguimiento profundo."
+  },
+  "mobile": {
+    "role": "supervision",
+    "navigation": [
+      "Resumen",
+      "Alertas",
+      "Aprobaciones",
+      "Vencimientos",
+      "Clientes en riesgo",
+      "Siguientes acciones"
+    ],
+    "blockedModules": [
+      "edición masiva de expedientes",
+      "configuración de políticas",
+      "administración profunda de contratos"
+    ],
+    "copy": "Mobile supervisa y resuelve decisiones acotadas; el gobierno profundo permanece en PC."
+  },
+  "screens": [
+    {
+      "id": "clientes",
+      "label": "Clientes",
+      "purpose": "consultar clientes y contexto operativo",
+      "primaryAction": "Abrir cliente",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "diagnostico",
+      "label": "Diagnóstico",
+      "purpose": "capturar necesidad, alcance y datos iniciales",
+      "primaryAction": "Registrar diagnóstico",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "expediente",
+      "label": "Expediente",
+      "purpose": "consultar el estado integral del cliente y sus servicios",
+      "primaryAction": "Abrir expediente",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "documentos",
+      "label": "Documentos",
+      "purpose": "registrar requisitos, recepción y revisión documental",
+      "primaryAction": "Registrar documento",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "tareas_vencimientos",
+      "label": "Tareas y vencimientos",
+      "purpose": "dar seguimiento a responsables, dependencias y fechas",
+      "primaryAction": "Actualizar seguimiento",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "aprobaciones",
+      "label": "Aprobaciones",
+      "purpose": "resolver decisiones acotadas con trazabilidad",
+      "primaryAction": "Revisar aprobación",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    },
+    {
+      "id": "seguimiento",
+      "label": "Seguimiento",
+      "purpose": "registrar hitos, riesgos, evidencia y siguientes acciones",
+      "primaryAction": "Registrar avance",
+      "secondaryActions": [
+        "Volver",
+        "Ver detalle",
+        "Ver historial"
+      ],
+      "mustDisableWhen": [
+        "faltan datos obligatorios",
+        "no hay permiso",
+        "la decisión requiere una superficie con mayor autoridad"
+      ],
+      "states": {
+        "empty": "No hay información disponible todavía.",
+        "loading": "Un momento, estamos cargando la información.",
+        "error": "No pudimos completar la acción. Revisa el dato e intenta otra vez.",
+        "success": "Listo. El avance quedó registrado.",
+        "disabled": "Completa lo necesario o solicita autorización para continuar.",
+        "offline": "Puedes registrar avances operativos permitidos. Las decisiones sensibles esperan conexión.",
+        "pending_sync": "El avance quedó guardado y se enviará cuando haya conexión."
+      }
+    }
+  ],
+  "flows": [
+    {
+      "id": "professional_services.client_intake",
+      "name": "Diagnóstico inicial",
+      "steps": [
+        "Abrir Clientes",
+        "Registrar necesidad y datos iniciales",
+        "Confirmar responsables",
+        "Guardar diagnóstico",
+        "Mostrar siguiente acción"
+      ],
+      "blockedBy": [
+        "datos mínimos faltantes",
+        "permiso insuficiente"
+      ],
+      "successMessage": "Diagnóstico registrado."
+    },
+    {
+      "id": "professional_services.open_engagement",
+      "name": "Abrir servicio",
+      "steps": [
+        "Abrir expediente",
+        "Elegir servicio",
+        "Definir alcance y responsable",
+        "Registrar fechas clave",
+        "Confirmar apertura"
+      ],
+      "blockedBy": [
+        "alcance no definido",
+        "responsable faltante"
+      ],
+      "successMessage": "Servicio iniciado."
+    },
+    {
+      "id": "professional_services.receive_document",
+      "name": "Recibir documento",
+      "steps": [
+        "Abrir Documentos",
+        "Seleccionar requisito",
+        "Registrar recepción",
+        "Añadir observación si aplica",
+        "Confirmar estado"
+      ],
+      "blockedBy": [
+        "requisito no identificado",
+        "permiso insuficiente"
+      ],
+      "successMessage": "Documento recibido."
+    },
+    {
+      "id": "professional_services.advance_milestone",
+      "name": "Completar hito",
+      "steps": [
+        "Abrir Seguimiento",
+        "Revisar dependencias",
+        "Registrar avance",
+        "Adjuntar evidencia declarada",
+        "Confirmar siguiente acción"
+      ],
+      "blockedBy": [
+        "dependencia abierta",
+        "evidencia requerida faltante"
+      ],
+      "successMessage": "Hito completado."
+    },
+    {
+      "id": "professional_services.review_approval",
+      "name": "Resolver aprobación",
+      "steps": [
+        "Abrir Aprobaciones",
+        "Revisar contexto",
+        "Confirmar autoridad",
+        "Registrar decisión",
+        "Mostrar resultado"
+      ],
+      "blockedBy": [
+        "autoridad insuficiente",
+        "información obligatoria faltante"
+      ],
+      "successMessage": "Aprobación registrada."
+    },
+    {
+      "id": "professional_services.deadline_risk",
+      "name": "Atender vencimiento en riesgo",
+      "steps": [
+        "Abrir Vencimientos",
+        "Revisar causa",
+        "Asignar responsable",
+        "Definir siguiente acción",
+        "Registrar seguimiento"
+      ],
+      "blockedBy": [
+        "responsable no definido",
+        "dependencia sin resolver"
+      ],
+      "successMessage": "Seguimiento actualizado."
+    }
+  ],
+  "microcopy": {
+    "primary": "Clientes",
+    "success": "Avance registrado.",
+    "error": "No pudimos completar la acción. Revisa la información e intenta otra vez.",
+    "offline": "Puedes continuar con captura operativa permitida. Las decisiones sensibles esperan conexión.",
+    "pending": "Pendiente por enviar.",
+    "disabled": "Completa lo necesario o solicita autorización.",
+    "special": {
+      "documento faltante": "Falta un documento requerido para continuar.",
+      "vencimiento en riesgo": "Hay una fecha comprometida que necesita atención.",
+      "aprobación pendiente": "La siguiente acción requiere una aprobación.",
+      "responsable faltante": "Asigna una persona responsable antes de continuar."
+    }
+  },
+  "forbiddenVisibleTerms": [
+    "checkout",
+    "cart",
+    "sync",
+    "outbox",
+    "runtime",
+    "lookup",
+    "guardrails",
+    "SaleReturn",
+    "amountCents",
+    "restock",
+    "payload",
+    "API",
+    "endpoint",
+    "worker",
+    "ack",
+    "schema",
+    "queue"
+  ],
+  "acceptance": [
+    "La acción principal se entiende sin conocer la estructura interna del sistema.",
+    "Cada pantalla tiene vacío, carga, error, éxito, deshabilitado, offline y pendiente por enviar.",
+    "Tablet no expone administración profunda.",
+    "PC conserva el gobierno de expedientes, políticas, responsables y evidencia.",
+    "Mobile supervisa y sólo ejecuta aprobaciones acotadas.",
+    "No aparecen términos técnicos visibles.",
+    "El usuario puede volver al cliente o expediente sin perder contexto."
+  ]
+}
