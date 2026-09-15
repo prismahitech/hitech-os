@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 883,
+  "file_count_excluding_manifest": 894,
   "files": [
     {
       "bytes": 156,
@@ -2317,9 +2317,44 @@
       "sha256": "87D1A7CD375ED8B4C0A264A74F1E1D75921D704B4D9DA62E53D427A3AC05662D"
     },
     {
-      "bytes": 1294,
+      "bytes": 1605,
       "path": "docs/ops/README.md",
-      "sha256": "F7EAC069AB5775ABC4CEB5D0E79EE0220886CA62C3C680BEAB3D750FCA5989A6"
+      "sha256": "6F45DA01F9C69794EE743B5E68DE228A25FDE169FBFDCA44B6A7D12ADFE8087D"
+    },
+    {
+      "bytes": 3309,
+      "path": "docs/ops/visual-operating-graph/PRISMA_LIVE_PHASE_TRUTH_REDUCER_SPEC.md",
+      "sha256": "69BCB07EBA7E48EA4076DECDFFCF743706169873869DE07678A6B2A8C0FDAE82"
+    },
+    {
+      "bytes": 2774,
+      "path": "docs/ops/visual-operating-graph/PRISMA_MASTER_MAP_GENERATION_CONTRACT.md",
+      "sha256": "07EB213F6A3A2D667DA9C92B7C31CDEB8B2CA6A9DA3015D87234C98678BB3C10"
+    },
+    {
+      "bytes": 2850,
+      "path": "docs/ops/visual-operating-graph/PRISMA_NEXT_SAFE_ACTION_AND_WHAT_IF_SPEC.md",
+      "sha256": "2CDE19E41B36F3771C8C132E3280C792A471A501F40F66A07D261DAF5F566834"
+    },
+    {
+      "bytes": 4645,
+      "path": "docs/ops/visual-operating-graph/PRISMA_PROCESS_PHASE_AND_BLOCKER_MODEL.md",
+      "sha256": "5B1C6AB483902007CF8BD889688F2E2ECDD85F0D90AE4A5C086491EF27D25596"
+    },
+    {
+      "bytes": 2139,
+      "path": "docs/ops/visual-operating-graph/PRISMA_VISUAL_CHANGE_DOCTRINE.md",
+      "sha256": "B31954B9521CC5AEC1799CCEA5CF1DD3C61E3A564D1E55A830A6677F4FB0A6BF"
+    },
+    {
+      "bytes": 10655,
+      "path": "docs/ops/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_SPEC.md",
+      "sha256": "E6863983A01D0C5597C93CA50C2AA6B23F78D5EA37EBBE330A5E959DAA0E95C6"
+    },
+    {
+      "bytes": 2851,
+      "path": "docs/ops/visual-operating-graph/README.md",
+      "sha256": "7CD15DB5109CAF93F21B06D88C9B0770945F96D0D0D44C637FB1CE88F4803F6B"
     },
     {
       "bytes": 29216,
@@ -3080,6 +3115,26 @@
       "bytes": 2677,
       "path": "governance/PRISMA_HTML_NARRATIVE_SWEEP_MANIFEST.json",
       "sha256": "82DE58FCF476246CFF077BD8A551D19D9E1E5DC129874A915E8CDEDA4023170D"
+    },
+    {
+      "bytes": 2527,
+      "path": "governance/visual-operating-graph/FOUNDATION_MANIFEST.json",
+      "sha256": "1311DB44F830E46907C63C0FD1A7F90EA9FCC317C40B480E30E6AB5E85F9B020"
+    },
+    {
+      "bytes": 13117,
+      "path": "governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json",
+      "sha256": "4A8211FB9220B6249DE2F439CEBDD1B83E29D50DD5B4D5763753D546BBFCDDD5"
+    },
+    {
+      "bytes": 8119,
+      "path": "governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_PROCESS_MODEL.registry.json",
+      "sha256": "3E676DACE7F3CF7AFE8A5E90BAB71996E468CEEEFF0B5D32CABBBA3FF4B8EEF9"
+    },
+    {
+      "bytes": 6502,
+      "path": "governance/visual-operating-graph/PRISMA_VISUAL_OPERATING_GRAPH_SCHEMA.json",
+      "sha256": "75DD8D1989209B02A6C7084562F47AE6ADB44DB019B267E5C892A46D4F1ED0D7"
     },
     {
       "bytes": 0,

@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.visual-operating-graph.schema.v1",
+  "title": "PRISMA Visual Operating Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "observedCanonicalMain",
+    "stateClass",
+    "nodes",
+    "edges",
+    "gaps",
+    "provenance"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prisma.visual-operating-graph.v1"
+    },
+    "observedCanonicalMain": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sourceSetDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stateClass": {
+      "enum": [
+        "CANONICAL_STATE",
+        "LIVE_OVERLAY",
+        "COMPOSED_VIEW"
+      ]
+    },
+    "generatedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "productionCertified": {
+      "const": false
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gap"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/provenanceRef"
+      }
+    }
+  },
+  "$defs": {
+    "nodeType": {
+      "enum": [
+        "REQUEST",
+        "CAPABILITY",
+        "AUTHORITY",
+        "SURFACE",
+        "SURFACE_COHORT",
+        "NEUTRAL_MEANING",
+        "VISUAL_MEANING",
+        "TARGET",
+        "RECIPE",
+        "ADAPTER",
+        "BINDING",
+        "APPLICATION_LAYER",
+        "PROJECTION",
+        "GATE",
+        "TOOL",
+        "EVIDENCE",
+        "BLOCKER",
+        "WRITER",
+        "OUTPUT",
+        "PHASE",
+        "WORKER",
+        "RECEIPT",
+        "PR",
+        "COMMIT",
+        "CI_RUN",
+        "RUNTIME_PROOF",
+        "LEDGER_STATE",
+        "DOCUMENT"
+      ]
+    },
+    "relation": {
+      "enum": [
+        "requires",
+        "blocks",
+        "produces",
+        "validates",
+        "projects_to",
+        "represented_by",
+        "derived_from",
+        "evidenced_by",
+        "observed_by",
+        "owned_by",
+        "writes",
+        "reads",
+        "updates",
+        "conflicts_with",
+        "reconciles",
+        "supersedes",
+        "implements",
+        "belongs_to",
+        "authorizes",
+        "does_not_authorize"
+      ]
+    },
+    "canonicality": {
+      "enum": [
+        "CANONICAL_AUTHORITY",
+        "CANONICAL_DERIVED",
+        "REFERENCE_ONLY",
+        "LIVE_OVERLAY",
+        "UNKNOWN"
+      ]
+    },
+    "provenanceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorityDomain",
+        "sourceRef",
+        "sourceRole",
+        "canonicality"
+      ],
+      "properties": {
+        "authorityDomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRole": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicality": {
+          "$ref": "#/$defs/canonicality"
+        },
+        "gitBlobSha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observedHead": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "canonicality",
+        "authorityDomain",
+        "sourceRefs",
+        "payload"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/nodeType"
+        },
+        "canonicality": {
+          "$ref": "#/$defs/canonicality"
+        },
+        "authorityDomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "payload": {
+          "type": "object"
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorizationGranted": {
+          "const": false
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "relation",
+        "canonicality",
+        "authorityDomain",
+        "sourceRefs"
+      ],
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation": {
+          "$ref": "#/$defs/relation"
+        },
+        "canonicality": {
+          "$ref": "#/$defs/canonicality"
+        },
+        "authorityDomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorizationGranted": {
+          "const": false
+        }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "reason",
+        "sourceDomain",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceDomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "UNKNOWN",
+            "MISSING",
+            "STALE",
+            "CONFLICTED",
+            "BLOCKED"
+          ]
+        },
+        "nextEvidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
