@@ -5,17 +5,17 @@
   "statusBranch": "status/vp-chat-02-pc",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc",
   "state": "IN_PROGRESS",
-  "updatedAt": "2026-09-15T00:35:00Z",
+  "updatedAt": "2026-09-15T09:32:00-06:00",
   "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
   "workBranch": "chat2/authority-reconciliation-pc-20260914",
   "workHead": null,
-  "summary": "ORCHESTRATOR CORRECTION: AUTHORITY_RECONCILIATION_ANTI_REWORK remains active. PR #555 trust-anchor drift must be revalidated, but visual.operating_graph_v1 is NOT this lane's capability. This phase continues to REUSE/ADVANCE visual.generic_application_engine_v1 (DONE/SOURCE_READY/doNotRebuild=true). Continue read-only reconciliation now; only work-branch output writes remain gated until the correct current-head anti-rework MUTATION decision can be produced.",
+  "summary": "AUTHORITY_RECONCILIATION_ANTI_REWORK read-only analysis is complete for all 827 PC targets. Chat 5 cross-authority receipt is consumed and CROSS_AUTHORITY_EVIDENCE_PENDING is cleared. Final read-only classification: 687 EXISTING_CONCEPT_LINK_MISSING, 139 PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED, 1 EXISTING_AUTHORITY_CONFLICT_CURATE; all other categories 0. TRUE_NEW=0 and complete negative-evidence packages=0. WRITE_GATE_PATH_PENDING blocks only governed work-branch output materialization.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
-      "scope": "lane-output-repository-write-only",
-      "detail": "Current-head trust-anchor drift from PR #555 requires a fresh anti-rework decision before work-branch output mutation. The exact capability for this phase is visual.generic_application_engine_v1 with requestedAction=ADVANCE, not visual.operating_graph_v1.",
-      "impact": "Do not stop lane analysis. Continue all read-only target reconciliation, negative-evidence work, history/authority review and deterministic result preparation. Hold only repository output writes until the correct gate evidence is available."
+      "scope": "governed-output-repository-write-only",
+      "detail": "Read-only reconciliation, target classification, zero-loss accounting and deterministic shard preparation are complete. Only writing governed outputs under prisma-html/governance/visual-promotion/authority-reconciliation/pc/** remains gated.",
+      "impact": "Do not mutate work branch/output root until the current-head write gate is available. Do not stop or downgrade the completed read-only analysis."
     }
   ],
   "findings": [
@@ -43,7 +43,14 @@
     "All 139 projection-MISSING rows remain a projection-debt dimension; projection absence is not used as a substitute for operational or visual semantic meaning.",
     "No complete negative-evidence package exists yet for any PC target; therefore TRUE_NEW_AUTHORITY_REQUIRED is not declared for any target.",
     "ORCHESTRATOR_CORRECTION: PR #555 registered visual.operating_graph_v1 as a separate BUILD/NOT_STARTED capability. It is not the affected capability for authority-reconciliation lanes. Canonical affected capability remains visual.generic_application_engine_v1 = DONE/SOURCE_READY/doNotRebuild=true; requestedAction=ADVANCE.",
-    "PR #555 changed only PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; no lane Target Index/RIFAT/Identity/promotion-readiness source path changed. Treat as governance trust-anchor drift requiring current-head revalidation, not as a new lane scope."
+    "PR #555 changed only PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json; no lane Target Index/RIFAT/Identity/promotion-readiness source path changed. Treat as governance trust-anchor drift requiring current-head revalidation, not as a new lane scope.",
+    "Chat 5 receipt PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING consumed; readOnlyEvidenceConsumableNow=true. CROSS_AUTHORITY_EVIDENCE_PENDING is no longer a valid blocker.",
+    "Correct phase capability is visual.generic_application_engine_v1 / DONE / SOURCE_READY / doNotRebuild=true / ADVANCE. visual.operating_graph_v1 is not a prerequisite for this lane.",
+    "Read-only target-by-target reconciliation is complete: 827/827 classified with zero missing, zero extra and zero duplicate target IDs.",
+    "Classification result: EXISTING_CONCEPT_LINK_MISSING=687; PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED=139; EXISTING_AUTHORITY_CONFLICT_CURATE=1; EXISTING_AUTHORITY_EXACT_REUSE=0; EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP=0; TRUE_NEW_AUTHORITY_REQUIRED=0; NOT_APPLICABLE=0.",
+    "All 827 PC targets remain NDC unresolved, visual-meaning unresolved and Identity binding blocked; Identity recipe/existing binding exact reuse is proven for 0 PC targets.",
+    "Atlasfin split inside current/current concept-link-missing set is 170 MATCHED_RECIPE + 517 NO_MATCH. Both remain non-equivalent reference states; Atlasfin recipe equality is not semantic authority and NO_MATCH is not absence proof.",
+    "NDC DOC1 is consumed as documentary canon + registries + schemas + seeds/examples; it is not treated as a populated DB/Prisma semantic runtime."
   ],
   "decisions": [
     "Clear HARD_STOP_EXECUTION_ENVIRONMENT_NO_REPO_COMPUTE because full Git blob access permitted deterministic exact-head validation of the materialized handoff.",
@@ -59,7 +66,13 @@
     "Do not create the assigned work branch merely to park partial outputs because branch/output mutation is downstream of the mandatory anti-rework gate.",
     "Do not use Materiality Catalog; owner authorization remains false.",
     "Do not declare TRUE_NEW_AUTHORITY_REQUIRED from empty code search, Atlasfin miss, selector naming, or missing projection.",
-    "Do not infer NDC operational meaning from visual recipe/selector/component naming."
+    "Do not infer NDC operational meaning from visual recipe/selector/component naming.",
+    "Clear stale CROSS_AUTHORITY_EVIDENCE_PENDING blocker.",
+    "Clear stale visual.operating_graph_v1 prerequisite from current reasoning/status.",
+    "Use conflict-first, projection-second, concept-link-third deterministic classification policy over the immutable certified PC corpus.",
+    "Keep TRUE_NEW_AUTHORITY_REQUIRED at 0 because target-specific complete negative evidence exists for 0 targets.",
+    "Do not reinterpret identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout as equivalence.",
+    "Treat WRITE_GATE_PATH_PENDING as repository-write-only; analysis remains complete."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-02-pc/STATUS.json",
@@ -113,17 +126,36 @@
     "GVAE_APPLY_PERFORMED: false",
     "WORK_BRANCH_CREATED: false",
     "ANTI_REWORK_PROPOSAL_GATE: NOT_RUN_BLOCKED_EXECUTION_PATH",
-    "ANTI_REWORK_MUTATION_GATE: NOT_RUN_BLOCKED_EXECUTION_PATH"
+    "ANTI_REWORK_MUTATION_GATE: NOT_RUN_BLOCKED_EXECUTION_PATH",
+    "CHAT5_READ_ONLY_RECEIPT_CONSUMED: PASS",
+    "CROSS_AUTHORITY_EVIDENCE_PENDING: CLEARED",
+    "CAPABILITY: PASS:visual.generic_application_engine_v1/ADVANCE",
+    "READ_ONLY_INPUT_ACCOUNTING: PASS:827",
+    "READ_ONLY_CLASSIFIED_ACCOUNTING: PASS:827",
+    "ZERO_LOSS_MISSING: 0",
+    "ZERO_LOSS_EXTRA: 0",
+    "ZERO_LOSS_DUPLICATE: 0",
+    "TARGET_INDEX_JOIN_MISSING: 0",
+    "CLASSIFICATION_SUM: PASS:687+139+1=827",
+    "TRUE_NEW_AUTHORITY_REQUIRED: 0",
+    "TRUE_NEW_NEGATIVE_EVIDENCE_COMPLETE: 0",
+    "DETERMINISTIC_SHARD_PLAN: PASS:250+250+250+77=827",
+    "READ_ONLY_ANALYSIS_COMPLETE: true",
+    "WRITE_GATE_BLOCKS_ANALYSIS: false",
+    "GOVERNED_OUTPUT_ROOT_WRITTEN: false",
+    "MATERIALITY_CATALOG_INSPECTED: false",
+    "PRODUCT_RUNTIME_MUTATION: false",
+    "CANONICAL_REGISTRATION: false",
+    "PROJECTION_REPAIR: false",
+    "GVAE_APPLY: false"
   ],
   "unresolved": [
-    "Execute exact-task universal anti-rework PROPOSAL for visual.operating_graph_v1 on current main through an authorized GitHub execution path.",
-    "After PROPOSAL PASS, bind the already-fresh/current Authority Mesh evidence as required and execute universal anti-rework MUTATION before lane-output mutation.",
-    "Consume Chat 5 cross-authority evidence when it becomes available before any TRUE_NEW_AUTHORITY_REQUIRED decision.",
-    "Materialize deterministic <=250-row reconciliation shards only after mutation authority exists; final accounting must be 827 with zero missing/extra/duplicate."
+    "WRITE_GATE_PATH_PENDING for governed output materialization under prisma-html/governance/visual-promotion/authority-reconciliation/pc/**.",
+    "After write authorization, materialize the already-prepared four deterministic shards and manifest without changing the read-only classifications unless main/input authority has drifted."
   ],
   "needsUserAction": false,
   "userActionRequested": "",
-  "nextAction": "Continue the assigned lane read-only immediately. Use visual.generic_application_engine_v1 / ADVANCE for anti-rework classification. Do not gate this lane on visual.operating_graph_v1. Publish progress/receipts in the coordination mailbox; hold only governed work-branch output mutation pending the correct current-head gate.",
+  "nextAction": "Read-only reconciliation is complete. Hold only governed output materialization. When the correct current-head write gate is available, create/reuse chat2/authority-reconciliation-pc-20260914 and materialize the prepared 4 shards + index/manifest/summary exactly from this receipt; otherwise do not redo analysis.",
   "handoff": {
     "readiness": "PASS",
     "result": "PASS_PC_CANDIDATE_CORPUS_CERTIFIED",
@@ -193,41 +225,266 @@
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
       "lane": "PC_AUTHORITY_RECONCILIATION",
-      "result": "BLOCKED_EXECUTION_PATH",
-      "baseHead": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
+      "result": "PASS_PC_READ_ONLY_AUTHORITY_RECONCILIATION_WITH_WRITE_GATE_PENDING",
       "currentMain": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
       "workBranch": "chat2/authority-reconciliation-pc-20260914",
       "workHead": null,
       "outputRoot": "prisma-html/governance/visual-promotion/authority-reconciliation/pc/**",
-      "expectedInputCount": 827,
-      "finalClassifiedCount": 0,
-      "outputShardCount": 0,
-      "missingCount": null,
-      "extraCount": null,
-      "duplicateTargetIds": null,
+      "readOnlyAnalysisComplete": true,
+      "writeGateStatus": "WRITE_GATE_PATH_PENDING",
+      "exactInputCount": 827,
+      "exactClassifiedCount": 827,
+      "classificationCounts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 687,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 1,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 139,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
       "trueNewAuthorityRequiredCount": 0,
       "negativeEvidenceCompleteCount": 0,
-      "freshAuthorityMesh": {
-        "runId": 34912650621,
-        "result": "PASS_COMPOSED_AUTHORITY_MESH",
-        "repoHead": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
-        "artifactId": 10375670287,
-        "uploadedArtifactDigest": "sha256:c26e8b136572e5742841bb51456bc2b2a20e24ca1a7308870000d2a3129bf377",
-        "composedArtifactSha256": "3fbc0256e6e8300b344fa9a0f5e6f96f8d54d337c540778205fc05eca4c72c56",
-        "requestDigest": "a35ac747cd6201f6e7ec910955211826c40c036d0044e7556ce8d62aebf3d0c8",
-        "laneCount": 2,
-        "readOnly": true
+      "zeroLoss": {
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0
       },
-      "antiReworkProposal": "NOT_RUN_BLOCKED_EXECUTION_PATH",
-      "antiReworkMutation": "NOT_RUN_BLOCKED_EXECUTION_PATH",
       "materialityCatalogInspected": false,
       "productRuntimeMutation": false,
       "canonicalAuthorityMutation": false,
       "projectionRepair": false,
-      "gvaeApply": false,
-      "defects": [
-        "Mandatory universal anti-rework PROPOSAL/MUTATION execution path is unavailable through the connected GitHub actions without workflow_dispatch or a new PR, and a new PR is not authorized."
-      ]
+      "gvaeApply": false
+    },
+    "authorityReconciliationReadOnlyReceipt": {
+      "schema": "prisma.visual-promotion.pc-authority-reconciliation-read-only-receipt.v1",
+      "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
+      "chatId": 2,
+      "lane": "PC_AUTHORITY_RECONCILIATION",
+      "state": "READ_ONLY_ANALYSIS_COMPLETE_WRITE_GATE_PENDING",
+      "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+      "capability": {
+        "id": "visual.generic_application_engine_v1",
+        "classification": "DONE",
+        "status": "SOURCE_READY",
+        "doNotRebuild": true,
+        "requestedAction": "ADVANCE"
+      },
+      "inputAccounting": {
+        "exactInputCount": 827,
+        "exactClassifiedCount": 827,
+        "uniqueTargetCount": 827,
+        "missing": 0,
+        "extra": 0,
+        "duplicate": 0,
+        "missingFromTargetIndex": 0
+      },
+      "classificationCounts": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+        "EXISTING_CONCEPT_LINK_MISSING": 687,
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+        "EXISTING_AUTHORITY_CONFLICT_CURATE": 1,
+        "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 139,
+        "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "classificationPolicy": [
+        {
+          "priority": 1,
+          "when": "physicalStatus == DRIFT",
+          "classification": "EXISTING_AUTHORITY_CONFLICT_CURATE",
+          "reason": "Current certified PC corpus contains one contradictory physical authority record. Preserve conflict for curation; do not choose by selector similarity."
+        },
+        {
+          "priority": 2,
+          "when": "physicalStatus == CURRENT && application.projectionStatus == MISSING",
+          "classification": "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED",
+          "reason": "Physical target exists but canonical projection direction is unproven. No projection repair is allowed in this phase."
+        },
+        {
+          "priority": 3,
+          "when": "physicalStatus == CURRENT && application.projectionStatus == CURRENT",
+          "classification": "EXISTING_CONCEPT_LINK_MISSING",
+          "reason": "Current physical/projection authority exists, but all PC targets remain NDC unresolved, visual-meaning unresolved and binding blocked. Chat 5 proves existing NDC/Identity/Atlasfin authority families exist and that absent exact links are not evidence of new authority."
+        }
+      ],
+      "whyZeroOtherClasses": {
+        "EXISTING_AUTHORITY_EXACT_REUSE": "0 because PC corpus has visualMeaningId unresolved for 827, identityRecipeId resolved for 0, existingBindingId resolved for 0, binding BLOCKED for 827.",
+        "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": "0 because no PC target has existing canonical Identity/VIS semantic authority proven target-specifically. Atlasfin recipe matches are structured reference evidence only, not canonical Identity semantic authority.",
+        "TRUE_NEW_AUTHORITY_REQUIRED": "0 because no target has complete target-specific negative evidence across every required family; Atlasfin NO_MATCH or missing direct target link is insufficient.",
+        "NOT_APPLICABLE": "0 because all 827 are certified PC corpus inputs and prior readiness did not prove a not-applicable subset."
+      },
+      "sourceDimensions": {
+        "physicalCurrent": 826,
+        "physicalDrift": 1,
+        "projectionCurrent": 688,
+        "projectionMissing": 139,
+        "atlasfinMatchedRecipe": 186,
+        "atlasfinNoMatch": 641,
+        "currentCurrentMatchedRecipe": 170,
+        "currentCurrentNoMatch": 517,
+        "ndcUnresolved": 827,
+        "visualUnresolved": 827,
+        "identityRecipeResolved": 0,
+        "existingBindingResolved": 0,
+        "bindingBlocked": 827
+      },
+      "targetSpecificUnresolved": {
+        "existingConceptLinkMissing": {
+          "count": 687,
+          "deterministicSet": "physicalStatus=CURRENT AND projectionStatus=CURRENT",
+          "atlasfinMatchedRecipeSubset": 170,
+          "atlasfinNoMatchSubset": 517,
+          "note": "Neither subset is promoted to semantic equivalence. Recipe similarity remains reference-only; NO_MATCH remains insufficient negative evidence."
+        },
+        "physicalOrProjectionReconciliationRequired": {
+          "count": 139,
+          "deterministicSet": "physicalStatus=CURRENT AND projectionStatus=MISSING",
+          "repairPerformed": false
+        },
+        "existingAuthorityConflictCurate": {
+          "count": 1,
+          "targetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
+          "targetIndexSelector": ".supplier-readable-v07",
+          "expandedVisualControlSelector": ".supplier-readable-v07 *",
+          "recordSha256": "1da944ba932ce5c1bccaf0abc13d4c277d634f693b4b19ce3aa302df317a7080",
+          "decision": "Preserve conflict; no winner chosen."
+        }
+      },
+      "trueNew": {
+        "count": 0,
+        "negativeEvidenceCompleteCount": 0,
+        "rule": "TRUE_NEW_AUTHORITY_REQUIRED requires target-specific negative evidence across all minimum source families in Chat 5 receipt. No such full negative-evidence package is complete for any PC target."
+      },
+      "crossAuthorityReceiptConsumed": {
+        "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
+        "result": "PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING",
+        "readOnlyEvidenceConsumableNow": true,
+        "main": "70f381e9b3c0b63ee4c7e445c98e86b3e9211be9",
+        "consumedSections": [
+          "capability",
+          "inputAccounting",
+          "existingConceptIndex",
+          "semanticCrosswalkEvidence",
+          "ndcMaterializationAudit",
+          "historicalAuthorityEvidence",
+          "negativeEvidenceRules",
+          "crossSurfaceEvidence",
+          "surfaceFactsForConsumers"
+        ],
+        "enforcedSeparations": [
+          "identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout is relation evidence, not equivalence",
+          "NDC operational/business meaning stays separate from Identity/VIS visual meaning",
+          "RIFAT/Target Index physical location stays separate from semantic meaning",
+          "BND/LYR/recipe/adapter application authority stays separate from both semantic domains",
+          "NDC DOC1 defined_for_doc1 is documentary canon/registries/schemas/seeds/examples, not populated runtime DB/Prisma truth"
+        ]
+      },
+      "deterministicShardPreparation": {
+        "prepared": true,
+        "materializedToGovernedOutputRoot": false,
+        "maxRowsPerShard": 250,
+        "shardCount": 4,
+        "shards": [
+          {
+            "shard": "001",
+            "count": 250,
+            "startNormalizedLine": 1,
+            "endNormalizedLine": 250,
+            "firstTargetId": "TGT.CENSUS.PC.0162F2E13904C11EE820.V1",
+            "lastTargetId": "TGT.CENSUS.PC.193BC7F9FCA52471B2EA.V1",
+            "firstRecordSha256": "47cfdc94e94093348ae310c125411ac2439e6e579eb6dffe67100f7d1174cbcf",
+            "lastRecordSha256": "87cb70be89f8baf8a81c5cbb2856f25f30ce6aa45d64c5c33e3ee64f27ede710",
+            "classificationCounts": {
+              "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+              "EXISTING_CONCEPT_LINK_MISSING": 222,
+              "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+              "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+              "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 28,
+              "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+              "NOT_APPLICABLE": 0
+            }
+          },
+          {
+            "shard": "002",
+            "count": 250,
+            "startNormalizedLine": 251,
+            "endNormalizedLine": 500,
+            "firstTargetId": "TGT.CENSUS.PC.1945B6B5C422E2E77008.V1",
+            "lastTargetId": "TGT.CENSUS.PC.7A022A89D00A55E2B872.V1",
+            "firstRecordSha256": "dcafa7e813b7bcfe2167a41e6b531b87fa09ebbce9d41851b684295c1725fb4c",
+            "lastRecordSha256": "5bc6bce899952979d4c1b7a0227d9f3c4380c223994fdfcdf81c95b8433197ec",
+            "classificationCounts": {
+              "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+              "EXISTING_CONCEPT_LINK_MISSING": 198,
+              "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+              "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+              "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 52,
+              "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+              "NOT_APPLICABLE": 0
+            }
+          },
+          {
+            "shard": "003",
+            "count": 250,
+            "startNormalizedLine": 501,
+            "endNormalizedLine": 750,
+            "firstTargetId": "TGT.CENSUS.PC.7B5B0CC6B910592E4AE1.V1",
+            "lastTargetId": "TGT.CENSUS.PC.E114999E04BB510A39DF.V1",
+            "firstRecordSha256": "7bafa9c826bf85411dd239cc8d04d0b5f387b6d2dcd49516eedefa20a87209f5",
+            "lastRecordSha256": "f247b7714106c2dd90c0be60a61722cf3fa62c657497b05bb1973aa85d36719a",
+            "classificationCounts": {
+              "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+              "EXISTING_CONCEPT_LINK_MISSING": 204,
+              "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+              "EXISTING_AUTHORITY_CONFLICT_CURATE": 0,
+              "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 46,
+              "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+              "NOT_APPLICABLE": 0
+            }
+          },
+          {
+            "shard": "004",
+            "count": 77,
+            "startNormalizedLine": 751,
+            "endNormalizedLine": 827,
+            "firstTargetId": "TGT.CENSUS.PC.E14874E603E875BA300E.V1",
+            "lastTargetId": "TGT.CENSUS.PC.097AB2F857F353CA4288.V1",
+            "firstRecordSha256": "80abb8ef8f4eda77f57efb191f17edd757859ea6e30e4f3fe04d7b7a51438faa",
+            "lastRecordSha256": "1da944ba932ce5c1bccaf0abc13d4c277d634f693b4b19ce3aa302df317a7080",
+            "classificationCounts": {
+              "EXISTING_AUTHORITY_EXACT_REUSE": 0,
+              "EXISTING_CONCEPT_LINK_MISSING": 63,
+              "EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP": 0,
+              "EXISTING_AUTHORITY_CONFLICT_CURATE": 1,
+              "PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED": 13,
+              "TRUE_NEW_AUTHORITY_REQUIRED": 0,
+              "NOT_APPLICABLE": 0
+            }
+          }
+        ]
+      },
+      "writeGate": {
+        "status": "WRITE_GATE_PATH_PENDING",
+        "scope": "governed-output-repository-write-only",
+        "blocksReadOnlyAnalysis": false,
+        "readOnlyAnalysisComplete": true,
+        "governedOutputRootWritten": false,
+        "workBranchCreated": false
+      },
+      "guardrails": {
+        "recensusPerformed": false,
+        "broadRediscoveryPerformed": false,
+        "materialityCatalogInspected": false,
+        "canonicalAuthorityCreated": false,
+        "productRuntimeMutationPerformed": false,
+        "projectionRepairPerformed": false,
+        "gvaeApplyPerformed": false,
+        "foreignMailboxWritten": false,
+        "prOpened": false,
+        "mainMerged": false
+      },
+      "result": "PASS_PC_READ_ONLY_AUTHORITY_RECONCILIATION_WITH_WRITE_GATE_PENDING"
     }
   }
 }

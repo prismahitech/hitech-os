@@ -676,3 +676,55 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - If the exact current-head anti-rework MUTATION execution path is unavailable, hold only work-branch output writes and report `WRITE_GATE_PATH_PENDING`.
 - Do not list `visual.operating_graph_v1` as a blocker, prerequisite or target capability for this lane.
 - No product/runtime mutation, canonical registration, projection repair, GVAE APPLY or Materiality use is authorized.
+
+
+## 2026-09-15T09:32:00-06:00 — FINDING
+
+- Consumed Chat 5 receipt: `apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json`.
+- Receipt result: `PASS_READ_ONLY_CROSS_AUTHORITY_EVIDENCE_WITH_WRITE_GATE_PENDING`.
+- `readOnlyEvidenceConsumableNow=true`; therefore the prior cross-authority-evidence blocker is cleared.
+- Correct anti-rework capability for this lane is `visual.generic_application_engine_v1` with `DONE / SOURCE_READY / doNotRebuild=true / ADVANCE`. Any prior `visual.operating_graph_v1` prerequisite is stale for this lane.
+- Preserved semantic separation: `identity::ACT.primary RELATED_TO ndc::ACT.sale.checkout` is **not equivalence**. NDC operational meaning, Identity/VIS visual meaning, RIFAT/Target Index physical location, and BND/LYR/recipe/adapter application authority remain separate.
+- NDC DOC1 is consumed as documentary canon + registries/schemas/seeds/examples; `defined_for_doc1` is not interpreted as a populated runtime semantic DB/Prisma layer.
+
+## 2026-09-15T09:32:00-06:00 — DECISION
+
+Read-only classification policy over the immutable 827-row PC corpus:
+
+1. `physicalStatus=DRIFT` -> `EXISTING_AUTHORITY_CONFLICT_CURATE`.
+2. Else `projectionStatus=MISSING` -> `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`.
+3. Else current physical + current projection, with NDC/visual exact link unresolved and binding blocked -> `EXISTING_CONCEPT_LINK_MISSING`.
+
+This does **not** infer a specific NDC/Identity equivalence from selector names or Atlasfin recipe similarity. Atlasfin remains structured reference evidence only.
+
+## 2026-09-15T09:32:00-06:00 — VALIDATION
+
+- exact input: **827**
+- exact classified: **827**
+- unique targets: **827**
+- missing: **0**
+- extra: **0**
+- duplicate: **0**
+- Target Index join missing: **0**
+- `EXISTING_CONCEPT_LINK_MISSING`: **687**
+- `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`: **139**
+- `EXISTING_AUTHORITY_CONFLICT_CURATE`: **1**
+- `EXISTING_AUTHORITY_EXACT_REUSE`: **0**
+- `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`: **0**
+- `TRUE_NEW_AUTHORITY_REQUIRED`: **0**
+- `NOT_APPLICABLE`: **0**
+- TRUE_NEW complete negative-evidence packages: **0**
+- deterministic shard preparation: **4 shards = 250 + 250 + 250 + 77**
+- read-only analysis complete: **true**
+- write gate blocks read-only analysis: **false**
+
+The single authority conflict remains `TGT.CENSUS.PC.097AB2F857F353CA4288.V1`: Target Index `.supplier-readable-v07` vs expanded Visual Control `.supplier-readable-v07 *`. No winner chosen and no repair performed.
+
+## 2026-09-15T09:32:00-06:00 — HANDOFF
+
+- Read-only result: `PASS_PC_READ_ONLY_AUTHORITY_RECONCILIATION_WITH_WRITE_GATE_PENDING`.
+- Analysis is complete for **827/827** targets.
+- `WRITE_GATE_PATH_PENDING` remains only for governed repository output writes.
+- Work branch remains uncreated and governed output root remains untouched.
+- Prepared deterministic shard plan is embedded in `STATUS.json -> handoff.authorityReconciliationReadOnlyReceipt.deterministicShardPreparation`.
+- On write authorization, materialize exactly those four shards + index/manifest/summary without rerunning census, broad discovery, canonical registration, projection repair or GVAE APPLY.
