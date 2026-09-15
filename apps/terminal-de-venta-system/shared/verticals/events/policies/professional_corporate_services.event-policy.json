@@ -173,6 +173,48 @@
       "sensitivity": "high",
       "requiresPermission": "professional_services.external_advisor.manage",
       "visibleMicrocopy": "Especialista externo asignado."
+    },
+    {
+      "topic": "professional_services.case_file.created",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Expediente creado."
+    },
+    {
+      "topic": "professional_services.case_file.updated",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.engagement.manage",
+      "visibleMicrocopy": "Expediente actualizado."
+    },
+    {
+      "topic": "professional_services.evidence.updated",
+      "scope": "vertical",
+      "source": [
+        "tablet",
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.evidence.record",
+      "visibleMicrocopy": "Evidencia actualizada."
+    },
+    {
+      "topic": "professional_services.external_advisor.updated",
+      "scope": "vertical",
+      "source": [
+        "pc"
+      ],
+      "sensitivity": "high",
+      "requiresPermission": "professional_services.external_advisor.manage",
+      "visibleMicrocopy": "Especialista externo actualizado."
     }
   ],
   "auditRules": [
