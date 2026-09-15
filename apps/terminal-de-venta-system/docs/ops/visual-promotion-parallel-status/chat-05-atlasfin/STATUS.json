@@ -5,11 +5,11 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "IN_PROGRESS_DYNAMIC_SUPPORT",
-  "updatedAt": "2026-09-15T11:17:28-06:00",
+  "updatedAt": "2026-09-15T11:20:00-06:00",
   "baseHead": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
-  "summary": "DYNAMIC_CROSS_AUTHORITY_SUPPORT resumed from canonical handoff on current main d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200. The accepted 2,097-target baseline remains intact and was not rebuilt. PR #557 changed only Factory Ledger/Evidence Index to register an unrelated Mamastrophic tooling capability; visual.generic_application_engine_v1 and its Evidence Index entries remain exactly unchanged as parsed JSON. Two new target-specific Shared UI non-equivalence guards were published. WRITE_GATE_PATH_PENDING still blocks governed output-root writes only.",
+  "summary": "DYNAMIC_CROSS_AUTHORITY_SUPPORT is active on current main d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200. The accepted 2,097-target baseline remains intact and was not rebuilt. PR #557 drift is non-reclassifying for this lane because visual.generic_application_engine_v1 and its Evidence Index entries are unchanged. Five new Shared UI non-equivalence guards have been added since restart, bringing the mailbox delta inventory to 15. WRITE_GATE_PATH_PENDING still blocks governed output-root writes only.",
   "blockers": [
     {
       "code": "WRITE_GATE_PATH_PENDING",
@@ -40,7 +40,10 @@
     "Published Shared UI non-equivalence delta for TGT.CENSUS.SHARED_UI.6A23B437B2D23C3D918D.V1: data-prisma-profile=\"perf\" is performance/rendering-mode evidence and must not be collapsed into Identity VIS.identity.profile merely because both use the word profile.",
     "Current main advanced from 8db4370d579014f8fed6e190ffce45e1589b33d9 to d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200 through PR #557. Exact compare contains only PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json and PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json. Parsed visual.generic_application_engine_v1 capability content and all of its Evidence Index entries are exactly unchanged across the drift, so the drift is governance-sensitive but non-reclassifying for this lane.",
     "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.D3AEDBC66337719F150A.V1: the exact light-theme selector groups inactive CategoryButton, ScanButton, IconButton and SearchBar under one frosted visual treatment and does not carry data-prisma-primary=true. ScanButton name alone therefore cannot promote the grouped target to ACT.primary, and ACT.primary remains non-equivalent to NDC ACT.sale.checkout.",
-    "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.EA65C3A5CAB81BE75525.V1: data-layer-card-blur and perf selectors are documented rendering/performance controls. They do not imply VIS.identity.profile, and the ProductCard component name does not itself establish a canonical NDC product meaning."
+    "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.EA65C3A5CAB81BE75525.V1: data-layer-card-blur and perf selectors are documented rendering/performance controls. They do not imply VIS.identity.profile, and the ProductCard component name does not itself establish a canonical NDC product meaning.",
+    "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.CC97A016C20A2F6436AD.V1: active CategoryButton gold styling is an active/selected component state and does not prove Identity ACT.primary or any NDC business action.",
+    "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.9E0AF0660DBAC425AB47.V1: NavItem aria-current=page/data-active=true is current-navigation state evidence, not ACT.primary semantic authority.",
+    "Published Shared UI non-equivalence delta TGT.CENSUS.SHARED_UI.3F9B003C100181C7E245.V1: prisma-light themed current-navigation styling changes presentation but does not establish ACT.primary or operational-action equivalence."
   ],
   "decisions": [
     "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
@@ -66,7 +69,10 @@
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_MAIN_DRIFT_8DB4370D.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_6A23B437.json",
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_D3AEDBC6.json",
-    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_EA65C3A5.json"
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_EA65C3A5.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_CC97A016.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_9E0AF066.json",
+    "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3F9B003C.json"
   ],
   "validations": [
     {
@@ -128,17 +134,22 @@
       "name": "Shared UI dynamic delta round 3",
       "result": "PASS_READ_ONLY",
       "detail": "2 additional exact-target NON_EQUIVALENCE_GUARD_ONLY receipts published for D3AEDBC6 and EA65C3A5. No foreign mailbox write, baseline rebuild, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
+    },
+    {
+      "name": "Shared UI dynamic delta round 4",
+      "result": "PASS_READ_ONLY",
+      "detail": "3 additional exact-target NON_EQUIVALENCE_GUARD_ONLY receipts published for CC97A016, 9E0AF066 and 3F9B003C. Active/current visual state was not collapsed into ACT.primary or NDC business meaning. No foreign mailbox write, baseline rebuild, Materiality access, canonical minting, product/runtime mutation, projection repair, GVAE APPLY, PR, or merge."
     }
   ],
   "unresolved": [
-    "Chat 4 still owns 40 target-specific Shared UI rows. Chat 5 has now published eight Shared UI target receipts: five application-gap evidence receipts (09F96569, BA225641, C2722826, 718C4BEE, 3863084F) and three non-equivalence guards (6A23B437, D3AEDBC6, EA65C3A5). These receipts do not reduce Chat 4's unresolved count until the surface owner classifies them.",
+    "Chat 4 still owns 40 target-specific Shared UI rows. Chat 5 has now published eleven Shared UI target receipts: five application-gap evidence receipts (09F96569, BA225641, C2722826, 718C4BEE, 3863084F) and six non-equivalence guards (6A23B437, D3AEDBC6, EA65C3A5, CC97A016, 9E0AF066, 3F9B003C). These receipts do not reduce Chat 4's unresolved count until the surface owner classifies them.",
     "Chat 6 still holds 1,744 Tablet/PC/Mobile EXISTING_CONCEPT_LINK_MISSING rows provisional pending target-specific existing-concept qualification or a governed rule. Chat 5 will answer bounded target/concept questions but will not rebuild those surface corpora.",
     "WRITE_GATE_PATH_PENDING remains only for governed output-root writes under Chat 5's assigned work branch.",
     "Any TRUE_NEW candidate still requires complete target-specific negative evidence across every required authority family; none is asserted by Chat 5."
   ],
   "needsUserAction": false,
   "userActionRequested": null,
-  "nextAction": "Do not rebuild the accepted 2,097-target baseline receipt. Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT on current main. First priority remains Shared UI: support Chat 4's 40 unresolved targets with bounded exact-target deltas. Current delta inventory is 12, including five Shared UI application-gap receipts and three Shared UI non-equivalence guards. Second priority is bounded qualification support for Chat 6 on the 1,744 provisional concept-link rows: 924 Tablet, 687 PC, 133 Mobile. Publish compact AUTHORITY_DELTA_*.json receipts only when they add target-specific evidence or an explicit non-equivalence guard. Do not infer semantic equivalence from selector names, recipes, adapters or Atlasfin similarity. Do not rebuild GVAE/RIFAT/Identity/NDC, inspect Materiality Catalog, mint authority, repair projections or mutate product/runtime. WRITE_GATE_PATH_PENDING does not block mailbox delta receipts or read-only analysis.",
+  "nextAction": "Do not rebuild the accepted 2,097-target baseline receipt. Continue DYNAMIC_CROSS_AUTHORITY_SUPPORT on current main. First priority remains Shared UI: support Chat 4's 40 unresolved targets with bounded exact-target evidence. Current delta inventory is 15, including five Shared UI application-gap receipts and six Shared UI non-equivalence guards. Second priority is bounded qualification support for Chat 6 on the 1,744 provisional concept-link rows: 924 Tablet, 687 PC, 133 Mobile. Publish compact AUTHORITY_DELTA_*.json receipts only when they add target-specific evidence or an explicit non-equivalence guard. Do not infer semantic equivalence from selector names, active/current state, recipes, adapters or Atlasfin similarity. Do not rebuild GVAE/RIFAT/Identity/NDC, inspect Materiality Catalog, mint authority, repair projections or mutate product/runtime. WRITE_GATE_PATH_PENDING does not block mailbox delta receipts or read-only analysis.",
   "handoff": {
     "authorityReconciliation": {
       "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
@@ -271,9 +282,33 @@
           "suggestedClassification": null,
           "confidence": "HIGH",
           "disposition": "NON_EQUIVALENCE_GUARD_ONLY"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_CC97A016.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.CC97A016C20A2F6436AD.V1",
+          "suggestedClassification": null,
+          "confidence": "HIGH",
+          "disposition": "NON_EQUIVALENCE_GUARD_ONLY"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_9E0AF066.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.9E0AF0660DBAC425AB47.V1",
+          "suggestedClassification": null,
+          "confidence": "HIGH",
+          "disposition": "NON_EQUIVALENCE_GUARD_ONLY"
+        },
+        {
+          "path": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_DELTA_SHARED_UI_3F9B003C.json",
+          "surface": "shared-ui",
+          "targetId": "TGT.CENSUS.SHARED_UI.3F9B003C100181C7E245.V1",
+          "suggestedClassification": null,
+          "confidence": "HIGH",
+          "disposition": "NON_EQUIVALENCE_GUARD_ONLY"
         }
       ],
-      "deltaReceiptCount": 12,
+      "deltaReceiptCount": 15,
       "lastMailboxScan": {
         "chat1": {
           "state": "READ_ONLY_ANALYSIS_COMPLETE",
@@ -360,12 +395,12 @@
     }
   },
   "postRestartProgress": {
-    "updatedAt": "2026-09-15T11:17:28-06:00",
+    "updatedAt": "2026-09-15T11:20:00-06:00",
     "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
     "baselineRebuilt": false,
-    "deltaReceiptCount": 12,
+    "deltaReceiptCount": 15,
     "sharedUiApplicationGapEvidenceCount": 5,
-    "sharedUiNonEquivalenceGuardCount": 3,
+    "sharedUiNonEquivalenceGuardCount": 6,
     "zeroLoss": {
       "expected": 2097,
       "accounted": 2097,
@@ -381,6 +416,7 @@
     },
     "currentMainDriftDisposition": "UNRELATED_TOOLING_CAPABILITY_APPEND_NO_RECLASSIFICATION",
     "foreignMailboxMutationPerformed": false,
-    "governedOutputMutationPerformed": false
+    "governedOutputMutationPerformed": false,
+    "sharedUiTargetReceiptCount": 11
   }
 }
