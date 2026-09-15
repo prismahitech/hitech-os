@@ -605,3 +605,39 @@ No cierres por “ya revisé bastante”. Cierra sólo cuando:
 - Uploaded artifact: `10375122326` / `prisma-automesh-1c3d00840430f627-34912817700-1` / `sha256:5f5cd2f93f0908e1c7abedad9af0dd834b97690cd3274892672c69136c07d5a3`.
 - Inner composed artifact SHA-256: `a8566c53145396bdfd13f308959378262cd43b1545bdf9ca55a582f725232c05`.
 - This clears current-head Authority Mesh revalidation for analysis. It does **not** substitute for the separate canonical Factory Ledger MUTATION anti-rework decision required before work-branch writes.
+
+## 2026-09-15T00:30:00Z — BLOCKER
+
+- **BLOCKED_EXECUTION_PATH** reached before any work-branch mutation.
+- The canonical Agent Gate requires the task-exact `verify_prisma_anti_rework_gate.py --request <request.json>` decision in `PROPOSAL` and `MUTATION` modes.
+- Current GitHub workflow `.github/workflows/prisma-factory-anti-rework-gate.yml` only runs `--validate` / `--self-test`; it accepts no task request and therefore cannot emit this lane's canonical decision.
+- No `issue_comment` task gateway exists for the universal anti-rework verifier, and the available GitHub connector actions do not expose arbitrary task-specific `workflow_dispatch` execution.
+- Historical workflows containing hardcoded anti-rework requests are bound to unrelated/stale heads/tasks/digests and were not rerun or repurposed.
+- Per owner policy, no substitute workflow was created and no local/manual execution was requested.
+
+## 2026-09-15T00:30:00Z — READ-ONLY RECONCILIATION MILESTONE
+
+- Immutable accepted Tablet source: `f2ce653ec10da67a81ed051da19e96b0c9323872`.
+- Accounting: **929 rows / 929 unique / missing 0 / extra 0 / duplicate 0**.
+- High-certainty cases already separable without invention:
+  - **1** `EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP`: Cobrar primary `TGT.CENSUS.TABLET.0DC6BC69B3278EC225CE.V1`.
+  - **2** `EXISTING_AUTHORITY_CONFLICT_CURATE`: Cobrar accent icon/before targets under ambiguous `BND.TOK.COLOR.ACCENT.TABLET.MULTI.V1`.
+  - **2** `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`: the two certified physical DRIFT targets.
+  - **0** `EXISTING_AUTHORITY_EXACT_REUSE` currently proven.
+  - **0** `TRUE_NEW_AUTHORITY_REQUIRED` declared.
+- The remaining **924** semantic-blocked targets are deliberately not forced into a final class while target-specific semantic linkage and the new-phase Chat 5 cross-authority evidence remain incomplete.
+- Code Atlas UIMAP explicitly relates golden Cobrar visual `identity::ACT.primary` to operational `ndc::ACT.sale.checkout` / `ENT.sale`; these are preserved as related, not equivalent.
+- Chat 5 new-phase cross-authority mailbox is still `NOT_STARTED`; therefore the owner-required complete negative-evidence checklist for any `TRUE_NEW_AUTHORITY_REQUIRED` classification is not satisfied.
+
+## 2026-09-15T00:30:00Z — HANDOFF / HARD STOP
+
+- Result: `BLOCKED_EXECUTION_PATH`.
+- Current main: `70f381e9b3c0b63ee4c7e445c98e86b3e9211be9`.
+- Fresh Authority Mesh: **PASS_COMPOSED_AUTHORITY_MESH**, run `34912817700`, blockers=0, required authority coverage=100%, Layer Maps present.
+- Assigned work branch: `chat1/authority-reconciliation-tablet-20260914`.
+- Work branch state: **absent / not created / not mutated**.
+- Exclusive output root: untouched.
+- Materiality Catalog inspected: **false**.
+- Product/runtime mutation: **false**.
+- Canonical authority mutation: **false**.
+- No user computer/manual action requested. Resume only from repository/GitHub authority once the execution-path blocker is actually cleared.
