@@ -5,7 +5,7 @@
   "statusBranch": "status/vp-chat-05-atlasfin",
   "mailboxPath": "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin",
   "state": "IN_PROGRESS_DYNAMIC_SUPPORT",
-  "updatedAt": "2026-09-15T11:22:00-06:00",
+  "updatedAt": "2026-09-15T11:24:00-06:00",
   "baseHead": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
   "workBranch": "chat5/authority-reconciliation-cross-evidence-20260914",
   "workHead": null,
@@ -48,7 +48,8 @@
     "Chat 4 resolves its prior 40 target-specific Shared UI rows as 35 EXISTING_CONCEPT_LINK_MISSING plus 5 EXISTING_SEMANTIC_AUTHORITY_APPLICATION_GAP. The 35 rows pass the quality rule using exact target-specific RIFAT/Visual Control role evidence joined to existing governed Visual OS background/atmosphere layer concepts; family-level adapter/recipe existence is not used as proof.",
     "Chat 4 consumed the five positive Shared UI ACT.primary receipts 09F96569, BA225641, C2722826, 718C4BEE and 3863084F plus the 6A23B437 non-equivalence guard. The five newer guards D3AEDBC6, EA65C3A5, CC97A016, 9E0AF066 and 3F9B003C were published after Chat 4's receipt and therefore must not be portrayed as having caused its completed classifications.",
     "Fresh Tablet Chat 1 and Mobile Chat 3 bounded qualification passes report no concept-link qualification gain: 924 Tablet and 133 Mobile rows remain composer-provisional. Chat 2 likewise retains 687 PC provisional concept-link rows. No fake promotion is justified from family-level NDC/Identity/Atlasfin evidence.",
-    "A bounded Mobile follow-up scan found product/business labels and CSS cohorts such as alertCritical, inventoryReorder, metricGold, cashBalance and syncNote, but no governed target-ID-to-neutral-concept crosswalk. Lexical business labels remain support-only, so no Mobile semantic delta was published."
+    "A bounded Mobile follow-up scan found product/business labels and CSS cohorts such as alertCritical, inventoryReorder, metricGold, cashBalance and syncNote, but no governed target-ID-to-neutral-concept crosswalk. Lexical business labels remain support-only, so no Mobile semantic delta was published.",
+    "Bounded governed-rule check: Chat 4's 35-row qualification rule is supported by the Shared UI-specific governed file products/shared-ui/prisma/visual-os/prisma-visual-os.layers.json. The current Visual Capability Matrix exposes that Shared UI registry explicitly, but this check did not prove equivalent per-surface layer-role registries or target crosswalks for Tablet, PC or Mobile. Therefore the Shared UI background/atmosphere rule must not be bulk-generalized to the remaining 1,744 provisional rows."
   ],
   "decisions": [
     "Read-only work continues despite WRITE_GATE_PATH_PENDING.",
@@ -61,7 +62,8 @@
     "Treat PR #557 main drift as NON_RECLASSIFYING_FOR_CURRENT_READ_ONLY_AUTHORITY_EVIDENCE because the only changed authority files append an unrelated tooling capability while the exact visual.generic_application_engine_v1 capability object and its Evidence Index entries remain unchanged.",
     "Treat Chat 4 Shared UI surface reconciliation as READ_ONLY_COMPLETE and do not reopen or recensus its 70-target lane. Composer-final acceptance remains Chat 6's responsibility.",
     "Do not change the global compositor counts in Chat 5 status before Chat 6 consumes the fresh Chat 4 receipt. Fresh worker evidence legitimately advances Shared UI, but composer truth remains the last published Chat 6 state until its quality gate runs.",
-    "Shift Chat 5 priority from Shared UI discovery to bounded Chat 6 concept-link qualification support for the 1,744 Tablet/PC/Mobile provisional rows, while retaining the newer Shared UI non-equivalence guards as quality evidence only."
+    "Shift Chat 5 priority from Shared UI discovery to bounded Chat 6 concept-link qualification support for the 1,744 Tablet/PC/Mobile provisional rows, while retaining the newer Shared UI non-equivalence guards as quality evidence only.",
+    "Do not use Chat 4's Shared UI Visual OS layer-role rule as a cross-surface shortcut. It is valid for the exact Shared UI target evidence Chat 4 joined, not a blanket proof for Tablet, PC or Mobile."
   ],
   "changedPaths": [
     "apps/terminal-de-venta-system/docs/ops/visual-promotion-parallel-status/chat-05-atlasfin/AUTHORITY_RECONCILIATION_READ_ONLY_RECEIPT.json",
@@ -157,6 +159,11 @@
       "name": "Tablet/Mobile bounded qualification freshness",
       "result": "PASS_NO_QUALIFICATION_GAIN",
       "detail": "Fresh Chat 1 and Chat 3 receipts preserve 924 Tablet and 133 Mobile composer-provisional concept-link rows with zero target-specific promotions. Chat 2 remains 687 provisional. No family-level authority was promoted to per-target proof."
+    },
+    {
+      "name": "Cross-surface rule generalization guard",
+      "result": "PASS_NO_BROAD_PROMOTION",
+      "detail": "Checked current Visual Capability evidence after Chat 4 completion. Shared UI has an explicit governed prisma-visual-os.layers.json authority used by Chat 4; no equivalent exact target-to-governed-concept rule was proven for Tablet, PC or Mobile in this bounded pass. The 1,744 rows remain provisional."
     }
   ],
   "unresolved": [
@@ -424,7 +431,7 @@
     }
   },
   "postRestartProgress": {
-    "updatedAt": "2026-09-15T11:22:00-06:00",
+    "updatedAt": "2026-09-15T11:24:00-06:00",
     "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
     "baselineRebuilt": false,
     "deltaReceiptCount": 15,
@@ -475,6 +482,12 @@
         "freshGain": 0
       },
       "total": 1744
+    },
+    "crossSurfaceRuleGeneralization": {
+      "sharedUiRuleProvenForSharedUi": true,
+      "generalizedToTabletPcMobile": false,
+      "reason": "No equivalent exact target-specific governed concept rule proven in bounded current-main evidence.",
+      "provisionalPreserved": 1744
     }
   }
 }
