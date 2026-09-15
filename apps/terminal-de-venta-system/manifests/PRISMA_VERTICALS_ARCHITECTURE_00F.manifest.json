@@ -15,8 +15,8 @@
   "files": [
     {
       "path": "docs/architecture/PRISMA_VERTICALS_ARCHITECTURE_00F_VALIDATION_FIXTURES.md",
-      "sha256": "b5919818b9fac4d791a4cefa109a51db72c47591a836d6ae45b3d4920027a9e7",
-      "bytes": 11730
+      "sha256": "c79013e04faafe7b60fdec0be67ffe72ddee46261bec20171f79e4029c00004e",
+      "bytes": 12944
     },
     {
       "path": "docs/qa/PRISMA_VERTICALS_00F_ACCEPTANCE_CRITERIA.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "shared/verticals/validation/acceptance/vertical-acceptance-matrix.v0.json",
-      "sha256": "22e7b92f8b2949b92d39b5b04145debf5fa2a3a2814080e87a0005a9316dffab",
-      "bytes": 75066
+      "sha256": "3b1fba7cd0d767798d47daf8c2597893cf02d140dccfc9cc49fc87ac8a87b578",
+      "bytes": 84650
     },
     {
       "path": "shared/verticals/validation/coverage/vertical-cross-coverage.v0.json",
@@ -165,26 +165,36 @@
     },
     {
       "path": "shared/verticals/validation/smoke/vertical-smoke-suite.v0.json",
-      "sha256": "96ab33d6356505044994696d83cf1eb56bf95d6856ea6aa66333a8ada7ee4942",
-      "bytes": 25338
+      "sha256": "c02f178d993bca31d5a0f2e6d1eab7875bd34021485cce6875201d294aa94feb",
+      "bytes": 28282
     },
     {
       "path": "shared/verticals/validation/vertical-validation-fixture.registry.v0.json",
-      "sha256": "d372c786f704e9dba76aa9c0702c7fa4b71d5464a8eb42c9d5a0b43f895d8f28",
-      "bytes": 2033
+      "sha256": "07f2d8db24613d11440b5f493b178355ffb8a4a09b3fbd8ffd37a88e29829e99",
+      "bytes": 2236
     },
     {
       "path": "tools/verticals/validate_vertical_validation_fixtures_00f.py",
-      "sha256": "10fd370371411465b0257d565bb5b49b58ecabb9f450bf933f5e62b66a054251",
-      "bytes": 5624
+      "sha256": "495f7f19bee1949fcf453aa6c3819f0ca4e3f417a3ae57670dd4b2369cf8d143",
+      "bytes": 5658
+    },
+    {
+      "path": "shared/verticals/validation/fixtures/professional_corporate_services.validation-fixture.json",
+      "bytes": 18774,
+      "sha256": "cc2969fd20ce63813e0ce8fc5530919a7ca494ec3224fc5b3ec6f7bd09838747"
+    },
+    {
+      "path": "shared/verticals/validation/scenarios/professional_corporate_services.validation-scenarios.json",
+      "bytes": 10241,
+      "sha256": "2c40109248cc6df55dda75b4d0f3b01707e703c0ef3efa03035d739f2f10a2b2"
     }
   ],
   "manifestSelfHash": null,
   "validation": {
     "validator": "tools/verticals/validate_vertical_validation_fixtures_00f.py",
-    "expectedVerticals": 10,
-    "minimumScenarios": 60,
-    "minimumAcceptanceChecks": 300,
-    "minimumCoverageRows": 420
+    "expectedVerticals": 11,
+    "minimumScenarios": 66,
+    "minimumAcceptanceChecks": 330,
+    "minimumCoverageRows": 462
   }
 }
