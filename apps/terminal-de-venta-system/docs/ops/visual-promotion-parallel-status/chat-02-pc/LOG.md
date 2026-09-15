@@ -728,3 +728,14 @@ The single authority conflict remains `TGT.CENSUS.PC.097AB2F857F353CA4288.V1`: T
 - Work branch remains uncreated and governed output root remains untouched.
 - Prepared deterministic shard plan is embedded in `STATUS.json -> handoff.authorityReconciliationReadOnlyReceipt.deterministicShardPreparation`.
 - On write authorization, materialize exactly those four shards + index/manifest/summary without rerunning census, broad discovery, canonical registration, projection repair or GVAE APPLY.
+
+
+## 2026-09-15T11:14:46-06:00 — RESTART READ-ONLY AUDIT
+
+- Fresh main: `8db4370d579014f8fed6e190ffce45e1589b33d9`; unchanged from restart handoff.
+- Chat 6 composer still holds the PC `687` concept-link rows provisional under the target-specific evidence rule.
+- Chat 5 PC delta `AUTHORITY_DELTA_PC_6CC072FF.json` consumed; no newer bounded PC delta is present.
+- `TGT.CENSUS.PC.6CC072FF944F55B85FE6.V1` remains `PHYSICAL_OR_PROJECTION_RECONCILIATION_REQUIRED`: physical CURRENT, projection MISSING, NDC/visual unresolved, Identity binding blocked. Historical `VIS.SURFACE.CONTENT.PRIMARY` is candidate intent, not canonical binding authority.
+- Qualification gain for the 687 provisional PC rows: `0`.
+- Zero-loss preserved: `827/827`, missing `0`, extra `0`, duplicate `0`, TRUE_NEW `0`.
+- No governed output or product/runtime mutation performed.
