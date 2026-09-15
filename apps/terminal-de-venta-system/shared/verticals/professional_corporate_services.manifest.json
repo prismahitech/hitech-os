@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalId": "professional_corporate_services",
+  "displayName": "Servicios Profesionales y Corporativos",
+  "coreRequired": true,
+  "capabilities": {
+    "required": [
+      "core.events",
+      "core.sync",
+      "professional_services.clients",
+      "professional_services.engagements",
+      "professional_services.documents",
+      "professional_services.tasks",
+      "professional_services.deadlines",
+      "professional_services.evidence"
+    ],
+    "optional": [
+      "professional_services.approvals",
+      "professional_services.recurring_services",
+      "core.export"
+    ]
+  },
+  "surfaces": {
+    "tablet": {
+      "enabled": true,
+      "routes": [
+        "Clientes",
+        "Diagnóstico",
+        "Checklist",
+        "Documentos",
+        "Avances",
+        "Pendientes por enviar"
+      ]
+    },
+    "pc": {
+      "enabled": true,
+      "routes": [
+        "Dashboard",
+        "Clientes",
+        "Expedientes",
+        "Servicios",
+        "Flujos",
+        "Documentos",
+        "Tareas y vencimientos",
+        "Responsables",
+        "Auditoría"
+      ]
+    },
+    "mobile": {
+      "enabled": true,
+      "routes": [
+        "Resumen",
+        "Alertas",
+        "Aprobaciones",
+        "Vencimientos",
+        "Clientes en riesgo",
+        "Siguientes acciones"
+      ]
+    }
+  },
+  "offline": {
+    "salesAllowed": false,
+    "sensitiveActionsRequireConnection": true
+  },
+  "doctrine": {
+    "tablet": "opera y captura hechos acotados",
+    "pc": "gobierna expedientes, reglas, conciliación y operación profunda",
+    "mobile": "supervisa alertas, aprobaciones, riesgos y siguientes acciones",
+    "control": "audita",
+    "runtimeImplemented": false
+  }
+}
