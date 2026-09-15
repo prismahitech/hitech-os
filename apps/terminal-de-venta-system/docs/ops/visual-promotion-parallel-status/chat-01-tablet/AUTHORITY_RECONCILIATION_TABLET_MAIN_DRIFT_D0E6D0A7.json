@@ -2,7 +2,7 @@
   "schema": "prisma.visual-promotion.tablet-main-drift-revalidation.v1",
   "phase": "AUTHORITY_RECONCILIATION_ANTI_REWORK",
   "chatId": 1,
-  "observedAt": "2026-09-15T11:15:14-06:00",
+  "observedAt": "2026-09-15T11:17:52-06:00",
   "priorMain": "8db4370d579014f8fed6e190ffce45e1589b33d9",
   "currentMain": "d0e6d0a74b363ac0cd11cb10c7ac7bb2992dd200",
   "compare": {
