@@ -124,8 +124,33 @@ def main():
   checks['charts']=sum(1 for n in z.namelist() if re.fullmatch(r'xl/charts/chart\d+\.xml',n))>=5
   cfgtext=' '.join(ctext(cfg,ref,shared(z)) for ref in ['AF5','AF6','AH5','AH6','AJ5','AJ6','AK6'])
   checks['configV3Catalogs']=all(x in cfgtext for x in ['Idioma','Motivo','Resultado'])
-  bb=literal_signature(bz,'Base de contactos',506,36); fb=literal_signature(z,'Base de contactos',506,36); bs=literal_signature(bz,'Seguimiento comercial',1006,14); fs=literal_signature(z,'Seguimiento comercial',1006,14)
-  checks['dataPreserved']=rows_signature(bz)==rows_signature(z) and len(rows_signature(z))==27 and all(fb.get(k)==v for k,v in bb.items()) and all(fs.get(k)==v for k,v in bs.items())
+  # Data preservation focuses on user-entered business data, not preseeded generated IDs.
+  def selected_signature(zz, sheet_name, rows, cols, driver_col):
+   ss=shared(zz); sp2=sheets(zz); rt=ET.fromstring(zz.read(sp2[sheet_name])); cells=_cell_map(rt); out=[]
+   for rr in rows:
+    driver=_cell_value(cells.get(f'{driver_col}{rr}'),ss)
+    if not driver: continue
+    out.append(tuple(_cell_value(cells.get(f'{cc}{rr}'),ss) for cc in cols))
+   return out
+  base_inputs=['B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','U','Y','AE']
+  track_inputs=['B','C','F','G','H','I','J','K','M','N']
+  base_ok=selected_signature(bz,'Base de contactos',range(7,507),base_inputs,'B')==selected_signature(z,'Base de contactos',range(7,507),base_inputs,'B')
+  track_ok=selected_signature(bz,'Seguimiento comercial',range(7,1007),track_inputs,'C')==selected_signature(z,'Seguimiento comercial',range(7,1007),track_inputs,'C')
+  checks['dataPreserved']=rows_signature(bz)==rows_signature(z) and len(rows_signature(z))==27 and base_ok and track_ok
+
+  # V3 visual-hygiene contract: no ghost IDs, zeros or 1899 dates in unused rows.
+  def has_cached(c):
+   v=c.find('m:v',NS) if c is not None else None
+   return v is not None and v.text not in (None,'')
+  base_cells=_cell_map(base); seg_cells=_cell_map(seg)
+  checks['blankProspectIdsHidden']=all(not has_cached(base_cells.get(f'A{rr}')) for rr in range(34,507))
+  checks['blankActivityIdsHidden']=all(not has_cached(seg_cells.get(f'A{rr}')) for rr in range(7,1007))
+  checks['blankFormulaCachesHidden']=all(not has_cached(c) for rr in range(34,507) for ref,c in base_cells.items() if ref and ref.endswith(str(rr)) and c.find('m:f',NS) is not None) and all(not has_cached(c) for rr in range(7,1007) for ref,c in seg_cells.items() if ref and ref.endswith(str(rr)) and c.find('m:f',NS) is not None)
+  base_rows={int(r.attrib['r']):r for r in base.findall('.//m:row',NS) if r.attrib.get('r')}
+  seg_rows={int(r.attrib['r']):r for r in seg.findall('.//m:row',NS) if r.attrib.get('r')}
+  checks['uniformTableRows']=all(base_rows[rr].attrib.get('ht')=='20' for rr in range(7,507)) and all(seg_rows[rr].attrib.get('ht')=='20' for rr in range(7,1007))
+  seg_cols=seg.findall('m:cols/m:col',NS)
+  checks['trackingHelpersHidden']=any(c.attrib.get('min')=='1' and c.attrib.get('hidden')=='1' for c in seg_cols) and any(c.attrib.get('min')=='16' and c.attrib.get('hidden')=='1' for c in seg_cols)
   checks['baselineStillUnchanged']=bp.stat().st_size==EXPECTED_SIZE and sha(bp)==EXPECTED_SHA
   raw='\n'.join((z.read(n).decode('utf-8','ignore') for n in z.namelist() if n.endswith('.xml')))
   checks['noBrokenRefsAnywhere']=not any(x in raw for x in BAD)
