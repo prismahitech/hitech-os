@@ -3,8 +3,8 @@
 **Status:** PASS  
 **Branch:** `feat/ciob-crm-builder`  
 **Final artifact:** `CIOB_CRM_V3_FINAL.xlsx`  
-**SHA-256:** `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`  
-**Size:** `221187` bytes
+**SHA-256:** `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`  
+**Size:** `225600` bytes
 
 ## Baseline immutability
 
@@ -35,8 +35,8 @@
 - `01_guardrails.xlsx` — `167620` bytes — `a49e0ae1f11313c1cb02aeee042f9867245e8f8c50941a94766b1a1b096646ae`
 - `02_intelligence.xlsx` — `215585` bytes — `f8cf41d4f77d598fbd9de10b5eee7715c8e409cb1cb0d04b8eb48d15fc47994d`
 - `03_productivity.xlsx` — `217192` bytes — `4c8473482f052718b484f1720799fbae318ddb22aa80e0012c5546e27886342e`
-- `04_visual_dashboard.xlsx` — `221187` bytes — `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
-- `05_final_candidate.xlsx` — `221187` bytes — `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+- `04_visual_dashboard.xlsx` — `225600` bytes — `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`
+- `05_final_candidate.xlsx` — `225600` bytes — `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`
 
 ## Visual QA
 
@@ -58,3 +58,11 @@
 ## Visual hygiene cleanup
 
 PASS: no ghost prospect/activity IDs on unused rows, no cached zero/date ghosts, table row heights are uniform, and internal tracking helper columns are hidden.
+
+
+## Presentación premium
+
+- Instrucciones ampliadas a una guía operativa completa (`A1:H56`).
+- Los 5 gráficos usan tarjetas redondeadas, degradados, sombras suaves y relieve sutil.
+- Paleta semántica aplicada a funnel, temperatura, salud, fuentes y motivos de cierre.
+- `tests/verify_v3_presentation.py`: **PASS**.
