@@ -1,11 +1,11 @@
 {
   "schemaVersion": "ciob.crm.release-manifest.v2",
   "release": "V3",
-  "status": "PASS_FINAL_VERIFIED",
+  "status": "PASS_V3_PREMIUM_PRESENTATION_VERIFIED",
   "artifactName": "CIOB_CRM_V3_FINAL.xlsx",
   "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
-  "sizeBytes": 221187,
-  "sha256": "054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e",
+  "sizeBytes": 225600,
+  "sha256": "ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1",
   "sourceBaseline": {
     "version": "V2",
     "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
@@ -19,5 +19,7 @@
   "verification": "tools/ciob-crm/evidence/CRM_V3_VERIFICATION.json",
   "deterministicBuild": true,
   "secondBuildByteIdentical": true,
-  "futureStartingPoint": true
+  "futureStartingPoint": true,
+  "presentationPolish": "tools/ciob-crm/build/polish_v3_presentation.py",
+  "presentationVerifier": "tools/ciob-crm/tests/verify_v3_presentation.py"
 }
