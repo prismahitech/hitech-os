@@ -1,18 +1,55 @@
 {
-  "schemaVersion": "ciob.crm.verification.v1",
-  "verifiedAt": "2026-09-15",
-  "artifact": {
+  "schemaVersion": "ciob.crm.v3.final-evidence.v2",
+  "status": "PASS",
+  "branch": "feat/ciob-crm-builder",
+  "scope": "tools/ciob-crm/**",
+  "baseline": {
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
+    "sizeBytes": 159678,
+    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
+    "immutableConfirmed": true
+  },
+  "final": {
     "name": "CIOB_CRM_V3_FINAL.xlsx",
-    "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
-    "sizeBytes": 95134,
-    "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0"
+    "sizeBytes": 220348,
+    "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f",
+    "deterministicBuild": true,
+    "secondBuildByteIdentical": true
   },
-  "preservedInput": {
-    "prospects": 27,
-    "trackingActivities": 0
-  },
-  "workbook": {
-    "sheets": [
+  "checkpoints": [
+    {
+      "name": "01_guardrails.xlsx",
+      "sizeBytes": 167620,
+      "sha256": "a49e0ae1f11313c1cb02aeee042f9867245e8f8c50941a94766b1a1b096646ae"
+    },
+    {
+      "name": "02_intelligence.xlsx",
+      "sizeBytes": 215585,
+      "sha256": "f8cf41d4f77d598fbd9de10b5eee7715c8e409cb1cb0d04b8eb48d15fc47994d"
+    },
+    {
+      "name": "03_productivity.xlsx",
+      "sizeBytes": 217192,
+      "sha256": "4c8473482f052718b484f1720799fbae318ddb22aa80e0012c5546e27886342e"
+    },
+    {
+      "name": "04_visual_dashboard.xlsx",
+      "sizeBytes": 220348,
+      "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f"
+    },
+    {
+      "name": "05_final_candidate.xlsx",
+      "sizeBytes": 220348,
+      "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f"
+    }
+  ],
+  "officialVerifier": {
+    "file": "/mnt/data/CIOB_CRM_V3_FINAL.xlsx",
+    "exists": true,
+    "zipOk": true,
+    "xmlOk": true,
+    "requiredSheets": true,
+    "sheetNames": [
       "Mi día",
       "Dashboard",
       "Base de contactos",
@@ -20,38 +57,88 @@
       "Configuración",
       "Instrucciones"
     ],
-    "structuredTables": 17,
-    "formulas": 2723,
-    "dataValidations": 17,
-    "formulaErrorScan": 0,
-    "zipOk": true,
-    "xmlWellFormed": true
+    "tables": 2,
+    "charts": 5,
+    "dataValidations": 37,
+    "formulaCount": 17758,
+    "brokenRefFormulaCount": 0,
+    "definedNames": 27,
+    "errors": [],
+    "pass": true
   },
-  "keyTables": {
-    "tblProspectos": "A6:AW86",
-    "tblSeguimiento": "A6:Q66"
+  "semanticVerifier": {
+    "pass": true,
+    "checks": {
+      "baselineIdentity": true,
+      "zipIntegrity": true,
+      "xmlIntegrity": true,
+      "requiredSheets": true,
+      "definedNames": true,
+      "dynamicCatalogNames": true,
+      "fullCalcOnLoad": true,
+      "prospectTableRef": true,
+      "trackingTableRef": true,
+      "v3ProspectColumns": true,
+      "trackingClosureColumns": true,
+      "seguimientoSourceOfTruth": true,
+      "noBrokenFormulaTokens": true,
+      "formulaBalance": true,
+      "softContactValidations": true,
+      "newPreferenceDropdowns": true,
+      "trackingCrossValidations": true,
+      "ownerSelector": true,
+      "emailValidationSafe": true,
+      "protectedAutomaticFields": true,
+      "compactGroupedBase": true,
+      "quickActions": true,
+      "miDiaPriorityFormula": true,
+      "charts": true,
+      "configV3Catalogs": true,
+      "dataPreserved": true,
+      "baselineStillUnchanged": true,
+      "noBrokenRefsAnywhere": true
+    },
+    "errors": [],
+    "finalSize": 220348,
+    "finalSha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f"
   },
-  "tracking": {
-    "formulas": 366,
-    "dropdownValidations": 6,
-    "preparedRows": 60
+  "visualReview": {
+    "Mi día": {
+      "status": "PASS",
+      "evidence": "deterministic OOXML preview",
+      "notes": "Cola clara, selector de responsable, KPIs y acciones rápidas."
+    },
+    "Dashboard": {
+      "status": "PASS",
+      "evidence": "deterministic OOXML preview",
+      "notes": "8 KPIs ejecutivos y 5 gráficos nativos XLSX."
+    },
+    "Base de contactos": {
+      "status": "PASS",
+      "evidence": "deterministic OOXML preview",
+      "notes": "Núcleo visible compacto; columnas secundarias agrupadas/colapsables."
+    },
+    "Seguimiento comercial": {
+      "status": "PASS",
+      "evidence": "deterministic OOXML preview",
+      "notes": "Bitácora lineal y fuente de verdad; motivo de cierre añadido."
+    }
   },
-  "base": {
-    "preparedRows": 80
+  "artifactTool": {
+    "attempted": true,
+    "status": "UNAVAILABLE",
+    "failure": "RPC closed/BrokenPipe on import; stopped after repeated failure per continuation contract",
+    "fallback": "conservative Python stdlib OOXML ZIP/XML mutation, no openpyxl/pandas/LibreOffice"
   },
-  "visualReview": [
-    "Mi día",
-    "Dashboard",
-    "Base de contactos",
-    "Seguimiento comercial"
-  ],
-  "observedDataQuality": [
-    "CIOB-015 has an email-like value in WhatsApp and is flagged by V3 coherence rules"
-  ],
-  "doesNotProve": [
-    "future Excel versions will render every hyperlink identically",
-    "phone/WhatsApp punctuation-normalized fuzzy duplicate matching",
-    "unlimited preseeded rows without builder expansion"
-  ],
-  "status": "PASS_V3_GENERATED_VERIFIED"
+  "dataPreservation": {
+    "contacts": 27,
+    "literalDataPreserved": true,
+    "sourceOfTruthSeguimiento": true
+  },
+  "notes": [
+    "Workbook forces full recalculation on open via calcPr fullCalcOnLoad=1.",
+    "Final package was reopened as ZIP/XML and every XML part parsed successfully.",
+    "Two independent builds from the same baseline are byte-identical.",
+    "Visual QA used deterministic OOXML previews because artifact_tool renderer was unavailable."
+  ]
 }
