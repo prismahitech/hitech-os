@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "ciob.crm.baseline-manifest.v1",
+  "name": "CIOB_CRM_V2_FINAL.xlsx",
+  "version": "V2",
+  "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
+  "repoDestination": "tools/ciob-crm/baseline/CIOB_CRM_V2_FINAL.xlsx",
+  "sizeBytes": 159678,
+  "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
+  "immutable": true,
+  "sourceOfTruth": "Seguimiento comercial",
+  "requiredBeforeV3": [
+    "materialize baseline from persistent Library",
+    "verify sizeBytes",
+    "verify sha256",
+    "never overwrite baseline",
+    "build V3 to a separate output path"
+  ]
+}

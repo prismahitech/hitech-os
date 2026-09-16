@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "ciob.crm.rules.v3",
+  "baseline": {
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
+    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
+    "sizeBytes": 159678,
+    "immutable": true
+  },
+  "release": {
+    "version": "V3",
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
+    "sha256": "ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1",
+    "sizeBytes": 225600,
+    "status": "PASS_FINAL_VERIFIED",
+    "deterministicBuild": true
+  },
+  "sourceOfTruth": "Seguimiento comercial",
+  "sheetsRequired": [
+    "Mi día",
+    "Dashboard",
+    "Base de contactos",
+    "Seguimiento comercial",
+    "Configuración",
+    "Instrucciones"
+  ],
+  "capacities": {
+    "prospects": 500,
+    "activities": 1000
+  },
+  "score": {
+    "hotMin": 70,
+    "warmMin": 45,
+    "completenessOk": 0.7
+  },
+  "alerts": {
+    "upcomingDays": 3,
+    "staleDays": 30
+  },
+  "validationPolicy": {
+    "email": "soft",
+    "phone": "soft",
+    "whatsapp": "soft",
+    "website": "soft",
+    "crossField": "warn-first",
+    "automaticCells": "protected"
+  },
+  "duplicatePolicy": {
+    "email": "trim+lower+remove-spaces",
+    "phone": "strip spaces hyphens parentheses plus dots slashes",
+    "whatsapp": "strip spaces hyphens parentheses plus dots slashes",
+    "companyAndName": "exact pair",
+    "flag": "REVISAR"
+  },
+  "catalogPolicy": {
+    "strategy": "dynamic-defined-names",
+    "expandWithNewNonblankRows": true
+  },
+  "visual": {
+    "inputFill": "#FFFFFF",
+    "automaticFill": "#EEF4F7",
+    "navigation": "#0B1F33",
+    "action": "#C8A24A",
+    "error": "#C44747",
+    "success": "#2E7D60"
+  }
+}
