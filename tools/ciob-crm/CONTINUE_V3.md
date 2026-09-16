@@ -22,8 +22,8 @@ ChatGPT Library:
 
 Verificar antes de cualquier mutación:
 
-- bytes: `220348`
-- SHA-256: `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
+- bytes: `221187`
+- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
 
 Si la identidad difiere, detenerse y reconciliar. No usar otro archivo silenciosamente.
 
@@ -38,7 +38,7 @@ V2 queda como baseline histórico y fuente de reconstrucción determinista. Nunc
 
 ## Reconstrucción de emergencia
 
-Si V3 se pierde o se corrompe, `build/build_crm_v3.py` reconstruye V3 incrementalmente desde una copia del V2 exacto y genera cinco checkpoints. Un rebuild correcto debe terminar en `220348` bytes y SHA-256 `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`, además de pasar ambos verificadores.
+Si V3 se pierde o se corrompe, `build/build_crm_v3.py` reconstruye V3 incrementalmente desde una copia del V2 exacto y genera cinco checkpoints. Un rebuild correcto debe terminar en `221187` bytes y SHA-256 `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`, además de pasar ambos verificadores.
 
 ## Regla futura
 
