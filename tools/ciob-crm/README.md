@@ -1,100 +1,101 @@
 # CIOB CRM Builder
 
-Repositorio fuente para evolucionar y verificar el CRM comercial XLSX de CIOB sin acoplarlo al runtime de PRISMA.
+Herramientas canónicas para evolucionar, generar y verificar el CRM comercial XLSX de CIOB sin acoplarlo al runtime de PRISMA.
 
 ## Estado actual
 
-**CIOB CRM V3 está generado y verificado.**
-
-Artefacto canónico persistente:
+**CIOB CRM V3 está terminado y verificado.** El artefacto canónico persistente es:
 
 `/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx`
 
-Identidad V3:
+Identidad exacta V3:
 
-- SHA-256: `3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0`
-- Tamaño: `95134` bytes
+- SHA-256: `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
+- Tamaño: `220348` bytes
 - Prospectos preservados desde V2: `27`
-- Actividades históricas preservadas desde V2: `0`
 - Fuente de verdad: `Seguimiento comercial`
 
-El XLSX binario se conserva persistentemente fuera del historial Git y Git conserva reglas, contratos y evidencia verificable. No se debe afirmar que el binario vive dentro del repo mientras el conector no permita materializarlo de forma segura.
-
-## Scope
-
-- Ruta canónica: `tools/ciob-crm/`
-- No modifica Tablet, PC, Mobile, Chart Lab, Shared UI, Prisma DB, licenciamiento ni runtime de `terminal-de-venta-system`.
-- Las reglas comerciales, validaciones y criterios de QA viven como texto/configuración revisable en Git.
-- El workbook final es un artefacto generado y verificado.
-
-## Baseline V2
-
-Baseline persistente:
+El baseline V2 permanece inmutable en Library:
 
 `/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx`
 
 - SHA-256: `e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9`
 - Tamaño: `159678` bytes
 
+## Scope
+
+Todo el trabajo vive en `tools/ciob-crm/**`. No toca Tablet, PC, Mobile, POS, Chart Lab, Shared UI, Prisma DB, licensing, deployment, prisma-html ni runtime PRISMA.
+
 ## Layout
 
 ```text
 tools/ciob-crm/
-  README.md
   AGENTS.md
+  README.md
   CONTINUE_V3.md
+  build/
+    build_crm_v3.py
   config/
     crm_rules.json
   spec/
     CRM_V3_PLAN.md
   tests/
     verify_xlsx.py
-  baseline/
-    BASELINE_MANIFEST.json
+    verify_v3_semantics.py
   evidence/
     CRM_V3_VERIFICATION.json
+    CRM_V3_VERIFICATION.md
+    render_ooxml_preview.py
   releases/
     CRM_V3_RELEASE_MANIFEST.json
+  baseline/
+    BASELINE_MANIFEST.json
 ```
+
+## Cómo regenerar V3
+
+1. Recuperar el baseline exacto de Library y comprobar tamaño + SHA-256.
+2. Ejecutar `build/build_crm_v3.py` contra una copia del baseline, nunca contra el baseline original.
+3. Conservar los cinco checkpoints: guardrails, intelligence, productivity, visual/dashboard y final candidate.
+4. Ejecutar `tests/verify_xlsx.py` y `tests/verify_v3_semantics.py`.
+5. Revisar Mi día, Dashboard, Base de contactos y Seguimiento comercial con el renderer de evidencia o con Excel.
+6. Promover sólo un candidato que conserve los datos V2 y produzca la identidad de release esperada.
+
+El builder trabaja incrementalmente sobre el OOXML de V2. `artifact_tool` fue intentado primero, pero el importador cerró el RPC/BrokenPipe con este baseline concreto; por contrato se detuvo el reintento repetitivo y se continuó con mutación OOXML conservadora usando sólo Python stdlib.
 
 ## V3 implementado
 
-- Seguimiento comercial como fuente de verdad.
-- Estatus, último contacto, próxima fecha y próxima acción automáticos.
-- Score, HOT/WARM/COLD, alertas y pipeline ponderado.
-- Días en etapa e intentos sin respuesta.
-- Completitud contextual y advertencias de coherencia.
-- Motivo de cierre/pérdida.
-- Fecha, canal y siguiente acción sugeridos.
-- Mi día priorizado con filtro por responsable y accesos rápidos.
+- Catálogos dinámicos autoexpandibles mediante nombres definidos.
+- Dropdowns y validaciones suaves/cruzadas.
+- Normalización de correo, teléfono y WhatsApp para duplicados.
+- Protección de campos automáticos preservando captura y filtros.
+- Motivo de pérdida/cierre, días en etapa e intentos consecutivos sin respuesta.
+- Completitud contextual por etapa.
+- Fecha, canal y acción siguiente sugeridos.
 - Idioma y canal preferidos.
-- Configuración ampliada mediante tablas de catálogos.
-- Dashboard ejecutivo con funnel y temperatura.
-- Detección de duplicados por correo, teléfono, WhatsApp y Empresa + Nombre.
-- Validaciones cruzadas en Seguimiento.
-- Diseño premium, campos automáticos visualmente separados y navegación rápida.
+- Mi día priorizado por urgencia, temperatura, score y valor, con filtro por responsable.
+- Acciones rápidas: WhatsApp, correo, web y registrar actividad.
+- Base compacta mediante grupos/columnas colapsables.
+- Paleta premium y badges discretos.
+- Dashboard ejecutivo con cinco gráficos nativos.
+- Seguimiento comercial conserva la autoridad de estatus, contacto, próxima fecha, próxima acción, motivo de cierre y días en etapa.
 
-## Capacidad preparada
+## Verificación final
 
-Para estabilidad del XLSX generado:
-
-- `80` filas de prospectos presembradas.
-- `60` filas de actividades presembradas.
-- Ambas zonas son tablas estructuradas. El builder debe ampliarlas antes de llegar al límite, en lugar de copiar fórmulas manualmente.
-
-## Verificación V3
-
-- ZIP/OOXML íntegro.
+- ZIP/OOXML íntegro y reabierto.
 - 6 hojas requeridas.
-- 17 tablas estructuradas.
-- 2723 fórmulas.
-- 17 reglas de validación.
-- 0 errores `#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#N/A` en el escaneo final.
-- `tblProspectos = A6:AW86`.
-- `tblSeguimiento = A6:Q66`.
-- Seguimiento conserva 366 fórmulas y 6 dropdowns propios.
-- Revisión visual de Mi día, Dashboard, Base de contactos y Seguimiento comercial completada.
+- 2 tablas estructuradas principales.
+- `tblProspectos = A6:AX506`.
+- `tblSeguimiento = A6:P1006`.
+- 27 nombres definidos; catálogos dinámicos incluidos.
+- 37 reglas de validación.
+- 17,758 fórmulas de hoja.
+- 5 gráficos.
+- 0 fórmulas con tokens `#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`.
+- Verificador oficial: PASS.
+- Verificador semántico V3: PASS.
+- Segundo build desde el mismo baseline: byte-identical.
 
-## Principio de diseño
+## Principio
 
-Más inteligencia debajo, menos fricción arriba. El operador debe capturar lo mínimo y recibir automáticamente prioridades, alertas, score, temperatura, siguiente acción y contexto comercial.
+Más inteligencia debajo, menos fricción arriba. El operador captura lo mínimo y recibe prioridad, alertas, score, temperatura, siguiente acción y contexto comercial sin convertir el libro en una cabina de avión.
