@@ -1,6 +1,6 @@
 {
   "schemaVersion": "ciob.crm.v3.final-evidence.v3",
-  "status": "PASS",
+  "status": "PASS_V3_PREMIUM_PRESENTATION_VERIFIED",
   "branch": "feat/ciob-crm-builder",
   "scope": "tools/ciob-crm/**",
   "baseline": {
@@ -11,8 +11,8 @@
   },
   "final": {
     "name": "CIOB_CRM_V3_FINAL.xlsx",
-    "sizeBytes": 221187,
-    "sha256": "054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e",
+    "sizeBytes": 225600,
+    "sha256": "ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1",
     "deterministicBuild": true,
     "secondBuildByteIdentical": true
   },
@@ -147,6 +147,19 @@
     "Base and Seguimiento table body rows have uniform custom heights; Seguimiento internal Activity ID and stage-change helper are hidden.",
     "Final package was reopened as ZIP/XML and every XML part parsed successfully.",
     "Two independent builds from the same baseline are byte-identical.",
-    "Visual QA used deterministic OOXML previews because artifact_tool renderer/import was unavailable."
-  ]
+    "Visual QA used deterministic OOXML previews because artifact_tool renderer/import was unavailable.",
+    "Final presentation layer expands Instrucciones and applies premium chart styling without changing sheets 1-5 data parts or the two structured tables."
+  ],
+  "presentation": {
+    "instructionsGuide": "expanded_operational_guide",
+    "instructionsRange": "A1:H56",
+    "charts": 5,
+    "roundedCards": true,
+    "gradients": true,
+    "softShadows": true,
+    "bevel": true,
+    "semanticPalette": true,
+    "verifier": "tools/ciob-crm/tests/verify_v3_presentation.py",
+    "status": "PASS"
+  }
 }
