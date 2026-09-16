@@ -9,10 +9,12 @@ V3 está terminada y verificada. Para V4 o un patch futuro, partir del V3 canón
 3. `tools/ciob-crm/spec/CRM_V3_PLAN.md`
 4. `tools/ciob-crm/config/crm_rules.json`
 5. `tools/ciob-crm/build/build_crm_v3.py`
-6. `tools/ciob-crm/tests/verify_xlsx.py`
-7. `tools/ciob-crm/tests/verify_v3_semantics.py`
-8. `tools/ciob-crm/evidence/CRM_V3_VERIFICATION.json`
-9. `tools/ciob-crm/releases/CRM_V3_RELEASE_MANIFEST.json`
+6. `tools/ciob-crm/build/polish_v3_presentation.py`
+7. `tools/ciob-crm/tests/verify_xlsx.py`
+8. `tools/ciob-crm/tests/verify_v3_semantics.py`
+9. `tools/ciob-crm/tests/verify_v3_presentation.py`
+10. `tools/ciob-crm/evidence/CRM_V3_VERIFICATION.json`
+11. `tools/ciob-crm/releases/CRM_V3_RELEASE_MANIFEST.json`
 
 ## Workbook canónico V3
 
@@ -22,8 +24,8 @@ ChatGPT Library:
 
 Verificar antes de cualquier mutación:
 
-- bytes: `221187`
-- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+- bytes: `225600`
+- SHA-256: `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`
 
 Si la identidad difiere, detenerse y reconciliar. No usar otro archivo silenciosamente.
 
@@ -38,7 +40,7 @@ V2 queda como baseline histórico y fuente de reconstrucción determinista. Nunc
 
 ## Reconstrucción de emergencia
 
-Si V3 se pierde o se corrompe, `build/build_crm_v3.py` reconstruye V3 incrementalmente desde una copia del V2 exacto y genera cinco checkpoints. Un rebuild correcto debe terminar en `221187` bytes y SHA-256 `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`, además de pasar ambos verificadores.
+Si V3 se pierde o se corrompe, `build/build_crm_v3.py` reconstruye V3 incrementalmente desde una copia del V2 exacto y genera cinco checkpoints. Después, `build/polish_v3_presentation.py` aplica la guía de Instrucciones ampliada y el sistema gráfico premium. Un rebuild correcto debe terminar en `225600` bytes y SHA-256 `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`, además de pasar ambos verificadores.
 
 ## Regla futura
 
