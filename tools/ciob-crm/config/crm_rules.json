@@ -9,8 +9,8 @@
   "release": {
     "version": "V3",
     "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
-    "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f",
-    "sizeBytes": 220348,
+    "sha256": "054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e",
+    "sizeBytes": 221187,
     "status": "PASS_FINAL_VERIFIED",
     "deterministicBuild": true
   },
