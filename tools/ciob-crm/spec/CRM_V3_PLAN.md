@@ -90,7 +90,7 @@ El candidato final y un segundo rebuild independiente resultaron byte-identical.
 - [x] 2 tablas estructuradas principales.
 - [x] 27 nombres definidos.
 - [x] 37 validaciones.
-- [x] 17,758 fórmulas de hoja.
+- [x] 19,258 fórmulas de hoja.
 - [x] 5 gráficos.
 - [x] Cero referencias rotas/tokens de error en fórmulas.
 - [x] `tools/ciob-crm/tests/verify_xlsx.py`: PASS.
@@ -103,5 +103,13 @@ El candidato final y un segundo rebuild independiente resultaron byte-identical.
 
 ## Identidad final
 
-- Tamaño: `220348` bytes
-- SHA-256: `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
+- Tamaño: `221187` bytes
+- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+
+## 7. Limpieza visual post-QA
+
+- [x] IDs presembrados invisibles hasta que exista un registro.
+- [x] Cachés `0` removidos de fórmulas que deben verse vacías.
+- [x] Fechas fantasma `31-dic-1899` eliminadas.
+- [x] Filas de Base, Seguimiento y Mi día con altura homogénea.
+- [x] Helpers técnicos de Seguimiento ocultos.
