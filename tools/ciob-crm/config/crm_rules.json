@@ -1,6 +1,12 @@
 {
   "schemaVersion": "ciob.crm.rules.v1",
-  "baseline": "baseline/CIOB_CRM_V2_FINAL.xlsx",
+  "baseline": {
+    "repoPath": "baseline/CIOB_CRM_V2_FINAL.xlsx",
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
+    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
+    "sizeBytes": 159678,
+    "status": "PERSISTED_LIBRARY_SOURCE_PENDING_REPO_BINARY_MATERIALIZATION"
+  },
   "output": "output/CIOB_CRM_V3.xlsx",
   "sourceOfTruth": "Seguimiento comercial",
   "sheetsRequired": [
