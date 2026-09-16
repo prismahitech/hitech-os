@@ -103,8 +103,8 @@ El candidato final y un segundo rebuild independiente resultaron byte-identical.
 
 ## Identidad final
 
-- Tamaño: `221187` bytes
-- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+- Tamaño: `225600` bytes
+- SHA-256: `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`
 
 ## 7. Limpieza visual post-QA
 
@@ -113,3 +113,10 @@ El candidato final y un segundo rebuild independiente resultaron byte-identical.
 - [x] Fechas fantasma `31-dic-1899` eliminadas.
 - [x] Filas de Base, Seguimiento y Mi día con altura homogénea.
 - [x] Helpers técnicos de Seguimiento ocultos.
+
+
+## Cierre de presentación premium
+
+- Guía de uso operativa expandida en Instrucciones: flujo, captura por hoja, rutina diaria, automatismos, reglas de oro, lectura de Mi día y cierres.
+- Cinco gráficos estilizados con tarjetas redondeadas, sombras suaves, degradados, relieve sutil y paleta semántica CIOB.
+- La capa se genera de forma determinista mediante `build/polish_v3_presentation.py` y se verifica con `tests/verify_v3_presentation.py`.
