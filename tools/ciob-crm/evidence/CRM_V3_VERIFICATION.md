@@ -3,8 +3,8 @@
 **Status:** PASS  
 **Branch:** `feat/ciob-crm-builder`  
 **Final artifact:** `CIOB_CRM_V3_FINAL.xlsx`  
-**SHA-256:** `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`  
-**Size:** `220348` bytes
+**SHA-256:** `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`  
+**Size:** `221187` bytes
 
 ## Baseline immutability
 
@@ -24,7 +24,7 @@
 - Charts: `5`
 - Data validations: `37`
 - Defined names: `27`
-- Worksheet formulas: `17758`
+- Worksheet formulas: `19258`
 - Broken-reference formula count: `0`
 - Existing literal data preserved: **PASS**
 - Seguimiento comercial remains source of truth: **PASS**
@@ -35,8 +35,8 @@
 - `01_guardrails.xlsx` — `167620` bytes — `a49e0ae1f11313c1cb02aeee042f9867245e8f8c50941a94766b1a1b096646ae`
 - `02_intelligence.xlsx` — `215585` bytes — `f8cf41d4f77d598fbd9de10b5eee7715c8e409cb1cb0d04b8eb48d15fc47994d`
 - `03_productivity.xlsx` — `217192` bytes — `4c8473482f052718b484f1720799fbae318ddb22aa80e0012c5546e27886342e`
-- `04_visual_dashboard.xlsx` — `220348` bytes — `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
-- `05_final_candidate.xlsx` — `220348` bytes — `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
+- `04_visual_dashboard.xlsx` — `221187` bytes — `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+- `05_final_candidate.xlsx` — `221187` bytes — `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
 
 ## Visual QA
 
@@ -54,3 +54,7 @@
 ## Tool continuity
 
 `artifact_tool` was attempted first and failed with RPC closed/BrokenPipe while importing this V2 workbook. Per `CONTINUE_V3.md`, retries were stopped and the last good baseline was preserved. The successful path uses conservative OOXML ZIP/XML mutation with Python stdlib only. No `openpyxl`, pandas or LibreOffice was used.
+
+## Visual hygiene cleanup
+
+PASS: no ghost prospect/activity IDs on unused rows, no cached zero/date ghosts, table row heights are uniform, and internal tracking helper columns are hidden.
