@@ -153,6 +153,22 @@ def set_formula(root: ET.Element, ref: str, formula: str, style: int | None = No
         v.text = str(cached)
 
 
+def clear_formula_cache(c: ET.Element):
+    """Keep the formula but remove stale cached display values."""
+    v = c.find('m:v', NS)
+    if v is not None:
+        c.remove(v)
+    if c.attrib.get('t') == 'str':
+        c.attrib.pop('t', None)
+
+
+def set_row_height(root: ET.Element, start: int, end: int, height: float):
+    for r in range(start, end + 1):
+        row = find_row(root, r, True)
+        row.set('ht', str(height))
+        row.set('customHeight', '1')
+
+
 def set_dimension(root: ET.Element, ref: str):
     dim = root.find('m:dimension', NS)
     if dim is None:
@@ -584,8 +600,13 @@ def apply_guardrails(entries: dict[str, bytes], checkpoints: Path):
         set_style_range(seg,col,7,1006,unlocked[style])
     # header and col widths
     seg_cols=[]
-    widths=[13,15,15,24,22,16,22,28,20,28,17,18,20,32,24,12]
-    for i,w in enumerate(widths,1): seg_cols.append({'min':i,'max':i,'width':w,'customWidth':1})
+    widths=[11,12,14,22,20,14,20,22,18,22,15,18,18,24,22,10]
+    for i,w in enumerate(widths,1):
+        spec={'min':i,'max':i,'width':w,'customWidth':1}
+        if i in (1,16):
+            spec['hidden']=1
+            spec['outlineLevel']=1
+        seg_cols.append(spec)
     rebuild_cols(seg,seg_cols)
     add_dv(seg,'O7:O1006','list','ListaMotivoCierre',error_style='warning',error='Usa un motivo del catálogo para cierres Perdido/No viable y, si aplica, Ganado.')
     add_dv(seg,'G7:G1006','custom','=OR($G7="",AND($B7<>"",$C7<>""))',error_style='warning',error='Si registras una actividad, completa Fecha e ID prospecto.')
@@ -751,6 +772,7 @@ def add_chart_anchor(drawing: ET.Element, rel_id: str, chart_num: int, c1: int,r
 
 def apply_visual(entries: dict[str, bytes], checkpoints: Path):
     paths=workbook_sheet_paths(entries)
+    sst=get_shared_strings(entries)
     # Base premium compact already grouped; add badge CF for new control and titles. Update row heights and outlinePr.
     base=ET.fromstring(entries[paths['Base de contactos']])
     sp=base.find('m:sheetPr',NS)
@@ -762,7 +784,55 @@ def apply_visual(entries: dict[str, bytes], checkpoints: Path):
     # discreet badges already present; ensure temp/alerts/control conditional formatting
     add_conditional_contains(base,'AF7:AF506','HOT',13,60); add_conditional_contains(base,'AF7:AF506','WARM',11,61); add_conditional_contains(base,'AF7:AF506','COLD',14,62)
     add_conditional_contains(base,'AC7:AC506','VENCIDO',10,63); add_conditional_contains(base,'AC7:AC506','HOY',11,64); add_conditional_contains(base,'AC7:AC506','PRÓXIMO',11,65)
+
+    # Final visual hygiene: an unused row must look genuinely empty.
+    # Prospect IDs remain deterministic, but only appear once Empresa exists.
+    t1=ET.fromstring(entries['xl/tables/table1.xml'])
+    set_table_formula(t1,'ID','IF([[#This Row],Empresa]="","","CIOB-"&TEXT(ROW()-6,"000"))')
+    for r in range(7,507):
+        empresa=cell_text(base,f'B{r}',sst)
+        old_id=cell_text(base,f'A{r}',sst)
+        set_formula(base,f'A{r}',f'IF(B{r}="","","CIOB-"&TEXT(ROW()-6,"000"))',16,old_id if empresa else None)
+        row=find_row(base,r,True)
+        if not empresa:
+            for c in row.findall('m:c',NS):
+                if c.find('m:f',NS) is not None:
+                    clear_formula_cache(c)
+    # V2 had no Seguimiento history. Remove stale 0 caches that QuickLook renders as 31-dic-1899 / 0.
+    for r in range(7,507):
+        if cell_text(base,f'B{r}',sst):
+            for col in ('V','W','X','AB','AI'):
+                c=find_cell(base,f'{col}{r}')
+                if c is not None and c.find('m:f',NS) is not None:
+                    clear_formula_cache(c)
+    set_row_height(base,7,506,20)
+    find_row(base,6,True).set('ht','27'); find_row(base,6,True).set('customHeight','1')
+    entries['xl/tables/table1.xml']=xml_bytes(t1)
     entries[paths['Base de contactos']]=xml_bytes(base)
+
+    # Seguimiento hygiene: internal activity IDs/helpers hidden; blank rows stay blank.
+    seg=ET.fromstring(entries[paths['Seguimiento comercial']])
+    t2=ET.fromstring(entries['xl/tables/table2.xml'])
+    set_table_formula(t2,'Actividad ID','IF([[#This Row],[ID prospecto]]="","","ACT-"&TEXT(ROW()-6,"0000"))')
+    for r in range(7,1007):
+        prospect=cell_text(seg,f'C{r}',sst)
+        old_act=cell_text(seg,f'A{r}',sst)
+        set_formula(seg,f'A{r}',f'IF(C{r}="","","ACT-"&TEXT(ROW()-6,"0000"))',16,old_act if prospect else None)
+        if not prospect:
+            for col in ('D','E','L','P'):
+                c=find_cell(seg,f'{col}{r}')
+                if c is not None and c.find('m:f',NS) is not None:
+                    clear_formula_cache(c)
+    set_row_height(seg,7,1006,20)
+    find_row(seg,6,True).set('ht','27'); find_row(seg,6,True).set('customHeight','1')
+    entries['xl/tables/table2.xml']=xml_bytes(t2)
+    entries[paths['Seguimiento comercial']]=xml_bytes(seg)
+
+    # Mi día is also a table-like working surface: keep rows rhythmically uniform.
+    mid=ET.fromstring(entries[paths['Mi día']])
+    set_row_height(mid,10,59,21)
+    find_row(mid,9,True).set('ht','26'); find_row(mid,9,True).set('customHeight','1')
+    entries[paths['Mi día']]=xml_bytes(mid)
 
     # Dashboard executive redesign/data tables
     dash=ET.fromstring(entries[paths['Dashboard']])
@@ -928,29 +998,3 @@ def build(inp: Path, out: Path, checkpoints: Path, evidence_path: Path):
         'output':{'path':str(out),'size':out.stat().st_size,'sha256':sha256(out)},
         'checkpoints':[{'name':x.name,'size':x.stat().st_size,'sha256':sha256(x)} for x in [cp1,cp2,cp3,cp4]],
         'dataPreserved':preserved,
-        'rowCountAfter':len(after_rows),
-        'verification':verify,
-        'snapshot':snapshot_summary(out),
-        'artifactToolFallback':{'used':True,'reason':'artifact_tool import_xlsx failed twice with TransportError: RPC closed/Broken pipe; V3 built with conservative stdlib OOXML ZIP/XML editing, no openpyxl/pandas/LibreOffice.'},
-    }
-    evidence_path.parent.mkdir(parents=True,exist_ok=True); evidence_path.write_text(json.dumps(evidence,ensure_ascii=False,indent=2),encoding='utf-8')
-    # final checkpoint copy only after evidence pass conditions
-    cp5=checkpoints/'05_final_candidate.xlsx'; shutil.copy2(out,cp5)
-    return evidence
-
-
-def main():
-    ap=argparse.ArgumentParser()
-    ap.add_argument('baseline',type=Path)
-    ap.add_argument('output',type=Path)
-    ap.add_argument('--checkpoints',type=Path,required=True)
-    ap.add_argument('--evidence',type=Path,required=True)
-    args=ap.parse_args()
-    ev=build(args.baseline,args.output,args.checkpoints,args.evidence)
-    print(json.dumps(ev['verification'],ensure_ascii=False,indent=2))
-    if not ev['verification'].get('pass') or not ev['dataPreserved'] or not ev['baseline']['unchanged']:
-        return 2
-    return 0
-
-if __name__=='__main__':
-    raise SystemExit(main())
