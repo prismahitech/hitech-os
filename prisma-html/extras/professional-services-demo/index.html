@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es-MX" data-motion="normal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Servicios Profesionales · PRISMA Demo</title>
+<link rel="stylesheet" href="../atlasfin/assets/css/atlas.css">
+<link rel="stylesheet" href="../atlasfin/assets/css/visual-recipe-dock.css">
+<style>
+.profsvc-demo .atlas-sidebar{overflow:auto}
+.profsvc-demo .atlas-nav__item{width:100%;text-align:left;border:0;cursor:pointer;font:inherit}
+.profsvc-demo .atlas-nav__item .atlas-nav__count{min-width:28px;text-align:center}
+.profsvc-demo .demo-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid rgba(255,255,255,.13);border-radius:999px;color:var(--atlas-text-2);background:rgba(6,15,24,.54);white-space:nowrap}
+.profsvc-demo .demo-badge:before{content:"";width:7px;height:7px;border-radius:50%;background:rgb(102,236,177);box-shadow:0 0 14px rgba(102,236,177,.48)}
+.profsvc-demo .demo-view[hidden],.profsvc-demo .demo-tab-panel[hidden],.profsvc-demo .demo-overlay[hidden]{display:none}
+.profsvc-demo .demo-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.profsvc-demo .demo-kpi{padding:14px 15px;border:1px solid rgba(226,243,252,.14);border-radius:16px;background:rgba(8,20,31,.54);box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+.profsvc-demo .demo-kpi span{display:block;color:var(--atlas-text-3);font-size:12px}
+.profsvc-demo .demo-kpi strong{display:block;margin-top:6px;font-size:24px}
+.profsvc-demo .demo-kpi em{display:block;margin-top:4px;color:var(--atlas-text-2);font-style:normal;font-size:12px}
+.profsvc-demo .demo-master{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.75fr);gap:12px;align-items:start}
+.profsvc-demo .demo-panel{padding:16px;border:1px solid rgba(226,243,252,.14);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),rgba(7,17,28,.60);box-shadow:0 18px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.055)}
+.profsvc-demo .demo-panel h3{margin:0 0 6px}.profsvc-demo .demo-panel p{margin:0;color:var(--atlas-text-2)}
+.profsvc-demo .demo-side{position:sticky;top:92px}
+.profsvc-demo .demo-action{margin-top:14px;padding:14px;border-radius:15px;border:1px solid rgba(var(--atlas-accent),.23);background:rgba(var(--atlas-accent),.065)}
+.profsvc-demo .demo-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.profsvc-demo .demo-tab{border:1px solid rgba(226,243,252,.13);background:rgba(8,20,31,.46);color:var(--atlas-text-2);padding:9px 12px;border-radius:12px;cursor:pointer}
+.profsvc-demo .demo-tab[aria-selected="true"]{color:var(--atlas-text);border-color:rgba(var(--atlas-accent),.45);background:rgba(var(--atlas-accent),.12)}
+.profsvc-demo .demo-grid{display:grid;grid-template-columns:1.05fr 1fr .86fr;gap:12px;margin-top:12px}
+.profsvc-demo .demo-list{display:grid;gap:9px;margin-top:13px}
+.profsvc-demo .demo-item{padding:11px 12px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(8,20,31,.48)}
+.profsvc-demo .demo-item strong{display:block}.profsvc-demo .demo-item small{display:block;margin-top:4px;color:var(--atlas-text-3)}
+.profsvc-demo .demo-step{display:grid;grid-template-columns:24px 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.profsvc-demo .demo-step:last-child{border-bottom:0}.profsvc-demo .demo-step b{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);font-size:11px}
+.profsvc-demo .demo-step.is-done b{background:rgba(102,236,177,.16);border-color:rgba(102,236,177,.45);color:#8ff3ca}
+.profsvc-demo .demo-step.is-active b{background:rgba(var(--atlas-accent),.18);border-color:rgba(var(--atlas-accent),.5);color:rgb(var(--atlas-accent))}
+.profsvc-demo .demo-route-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.profsvc-demo .demo-table-action{border:1px solid rgba(var(--atlas-accent),.25);background:rgba(var(--atlas-accent),.08);color:var(--atlas-text);border-radius:10px;padding:7px 10px;cursor:pointer}
+.profsvc-demo .demo-toast{position:fixed;right:22px;bottom:22px;z-index:220;width:min(360px,calc(100vw - 44px));padding:14px 15px;border:1px solid rgba(226,243,252,.18);border-radius:16px;background:rgba(5,14,23,.93);box-shadow:0 24px 70px rgba(0,0,0,.38);backdrop-filter:blur(18px);transform:translateY(18px);opacity:0;pointer-events:none;transition:180ms var(--atlas-ease)}
+.profsvc-demo .demo-toast.is-visible{transform:translateY(0);opacity:1}.profsvc-demo .demo-toast strong,.profsvc-demo .demo-toast span{display:block}.profsvc-demo .demo-toast span{margin-top:3px;color:var(--atlas-text-2)}
+.profsvc-demo .demo-overlay{position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:22px;background:rgba(1,5,9,.72);backdrop-filter:blur(12px)}
+.profsvc-demo .demo-overlay__panel{width:min(720px,100%);padding:20px;border:1px solid rgba(226,243,252,.18);border-radius:22px;background:rgba(6,15,24,.94);box-shadow:0 30px 110px rgba(0,0,0,.45)}
+.profsvc-demo .demo-paper{width:min(420px,90%);margin:18px auto 0;padding:24px;border-radius:10px;background:#eff4f8;color:#182235;box-shadow:0 18px 50px rgba(0,0,0,.26)}
+.profsvc-demo .demo-paper i{display:block;height:8px;border-radius:999px;background:#bdc8d3;margin-top:10px}.profsvc-demo .demo-paper i:nth-child(3),.profsvc-demo .demo-paper i:nth-child(5){width:64%}
+@media(max-width:1120px){.profsvc-demo .demo-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.profsvc-demo .demo-grid{grid-template-columns:1fr 1fr}.profsvc-demo .demo-grid>*:last-child{grid-column:1/-1}}
+@media(max-width:900px){.profsvc-demo .demo-master{grid-template-columns:1fr}.profsvc-demo .demo-side{position:static}.profsvc-demo .demo-route-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.profsvc-demo .demo-kpis,.profsvc-demo .demo-grid,.profsvc-demo .demo-route-grid{grid-template-columns:1fr}.profsvc-demo .demo-grid>*:last-child{grid-column:auto}}
+</style>
+</head>
+<body class="profsvc-demo" data-atlas-chroma="spectral-page" data-atlas-premium="select-layer-sweep" data-atlas-page="DEMO" data-default-accent="cyan">
+<div class="atlas-scene" aria-hidden="true"><div class="atlas-scene__image"></div><div class="atlas-scene__smoke"></div><div class="atlas-scene__grain"></div></div>
+<div class="atlas-shell">
+<header class="atlas-topbar">
+<a class="atlas-brand" href="#expedientes" data-route="expedientes"><span class="atlas-brand__mark"><img src="../atlasfin/assets/media/prisma-mark.png" alt=""></span><span class="atlas-brand__copy"><strong>PRISMA</strong><small>Servicios Profesionales</small></span></a>
+<button class="atlas-search-trigger" type="button" data-open-search><span>⌕</span><span>Buscar cliente, expediente o documento…</span><span class="atlas-kbd">Ctrl K</span></button>
+<div class="atlas-top-actions"><span class="demo-badge">Demo · Datos sintéticos</span><button class="atlas-button" type="button" data-reset>Restablecer</button></div>
+</header>
+<aside class="atlas-sidebar"><div class="atlas-sidebar__label">Servicios Profesionales</div><nav class="atlas-nav" aria-label="Módulos demo">
+<button class="atlas-nav__item" type="button" data-route="clientes" style="--item-accent:103,225,255"><span class="atlas-nav__letter">C</span><span class="atlas-nav__copy">Clientes</span><span class="atlas-nav__count">6</span></button>
+<button class="atlas-nav__item is-active" type="button" data-route="expedientes" style="--item-accent:102,236,177"><span class="atlas-nav__letter">E</span><span class="atlas-nav__copy">Expedientes</span><span class="atlas-nav__count">8</span></button>
+<button class="atlas-nav__item" type="button" data-route="servicios" style="--item-accent:177,151,255"><span class="atlas-nav__letter">S</span><span class="atlas-nav__copy">Servicios</span><span class="atlas-nav__count">11</span></button>
+<button class="atlas-nav__item" type="button" data-route="propuestas" style="--item-accent:255,198,112"><span class="atlas-nav__letter">P</span><span class="atlas-nav__copy">Propuestas y contratos</span><span class="atlas-nav__count">4</span></button>
+<button class="atlas-nav__item" type="button" data-route="flujos" style="--item-accent:255,137,207"><span class="atlas-nav__letter">F</span><span class="atlas-nav__copy">Flujos</span><span class="atlas-nav__count">5</span></button>
+<button class="atlas-nav__item" type="button" data-route="documentos" style="--item-accent:103,225,255"><span class="atlas-nav__letter">D</span><span class="atlas-nav__copy">Documentos</span><span class="atlas-nav__count">18</span></button>
+<button class="atlas-nav__item" type="button" data-route="responsables" style="--item-accent:255,159,202"><span class="atlas-nav__letter">R</span><span class="atlas-nav__copy">Responsables</span><span class="atlas-nav__count">5</span></button>
+<button class="atlas-nav__item" type="button" data-route="vencimientos" style="--item-accent:255,198,112"><span class="atlas-nav__letter">V</span><span class="atlas-nav__copy">Vencimientos</span><span class="atlas-nav__count">4</span></button>
+<button class="atlas-nav__item" type="button" data-route="recurrentes" style="--item-accent:102,236,177"><span class="atlas-nav__letter">↻</span><span class="atlas-nav__copy">Servicios recurrentes</span><span class="atlas-nav__count">3</span></button>
+<button class="atlas-nav__item" type="button" data-route="evidencia" style="--item-accent:177,151,255"><span class="atlas-nav__letter">EV</span><span class="atlas-nav__copy">Evidencia</span><span class="atlas-nav__count">12</span></button>
+<button class="atlas-nav__item" type="button" data-route="reportes" style="--item-accent:49,95,148"><span class="atlas-nav__letter">R</span><span class="atlas-nav__copy">Reportes</span><span class="atlas-nav__count">3</span></button>
+<button class="atlas-nav__item" type="button" data-route="configuracion" style="--item-accent:137,151,163"><span class="atlas-nav__letter">⚙</span><span class="atlas-nav__copy">Configuración</span><span class="atlas-nav__count">•</span></button>
+</nav></aside>
+<main class="atlas-main"><div class="atlas-content">
+
+<section class="demo-view" data-view="expedientes">
+<section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">PC · Gobierno del expediente</p><h1>Expedientes</h1><p>Cliente, servicio, responsables, compromisos y evidencia en una sola lectura.</p><div class="atlas-hero__meta"><span class="atlas-pill">8 expedientes activos</span><span class="atlas-pill">3 requieren atención</span><span class="atlas-pill">Datos sintéticos</span></div></section>
+<section class="atlas-section"><div class="demo-kpis">
+<div class="demo-kpi"><span>Clientes activos</span><strong>8</strong><em>6 en curso · 2 onboarding</em></div>
+<div class="demo-kpi"><span>Servicios activos</span><strong>11</strong><em>3 recurrentes</em></div>
+<div class="demo-kpi"><span>Documentos pendientes</span><strong>3</strong><em>1 requiere seguimiento</em></div>
+<div class="demo-kpi"><span>Vencimientos próximos</span><strong>2</strong><em>Próximos 7 días</em></div>
+<div class="demo-kpi"><span>Aprobaciones</span><strong data-approval-count>1</strong><em>Pendiente de decisión</em></div>
+</div></section>
+<section class="atlas-section"><div class="demo-master"><div>
+<header class="atlas-section__header"><div><p class="atlas-eyebrow">Portafolio</p><h2>Expedientes activos</h2></div></header>
+<div class="atlas-table-shell"><table class="atlas-table"><thead><tr><th>Cliente</th><th>Servicio</th><th>Estado</th><th>Responsable</th><th>Próximo compromiso</th><th></th></tr></thead><tbody>
+<tr><td><strong>Empresa demo internacional</strong><br><small>CA · onboarding</small></td><td>Servicios corporativos demo</td><td><span class="atlas-status" data-tone="warning">Atención</span></td><td>Mariana Ortega</td><td>18 Sep · 14:00</td><td><button class="demo-table-action" type="button" data-open-client>Ver</button></td></tr>
+<tr><td><strong>Aurora Market Entry</strong><br><small>US · operación inicial</small></td><td>Soft landing</td><td><span class="atlas-status" data-tone="success">En curso</span></td><td>Carlos Vega</td><td>19 Sep · 10:30</td><td><button class="demo-table-action" type="button" data-toast="Expediente sintético disponible en la demo.">Ver</button></td></tr>
+<tr><td><strong>Nexo Advisory</strong><br><small>MX · activo</small></td><td>Consultoría empresarial</td><td><span class="atlas-status">En curso</span></td><td>Sofía Martínez</td><td>22 Sep · 09:00</td><td><button class="demo-table-action" type="button" data-toast="Expediente sintético disponible en la demo.">Ver</button></td></tr>
+<tr><td><strong>Brava Compliance</strong><br><small>MX · activo</small></td><td>Compliance documental</td><td><span class="atlas-status" data-tone="warning">Pendiente</span></td><td>Daniela Cruz</td><td>23 Sep · 16:00</td><td><button class="demo-table-action" type="button" data-toast="Expediente sintético disponible en la demo.">Ver</button></td></tr>
+</tbody></table></div></div>
+<aside class="demo-panel demo-side"><p class="atlas-eyebrow">Cliente seleccionado</p><h3>Empresa demo internacional</h3><p>Servicios corporativos demo</p><div class="atlas-key-value" style="margin-top:14px"><div><span>Etapa</span><strong>Onboarding</strong></div><div><span>Responsable</span><strong>Mariana Ortega</strong></div><div><span>Estado</span><strong>Atención requerida</strong></div><div><span>Próximo compromiso</span><strong>18 Sep · 14:00</strong></div></div><div class="demo-action"><strong>Próxima acción</strong><p>Completar documentación inicial y confirmar fecha objetivo.</p></div><button class="atlas-button atlas-button--primary" type="button" data-open-client style="margin-top:14px">Abrir expediente</button></aside>
+</div></section>
+<section class="atlas-section" data-workspace hidden><header class="atlas-section__header"><div><p class="atlas-eyebrow">Expediente · PS-DEMO-014</p><h2>Empresa demo internacional</h2><p>Servicios corporativos demo · Datos sintéticos</p></div><div><span class="atlas-status" data-tone="warning">Atención requerida</span> <span class="atlas-pill">Avance 68%</span></div></header>
+<div class="demo-tabs" role="tablist"><button class="demo-tab" role="tab" aria-selected="true" data-tab="resumen">Resumen</button><button class="demo-tab" role="tab" aria-selected="false" data-tab="docs">Documentos</button><button class="demo-tab" role="tab" aria-selected="false" data-tab="tareas">Tareas</button><button class="demo-tab" role="tab" aria-selected="false" data-tab="aprobaciones">Aprobaciones</button><button class="demo-tab" role="tab" aria-selected="false" data-tab="actividad">Actividad</button></div>
+<div class="demo-tab-panel" data-tab-panel="resumen"><div class="demo-grid">
+<article class="demo-panel"><p class="atlas-eyebrow">Estado del servicio</p><h3>Onboarding corporativo</h3><p>Ruta demostrativa basada en el contrato del vertical.</p><div style="margin-top:13px"><div class="demo-step is-done"><b>✓</b><span>Diagnóstico</span><small>Listo</small></div><div class="demo-step is-active"><b>2</b><span>Documentación</span><small>En curso</small></div><div class="demo-step"><b>3</b><span>Asignación y validación</span><small>Pendiente</small></div><div class="demo-step"><b>4</b><span>Ejecución</span><small>Pendiente</small></div></div></article>
+<article class="demo-panel"><p class="atlas-eyebrow">Siguiente acción</p><h3>Completar documentación inicial</h3><p>Falta un documento para continuar con la validación del expediente.</p><div class="demo-action"><strong>Comprobante de domicilio</strong><p>Responsable: Mariana Ortega · Objetivo: 18 Sep</p></div><button class="atlas-button atlas-button--primary" type="button" data-request-doc style="margin-top:14px">Marcar como solicitado</button></article>
+<article class="demo-panel"><p class="atlas-eyebrow">Requiere atención</p><div class="demo-list"><div class="demo-item"><strong>Documento faltante</strong><small>Comprobante de domicilio</small></div><div class="demo-item"><strong>Vencimiento próximo</strong><small>18 Sep · 14:00</small></div><div class="demo-item"><strong>Aprobación requerida</strong><small>Extensión de fecha objetivo</small></div></div></article>
+</div></div>
+<div class="demo-tab-panel" data-tab-panel="docs" hidden><div class="atlas-table-shell" style="margin-top:12px"><table class="atlas-table"><thead><tr><th>Documento</th><th>Estado</th><th>Responsable</th><th></th></tr></thead><tbody><tr><td>Acta constitutiva</td><td><span class="atlas-status" data-tone="success">Recibido</span></td><td>Mariana Ortega</td><td><button class="demo-table-action" data-doc="Acta constitutiva" type="button">Ver</button></td></tr><tr><td>Poder del representante</td><td><span class="atlas-status">En revisión</span></td><td>Luis Herrera</td><td><button class="demo-table-action" data-doc="Poder del representante" type="button">Ver</button></td></tr><tr><td>Comprobante de domicilio</td><td><span class="atlas-status" data-tone="warning" data-missing>Pendiente</span></td><td>Mariana Ortega</td><td><button class="demo-table-action" data-doc="Comprobante de domicilio" type="button">Ver</button></td></tr></tbody></table></div></div>
+<div class="demo-tab-panel" data-tab-panel="tareas" hidden><div class="atlas-table-shell" style="margin-top:12px"><table class="atlas-table"><thead><tr><th>Tarea</th><th>Responsable</th><th>Estado</th><th>Fecha</th></tr></thead><tbody><tr><td>Revisar documentación inicial</td><td>Mariana Ortega</td><td><span class="atlas-status">En curso</span></td><td>18 Sep</td></tr><tr><td>Validar poderes</td><td>Luis Herrera</td><td><span class="atlas-status" data-tone="warning">Pendiente</span></td><td>19 Sep</td></tr><tr><td>Registrar evidencia</td><td>Daniela Cruz</td><td><span class="atlas-status">Pendiente</span></td><td>20 Sep</td></tr></tbody></table></div></div>
+<div class="demo-tab-panel" data-tab-panel="aprobaciones" hidden><div class="demo-panel" style="margin-top:12px"><p class="atlas-eyebrow">Decisión pendiente</p><h3>Extensión de fecha objetivo</h3><p>Solicitud sintética por documentación aún pendiente. Nueva fecha propuesta: 20 Sep 2026.</p><div class="atlas-key-value" style="margin-top:14px"><div><span>Solicita</span><strong>Mariana Ortega</strong></div><div><span>Estado</span><strong data-approval-status>Pendiente</strong></div></div><button class="atlas-button atlas-button--primary" type="button" data-approve style="margin-top:14px">Aprobar</button></div></div>
+<div class="demo-tab-panel" data-tab-panel="actividad" hidden><div class="atlas-feed" style="margin-top:12px"><article class="atlas-feed__item"><span class="atlas-feed__dot"></span><div><strong>Mariana actualizó el expediente</strong><p>Se confirmó la documentación recibida.</p><small>Hoy · 11:42</small></div></article><article class="atlas-feed__item"><span class="atlas-feed__dot"></span><div><strong>Luis inició revisión de poderes</strong><p>Estado cambiado a En revisión.</p><small>Hoy · 10:05</small></div></article></div></div>
+</section></section>
+
+<section class="demo-view" data-view="clientes" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Portafolio</p><h1>Clientes</h1><p>Organizaciones sintéticas con expediente activo.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><h3>Empresa demo internacional</h3><p>CA · onboarding · Atención requerida</p><button class="atlas-button atlas-button--primary" type="button" data-open-client style="margin-top:14px">Abrir expediente</button></article><article class="demo-panel"><h3>Aurora Market Entry</h3><p>US · soft landing · En curso</p></article><article class="demo-panel"><h3>Nexo Advisory</h3><p>MX · consultoría empresarial · En curso</p></article><article class="demo-panel"><h3>Brava Compliance</h3><p>MX · compliance documental · Pendiente</p></article><article class="demo-panel"><h3>Lumen Back Office</h3><p>ES · back office · Estable</p></article><article class="demo-panel"><h3>Punto Norte Capital</h3><p>MX · soporte financiero · En curso</p></article></div></section></section>
+
+<section class="demo-view" data-view="servicios" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Gobierno de servicios</p><h1>Servicios</h1><p>Engagements y especializaciones activas.</p></section><section class="atlas-section"><div class="atlas-table-shell"><table class="atlas-table"><thead><tr><th>Servicio</th><th>Cliente</th><th>Tipo</th><th>Estado</th></tr></thead><tbody><tr><td>Servicios corporativos demo</td><td>Empresa demo internacional</td><td>Servicios corporativos</td><td><span class="atlas-status" data-tone="warning">Atención</span></td></tr><tr><td>Entrada a mercado</td><td>Aurora Market Entry</td><td>Soft landing</td><td><span class="atlas-status" data-tone="success">En curso</span></td></tr><tr><td>Diagnóstico operativo</td><td>Nexo Advisory</td><td>Consultoría empresarial</td><td><span class="atlas-status">En curso</span></td></tr></tbody></table></div></section></section>
+
+<section class="demo-view" data-view="propuestas" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Referencias comerciales</p><h1>Propuestas y contratos</h1><p>Referencias sintéticas de alcance y estado.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><span class="atlas-status" data-tone="success">Aprobado</span><h3 style="margin-top:12px">PS-DEMO-014</h3><p>Servicios corporativos demo</p></article><article class="demo-panel"><span class="atlas-status">En revisión</span><h3 style="margin-top:12px">PS-DEMO-021</h3><p>Soft landing</p></article><article class="demo-panel"><span class="atlas-status" data-tone="warning">Pendiente</span><h3 style="margin-top:12px">PS-DEMO-027</h3><p>Compliance documental</p></article></div></section></section>
+
+<section class="demo-view" data-view="flujos" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Ruta operativa</p><h1>Flujos</h1><p>Seguimiento desde intake hasta cierre.</p></section><section class="atlas-section"><div class="demo-panel"><h3>Flujo principal de servicio</h3><p>Abrir expediente → revisar servicio → actualizar trabajo → registrar evidencia → confirmar estado.</p><div style="margin-top:13px"><div class="demo-step is-done"><b>✓</b><span>Intake</span><small>Completo</small></div><div class="demo-step is-active"><b>2</b><span>Documentación</span><small>En curso</small></div><div class="demo-step"><b>3</b><span>Ejecución</span><small>Pendiente</small></div><div class="demo-step"><b>4</b><span>Evidencia y cierre</span><small>Pendiente</small></div></div></div></section></section>
+
+<section class="demo-view" data-view="documentos" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Control documental</p><h1>Documentos</h1><p>Requisitos, recepción y estado del expediente.</p></section><section class="atlas-section"><div class="atlas-table-shell"><table class="atlas-table"><thead><tr><th>Documento</th><th>Cliente</th><th>Estado</th><th></th></tr></thead><tbody><tr><td>Acta constitutiva</td><td>Empresa demo internacional</td><td><span class="atlas-status" data-tone="success">Recibido</span></td><td><button class="demo-table-action" data-doc="Acta constitutiva" type="button">Ver</button></td></tr><tr><td>Comprobante de domicilio</td><td>Empresa demo internacional</td><td><span class="atlas-status" data-tone="warning" data-missing>Pendiente</span></td><td><button class="demo-table-action" data-doc="Comprobante de domicilio" type="button">Ver</button></td></tr></tbody></table></div></section></section>
+
+<section class="demo-view" data-view="responsables" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Ownership</p><h1>Responsables</h1><p>Quién tiene cada compromiso y siguiente acción.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><h3>Mariana Ortega</h3><p>Operaciones · 3 expedientes</p></article><article class="demo-panel"><h3>Luis Herrera</h3><p>Revisión documental · 2 expedientes</p></article><article class="demo-panel"><h3>Sofía Martínez</h3><p>Consultoría · 2 expedientes</p></article></div></section></section>
+
+<section class="demo-view" data-view="vencimientos" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Compromisos</p><h1>Vencimientos</h1><p>Fechas objetivo y atención requerida.</p></section><section class="atlas-section"><div class="atlas-table-shell"><table class="atlas-table"><thead><tr><th>Compromiso</th><th>Cliente</th><th>Fecha</th><th>Estado</th></tr></thead><tbody><tr><td>Documentación inicial</td><td>Empresa demo internacional</td><td>18 Sep · 14:00</td><td><span class="atlas-status" data-tone="warning">Próximo</span></td></tr><tr><td>Revisión de alcance</td><td>Aurora Market Entry</td><td>19 Sep · 10:30</td><td><span class="atlas-status">Programado</span></td></tr></tbody></table></div></section></section>
+
+<section class="demo-view" data-view="recurrentes" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Seguimiento recurrente</p><h1>Servicios recurrentes</h1><p>Próximos ciclos y responsables.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><span class="atlas-pill">Mensual</span><h3 style="margin-top:12px">Control documental</h3><p>Brava Compliance · 01 Oct</p></article><article class="demo-panel"><span class="atlas-pill">Mensual</span><h3 style="margin-top:12px">Back office operativo</h3><p>Lumen Back Office · 03 Oct</p></article><article class="demo-panel"><span class="atlas-pill">Trimestral</span><h3 style="margin-top:12px">Revisión ejecutiva</h3><p>Nexo Advisory · 15 Oct</p></article></div></section></section>
+
+<section class="demo-view" data-view="evidencia" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Trazabilidad</p><h1>Evidencia</h1><p>Elementos y actividad que explican el estado del trabajo.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><h3>Documento recibido</h3><p>Acta constitutiva · Empresa demo internacional</p></article><article class="demo-panel"><h3>Decisión registrada</h3><p>Alcance inicial aprobado · 12 Sep</p></article><article class="demo-panel"><h3>Seguimiento</h3><p>Documento pendiente · Responsable asignado</p></article></div></section></section>
+
+<section class="demo-view" data-view="reportes" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Resumen ejecutivo</p><h1>Reportes</h1><p>Lectura sintética del portafolio.</p></section><section class="atlas-section"><div class="demo-kpis"><div class="demo-kpi"><span>Clientes activos</span><strong>8</strong><em>Portafolio demo</em></div><div class="demo-kpi"><span>Expedientes completos</span><strong>62%</strong><em>Promedio sintético</em></div><div class="demo-kpi"><span>Tareas vencidas</span><strong>1</strong><em>Requiere atención</em></div><div class="demo-kpi"><span>Vencimientos</span><strong>2</strong><em>7 días</em></div><div class="demo-kpi"><span>Recurrentes</span><strong>3</strong><em>Próximo ciclo</em></div></div></section></section>
+
+<section class="demo-view" data-view="configuracion" hidden><section class="atlas-hero atlas-reveal is-visible"><p class="atlas-eyebrow">Configuración</p><h1>Configuración</h1><p>Controles locales de demostración. No escriben configuración real.</p></section><section class="atlas-section"><div class="demo-route-grid"><article class="demo-panel"><h3>Notificaciones</h3><p>Avisar antes de vencimientos.</p><button class="atlas-button" type="button" data-toast="Preferencia actualizada sólo en la demo." style="margin-top:14px">Activado</button></article><article class="demo-panel"><h3>Vista inicial</h3><p>Abrir en Expedientes.</p><button class="atlas-button" type="button" data-toast="Preferencia actualizada sólo en la demo." style="margin-top:14px">Expedientes</button></article><article class="demo-panel"><h3>Densidad</h3><p>Vista compacta de escritorio.</p><button class="atlas-button" type="button" data-toast="Preferencia actualizada sólo en la demo." style="margin-top:14px">Compacta</button></article></div></section></section>
+
+</div></main></div>
+
+<div class="demo-overlay" data-doc-overlay hidden><section class="demo-overlay__panel" role="dialog" aria-modal="true"><div style="display:flex;justify-content:space-between;gap:12px"><div><p class="atlas-eyebrow">Vista previa sintética</p><h2 data-doc-title>Documento</h2><p>Esta previsualización no contiene información real.</p></div><button class="atlas-icon-button" type="button" data-close-doc aria-label="Cerrar">×</button></div><div class="demo-paper"><strong>PRISMA · Documento de demostración</strong><i></i><i></i><i></i><i></i><i></i></div></section></div>
+<div class="demo-toast" data-toast-region role="status"><strong>Listo</strong><span data-toast-copy>Cambio aplicado sólo en esta demostración.</span></div>
+
+<script>
+(function(){
+var root=document.documentElement;
+root.style.setProperty("--atlas-accent","103, 225, 255");
+root.style.setProperty("--atlas-accent-2","177, 151, 255");
+root.style.setProperty("--atlas-accent-3","255, 198, 112");
+document.body.classList.add("is-ready");
+var views=[].slice.call(document.querySelectorAll("[data-view]"));
+function showRoute(route){
+var allowed=["clientes","expedientes","servicios","propuestas","flujos","documentos","responsables","vencimientos","recurrentes","evidencia","reportes","configuracion"];
+var safe=allowed.indexOf(route)>=0?route:"expedientes";
+views.forEach(function(v){v.hidden=v.getAttribute("data-view")!==safe;});
+[].slice.call(document.querySelectorAll(".atlas-nav__item[data-route]")).forEach(function(b){var active=b.getAttribute("data-route")===safe;b.classList.toggle("is-active",active);if(active){b.setAttribute("aria-current","page");}else{b.removeAttribute("aria-current");}});
+history.replaceState(null,"","#"+safe);
+window.scrollTo({top:0,behavior:"smooth"});
+}
+[].slice.call(document.querySelectorAll("[data-route]")).forEach(function(n){n.addEventListener("click",function(e){e.preventDefault();showRoute(n.getAttribute("data-route"));});});
+var toast=document.querySelector("[data-toast-region]"),timer;
+function notify(copy){clearTimeout(timer);toast.querySelector("[data-toast-copy]").textContent=copy;toast.classList.add("is-visible");timer=setTimeout(function(){toast.classList.remove("is-visible");},3000);}
+[].slice.call(document.querySelectorAll("[data-toast]")).forEach(function(b){b.addEventListener("click",function(){notify(b.getAttribute("data-toast"));});});
+[].slice.call(document.querySelectorAll("[data-open-client]")).forEach(function(b){b.addEventListener("click",function(){showRoute("expedientes");var w=document.querySelector("[data-workspace]");w.hidden=false;setTimeout(function(){w.scrollIntoView({behavior:"smooth",block:"start"});},60);});});
+var tabs=[].slice.call(document.querySelectorAll(".demo-tab"));
+tabs.forEach(function(tab){tab.addEventListener("click",function(){var id=tab.getAttribute("data-tab");tabs.forEach(function(t){t.setAttribute("aria-selected",String(t===tab));});[].slice.call(document.querySelectorAll("[data-tab-panel]")).forEach(function(p){p.hidden=p.getAttribute("data-tab-panel")!==id;});});});
+var req=document.querySelector("[data-request-doc]");if(req){req.addEventListener("click",function(){req.textContent="Solicitud registrada ✓";req.disabled=true;[].slice.call(document.querySelectorAll("[data-missing]")).forEach(function(n){n.textContent="Solicitado";});notify("El documento quedó solicitado sólo dentro de esta sesión demo.");});}
+var approve=document.querySelector("[data-approve]");if(approve){approve.addEventListener("click",function(){approve.textContent="Aprobado ✓";approve.disabled=true;document.querySelector("[data-approval-status]").textContent="Aprobado";document.querySelector("[data-approval-count]").textContent="0";notify("La decisión se registró sólo en el estado local de la demostración.");});}
+var overlay=document.querySelector("[data-doc-overlay]");
+[].slice.call(document.querySelectorAll("[data-doc]")).forEach(function(b){b.addEventListener("click",function(){overlay.querySelector("[data-doc-title]").textContent=b.getAttribute("data-doc");overlay.hidden=false;document.body.style.overflow="hidden";});});
+function closeDoc(){overlay.hidden=true;document.body.style.overflow="";}
+document.querySelector("[data-close-doc]").addEventListener("click",closeDoc);
+overlay.addEventListener("click",function(e){if(e.target===overlay){closeDoc();}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!overlay.hidden){closeDoc();}});
+document.querySelector("[data-reset]").addEventListener("click",function(){location.reload();});
+document.querySelector("[data-open-search]").addEventListener("click",function(){showRoute("clientes");notify("Búsqueda demo abierta en Clientes.");});
+showRoute((location.hash||"#expedientes").slice(1));
+})();
+</script>
+</body>
+</html>
