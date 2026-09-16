@@ -10,8 +10,8 @@ Herramientas canónicas para evolucionar, generar y verificar el CRM comercial X
 
 Identidad exacta V3:
 
-- SHA-256: `f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f`
-- Tamaño: `220348` bytes
+- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
+- Tamaño: `221187` bytes
 - Prospectos preservados desde V2: `27`
 - Fuente de verdad: `Seguimiento comercial`
 
@@ -89,7 +89,7 @@ El builder trabaja incrementalmente sobre el OOXML de V2. `artifact_tool` fue in
 - `tblSeguimiento = A6:P1006`.
 - 27 nombres definidos; catálogos dinámicos incluidos.
 - 37 reglas de validación.
-- 17,758 fórmulas de hoja.
+- 19,258 fórmulas de hoja.
 - 5 gráficos.
 - 0 fórmulas con tokens `#REF!`, `#VALUE!`, `#NAME?`, `#DIV/0!`.
 - Verificador oficial: PASS.
@@ -99,3 +99,11 @@ El builder trabaja incrementalmente sobre el OOXML de V2. `artifact_tool` fue in
 ## Principio
 
 Más inteligencia debajo, menos fricción arriba. El operador captura lo mínimo y recibe prioridad, alertas, score, temperatura, siguiente acción y contexto comercial sin convertir el libro en una cabina de avión.
+
+## Limpieza visual post-QA
+
+- Filas vacías ya no muestran `0`, `31-dic-1899` ni otros cachés de fórmula.
+- Los IDs de prospecto y actividad aparecen sólo cuando la fila tiene un registro real.
+- `Actividad ID` y `Cambio etapa?` quedan ocultos en Seguimiento.
+- Alturas de filas de tablas normalizadas para evitar geometría irregular.
+- La limpieza forma parte del builder determinista; no es un parche manual al XLSX.
