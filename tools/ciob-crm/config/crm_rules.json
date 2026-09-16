@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "ciob.crm.rules.v2",
+  "schemaVersion": "ciob.crm.rules.v3",
   "baseline": {
     "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
     "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
@@ -9,9 +9,10 @@
   "release": {
     "version": "V3",
     "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
-    "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0",
-    "sizeBytes": 95134,
-    "status": "GENERATED_VERIFIED"
+    "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f",
+    "sizeBytes": 220348,
+    "status": "PASS_FINAL_VERIFIED",
+    "deterministicBuild": true
   },
   "sourceOfTruth": "Seguimiento comercial",
   "sheetsRequired": [
@@ -22,10 +23,9 @@
     "Configuración",
     "Instrucciones"
   ],
-  "preparedCapacity": {
-    "prospects": 80,
-    "activities": 60,
-    "policy": "expand table through builder before limit"
+  "capacities": {
+    "prospects": 500,
+    "activities": 1000
   },
   "score": {
     "hotMin": 70,
@@ -42,14 +42,18 @@
     "whatsapp": "soft",
     "website": "soft",
     "crossField": "warn-first",
-    "automaticCells": "visual-auto-zone"
+    "automaticCells": "protected"
   },
   "duplicatePolicy": {
-    "email": "trim+lower",
-    "phone": "exact nonblank",
-    "whatsapp": "exact nonblank",
+    "email": "trim+lower+remove-spaces",
+    "phone": "strip spaces hyphens parentheses plus dots slashes",
+    "whatsapp": "strip spaces hyphens parentheses plus dots slashes",
     "companyAndName": "exact pair",
     "flag": "REVISAR"
+  },
+  "catalogPolicy": {
+    "strategy": "dynamic-defined-names",
+    "expandWithNewNonblankRows": true
   },
   "visual": {
     "inputFill": "#FFFFFF",
