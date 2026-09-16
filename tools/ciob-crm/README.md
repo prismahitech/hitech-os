@@ -9,12 +9,27 @@ Repositorio fuente para evolucionar y verificar el CRM comercial XLSX de CIOB si
 - El XLSX es un artefacto generado/versionado, no la única fuente de verdad.
 - Las reglas comerciales, validaciones y criterios de QA viven como texto/configuración revisable en Git.
 
+## Baseline V2
+
+El baseline exacto está preservado de forma persistente en ChatGPT Library:
+
+`/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx`
+
+Identidad esperada:
+
+- SHA-256: `e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9`
+- Tamaño: `159678` bytes
+- Nombre canónico futuro en repo: `baseline/CIOB_CRM_V2_FINAL.xlsx`
+
+El conector GitHub usado en esta sesión no acepta una referencia de archivo binario local directamente para crear el blob. No se debe fingir que el binario ya está en Git. El manifiesto de baseline permite recuperar el archivo persistente y comprobar su identidad antes de construir V3.
+
 ## Layout
 
 ```text
 tools/ciob-crm/
   README.md
   AGENTS.md
+  CONTINUE_V3.md
   config/
     crm_rules.json
   spec/
@@ -22,19 +37,21 @@ tools/ciob-crm/
   tests/
     verify_xlsx.py
   baseline/
-    CIOB_CRM_V2_FINAL.xlsx     # se incorpora después del gate
+    BASELINE_MANIFEST.json
+    CIOB_CRM_V2_FINAL.xlsx     # destino canónico cuando se materialice el binario
   output/
     CIOB_CRM_V3.xlsx           # generado, no fuente canónica
 ```
 
 ## Workflow
 
-1. Preservar un baseline V2 inmutable.
-2. Cambiar reglas/spec en commits pequeños.
-3. Generar un XLSX candidato.
-4. Ejecutar `tests/verify_xlsx.py`.
-5. Verificar visualmente Mi día, Dashboard, Base y Seguimiento.
-6. Sólo entonces promover el XLSX como versión entregable.
+1. Recuperar el baseline V2 persistente y verificar SHA-256 + tamaño.
+2. Preservarlo inmutable.
+3. Cambiar reglas/spec en commits pequeños.
+4. Generar un XLSX candidato por checkpoints.
+5. Ejecutar `tests/verify_xlsx.py`.
+6. Verificar visualmente Mi día, Dashboard, Base y Seguimiento.
+7. Sólo entonces promover el XLSX como versión entregable.
 
 ## Design principle
 
