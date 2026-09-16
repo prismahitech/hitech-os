@@ -10,8 +10,8 @@ Herramientas canónicas para evolucionar, generar y verificar el CRM comercial X
 
 Identidad exacta V3:
 
-- SHA-256: `054be2704261e44c93d548b84eaf56ca7a491a15591d527eb07c0d8577251b8e`
-- Tamaño: `221187` bytes
+- SHA-256: `ca2eeb60abe76f80d809728e1655f11d21b3a649d0b44a76b6ee4a5cd87a22f1`
+- Tamaño: `225600` bytes
 - Prospectos preservados desde V2: `27`
 - Fuente de verdad: `Seguimiento comercial`
 
@@ -35,6 +35,7 @@ tools/ciob-crm/
   CONTINUE_V3.md
   build/
     build_crm_v3.py
+    polish_v3_presentation.py
   config/
     crm_rules.json
   spec/
@@ -42,6 +43,7 @@ tools/ciob-crm/
   tests/
     verify_xlsx.py
     verify_v3_semantics.py
+    verify_v3_presentation.py
   evidence/
     CRM_V3_VERIFICATION.json
     CRM_V3_VERIFICATION.md
@@ -107,3 +109,8 @@ Más inteligencia debajo, menos fricción arriba. El operador captura lo mínimo
 - `Actividad ID` y `Cambio etapa?` quedan ocultos en Seguimiento.
 - Alturas de filas de tablas normalizadas para evitar geometría irregular.
 - La limpieza forma parte del builder determinista; no es un parche manual al XLSX.
+
+
+## Presentación premium
+
+La capa final de presentación se aplica con `build/polish_v3_presentation.py` sobre el V3 limpio verificado. Rediseña Instrucciones como guía operativa completa y estiliza los 5 gráficos con tarjetas redondeadas, sombras suaves, degradados, relieve sutil y paleta semántica CIOB. `tests/verify_v3_presentation.py` certifica esta capa.
