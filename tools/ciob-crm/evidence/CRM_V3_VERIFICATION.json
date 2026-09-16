@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "ciob.crm.verification.v1",
+  "verifiedAt": "2026-09-15",
+  "artifact": {
+    "name": "CIOB_CRM_V3_FINAL.xlsx",
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
+    "sizeBytes": 95134,
+    "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0"
+  },
+  "preservedInput": {
+    "prospects": 27,
+    "trackingActivities": 0
+  },
+  "workbook": {
+    "sheets": [
+      "Mi día",
+      "Dashboard",
+      "Base de contactos",
+      "Seguimiento comercial",
+      "Configuración",
+      "Instrucciones"
+    ],
+    "structuredTables": 17,
+    "formulas": 2723,
+    "dataValidations": 17,
+    "formulaErrorScan": 0,
+    "zipOk": true,
+    "xmlWellFormed": true
+  },
+  "keyTables": {
+    "tblProspectos": "A6:AW86",
+    "tblSeguimiento": "A6:Q66"
+  },
+  "tracking": {
+    "formulas": 366,
+    "dropdownValidations": 6,
+    "preparedRows": 60
+  },
+  "base": {
+    "preparedRows": 80
+  },
+  "visualReview": [
+    "Mi día",
+    "Dashboard",
+    "Base de contactos",
+    "Seguimiento comercial"
+  ],
+  "observedDataQuality": [
+    "CIOB-015 has an email-like value in WhatsApp and is flagged by V3 coherence rules"
+  ],
+  "doesNotProve": [
+    "future Excel versions will render every hyperlink identically",
+    "phone/WhatsApp punctuation-normalized fuzzy duplicate matching",
+    "unlimited preseeded rows without builder expansion"
+  ],
+  "status": "PASS_V3_GENERATED_VERIFIED"
+}

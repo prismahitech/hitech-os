@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "ciob.crm.release-manifest.v1",
+  "release": "V3",
+  "status": "PASS_V3_GENERATED_VERIFIED",
+  "artifactName": "CIOB_CRM_V3_FINAL.xlsx",
+  "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
+  "sizeBytes": 95134,
+  "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0",
+  "sourceBaseline": {
+    "version": "V2",
+    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9"
+  },
+  "verification": "tools/ciob-crm/evidence/CRM_V3_VERIFICATION.json",
+  "futureStartingPoint": true
+}

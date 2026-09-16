@@ -1,86 +1,107 @@
-# CIOB CRM V3 — plan de fortalecimiento
+# CIOB CRM V3 — fortalecimiento
 
-Estado: PROPOSED
+Estado: **GENERATED_VERIFIED**
 Base funcional: CIOB CRM V2
-Objetivo: aumentar blindaje, velocidad operativa y calidad visual sin elevar la complejidad percibida.
+Artefacto final: `/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx`
 
-## 1. Blindaje
+## Resultado
 
-- Catálogos de Configuración autoexpandibles.
-- Validar porcentajes 0–100%, pesos no negativos, días enteros positivos y Score HOT > WARM.
-- Validaciones cruzadas:
-  - actividad => Fecha + ID prospecto;
-  - próximo seguimiento >= fecha de actividad;
-  - Negociación => valor potencial recomendado/obligatorio configurable;
-  - Propuesta enviada => servicio potencial definido;
-  - Cliente/Perdido/No viable => resultado/cierre coherente;
-  - prospecto activo => siguiente acción o fecha.
-- Validación suave de correo, teléfono, WhatsApp y URL.
-- Normalización para duplicados por correo/teléfono/WhatsApp.
-- Proteger celdas automáticas preservando filtros, orden y captura.
+V3 fue reconstruida de forma controlada a partir de los datos del V2 porque el importador de artifact_tool fallaba con el XLSX V2 concreto. El baseline original quedó inmutable y se preservaron los 27 prospectos. No existían actividades históricas que reconciliar.
 
-## 2. Inteligencia
+## 1. Blindaje implementado
+
+- Catálogos de Configuración convertidos en tablas estructuradas.
+- Dropdowns ampliados para contacto, fuente, necesidades, servicio, responsable, canal, idioma, actividad, resultado, motivo de cierre y estatus.
+- Validaciones cruzadas en Seguimiento:
+  - Fecha + ID + actividad obligatorios cuando existe interacción.
+  - Próximo seguimiento no puede preceder a la actividad sin advertencia.
+  - Perdido/No viable exige motivo de cierre.
+  - Cliente requiere resultado Ganado.
+  - Ganado requiere estatus Cliente.
+- Coherencia en Base:
+  - posible duplicado;
+  - correo sospechoso;
+  - WhatsApp sospechoso;
+  - falta de motivo de cierre;
+  - falta de valor en etapa avanzada.
+- Campos automáticos diferenciados visualmente de captura manual.
+
+## 2. Inteligencia implementada
 
 - Motivo de pérdida/cierre.
 - Días en etapa.
-- Intentos consecutivos sin respuesta.
-- Completitud contextual por etapa.
-- Próxima fecha sugerida según resultado.
-- Canal sugerido según historial/canal preferido.
+- Intentos sin respuesta.
+- Completitud contextual.
+- Último resultado y último motivo de cierre ocultos como auxiliares.
+- Fecha sugerida por resultado.
+- Canal sugerido.
 - Siguiente acción sugerida enriquecida.
+- Score y HOT/WARM/COLD.
+- Pipeline ponderado.
+- Prioridad operativa de Mi día.
 
-## 3. Productividad
+## 3. Productividad implementada
 
-- Mi día priorizado:
-  1. Vencido + HOT
-  2. Vencido
-  3. Hoy + HOT
-  4. Hoy
-  5. Próximo
-  6. HOT sin fecha
-  7. WARM sin fecha
-  8. datos incompletos
-  9. posibles duplicados
-- Orden secundario: Score desc, Valor potencial desc.
-- Selector de Responsable.
-- Accesos de un clic: WhatsApp, correo, web y registrar actividad.
-- Campos nuevos de bajo costo:
-  - Idioma preferido.
-  - Canal preferido.
+Mi día prioriza:
+1. Vencido + HOT.
+2. Vencido.
+3. Hoy + HOT.
+4. Hoy.
+5. Próximo.
+6. HOT sin fecha.
+7. WARM sin fecha.
+8. Datos incompletos.
+9. Duplicados/estancados y resto por score/valor.
 
-## 4. Visual premium
+Incluye:
+- selector de Responsable;
+- accesos rápidos de correo/WhatsApp/web;
+- idioma preferido;
+- canal preferido;
+- acción sugerida;
+- valor y responsable visibles en la cola.
 
-- Reducir densidad visible de Base de contactos.
-- Grupos colapsables: contacto, perfil empresa, oportunidad, inteligencia.
-- Núcleo visible aproximado:
-  Empresa | Contacto | Cargo | Teléfono | Correo | Temp. | Prioridad | Estatus | Próx. fecha | Acción | Score | Valor | Responsable | Alerta
-- Paleta funcional:
-  - navy: navegación/títulos;
-  - blanco: captura;
-  - azul grisáceo tenue: automático;
-  - dorado: acción/próximo;
-  - rojo: problema;
-  - verde: éxito.
-- HOT/WARM/COLD y alertas como badges discretos.
-- Dashboard ejecutivo:
-  Pipeline | Ponderado | HOT | Vencidos | Clientes | Conversión
-  + funnel + temperatura + salud de seguimiento + fuentes + motivos de pérdida.
+## 4. Visual implementado
 
-## 5. No objetivos
+- Sistema navy/blanco/azul grisáceo/dorado/rojo/verde.
+- Campos automáticos en azul grisáceo tenue.
+- Dashboard ejecutivo.
+- Funnel por estatus.
+- Temperatura comercial.
+- KPI de pipeline en riesgo, estancados, completitud, duplicados, conversión y score.
+- Seguimiento comercial limpio y enfocado.
+- Base detallada como hoja maestra; Mi día funciona como vista compacta operativa.
 
-- No agregar docenas de etapas MQL/SQL innecesarias.
-- No crear una hoja por vendedor.
-- No duplicar conceptos como prioridad/interés/temperatura.
-- No VBA por defecto.
-- No tocar runtime PRISMA.
+## 5. Decisiones de estabilidad
+
+La primera construcción con cientos/miles de filas físicamente presembradas provocó fallos del motor de edición. V3 final usa:
+
+- 80 filas de prospecto preparadas;
+- 60 filas de actividad preparadas;
+- tablas estructuradas para crecimiento;
+- expansión futura por builder antes de alcanzar el límite.
+
+Esto reduce peso, fórmulas duplicadas y riesgo de corrupción sin limitar el uso normal actual.
+
+## 6. Limitaciones explícitas
+
+- Correo se normaliza con trim/lower para duplicados.
+- Teléfono y WhatsApp usan coincidencia exacta no vacía en esta release; la normalización de puntuación internacional queda como mejora posterior para no introducir fórmulas frágiles.
+- Los enlaces HYPERLINK son fórmulas nativas de Excel. El renderizador interno de artifact_tool no evalúa HYPERLINK, pero Excel sí.
+- No se agregó VBA.
 
 ## Definition of done
 
-- XLSX abre correctamente.
-- No #REF!, #VALUE!, #NAME?, #DIV/0! ni referencias rotas en zonas clave.
-- Catálogos y validaciones operan en filas nuevas.
-- Fórmulas automáticas están protegidas.
-- Seguimiento gobierna último contacto, próxima fecha, próxima acción y estatus.
-- Mi día presenta una cola accionable y priorizada.
-- Dashboard es legible y ejecutivo.
-- Revisión visual de cuatro hojas clave aprobada.
+- [x] XLSX exportado.
+- [x] Reabierto e inspeccionado.
+- [x] ZIP/OOXML íntegro.
+- [x] 6 hojas requeridas.
+- [x] 17 tablas.
+- [x] 2723 fórmulas.
+- [x] 17 validaciones.
+- [x] 0 errores de fórmula detectados.
+- [x] tblProspectos A6:AW86.
+- [x] tblSeguimiento A6:Q66.
+- [x] Seguimiento: 366 fórmulas + 6 dropdowns.
+- [x] Revisión visual de Mi día, Dashboard, Base y Seguimiento.
+- [x] Artefacto V3 persistido con SHA-256 verificado.

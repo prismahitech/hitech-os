@@ -1,13 +1,18 @@
 {
-  "schemaVersion": "ciob.crm.rules.v1",
+  "schemaVersion": "ciob.crm.rules.v2",
   "baseline": {
-    "repoPath": "baseline/CIOB_CRM_V2_FINAL.xlsx",
     "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
     "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
     "sizeBytes": 159678,
-    "status": "PERSISTED_LIBRARY_SOURCE_PENDING_REPO_BINARY_MATERIALIZATION"
+    "immutable": true
   },
-  "output": "output/CIOB_CRM_V3.xlsx",
+  "release": {
+    "version": "V3",
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
+    "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0",
+    "sizeBytes": 95134,
+    "status": "GENERATED_VERIFIED"
+  },
   "sourceOfTruth": "Seguimiento comercial",
   "sheetsRequired": [
     "Mi día",
@@ -17,9 +22,10 @@
     "Configuración",
     "Instrucciones"
   ],
-  "capacities": {
-    "prospects": 500,
-    "activities": 1000
+  "preparedCapacity": {
+    "prospects": 80,
+    "activities": 60,
+    "policy": "expand table through builder before limit"
   },
   "score": {
     "hotMin": 70,
@@ -33,9 +39,17 @@
   "validationPolicy": {
     "email": "soft",
     "phone": "soft",
+    "whatsapp": "soft",
     "website": "soft",
     "crossField": "warn-first",
-    "automaticCells": "protected"
+    "automaticCells": "visual-auto-zone"
+  },
+  "duplicatePolicy": {
+    "email": "trim+lower",
+    "phone": "exact nonblank",
+    "whatsapp": "exact nonblank",
+    "companyAndName": "exact pair",
+    "flag": "REVISAR"
   },
   "visual": {
     "inputFill": "#FFFFFF",
