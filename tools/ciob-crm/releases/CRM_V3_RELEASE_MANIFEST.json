@@ -1,15 +1,23 @@
 {
-  "schemaVersion": "ciob.crm.release-manifest.v1",
+  "schemaVersion": "ciob.crm.release-manifest.v2",
   "release": "V3",
-  "status": "PASS_V3_GENERATED_VERIFIED",
+  "status": "PASS_FINAL_VERIFIED",
   "artifactName": "CIOB_CRM_V3_FINAL.xlsx",
   "libraryPath": "/CIOB CRM/CIOB_CRM_V3_FINAL.xlsx",
-  "sizeBytes": 95134,
-  "sha256": "3df440dafe2ed9e4f1c29220dbedb9627ec79553beb8226ba685dfe2981f01f0",
+  "sizeBytes": 220348,
+  "sha256": "f5a39cf8be5f62e402dde98d201410df9830cfab81cc886bcf7315c08250ce9f",
   "sourceBaseline": {
     "version": "V2",
-    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9"
+    "libraryPath": "/CIOB CRM/CIOB_CRM_V2_FINAL.xlsx",
+    "sizeBytes": 159678,
+    "sha256": "e8eb06bcf05b88500c4733a9b54b11f355ce3a7c51773b062fefafab86b27bf9",
+    "immutable": true
   },
+  "builder": "tools/ciob-crm/build/build_crm_v3.py",
+  "structuralVerifier": "tools/ciob-crm/tests/verify_xlsx.py",
+  "semanticVerifier": "tools/ciob-crm/tests/verify_v3_semantics.py",
   "verification": "tools/ciob-crm/evidence/CRM_V3_VERIFICATION.json",
+  "deterministicBuild": true,
+  "secondBuildByteIdentical": true,
   "futureStartingPoint": true
 }
