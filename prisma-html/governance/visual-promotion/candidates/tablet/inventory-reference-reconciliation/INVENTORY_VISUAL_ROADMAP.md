@@ -177,6 +177,38 @@ certify or rollback
 
 The visual solution described here must survive the governance work unchanged unless new repository evidence disproves a specific detail.
 
+## 2026-09-27 resolution checkpoint
+
+A bounded reconciliation against current machine-readable authority was performed before any mutation.
+
+### Newly proven authority
+
+- `/inventory` is explicitly registered in the current Tablet route authority as `tablet.inventory.route`.
+- Its canonical route regions include `tablet.inventory.route.main-content` and `tablet.inventory.route.shell`.
+- The exact physical layer remains the governed `table` layer:
+  - implementation layer: `products.tablet.app.components.catalog.stock.selling.assist.catalog.stock.selling.assist.module.css.data.prisma.route.inventory.stockcell`
+  - selector: `[data-prisma-route="/inventory"] .stockCell`
+  - visual region: `table`
+  - safety classification: `safeVisualOnly`
+  - current projection hashes remain consistent with the visual-source manifest.
+- The Tablet route budget explicitly permits background visibility and zero full-viewport opaque panels on `/inventory`.
+- The governed Tablet light-shell route-combo catalog classifies inventory/audit as `route_combo.table_heavy_operations`, with medium glass density, signature-only rims, a semantic glow budget of one strong plus three medium accents, and reduced-motion compliance.
+- The named Materiality Catalog was explicitly inspected for this task invocation, but the canonical registry file currently contains no usable records. It therefore supplies no semantic or registration authority for this target.
+
+### Still missing, deliberately unresolved
+
+The current authority does **not** prove an exact region/slot/component binding for `.stockCell`, nor an existing Identity visual meaning or Identity recipe for the generic table role. The existing Atlasfin `REC.table.governed.v2` match remains reference evidence only.
+
+Therefore this target remains:
+
+`REGISTER_TARGET_FIRST`
+
+No canonical ID was invented, no target-index record was edited, and no product/runtime mutation was performed.
+
+### Immediate next governed step
+
+Use the newly proven route/layer evidence to resolve whether an existing canonical neutral table meaning/recipe/binding can be reused. If no existing authority exists, the canonical composer must be allowed to register the missing semantic/application authority. Only after that may Work Entry/GVAE be reconsidered.
+
 ## Historical note
 
 A prior direct visual patch attempt was intentionally abandoned after the Universal Visual Work Entry Gate returned `REGISTER_TARGET_FIRST`. The attempted patch was reverted and its PR closed.
