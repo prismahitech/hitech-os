@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 902,
+  "file_count_excluding_manifest": 904,
   "files": [
     {
       "bytes": 156,
@@ -3124,7 +3124,7 @@
     {
       "bytes": 14206,
       "path": "governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json",
-      "sha256": "7B18D345B1B6B7C6282755DE7E0A21E15E36128AB0A228A9F92A2C9A1AE2B6DD"
+      "sha256": "BC196A387D7116BD46A138AEAE7ECBB6DDB2787EFE2B117BD83F2B7EB1D1546A"
     },
     {
       "bytes": 8119,
@@ -3287,6 +3287,11 @@
       "sha256": "17F31D655175CE84D72F490CE7FA6F02C1D950B5453006E8B4F0ED2F9CE7BD40"
     },
     {
+      "bytes": 6879,
+      "path": "governance/visual-promotion/candidates/shared-ui/visual-language-catalog-expansion/PRISMA_PREMIUM_VISUAL_LANGUAGE_CANDIDATE.json",
+      "sha256": "9C536B4E3EB9B3E14D8D0B1C96422032FFBEBA75FA90663CE4596E1AB11D2605"
+    },
+    {
       "bytes": 501357,
       "path": "governance/visual-promotion/candidates/tablet/CANDIDATES.jsonl",
       "sha256": "3D3A70E4B271F70305D41DFD70511E9776D6EC23F32C4011A4B543D6A628B915"
@@ -3335,6 +3340,11 @@
       "bytes": 4982,
       "path": "governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
       "sha256": "05E56F1CD22205D732EE3C412B149C9B7527BE658572DB1C0CCEEF8A904EF06F"
+    },
+    {
+      "bytes": 7780,
+      "path": "governance/visual-promotion/candidates/tablet/inventory-reference-reconciliation/INVENTORY_VISUAL_ROADMAP.md",
+      "sha256": "4E7AB81994583D5523DCFD11C0542AE5EC166D429731E7D17212B95D84737923"
     },
     {
       "bytes": 632,
