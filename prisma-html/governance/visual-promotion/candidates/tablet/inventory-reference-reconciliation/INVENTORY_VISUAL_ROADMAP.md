@@ -193,7 +193,6 @@ A bounded reconciliation against current machine-readable authority was performe
   - current projection hashes remain consistent with the visual-source manifest.
 - The Tablet route budget explicitly permits background visibility and zero full-viewport opaque panels on `/inventory`.
 - The governed Tablet light-shell route-combo catalog classifies inventory/audit as `route_combo.table_heavy_operations`, with medium glass density, signature-only rims, a semantic glow budget of one strong plus three medium accents, and reduced-motion compliance.
-- The named Materiality Catalog was explicitly inspected for this task invocation, but the canonical registry file currently contains no usable records. It therefore supplies no semantic or registration authority for this target.
 
 ### Still missing, deliberately unresolved
 
