@@ -1,0 +1,68 @@
+{
+  "schema": "prisma.visual-promotion.inventory-registration-evidence-packet.v1",
+  "candidateOnly": true,
+  "status": "BLOCKED_MISSING_CANONICAL_AUTHORITY",
+  "targetId": "TGT.CENSUS.TABLET.00EE5391791EB685F977.V1",
+  "surfaceKey": "tablet",
+  "route": {
+    "routeId": "tablet.inventory.route",
+    "routePath": "/inventory",
+    "regionEvidence": [
+      "tablet.inventory.route.main-content",
+      "tablet.inventory.route.shell"
+    ],
+    "routeEvidenceStatus": "CURRENT_AUTHORITY_CONFIRMED"
+  },
+  "physical": {
+    "ownerId": "products.tablet.app.components.catalog.stock.selling.assist.catalog.stock.selling.assist.module.css",
+    "ownerFile": "products/tablet/app/components/catalog-stock-selling-assist/catalog-stock-selling-assist.module.css",
+    "renderComponentId": "products.tablet.app.components.catalog.stock.selling.assist.catalog.stock.selling.assist.screen.tsx",
+    "selector": "[data-prisma-route=\"/inventory\"] .stockCell",
+    "implementationLayerId": "products.tablet.app.components.catalog.stock.selling.assist.catalog.stock.selling.assist.module.css.data.prisma.route.inventory.stockcell",
+    "visualRegion": "table",
+    "safetyClassification": "safeVisualOnly",
+    "projectionMode": "existing-rifat-tablet-generator"
+  },
+  "semantic": {
+    "proposalKey": "proposal.tablet.00ee5391791eb685f977.meaning.table",
+    "visualMeaningCandidate": "table",
+    "visualMeaningId": null,
+    "ndcPrimaryId": null,
+    "status": "PROPOSE_NEW_PENDING_CANONICAL_COMPOSER"
+  },
+  "identity": {
+    "adapterId": "prisma.adapter.tablet.v1",
+    "adapterReadiness": "BINDING_READY_SOURCE_ONLY",
+    "identityRecipeId": null,
+    "existingBindingId": null,
+    "bindingProposalKey": null
+  },
+  "atlasfin": {
+    "recipeId": "REC.table.governed.v2",
+    "adapterId": "ADP.TB.TOUCH.V2",
+    "supportOnly": true,
+    "canonicalMeaningSubstitute": false
+  },
+  "application": {
+    "applicationLayerId": null,
+    "projectionPolicy": "existing-rifat-tablet-generator",
+    "exactTargetRegistrationReady": false
+  },
+  "unresolved": [
+    "MISSING_IDENTITY_RECIPE",
+    "MISSING_BINDING",
+    "MISSING_SLOT",
+    "MISSING_APPLICATION_LAYER",
+    "MISSING_LAYER_APPLICATION_POLICY",
+    "MISSING_EXACT_TARGET_AUTHORITY"
+  ],
+  "prohibitedShortcuts": [
+    "do_not_mint_canonical_visual_meaning_id",
+    "do_not_reuse_atlasfin_recipe_as_identity_recipe",
+    "do_not_invent_slot_id",
+    "do_not_invent_application_layer_id",
+    "do_not_edit_generated_projection",
+    "do_not_apply_gvae"
+  ],
+  "nextGovernedAction": "Canonical composer must resolve/register the missing semantic + Identity recipe + exact binding/application authority before Work Entry can become APPLY_READY."
+}

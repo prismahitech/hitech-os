@@ -3347,6 +3347,11 @@
       "sha256": "69F5BF5A0E35B36E5C4A8FFBB2F02C99ED184F75E453B787D3633917FF4BC06D"
     },
     {
+      "bytes": 2695,
+      "path": "governance/visual-promotion/candidates/tablet/inventory-reference-reconciliation/TARGET_REGISTRATION_EVIDENCE_PACKET.json",
+      "sha256": "4603E225860C0014C977199772164A6B68ED843DD3C73C66A3D8AC4DB4AD8DD2"
+    },
+    {
       "bytes": 632,
       "path": "governance/visual-promotion/contracts/README.md",
       "sha256": "9A3972CCB52F6C824E336E28F98765CEC65683C716D7C469AB39BCD66A61D3C2"
