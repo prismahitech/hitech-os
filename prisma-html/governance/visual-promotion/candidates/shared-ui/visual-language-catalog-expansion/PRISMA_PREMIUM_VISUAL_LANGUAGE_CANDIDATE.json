@@ -1,0 +1,154 @@
+{
+  "schema": "prisma-visual-language-candidate-v1",
+  "candidateOnly": true,
+  "status": "REVIEW_REQUIRED",
+  "purpose": "Preserve and formalize the cross-surface visual language needed by Tablet /inventory and future surfaces without mutating canonical runtime authority in this candidate.",
+  "evidence": {
+    "visualCatalog": "apps/terminal-de-venta-system/docs/design/prisma-visual/VISUAL_CATALOG_V2_REPORT.md",
+    "surfaceAdapters": "prisma-html/authority/rifat/neutral/runtime-sources/config/prisma-visual/surface-adapters.json",
+    "sharedTokens": "apps/terminal-de-venta-system/products/shared-ui/prisma/tokens/prisma-theme.css",
+    "sharedEffects": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/effects/prisma-reference-effects.css",
+    "sharedComponents": "prisma-html/authority/rifat/surfaces/shared-ui/runtime-sources/prisma/components/prisma-components.css",
+    "layerIds": "packages/ui-kit/src/layers/layerIds.ts",
+    "layerContract": "docs/design/layers/LAYER_FLAGS_SYSTEM.md"
+  },
+  "confirmedCurrentState": {
+    "catalogAlreadyGoverns": [
+      "surface roles",
+      "surface density",
+      "default themes",
+      "background contracts",
+      "allowed recipes",
+      "component/recipe policy",
+      "motion budget",
+      "effect budget",
+      "layer budget"
+    ],
+    "sharedVisualRuntimeAlreadyContains": [
+      "glass blur",
+      "panel/card material",
+      "haze",
+      "vignette",
+      "grain/noise",
+      "specular treatment",
+      "ambient shadow",
+      "gold CTA treatment",
+      "reduced-motion fallback",
+      "layer on/off machinery"
+    ],
+    "missingOrFragmentedAtCatalogLevel": [
+      "semantic accent family covering cyan/gold/emerald/violet roles",
+      "cross-surface material language contract tying accents and glass behavior to recipes",
+      "explicit catalog entries for visual effect roles and their layer IDs",
+      "a governed ambient particle/sparkle capability; no canonical particle LayerId was found",
+      "explicit mapping between light-on/light-off presentation and the existing layer flag system",
+      "a single premium visual-language contract consumable by all surface adapters"
+    ]
+  },
+  "visualLanguage": {
+    "material": {
+      "glass": {
+        "role": "shared material family",
+        "properties": [
+          "translucent",
+          "blur-bounded",
+          "saturated-background-reveal",
+          "inner-specular",
+          "ambient-shadow",
+          "thin-edge"
+        ],
+        "adaptationRule": "Each surface adapter controls density, opacity, blur budget and composition. Do not copy Tablet shell geometry into PC/Mobile."
+      }
+    },
+    "semanticAccents": {
+      "cyan": "information, active operational focus, selected/primary informational state",
+      "gold": "attention, commerce emphasis, cart/payment, premium highlight",
+      "emerald": "healthy, available, success, confirmed operational state",
+      "violet": "secondary analysis, structure, selected secondary emphasis",
+      "red": "danger/error only"
+    },
+    "accentRule": "Accents are semantic and localized. They may appear in iconography, borders, glows, text highlights, selected states and radial illumination. They must not become a global page wash.",
+    "effects": {
+      "stage": [
+        "stage.haze",
+        "stage.vignette",
+        "stage.noise",
+        "stage.horizon"
+      ],
+      "surface": [
+        "card.blur",
+        "card.innerStroke",
+        "card.specular",
+        "card.grain",
+        "card.shadowAmbient",
+        "inset.shadow"
+      ],
+      "motion": [
+        "motion.enabled"
+      ],
+      "ambientParticles": {
+        "status": "NOT_CURRENTLY_A_CANONICAL_LAYER",
+        "policy": "Do not invent or enable a production particle layer from this candidate. If required, create a separate governed capability proposal with performance/accessibility budget and exact layer ownership."
+      }
+    },
+    "presentationModes": {
+      "lightOn": {
+        "meaning": "premium effects profile enabled within the surface adapter budget",
+        "mechanism": "existing Layer Flags System/profile/explicit layer resolution",
+        "notASeparateTheme": true
+      },
+      "lightOff": {
+        "meaning": "effects suppressed for performance/accessibility or controlled comparison",
+        "mechanism": "existing Layer Flags System/profile/explicit layer resolution",
+        "notASeparateTheme": true
+      }
+    }
+  },
+  "surfaceAdaptation": {
+    "tablet": {
+      "baseRecipeFamily": "tablet-cloudglass-light",
+      "character": "touch, luminous, operational, atmospheric",
+      "accentDensity": "moderate-localized",
+      "effects": "low-noise-effects",
+      "backgroundMustRemainVisible": true
+    },
+    "pc": {
+      "baseRecipeFamily": "pc-graphite-glass",
+      "character": "dense, analytical, command-oriented",
+      "accentDensity": "restrained-semantic",
+      "effects": "low-noise-effects",
+      "backgroundMustRemainVisible": true
+    },
+    "mobile": {
+      "baseRecipeFamily": "mobile-mist",
+      "character": "compact, thumb-friendly, alert/pulse oriented",
+      "accentDensity": "sparse-semantic",
+      "effects": "low-noise-effects",
+      "backgroundMustRemainVisible": true
+    },
+    "shared-ui": {
+      "baseRecipeFamily": "shared-ui-foundation",
+      "character": "neutral primitives consumed by surface adapters",
+      "accentDensity": "token-level-only",
+      "effects": "capability-level, not route-specific"
+    }
+  },
+  "requiredPromotionWork": [
+    "Assign canonical neutral meaning for the semantic accent family without inventing NDC IDs.",
+    "Register/reconcile the shared visual-language catalog entries through the existing promotion mechanism.",
+    "Bind the shared accent/material/effect vocabulary to approved recipes and surface adapters.",
+    "Represent the existing layer IDs as governed visual effect capabilities rather than leaving them only in the UI-kit layer system.",
+    "Resolve whether a particle/sparkle effect is actually required; if yes, promote a bounded capability with evidence instead of inventing a layer.",
+    "Keep light-on/light-off as presentation state over the existing layer system, not as an uncontrolled duplicate theme mechanism.",
+    "Only after exact targets become APPLY_READY, update canonical RIFAT sources and deterministic projections.",
+    "Run cross-surface visual evidence so Tablet, PC and Mobile share language but remain adapted to their own interaction/density model."
+  ],
+  "explicitNonGoals": [
+    "No runtime CSS mutation from this candidate.",
+    "No direct edit to generated projections.",
+    "No new LayerId minted here.",
+    "No global color wash.",
+    "No automatic conversion of every surface into Tablet Cloudglass.",
+    "No particle/WebGL effect without an explicit budget and promotion record."
+  ]
+}
