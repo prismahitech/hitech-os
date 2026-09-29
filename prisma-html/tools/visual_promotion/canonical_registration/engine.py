@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -94,6 +95,20 @@ def _release_lock(lock_dir:Path)->None:
 
 def _transaction_lock_path(repo_root:Path,request_id:str)->Path:
     return repo_root/TRANSACTIONS_ROOT/f".{request_id}.lock"
+
+def _assert_request_id(request_id:str)->None:
+    if not isinstance(request_id,str) or not re.fullmatch(r"cpr-[a-z0-9][a-z0-9._-]{0,95}",request_id):
+        raise UnsafeMutationError("REQUEST_ID_INVALID")
+
+def _assert_receipt_path(root:Path,path:Path,request_id:str)->None:
+    expected=(root/RESULTS_ROOT/f"{request_id}.json").resolve()
+    if path.resolve()!=expected:
+        raise UnsafeMutationError("RECEIPT_PATH_INVALID")
+
+def _assert_journal_path(root:Path,path:Path,request_id:str)->None:
+    expected=(root/TRANSACTIONS_ROOT/request_id/"journal.json").resolve()
+    if path.resolve()!=expected:
+        raise UnsafeMutationError("JOURNAL_PATH_INVALID")
 
 def _registry_ids(registry:dict[str,Any],key:str)->set[str]:
     out=set()
@@ -324,23 +339,29 @@ def _evidence(request,plan,status,applied,errors):
 
 def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     request=copy.deepcopy(request); request["_repoRoot"]=str(repo_root.resolve())
-    receipt_path=repo_root/RESULTS_ROOT/f"{request['requestId']}.json"; receipt_path.parent.mkdir(parents=True,exist_ok=True)
+    request_id=request.get("requestId")
+    _assert_request_id(request_id)
+    receipt_path=repo_root/RESULTS_ROOT/f"{request_id}.json"; receipt_path.parent.mkdir(parents=True,exist_ok=True)
     request_digest=sha256_json({k:v for k,v in request.items() if k!="_repoRoot"})
-    lock=_transaction_lock_path(repo_root,request["requestId"]); _acquire_lock(lock)
+    lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
         if receipt_path.exists():
             prior=_load(receipt_path)
-            if prior.get("requestDigest")==request_digest and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"} and prior.get("result"):
+            prior_digest=prior.get("requestDigest")
+            if prior_digest and prior_digest!=request_digest:
+                raise UnsafeMutationError("REQUEST_ID_REUSE_CONFLICT")
+            if prior_digest==request_digest and prior.get("status")=="APPLIED" and prior.get("result"):
                 if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
                 for row in prior.get("postState",[]):
                     rel=row.get("path")
                     expected_post=row.get("sha256")
-                    if not isinstance(rel,str) or not isinstance(expected_post,str):
+                    if rel not in ALLOWED_CANONICAL_PATHS or not isinstance(expected_post,str):
                         raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_INVALID")
                     current_path=repo_root/rel
                     if not current_path.is_file() or sha256_json(_load(current_path))!=expected_post:
                         raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_DRIFT:"+rel)
                 return prior["result"]
+
 
         plan=build_plan(request,repo_root)
         journal_dir=repo_root/TRANSACTIONS_ROOT/request["requestId"]; journal_path=journal_dir/"journal.json"
@@ -379,15 +400,19 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         _release_lock(lock)
 
 def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
+    _assert_request_id(request_id)
     receipt=repo_root/RESULTS_ROOT/f"{request_id}.json"
     lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
         if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
         evidence=_load(receipt)
+        if evidence.get("status")=="ROLLED_BACK":
+            return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":evidence.get("rollback",{}).get("restoredPaths",[])}
         if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
         restored=[]
         for row in evidence.get("postState",[]):
             rel=row["path"]; path=repo_root/rel
+            if rel not in ALLOWED_CANONICAL_PATHS: raise UnsafeMutationError("ROLLBACK_PATH_NOT_GOVERNED:"+str(rel))
             if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
             prior=evidence.get("preStateValues",{}).get(rel)
             if prior is None: raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:"+rel)
@@ -397,6 +422,7 @@ def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
         journal_path=evidence.get("journalPath")
         if isinstance(journal_path,str):
             journal_file=repo_root/journal_path
+            _assert_journal_path(repo_root,journal_file,request_id)
             if journal_file.is_file():
                 journal=_load(journal_file)
                 journal["status"]="ROLLED_BACK"
