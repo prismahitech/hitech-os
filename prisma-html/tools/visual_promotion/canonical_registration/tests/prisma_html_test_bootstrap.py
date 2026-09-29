@@ -27,3 +27,8 @@ def import_engine():
     sys.modules["current_truth"]=truth
     _load("canonical_registration.postconditions",pkg/"postconditions.py","canonical_registration")
     return _load("canonical_registration.engine",pkg/"engine.py","canonical_registration")
+
+
+def load_builder():
+    pkg=ROOT/"canonical_registration"
+    return _load("canonical_registration.request_builder",pkg/"request_builder.py","canonical_registration")
