@@ -215,11 +215,10 @@ async function call(harness, urlPath, method = "GET", body = null, admin = false
 function assert(condition, code, details = {}) {
   if (!condition) {
     const error = new Error(code);
-    error.details = { ...details, checksCompleted: Array.isArray(globalThis.__g3Checks) ? [...globalThis.__g3Checks] : [] };
+    error.details = details;
     throw error;
   }
 }
-globalThis.__g3Checks = [];
 function unique(prefix) {
   return `${prefix}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
 }
@@ -298,7 +297,7 @@ async function main() {
   assert(await directCount(seed, "license_assignments", "license_assignment_id = ?", [failedSetup.licenseAssignmentId]) === 0, "ATOMIC_SETUP_LEFT_ASSIGNMENT");
   assert(await directCount(seed, "licenses", "license_id = ?", [failedSetup.licenseId]) === 0, "ATOMIC_SETUP_LEFT_LICENSE");
   assert(await directCount(seed, "tenants", "slug = ?", [failedSetup.tenantSlug]) === 0, "ATOMIC_SETUP_LEFT_TENANT");
-  checks.push("atomic_customer_setup_rollback"); globalThis.__g3Checks = [...checks];
+  checks.push("atomic_customer_setup_rollback");
 
   // 2. Provisioning-only package must persist the canonical commercial SKU separately.
   const starter = await createSetup(seed, "starter", { planId: "TABLET_PC_MOBILE_MANAGED" });
@@ -314,7 +313,7 @@ async function main() {
     { surface: "pc", allowed: 1 },
     { surface: "tablet", allowed: 1 }
   ]), "STARTER_SLOT_MATRIX_DRIFT", { starterSlots });
-  checks.push("provisioning_only_starter_maps_to_commercial_sku"); globalThis.__g3Checks = [...checks];
+  checks.push("provisioning_only_starter_maps_to_commercial_sku");
 
   // 3. Real concurrent claims on the same DB with separate connections.
   const setup = await createSetup(seed, "concurrent");
@@ -332,7 +331,7 @@ async function main() {
   assert(await directCount(seed, "customer_device_claims", "setup_id = ? and surface = ? and status = 'claimed'", [setup.setupId, "tablet"]) === 2, "CONCURRENT_CLAIM_PERSISTENCE_COUNT_DRIFT");
   const claimedSlotCount = Number((await seed.first("select claimed from customer_setup_slots where setup_id = ? and surface = 'tablet'", [setup.setupId]))?.claimed || 0);
   assert(claimedSlotCount === 2, "CONCURRENT_CLAIM_AGGREGATE_COUNTER_DRIFT", { claimedSlotCount });
-  checks.push("concurrent_claims_respect_two_tablet_slots"); globalThis.__g3Checks = [...checks];
+  checks.push("concurrent_claims_respect_two_tablet_slots");
 
   // 4. Idempotency / replay: same device cannot create a second claim.
   const successfulDevice = successes[0].payload.device.deviceId;
@@ -345,7 +344,7 @@ async function main() {
   const afterReplay = await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ?", [setup.setupId, successfulDevice]);
   assert(replay.status === 409 && replay.payload?.resultCode === "DEVICE_ALREADY_CLAIMED", "DEVICE_REPLAY_NOT_BLOCKED", { replay });
   assert(beforeReplay === afterReplay, "DEVICE_REPLAY_MUTATED_STATE");
-  checks.push("device_claim_replay_is_idempotently_blocked"); globalThis.__g3Checks = [...checks];
+  checks.push("device_claim_replay_is_idempotently_blocked");
 
   // 5. Replacement releases the exact physical claim slot, then new device can reclaim it.
   const oldDeviceId = successes[1].payload.device.deviceId;
@@ -369,7 +368,7 @@ async function main() {
     deviceId: "g3-replacement-new-device"
   });
   assert(replacementClaim.status === 200 && replacementClaim.payload?.resultCode === "DEVICE_CLAIM_ACCEPTED", "REPLACEMENT_NEW_DEVICE_CLAIM_FAILED", { replacementClaim, replacementEligibleSlot, replacementSetupSlot, replacementSetupRow });
-  checks.push("replacement_releases_and_reuses_exact_slot"); globalThis.__g3Checks = [...checks];
+  checks.push("replacement_releases_and_reuses_exact_slot");
 
   // 5b. Simultaneous replacement approvals: exactly one request may consume
   // the active claim; the concurrent loser must not double-release the slot.
@@ -400,7 +399,7 @@ async function main() {
   assert(remainingConcurrentClaims === 0, "CONCURRENT_REPLACEMENT_LEFT_ACTIVE_CLAIM", { remainingConcurrentClaims });
   const concurrentSlot = await seed.first("select status, device_id from customer_device_claim_slots where setup_bundle_id = ? and surface = 'tablet' order by slot_index asc limit 1", [concurrentReplacementSetup.setupBundleId]);
   assert(concurrentSlot?.status === "AVAILABLE" && concurrentSlot?.device_id == null, "CONCURRENT_REPLACEMENT_SLOT_NOT_AVAILABLE", { concurrentSlot });
-  checks.push("concurrent_replacements_are_single_consumer"); globalThis.__g3Checks = [...checks];
+  checks.push("concurrent_replacements_are_single_consumer");
 
   // 6. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
@@ -417,7 +416,7 @@ async function main() {
   assert(await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ?", [failClaimSetup.setupId, "g3-atomic-claim-device"]) === 0, "ATOMIC_CLAIM_LEFT_CLAIM");
   assert(await directCount(seed, "devices", "tenant_slug = ? and device_id = ?", [failClaimSetup.tenantSlug, "g3-atomic-claim-device"]) === 0, "ATOMIC_CLAIM_LEFT_DEVICE");
   assert(await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [failClaimSetup.setupBundleId]) === 1 || await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [failClaimSetup.setupBundleId]) === 2, "ATOMIC_CLAIM_SLOT_NOT_ROLLED_BACK");
-  checks.push("atomic_claim_failure_rolls_back_all_writes"); globalThis.__g3Checks = [...checks];
+  checks.push("atomic_claim_failure_rolls_back_all_writes");
 
   // 7. Atomic replacement failure: audit failure leaves old claim and slot intact.
   const failReplacementSetup = await createSetup(seed, "replacement-failure");
@@ -442,7 +441,7 @@ async function main() {
   assert(replacementClaimState?.status === "claimed", "ATOMIC_REPLACEMENT_LEFT_CLAIM_REPLACED");
   const replacementSlotState = await seed.first("select status, device_id from customer_device_claim_slots where setup_bundle_id = ? and device_id = ?", [failReplacementSetup.setupBundleId, "g3-replacement-atomic-old"]);
   assert(replacementSlotState?.status === "CLAIMED" && replacementSlotState?.device_id === "g3-replacement-atomic-old", "ATOMIC_REPLACEMENT_LEFT_SLOT_RELEASED", { replacementSlotState });
-  checks.push("atomic_replacement_failure_rolls_back_all_writes"); globalThis.__g3Checks = [...checks];
+  checks.push("atomic_replacement_failure_rolls_back_all_writes");
 
   // 8. Retry createCustomerSetup with identical identifiers must preserve an already claimed slot.
   const retrySetup = await createSetup(seed, "setup-retry");
@@ -507,7 +506,7 @@ async function main() {
   });
   assert(expiredClaim.status === 403 && expiredClaim.payload?.resultCode === "LICENSE_EXPIRED", "EXPIRED_LICENSE_CLAIM_FAIL_CLOSED", { expiredClaim });
   assert(expiredRefresh.status === 403 && expiredRefresh.payload?.resultCode === "LICENSE_EXPIRED", "EXPIRED_LICENSE_REFRESH_FAIL_CLOSED", { expiredRefresh });
-  checks.push("blocked_license_states_fail_closed"); globalThis.__g3Checks = [...checks];
+  checks.push("blocked_license_states_fail_closed");
 
   // Setup expiry/revocation must block device admission even with an otherwise active license.
   const expiredSetup = await createSetup(seed, "expired-setup");
@@ -529,7 +528,7 @@ async function main() {
     deviceId: "g3-revoked-setup-device"
   });
   assert(setupRevokedClaim.status === 403 && setupRevokedClaim.payload?.resultCode === "SETUP_REVOKED", "REVOKED_SETUP_CLAIM_FAIL_CLOSED", { setupRevokedClaim });
-  checks.push("expired_and_revoked_setups_fail_closed"); globalThis.__g3Checks = [...checks];
+  checks.push("expired_and_revoked_setups_fail_closed");
 
   // License conflict: revoke is terminal. A concurrent renew may win only if it
   // commits first; any renew attempted after revocation must be blocked.
@@ -563,7 +562,7 @@ async function main() {
   assert(renewResponse.status === 200 || (renewResponse.status === 409 && renewResponse.payload?.resultCode === "LICENSE_REVOKED_TERMINAL"), "CONCURRENT_RENEW_UNEXPECTED_FAILURE", { revokeResponse, renewResponse });
   assert(postConflictLicense?.status === "revoked", "REVOKE_NOT_TERMINAL_AFTER_CONFLICT", { postConflictLicense, revokeResponse, renewResponse });
   assert(postRevokedRenew.status === 409 && postRevokedRenew.payload?.resultCode === "LICENSE_REVOKED_TERMINAL", "REVOKED_LICENSE_RENEWAL_NOT_BLOCKED", { postRevokedRenew });
-  checks.push("refresh_revoke_renew_conflicts_and_terminal_revoke"); globalThis.__g3Checks = [...checks];
+  checks.push("refresh_revoke_renew_conflicts_and_terminal_revoke");
 
   // Read-only graph integrity over the same local D1-compatible database used by the race tests.
   const orphanClaims = await directCount(seed, "customer_device_claims", "claim_slot_id IS NULL", []);
