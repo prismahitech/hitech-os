@@ -59,6 +59,8 @@ function main() {
     "COMMERCIAL_PLAN_MAPPING_TYPE_MISSING");
   assert(contract.includes('planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,\n    commercialPlanId: "TABLET_PC_MANAGED"'),
     "STARTER_COMMERCIAL_PLAN_MAPPING_DRIFT");
+  assert(worker.includes("pass.commercialPlanId"), "WORKER_COMMERCIAL_PLAN_PERSISTENCE_FIELD_MISSING");
+  checks.push("worker_persistence_can_distinguish_commercial_and_provisioning_plan");
   assert(contract.includes("PLAN_BASED_PROVISIONING_CATALOG"),
     "PROVISIONING_CATALOG_MISSING");
   checks.push("shared_contract_semantic_split_explicit");
