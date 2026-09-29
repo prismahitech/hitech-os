@@ -48,5 +48,14 @@ class WritePreflightTests(unittest.TestCase):
         with self.assertRaises(self.v.WritePreflightError):
             self.v.validate_write_preflight(self.root,c)
 
+
+    def test_symlink_source_blocks(self):
+        c=self.ctx()
+        link=self.root/"candidate-link.json"
+        link.symlink_to(self.src)
+        c["sourcePath"]="candidate-link.json"
+        with self.assertRaises(self.v.WritePreflightError):
+            self.v.validate_write_preflight(self.root,c)
+
 if __name__=="__main__":
     unittest.main()
