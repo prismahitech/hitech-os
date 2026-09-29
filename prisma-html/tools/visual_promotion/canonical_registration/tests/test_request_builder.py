@@ -28,6 +28,7 @@ class RequestBuilderTests(unittest.TestCase):
                 "canonicalTargetId":"TGT.test.canonical.V1","canonicalLayerId":"LYR.test",
                 "applicationPolicy":"EXACT_TARGET_ONLY","applicationLayerDecisionRef":"rifat::policy.test",
             },
+            "workEntryHandoff":{"gate":"visual_application.visual_work_entry_gate","decision":"REGISTER_TARGET_FIRST","targetId":"TGT.CENSUS.TABLET.TEST.V1","evaluatedHead":"a"*40},
         }
 
     def test_builder_requires_exact_component_ui_id(self):
