@@ -1299,7 +1299,7 @@ async function createCustomerSetup(request, env) {
     persistedTenant.slug === pass.tenantSlug &&
     persistedTenant.plan === pass.commercialPlanId &&
     Boolean(persistedLicense) &&
-    persistedLicense.licenseId === pass.licenseId &&
+    (persistedLicense.licenseId || persistedLicense.license_id) === pass.licenseId &&
     persistedLicense.plan === pass.commercialPlanId &&
     persistedLicense.status === "active" &&
     Boolean(persistedAssignment) &&
@@ -1334,7 +1334,7 @@ async function createCustomerSetup(request, env) {
       resultCode: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
       persistenceDiagnostics: {
         tenant: Boolean(persistedTenant) && persistedTenant.slug === pass.tenantSlug && persistedTenant.plan === pass.commercialPlanId,
-        license: Boolean(persistedLicense) && persistedLicense.licenseId === pass.licenseId && persistedLicense.plan === pass.commercialPlanId && persistedLicense.status === "active",
+        license: Boolean(persistedLicense) && (persistedLicense.licenseId || persistedLicense.license_id) === pass.licenseId && persistedLicense.plan === pass.commercialPlanId && persistedLicense.status === "active",
         licenseObserved: persistedLicense ? {
           licenseId: persistedLicense.licenseId || null,
           tenantSlug: persistedLicense.tenantSlug || persistedLicense.tenant_slug || null,
