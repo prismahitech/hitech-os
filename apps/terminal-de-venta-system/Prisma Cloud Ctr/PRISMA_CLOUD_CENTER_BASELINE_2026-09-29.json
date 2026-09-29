@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "baselineId": "CLOUD_CENTER_BASELINE_2026-09-29",
   "capturedAt": "2026-09-29",
   "repository": "prismahitech/hitech-os",
@@ -16,32 +16,91 @@
   "sourceSnapshot": {
     "files": [
       {
-        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/README.md",
-        "sha": "23793189ddeb483b6b1eecebb264cd6a97082f1c"
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/README.md"
       },
       {
-        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/ARCHITECTURE.md",
-        "sha": "4a75a2f027c49f47e6c2c6c92cf737e56663a986"
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/ARCHITECTURE.md"
       },
       {
-        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/SECURITY.md",
-        "sha": "0c99a0f5b1e9ba08f39dcfd141bfce4d34dfeeff"
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/SECURITY.md"
       },
       {
         "path": "apps/terminal-de-venta-system/shared/licensing/plan-catalog.canonical.json",
-        "sha": "3f524c669e7f5803d59c45327cccb86ce11242b9"
+        "blobSha": "3f524c669e7f5803d59c45327cccb86ce11242b9"
       },
       {
         "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js",
-        "sha": "5b1428252c7f9c6b5c698f798944baa5ceb636e3"
+        "blobSha": "5b1428252c7f9c6b5c698f798944baa5ceb636e3"
       },
       {
-        "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json",
-        "sha": "75c6664f92d100f8321f1aff085382b6b9318fbf"
+        "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json"
       },
       {
-        "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
-        "sha": "current-main-observed"
+        "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/MANUAL.md",
+        "blobSha": "9af5d9a958587bd5428f5be9c0e2cc09e95978fd"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/PRISMA_CLOUD_CENTER_MANUAL_FACTORY_STANDARD.md",
+        "blobSha": "e2dad2579110aa92d9309070d95ae23e97d10542"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/prisma_unified_lab_v3.py",
+        "blobSha": "b8ba736c5ed2e1074332d3713b167d39d906e2f6"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/licflow4_admin_bridge.py",
+        "blobSha": "fd0b0e70f3f89b1ff4e3f008f0b1feb9bbc6f576"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py",
+        "blobSha": "eb9b8a0a5bf034dee91e1a65dee16635ce5aac1e"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/license_ops_api.py",
+        "blobSha": "62045f639785ca3514ce7b2038d96dea783d491f"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/web/cloud_command_center.html",
+        "blobSha": "8f44748fab78841b25afb3225475552330603906"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/web/cloud_command_center.js",
+        "blobSha": "c82a5b18a34ff49f4da2e25a1830a78add1c69fe"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/config/cloud_saas.json",
+        "blobSha": "e67842684eea53181132bca6d5df4f66f46042eb"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/config/change_intelligence_cloud.json",
+        "blobSha": "abd2ebc398b9033a36e33951bba4c385eefba5c1"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-licflow3.mts",
+        "blobSha": "fed757febd4c0d61a4a0a929ff73d7febb27be83"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-licflow4.mts",
+        "blobSha": "9aa56a6d31aef6749943c1b90ec9e90e5744f169"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-customer-setup-multidevice.mjs",
+        "blobSha": "b45527a75bdf783aeec776c1070415cf34d857fa"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-change-intelligence-runtime-01.mjs",
+        "blobSha": "8479ddbc507e03e65431f0fdb98842385b86eb21"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-change-intelligence-01.py",
+        "blobSha": "f9e43c8fd27b9bcbfbbb13502ae2cc146e20a7be"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/docs/productization/PRISMA_CHANGE_INTELLIGENCE_CLOUD_CENTER_VERTICAL_CONTRACT.md",
+        "blobSha": "2195d3253bdb1308647aceabe7db2f598cb7760a"
       }
     ],
     "sourceNotes": [
@@ -49,7 +108,8 @@
       "Cloud License Gateway canonical Worker is prisma-cloud-semilla.",
       "Live base URL is https://app.hitechrts.com.",
       "Admin token is intended to remain backend-only and presence-only in UI/diagnostics."
-    ]
+    ],
+    "inventoryStatus": "KEY_AUTHORITY_SURFACES_CAPTURED"
   },
   "historicalEvidence": {
     "latestObservedLiveSmoke": "2026-07-07T22:29:07.271Z",
@@ -170,19 +230,20 @@
   },
   "step1Status": {
     "name": "Baseline freeze",
-    "status": "IN_PROGRESS",
+    "status": "NEAR_COMPLETE",
     "completed": [
       "Exact main HEAD captured.",
-      "Canonical Cloud Center/LICFLOW3/shared licensing surfaces identified.",
       "Historical evidence timestamp captured.",
       "Relevant open issue/PR overlap searched.",
       "Current combined CI status classified UNKNOWN rather than assumed green.",
-      "Initial high-attention reconciliation findings recorded."
+      "Initial high-attention reconciliation findings recorded.",
+      "Canonical Cloud Center/LICFLOW3/shared licensing surfaces identified.",
+      "Expanded key source/verifier/config inventory with exact blob SHAs."
     ],
     "remaining": [
-      "Complete exhaustive source surface inventory with exact file hashes.",
-      "Bind the baseline to final evidence/index objects.",
-      "Close G0 gate before source modifications."
+      "Bind baseline to existing canonical evidence/register if required by repository governance.",
+      "Perform final G0 consistency check.",
+      "Then move execution pointer to G1."
     ]
   },
   "mutationSafety": {
