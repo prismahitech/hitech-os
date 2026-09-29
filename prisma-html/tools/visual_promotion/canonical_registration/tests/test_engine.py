@@ -3,7 +3,9 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 
@@ -15,6 +17,12 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.engine=import_engine()
         self.root=Path(tempfile.mkdtemp())
         os.environ["GITHUB_SHA"]="a"*40
+        visual_pkg=types.ModuleType("visual_application")
+        visual_pkg.__path__=[]
+        ti=types.ModuleType("visual_application.target_index")
+        ti.build_index=lambda root: self._fake_index(root)
+        sys.modules["visual_application"]=visual_pkg
+        sys.modules["visual_application.target_index"]=ti
 
         source=self.root/"candidate.json"
         source.write_text('{"candidate":true}',encoding="utf-8")
@@ -83,11 +91,32 @@ class CanonicalRegistrationTests(unittest.TestCase):
             }],
             "recipeCount":1,
         }),encoding="utf-8")
+        recipe_source=reg/"recipes/REC.new.recipe.json"
+        recipe_source.parent.mkdir(parents=True,exist_ok=True)
+        recipe_source.write_text("{\"recipe\":\"new\"}",encoding="utf-8")
+        self.new_recipe_sha=hashlib.sha256(recipe_source.read_bytes()).hexdigest()
         (reg/"element-bindings.registry.json").write_text(json.dumps({
             "schema":"prisma.identity.element-bindings.registry.v1",
             "bindings":[],
         }),encoding="utf-8")
         self.current_truth=self._snapshot()
+
+
+    def _fake_index(self, root):
+        bindings_path=root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+        records=[self.census_target]
+        if bindings_path.exists():
+            doc=json.loads(bindings_path.read_text(encoding="utf-8"))
+            for entry in doc.get("bindings",[]):
+                for target in entry.get("targets",[]):
+                    if isinstance(target,dict):
+                        records.append({
+                            "targetId":target.get("targetId"),
+                            "surface":(entry.get("selector") or {}).get("surfaceId"),
+                            "recordKind":"EXACT_APPLICATION_TARGET",
+                            "enforcement":"GVAE_ENFORCED",
+                        })
+        return {"records":records}
 
     def _snapshot(self):
         from canonical_registration.current_truth import capture_current_truth
@@ -223,7 +252,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
             "registryEntry":{
                 "recipeId":"REC.placeholder",
                 "familyId":"FAM.test","presetId":"PRESET.test","identityProfileId":"profile.test",
-                "path":"recipes/REC.test.table.json","fileSha256":"0"*64,
+                "path":"recipes/REC.new.recipe.json","fileSha256":self.new_recipe_sha,
             },
         }
         with self.assertRaises(RuntimeError):
