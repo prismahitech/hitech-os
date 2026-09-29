@@ -1330,6 +1330,13 @@ async function createCustomerSetup(request, env) {
       persistenceDiagnostics: {
         tenant: Boolean(persistedTenant) && persistedTenant.slug === pass.tenantSlug && persistedTenant.plan === pass.commercialPlanId,
         license: Boolean(persistedLicense) && persistedLicense.licenseId === pass.licenseId && persistedLicense.plan === pass.commercialPlanId && persistedLicense.status === "active",
+        licenseObserved: persistedLicense ? {
+          licenseId: persistedLicense.licenseId || null,
+          tenantSlug: persistedLicense.tenantSlug || persistedLicense.tenant_slug || null,
+          status: persistedLicense.status || null,
+          plan: persistedLicense.plan || null,
+          activationStatus: persistedLicense.activationStatus || persistedLicense.activation_status || null
+        } : null,
         assignment: Boolean(persistedAssignment) && persistedAssignment.licenseId === pass.licenseId && persistedAssignment.setupBundleId === pass.setupBundleId && persistedAssignment.planId === pass.commercialPlanId && persistedAssignment.status === "assigned",
         setup: Boolean(persistedSetup) && persistedSetup.setupCode === pass.setupCode && persistedSetup.status === "active",
         bundle: Boolean(persistedBundle) && persistedBundle.setupId === pass.setupId && persistedBundle.licenseId === pass.licenseId && persistedBundle.licenseAssignmentId === pass.licenseAssignmentId && persistedBundle.planId === pass.planId && persistedBundle.auditEventId === provisionAuditEventId,
