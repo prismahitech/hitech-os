@@ -102,6 +102,20 @@ This is consistent with the binding registry policy:
 
 No `LYR.*` ID was inferred.
 
+## Evidence freshness boundary
+
+The broader Tablet candidate corpus under `prisma-html/governance/visual-promotion/candidates/tablet/**` is a **historical discovery corpus**. Its manifest and candidate rows are pinned to base head `57b01ad8bda043ec25763203354b686341bace09`, not the current `main` head `9249ea49c6fdeef195f5132d18c7a9866e8762f0`.
+
+Therefore those candidate artifacts are not, by themselves, a valid `currentTruth` snapshot for the canonical-registration engine. They remain useful discovery evidence only.
+
+For this target, the following were independently rechecked against current `main`:
+
+- the canonical RIFAT CSS source still has the candidate-record source digest `9a2487c0ef7e9f9a6d36b8e9da349e33c9e8e327e838edacbec3dd0e03ff8cd1`;
+- the generated product projection still has the candidate-record output digest `2f5e695073c3ed3adf79061a88c11d42d88e0c87a1d1e980b2722042575a6f8f`;
+- `tablet.inventory.route`, `/inventory`, the current InventoryPage mount, and the current InventoryWorkspace/stock-cell implementation still match the physical target definition.
+
+This supports continuity of the target evidence, but it does **not** replace a fresh current-truth snapshot with current Authority Mesh + Layer Map evidence. Such a snapshot is required before the canonical-registration writer can accept the target for mutation.
+
 ## Canonical registration integration-path audit
 
 The current main was re-audited after G-01 hardening and the canonical-registration integration is now present in:
