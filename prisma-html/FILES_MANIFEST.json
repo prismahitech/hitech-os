@@ -4542,9 +4542,9 @@
       "sha256": "6B686E708CD78791F47DD59A28118E1DAA2D6537D3962655178B9AC056E5025E"
     },
     {
-      "bytes": 3423,
+      "bytes": 3806,
       "path": "tools/visual_promotion/canonical_registration/contracts/canonical-promotion-request.schema.json",
-      "sha256": "E9F963A86E2E79D1483250DDE98AE62D68828C5FEDD172A31CA077345E110C1B"
+      "sha256": "6407A06749BA578B5E786754F9BB512496096474F23D1A3AA569C3A3BB474158"
     },
     {
       "bytes": 719,
@@ -4587,9 +4587,9 @@
       "sha256": "D15CC8680B7C9F11EDB96071554105567E8B06D1CA89EA7C24FC2A0693DCA52F"
     },
     {
-      "bytes": 29441,
+      "bytes": 30058,
       "path": "tools/visual_promotion/canonical_registration/engine.py",
-      "sha256": "9DBF6DC59D6A1C54477B24CC808002F021F740007F158B3752489760BC555234"
+      "sha256": "2128F50C1498272F56F8D5F319919CD467342B5B057B10C0A4CC0A870733488C"
     },
     {
       "bytes": 1890,
@@ -4612,9 +4612,9 @@
       "sha256": "1BE931EC67A45796D1E6D79FB6C55125C8FDC00C46FBDE93B1ED5356EE1B0B5E"
     },
     {
-      "bytes": 5378,
+      "bytes": 6164,
       "path": "tools/visual_promotion/canonical_registration/request_builder.py",
-      "sha256": "B6CAB766486FFCDE968CA9F922EF3F46FB5AB8AB17139523E836BE65AA28F8C9"
+      "sha256": "89AB3A969666283E718DE55715D14AB7B805F443DFA6EF04490B14538B42F1D9"
     },
     {
       "bytes": 4780,
@@ -4647,9 +4647,9 @@
       "sha256": "D217BC62F8A1DCCF635B7930A89A8B771EE166EB28DDD75924F83F5761F6E8D4"
     },
     {
-      "bytes": 23781,
+      "bytes": 23967,
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
-      "sha256": "5A7E967E9C032BE11B932722F3534A0EE275A35D530D6D784C62E2CCA7492CB5"
+      "sha256": "991ED109B5A87EC603C67BC767B06C075CE94B5C7C039FC6FDA7DAA6D3517AEB"
     },
     {
       "bytes": 1782,
@@ -4657,9 +4657,9 @@
       "sha256": "79FA5F24574C97FA1BAA8D7F71B7182FCF822254948DA55DE7161B94CF9DE109"
     },
     {
-      "bytes": 4227,
+      "bytes": 5258,
       "path": "tools/visual_promotion/canonical_registration/tests/test_request_builder.py",
-      "sha256": "141B3BBD19BD7064D635AFDBB45FF813C49E9F61A2C75A933ED6546D012D60E7"
+      "sha256": "BAA4A189570894FA47316464ACB908DB40E4816869898E598E484F67D449E419"
     },
     {
       "bytes": 2295,
