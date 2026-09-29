@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-registration-collision.v1",
+  "type":"object","additionalProperties":false,
+  "required":["code","basis"],
+  "properties":{
+    "code":{"enum":["DUPLICATE_EXACT","SEMANTIC_COLLISION","BINDING_COLLISION","ID_COLLISION","LAYER_COLLISION","PROJECTION_CONFLICT"]},
+    "basis":{"type":"string","minLength":1},
+    "targetId":{"type":"string"},"existingTargetId":{"type":"string"},
+    "existingBindingId":{"type":"string"},"requestedBindingId":{"type":"string"},
+    "existingMeaningId":{"type":"string"},"requestedMeaningId":{"type":"string"},
+    "existingLayerId":{"type":"string"},"requestedLayerId":{"type":"string"},
+    "existingSourceSha256":{"type":"string"},"requestedSourceSha256":{"type":"string"},
+    "existingOutputSha256":{"type":"string"},"requestedOutputSha256":{"type":"string"}
+  }
+}
