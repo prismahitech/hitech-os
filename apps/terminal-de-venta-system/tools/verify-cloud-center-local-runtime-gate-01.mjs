@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = new URL(".", import.meta.url);
+const repoRoot = path.resolve(fileURLToPath(new URL("../../..", import.meta.url)));
 const commands = [
   ["runtime-config", "verify:runtime-config"],
   ["licflow3-inventory", "verify:licflow3:inventory"],
@@ -20,7 +22,7 @@ const results = [];
 function run(label, args) {
   const started = Date.now();
   const result = spawnSync(pnpm, ["--dir", "apps/terminal-de-venta-system", "run", args], {
-    cwd: new URL("../../../..", import.meta.url),
+    cwd: repoRoot,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
   });
