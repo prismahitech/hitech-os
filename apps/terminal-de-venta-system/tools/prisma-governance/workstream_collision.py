@@ -187,9 +187,12 @@ def normalize_scope(value: str) -> str:
 
 
 def parse_declaration(body: str) -> Declaration | None:
-    match = DECLARATION_RE.search(body or "")
-    if not match:
+    matches = list(DECLARATION_RE.finditer(body or ""))
+    if not matches:
         return None
+    if len(matches) != 1:
+        raise GateError("WORKSTREAM_DECLARATION_COUNT_INVALID")
+    match = matches[0]
     values: dict[str, str] = {}
     for raw_line in match.group("body").splitlines():
         line = raw_line.strip()
@@ -259,6 +262,17 @@ def exclusive_overlap_paths(current: PullRequestView, other: PullRequestView) ->
     )
 
 
+def exclusive_scope_overlap(current: PullRequestView, other: PullRequestView) -> list[str]:
+    current_paths = {p for p in current.changed_files if is_exclusive_path(p)}
+    other_paths = {p for p in other.changed_files if is_exclusive_path(p)}
+    prefixes = []
+    for prefix in EXCLUSIVE_PREFIXES:
+        prefix = prefix.rstrip("/")
+        if any(p == prefix or p.startswith(prefix + "/") for p in current_paths) and any(p == prefix or p.startswith(prefix + "/") for p in other_paths):
+            prefixes.append(prefix)
+    return sorted(set(prefixes))
+
+
 def declaration_conflict(current: PullRequestView, other: PullRequestView) -> tuple[bool, list[str], list[str]]:
     if not current.declaration or not other.declaration:
         return False, [], []
@@ -267,17 +281,20 @@ def declaration_conflict(current: PullRequestView, other: PullRequestView) -> tu
     same_ws = a.workstream_id == b.workstream_id
     same_cap = bool(set(a.capabilities) & set(b.capabilities))
     exclusive_overlap = exclusive_overlap_paths(current, other)
+    exclusive_scope = exclusive_scope_overlap(current, other)
     scoped_overlap = sorted(
         set(pa for pa in current.changed_files if scope_matches_any(a.scope, pa))
         & set(pb for pb in other.changed_files if scope_matches_any(b.scope, pb))
     )
     if same_ws:
         reasons.append("same_workstream_id")
-    if same_cap and (scoped_overlap or exclusive_overlap):
+    if same_cap and (scoped_overlap or exclusive_overlap or exclusive_scope):
         reasons.append("same_capability_overlapping_scope")
     if exclusive_overlap:
         reasons.append("same_exclusive_path")
-    return bool(reasons), reasons, (exclusive_overlap or scoped_overlap)
+    if exclusive_scope:
+        reasons.append("same_exclusive_scope")
+    return bool(reasons), reasons, (exclusive_overlap or scoped_overlap or exclusive_scope)
 
 
 def pr_view(client: GitHubClient, row: dict[str, Any]) -> PullRequestView:
@@ -420,6 +437,20 @@ def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> d
                 others.append(other)
         except Exception as exc:
             load_errors.append(f"PR_LOAD_FAILED:{row.get('number')}:{exc}")
+
+    if load_errors:
+        out = {
+            "schemaVersion": SCHEMA,
+            "result": "BLOCKED_WORKSTREAM_PEER_SCAN_INCOMPLETE",
+            "pr": current.number,
+            "headSha": current.head_sha,
+            "changedFiles": len(current.changed_files),
+            "workstream": declaration.workstream_id,
+            "loadErrors": load_errors,
+            "declarationRequired": True,
+        }
+        out["decisionDigest"] = digest(out)
+        return out
 
     conflicts: list[dict[str, Any]] = []
     for other in others:
