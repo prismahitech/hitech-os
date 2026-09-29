@@ -206,7 +206,19 @@ No canonical ID was invented, no target-index record was edited, and no product/
 
 ### Immediate next governed step
 
-Use the newly proven route/layer evidence to resolve whether an existing canonical neutral table meaning/recipe/binding can be reused. If no existing authority exists, the canonical composer must be allowed to register the missing semantic/application authority. Only after that may Work Entry/GVAE be reconsidered.
+The repository now contains the hardened canonical-registration capability `visual.canonical_promotion_integration_v1`. Do **not** create another registration engine.
+
+First resolve the missing authority inputs that the existing writer requires:
+
+1. NDC semantic adjudication for the table meaning;
+2. canonical Identity table recipe;
+3. exact RIFAT region/slot/component binding for `.stockCell`;
+4. canonical `LYR.*` application-layer authority and explicit policy;
+5. exact Work Entry handoff and current-head Authority Mesh/Layer Map evidence.
+
+Then build and validate a canonical-registration request through the existing path. Only a machine-valid request with explicit authorization may reach registry mutation. Work Entry/GVAE and runtime visual evidence remain subsequent gates.
+
+The canonical writer itself must not be used as a source of missing authority: it consumes adjudicated authority; it does not infer it.
 
 ## Historical note
 
