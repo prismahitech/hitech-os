@@ -2,9 +2,7 @@ name: PRISMA Factory Anti-Rework Gate
 
 on:
   pull_request:
-    paths:
-      - 'PRISMA Factory Ledger/**'
-      - '.github/workflows/prisma-factory-anti-rework-gate.yml'
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
 
 permissions:
