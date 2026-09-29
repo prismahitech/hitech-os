@@ -2,13 +2,14 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"prisma.visual.canonical-application-policy.v1",
   "type":"object","additionalProperties":false,
-  "required":["schema","implementationLayerId","applicationLayerId","policy","writerKind","sourceOfTruth"],
+  "required":["schema","implementationLayerId","applicationLayerId","policy","writerKind","authorityDomain","decisionRef"],
   "properties":{
     "schema":{"const":"prisma.visual.canonical-application-policy.v1"},
     "implementationLayerId":{"type":"string","minLength":1},
-    "applicationLayerId":{"type":"string","minLength":1},
+    "applicationLayerId":{"type":"string","minLength":1,"pattern":"^LYR\\."},
     "policy":{"enum":["EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"]},
-    "writerKind":{"enum":["CANONICAL_REGISTRATION","GVAE"]},
-    "sourceOfTruth":{"enum":["RIFAT","IDENTITY","TARGET_INDEX"]}
+    "writerKind":{"const":"CANONICAL_REGISTRATION"},
+    "authorityDomain":{"const":"rifat"},
+    "decisionRef":{"type":"string","minLength":1}
   }
 }
