@@ -62,9 +62,9 @@ def reconcile_projection(
         return ProjectionDecision("BLOCK_AMBIGUOUS", "explicit-ambiguity", target_id, tuple(sorted(set(ambiguity)) + tuple(evidence)))
 
     if projection_classification == "CURRENT":
-        return ProjectionDecision("ACCEPT_NEWER_RUNTIME", "projection-already-current", target_id, tuple(evidence)) if newer_runtime else ProjectionDecision(
-            "RESTORE_CANONICAL_PROJECTION",
-            "canonical-projection-remains-authoritative",
+        return ProjectionDecision(
+            "ACCEPT_NEWER_RUNTIME" if newer_runtime else "ACCEPT_CURRENT",
+            "projection-already-current",
             target_id,
             tuple(evidence),
         )
