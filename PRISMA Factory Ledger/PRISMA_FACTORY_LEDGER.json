@@ -1929,11 +1929,11 @@
         "governance",
         "quality"
       ],
-      "classification": "DONE",
-      "status": "LOCAL_VERIFIED",
-      "stateLabel": "PASS_VISUAL_OPERATING_GRAPH_WAVE2_READ_ONLY_LOCAL_VERIFIED",
-      "doNotRebuild": false,
-      "nextGate": "Reuse the Wave 2 read-only planner and simulator. Any future capability expansion, mutation-related integration, or authority-affecting change requires a fresh task-exact Authority Mesh and Factory Ledger gate. Runtime/visual certification and mutation authorization remain separate gates.",
+      "classification": "FIX",
+      "status": "VERIFY_REQUIRED",
+      "stateLabel": "FIX_REQUIRED_VISUAL_OPERATING_GRAPH_WAVE2_POSTMERGE_ADVERSARIAL_AUDIT",
+      "doNotRebuild": true,
+      "nextGate": "Run a fresh current-head Factory Ledger MUTATION gate with requestedAction FIX, then make one bounded source correction for the proven Wave 2 contract defect (unmapped blocker handling) with native adversarial regression coverage. Return to DONE / LOCAL_VERIFIED only after exact-head CI proves the corrected engine and preserves non-authorizing boundaries.",
       "evidence": [
         "Registration-only Authority Mesh run 34911873722 artifact 10374668209; PASS_COMPOSED_AUTHORITY_MESH at main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09; composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e; uploaded artifact sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
         "Foundation PR #556 merged at 8db4370d579014f8fed6e190ffce45e1589b33d9 with VISCORE1, CI, ForgeOS Quality Gate and Sync Sentinel green; Foundation establishes collision/reuse boundaries and machine-readable contracts without product/runtime mutation",
@@ -1943,27 +1943,28 @@
         "Wave 1 closure Authority Mesh run 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769; PASS_COMPOSED_AUTHORITY_MESH on exact main 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d; requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b; composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466; uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab",
         "PR #585 merged as 4b8eb9dce6f7918f3d219332f9318e43c435b5a6; CI 36540654017, GVAE All-Surface Authority 36540654006, ForgeOS Quality Gate 36540654089, Sync Sentinel 36540654023 and VISCORE1 Certification 36540654022 passed.",
         "Fresh post-merge AutoMesh run 36540982644 artifact 11020856487; PASS_COMPOSED_AUTHORITY_MESH at main@4b8eb9dce6f7918f3d219332f9318e43c435b5a6; 100% required authority coverage; zero blockers; artifact sha256:2bb76f7089e5cea81930f2880c0df1d6acfea4202c768d1b15d6e0b579b7b01c.",
-        "Wave 2 implementation is limited to read-only Next Safe Action and What-if tooling in prisma-html/tools/visual_operating_graph; no canonical authority writer or product/runtime mutation was added."
+        "Wave 2 implementation is limited to read-only Next Safe Action and What-if tooling in prisma-html/tools/visual_operating_graph; no canonical authority writer or product/runtime mutation was added.",
+        "Fresh post-merge adversarial audit: current canonical main 5ad615cd2264310a2e669adbf58ee4c12fd5c2ea; task-exact AutoMesh run 36548016503 artifact 11023820410 sha256:94ffc3ed4a97543022b21dbbe42e5d3a7989d5a3ee616620ac6066f293e76184; PASS_COMPOSED_AUTHORITY_MESH; 100% required authority coverage; zero blockers.",
+        "Source-static contract review against prisma-html/docs/ops/visual-operating-graph/PRISMA_PROCESS_PHASE_AND_BLOCKER_MODEL.md found one proven Wave 2 defect: unmapped blocker codes become UNCLASSIFIED_SOURCE_BLOCKER but the result omits the required requiresTaxonomyUpdate=true marker.",
+        "Correction is bounded to the existing Wave 2 planner/simulator contract and does not rebuild or replace Operating Graph, Factory Ledger, Authority Mesh, Code Atlas, NDC, Identity, RIFAT, Target Index, Visual Promotion, Work Entry or GVAE."
       ],
       "doesNotProve": [
+        "The proven Wave 2 defect is corrected.",
+        "Any runtime visual, production, distribution or customer deployment certification.",
         "Canonical visual registration, semantic authority minting, binding repair, Work Entry mutation or GVAE APPLY.",
-        "Planner or simulator output is authorization for any mutation.",
-        "Runtime visual certification, production certification, distribution readiness or customer deployment.",
-        "Future correctness after source, authority, dependency or runtime drift."
+        "Planner or simulator output authorizes mutation."
       ],
       "allowedActions": [
-        "reuse the Wave 1 source-set verifier, canonical graph builder, generated Master Map projection, Live Phase Truth Reducer and Drift Sentinel without rebuilding them",
-        "run the exact anti-rework and Authority Mesh gates for the bounded Next Safe Action + What-if Wave 2",
-        "after those gates, implement only deterministic read-only planner/simulator tooling against existing Operating Graph authority and provenance",
-        "represent unresolved authority, staleness and conflicts explicitly; preserve source blocker codes and canonical versus live-overlay separation"
+        "reuse the existing Wave 2 architecture and read-only boundaries without rebuilding it",
+        "perform the single bounded source correction after fresh Factory Ledger MUTATION FIX authority",
+        "add adversarial regression coverage for the corrected contract",
+        "return to DONE / LOCAL_VERIFIED only after exact-head CI and governed evidence prove the correction"
       ],
       "forbiddenActions": [
-        "touch product or runtime source as part of Operating Graph Wave 2",
-        "mint NDC or visual semantic authority, infer canonical identity from similarity, or perform canonical visual registration",
-        "bypass the Universal Visual Work Entry Gate or run GVAE APPLY",
-        "rebuild existing Factory Ledger, Authority Mesh, Code Atlas, NDC, Identity, RIFAT, Target Index or Visual Promotion authorities",
-        "touch databases, Prisma generation, deployment, processes or ports",
-        "claim authorization, runtime visual green or production readiness from planner/simulator output"
+        "rebuild or replace the Wave 2 architecture",
+        "mint semantic, binding, target or projection authority",
+        "write NDC, Identity, RIFAT, Target Index, Visual Promotion, Work Entry, GVAE or runtime state",
+        "treat candidate gates or what-if results as authorization"
       ]
     },
     {
