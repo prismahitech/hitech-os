@@ -2124,7 +2124,7 @@
         "governance",
         "quality"
       ],
-      "classification": "BUILD",
+      "classification": "DONE",
       "status": "SOURCE_READY",
       "stateLabel": "PASS_VISUAL_CANONICAL_PROMOTION_INTEGRATION_FOUNDATION_SOURCE_READY",
       "doNotRebuild": true,
