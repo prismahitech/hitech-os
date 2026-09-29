@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from .current_truth import capture_current_truth
@@ -37,6 +38,9 @@ def main() -> int:
 
     args=parser.parse_args()
     root=args.repo_root.resolve()
+    tools_root=root/"prisma-html/tools" if (root/"prisma-html/tools").is_dir() else root/"tools"
+    if tools_root.is_dir() and str(tools_root) not in sys.path:
+        sys.path.insert(0,str(tools_root))
     try:
         if args.command=="snapshot":
             out=capture_current_truth(root,evidence_target_id=args.evidence_target_id,
