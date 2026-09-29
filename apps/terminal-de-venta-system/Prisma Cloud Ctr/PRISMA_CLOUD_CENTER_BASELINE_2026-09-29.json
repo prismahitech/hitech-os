@@ -30,7 +30,7 @@
       },
       {
         "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js",
-        "blobSha": "5b1428252c7f9c6b5c698f798944baa5ceb636e3"
+        "blobSha": "c520c76b9fb62e1d764ea4919313cd05e25d0d36"
       },
       {
         "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json"
@@ -248,7 +248,7 @@
     ],
     "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
     "nextGate": "G3",
-    "note": "G0 baseline captured. G1/G2 source gates revalidated after commercial/provisioning semantic correction. G3 runtime harness is implemented and awaiting CI execution."
+    "note": "Baseline repinned to candidate HEAD after final G2 hardening. No live production mutation performed."
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
@@ -261,13 +261,13 @@
     "G1": {
       "status": "PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED",
       "verifiedAt": "2026-09-29",
-      "verificationMode": "independent repository invariant revalidation",
+      "verificationMode": "independent repository invariant revalidation at candidate HEAD",
       "result": "PASS"
     },
     "G2": {
       "status": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY_SOURCE",
       "verifiedAt": "2026-09-29",
-      "verificationMode": "independent repository invariant revalidation",
+      "verificationMode": "independent repository invariant revalidation at candidate HEAD",
       "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-persistence-hardening-01.mjs",
       "result": "PASS",
       "scope": [
@@ -291,7 +291,8 @@
         "setup retry preservation",
         "D1 graph integrity"
       ],
-      "currentEvidence": "source/harness present; CI execution pending"
+      "currentEvidence": "runtime harness present; CI execution not yet exposed by connector",
+      "candidateHead": "90625dc319866d5d77191efc1a384b1c9d2b5e1e"
     }
   },
   "step2Status": {
@@ -303,7 +304,7 @@
   },
   "candidateState": {
     "branch": "governance/cloud-center-roadmap-step1-20260929",
-    "head": "75bf64523f3ae27977557fc14f47cf58e4b67bef",
-    "note": "Candidate HEAD is ahead of the original main baseline; baseline head remains unchanged for auditability."
+    "head": "90625dc319866d5d77191efc1a384b1c9d2b5e1e",
+    "note": "Latest candidate HEAD after final G2 hardening; main baseline remains d064110... for auditability."
   }
 }
