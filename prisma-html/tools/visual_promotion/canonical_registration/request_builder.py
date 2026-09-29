@@ -49,8 +49,8 @@ def build_request_from_readiness(
     for field in ("routeId","regionId","slotId","componentId","ownerId","implementationLayerId"):
         if not physical.get(field):
             raise RequestBuilderError(f"PHYSICAL_BINDING_REQUIRED:{field}")
-    if not application.get("applicationLayerId") or not application.get("projectionPolicy"):
-        raise RequestBuilderError("APPLICATION_POLICY_REQUIRED")
+    if not application.get("applicationLayerId"):
+        raise RequestBuilderError("APPLICATION_LAYER_REQUIRED")
     recipe_id=identity.get("identityRecipeId")
     if not recipe_id:
         raise RequestBuilderError("IDENTITY_RECIPE_REQUIRED")
