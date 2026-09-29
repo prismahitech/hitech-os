@@ -8,7 +8,7 @@
     "recordCount": 933,
     "wholeSurfaceApplyReady": false
   },
-  "indexDigest": "d41c0b2f0f9a8f5d691f9f1dfcb2fa0dfa3e6b8bef9372d8b267b7d7b65e563e",
+  "indexDigest": "0b90b7d30dc84377ea23ac3ba3997bd5f09912a1fb546824e9797a9b275ebc80",
   "records": [
     {
       "adapterId": null,
@@ -2574,8 +2574,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -3783,8 +3785,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -5860,8 +5864,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -6852,8 +6858,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -6883,8 +6891,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -13920,8 +13930,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -14912,8 +14924,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -21546,8 +21560,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -22972,8 +22988,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -23375,8 +23393,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
@@ -28273,8 +28293,10 @@
       "blockers": [
         "exact-binding",
         "layer-application-policy",
+        "projection-hash-drift",
         "recipe",
-        "semantic"
+        "semantic",
+        "source-hash-drift"
       ],
       "canonicalSourcePath": "prisma-html/authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
       "enforcement": "DISCOVERY_ONLY",
