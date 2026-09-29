@@ -359,12 +359,14 @@ async function main() {
   const availableSlotsAfterReplacement = await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [setup.setupBundleId]);
   assert(activeAfterReplacement === 1 && availableSlotsAfterReplacement >= 1, "REPLACEMENT_STATE_DRIFT", { activeAfterReplacement, availableSlotsAfterReplacement });
   const replacementEligibleSlot = await seed.first("select slot_id as slotId, status, expires_at as expiresAt from customer_device_claim_slots where setup_id = ? and surface = 'tablet' and status = 'AVAILABLE' and (expires_at is null or expires_at > ?) order by slot_index asc limit 1", [setup.setupId, new Date().toISOString()]);
+  const replacementSetupSlot = await seed.first("select claimed, allowed from customer_setup_slots where setup_id = ? and surface = 'tablet' limit 1", [setup.setupId]);
+  const replacementSetupRow = await seed.first("select plan_code as planCode, package_code as packageCode, status from customer_setups where setup_id = ? limit 1", [setup.setupId]);
   const replacementClaim = await call(seed, "/api/customer/devices/claim", "POST", {
     setupCode: setup.setupCode,
     surface: "tablet",
     deviceId: "g3-replacement-new-device"
   });
-  assert(replacementClaim.status === 200 && replacementClaim.payload?.resultCode === "DEVICE_CLAIM_ACCEPTED", "REPLACEMENT_NEW_DEVICE_CLAIM_FAILED", { replacementClaim, replacementEligibleSlot });
+  assert(replacementClaim.status === 200 && replacementClaim.payload?.resultCode === "DEVICE_CLAIM_ACCEPTED", "REPLACEMENT_NEW_DEVICE_CLAIM_FAILED", { replacementClaim, replacementEligibleSlot, replacementSetupSlot, replacementSetupRow });
   checks.push("replacement_releases_and_reuses_exact_slot");
 
   // 6. Atomic claim failure: audit failure rolls back claim, device and slot.
