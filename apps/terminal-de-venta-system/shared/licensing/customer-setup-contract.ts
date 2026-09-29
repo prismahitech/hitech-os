@@ -76,7 +76,10 @@ export type DeviceClaimSlot = {
   setupBundleId: string;
   clientId: string;
   licenseId: string;
+  /** Provisioning plan/package identifier for the claim slot. */
   planId: CustomerSetupPlanId | string;
+  /** Canonical commercial SKU attached to the underlying license. */
+  commercialPlanId?: CustomerSetupCommercialPlanId;
   surface: CustomerSetupSurface;
   status: DeviceClaimSlotStatus;
   claimCode: string;
@@ -102,6 +105,7 @@ export type PlanBasedProvisioningResult = {
   operatorActionCount: 1;
   manualDeviceClaimRequired: false;
   auditEventId: string | null;
+  commercialPlanId: CustomerSetupCommercialPlanId;
 };
 
 export type CustomerSetupPass = {
@@ -117,8 +121,12 @@ export type CustomerSetupPass = {
   businessId: string;
   businessName: string;
   packageCode: typeof PRISMA_TRIPLE_DEVICE_STARTER | string;
+  /** Provisioning plan/package identifier. */
   planId: CustomerSetupPlanId | string;
+  /** Provisioning plan code retained for Customer Setup compatibility. */
   planCode: typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN | string;
+  /** Canonical commercial license SKU represented by this setup. */
+  commercialPlanId: CustomerSetupCommercialPlanId;
   licenseId: string;
   licenseAssignmentId: string;
   status: CustomerSetupStatus;
