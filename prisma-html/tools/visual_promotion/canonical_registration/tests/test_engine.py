@@ -222,6 +222,16 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.StaleHeadError):
             self.engine.register(request,self.root)
 
+    def test_idempotent_replay_refuses_poststate_drift(self):
+        request=self.request()
+        self.engine.register(request,self.root)
+        p=self.root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
+        doc=json.loads(p.read_text())
+        doc["externalDrift"]=True
+        p.write_text(json.dumps(doc),encoding="utf-8")
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.register(request,self.root)
+
     def test_rollback_is_transaction_scoped(self):
         request=self.request()
         self.engine.register(request,self.root)
