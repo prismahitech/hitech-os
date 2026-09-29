@@ -51,6 +51,12 @@ function main() {
   assert(setup.includes("on conflict(slot_id)"), "CLAIM_SLOT_IDEMPOTENCY_GUARD_MISSING");
   checksPush("customer_setup_atomic_and_retry_safe");
 
+  const activation = sliceFunction(worker, "async function activateLicense(request, env, mode) {", "async function registerDevice");
+  assert(activation.includes("runBatch(env, [tenantStatement, licenseMutation.statement, auditStatement]"), "LICENSE_MUTATIONS_NOT_TRANSACTIONAL");
+  assert(activation.includes("D1_LICENSE_OPERATION_PERSISTENCE_VERIFY_FAILED"), "LICENSE_MUTATION_READ_AFTER_WRITE_MISSING");
+  assert(activation.includes("auditEventExists"), "LICENSE_MUTATION_AUDIT_READBACK_MISSING");
+  checksPush("confirmed_license_mutations_atomic_and_verified");
+
   const replacement = sliceFunction(worker, "async function approveDeviceReplacement(request, env) {", "async function commercialSummary");
   assert(replacement.includes("runBatch(env, ["), "REPLACEMENT_NOT_TRANSACTIONAL");
   assert(replacement.includes("D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED"), "REPLACEMENT_READ_AFTER_WRITE_MISSING");
