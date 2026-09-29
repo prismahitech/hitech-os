@@ -103,7 +103,7 @@ def build_request_from_readiness(
     }
     return {
         "schema":"prisma.visual.canonical-promotion-request.v1",
-        "requestId":"cpr-"+_digest({"targetId":requested_target,"source":source.get("digest"),"decision":decision})[:24],
+        "requestId":"cpr-"+_digest({"targetId":target_id,"source":source.get("digest"),"decision":decision})[:24],
         "target":{"targetId":None,"censusTargetId":target_id,"surfaceKey":row["surfaceKey"]},
         "expectedCurrentHead":expected_current_head,
         "currentTruth":current_truth,
