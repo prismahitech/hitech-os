@@ -1327,6 +1327,18 @@ async function createCustomerSetup(request, env) {
       ok: false,
       status: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
       resultCode: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
+      persistenceDiagnostics: {
+        tenant: Boolean(persistedTenant) && persistedTenant.slug === pass.tenantSlug && persistedTenant.plan === pass.commercialPlanId,
+        license: Boolean(persistedLicense) && persistedLicense.licenseId === pass.licenseId && persistedLicense.plan === pass.commercialPlanId && persistedLicense.status === "active",
+        assignment: Boolean(persistedAssignment) && persistedAssignment.licenseId === pass.licenseId && persistedAssignment.setupBundleId === pass.setupBundleId && persistedAssignment.planId === pass.commercialPlanId && persistedAssignment.status === "assigned",
+        setup: Boolean(persistedSetup) && persistedSetup.setupCode === pass.setupCode && persistedSetup.status === "active",
+        bundle: Boolean(persistedBundle) && persistedBundle.setupId === pass.setupId && persistedBundle.licenseId === pass.licenseId && persistedBundle.licenseAssignmentId === pass.licenseAssignmentId && persistedBundle.planId === pass.planId && persistedBundle.auditEventId === provisionAuditEventId,
+        planRegistry: Boolean(persistedPlan) && Number(persistedPlan.maxTabletDevices) === Number(plan.maxTabletDevices) && Number(persistedPlan.maxPcDevices) === Number(plan.maxPcDevices) && Number(persistedPlan.maxMobileDevices) === Number(plan.maxMobileDevices) && Number(persistedPlan.maxTotalDevices) === Number(plan.maxTotalDevices),
+        aggregateSlots: aggregateMatches,
+        claimSlots: claimSlotMatches,
+        createAudit: createAuditVerified,
+        provisionAudit: provisionAuditVerified
+      },
       customerMessage: "El alta fue rechazada porque el grafo final de Customer Setup no pudo verificarse completamente.",
       nextStep: "No uses el Setup Code; inspecciona el estado D1 y las auditorias antes de reintentar.",
       secretsExposed: false
