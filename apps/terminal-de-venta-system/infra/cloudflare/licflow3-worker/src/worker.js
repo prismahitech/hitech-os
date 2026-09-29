@@ -587,6 +587,9 @@ function operatorResult(action, mutationMode, resultCode, options = {}) {
       "No secret values returned to frontend or reports"
     ],
     safeToMutate: Boolean(options.safeToMutate),
+    persisted: Boolean(options.persisted),
+    idempotent: Boolean(options.idempotent),
+    slotReleased: Boolean(options.slotReleased),
     safeToMutateReason: options.safeToMutateReason || (confirmed ? "Confirmed operation gates evaluated." : "Simulation does not mutate Cloud License Database."),
     safeToMutateChecks: options.safeToMutateChecks || {
       adminToken: confirmed ? "validated_server_side" : "not_required",
