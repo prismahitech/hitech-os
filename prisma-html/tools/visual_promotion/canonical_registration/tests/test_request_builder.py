@@ -47,6 +47,7 @@ class RequestBuilderTests(unittest.TestCase):
             expected_current_head="a"*40,
             authorization={"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False},
             source={"digest":"b"*64,"path":"candidate.json"},
+            work_entry_handoff={"gate":"visual_application.visual_work_entry_gate","decision":"REGISTER_TARGET_FIRST","targetId":"TGT.CENSUS.TABLET.TEST.V1","evaluatedHead":"a"*40},
         )
         self.assertEqual(request["decision"]["layerAction"]["policy"],"EXACT_TARGET_ONLY")
         self.assertEqual(request["decision"]["layerAction"]["authorityDomain"],"rifat")
@@ -66,6 +67,15 @@ class RequestBuilderTests(unittest.TestCase):
         )
         self.assertEqual(request["decision"]["bindingAction"]["semanticKey"],"tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary")
         self.assertNotIn("physical.layer",request["decision"]["bindingAction"]["semanticKey"])
+
+    def test_builder_requires_work_entry_handoff(self):
+        with self.assertRaises(self.builder.RequestBuilderError):
+            self.builder.build_request_from_readiness(
+                self.row(),current_truth={"schema":"prisma.visual.current-truth-snapshot.v1"},
+                expected_current_head="a"*40,
+                authorization={"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False},
+                source={"digest":"b"*64,"path":"candidate.json"},
+            )
 
     def test_builder_does_not_supply_canonical_target_id(self):
         request=self.builder.build_request_from_readiness(
