@@ -195,6 +195,11 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(one.id,two.id)
         self.assertTrue(one.id.startswith("TGT."))
 
+    def test_plan_persists_allocated_target_id(self):
+        plan=self.engine.build_plan(self.request(),self.root)
+        self.assertIsNotNone(plan["targetId"])
+        self.assertEqual(plan["ids"]["targetId"],plan["targetId"])
+
     def test_existing_target_id_cannot_be_reused_as_create(self):
         request=self.request()
         from canonical_registration.policy import allocate_id
