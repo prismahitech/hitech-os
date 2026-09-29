@@ -55,3 +55,8 @@ def load_application_policy():
 def load_runtime_bridge():
     pkg=_ensure_package()
     return _load("canonical_registration.runtime_evidence_bridge",pkg/"runtime_evidence_bridge.py","canonical_registration")
+
+
+def load_projection_reconciler():
+    pkg=_ensure_package()
+    return _load("canonical_registration.projection_reconciler",pkg/"projection_reconciler.py","canonical_registration")
