@@ -55,6 +55,8 @@ def _validate_request(request: dict[str, Any]) -> None:
     if not target.get("targetId") or not target.get("surfaceKey"): raise CanonicalRegistrationError("EXACT_TARGET_IDENTITY_REQUIRED")
     truth = request["currentTruth"]
     if truth.get("schema") != "prisma.visual.current-truth-snapshot.v1": raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_REQUIRED")
+    required_truth = {"repoHead","targetIndexDigest","identityDigest","rifatDigest","ndcDigest","projectionDigest","authorityMeshDigest","layerMapDigest","targetEvidenceDigest"}
+    if not required_truth.issubset(truth): raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_INCOMPLETE")
     if truth.get("repoHead") != request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_TRUTH_HEAD_MISMATCH")
     if not isinstance(request["source"].get("digest"),str) or len(request["source"]["digest"]) != 64: raise CanonicalRegistrationError("SOURCE_DIGEST_REQUIRED")
     if not request["source"].get("path"): raise CanonicalRegistrationError("SOURCE_PATH_REQUIRED")
@@ -77,6 +79,8 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     d, target = request["decision"], request["target"]
     recipe_action, binding_action, layer_action = d.get("recipeAction",{}), d.get("bindingAction",{}), d.get("layerAction",{})
     if not layer_action.get("applicationLayerId") or not layer_action.get("policy"): raise CanonicalRegistrationError("APPLICATION_LAYER_POLICY_REQUIRED")
+    if layer_action.get("policy") not in {"EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"}: raise CanonicalRegistrationError("APPLICATION_POLICY_INVALID")
+    if layer_action.get("writerKind") not in {"CANONICAL_REGISTRATION","GVAE"}: raise CanonicalRegistrationError("WRITER_KIND_REQUIRED")
     if not binding_action.get("exactBinding"): raise CanonicalRegistrationError("EXACT_BINDING_REQUIRED")
     recipe_path = repo_root / "prisma-html/authority/rifat/identity/registries/recipe.registry.json"
     binding_path = repo_root / "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
@@ -94,7 +98,8 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
         if not binding_id or not any(x.get("bindingId")==binding_id for x in bindings.get("bindings",[])): raise CanonicalRegistrationError("BINDING_REUSE_NOT_FOUND")
     else: raise CanonicalRegistrationError("BINDING_ACTION_INVALID")
     collisions = [t for b in bindings.get("bindings",[]) for t in b.get("targets",[]) if t.get("targetId")==target["targetId"]]
-    if collisions and collisions[0] != binding_action["exactBinding"]: raise CollisionError("EXACT_TARGET_BINDING_COLLISION")
+    requested_target = (binding_action["exactBinding"].get("targets") or [None])[0]
+    if collisions and collisions[0] != requested_target: raise CollisionError("EXACT_TARGET_BINDING_COLLISION")
     status = "NO_OP_IDEMPOTENT" if collisions else "APPLY"
     mutations=[]
     if status=="APPLY":
