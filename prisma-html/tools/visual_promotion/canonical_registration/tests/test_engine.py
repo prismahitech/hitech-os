@@ -235,6 +235,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         request=self.request()
         first=self.engine.register(request,self.root)
         replay=self.request()
+        replay["currentTruth"]=self._snapshot()
         replay["target"]["targetId"]=first["targetId"]
         replay["decision"]["targetAction"]={"action":"REUSE_EXISTING"}
         replay["decision"]["bindingAction"]["action"]="REUSE_EXISTING"
@@ -248,6 +249,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         request=self.request()
         first=self.engine.register(request,self.root)
         replay=self.request()
+        replay["currentTruth"]=self._snapshot()
         replay["target"]["targetId"]=first["targetId"]
         replay["decision"]["targetAction"]={"action":"REUSE_EXISTING"}
         replay["decision"]["bindingAction"]["action"]="REUSE_EXISTING"
