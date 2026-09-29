@@ -12,6 +12,7 @@ MIGRATIONS = [
     ROOT / "infra" / "cloudflare" / "licflow3-worker" / "migrations" / "0002_customer_setup.sql",
     ROOT / "infra" / "cloudflare" / "licflow3-worker" / "migrations" / "0003_plan_based_provisioning.sql",
     ROOT / "infra" / "cloudflare" / "licflow3-worker" / "migrations" / "0004_customer_device_claim_integrity.sql",
+    ROOT / "infra" / "cloudflare" / "licflow3-worker" / "migrations" / "0005_replacement_slot_reuse.sql",
 ]
 
 
@@ -31,8 +32,7 @@ def scalar(conn: sqlite3.Connection, sql: str, params=()):
 
 def main() -> None:
     checks = []
-    migration_sql = "
-".join(path.read_text(encoding="utf-8") for path in MIGRATIONS)
+    migration_sql = "\n".join(path.read_text(encoding="utf-8") for path in MIGRATIONS)
 
     with tempfile.TemporaryDirectory(prefix="prisma-cloud-center-g4-") as td:
         db_path = Path(td) / "graph.sqlite"
@@ -43,7 +43,7 @@ def main() -> None:
         # Migration contract.
         require("claim_slot_id" in schema(conn, "customer_device_claims"), "CLAIM_SLOT_COLUMN_MISSING")
         indexes = {row[1] for row in conn.execute("PRAGMA index_list(customer_device_claims)")}
-        require("ux_customer_device_claims_setup_surface_slot" in indexes, "CLAIM_SLOT_UNIQUE_INDEX_MISSING")
+        require("ux_customer_device_claims_setup_surface_slot_active" in indexes, "CLAIM_SLOT_UNIQUE_INDEX_MISSING")
         checks.append("schema_claim_slot_integrity")
 
         # Seed one fully connected valid Customer Setup graph.
