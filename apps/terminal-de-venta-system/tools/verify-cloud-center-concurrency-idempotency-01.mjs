@@ -394,6 +394,32 @@ async function main() {
   assert(retryBefore === 1 && retryAfter === 1 && retryClaimSlot?.status === "CLAIMED", "SETUP_RETRY_RESET_CLAIMED_SLOT", { retryBefore, retryAfter, retryClaimSlot });
   checks.push("setup_retry_preserves_claimed_state");
 
+  // Read-only graph integrity over the same local D1-compatible database used by the race tests.
+  const orphanClaims = await directCount(seed, "customer_device_claims", "claim_slot_id IS NULL", []);
+  assert(orphanClaims === 0, "GRAPH_ORPHAN_CLAIMS_WITHOUT_SLOT", { orphanClaims });
+
+  const danglingClaims = Number((await seed.first(
+    "select count(*) as count from customer_device_claims c left join customer_setups s on s.setup_id = c.setup_id left join customer_device_claim_slots cs on cs.slot_id = c.claim_slot_id left join licenses l on l.license_id = cs.license_id left join license_plans p on p.plan_id = cs.plan_id where c.status = 'claimed' and (s.setup_id is null or cs.slot_id is null or l.license_id is null or p.plan_id is null)"
+  ))?.count || 0);
+  assert(danglingClaims === 0, "GRAPH_DANGLING_ACTIVE_CLAIMS", { danglingClaims });
+
+  const danglingBundles = Number((await seed.first(
+    "select count(*) as count from customer_setup_bundles b left join customer_setups s on s.setup_id = b.setup_id left join licenses l on l.license_id = b.license_id left join license_assignments a on a.license_assignment_id = b.license_assignment_id where s.setup_id is null or l.license_id is null or a.license_assignment_id is null"
+  ))?.count || 0);
+  assert(danglingBundles === 0, "GRAPH_DANGLING_SETUP_BUNDLES", { danglingBundles });
+
+  const danglingClaimSlots = Number((await seed.first(
+    "select count(*) as count from customer_device_claim_slots cs left join customer_setup_bundles b on b.setup_bundle_id = cs.setup_bundle_id left join licenses l on l.license_id = cs.license_id left join license_plans p on p.plan_id = cs.plan_id where b.setup_bundle_id is null or l.license_id is null or p.plan_id is null"
+  ))?.count || 0);
+  assert(danglingClaimSlots === 0, "GRAPH_DANGLING_CLAIM_SLOTS", { danglingClaimSlots });
+
+  const counterMismatches = Number((await seed.first(
+    "select count(*) as count from customer_setup_slots ss where ss.claimed != (select count(*) from customer_device_claims c where c.setup_id = ss.setup_id and c.surface = ss.surface and c.status = 'claimed') or ss.claimed > ss.allowed or ss.claimed < 0"
+  ))?.count || 0);
+  assert(counterMismatches === 0, "GRAPH_AGGREGATE_SLOT_COUNTER_MISMATCH", { counterMismatches });
+  checks.push("setup_license_assignment_claim_slot_graph_integrity");
+  checks.push("aggregate_slot_counter_integrity");
+
   console.log(JSON.stringify({
     ok: true,
     verifier: "verify-cloud-center-concurrency-idempotency-01",
