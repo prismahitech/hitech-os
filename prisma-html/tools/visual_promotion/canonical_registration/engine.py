@@ -197,6 +197,15 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     targets[0]["targetId"]=canonical_target_id
     exact["targets"]=targets
 
+    from .application_policy import ApplicationPolicyError, validate_application_policy
+    try:
+        validate_application_policy({
+            **layer,
+            "implementationLayerId": exact["targets"][0].get("implementationLayerId"),
+        })
+    except ApplicationPolicyError as exc:
+        raise CanonicalRegistrationError(str(exc)) from exc
+
     if binding.get("action")=="CREATE_NEW":
         b=allocate_id("binding",f"{target['surfaceKey']}|{canonical_target_id}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
         if b.action!="CREATE_NEW": raise IdCollisionError("BINDING_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
