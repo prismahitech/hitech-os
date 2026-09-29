@@ -176,6 +176,22 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.CanonicalRegistrationError):
             self.engine.build_plan(request,self.root)
 
+
+    def test_invalid_request_id_is_rejected_before_path_use(self):
+        request=self.request()
+        request["requestId"]="../escape"
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.register(request,self.root)
+
+    def test_request_id_cannot_be_reused_for_different_payload(self):
+        request=self.request()
+        self.engine.register(request,self.root)
+        changed=self.request()
+        changed["requestId"]=request["requestId"]
+        changed["source"]["digest"]="c"*64
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.register(changed,self.root)
+
     def test_new_semantic_requires_adjudication(self):
         request=self.request()
         request["decision"]["semanticAction"]="CREATE_NEW"
@@ -277,6 +293,18 @@ class CanonicalRegistrationTests(unittest.TestCase):
         doc=json.loads(p.read_text())
         doc["newerWork"]=True
         p.write_text(json.dumps(doc),encoding="utf-8")
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.rollback(request["requestId"],self.root)
+
+
+    def test_rollback_receipt_cannot_escape_canonical_paths(self):
+        request=self.request()
+        self.engine.register(request,self.root)
+        receipt_path=self.root/"prisma-html/governance/visual-promotion/canonical-registration/receipts"/f"{request['requestId']}.json"
+        evidence=json.loads(receipt_path.read_text())
+        outside="candidate.json"
+        evidence["postState"]=[{"path":outside,"sha256":"0"*64}]
+        receipt_path.write_text(json.dumps(evidence),encoding="utf-8")
         with self.assertRaises(self.engine.UnsafeMutationError):
             self.engine.rollback(request["requestId"],self.root)
 
