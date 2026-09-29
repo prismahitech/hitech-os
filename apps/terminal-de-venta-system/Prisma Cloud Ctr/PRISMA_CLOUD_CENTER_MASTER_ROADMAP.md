@@ -1,6 +1,6 @@
 # PRISMA Cloud Center — Master Roadmap & Certification Checklist
 
-**Status:** STEP 1 IN PROGRESS  
+**Status:** G0 PASSED — STEP 1 BASELINE CLOSED  
 **Baseline date:** 2026-09-29  
 **Target repository:** `prismahitech/hitech-os`  
 **Canonical component:** `apps/terminal-de-venta-system/Prisma Cloud Ctr`
@@ -327,8 +327,8 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G0 / Step 1 — Baseline freeze  
-**Next:** finish machine-readable baseline and surface inventory, then run G1 contract/authority reconciliation.  
+**Current:** G0 PASSED — Step 1 baseline freeze closed  
+**Next:** G1 — Contract / authority reconciliation  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
 # Historical evidence rule
