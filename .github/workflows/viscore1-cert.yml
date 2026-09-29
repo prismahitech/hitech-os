@@ -55,7 +55,7 @@ jobs:
           import json,sys
           d=json.load(open(sys.argv[1],encoding='utf-8'))
           assert d.get('result') == 'PASS_ANTI_REWORK_GATE', d
-          assert d.get('repoHead') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
+          assert d.get('sourceCommit') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
           assert d.get('errors') == [], d
           print(json.dumps({'result':d.get('result'),'repoHead':d.get('repoHead'),'decisionDigest':d.get('decisionDigest')},indent=2))
           PY
@@ -73,7 +73,7 @@ jobs:
           assert d.get('repoHead') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
           print(json.dumps({
               'status':d.get('status'),
-              'repoHead':d.get('repoHead'),
+              'sourceCommit':d.get('sourceCommit'),
               'readset_count':d.get('readset_count'),
               'missing_count':d.get('missing_count'),
               'critical_missing_count':d.get('critical_missing_count'),
