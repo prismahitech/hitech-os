@@ -92,6 +92,9 @@ def _release_lock(lock_dir:Path)->None:
     if (lock_dir/"LOCK.json").exists(): (lock_dir/"LOCK.json").unlink()
     if lock_dir.exists(): lock_dir.rmdir()
 
+def _transaction_lock_path(repo_root:Path,request_id:str)->Path:
+    return repo_root/TRANSACTIONS_ROOT/f".{request_id}.lock"
+
 def _registry_ids(registry:dict[str,Any],key:str)->set[str]:
     out=set()
     for item in registry.get(key,[]):
@@ -323,29 +326,29 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     request=copy.deepcopy(request); request["_repoRoot"]=str(repo_root.resolve())
     receipt_path=repo_root/RESULTS_ROOT/f"{request['requestId']}.json"; receipt_path.parent.mkdir(parents=True,exist_ok=True)
     request_digest=sha256_json({k:v for k,v in request.items() if k!="_repoRoot"})
-    if receipt_path.exists():
-        prior=_load(receipt_path)
-        if prior.get("requestDigest")==request_digest and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"} and prior.get("result"):
-            if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
-            for row in prior.get("postState",[]):
-                rel=row.get("path")
-                expected_post=row.get("sha256")
-                if not isinstance(rel,str) or not isinstance(expected_post,str):
-                    raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_INVALID")
-                current_path=repo_root/rel
-                if not current_path.is_file() or sha256_json(_load(current_path))!=expected_post:
-                    raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_DRIFT:"+rel)
-            return prior["result"]
-
-    plan=build_plan(request,repo_root)
-    journal_dir=repo_root/TRANSACTIONS_ROOT/request["requestId"]; journal_path=journal_dir/"journal.json"
-    if plan["status"]=="NO_OP_IDEMPOTENT":
-        evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
-        result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
-        evidence["result"]=result; _atomic_write_json(receipt_path,evidence); return result
-
-    lock=repo_root/TRANSACTIONS_ROOT/f".{request['requestId']}.lock"; _acquire_lock(lock)
+    lock=_transaction_lock_path(repo_root,request["requestId"]); _acquire_lock(lock)
     try:
+        if receipt_path.exists():
+            prior=_load(receipt_path)
+            if prior.get("requestDigest")==request_digest and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"} and prior.get("result"):
+                if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
+                for row in prior.get("postState",[]):
+                    rel=row.get("path")
+                    expected_post=row.get("sha256")
+                    if not isinstance(rel,str) or not isinstance(expected_post,str):
+                        raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_INVALID")
+                    current_path=repo_root/rel
+                    if not current_path.is_file() or sha256_json(_load(current_path))!=expected_post:
+                        raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_DRIFT:"+rel)
+                return prior["result"]
+
+        plan=build_plan(request,repo_root)
+        journal_dir=repo_root/TRANSACTIONS_ROOT/request["requestId"]; journal_path=journal_dir/"journal.json"
+        if plan["status"]=="NO_OP_IDEMPOTENT":
+            evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
+            result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
+            evidence["result"]=result; _atomic_write_json(receipt_path,evidence); return result
+
         head=current_repo_head(repo_root)
         if head!=request["expectedCurrentHead"]: raise StaleHeadError(f"CURRENT_HEAD_CHANGED:{head}:{request['expectedCurrentHead']}")
         prestate={m["path"]:_load(repo_root/m["path"]) for m in plan["mutations"]}
@@ -380,8 +383,7 @@ def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
     if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
     evidence=_load(receipt)
     if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
-    lock=repo_root/TRANSACTIONS_ROOT/f".rollback-{request_id}.lock"
-    _acquire_lock(lock)
+    lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
         restored=[]
         for row in evidence.get("postState",[]):
