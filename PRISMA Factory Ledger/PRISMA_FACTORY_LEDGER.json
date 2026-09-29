@@ -1979,7 +1979,7 @@
         "chart_lab",
         "control_center"
       ],
-      "classification": "BUILD",
+      "classification": "DONE",
       "status": "DONE_SOURCE_READY",
       "stateLabel": "MAMASTROPHIC_UNIVERSAL_SCREENSHOT_ARTIFACTS_SOURCE_READY",
       "doNotRebuild": true,
