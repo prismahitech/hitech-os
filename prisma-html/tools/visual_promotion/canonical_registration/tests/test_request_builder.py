@@ -21,7 +21,7 @@ class RequestBuilderTests(unittest.TestCase):
                 "componentId":"component","componentUiId":"component.ui",
                 "ownerId":"owner","implementationLayerId":"physical.layer","selector":".table",
             },
-            "application":{"applicationLayerId":"LYR.APP.TEST"},
+            "application":{"applicationLayerId":"LYR.APP.TEST","projectionPolicy":"EXACT_TARGET_ONLY"},
             "semanticAuthority":{
                 "authorityDomain":"ndc","writerKind":"NDC_CURATION",
                 "canonicalMeaningId":"ACT.primary","decisionRef":"ndc::decision.test",
