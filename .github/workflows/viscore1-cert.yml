@@ -30,6 +30,7 @@ jobs:
         with:
           python-version: '3.11'
 
+      # Carrier-only: G-01 authority preflight; never merge this branch.
       - name: TEMP G01 Factory Ledger PROPOSAL + Authority Mesh
         if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'preflight/visual-canonical-registration-g01-20260929' }}
         shell: bash
