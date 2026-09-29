@@ -31,6 +31,16 @@ When a client buys Tablet + PC + Mobile:
 - PC Admin Slot
 - Mobile Companion Slot
 
+## Plan Authority Boundary
+
+Customer Setup provisioning plans and commercial license SKUs are different domains.
+
+- Commercial SKU authority: `shared/licensing/plan-catalog.canonical.json`
+- Customer Setup provisioning authority: `shared/licensing/customer-setup-contract.ts`
+- `TABLET_PC_MOBILE_MANAGED` is a provisioning-only package plan for `PRISMA_TRIPLE_DEVICE_STARTER`; it is not a vendible SKU and has no standalone commercial price.
+
+Consumers must not derive commercial pricing or commercial selectors from the Customer Setup provisioning catalog.
+
 ## Shared Contract
 
 Canonical source module:
