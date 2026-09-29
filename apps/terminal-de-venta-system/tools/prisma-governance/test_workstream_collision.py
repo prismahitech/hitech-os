@@ -7,6 +7,7 @@ from workstream_collision import (
     GateError,
     PullRequestView,
     declaration_conflict,
+    declaration_scope_gaps,
     exclusive_overlap_paths,
     is_exclusive_path,
     is_governed_path,
@@ -68,6 +69,16 @@ scope: ../../unsafe
         ])
         self.assertEqual(
             exclusive_overlap_paths(pa, pb),
+            ["prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
+        )
+
+    def test_declared_scope_covers_governed_paths(self):
+        d = Declaration("alpha", "canonical", "ADVANCE", ("visual.foo",), ("governance",), ("foo/**",))
+        self.assertEqual(
+            declaration_scope_gaps(
+                d,
+                ["foo/bar.py", "prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
+            ),
             ["prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
         )
 
