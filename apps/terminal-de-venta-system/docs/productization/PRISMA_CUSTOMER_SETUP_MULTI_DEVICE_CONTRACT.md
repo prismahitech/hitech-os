@@ -38,6 +38,7 @@ Customer Setup provisioning plans and commercial license SKUs are different doma
 - Commercial SKU authority: `shared/licensing/plan-catalog.canonical.json`
 - Customer Setup provisioning authority: `shared/licensing/customer-setup-contract.ts`
 - `TABLET_PC_MOBILE_MANAGED` is a provisioning-only package plan for `PRISMA_TRIPLE_DEVICE_STARTER`; it is not a vendible SKU and has no standalone commercial price.
+- Its underlying commercial license SKU is `TABLET_PC_MANAGED`; the provisioning identifier must not be persisted as `licenses.plan`.
 
 Consumers must not derive commercial pricing or commercial selectors from the Customer Setup provisioning catalog.
 
