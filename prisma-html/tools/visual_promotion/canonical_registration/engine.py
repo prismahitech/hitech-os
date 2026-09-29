@@ -210,6 +210,13 @@ def _validate_request(request: dict[str, Any]) -> None:
     if decision.get("semanticAction") == "CREATE_NEW":
         if not decision.get("semanticDecisionId") or not decision.get("approvalEvidenceRefs"):
             raise CanonicalRegistrationError("EXPLICIT_SEMANTIC_APPROVAL_REQUIRED")
+        authority = decision.get("semanticAuthority") or {}
+        if authority.get("authorityDomain") != "ndc":
+            raise CanonicalRegistrationError("NEW_SEMANTIC_MUST_REFERENCE_NDC_AUTHORITY")
+        if authority.get("writerKind") != "NDC_CURATION":
+            raise CanonicalRegistrationError("NEW_SEMANTIC_WRITER_MUST_BE_NDC_CURATION")
+        if not authority.get("canonicalMeaningId") or not authority.get("decisionRef"):
+            raise CanonicalRegistrationError("NDC_ADJUDICATION_REFERENCE_REQUIRED")
 
     auth = request["authorization"]
     if auth.get("canonicalRegistrationAuthorized") is not True:
