@@ -23,10 +23,11 @@ def import_engine():
     sys.modules["canonical_registration"]=package
     _load("canonical_registration.policy",pkg/"policy.py","canonical_registration")
     _load("canonical_registration.authority_adapters",pkg/"authority_adapters.py","canonical_registration")
+    engine=_load("canonical_registration.engine",pkg/"engine.py","canonical_registration")
     truth=_load("canonical_registration.current_truth",pkg/"current_truth.py","canonical_registration")
     sys.modules["current_truth"]=truth
     _load("canonical_registration.postconditions",pkg/"postconditions.py","canonical_registration")
-    return _load("canonical_registration.engine",pkg/"engine.py","canonical_registration")
+    return engine
 
 
 def load_builder():
