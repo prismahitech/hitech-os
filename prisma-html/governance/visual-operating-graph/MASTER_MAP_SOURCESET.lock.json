@@ -158,7 +158,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-authority",
-      "gitBlobSha": "7bad80a58fd13241c4751b0294123e5af176a19f",
+      "gitBlobSha": "da61129bd2dcf270276e3672cc0108ba4e23631b",
       "schema": "1.0.0",
       "version": null
     },
