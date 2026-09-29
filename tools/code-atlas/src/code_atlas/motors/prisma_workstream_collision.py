@@ -245,6 +245,13 @@ def scope_matches_any(scopes: Iterable[str], path: str) -> bool:
     return any(scope_matches(scope, path) for scope in scopes)
 
 
+def exclusive_overlap_paths(current: PullRequestView, other: PullRequestView) -> list[str]:
+    return sorted(
+        set(current.changed_files) & set(other.changed_files)
+        & {p for p in set(current.changed_files) | set(other.changed_files) if is_exclusive_path(p)}
+    )
+
+
 def declaration_conflict(current: PullRequestView, other: PullRequestView) -> tuple[bool, list[str], list[str]]:
     if not current.declaration or not other.declaration:
         return False, [], []
@@ -252,10 +259,7 @@ def declaration_conflict(current: PullRequestView, other: PullRequestView) -> tu
     reasons: list[str] = []
     same_ws = a.workstream_id == b.workstream_id
     same_cap = bool(set(a.capabilities) & set(b.capabilities))
-    exclusive_overlap = sorted(
-        set(current.changed_files) & set(other.changed_files)
-        & {p for p in set(current.changed_files) | set(other.changed_files) if is_exclusive_path(p)}
-    )
+    exclusive_overlap = exclusive_overlap_paths(current, other)
     scoped_overlap = sorted(
         set(pa for pa in current.changed_files if scope_matches_any(a.scope, pa))
         & set(pb for pb in other.changed_files if scope_matches_any(b.scope, pb))
@@ -387,11 +391,8 @@ def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> d
     conflicts: list[dict[str, Any]] = []
     for other in others:
         hard, reasons, overlap = declaration_conflict(current, other)
-        undeclared_exclusive = bool(
-            not other.declaration
-            and (set(current.changed_files) & set(other.changed_files)
-                 & {p for p in set(current.changed_files) | set(other.changed_files) if is_exclusive_path(p)})
-        )
+        undeclared_exclusive_paths = exclusive_overlap_paths(current, other) if not other.declaration else []
+        undeclared_exclusive = bool(undeclared_exclusive_paths)
         if not hard and not undeclared_exclusive:
             continue
         disposition = (
@@ -405,8 +406,8 @@ def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> d
             "role": other.declaration.role if other.declaration else None,
             "workstreamId": other.declaration.workstream_id if other.declaration else None,
             "reasons": reasons + (["undeclared_exclusive_overlap"] if undeclared_exclusive else []),
-            "overlapPaths": overlap or sorted(set(current.changed_files) & set(other.changed_files))[:100],
-            "overlapCount": len(overlap or (set(current.changed_files) & set(other.changed_files))),
+            "overlapPaths": overlap or undeclared_exclusive_paths or sorted(set(current.changed_files) & set(other.changed_files))[:100],
+            "overlapCount": len(overlap or undeclared_exclusive_paths or (set(current.changed_files) & set(other.changed_files))),
             "disposition": disposition,
         })
 
