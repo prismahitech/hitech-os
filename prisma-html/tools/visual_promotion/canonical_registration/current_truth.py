@@ -50,6 +50,8 @@ def capture_current_truth(
     repo_head: str | None = None,
     authority_mesh_path: str | None = None,
     layer_map_path: str | None = None,
+    authority_mesh_digest: str | None = None,
+    layer_map_digest: str | None = None,
 ) -> dict:
     head = repo_head or current_repo_head(repo_root)
     if len(head) != 40 or any(ch not in "0123456789abcdef" for ch in head):
@@ -74,13 +76,19 @@ def capture_current_truth(
     ndc_digest, ndc_sources = _glob_bundle(repo_root, NDC_ROOT)
     projection_digest, projection_sources = _bundle(repo_root, PROJECTION_PATHS)
 
-    if not authority_mesh_path:
-        raise CanonicalRegistrationError("CURRENT_TRUTH_AUTHORITY_MESH_PATH_REQUIRED")
-    if not layer_map_path:
-        raise CanonicalRegistrationError("CURRENT_TRUTH_LAYER_MAP_PATH_REQUIRED")
+    if authority_mesh_path:
+        authority_mesh_digest, authority_mesh_sources = _bundle(repo_root, [authority_mesh_path])
+    elif authority_mesh_digest:
+        authority_mesh_sources = [{"externalRef": "authority-mesh", "sha256": authority_mesh_digest}]
+    else:
+        raise CanonicalRegistrationError("CURRENT_TRUTH_AUTHORITY_MESH_EVIDENCE_REQUIRED")
 
-    authority_mesh_digest, authority_mesh_sources = _bundle(repo_root, [authority_mesh_path])
-    layer_map_digest, layer_map_sources = _bundle(repo_root, [layer_map_path])
+    if layer_map_path:
+        layer_map_digest, layer_map_sources = _bundle(repo_root, [layer_map_path])
+    elif layer_map_digest:
+        layer_map_sources = [{"externalRef": "layer-map", "sha256": layer_map_digest}]
+    else:
+        raise CanonicalRegistrationError("CURRENT_TRUTH_LAYER_MAP_EVIDENCE_REQUIRED")
 
     snapshot = {
         "schema": "prisma.visual.current-truth-snapshot.v1",
@@ -110,6 +118,9 @@ def capture_current_truth(
 def verify_current_truth(repo_root: Path, snapshot: dict, *, target_id: str) -> None:
     if snapshot.get("schema") != "prisma.visual.current-truth-snapshot.v1":
         raise CanonicalRegistrationError("CURRENT_TRUTH_SCHEMA_INVALID")
+    expected_snapshot_id = snapshot.get("snapshotId")
+    if expected_snapshot_id and expected_snapshot_id != sha256_json({k: v for k, v in snapshot.items() if k != "snapshotId"}):
+        raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_ID_INVALID")
     if snapshot.get("targetEvidenceDigest") is None:
         raise CanonicalRegistrationError("CURRENT_TRUTH_TARGET_EVIDENCE_DIGEST_MISSING")
     sources = snapshot.get("sources")
@@ -130,13 +141,20 @@ def verify_current_truth(repo_root: Path, snapshot: dict, *, target_id: str) -> 
             raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SET_MISSING:{bucket}")
         actual_rows = []
         for row in rows:
-            if not isinstance(row, dict) or not isinstance(row.get("path"), str):
+            if not isinstance(row, dict):
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_ROW_INVALID:{bucket}")
+            if row.get("externalRef"):
+                if not isinstance(row.get("sha256"), str) or len(row["sha256"]) != 64:
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_EXTERNAL_DIGEST_INVALID:{bucket}")
+                actual_rows.append({"externalRef": row["externalRef"], "sha256": row["sha256"]})
+                continue
+            if not isinstance(row.get("path"), str):
                 raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_ROW_INVALID:{bucket}")
             path = repo_root / row["path"]
             if not path.is_file():
                 raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{row['path']}")
             actual_rows.append({"path": row["path"], "sha256": file_sha256(path), "bytes": path.stat().st_size})
-        actual_rows.sort(key=lambda item: item["path"])
+        actual_rows.sort(key=lambda item: str(item.get("path") or item.get("externalRef")))
         if sha256_json(actual_rows) != snapshot.get(digest_field):
             raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
 
