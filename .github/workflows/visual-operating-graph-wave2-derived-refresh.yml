@@ -8,7 +8,7 @@ on:
       - '.github/workflows/visual-operating-graph-wave2-derived-refresh.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   refresh-derived:
@@ -48,6 +48,25 @@ jobs:
             --check
           python tools/refresh_files_manifest.py --write
           python tools/refresh_files_manifest.py --check
+
+      - name: Commit exact generated governance candidates
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- \
+            prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json \
+            prisma-html/FILES_MANIFEST.json; then
+            echo "No generated governance drift."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json \
+            prisma-html/FILES_MANIFEST.json
+          git commit -m "chore(visual-graph): refresh generated governance artifacts"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
 
       - name: Upload exact generated governance candidates
         uses: actions/upload-artifact@v7
