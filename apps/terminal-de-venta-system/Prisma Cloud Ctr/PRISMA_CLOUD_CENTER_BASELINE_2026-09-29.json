@@ -274,8 +274,8 @@
       "G4 blocked/expired behavioral checks"
     ],
     "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
-    "nextGate": "G5",
-    "note": "G1-G4 are CI-certified on candidate code HEAD 94c184f. Subsequent commits on this branch are governance/documentation only unless stated otherwise."
+    "nextGate": "G5A",
+    "note": "G1-G4 are CI-verified. Candidate now awaits G5A/G5B runtime recertification plus live read-only certification. Live mutation remains blocked."
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
@@ -303,7 +303,7 @@
     "G3": {
       "status": "PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY",
       "verifiedAt": "2026-09-29",
-      "ciRun": 2242,
+      "ciRun": "CI run 2234",
       "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
       "result": "PASS",
       "remaining": [
@@ -313,13 +313,23 @@
     "G4": {
       "status": "PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY",
       "verifiedAt": "2026-09-29",
-      "ciRun": 2242,
+      "ciRun": "CI run 2234",
       "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
       "result": "PASS",
       "remaining": [
         "blocked license states behavioral gate",
         "expired/revoked setup behavioral gate"
       ]
+    },
+    "G5A": {
+      "status": "PATCHED_CI_PENDING",
+      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-local-runtime-gate-01.mjs",
+      "lastFailure": "worker syntax check used repository parent as cwd",
+      "fix": "worker syntax check now uses repoRoot"
+    },
+    "collisionGate": {
+      "status": "PATCHED_DEPENDENCY_PRESENT_CI_PENDING",
+      "fix": "restored canonical workstream_collision.py and test_workstream_collision.py from main"
     }
   },
   "step2Status": {
