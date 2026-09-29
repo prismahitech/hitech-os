@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-promotion-postconditions.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","targetId","censusTargetId","bindingId","recipeId","identityBinding","rifatExactBinding","targetIndex","projection","runtimeCertification","postconditionDigest"],
+  "properties":{
+    "schema":{"const":"prisma.visual.canonical-promotion-postconditions.v1"},
+    "targetId":{"type":"string"},"censusTargetId":{"type":"string"},"bindingId":{"type":"string"},"recipeId":{"type":"string"},
+    "identityBinding":{"const":"VERIFIED"},"rifatExactBinding":{"const":"VERIFIED"},
+    "targetIndex":{"enum":["VERIFIED_EXACT_TARGET","DERIVATION_PENDING_TARGET_INDEX"]},
+    "projection":{"const":"DERIVATION_DEFERRED"},
+    "runtimeCertification":{"const":"NOT_PERFORMED"},
+    "postconditionDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"}
+  }
+}
