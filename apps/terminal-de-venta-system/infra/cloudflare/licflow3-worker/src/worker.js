@@ -791,7 +791,7 @@ async function buildTenantMutationStatement(env, slug, displayName, plan) {
   return null;
 }
 
-async function buildLicenseMutationStatement(env, slug, licenseId, status, plan, validUntil) {
+async function buildLicenseMutationStatement(env, slug, licenseId, status, plan, validUntil, mode = null) {
   const schemaMode = await licenseSchemaMode(env);
   if (schemaMode === "unknown") return { schemaMode, statement: null };
   const existing = await licenseById(env, slug, licenseId, schemaMode);
@@ -800,7 +800,9 @@ async function buildLicenseMutationStatement(env, slug, licenseId, status, plan,
       schemaMode,
       statement: existing
         ? {
-            sql: "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = coalesce(?, valid_until), updated_at = ? where license_id = ? and tenant_slug = ?",
+            sql: mode === "renew"
+              ? "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = coalesce(?, valid_until), updated_at = ? where license_id = ? and tenant_slug = ? and status <> 'revoked'"
+              : "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = coalesce(?, valid_until), updated_at = ? where license_id = ? and tenant_slug = ?",
             params: [slug, status, plan, status, validUntil || null, now(), licenseId, slug]
           }
         : {
@@ -813,7 +815,9 @@ async function buildLicenseMutationStatement(env, slug, licenseId, status, plan,
     schemaMode,
     statement: existing
       ? {
-          sql: "update licenses set plan = ?, status = ?, expires_at = coalesce(?, expires_at), updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?)",
+          sql: mode === "renew"
+            ? "update licenses set plan = ?, status = ?, expires_at = coalesce(?, expires_at), updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?) and status <> 'revoked'"
+            : "update licenses set plan = ?, status = ?, expires_at = coalesce(?, expires_at), updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?)",
           params: [plan, status, validUntil || null, now(), licenseId, slug]
         }
       : {
@@ -2168,7 +2172,7 @@ async function activateLicense(request, env, mode) {
   }
 
   const tenantStatement = await buildTenantMutationStatement(env, slug, body.businessName || slug, requestedPlan);
-  const licenseMutation = await buildLicenseMutationStatement(env, slug, licenseId, status, requestedPlan, validUntil);
+  const licenseMutation = await buildLicenseMutationStatement(env, slug, licenseId, status, requestedPlan, validUntil, mode);
   const auditMode = await auditSchemaMode(env);
   if (!tenantStatement || !licenseMutation.statement || auditMode === "none") {
     return json(operatorResult(mode, mutationMode, "LICENSE_OPERATION_SCHEMA_REQUIRED", {
@@ -2216,11 +2220,63 @@ async function activateLicense(request, env, mode) {
   const persistedLicense = await licenseById(env, slug, licenseId, licenseMutation.schemaMode);
   const persistedTenant = await tenant(env, slug);
   const auditVerified = await auditEventExists(env, auditMode, auditEventId);
+  const mutationResult = batch.results?.[1] || null;
+  const mutationChanges = Number(mutationResult?.meta?.changes ?? mutationResult?.changes ?? -1);
+
+  // Renew is a terminal-state CAS. Zero affected rows means another actor
+  // revoked the license before this mutation committed; surface a deterministic
+  // conflict rather than a generic 500.
+  if (mode === "renew" && mutationChanges === 0) {
+    return json(operatorResult(mode, mutationMode, "LICENSE_REVOKED_TERMINAL", {
+      ok: false,
+      status: "LICENSE_REVOKED_TERMINAL",
+      safeToMutate: false,
+      safeToMutateReason: "Renewal was prevented because revoke owns the terminal state.",
+      safeToMutateChecks: {
+        readAfterWrite: "not_mutated",
+        auditEvent: "verified"
+      },
+      operatorMessage: "La licencia fue revocada y ya no puede renovarse.",
+      nextStep: "Crea una nueva licencia o revierte la revocacion mediante el proceso autorizado.",
+      latencyMs: Date.now() - started
+    }), 409);
+  }
   const licenseOk = Boolean(persistedLicense) &&
     persistedLicense.licenseId === licenseId &&
     persistedLicense.status === status &&
     persistedLicense.plan === (body.plan || PLAN);
   const tenantOk = Boolean(persistedTenant) && persistedTenant.slug === slug;
+  if (mode === "renew" && mutationChanges > 0 && auditVerified) {
+    return json(operatorResult(mode, mutationMode, resultCode, {
+      ok: true,
+      status,
+      safeToMutate: true,
+      persisted: true,
+      auditVerified: true,
+      safeToMutateReason: "Renew transaction and audit committed; later terminal transitions may have changed current state.",
+      safeToMutateChecks: {
+        adminToken: "validated_server_side",
+        confirmation: true,
+        revokePhrase: "not_required",
+        reason: "not_required",
+        transactionCommit: "confirmed",
+        auditEvent: "verified"
+      },
+      operatorMessage: "Renewal transaction completed and its audit event was persisted.",
+      nextStep: persistedLicense?.status === "revoked"
+        ? "The license was subsequently revoked; current state is terminal."
+        : "Review License Operation Audit and customer status.",
+      requestId: auditEventId,
+      latencyMs: Date.now() - started,
+      extra: {
+        tenantSlug: slug,
+        licenseId,
+        license: { licenseId, status, plan: requestedPlan, currentStatus: persistedLicense?.status || null, validUntil, signedLicenseIssued: false },
+        persistence: { schemaMode: licenseMutation.schemaMode, auditTable: auditMode, auditEventId, mutationChanges }
+      }
+    }), 200);
+  }
+
   if (!licenseOk || !tenantOk || !auditVerified) {
     return json(operatorResult(mode, mutationMode, "D1_LICENSE_OPERATION_PERSISTENCE_VERIFY_FAILED", {
       ok: false,
