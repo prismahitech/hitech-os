@@ -1929,25 +1929,27 @@
         "governance",
         "quality"
       ],
-      "classification": "BUILD",
-      "status": "WAVE1_SOURCE_READY",
-      "stateLabel": "VISUAL_OPERATING_GRAPH_WAVE1_READ_ONLY_SOURCE_READY",
+      "classification": "DONE",
+      "status": "LOCAL_VERIFIED",
+      "stateLabel": "PASS_VISUAL_OPERATING_GRAPH_WAVE2_READ_ONLY_LOCAL_VERIFIED",
       "doNotRebuild": false,
-      "nextGate": "On exact current main after this Wave 1 closure, run the universal anti-rework PROPOSAL gate and a fresh task-exact Authority Mesh for the bounded read-only Next Safe Action Engine + What-if Digital Twin scope. Then run the anti-rework MUTATION gate before repository source writes. Preserve authorizationGranted=false, productionCertified=false, no semantic minting, no canonical visual registration, no Work Entry mutation, no GVAE APPLY and no product/runtime mutation.",
+      "nextGate": "Reuse the Wave 2 read-only planner and simulator. Any future capability expansion, mutation-related integration, or authority-affecting change requires a fresh task-exact Authority Mesh and Factory Ledger gate. Runtime/visual certification and mutation authorization remain separate gates.",
       "evidence": [
         "Registration-only Authority Mesh run 34911873722 artifact 10374668209; PASS_COMPOSED_AUTHORITY_MESH at main 46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0; requestDigest 1f412153563dfcfb13af8a29a1d056d7c0ac026a096c99ec1dd6c303465fee09; composed sha256 116eb6763057e6e7a242465983cc62ebbfdb50411448813e2301b21e00d3e20e; uploaded artifact sha256:13a6daaf3febb26a0b0312a1d0ad9a6cdb0d99160467f95f9ebd60f8976f99c8",
         "Foundation PR #556 merged at 8db4370d579014f8fed6e190ffce45e1589b33d9 with VISCORE1, CI, ForgeOS Quality Gate and Sync Sentinel green; Foundation establishes collision/reuse boundaries and machine-readable contracts without product/runtime mutation",
         "Wave 1 implementation PR #558 merged at 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d after source-set fail-closed rebind to current authority; final PR checks: VISCORE1 35001088119 PASS, CI 35001088193 PASS, ForgeOS 35001087929 PASS, Sync Sentinel 35001088016 PASS",
         "Wave 1 current-main Authority Mesh run 35000699014 artifact 10409517912 requestId de894f21c1b291df; PASS_COMPOSED_AUTHORITY_MESH; 100% required authority coverage; blockers 0; requestDigest 7c2b9b38cf8ae6d215f3ab13e7005d1371d2facdb5b149ad7296c95e20f8b7d7; composed sha256 67f209964b861ae89e9fb712cb9d9137ea8058882e02c056291690f3d5f13664; uploaded sha256 5696d219f0802dac14a6fa509acaf97089fd12541eed229ee576d533606cf560",
         "Final VISCORE1 source validator on PR #558: PASS_SOURCESET_VERIFIED; 0 blocking findings; deterministic canonical graph 87 nodes / 75 edges; canonical/live separation preserved; live overlay not observed; productionCertified=false and authorizationGranted=false",
-        "Wave 1 closure Authority Mesh run 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769; PASS_COMPOSED_AUTHORITY_MESH on exact main 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d; requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b; composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466; uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab"
+        "Wave 1 closure Authority Mesh run 35001765419 artifact 10409673990 requestId 4ddf0174aafe9769; PASS_COMPOSED_AUTHORITY_MESH on exact main 63a904fc8a4e2e2ee4c8d53c9157105e7b527a7d; requestDigest de379d9cddd9c7b051a2b3284c1859807a44329b27e2913fbc21cd4609118e9b; composed sha256 867382a29a4f89bf54ed5e4789156564a25881d3ceee4813dc9ed89f59368466; uploaded sha256 e071c0101d030fba2751e80a82336de3c9ac305397668887b9aaa8db5a56bbab",
+        "PR #585 merged as 4b8eb9dce6f7918f3d219332f9318e43c435b5a6; CI 36540654017, GVAE All-Surface Authority 36540654006, ForgeOS Quality Gate 36540654089, Sync Sentinel 36540654023 and VISCORE1 Certification 36540654022 passed.",
+        "Fresh post-merge AutoMesh run 36540982644 artifact 11020856487; PASS_COMPOSED_AUTHORITY_MESH at main@4b8eb9dce6f7918f3d219332f9318e43c435b5a6; 100% required authority coverage; zero blockers; artifact sha256:2bb76f7089e5cea81930f2880c0df1d6acfea4202c768d1b15d6e0b579b7b01c.",
+        "Wave 2 implementation is limited to read-only Next Safe Action and What-if tooling in prisma-html/tools/visual_operating_graph; no canonical authority writer or product/runtime mutation was added."
       ],
       "doesNotProve": [
-        "Next Safe Action Engine is implemented or source-ready",
-        "What-if Digital Twin is implemented or source-ready",
-        "Any canonical visual registration, semantic authority minting, binding repair, Work Entry mutation or GVAE APPLY is authorized",
-        "Any product/runtime source mutation or rendered visual behavior",
-        "Any runtime visual, production, distribution or customer deployment certification"
+        "Canonical visual registration, semantic authority minting, binding repair, Work Entry mutation or GVAE APPLY.",
+        "Planner or simulator output is authorization for any mutation.",
+        "Runtime visual certification, production certification, distribution readiness or customer deployment.",
+        "Future correctness after source, authority, dependency or runtime drift."
       ],
       "allowedActions": [
         "reuse the Wave 1 source-set verifier, canonical graph builder, generated Master Map projection, Live Phase Truth Reducer and Drift Sentinel without rebuilding them",
