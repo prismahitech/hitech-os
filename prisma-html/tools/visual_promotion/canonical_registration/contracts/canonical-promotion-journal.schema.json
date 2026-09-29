@@ -2,13 +2,14 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"prisma.visual.canonical-promotion-journal.v1",
   "type":"object","additionalProperties":false,
-  "required":["schema","requestId","requestDigest","status","expectedCurrentHead","currentTruthDigest","preStateValues","preStateDigests","mutations"],
+  "required":["schema","requestId","requestDigest","status","expectedCurrentHead","currentTruthDigest","workEntryHandoff","preStateValues","preStateDigests","mutations"],
   "properties":{
     "schema":{"const":"prisma.visual.canonical-promotion-journal.v1"},
     "requestId":{"type":"string"},"requestDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
     "status":{"enum":["PREPARED","APPLIED","ROLLED_BACK","ROLLED_BACK_AFTER_FAILURE"]},
     "expectedCurrentHead":{"type":"string","pattern":"^[0-9a-f]{40}$"},
     "currentTruthDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "workEntryHandoff":{"type":"object","additionalProperties":false,"required":["gate","decision","targetId","evaluatedHead"],"properties":{"gate":{"const":"visual_application.visual_work_entry_gate"},"decision":{"const":"REGISTER_TARGET_FIRST"},"targetId":{"type":"string","pattern":"^TGT\\.CENSUS\\."},"evaluatedHead":{"type":"string","pattern":"^[0-9a-f]{40}$"}}},
     "preStateValues":{"type":"object"},"preStateDigests":{"type":"object"},
     "postStateDigests":{"type":"object"},"mutations":{"type":"array"},
     "rollbackVerified":{"type":"boolean"},"error":{"type":"string"},"restoredPaths":{"type":"array","items":{"type":"string"}}
