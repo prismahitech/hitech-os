@@ -35,11 +35,35 @@ def verify_registration_postconditions(repo_root: Path, plan: dict) -> dict:
     if len(recipe_entries)!=1:
         raise CanonicalRegistrationError("POSTCONDITION_RECIPE_ID_NOT_UNIQUE")
 
-    from visual_application.target_index import build_index
-    target_rows=[x for x in build_index(repo_root).get("records",[]) if isinstance(x,dict) and x.get("targetId")==target_id]
+    target_index_path=repo_root/"prisma-html/authority/rifat/prisma-ui/visual-control/target-index/manifest.json"
+    target_rows=[]
+    if target_index_path.is_file():
+        try:
+            target_index=_load(target_index_path)
+        except Exception as exc:
+            raise CanonicalRegistrationError("POSTCONDITION_TARGET_INDEX_UNREADABLE") from exc
+        target_rows=[
+            x for x in target_index.get("records",[])
+            if isinstance(x,dict) and x.get("targetId")==target_id
+        ]
     if len(target_rows)>1:
         raise CanonicalRegistrationError("POSTCONDITION_TARGET_INDEX_DUPLICATE")
-    target_status="VERIFIED_EXACT_TARGET" if len(target_rows)==1 else "DERIVATION_PENDING_TARGET_INDEX"
+    if len(target_rows)==1:
+        target_row=target_rows[0]
+        required_match={
+            "recordKind":"EXACT_APPLICATION_TARGET",
+            "enforcement":"GVAE_ENFORCED",
+            "bindingId":binding_id,
+            "surface":plan["surfaceKey"],
+        }
+        for field,expected in required_match.items():
+            if target_row.get(field)!=expected:
+                raise CanonicalRegistrationError(f"POSTCONDITION_TARGET_INDEX_{field.upper()}_MISMATCH")
+        if target_row.get("status") not in {"READY","APPLY_READY","RUNTIME_VERIFIED","BLOCKED"}:
+            raise CanonicalRegistrationError("POSTCONDITION_TARGET_INDEX_STATUS_INVALID")
+        target_status="VERIFIED_EXACT_TARGET"
+    else:
+        target_status="DERIVATION_PENDING_TARGET_INDEX"
 
     body={
         "targetId":target_id,
