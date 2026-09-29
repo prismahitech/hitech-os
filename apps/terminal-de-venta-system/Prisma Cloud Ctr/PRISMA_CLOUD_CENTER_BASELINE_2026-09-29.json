@@ -247,7 +247,8 @@
       "G1 contract/authority reconciliation."
     ],
     "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
-    "nextGate": "G1"
+    "nextGate": "G2",
+    "note": "G0 and G1 closed on the roadmap branch. Live mutation remains blocked; current CI status is not inferred from absent connector status entries."
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
@@ -255,5 +256,23 @@
     "d1LiveWritePerformed": false,
     "adminTokenRequested": false,
     "rule": "Read-only repository inspection only for Step 1."
+  },
+  "gates": {
+    "G1": {
+      "status": "PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED",
+      "verifiedAt": "2026-09-29",
+      "verificationMode": "independent repository invariant verification",
+      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-contract-authority-01.mjs",
+      "scope": [
+        "commercial vendible set",
+        "provisioning-only starter semantics",
+        "shared contract type separation",
+        "Worker provisioning plan support",
+        "Cloud Center commercial selector",
+        "D1 provisioning registry semantics",
+        "governance/productization/operations terminology"
+      ],
+      "result": "PASS"
+    }
   }
 }
