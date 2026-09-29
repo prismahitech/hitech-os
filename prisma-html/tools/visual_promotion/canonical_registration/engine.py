@@ -291,7 +291,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         "schema":PLAN_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],
         "targetId":canonical_target_id,"censusTargetId":target["censusTargetId"],"surfaceKey":target["surfaceKey"],
         "semanticAction":decision["semanticAction"],"semanticDecisionId":decision.get("semanticDecisionId"),
-        "ids":{"targetId":target["targetId"],"bindingId":binding_id,"recipeId":recipe_id},
+        "ids":{"targetId":canonical_target_id,"bindingId":binding_id,"recipeId":recipe_id},
         "bindingAction":binding.get("action"),"recipeAction":recipe.get("action"),"targetAction":target_action.get("action"),
         "layerAction":layer,"semanticAuthority":decision["semanticAuthority"],
         "projectionAction":decision.get("projectionAction",{"mode":"DEFERRED_DERIVATION","authorized":False}),
