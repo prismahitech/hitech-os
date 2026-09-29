@@ -1429,11 +1429,17 @@ async function claimCustomerDevice(request, env) {
 
   const slot = pass.slots.find((item) => item.surface === surface);
   if (!slot) return json({ ok: false, status: "SURFACE_NOT_ALLOWED", resultCode: "SURFACE_NOT_ALLOWED", customerMessage: "Este paquete no incluye esta app.", nextStep: "Revisa tu plan o contacta soporte.", secretsExposed: false }, 422);
+  // Re-read the aggregate slot state from D1 immediately before admission.
+  // The Setup Pass is a snapshot and may be stale after an authorized replacement.
+  const persistedSlotAggregate = await first(env, "select claimed, allowed from customer_setup_slots where setup_id = ? and surface = ? limit 1", [pass.setupId, surface]);
+  if (!persistedSlotAggregate) return json({ ok: false, status: "CUSTOMER_SETUP_SCHEMA_REQUIRED", resultCode: "CUSTOMER_SETUP_UPSTREAM_FAILED", customerMessage: "No pudimos verificar el cupo del dispositivo.", nextStep: "Inspecciona customer_setup_slots antes de reintentar.", secretsExposed: false }, 500);
+  const currentClaimed = Number(persistedSlotAggregate.claimed || 0);
+  const currentAllowed = Number(persistedSlotAggregate.allowed || 0);
   const existing = await first(env, "select claim_id, device_id, surface, status from customer_device_claims where setup_id = ? and device_id = ? limit 1", [pass.setupId, deviceId]);
   if (existing?.status === "claimed") return json({ ok: false, status: "DEVICE_ALREADY_CLAIMED", resultCode: "DEVICE_ALREADY_CLAIMED", customerMessage: "Este dispositivo ya esta activado.", nextStep: "Continua usando la app o revisa soporte si cambiaste de equipo.", secretsExposed: false }, 409);
   if (existing?.status === "replaced") return json({ ok: false, status: "DEVICE_REPLACEMENT_REQUIRED", resultCode: "DEVICE_REPLACEMENT_REQUIRED", customerMessage: "Este dispositivo fue reemplazado anteriormente.", nextStep: "Solicita un reemplazo autorizado para volver a usar este equipo.", secretsExposed: false }, 409);
 
-  if (slot.claimed >= slot.allowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", diagnostic: { guard: "aggregate_full", surface, claimed: slot.claimed, allowed: slot.allowed }, secretsExposed: false }, 409);
+  if (currentClaimed >= currentAllowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
   const claimSlot = await nextAvailableClaimSlot(env, pass, surface);
   if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", diagnostic: { guard: "claim_slot_lookup_empty", surface, setupId: pass.setupId }, secretsExposed: false }, 409);
 
