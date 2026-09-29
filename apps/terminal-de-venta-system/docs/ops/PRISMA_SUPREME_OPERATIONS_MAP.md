@@ -36,6 +36,12 @@ Participating tables and endpoints:
 | Plan provisioning tables | `license_plans`, `license_assignments`, `customer_setup_bundles`, `customer_device_claim_slots` |
 | Audit events | `customer_setup.create`, `customer_setup.plan_based_provision` |
 
+## Provisioning vs Commercial Authority
+
+This is the operational provisioning matrix. It must not be interpreted as the commercial SKU catalog.
+
+Commercial SKU/price authority remains `shared/licensing/plan-catalog.canonical.json`. Customer Setup provisioning authority remains `shared/licensing/customer-setup-contract.ts`. `TABLET_PC_MOBILE_MANAGED` is provisioning-only.
+
 ## PLAN_PROVISIONING_MATRIX
 
 | planId | planName | maxTabletDevices | maxPcDevices | maxMobileDevices | maxTotalDevices | allowedSurfaces | features | claimMode | autoGenerateSlots | requiresManualApproval | status | evidence |
