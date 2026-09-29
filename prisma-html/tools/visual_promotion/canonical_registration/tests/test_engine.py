@@ -270,6 +270,44 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.SourceDriftError):
             self.engine.build_plan(request,self.root)
 
+
+    def test_new_recipe_source_path_escape_blocks(self):
+        request=self.request()
+        request["decision"]["recipeAction"]={
+            "action":"CREATE_NEW",
+            "semanticKey":"new.recipe.escape",
+            "registryEntry":{
+                "recipeId":"REC.placeholder",
+                "familyId":"FAM.test",
+                "presetId":"PRESET.test",
+                "identityProfileId":"profile.test",
+                "path":"../candidate.json",
+                "fileSha256":self.source_digest,
+            },
+        }
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.build_plan(request,self.root)
+
+    def test_new_recipe_symlink_source_blocks(self):
+        request=self.request()
+        identity_root=self.root/"prisma-html/authority/rifat/identity"
+        link=identity_root/"recipes/linked.recipe.json"
+        link.symlink_to(self.root/"candidate.json")
+        request["decision"]["recipeAction"]={
+            "action":"CREATE_NEW",
+            "semanticKey":"new.recipe.symlink",
+            "registryEntry":{
+                "recipeId":"REC.placeholder",
+                "familyId":"FAM.test",
+                "presetId":"PRESET.test",
+                "identityProfileId":"profile.test",
+                "path":"recipes/linked.recipe.json",
+                "fileSha256":self.source_digest,
+            },
+        }
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.build_plan(request,self.root)
+
     def test_idempotent_repeat(self):
         request=self.request()
         first=self.engine.register(request,self.root)
