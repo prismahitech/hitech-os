@@ -1,6 +1,8 @@
 name: PRISMA Workstream Collision Gate
 
 on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   pull_request_target:
     types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
@@ -23,6 +25,26 @@ env:
   PYTHONUNBUFFERED: "1"
 
 jobs:
+  self-test:
+    name: Workstream collision self-test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Checkout PR source without repository permissions
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Run self-test and unit tests
+        run: |
+          set -euo pipefail
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py --self-test
+          PYTHONPATH=apps/terminal-de-venta-system/tools/prisma-governance \
+            python -m unittest -v apps/terminal-de-venta-system/tools/prisma-governance/test_workstream_collision.py
+
   workstream-collision:
     name: Workstream collision / ownership guard
     runs-on: ubuntu-24.04
