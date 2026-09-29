@@ -6,6 +6,35 @@ from typing import Any
 class AuthorityBindingError(ValueError):
     pass
 
+
+def _load_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        raise AuthorityBindingError(f"EXPANDED_AUTHORITY_MISSING:{path}")
+    rows=[]
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
+        if not line.strip():
+            continue
+        try:
+            value=json.loads(line)
+        except Exception as exc:
+            raise AuthorityBindingError(f"JSONL_INVALID:{path}") from exc
+        if not isinstance(value,dict):
+            raise AuthorityBindingError(f"JSONL_OBJECT_REQUIRED:{path}")
+        rows.append(value)
+    return rows
+
+
+def _expanded_surface_indexes(repo_root: Path, surface: str) -> dict[str, dict[str, Any]]:
+    base=repo_root/"prisma-html/authority/rifat/prisma-ui/visual-control/expanded"/surface
+    def index(rows,key):
+        return {str(row[key]):row for row in rows if isinstance(row.get(key),str) and row.get(key)}
+    return {
+        "routes":index(_load_jsonl(base/"routes.jsonl"),"route_id"),
+        "componentOwners":index(_load_jsonl(base/"owners-componentOwners.jsonl"),"component_id"),
+        "regionOwners":index(_load_jsonl(base/"owners-regionOwners.jsonl"),"region_id"),
+        "slots":index(_load_jsonl(base/"editable-slots.jsonl"),"slot_unit_id"),
+    }
+
 def _load(path: Path) -> dict[str, Any]:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -49,12 +78,24 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
     if not isinstance(target.get("selector"),str) or not target["selector"]: raise AuthorityBindingError("EXACT_BINDING_SELECTOR_REQUIRED")
     idx=rifat_indexes(repo_root)
     if expected_surface not in idx["surfaces"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_SURFACE:{expected_surface}")
-    lookup={"ownerId":"componentOwners","routeId":"routes","regionId":"regionOwners","slotId":"slots","componentUiId":"components","layerId":"layers"}
+    expanded=_expanded_surface_indexes(repo_root,expected_surface)
+    lookup={"ownerId":"componentOwners","routeId":"routes","regionId":"regionOwners","slotId":"slots","componentUiId":"componentOwners","layerId":"layers"}
     for field,bucket in lookup.items():
-        if target[field] not in idx[bucket]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_{field.upper()}:{target[field]}")
-    route_record=idx["routes"][target["routeId"]]
+        authority_index=expanded[bucket] if bucket in expanded else idx[bucket]
+        if target[field] not in authority_index: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_{field.upper()}:{target[field]}")
+    route_record=expanded["routes"][target["routeId"]]
     if route_record.get("surface")!=expected_surface:
         raise AuthorityBindingError("EXACT_BINDING_ROUTE_SURFACE_MISMATCH")
+    component_record=expanded["componentOwners"][target["componentUiId"]]
+    region_record=expanded["regionOwners"][target["regionId"]]
+    slot_record=expanded["slots"][target["slotId"]]
+    for label,record in (("COMPONENT",component_record),("REGION",region_record),("SLOT",slot_record)):
+        if record.get("surface")!=expected_surface:
+            raise AuthorityBindingError(f"EXACT_BINDING_{label}_SURFACE_MISMATCH")
+    if component_record.get("component_id")!=target["ownerId"]:
+        raise AuthorityBindingError("EXACT_BINDING_OWNER_COMPONENT_MISMATCH")
+    if region_record.get("ownerComponent") not in {target["ownerId"],target["componentUiId"]}:
+        raise AuthorityBindingError("EXACT_BINDING_REGION_OWNER_MISMATCH")
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
     implementation_layer=target["implementationLayerId"]
