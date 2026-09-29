@@ -1433,9 +1433,9 @@ async function claimCustomerDevice(request, env) {
   if (existing?.status === "claimed") return json({ ok: false, status: "DEVICE_ALREADY_CLAIMED", resultCode: "DEVICE_ALREADY_CLAIMED", customerMessage: "Este dispositivo ya esta activado.", nextStep: "Continua usando la app o revisa soporte si cambiaste de equipo.", secretsExposed: false }, 409);
   if (existing?.status === "replaced") return json({ ok: false, status: "DEVICE_REPLACEMENT_REQUIRED", resultCode: "DEVICE_REPLACEMENT_REQUIRED", customerMessage: "Este dispositivo fue reemplazado anteriormente.", nextStep: "Solicita un reemplazo autorizado para volver a usar este equipo.", secretsExposed: false }, 409);
 
-  if (slot.claimed >= slot.allowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
+  if (slot.claimed >= slot.allowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", diagnostic: { guard: "aggregate_full", surface, claimed: slot.claimed, allowed: slot.allowed }, secretsExposed: false }, 409);
   const claimSlot = await nextAvailableClaimSlot(env, pass, surface);
-  if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
+  if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", diagnostic: { guard: "claim_slot_lookup_empty", surface, setupId: pass.setupId }, secretsExposed: false }, 409);
 
   const existingCanonicalDevice = await first(env, "select device_id, tenant_slug, status from devices where device_id = ? limit 1", [deviceId]);
   if (existingCanonicalDevice && existingCanonicalDevice.tenant_slug && existingCanonicalDevice.tenant_slug !== pass.tenantSlug) {
