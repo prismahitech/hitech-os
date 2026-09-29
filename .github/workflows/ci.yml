@@ -147,6 +147,12 @@ jobs:
         run: |
           set -euo pipefail
           pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:persistence-hardening
+      - name: Verify Cloud Center concurrency and idempotency
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:concurrency-idempotency
+
 
       - name: Enforce zero priority overrides
         shell: bash
