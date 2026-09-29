@@ -230,7 +230,7 @@
   },
   "step1Status": {
     "name": "Baseline freeze",
-    "status": "NEAR_COMPLETE",
+    "status": "COMPLETE",
     "completed": [
       "Exact main HEAD captured.",
       "Historical evidence timestamp captured.",
@@ -238,13 +238,16 @@
       "Current combined CI status classified UNKNOWN rather than assumed green.",
       "Initial high-attention reconciliation findings recorded.",
       "Canonical Cloud Center/LICFLOW3/shared licensing surfaces identified.",
-      "Expanded key source/verifier/config inventory with exact blob SHAs."
+      "Expanded key source/verifier/config inventory with exact blob SHAs.",
+      "Exact source owner/verifier/config inventory captured with blob SHAs.",
+      "Roadmap linked from Cloud Center README.",
+      "Baseline consistency check completed on working branch."
     ],
     "remaining": [
-      "Bind baseline to existing canonical evidence/register if required by repository governance.",
-      "Perform final G0 consistency check.",
-      "Then move execution pointer to G1."
-    ]
+      "G1 contract/authority reconciliation."
+    ],
+    "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
+    "nextGate": "G1"
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
