@@ -1,0 +1,33 @@
+name: Mamastrophic Universal Artifact Tests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/Plawright Mamastrophic/ci/build_universal_artifact.py'
+      - 'tools/Plawright Mamastrophic/tests/test_universal_artifact.py'
+      - 'tools/Plawright Mamastrophic/docs/README_universal_screenshot_artifacts.md'
+      - 'tools/Plawright Mamastrophic/RUN.ps1'
+      - '.github/workflows/mamshot-universal-artifact-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Run universal artifact unit tests
+        run: python -m unittest -v "tools/Plawright Mamastrophic/tests/test_universal_artifact.py"
+      - name: Parse Mamastrophic runner
+        shell: pwsh
+        run: |
+          [scriptblock]::Create((Get-Content -Raw "tools/Plawright Mamastrophic/RUN.ps1")) | Out-Null
