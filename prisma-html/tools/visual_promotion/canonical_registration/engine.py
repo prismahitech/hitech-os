@@ -215,7 +215,6 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         if not binding_id or binding_id not in existing_binding_ids: raise CanonicalRegistrationError("BINDING_REUSE_NOT_FOUND")
     else: raise CanonicalRegistrationError("BINDING_ACTION_INVALID")
 
-    exact=binding.get("exactBinding")
     try:
         validate_exact_binding(repo_root,exact,canonical_target_id,target["surfaceKey"],meaning_id)
     except AuthorityBindingError as exc: raise CanonicalRegistrationError(str(exc)) from exc
