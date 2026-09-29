@@ -1,0 +1,42 @@
+name: G01 Derived Artifact Refresh
+on:
+  push:
+    branches:
+      - "feat/visual-canonical-registration-g01-hardening-20260929"
+permissions:
+  contents: write
+jobs:
+  refresh:
+    if: github.event.head_commit.message != 'chore(g01): refresh generated artifacts [skip g01 regen]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Remove temporary workflow before manifest generation
+        run: rm -f .github/workflows/g01-derived-artifact-refresh.yml
+      - name: Regenerate derived artifacts with owning generators
+        run: |
+          set -euo pipefail
+          python prisma-html/tools/visual_operating_graph/refresh_source_set_lock.py --write
+          python prisma-html/tools/visual_operating_graph/refresh_source_set_lock.py --check
+          python prisma-html/tools/refresh_files_manifest.py --write
+          python prisma-html/tools/refresh_files_manifest.py --check
+      - name: Commit generated artifacts and workflow removal
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json prisma-html/FILES_MANIFEST.json .github/workflows/g01-derived-artifact-refresh.yml
+          git status --short
+          if git diff --cached --quiet; then
+            echo "No derived drift."
+            exit 0
+          fi
+          git commit -m "chore(g01): refresh generated artifacts [skip g01 regen]"
+          git push origin "HEAD:feat/visual-canonical-registration-g01-hardening-20260929"
