@@ -45,6 +45,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
 
         ti=base/"visual-control/target-index"
         ti.mkdir(parents=True)
+        (ti/"manifest.json").write_text(json.dumps({"schema":"prisma.visual.application.target-index.v1"}),encoding="utf-8")
         self.census_target={
             "targetId":"TGT.CENSUS.TABLET.TEST.V1",
             "surface":"tablet",
