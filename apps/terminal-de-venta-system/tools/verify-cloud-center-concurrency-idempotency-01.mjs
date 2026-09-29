@@ -263,7 +263,8 @@ async function main() {
   const checks = [];
 
   // 1. Atomic create failure: no partial setup graph.
-  const setupFailHarness = new D1Harness(dbPath);\n  harnesses.push(setupFailHarness);
+  const setupFailHarness = new D1Harness(dbPath);
+  harnesses.push(setupFailHarness);
   await setupFailHarness.setFailure("insert into customer_setup_bundles");
   const failedSetupIds = unique("setup_atomic_fail");
   const failedSetup = {
@@ -306,7 +307,8 @@ async function main() {
 
   // 2. Real concurrent claims on the same DB with separate connections.
   const setup = await createSetup(seed, "concurrent");
-  const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];\n  harnesses.push(...claimHarnesses);
+  const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];
+  harnesses.push(...claimHarnesses);
   const claimResponses = await Promise.all(claimHarnesses.map((h, i) =>
     call(h, "/api/customer/devices/claim", "POST", {
       setupCode: setup.setupCode,
@@ -357,7 +359,8 @@ async function main() {
 
   // 5. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
-  const failClaimHarness = new D1Harness(dbPath);\n  harnesses.push(failClaimHarness);
+  const failClaimHarness = new D1Harness(dbPath);
+  harnesses.push(failClaimHarness);
   await failClaimHarness.setFailure("audit_events (event_id");
   const failedClaim = await call(failClaimHarness, "/api/customer/devices/claim", "POST", {
     setupCode: failClaimSetup.setupCode,
@@ -378,7 +381,8 @@ async function main() {
     deviceId: "g3-replacement-atomic-old"
   });
   assert(successfulReplacementClaim.status === 200, "PRECONDITION_REPLACEMENT_CLAIM_FAILED", { successfulReplacementClaim });
-  const failReplacementHarness = new D1Harness(dbPath);\n  harnesses.push(failReplacementHarness);
+  const failReplacementHarness = new D1Harness(dbPath);
+  harnesses.push(failReplacementHarness);
   await failReplacementHarness.setFailure("audit_events (event_id");
   const failedReplacement = await call(failReplacementHarness, "/api/admin/customer-devices/replacement/approve", "POST", {
     setupCode: failReplacementSetup.setupCode,
