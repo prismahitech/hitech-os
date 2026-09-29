@@ -1071,8 +1071,10 @@ async function createCustomerSetup(request, env) {
     return json({ ...pass, ok: false, status: "AUDIT_TABLE_REQUIRED", resultCode: "AUDIT_TABLE_REQUIRED", secretsExposed: false }, 500);
   }
 
-  const createAuditEventId = `customer_setup.create-${crypto.randomUUID()}`;
-  const provisionAuditEventId = `customer_setup.plan_based_provision-${crypto.randomUUID()}`;
+  // Stable audit identities make an identical setup retry idempotent instead of
+  // producing a fresh pair of provisioning audit events every time.
+  const createAuditEventId = `customer_setup.create-${pass.setupId}`;
+  const provisionAuditEventId = `customer_setup.plan_based_provision-${pass.setupId}`;
   const auditPayload = {
     setupId: pass.setupId,
     setupBundleId: pass.setupBundleId,
