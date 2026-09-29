@@ -192,7 +192,17 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install --with-deps chromium
           cd "$GITHUB_WORKSPACE"
-          CC_PLAYWRIGHT_ROOT="$RUNNER_TEMP/cloud-center-playwright/node_modules/playwright"             pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:browser-runtime
+          CC_PLAYWRIGHT_ROOT="$RUNNER_TEMP/cloud-center-playwright/node_modules/playwright" \
+          CC_BROWSER_EVIDENCE_DIR="$GITHUB_WORKSPACE/cloud-center-browser-evidence" \
+            pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:browser-runtime
+
+      - name: Upload Cloud Center browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloud-center-browser-runtime-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          path: cloud-center-browser-evidence/
 
 
       - name: Enforce zero priority overrides
