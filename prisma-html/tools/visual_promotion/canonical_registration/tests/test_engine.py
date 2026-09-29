@@ -41,7 +41,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         (base/"visual-control/components.json").write_text(json.dumps({"components":[{"component_id":"component"}]}),encoding="utf-8")
         (base/"visual-control/editable-slots.json").write_text(json.dumps({"slotUnitSamples":[{"slot_unit_id":"slot"}]}),encoding="utf-8")
         (base/"visual-control/layers.json").write_text(json.dumps({
-            "layerSamples":[{"layer_id":"LYR.test"}],"certifiedLayers":[]
+            "layerSamples":[{"layer_id":"LYR.test","surface":"tablet","selector":".table","implementationLayerId":"physical.layer","ownerCss":"css"}],"certifiedLayers":[]
         }),encoding="utf-8")
 
         ti=base/"visual-control/target-index"
@@ -263,6 +263,12 @@ class CanonicalRegistrationTests(unittest.TestCase):
         (self.root/"prisma-html/authority/rifat/prisma-ui/routes.json").write_text(
             json.dumps({"routes":[{"route_id":"route","surface":"pc"}]}),encoding="utf-8"
         )
+        with self.assertRaises(self.engine.CanonicalRegistrationError):
+            self.engine.build_plan(request,self.root)
+
+    def test_implementation_layer_must_match_rifat_evidence(self):
+        request=self.request()
+        request["decision"]["bindingAction"]["exactBinding"]["targets"][0]["implementationLayerId"]="physical.layer.other"
         with self.assertRaises(self.engine.CanonicalRegistrationError):
             self.engine.build_plan(request,self.root)
 
