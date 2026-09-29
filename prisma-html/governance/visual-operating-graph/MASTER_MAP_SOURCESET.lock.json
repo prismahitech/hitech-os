@@ -3,7 +3,7 @@
   "generated": true,
   "manualEditsForbidden": true,
   "generator": "visual-operating-graph-wave1-sourceset-lock",
-  "observedMainSha": "708f35d9a10387fdfd04606c061fc2fbc7531229",
+  "observedMainSha": "7aab9f0769a692c7914ffe9440c902390710ce8a",
   "promotionReadinessClosure": {
     "pr": 554,
     "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
@@ -118,7 +118,7 @@
       "path": "apps/terminal-de-venta-system/docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md",
       "authorityDomain": "ops",
       "role": "manual-doctrine",
-      "gitBlobSha": "cfd3fa7dcfe949342a62d1576bc4896326eb4655",
+      "gitBlobSha": "49fec4eef340810b1e4f9ea5bab9b2b8c2d78b7f",
       "schema": null,
       "version": null
     },
@@ -142,7 +142,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-evidence-index",
-      "gitBlobSha": "e365e92b74c2630028ee78b0a894657571f5f36d",
+      "gitBlobSha": "596959f710e645c68d1d873fe4ddb7212d1d7b57",
       "schema": "1.0.0",
       "version": null
     },
@@ -158,7 +158,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-authority",
-      "gitBlobSha": "959de7b6f70490d73726f8a899508c6ffdbcf5d2",
+      "gitBlobSha": "77aa141bb410a38e7c8ebb3c9e5520f55d7ff7fa",
       "schema": "1.0.0",
       "version": null
     },
@@ -198,7 +198,7 @@
       "path": "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/manifest.json",
       "authorityDomain": "target-index",
       "role": "generated-canonical-address-book",
-      "gitBlobSha": "75a9d8fc39785c01699c12ee1ecb3bacf1ce3049",
+      "gitBlobSha": "9c5ab8dc5ed2078b2ed2e986c61284b65a4a3f88",
       "schema": "prisma.visual.application.target-index.v1",
       "version": "2.0.0"
     },

@@ -84,7 +84,7 @@
   "generated": true,
   "globalBlockers": [],
   "hardTruth": "Census records prove physical visual coordinates only. DISCOVERY_ONLY records are never APPLY_READY and do not authorize product mutation.",
-  "indexDigest": "d41c0b2f0f9a8f5d691f9f1dfcb2fa0dfa3e6b8bef9372d8b267b7d7b65e563e",
+  "indexDigest": "0b90b7d30dc84377ea23ac3ba3997bd5f09912a1fb546824e9797a9b275ebc80",
   "manualEditsForbidden": true,
   "recordCount": 3915,
   "recordStorage": {

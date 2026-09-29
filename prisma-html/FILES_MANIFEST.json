@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 905,
+  "file_count_excluding_manifest": 911,
   "files": [
     {
       "bytes": 156,
@@ -1469,7 +1469,7 @@
     {
       "bytes": 764540,
       "path": "authority/rifat/prisma-ui/visual-control/expanded/tablet/layers.jsonl",
-      "sha256": "5DF4FBFB8CD2D1933BAD62F1F2F971ADEA879FCB4822BCB66D43BBF36BD0DCA3"
+      "sha256": "6D49CB98CE963A1211495204912EA4EF650B033D3B1F6565BDE80971146D5D6D"
     },
     {
       "bytes": 23826,
@@ -1584,7 +1584,7 @@
     {
       "bytes": 2411,
       "path": "authority/rifat/prisma-ui/visual-control/promotion.json",
-      "sha256": "F50CC384759A66BB1EA78D885F4EE2BCF16B86CEE08EF5BB33AD52FB22A05516"
+      "sha256": "E041C54B59834697DBC31E9AEBD9511AD32F7711F944D87AACF07F61BEDCF294"
     },
     {
       "bytes": 2035,
@@ -1599,7 +1599,7 @@
     {
       "bytes": 1010,
       "path": "authority/rifat/prisma-ui/visual-control/risks.json",
-      "sha256": "11B78531A7EFB8F51E7C97642D3D1950A6BCBECC82709782B5F5BD440583A2B2"
+      "sha256": "F44CC92ADD96E3C3AC42B08C09419029A0CC2F01FDE74D966BABB992C568F9C2"
     },
     {
       "bytes": 118816,
@@ -1614,42 +1614,42 @@
     {
       "bytes": 916261,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/chart-lab.json",
-      "sha256": "1A10C790DE33B5E1DFEE96707A912251F2672473AE399609308ED51A66DBFC34"
+      "sha256": "A6D6FBA4C066A6217ADC5525927C1742A9E60B98AA2AEAAAD2F6C3E908D71A6C"
     },
     {
       "bytes": 1796143,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/control-center.json",
-      "sha256": "64C48D6D14B53C98623294713398FBA25E99CE95208C0DF20EB1B422E13201DC"
+      "sha256": "7EBB7C6DA4FDF425A37D1DC3A85D86FB77ED621CEAE193D1C23E218CE21772C4"
     },
     {
       "bytes": 6627,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/manifest.json",
-      "sha256": "088B237F6AFDD932CE6AB0075AC60E27226E87D292C41F17EA38750EAA8743A7"
+      "sha256": "6AED80B6D1AB66B69F2A1FFA56580F6C2C37168E25435DFE38291907CDF198E4"
     },
     {
       "bytes": 439783,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/mobile.json",
-      "sha256": "8E13996600F8281D0501645DE68133662C024646C15F8175BC7C2076E3E5C159"
+      "sha256": "5B5C537066DF7388B8B9C7C4056A28CD496E845771E0E0A4B468E89F93C485DF"
     },
     {
       "bytes": 1173184,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/pc.json",
-      "sha256": "C6A51C70879101A365811A0D1FC8EE79037EBEDD1236310A60C86779C9BBD385"
+      "sha256": "1827A5D9C6E31FC5DB54BD5A426DBD2A92CF0B11CB0416451444F205541F2FE4"
     },
     {
       "bytes": 117373,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/shared-ui.json",
-      "sha256": "D705999CCF89522C7619AD6BAB4874A41A1DA3665D4BAA1A7AAEB475E3A5F8F7"
+      "sha256": "B3A46A69C51A7FDDBAE06DEEDA6C9C9AEA691B45A9E095AEE291268832F6524F"
     },
     {
-      "bytes": 1440760,
+      "bytes": 1441442,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/tablet.json",
-      "sha256": "3F9DD2562162B9B346A44F1AAC098B94F6E45023EBFBC5757CDD8C4F9E5EB3B9"
+      "sha256": "B43454985C6E7E8132C697C1820D9FF6835001F31EB7E7EC51C03DF0B2C57204"
     },
     {
       "bytes": 108798,
       "path": "authority/rifat/prisma-ui/visual-control/target-index/web.json",
-      "sha256": "E65BA2D298896E13594F884BFF7E59F9BDCF6F1D5BB60B0BFEF5762769CA51DD"
+      "sha256": "8E281C8970770954DEAA76BFF2BCA6BE56D024241037C4364E93BBDE223F04CA"
     },
     {
       "bytes": 224475,
@@ -2124,7 +2124,7 @@
     {
       "bytes": 2705,
       "path": "authority/rifat/tablet/runtime-sources/modules/pos-terminal/pos-terminal-surface.module.css",
-      "sha256": "CD8EA9F70552FA6D35389BC03F9BBF5EC4EBC1C97776FCBA47DDAACB37C943B8"
+      "sha256": "4D58B944F07C4C2EB1444E129E9855DD0DF791971C8E3E65FE91D1B97CD5B90C"
     },
     {
       "bytes": 40157,
@@ -2317,9 +2317,14 @@
       "sha256": "87D1A7CD375ED8B4C0A264A74F1E1D75921D704B4D9DA62E53D427A3AC05662D"
     },
     {
-      "bytes": 1605,
+      "bytes": 21903,
+      "path": "docs/ops/PRISMA_VISUAL_CHANGE_MASTER_MAP_ULTRA_TECHNICAL_20260929.md",
+      "sha256": "9AD9DD8CDAA02A70B91100BF868AA8208B3388DF5A3627719E1393895F9C8B7B"
+    },
+    {
+      "bytes": 1871,
       "path": "docs/ops/README.md",
-      "sha256": "6F45DA01F9C69794EE743B5E68DE228A25FDE169FBFDCA44B6A7D12ADFE8087D"
+      "sha256": "CE57BEE3ABB795219DC5B0078D451F12E6A1312507078D4D85AEE4FD3EEE784E"
     },
     {
       "bytes": 3309,
@@ -3082,6 +3087,11 @@
       "sha256": "465D72FCD181FDB98E2D7ADF1D36294A495128B7302AE1FA0706A4AB45F89A03"
     },
     {
+      "bytes": 63485,
+      "path": "extras/professional-services-demo/index.html",
+      "sha256": "C164FFE54CFE3376EAB9CE362F82F8610E773A66C733D37E4D3485AEF3F774A9"
+    },
+    {
       "bytes": 751,
       "path": "governance/PRISMA_HTML_ALLCHAT_MIGRATION_MANIFEST.json",
       "sha256": "8E289D127404A75976648159E7CEE7D77296B9F2DFDFCFE0B32120DAA3945575"
@@ -3124,7 +3134,7 @@
     {
       "bytes": 14206,
       "path": "governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json",
-      "sha256": "BC196A387D7116BD46A138AEAE7ECBB6DDB2787EFE2B117BD83F2B7EB1D1546A"
+      "sha256": "741290F84FA012DE5D155210AC5340860F62F912A7FD57A7CA8E47E9F19DA0B2"
     },
     {
       "bytes": 8119,
@@ -3340,6 +3350,11 @@
       "bytes": 4982,
       "path": "governance/visual-promotion/candidates/tablet/certification/SUMMARY.md",
       "sha256": "05E56F1CD22205D732EE3C412B149C9B7527BE658572DB1C0CCEEF8A904EF06F"
+    },
+    {
+      "bytes": 9812,
+      "path": "governance/visual-promotion/candidates/tablet/inventory-reference-reconciliation/CANONICAL_COMPOSER_RECONCILIATION_CHECKPOINT.md",
+      "sha256": "EB9B78961D45FC3044FEE52B76DE04CCCC5E0F5A6E1D0E47F054C00F2F13B4E8"
     },
     {
       "bytes": 9832,
@@ -4397,14 +4412,14 @@
       "sha256": "272D8B00D7BC8FB50907D7521D774BA17F9BF012B5B538EC942184E0A1424203"
     },
     {
-      "bytes": 1154,
+      "bytes": 2681,
       "path": "tools/visual_operating_graph/README.md",
-      "sha256": "4049C3107F3D64DD179B76E0EB629AD97F70A7E228388EE724D861D4105B6752"
+      "sha256": "4863F7A7BEDF1FA1B1C5B271728567D33C6D5F67AFF292E858792239192B3480"
     },
     {
-      "bytes": 320,
+      "bytes": 441,
       "path": "tools/visual_operating_graph/__init__.py",
-      "sha256": "EF1EED34DB77557E5B59412A9DA9EA68AECBBADE72567801D03D8D4D61E684B4"
+      "sha256": "D4E3FB55F70A8F7C2ADFA504A2D6C53DC88DBFEE6847ADF36003950E4A03D31F"
     },
     {
       "bytes": 21910,
@@ -4422,6 +4437,16 @@
       "sha256": "BC5483C1AF2B719A4EDB7DA7E56B8AFEB8DB551F41BF87487E130D9C377DE15D"
     },
     {
+      "bytes": 24082,
+      "path": "tools/visual_operating_graph/next_safe_action.py",
+      "sha256": "BAA8A13B83CD3BBBEE1A36D5A84D79C72B8BE9F18AD9579962E01B834D34DB77"
+    },
+    {
+      "bytes": 3631,
+      "path": "tools/visual_operating_graph/refresh_source_set_lock.py",
+      "sha256": "718EC370B56370247E3B4BC7BC37F021E54F77A4B4D9622673E1F7E56624DA43"
+    },
+    {
       "bytes": 11281,
       "path": "tools/visual_operating_graph/source_set_verifier.py",
       "sha256": "5FC22A258CCAFD9C9EA94CC39705EB25699B55657C945D33B0485C81EB7BA3FC"
@@ -4435,6 +4460,11 @@
       "bytes": 5442,
       "path": "tools/visual_operating_graph/tests/test_wave1.py",
       "sha256": "BF5FE6050ED1E7DB195645052B3C938271CBBEC87416DE917633663072F65465"
+    },
+    {
+      "bytes": 7069,
+      "path": "tools/visual_operating_graph/tests/test_wave2.py",
+      "sha256": "972054A1B5D9DED65E9AADD7E3AC4837CA114E59F25E939527BE3F61A7548C34"
     },
     {
       "bytes": 2781,

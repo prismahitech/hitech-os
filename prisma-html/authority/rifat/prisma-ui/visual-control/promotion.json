@@ -88,7 +88,7 @@
   "productApplicationAllowed": false,
   "runtimeMutationAllowed": false,
   "schema": "prisma.ui.visual-control.promotion.v1",
-  "sourceAuthorityDigest": "adc276464ce2ac5f43514463bfcf77144206d8376328b915f1d1ba7b71520d6a",
+  "sourceAuthorityDigest": "b1385ecfe51ae83d1f28e9aa2a094384f52a1b90e3e9bcafe8dca212530bcc35",
   "sourceGenerator": "apps/terminal-de-venta-system/tools/quality/ui-visual-control.mjs",
   "sourceScopeMode": "ALL_SURFACES_CANONICAL",
   "status": "SOURCE_STATIC_ONLY",
