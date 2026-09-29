@@ -151,6 +151,12 @@ function resolveCustomerSetupPlan(planId) {
   return PLAN_PROVISIONING_CATALOG[key] || PLAN_PROVISIONING_CATALOG[DEFAULT_SETUP_PLAN];
 }
 
+function resolveCustomerSetupPlanStrict(planId) {
+  const key = String(planId || DEFAULT_SETUP_PLAN).trim().toUpperCase();
+  const plan = PLAN_PROVISIONING_CATALOG[key];
+  return plan ? { key, plan } : { key, plan: null };
+}
+
 function surfaceLimit(plan, surface) {
   if (surface === "tablet") return Number(plan.maxTabletDevices || 0);
   if (surface === "pc") return Number(plan.maxPcDevices || 0);
@@ -978,7 +984,20 @@ async function createCustomerSetup(request, env) {
   const setupBundleId = body.setupBundleId || `bundle_${crypto.randomUUID()}`;
   const tenantSlug = body.tenantSlug || slugify(body.customerPrefix || body.businessName || setupCode, `tenant-${setupCode.toLowerCase()}`);
   const businessName = body.businessName || `PRISMA Customer ${setupCode}`;
-  const plan = resolveCustomerSetupPlan(body.planId || body.planCode || DEFAULT_SETUP_PLAN);
+  const requestedProvisioningPlan = String(body.planId || body.planCode || DEFAULT_SETUP_PLAN).trim().toUpperCase();
+  const strictProvisioningPlan = resolveCustomerSetupPlanStrict(requestedProvisioningPlan);
+  if (!strictProvisioningPlan.plan) {
+    return json({
+      ok: false,
+      status: "CUSTOMER_SETUP_PLAN_UNSUPPORTED",
+      resultCode: "CUSTOMER_SETUP_PLAN_UNSUPPORTED",
+      requestedPlan: requestedProvisioningPlan,
+      customerMessage: "El paquete de provisioning solicitado no existe.",
+      nextStep: "Usa un plan de Customer Setup soportado.",
+      secretsExposed: false
+    }, 422);
+  }
+  const plan = strictProvisioningPlan.plan;
   const validUntil = body.validUntil || addDays(365);
   const expiresAt = body.expiresAt || addDays(30);
   const licenseId = body.licenseId || `lic_${setupId}`;
