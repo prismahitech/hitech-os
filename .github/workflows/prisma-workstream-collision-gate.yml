@@ -1,0 +1,110 @@
+name: PRISMA Workstream Collision Gate
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to evaluate"
+        required: true
+        type: string
+      expected_head:
+        description: "Expected PR head SHA"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  self-test:
+    name: Workstream collision self-test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Checkout PR source without repository permissions
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Run self-test and unit tests
+        run: |
+          set -euo pipefail
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py --self-test
+          PYTHONPATH=apps/terminal-de-venta-system/tools/prisma-governance \
+            python -m unittest -v apps/terminal-de-venta-system/tools/prisma-governance/test_workstream_collision.py
+
+  workstream-collision:
+    name: Workstream collision / ownership guard
+    if: github.event_name == 'pull_request_target' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout canonical gate from default branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Run deterministic self-test
+        run: |
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py --self-test
+
+      - name: Evaluate live PR workstream collisions
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: \${{ github.repository }}
+          PRISMA_PR_NUMBER: \${{ github.event.pull_request.number || vars.PRISMA_PR_NUMBER }}
+          PRISMA_EXPECTED_HEAD: \${{ github.event.pull_request.head.sha || vars.PRISMA_EXPECTED_HEAD }}
+        run: |
+          set -euo pipefail
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py \
+            --repo "$GITHUB_REPOSITORY" \
+            --pr-number "$PRISMA_PR_NUMBER" \
+            --token "$GITHUB_TOKEN" \
+            --expected-head "$PRISMA_EXPECTED_HEAD" \
+            | tee "$RUNNER_TEMP/prisma-workstream-collision-result.json"
+
+      - name: Publish decision summary
+        if: always()
+        env:
+          RESULT_PATH: \${{ runner.temp }}/prisma-workstream-collision-result.json
+        run: |
+          python - "$RESULT_PATH" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, sys
+          from pathlib import Path
+          p = Path(sys.argv[1])
+          print("## PRISMA Workstream Collision Gate")
+          if not p.exists():
+              print("- Result file was not produced.")
+              raise SystemExit(0)
+          data = json.loads(p.read_text(encoding="utf-8"))
+          print(f"- Result: \`{data.get('result')}\`")
+          print(f"- PR: \`#{data.get('pr')}\`")
+          print(f"- Head: \`{data.get('headSha')}\`")
+          ws = data.get("workstream") or {}
+          if ws:
+              print(f"- Workstream: \`{ws.get('id')}\`")
+              print(f"- Role: \`{ws.get('role')}\`")
+          for row in data.get("conflicts") or []:
+              print(f"- Conflict: PR #{row.get('pr')} — {row.get('disposition')} — {', '.join(row.get('reasons') or [])}")
+          for row in data.get("mergedHistoryConflicts") or []:
+              print(f"- Reused merged workstream: PR #{row.get('number')} — {row.get('mergedAt')}")
+          PY
+
+      - name: Explain fail-closed resolution
+        if: failure()
+        run: |
+          echo "Workstream collision gate blocked this PR. Resolve the active owner/workstream conflict or declare a new governed continuation."
+          echo "This gate is read-only; it never closes, merges, labels, or pushes."
