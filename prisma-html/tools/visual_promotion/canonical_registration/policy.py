@@ -76,7 +76,13 @@ def validate_target_id(
     surface_key: str,
     existing_ids: set[str],
 ) -> IdDecision:
-    canonical_key = f"{surface_key}|{census_target_id}|{semantic_key}"
+    # The caller passes the already-qualified canonical target key.
+    # surface_key/census_target_id remain explicit parameters for contract readability
+    # and future validation, but must not be prefixed a second time.
+    canonical_key = semantic_key
+    expected_key = f"{surface_key}|{census_target_id}|"
+    if not canonical_key.startswith(expected_key):
+        raise CanonicalRegistrationPolicyError("TARGET_ID_SEMANTIC_KEY_SCOPE_INVALID")
     decision = allocate_id("target", canonical_key, existing_ids, requested_id=requested_id)
     expected = allocate_id("target", canonical_key, existing_ids).id
     if decision.action == "CREATE_NEW" and requested_id != expected:
