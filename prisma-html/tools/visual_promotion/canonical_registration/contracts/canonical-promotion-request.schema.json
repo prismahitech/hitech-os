@@ -7,9 +7,9 @@
     "schema":{"const":"prisma.visual.canonical-promotion-request.v1"},
     "requestId":{"type":"string","pattern":"^cpr-[a-z0-9][a-z0-9._-]{0,95}$"},
     "target":{
-      "type":"object","additionalProperties":false,"required":["targetId","censusTargetId","surfaceKey"],
+      "type":"object","additionalProperties":false,"required":["censusTargetId","surfaceKey"],
       "properties":{
-        "targetId":{"type":"string","pattern":"^TGT\.[A-Za-z0-9._-]+$"},
+        "targetId":{"type":["string","null"],"pattern":"^TGT\.[A-Za-z0-9._-]+$"},
         "censusTargetId":{"type":"string","pattern":"^TGT\.CENSUS\.[A-Za-z0-9._-]+$"},
         "surfaceKey":{"enum":["tablet","pc","mobile","shared-ui"]}
       }
