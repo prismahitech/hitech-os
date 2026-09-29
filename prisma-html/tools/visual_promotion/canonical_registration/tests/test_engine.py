@@ -136,7 +136,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
             "targets":[{
                 "targetId":None,
                 "ownerId":"owner","routeId":"route","regionId":"region","slotId":"slot",
-                "componentUiId":"component","layerId":"LYR.test","ownerCssId":"css",
+                "componentUiId":"component","layerId":"LYR.test","implementationLayerId":"physical.layer","ownerCssId":"css",
                 "selector":".table",
                 "missingBindings":[],
             }],
