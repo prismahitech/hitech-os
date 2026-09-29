@@ -27,7 +27,7 @@
         "targetAction":{"type":"object","additionalProperties":false,"required":["action"],"properties":{"action":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"existingCanonicalTargetIds":{"type":"array","items":{"type":"string"}}}},
         "recipeAction":{"type":"object","properties":{"action":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"recipeId":{"type":"string"},"semanticKey":{"type":"string"},"registryEntry":{"type":"object"}}},
         "bindingAction":{"type":"object","properties":{"action":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"bindingId":{"type":"string"},"semanticKey":{"type":"string"},"exactBinding":{"type":"object"},"registryEntry":{"type":"object"}}},
-        "layerAction":{"type":"object","additionalProperties":false,"required":["applicationLayerId","policy","writerKind"],"properties":{"applicationLayerId":{"type":"string"},"policy":{"enum":["EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"]},"writerKind":{"const":"CANONICAL_REGISTRATION"}}},
+        "layerAction":{"type":"object","additionalProperties":false,"required":["applicationLayerId","policy","writerKind","authorityDomain","decisionRef"],"properties":{"applicationLayerId":{"type":"string","pattern":"^LYR\\."},"policy":{"enum":["EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"]},"writerKind":{"const":"CANONICAL_REGISTRATION"},"authorityDomain":{"const":"rifat"},"decisionRef":{"type":"string","minLength":1}}},
         "projectionAction":{"type":"object"},"idInputs":{"type":"object"}
       }
     },
