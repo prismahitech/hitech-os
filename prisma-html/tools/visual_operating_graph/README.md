@@ -55,3 +55,13 @@ PYTHONPATH=tools python -m visual_operating_graph.next_safe_action \
 The second command reads the existing generated Target Index only; it never edits it.
 
 Generated Wave 1 outputs remain non-authoritative and must not be hand-edited.
+## Source-set lock rebinding
+
+When a governed canonical input changes, the generated source-set lock must be refreshed through the dedicated refresher rather than edited manually:
+
+```bash
+PYTHONPATH=tools python -m visual_operating_graph.refresh_source_set_lock --write
+PYTHONPATH=tools python -m visual_operating_graph.refresh_source_set_lock --check
+```
+
+The refresher recomputes Git blob SHAs for the existing pinned sources and preserves the lock's existing source list. It does not mint source IDs, add authorities, or authorize mutation.
