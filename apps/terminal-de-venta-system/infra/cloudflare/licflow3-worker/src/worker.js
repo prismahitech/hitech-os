@@ -1741,7 +1741,7 @@ async function approveDeviceReplacement(request, env) {
     }), 500);
   }
 
-  const replacedClaim = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt, claim_slot_id as claimSlotId from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by updated_at desc, created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
+  const replacedClaim = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt, claim_slot_id as claimSlotId from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by replaced_at desc, created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
   const persistedSetupSlot = await first(env, "select claimed, allowed from customer_setup_slots where setup_id = ? and surface = ? limit 1", [pass.setupId, surface]);
   const activeClaims = Number((await first(env, "select count(*) as count from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'", [pass.setupId, surface]))?.count || 0);
   const releasedClaimSlot = replacedClaim?.claimSlotId
