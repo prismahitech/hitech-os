@@ -57,6 +57,26 @@ function main() {
   assert(activation.includes("auditEventExists"), "LICENSE_MUTATION_AUDIT_READBACK_MISSING");
   checksPush("confirmed_license_mutations_atomic_and_verified");
 
+  const refresh = sliceFunction(worker, "async function customerLicenseRefresh(request, env) {", "async function registerDevice");
+  assert(refresh.includes("const refreshAudit = await recordAudit"), "CUSTOMER_LICENSE_REFRESH_AUDIT_NOT_CHECKED");
+  assert(refresh.includes("AUDIT_PERSISTENCE_REQUIRED"), "CUSTOMER_LICENSE_REFRESH_AUDIT_FAILURE_NOT_FAIL_CLOSED");
+  checksPush("customer_license_refresh_requires_verified_audit");
+
+  const deviceRegister = sliceFunction(worker, "async function registerDevice(request, env) {", "async function integrationReceipt");
+  assert(deviceRegister.includes("const audit = result.ok ? await recordAudit"), "DEVICE_REGISTER_AUDIT_NOT_CHECKED");
+  assert(deviceRegister.includes("auditVerified: audit.ok === true"), "DEVICE_REGISTER_AUDIT_RESULT_NOT_EXPOSED");
+  checksPush("device_register_requires_verified_audit");
+
+  const receipt = sliceFunction(worker, "async function integrationReceipt(request, env) {", "async function createNote");
+  assert(receipt.includes("const audit = result.ok ? await recordAudit"), "RECEIPT_AUDIT_NOT_CHECKED");
+  assert(receipt.includes("auditVerified: audit.ok === true"), "RECEIPT_AUDIT_RESULT_NOT_EXPOSED");
+  checksPush("integration_receipt_requires_verified_audit");
+
+  const note = sliceFunction(worker, "async function createNote(request, env, slug) {", "async function simulate");
+  assert(note.includes("const audit = result.ok ? await recordAudit"), "NOTE_AUDIT_NOT_CHECKED");
+  assert(note.includes("auditVerified: audit.ok === true"), "NOTE_AUDIT_RESULT_NOT_EXPOSED");
+  checksPush("tenant_note_requires_verified_audit");
+
   const replacement = sliceFunction(worker, "async function approveDeviceReplacement(request, env) {", "async function commercialSummary");
   assert(replacement.includes("runBatch(env, ["), "REPLACEMENT_NOT_TRANSACTIONAL");
   assert(replacement.includes("D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED"), "REPLACEMENT_READ_AFTER_WRITE_MISSING");
