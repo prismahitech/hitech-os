@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 934,
+  "file_count_excluding_manifest": 935,
   "files": [
     {
       "bytes": 156,
@@ -2337,9 +2337,9 @@
       "sha256": "7CD15DB5109CAF93F21B06D88C9B0770945F96D0D0D44C637FB1CE88F4803F6B"
     },
     {
-      "bytes": 29216,
+      "bytes": 30170,
       "path": "docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
-      "sha256": "8F12D1BB16C25677F096F094E6D0B0719F975E0CA9FE0C6C0FBF705B27236821"
+      "sha256": "6F816EAE56AAEDB0E1DD3C6F6E768B48DDAF7CCACC76E19A54AED08B0D6A66F0"
     },
     {
       "bytes": 27318,
@@ -2347,9 +2347,9 @@
       "sha256": "EC1EC27B6F177FD025FF0DCF934EE17C9ADC89C28984431FC1EFA002D4270DB0"
     },
     {
-      "bytes": 10928,
+      "bytes": 11655,
       "path": "docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
-      "sha256": "6CA8A0BA7A34BED2831CCB9716224F789D13821458AC971FAA8D37DF677AC405"
+      "sha256": "FCD47F2DDF3ABE36089D2AF7F859B64AD3749B4E15638EF0B08D4E4BFEFB9E6E"
     },
     {
       "bytes": 4012,
@@ -4517,9 +4517,9 @@
       "sha256": "6B686E708CD78791F47DD59A28118E1DAA2D6537D3962655178B9AC056E5025E"
     },
     {
-      "bytes": 3291,
+      "bytes": 3425,
       "path": "tools/visual_promotion/canonical_registration/contracts/canonical-promotion-request.schema.json",
-      "sha256": "A9304E6D6B35E1F4FF566CE799E8B0F2A91EFA7E98007B98A7CC859DF61207B4"
+      "sha256": "68909B2B03316D2462F548C1D2BB830D4D23E5EFE9A8009FFED5FEC86C24377F"
     },
     {
       "bytes": 719,
@@ -4547,9 +4547,9 @@
       "sha256": "CB8E1E762655D2183D67DA4BCAAA29ABEE879C5E4369563CFB98046F2E30655A"
     },
     {
-      "bytes": 21234,
+      "bytes": 21656,
       "path": "tools/visual_promotion/canonical_registration/engine.py",
-      "sha256": "1ABF1183908AA8C9E81C9E6618B80AD99BEB5D96D6A59C2D88D9CFFCE000788B"
+      "sha256": "60CC688829915F5D5FDDA6F4D99DDBB4A099D7A4615A9182B4B74845E66A235E"
     },
     {
       "bytes": 3375,
@@ -4567,19 +4567,24 @@
       "sha256": "50DB1035568DCC2C11F8C8124FB4F0BE94E3AF089B20D5154F8A0F046650DCFB"
     },
     {
-      "bytes": 5729,
+      "bytes": 5921,
       "path": "tools/visual_promotion/canonical_registration/request_builder.py",
-      "sha256": "41E8C24D9C77891B0E9F1BA9E79063A66F6694828DFD24F480E4F1C7E645F3FE"
+      "sha256": "18D73B73BC5671284D07C7E3918F2B8533CE028D89919822DEA60821FBFDE15F"
     },
     {
-      "bytes": 1195,
+      "bytes": 1364,
       "path": "tools/visual_promotion/canonical_registration/tests/prisma_html_test_bootstrap.py",
-      "sha256": "422A41A29B0CBAD05E25400D6389AE21EF3719C767C9C4FDFDCADDDF27015A09"
+      "sha256": "6B672E75C60982D46A06EF8A381082F552627950876C019D4B9A8472F705CF6F"
     },
     {
-      "bytes": 12430,
+      "bytes": 12817,
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
-      "sha256": "23B56921DBF37B4101B65254911B30E32041619E284F0EB9C18DC7E75E5A2782"
+      "sha256": "0C6BD60BBFD60CB8E378743770CC3803BD8BA685E910BE30C2C7C19A60214ECC"
+    },
+    {
+      "bytes": 2748,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_request_builder.py",
+      "sha256": "9820DD0BED8C055A07F391A656B870ACEF147398094408F2ADB3851191F92BFD"
     },
     {
       "bytes": 22596,
