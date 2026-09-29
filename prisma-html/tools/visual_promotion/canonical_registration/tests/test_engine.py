@@ -341,6 +341,25 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.UnsafeMutationError):
             self.engine.rollback(request["requestId"],self.root)
 
+    def test_postcondition_keeps_target_index_pending_until_persisted(self):
+        request=self.request()
+        plan=self.engine.build_plan(request,self.root)
+        from canonical_registration.postconditions import verify_registration_postconditions
+        self.engine._apply(self.root,plan["mutations"][0])
+        post=verify_registration_postconditions(self.root,plan)
+        self.assertEqual(post["targetIndex"],"DERIVATION_PENDING_TARGET_INDEX")
+
+        target_index=self.root/"prisma-html/authority/rifat/prisma-ui/visual-control/target-index/manifest.json"
+        target_index.write_text(json.dumps({
+            "records":[{
+                "targetId":plan["targetId"],
+                "recordKind":"EXACT_APPLICATION_TARGET",
+                "enforcement":"GVAE_ENFORCED"
+            }]
+        }),encoding="utf-8")
+        post=verify_registration_postconditions(self.root,plan)
+        self.assertEqual(post["targetIndex"],"VERIFIED_EXACT_TARGET")
+
     def test_partial_failure_rolls_back(self):
         request=self.request()
         original=self.engine._apply
