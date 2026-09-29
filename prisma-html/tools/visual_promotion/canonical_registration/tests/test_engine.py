@@ -349,6 +349,24 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.UnsafeMutationError):
             self.engine.rollback(request["requestId"],self.root)
 
+
+    def test_rollback_requires_journal(self):
+        request=self.request()
+        self.engine.register(request,self.root)
+        receipt_path=self.root/"prisma-html/governance/visual-promotion/canonical-registration/receipts"/f"{request['requestId']}.json"
+        evidence=json.loads(receipt_path.read_text())
+        journal=self.root/evidence["journalPath"]
+        journal.unlink()
+        with self.assertRaises(self.engine.UnsafeMutationError):
+            self.engine.rollback(request["requestId"],self.root)
+
+    def test_register_rejects_apply_without_mutations(self):
+        request=self.request()
+        request["decision"]["bindingAction"]["action"]="REUSE_EXISTING"
+        request["decision"]["bindingAction"]["bindingId"]="BND.missing"
+        with self.assertRaises(self.engine.CanonicalRegistrationError):
+            self.engine.register(request,self.root)
+
     def test_postcondition_keeps_target_index_pending_until_persisted(self):
         request=self.request()
         plan=self.engine.build_plan(request,self.root)
