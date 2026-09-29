@@ -69,7 +69,11 @@ def verify_current_truth(repo_root:Path, snapshot:dict, *, evidence_target_id:st
                 if not path.is_file(): raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{row.get('path')}")
                 actual.append({"path":row["path"],"sha256":file_sha256(path),"bytes":path.stat().st_size})
         actual.sort(key=lambda x:str(x.get("path") or x.get("externalRef")))
-        if sha256_json(actual)!=snapshot.get(field): raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
+        if len(actual)==1 and "externalRef" in actual[0]:
+            if actual[0].get("sha256") != snapshot.get(field):
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
+        elif sha256_json(actual)!=snapshot.get(field):
+            raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
     from visual_application.target_index import build_index
     matches=[r for r in build_index(repo_root).get("records",[]) if r.get("targetId")==evidence_target_id]
     if len(matches)!=1 or sha256_json(matches[0])!=snapshot.get("targetEvidenceDigest"): raise CanonicalRegistrationError("CURRENT_TRUTH_TARGET_EVIDENCE_DRIFT")
