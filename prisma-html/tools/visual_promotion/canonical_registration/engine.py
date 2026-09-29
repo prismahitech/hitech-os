@@ -284,9 +284,9 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
             _registry_ids(recipes, "recipes"),
             requested_id=recipe_action.get("recipeId"),
         )
+        if allocation.action != "CREATE_NEW":
+            raise IdCollisionError("RECIPE_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
         recipe_id = allocation.id
-        if recipe_id in _registry_ids(recipes, "recipes"):
-            raise IdCollisionError("RECIPE_ID_COLLISION")
     elif recipe_action.get("action") == "REUSE_EXISTING":
         recipe_id = recipe_action.get("recipeId")
         if not recipe_id or not any(
@@ -303,9 +303,9 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
             _registry_ids(bindings, "bindings"),
             requested_id=binding_action.get("bindingId"),
         )
+        if allocation.action != "CREATE_NEW":
+            raise IdCollisionError("BINDING_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
         binding_id = allocation.id
-        if binding_id in _registry_ids(bindings, "bindings"):
-            raise IdCollisionError("BINDING_ID_COLLISION")
     elif binding_action.get("action") == "REUSE_EXISTING":
         binding_id = binding_action.get("bindingId")
         if not binding_id or not any(
