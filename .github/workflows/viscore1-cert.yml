@@ -61,7 +61,7 @@ jobs:
           PY
 
           TASK='Bounded G-01 integration slice for visual.canonical_promotion_integration_v1: connect existing NDC, Identity, RIFAT, Target Index, projection and Work Entry authorities through explicit read/validation adapters; establish transaction-scoped journal evidence and exact-head postcondition verification; no competing authority, no canonical ID minting, no product/runtime mutation and no GVAE APPLY.'
-          python apps/terminal-de-venta-system/tools/prisma-governance/authority_mesh_run.py --task "$TASK" --full --output "$RUNNER_TEMP/g01-authority-mesh" | tee "$RUNNER_TEMP/g01-mesh.json"
+          python apps/terminal-de-venta-system/tools/prisma-governance/authority_mesh_run.py --task "$TASK" --full --output apps/terminal-de-venta-system/.governance/g01-authority-mesh | tee "$RUNNER_TEMP/g01-mesh.json"
           python - "$RUNNER_TEMP/g01-mesh.json" <<'PY'
           import json,sys
           d=json.load(open(sys.argv[1],encoding='utf-8'))
