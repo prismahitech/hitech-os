@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.runtime-evidence.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","target","viewport","browser","build","before","after","sourceProjection","runtimeState","consoleState","networkState","geometryVerdict","accessibilityVerdict","visualVerdict","capturedAt"],
+  "properties":{
+    "schema":{"const":"prisma.visual.runtime-evidence.v1"},
+    "target":{"type":"object","additionalProperties":false,"required":["targetId","censusTargetId","route"],"properties":{"targetId":{"type":"string"},"censusTargetId":{"type":"string","pattern":"^TGT\.CENSUS\."},"route":{"type":"string"}}},
+    "viewport":{"type":"object","required":["width","height"],"properties":{"width":{"type":"integer","minimum":1},"height":{"type":"integer","minimum":1},"dpr":{"type":"number","exclusiveMinimum":0}}},
+    "browser":{"type":"object","required":["name"],"properties":{"name":{"type":"string"},"version":{"type":"string"},"device":{"type":"string"}}},
+    "build":{"type":"object","required":["commitSha"],"properties":{"commitSha":{"type":"string","pattern":"^[0-9a-f]{40}$"}}},
+    "before":{"type":"object","required":["path","sha256"],"properties":{"path":{"type":"string"},"sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"}}},
+    "after":{"type":"object","required":["path","sha256"],"properties":{"path":{"type":"string"},"sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"}}},
+    "sourceProjection":{"type":"object","required":["commitSha"],"properties":{"commitSha":{"type":"string","pattern":"^[0-9a-f]{40}$"},"digest":{"type":"string","pattern":"^[0-9a-f]{64}$"}}},
+    "runtimeState":{"enum":["PASS","FAIL","NOT_RUN"]},"consoleState":{"enum":["PASS","FAIL","NOT_RUN"]},"networkState":{"enum":["PASS","FAIL","NOT_RUN"]},
+    "geometryVerdict":{"enum":["PASS","FAIL","NOT_RUN"]},"accessibilityVerdict":{"enum":["PASS","FAIL","NOT_RUN"]},"visualVerdict":{"enum":["PASS","FAIL","NOT_RUN"]},
+    "gvaeVerifyState":{"enum":["PASS","FAIL","NOT_RUN"]},"capturedAt":{"type":"string"}
+  }
+}

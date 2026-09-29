@@ -1,0 +1,127 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+from typing import Any
+
+class RequestBuilderError(ValueError):
+    pass
+
+def _digest(value: Any) -> str:
+    return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(",",":"),allow_nan=False).encode()).hexdigest()
+
+def build_request_from_readiness(
+    row: dict[str, Any],
+    *,
+    current_truth: dict[str, Any],
+    expected_current_head: str,
+    authorization: dict[str, Any],
+    source: dict[str, Any],
+    work_entry_handoff: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    if row.get("promotionReadinessDecision") != "READY_FOR_CANONICAL_REGISTRATION":
+        raise RequestBuilderError("READINESS_NOT_READY_FOR_CANONICAL_REGISTRATION")
+    if row.get("surfaceKey") not in {"tablet","pc","mobile","shared-ui"}:
+        raise RequestBuilderError("SURFACE_INVALID")
+    target_id = row.get("targetId")
+    if not isinstance(work_entry_handoff, dict):
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_REQUIRED")
+    if work_entry_handoff.get("decision") != "REGISTER_TARGET_FIRST":
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_DECISION_REQUIRED")
+    if work_entry_handoff.get("targetId") != target_id:
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_TARGET_MISMATCH")
+    if work_entry_handoff.get("evaluatedHead") != expected_current_head:
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_HEAD_MISMATCH")
+    if work_entry_handoff.get("gate") != "visual_application.visual_work_entry_gate":
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_GATE_INVALID")
+
+    if not isinstance(target_id,str) or not target_id.startswith("TGT.CENSUS."):
+        raise RequestBuilderError("READINESS_MUST_REFERENCE_CENSUS_TARGET")
+
+    meaning=row.get("canonicalMeaning") or {}
+    identity=row.get("identity") or {}
+    physical=row.get("physical") or {}
+    application=row.get("application") or {}
+    semantic_resolution=meaning.get("resolution")
+    semantic_id=meaning.get("ndcPrimaryId") or meaning.get("visualMeaningId")
+    if semantic_resolution not in {"REUSE_EXISTING","PROPOSE_NEW"}:
+        raise RequestBuilderError("SEMANTIC_DECISION_REQUIRED")
+    if not semantic_id:
+        authority=row.get("semanticAuthority") or {}
+        semantic_id=authority.get("canonicalMeaningId")
+    authority=row.get("semanticAuthority") or {}
+    if authority.get("authorityDomain")!="ndc" or authority.get("writerKind")!="NDC_CURATION":
+        raise RequestBuilderError("NDC_ADJUDICATION_EVIDENCE_REQUIRED")
+    if not authority.get("decisionRef"):
+        raise RequestBuilderError("NDC_DECISION_REF_REQUIRED")
+
+    for field in ("routeId","regionId","slotId","componentId","ownerId","implementationLayerId"):
+        if not physical.get(field):
+            raise RequestBuilderError(f"PHYSICAL_BINDING_REQUIRED:{field}")
+    if not application.get("applicationLayerId"):
+        raise RequestBuilderError("APPLICATION_LAYER_REQUIRED")
+    recipe_id=identity.get("identityRecipeId")
+    if not recipe_id:
+        raise RequestBuilderError("IDENTITY_RECIPE_REQUIRED")
+
+    # The canonical target allocator is deterministic but consumes the physical
+    # census identity as evidence, never as a semantic guess.
+    binding_target={
+        "targetId":None,
+        "ownerId":physical["ownerId"],
+        "routeId":physical["routeId"],
+        "regionId":physical["regionId"],
+        "slotId":physical["slotId"],
+        "componentUiId":physical.get("componentUiId"),
+        "layerId":authority.get("canonicalLayerId"),
+        "implementationLayerId":physical["implementationLayerId"],
+        "ownerCssId":physical.get("ownerCssId"),
+        "selector":physical.get("selector"),
+        "missingBindings":[],
+    }
+    if not binding_target["componentUiId"]:
+        raise RequestBuilderError("EXACT_COMPONENT_UI_ID_REQUIRED")
+    if not binding_target["layerId"]:
+        raise RequestBuilderError("CANONICAL_LAYER_ID_ADJUDICATION_REQUIRED")
+    if not authority.get("applicationPolicy"):
+        raise RequestBuilderError("APPLICATION_POLICY_ADJUDICATION_REQUIRED")
+
+    decision={
+        "semanticAction":"CREATE_NEW" if semantic_resolution=="PROPOSE_NEW" else "REUSE_EXISTING",
+        "semanticDecisionId":authority.get("decisionId"),
+        "approvalEvidenceRefs":authority.get("approvalEvidenceRefs") or [],
+        "semanticAuthority":{
+            "authorityDomain":"ndc",
+            "writerKind":"NDC_CURATION",
+            "canonicalMeaningId":semantic_id,
+            "decisionRef":authority["decisionRef"],
+        },
+        "targetAction":{"action":"CREATE_NEW","existingCanonicalTargetIds":sorted(set(authority.get("existingCanonicalTargetIds") or []))},
+        "recipeAction":{"action":"REUSE_EXISTING","recipeId":recipe_id,"semanticKey":recipe_id},
+        "bindingAction":{"action":"CREATE_NEW","bindingId":authority.get("canonicalBindingId"),"semanticKey":f"{row['surfaceKey']}|{target_id}|{semantic_id}","exactBinding":{
+            "selector":{"surfaceId":row["surfaceKey"],"neutralMeaningId":semantic_id},
+            "status":"RESOLVED",
+            "targets":[binding_target],
+        }},
+        "layerAction":{
+            "applicationLayerId":application["applicationLayerId"],
+            "policy":authority.get("applicationPolicy"),
+            "writerKind":"CANONICAL_REGISTRATION",
+            "authorityDomain":"rifat",
+            "decisionRef":authority.get("applicationLayerDecisionRef"),
+        },
+        "projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False},
+        "workEntryHandoff":work_entry_handoff,
+        "idInputs":{"selector":None,"implementationLayerId":None},
+    }
+    return {
+        "schema":"prisma.visual.canonical-promotion-request.v1",
+        "requestId":"cpr-"+_digest({"targetId":target_id,"source":source.get("digest"),"decision":decision})[:24],
+        "target":{"targetId":None,"censusTargetId":target_id,"surfaceKey":row["surfaceKey"]},
+        "expectedCurrentHead":expected_current_head,
+        "currentTruth":current_truth,
+        "source":source,
+        "decision":decision,
+        "authorization":authorization,
+    }

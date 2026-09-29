@@ -3,7 +3,7 @@
   "generated": true,
   "manualEditsForbidden": true,
   "generator": "visual-operating-graph-wave1-sourceset-lock",
-  "observedMainSha": "300ad756791a85c8f432f0381366141922a78e42",
+  "observedMainSha": "a127a52a1b68db7216baaf5cfed9f57947990dc3",
   "promotionReadinessClosure": {
     "pr": 554,
     "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
@@ -222,7 +222,7 @@
       "path": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_INTEROPERABILITY_CONTRACT.md",
       "authorityDomain": "visual-promotion",
       "role": "manual-contract",
-      "gitBlobSha": "3d80060334777156c0e9398057cffc4ad61c2372",
+      "gitBlobSha": "f03388cf58bc2c7d30c85cb1aec0793c29f8e684",
       "schema": null,
       "version": null
     },
@@ -230,7 +230,7 @@
       "path": "prisma-html/docs/ops/visual-promotion-parallel/PRISMA_VISUAL_PROMOTION_VOCABULARY.registry.json",
       "authorityDomain": "visual-promotion",
       "role": "canonical-registry",
-      "gitBlobSha": "82373a57e4cfd6233c06e2bcd9ddaed5999d0054",
+      "gitBlobSha": "8bdac7be63121ed1575ca02a877976287c8e6574",
       "schema": "prisma.visual-promotion.interoperability-vocabulary.v1",
       "version": "1.1.0"
     },

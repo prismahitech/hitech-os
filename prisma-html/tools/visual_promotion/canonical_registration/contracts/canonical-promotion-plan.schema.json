@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-promotion-plan.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","capabilityId","requestId","targetId","censusTargetId","surfaceKey","semanticAction","semanticAuthority","ids","targetAction","bindingAction","recipeAction","layerAction","projectionAction","mutations","preconditions","status"],
+  "properties":{
+    "schema":{"const":"prisma.visual.canonical-promotion-plan.v1"},
+    "capabilityId":{"const":"visual.canonical_promotion_integration_v1"},
+    "requestId":{"type":"string"},"targetId":{"type":"string"},"censusTargetId":{"type":"string"},"surfaceKey":{"enum":["tablet","pc","mobile","shared-ui"]},
+    "semanticAction":{"enum":["REUSE_EXISTING","CREATE_NEW"]},"semanticAuthority":{"type":"object"},
+    "ids":{"type":"object","required":["targetId","bindingId","recipeId"],"properties":{"targetId":{"type":"string"},"bindingId":{"type":"string"},"recipeId":{"type":"string"}}},
+    "targetAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"bindingAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"recipeAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},
+    "layerAction":{"type":"object","required":["applicationLayerId","policy","writerKind"]},
+    "projectionAction":{"type":"object"},"collisionClassifications":{"type":"array","items":{"$ref":"canonical-registration-collision.schema.json"}},"mutations":{"type":"array","items":{"type":"object"}},
+    "preconditions":{"type":"object","required":["expectedCurrentHead","currentTruthDigest","sourceDigest","registryDigests"]},
+    "status":{"enum":["APPLY","NO_OP_IDEMPOTENT"]}
+  }
+}

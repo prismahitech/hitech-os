@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-promotion-derivation-plan.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","targetId","steps","verification","runtimeMutationAuthorized","wildcardMutation"],
+  "properties":{
+    "schema":{"const":"prisma.visual.canonical-promotion-derivation-plan.v1"},
+    "targetId":{"type":"string"},
+    "steps":{"type":"array","items":{"type":"object"}},
+    "verification":{"type":"array","items":{"type":"array"}},
+    "runtimeMutationAuthorized":{"const":false},
+    "wildcardMutation":{"const":false}
+  }
+}
