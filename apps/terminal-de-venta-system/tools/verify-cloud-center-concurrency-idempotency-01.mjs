@@ -70,9 +70,12 @@ while True:
                         if failure_pattern in stmt.get("sql", ""):
                             raise RuntimeError("Injected failure for test atomicity")
                 results = []
-                for stmt in statements:
-                    cur = conn.execute(stmt.get("sql", ""), stmt.get("params", []))
-                    results.append({"changes": cur.rowcount})
+                for index, stmt in enumerate(statements):
+                    try:
+                        cur = conn.execute(stmt.get("sql", ""), stmt.get("params", []))
+                        results.append({"changes": cur.rowcount})
+                    except Exception as exc:
+                        raise RuntimeError(f"statement_index={index}; sql={stmt.get('sql', '')[:500]}; error={exc}") from exc
                 conn.execute("COMMIT")
                 reply(req_id, {"ok": True, "results": results})
             except Exception:
