@@ -46,7 +46,10 @@ class CanonicalRegistrationTests(unittest.TestCase):
         expanded=base/"visual-control/expanded/tablet"
         expanded.mkdir(parents=True,exist_ok=True)
         (expanded/"routes.jsonl").write_text(json.dumps({"route_id":"route","surface":"tablet","route":"/"})+"\n",encoding="utf-8")
-        (expanded/"owners-componentOwners.jsonl").write_text(json.dumps({"component_id":"component","surface":"tablet","path":"products/tablet/app/components.test.tsx"})+"\n",encoding="utf-8")
+        (expanded/"owners-componentOwners.jsonl").write_text("\n".join([
+            json.dumps({"component_id":"owner","surface":"tablet","path":"products/tablet/app/components.test.tsx"}),
+            json.dumps({"component_id":"component","surface":"tablet","path":"products/tablet/app/components.test.tsx"}),
+        ])+"\n",encoding="utf-8")
         (expanded/"owners-regionOwners.jsonl").write_text(json.dumps({"region_id":"region","surface":"tablet","ownerComponent":"component","route":"/"})+"\n",encoding="utf-8")
         (expanded/"editable-slots.jsonl").write_text(json.dumps({"slot_unit_id":"slot","surface":"tablet","target":"slot"})+"\n",encoding="utf-8")
 
