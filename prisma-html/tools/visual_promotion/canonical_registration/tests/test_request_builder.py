@@ -64,6 +64,7 @@ class RequestBuilderTests(unittest.TestCase):
             expected_current_head="a"*40,
             authorization={"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False},
             source={"digest":"b"*64,"path":"candidate.json"},
+            work_entry_handoff=self.row()["workEntryHandoff"],
         )
         self.assertEqual(request["decision"]["bindingAction"]["semanticKey"],"tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary")
         self.assertNotIn("physical.layer",request["decision"]["bindingAction"]["semanticKey"])
@@ -83,6 +84,7 @@ class RequestBuilderTests(unittest.TestCase):
             expected_current_head="a"*40,
             authorization={"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False},
             source={"digest":"b"*64,"path":"candidate.json"},
+            work_entry_handoff=self.row()["workEntryHandoff"],
         )
         self.assertIsNone(request["target"]["targetId"])
         self.assertEqual(request["target"]["censusTargetId"],"TGT.CENSUS.TABLET.TEST.V1")
