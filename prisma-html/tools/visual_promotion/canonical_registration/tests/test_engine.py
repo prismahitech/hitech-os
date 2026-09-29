@@ -201,12 +201,14 @@ class CanonicalRegistrationTests(unittest.TestCase):
         )
         tampered=json.loads(json.dumps(self.current_truth))
         tampered["authorityMeshDigest"]="f"*64
-        with self.assertRaises(self.engine.CanonicalRegistrationError):
+        tampered["snapshotId"]=self.engine.sha256_json({k:v for k,v in tampered.items() if k!="snapshotId"})
+        with self.assertRaises(self.engine.CanonicalRegistrationError) as ctx:
             verify_current_truth(
                 self.root,
                 tampered,
                 evidence_target_id="TGT.CENSUS.TABLET.TEST.V1",
             )
+        self.assertEqual(str(ctx.exception),"CURRENT_TRUTH_DIGEST_DRIFT:authorityMesh")
 
     def test_target_id_is_deterministic(self):
         from canonical_registration.policy import allocate_id
