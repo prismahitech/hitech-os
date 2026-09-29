@@ -247,8 +247,8 @@
       "G1 contract/authority reconciliation."
     ],
     "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
-    "nextGate": "G2",
-    "note": "G0 and G1 closed on the roadmap branch. Live mutation remains blocked; current CI status is not inferred from absent connector status entries."
+    "nextGate": "G3",
+    "note": "G0, G1, and G2 source gates are closed on the roadmap branch. Live mutation remains blocked."
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
@@ -273,6 +273,29 @@
         "governance/productization/operations terminology"
       ],
       "result": "PASS"
+    },
+    "G2": {
+      "status": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY_SOURCE",
+      "verifiedAt": "2026-09-29",
+      "verificationMode": "independent repository invariant verification",
+      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-persistence-hardening-01.mjs",
+      "result": "PASS",
+      "scope": [
+        "Device Claim atomic batch and read-back",
+        "Device Replacement atomic claim-slot release and read-back",
+        "Customer Setup atomic provisioning and retry-safe upserts",
+        "Confirmed license mutation atomic tenant/license/audit path",
+        "Audit helper fail-closed persistence verification",
+        "Claim-slot identity migration and uniqueness guard"
+      ],
+      "runtimeLimit": "No live D1 mutation or production concurrency test performed. G3 remains the runtime concurrency/idempotency gate."
     }
+  },
+  "step2Status": {
+    "name": "G2 persistence hardening",
+    "status": "COMPLETE_SOURCE_PENDING_RUNTIME",
+    "sourceGate": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY_SOURCE",
+    "nextGate": "G3",
+    "liveMutationPerformed": false
   }
 }
