@@ -28,7 +28,9 @@ def rifat_indexes(repo_root: Path) -> dict[str, dict[str, Any]]:
         doc=_load(path)
         indexes[name]={str(item[key]):item for item in doc.get(section,[]) if isinstance(item,dict) and isinstance(item.get(key),str)}
     layers=_load(base/"visual-control/layers.json")
-    indexes["layers"]={str(item["layer_id"]):item for item in [*layers.get("layerSamples",[]),*layers.get("certifiedLayers",[])] if isinstance(item,dict) and isinstance(item.get("layer_id"),str)}
+    layer_records=[item for item in [*layers.get("layerSamples",[]),*layers.get("certifiedLayers",[])] if isinstance(item,dict) and isinstance(item.get("layer_id"),str)]
+    indexes["layers"]={str(item["layer_id"]):item for item in layer_records}
+    indexes["layerEvidence"]=layer_records
     return indexes
 
 def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: str, expected_surface: str, expected_meaning_id: str) -> None:
@@ -55,3 +57,13 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
         raise AuthorityBindingError("EXACT_BINDING_ROUTE_SURFACE_MISMATCH")
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
+    implementation_layer=target["implementationLayerId"]
+    evidence_matches=[
+        row for row in idx["layerEvidence"]
+        if row.get("surface")==expected_surface
+        and row.get("layer_id")==target["layerId"]
+        and row.get("implementationLayerId")==implementation_layer
+        and row.get("selector")==target["selector"]
+    ]
+    if len(evidence_matches)!=1:
+        raise AuthorityBindingError("EXACT_BINDING_IMPLEMENTATION_LAYER_MUST_MATCH_RIFAT_EVIDENCE")
