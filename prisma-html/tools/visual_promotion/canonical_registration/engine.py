@@ -198,7 +198,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     exact["targets"]=targets
 
     if binding.get("action")=="CREATE_NEW":
-        b=allocate_id("binding",f"{target['surfaceKey']}|{target['targetId']}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
+        b=allocate_id("binding",f"{target['surfaceKey']}|{canonical_target_id}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
         if b.action!="CREATE_NEW": raise IdCollisionError("BINDING_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
         binding_id=b.id
     elif binding.get("action")=="REUSE_EXISTING":
@@ -237,7 +237,29 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         recipe_entry=None
     else: raise CanonicalRegistrationError("RECIPE_ACTION_INVALID")
 
-    collisions=[t for bentry in existing_bindings.get("bindings",[]) if isinstance(bentry,dict) for t in bentry.get("targets",[]) if isinstance(t,dict) and t.get("targetId")==target["targetId"]]
+    from .collision_classifier import classify_collisions
+    collision_classifications=classify_collisions(
+        repo_root,
+        target_id=canonical_target_id,
+        surface_key=target["surfaceKey"],
+        semantic_meaning_id=meaning_id,
+        proposed_binding_target=exact["targets"][0],
+        proposed_binding_id=binding_id,
+        proposed_layer_id=exact["targets"][0].get("layerId"),
+        projection_expectation=decision.get("projectionAction") or {},
+    )
+    blocking_collisions=[x for x in collision_classifications if x["code"] not in {"DUPLICATE_EXACT"}]
+    if blocking_collisions:
+        primary=blocking_collisions[0]["code"]
+        exc_types={
+            "SEMANTIC_COLLISION":SemanticCollisionError,
+            "BINDING_COLLISION":BindingCollisionError,
+            "ID_COLLISION":IdCollisionError,
+            "LAYER_COLLISION":LayerCollisionError,
+            "PROJECTION_CONFLICT":ProjectionConflictError,
+        }
+        raise exc_types.get(primary,CollisionError)(primary)
+    collisions=[t for bentry in existing_bindings.get("bindings",[]) if isinstance(bentry,dict) for t in bentry.get("targets",[]) if isinstance(t,dict) and t.get("targetId")==canonical_target_id]
     if collisions:
         if len(collisions)>1: raise BindingCollisionError("MULTIPLE_EXISTING_TARGET_BINDINGS")
         if collisions[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
@@ -263,6 +285,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         "preconditions":{"expectedCurrentHead":request["expectedCurrentHead"],"currentTruthDigest":sha256_json(request["currentTruth"]),"sourceDigest":request["source"]["digest"],
                         "registryDigests":{"recipeRegistry":sha256_json(existing_recipe_registry),"bindingRegistry":sha256_json(existing_bindings)}},
         "status":status,
+        "collisionClassifications":collision_classifications,
     }
 
 def _apply(repo_root:Path,mutation:dict[str,Any])->tuple[Path,str,str,Any]:
