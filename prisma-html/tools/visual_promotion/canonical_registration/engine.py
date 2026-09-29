@@ -150,6 +150,15 @@ def _validate_request(request:dict[str,Any])->None:
         raise CanonicalRegistrationError("NDC_CANONICAL_MEANING_REFERENCE_REQUIRED")
     if decision.get("semanticAction")=="CREATE_NEW" and (not decision.get("semanticDecisionId") or not decision.get("approvalEvidenceRefs")):
         raise CanonicalRegistrationError("EXPLICIT_SEMANTIC_APPROVAL_REQUIRED")
+    handoff=decision.get("workEntryHandoff") or {}
+    if handoff.get("gate")!="visual_application.visual_work_entry_gate":
+        raise CanonicalRegistrationError("WORK_ENTRY_GATE_REFERENCE_REQUIRED")
+    if handoff.get("decision")!="REGISTER_TARGET_FIRST":
+        raise CanonicalRegistrationError("WORK_ENTRY_REGISTER_TARGET_FIRST_REQUIRED")
+    if handoff.get("targetId")!=target["censusTargetId"]:
+        raise CanonicalRegistrationError("WORK_ENTRY_HANDOFF_TARGET_MISMATCH")
+    if handoff.get("evaluatedHead")!=request["expectedCurrentHead"]:
+        raise StaleHeadError("WORK_ENTRY_HANDOFF_HEAD_MISMATCH")
     auth=request["authorization"]
     if auth.get("canonicalRegistrationAuthorized") is not True: raise CanonicalRegistrationError("CANONICAL_REGISTRATION_NOT_AUTHORIZED")
     if auth.get("automaticSemanticInference") is not False: raise CanonicalRegistrationError("AUTOMATIC_SEMANTIC_INFERENCE_FORBIDDEN")
