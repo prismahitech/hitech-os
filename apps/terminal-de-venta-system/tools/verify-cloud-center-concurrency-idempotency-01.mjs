@@ -460,6 +460,111 @@ async function main() {
   assert(retryBefore === 1 && retryAfter === 1 && retryClaimSlot?.status === "CLAIMED", "SETUP_RETRY_RESET_CLAIMED_SLOT", { retryBefore, retryAfter, retryClaimSlot });
   checks.push("setup_retry_preserves_claimed_state");
 
+  // 9. Customer actions must fail closed when license or setup state is blocked.
+  const blockedSetup = await createSetup(seed, "blocked-license");
+  const blockedClaim = await call(seed, "/api/customer/devices/claim", "POST", {
+    setupCode: blockedSetup.setupCode,
+    surface: "tablet",
+    deviceId: "g3-blocked-device"
+  });
+  assert(blockedClaim.status === 200, "BLOCKED_LICENSE_PRECONDITION_CLAIM_FAILED", { blockedClaim });
+
+  const blockedLicenseStates = [
+    { status: "revoked", activation: "revoked", code: "LICENSE_REVOKED" },
+    { status: "suspended", activation: "suspended", code: "LICENSE_SUSPENDED" }
+  ];
+  for (const state of blockedLicenseStates) {
+    await seed.run("update licenses set status = ?, activation_status = ? where license_id = ?", [state.status, state.activation, blockedSetup.licenseId]);
+    const beforeClaims = await directCount(seed, "customer_device_claims", "setup_id = ? and status = 'claimed'", [blockedSetup.setupId]);
+    const claimBlocked = await call(seed, "/api/customer/devices/claim", "POST", {
+      setupCode: blockedSetup.setupCode,
+      surface: "tablet",
+      deviceId: "g3-blocked-device-" + state.status
+    });
+    const refreshBlocked = await call(seed, "/api/customer/license/refresh", "POST", {
+      setupCode: blockedSetup.setupCode,
+      deviceId: "g3-blocked-device"
+    });
+    const afterClaims = await directCount(seed, "customer_device_claims", "setup_id = ? and status = 'claimed'", [blockedSetup.setupId]);
+    assert(claimBlocked.status === 403 && claimBlocked.payload?.resultCode === state.code, "BLOCKED_LICENSE_CLAIM_FAIL_CLOSED", { state, claimBlocked });
+    assert(refreshBlocked.status === 403 && refreshBlocked.payload?.resultCode === state.code, "BLOCKED_LICENSE_REFRESH_FAIL_CLOSED", { state, refreshBlocked });
+    assert(beforeClaims === afterClaims, "BLOCKED_LICENSE_MUTATED_STATE", { state, beforeClaims, afterClaims });
+  }
+
+  // Expired licenses degrade to an explicit customer deny at the Cloud Center claim/refresh boundary.
+  await seed.run("update licenses set status = 'active', activation_status = 'active', valid_until = ? where license_id = ?", [
+    new Date(Date.now() - 60_000).toISOString(),
+    blockedSetup.licenseId
+  ]);
+  const expiredClaim = await call(seed, "/api/customer/devices/claim", "POST", {
+    setupCode: blockedSetup.setupCode,
+    surface: "tablet",
+    deviceId: "g3-expired-device"
+  });
+  const expiredRefresh = await call(seed, "/api/customer/license/refresh", "POST", {
+    setupCode: blockedSetup.setupCode,
+    deviceId: "g3-blocked-device"
+  });
+  assert(expiredClaim.status === 403 && expiredClaim.payload?.resultCode === "LICENSE_EXPIRED", "EXPIRED_LICENSE_CLAIM_FAIL_CLOSED", { expiredClaim });
+  assert(expiredRefresh.status === 403 && expiredRefresh.payload?.resultCode === "LICENSE_EXPIRED", "EXPIRED_LICENSE_REFRESH_FAIL_CLOSED", { expiredRefresh });
+  checks.push("blocked_license_states_fail_closed"); globalThis.__g3Checks = [...checks];
+
+  // Setup expiry/revocation must block device admission even with an otherwise active license.
+  const expiredSetup = await createSetup(seed, "expired-setup");
+  await seed.run("update customer_setups set expires_at = ? where setup_id = ?", [new Date(Date.now() - 60_000).toISOString(), expiredSetup.setupId]);
+  await seed.run("update customer_setup_bundles set expires_at = ? where setup_bundle_id = ?", [new Date(Date.now() - 60_000).toISOString(), expiredSetup.setupBundleId]);
+  const setupExpiredClaim = await call(seed, "/api/customer/devices/claim", "POST", {
+    setupCode: expiredSetup.setupCode,
+    surface: "tablet",
+    deviceId: "g3-expired-setup-device"
+  });
+  assert(setupExpiredClaim.status === 410 && setupExpiredClaim.payload?.resultCode === "SETUP_EXPIRED", "EXPIRED_SETUP_CLAIM_FAIL_CLOSED", { setupExpiredClaim });
+
+  const revokedSetup = await createSetup(seed, "revoked-setup");
+  await seed.run("update customer_setups set status = 'revoked' where setup_id = ?", [revokedSetup.setupId]);
+  await seed.run("update customer_setup_bundles set status = 'revoked' where setup_bundle_id = ?", [revokedSetup.setupBundleId]);
+  const setupRevokedClaim = await call(seed, "/api/customer/devices/claim", "POST", {
+    setupCode: revokedSetup.setupCode,
+    surface: "tablet",
+    deviceId: "g3-revoked-setup-device"
+  });
+  assert(setupRevokedClaim.status === 403 && setupRevokedClaim.payload?.resultCode === "SETUP_REVOKED", "REVOKED_SETUP_CLAIM_FAIL_CLOSED", { setupRevokedClaim });
+  checks.push("expired_and_revoked_setups_fail_closed"); globalThis.__g3Checks = [...checks];
+
+  // License conflict: revoke is terminal. A concurrent renew may win only if it
+  // commits first; any renew attempted after revocation must be blocked.
+  const conflictSetup = await createSetup(seed, "license-conflict");
+  const conflictHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath)];
+  harnesses.push(...conflictHarnesses);
+  const [revokeResponse, renewResponse] = await Promise.all([
+    call(conflictHarnesses[0], "/api/licenses/revoke", "POST", {
+      tenantSlug: conflictSetup.tenantSlug,
+      licenseId: conflictSetup.licenseId,
+      plan: "TABLET_PC_MANAGED",
+      reason: "G3 concurrent terminal revoke",
+      confirmAdminLicenseAction: true,
+      confirmRevoke: "REVOKE_LICENSE"
+    }, true),
+    call(conflictHarnesses[1], "/api/licenses/renew", "POST", {
+      tenantSlug: conflictSetup.tenantSlug,
+      licenseId: conflictSetup.licenseId,
+      plan: "TABLET_PC_MANAGED",
+      confirmAdminLicenseAction: true
+    }, true)
+  ]);
+  const postConflictLicense = await seed.first("select status from licenses where license_id = ?", [conflictSetup.licenseId]);
+  const postRevokedRenew = await call(seed, "/api/licenses/renew", "POST", {
+    tenantSlug: conflictSetup.tenantSlug,
+    licenseId: conflictSetup.licenseId,
+    plan: "TABLET_PC_MANAGED",
+    confirmAdminLicenseAction: true
+  }, true);
+  assert(revokeResponse.status === 200 && revokeResponse.payload?.resultCode === "REVOKE_CONFIRMED", "CONCURRENT_REVOKE_DID_NOT_CONFIRM", { revokeResponse, renewResponse });
+  assert(renewResponse.status === 200 || (renewResponse.status === 409 && renewResponse.payload?.resultCode === "LICENSE_REVOKED_TERMINAL"), "CONCURRENT_RENEW_UNEXPECTED_FAILURE", { revokeResponse, renewResponse });
+  assert(postConflictLicense?.status === "revoked", "REVOKE_NOT_TERMINAL_AFTER_CONFLICT", { postConflictLicense, revokeResponse, renewResponse });
+  assert(postRevokedRenew.status === 409 && postRevokedRenew.payload?.resultCode === "LICENSE_REVOKED_TERMINAL", "REVOKED_LICENSE_RENEWAL_NOT_BLOCKED", { postRevokedRenew });
+  checks.push("refresh_revoke_renew_conflicts_and_terminal_revoke"); globalThis.__g3Checks = [...checks];
+
   // Read-only graph integrity over the same local D1-compatible database used by the race tests.
   const orphanClaims = await directCount(seed, "customer_device_claims", "claim_slot_id IS NULL", []);
   assert(orphanClaims === 0, "GRAPH_ORPHAN_CLAIMS_WITHOUT_SLOT", { orphanClaims });
