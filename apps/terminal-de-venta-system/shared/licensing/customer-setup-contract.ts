@@ -9,7 +9,17 @@ export type CustomerSetupStatus = "active" | "expired" | "revoked" | "draft" | "
 export type DeviceClaimStatus = "claimed" | "already_claimed" | "slot_full" | "replacement_required" | "replaced" | "source_ready";
 export type DeviceClaimSlotStatus = "AVAILABLE" | "CLAIMED" | "EXPIRED" | "REVOKED";
 export type CustomerLicenseCommercialStatus = "active" | "expiring" | "grace_period" | "suspended" | "revoked" | "renewed";
-export type CustomerSetupPlanId = "TABLET_SOLO" | "TABLET_PRO" | "TABLET_PC_MANAGED" | typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN;
+/** Commercial plan IDs owned by shared/licensing/plan-catalog.canonical.json. */
+export type CustomerSetupCommercialPlanId = "TABLET_SOLO" | "TABLET_PRO" | "TABLET_PC_MANAGED";
+
+/** Provisioning-only plan/package IDs. These are not vendible license SKUs. */
+export type CustomerSetupProvisioningOnlyPlanId = typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN;
+
+/**
+ * Customer Setup plan IDs span commercial plans plus provisioning-only packages.
+ * Consumers must not treat every CustomerSetupPlanId as a vendible commercial SKU.
+ */
+export type CustomerSetupPlanId = CustomerSetupCommercialPlanId | CustomerSetupProvisioningOnlyPlanId;
 export type CustomerSetupMode = "setup_link_code_qr";
 export type CustomerClaimMode = "auto_generated_claim_slots";
 
@@ -334,6 +344,11 @@ export const PRISMA_TRIPLE_DEVICE_STARTER_SLOTS: readonly CustomerSetupSlot[] = 
   { surface: "mobile", label: CUSTOMER_SETUP_SLOT_LABELS.mobile, allowed: 1, claimed: 0 }
 ];
 
+/**
+ * Canonical Customer Setup provisioning owner.
+ * Commercial status is owned by plan-catalog.canonical.json; the starter plan below
+ * is provisioning-only and has no standalone commercial SKU/price.
+ */
 export const PLAN_BASED_PROVISIONING_CATALOG: Record<CustomerSetupPlanId, PlanProvisioningDefinition> = {
   TABLET_SOLO: {
     planId: "TABLET_SOLO",
