@@ -53,9 +53,6 @@ class RequestBuilderTests(unittest.TestCase):
         self.assertEqual(request["decision"]["layerAction"]["decisionRef"],"rifat::policy.test")
 
 
-if __name__=="__main__":
-    unittest.main()
-
     def test_builder_does_not_supply_canonical_target_id(self):
         request=self.builder.build_request_from_readiness(
             self.row(),current_truth={"schema":"prisma.visual.current-truth-snapshot.v1"},
@@ -65,3 +62,7 @@ if __name__=="__main__":
         )
         self.assertIsNone(request["target"]["targetId"])
         self.assertEqual(request["target"]["censusTargetId"],"TGT.CENSUS.TABLET.TEST.V1")
+
+
+if __name__=="__main__":
+    unittest.main()
