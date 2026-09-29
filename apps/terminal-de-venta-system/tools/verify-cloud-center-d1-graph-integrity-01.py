@@ -227,6 +227,10 @@ def main() -> None:
         checks.append("corruption_drill_aggregate_counter")
 
         # Active claim-slot uniqueness must be enforced by the partial unique index.
+        conn.execute(
+            "INSERT INTO customer_device_claims(claim_id, setup_id, setup_code, tenant_slug, surface, device_id, status, claim_slot_id) VALUES(?,?,?,?,?,?,?,?)",
+            ("g4-existing-active-slot", "g4-setup", "G4-SETUP", "g4-tenant", "tablet", "g4-existing-device", "claimed", "g4-slot-tablet-1"),
+        )
         try:
             conn.execute(
                 "INSERT INTO customer_device_claims(claim_id, setup_id, setup_code, tenant_slug, surface, device_id, status, claim_slot_id) VALUES(?,?,?,?,?,?,?,?)",
@@ -236,6 +240,7 @@ def main() -> None:
             checks.append("corruption_drill_duplicate_active_claim_slot_blocked")
         else:
             raise AssertionError("CORRUPTION_DRILL_DUPLICATE_ACTIVE_SLOT_NOT_BLOCKED")
+        conn.execute("DELETE FROM customer_device_claims WHERE claim_id='g4-existing-active-slot'")
 
         # A replaced claim may not leave its physical slot active for the same device.
         conn.execute("INSERT INTO customer_device_claims(claim_id, setup_id, setup_code, tenant_slug, surface, device_id, status, claim_slot_id) VALUES(?,?,?,?,?,?,?,?)",
