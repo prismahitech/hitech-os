@@ -27,7 +27,9 @@ def rifat_indexes(repo_root: Path) -> dict[str, dict[str, Any]]:
         doc=_load(path)
         indexes[name]={str(item[key]):item for item in doc.get(section,[]) if isinstance(item,dict) and isinstance(item.get(key),str)}
     layers=_load(base/"visual-control/layers.json")
-    indexes["layers"]={str(item["layer_id"]):item for item in [*layers.get("layerSamples",[]),*layers.get("certifiedLayers",[])] if isinstance(item,dict) and isinstance(item.get("layer_id"),str)}
+    layer_items=[*layers.get("layerSamples",[]),*layers.get("certifiedLayers",[])]
+    indexes["layers"]={str(item["layer_id"]):item for item in layer_items if isinstance(item,dict) and isinstance(item.get("layer_id"),str)}
+    indexes["implementationLayers"]={str(item["implementationLayerId"]):item for item in layer_items if isinstance(item,dict) and isinstance(item.get("implementationLayerId"),str) and item.get("implementationLayerId")}
     return indexes
 
 def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: str, expected_surface: str, expected_meaning_id: str) -> None:
@@ -50,7 +52,15 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
         if target[field] not in idx[bucket]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_{field.upper()}:{target[field]}")
     implementation_layer=target.get("implementationLayerId")
     if implementation_layer is not None:
-        if not isinstance(implementation_layer,str) or not implementation_layer or implementation_layer not in idx["layers"]:
+        if not isinstance(implementation_layer,str) or not implementation_layer:
+            raise AuthorityBindingError("EXACT_BINDING_IMPLEMENTATIONLAYERID_INVALID")
+        if implementation_layer not in idx["implementationLayers"]:
             raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_IMPLEMENTATIONLAYERID:{implementation_layer}")
+        layer_record=idx["layers"].get(target["layerId"])
+        declared_implementation=layer_record.get("implementationLayerId") if isinstance(layer_record,dict) else None
+        if declared_implementation is not None and declared_implementation != implementation_layer:
+            raise AuthorityBindingError(
+                f"EXACT_BINDING_IMPLEMENTATION_LAYER_RIFAT_MISMATCH:{target['layerId']}:{implementation_layer}:{declared_implementation}"
+            )
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
