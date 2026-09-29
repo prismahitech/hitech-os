@@ -112,7 +112,7 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [x] Make critical mutations fail closed when audit cannot be verified.
 - [x] Preserve sanitized diagnostic behavior.
 
-**Gate G2:** `PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY`
+**Gate G2:** `PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY` — **PASS in CI #2238** on candidate `e92feb8…`
 
 ---
 
