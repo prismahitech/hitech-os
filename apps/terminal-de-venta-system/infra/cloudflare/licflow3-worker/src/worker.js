@@ -1538,7 +1538,10 @@ async function customerLicenseRefresh(request, env) {
   if (licenseBlock) return customerError(`LICENSE_${licenseBlock.state.toUpperCase()}`, `LICENSE_${licenseBlock.state.toUpperCase()}`, licenseBlock.customerMessage, licenseBlock.nextStep, 403);
   const claim = await activeClaimForDevice(env, pass.setupId, deviceId);
   if (!claim) return customerError("DEVICE_NOT_CLAIMED", "DEVICE_NOT_CLAIMED", "Este dispositivo no esta reclamado en este setup.", "Reclama el dispositivo o contacta soporte.", 404);
-  await recordAudit(env, pass.tenantSlug, "customer_license.refresh", { setupCode, deviceId, surface: claim.surface });
+  const refreshAudit = await recordAudit(env, pass.tenantSlug, "customer_license.refresh", { setupCode, deviceId, surface: claim.surface });
+  if (!refreshAudit.ok) {
+    return customerError("AUDIT_PERSISTENCE_REQUIRED", refreshAudit.status || "AUDIT_PERSISTENCE_REQUIRED", "No pudimos verificar la auditoria de la actualizacion.", "Reintenta o contacta soporte.", 500);
+  }
   const [customerMessage, nextStep] = licenseCopy(licenseStateForCustomer(licenseRow));
   return json({
     ok: true,
@@ -2207,8 +2210,16 @@ async function registerDevice(request, env) {
   if (!result.ok) {
     result = await run(env, "insert or replace into devices (id, tenant_id, device_code, label, status, updated_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)", [deviceId, slug, deviceId, body.deviceName || deviceId, "registered", now()]);
   }
-  await recordAudit(env, slug, "device.register", { deviceId });
-  return json({ ok: result.ok, status: result.ok ? "registered" : result.status, tenantSlug: slug, deviceId }, result.ok ? 200 : 500);
+  const audit = result.ok ? await recordAudit(env, slug, "device.register", { deviceId }) : { ok: false, status: "PRIMARY_WRITE_FAILED" };
+  const ok = result.ok && audit.ok;
+  return json({
+    ok,
+    status: ok ? "registered" : result.ok ? audit.status : result.status,
+    tenantSlug: slug,
+    deviceId,
+    auditVerified: audit.ok === true,
+    safeToMutate: false
+  }, ok ? 200 : 500);
 }
 
 async function integrationReceipt(request, env) {
@@ -2222,8 +2233,16 @@ async function integrationReceipt(request, env) {
   if (!result.ok) {
     result = await run(env, "insert or replace into integration_receipts (id, tenant_id, receipt_type, payload_json, status, created_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)", [receiptId, slug, body.kind || "integration", JSON.stringify(body.payload || {}), body.ok ? "accepted" : "rejected", now()]);
   }
-  await recordAudit(env, slug, "integration.receipt", { receiptId });
-  return json({ ok: result.ok, status: result.ok ? "recorded" : result.status, tenantSlug: slug, receiptId }, result.ok ? 200 : 500);
+  const audit = result.ok ? await recordAudit(env, slug, "integration.receipt", { receiptId }) : { ok: false, status: "PRIMARY_WRITE_FAILED" };
+  const ok = result.ok && audit.ok;
+  return json({
+    ok,
+    status: ok ? "recorded" : result.ok ? audit.status : result.status,
+    tenantSlug: slug,
+    receiptId,
+    auditVerified: audit.ok === true,
+    safeToMutate: false
+  }, ok ? 200 : 500);
 }
 
 async function createNote(request, env, slug) {
@@ -2237,8 +2256,16 @@ async function createNote(request, env, slug) {
   if (!result.ok) {
     result = await run(env, "insert into tenant_notes (id, tenant_id, note_type, body, created_by, created_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)", [noteId, slug, "general", text, body.source || "licflow3-worker", now()]);
   }
-  await recordAudit(env, slug, "tenant.note", { noteId });
-  return json({ ok: result.ok, status: result.ok ? "created" : result.status, tenantSlug: slug, noteId }, result.ok ? 200 : 500);
+  const audit = result.ok ? await recordAudit(env, slug, "tenant.note", { noteId }) : { ok: false, status: "PRIMARY_WRITE_FAILED" };
+  const ok = result.ok && audit.ok;
+  return json({
+    ok,
+    status: ok ? "created" : result.ok ? audit.status : result.status,
+    tenantSlug: slug,
+    noteId,
+    auditVerified: audit.ok === true,
+    safeToMutate: false
+  }, ok ? 200 : 500);
 }
 
 async function route(request, env) {
