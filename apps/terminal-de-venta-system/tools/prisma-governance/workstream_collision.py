@@ -32,6 +32,7 @@ ROLE_VALUES = {"canonical", "proposal", "continuation"}
 
 EXCLUSIVE_PREFIXES = (
     "PRISMA Factory Ledger/",
+    "apps/terminal-de-venta-system/tools/prisma-governance/",
     "prisma-html/tools/visual_promotion/canonical_registration/",
     "prisma-html/authority/rifat/",
     "prisma-html/authority/ndc/",
@@ -43,6 +44,7 @@ EXCLUSIVE_PREFIXES = (
 )
 
 GOVERNED_PREFIXES = EXCLUSIVE_PREFIXES + (
+    ".github/workflows/",
     "prisma-html/tools/visual_promotion/",
     "prisma-html/tools/visual_operating_graph/",
     "tools/code-atlas/",
