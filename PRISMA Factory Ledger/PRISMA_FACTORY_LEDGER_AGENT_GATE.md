@@ -16,6 +16,30 @@ If main moves, revalidate task authority against current HEAD; do not blindly ke
 At the end, update PRISMA_FACTORY_LEDGER.json and PRISMA_EVIDENCE_INDEX.json only when capability/evidence truth changed, or explain exactly why no update was appropriate.
 ```
 
+## Mandatory workstream collision coordination
+
+Before technical work on any governed PR:
+
+1. Declare exactly one `PRISMA-WORKSTREAM` block in the PR body with a unique workstream id, role, requested action, canonical capability id(s), surface(s), and mutation scope.
+2. The live Workstream Collision Gate must pass before continuing. A governed PR without a declaration is blocked.
+3. The gate is coordination-only: Factory Ledger remains capability authority; Authority Mesh remains task authority; Code Atlas/Change Assurance remains impact assurance.
+4. Never infer ownership from PR age, author, commit count, branch name or similarity. If two canonical claims collide, stop and obtain human reconciliation.
+5. A continuation of a completed workstream uses a new workstream id; it never silently reuses a merged id.
+
+Example:
+
+```text
+<!-- PRISMA-WORKSTREAM
+id: example-workstream-20260929
+role: proposal
+requested_action: ADVANCE
+capabilities: canonical.capability.id
+surfaces: prisma-html, governance
+scope: prisma-html/tools/example/**
+owner: optional-owner
+-->
+```
+
 ## Mandatory universal PRISMA anti-rework gate
 
 For **every PRISMA technical proposal, prompt/plan that authorizes technical work, package/injector that can change the repository, or repository mutation**, run the universal Factory Ledger gate before authorizing BUILD/FIX or touching files.
