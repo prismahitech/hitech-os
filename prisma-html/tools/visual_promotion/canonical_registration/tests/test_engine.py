@@ -15,7 +15,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
     def request(self):
         return {"schema":"prisma.visual.canonical-promotion-request.v1","requestId":"cpr-test-001",
         "target":{"targetId":"TGT.TEST.EXACT.V1","surfaceKey":"tablet"},"expectedCurrentHead":"a"*40,
-        "currentTruth":{"schema":"prisma.visual.current-truth-snapshot.v1","repoHead":"a"*40,"targetIndexDigest":"b"*64},
+        "currentTruth":{"schema":"prisma.visual.current-truth-snapshot.v1","repoHead":"a"*40,"targetIndexDigest":"b"*64,"identityDigest":"b"*64,"rifatDigest":"b"*64,"ndcDigest":"b"*64,"projectionDigest":"b"*64,"authorityMeshDigest":"b"*64,"layerMapDigest":"b"*64,"targetEvidenceDigest":"b"*64},
         "source":{"digest":self.source_digest,"candidateRef":"candidate.test","path":"candidate.json"},
         "decision":{"semanticAction":"REUSE_EXISTING","idInputs":{},"recipeAction":{"action":"CREATE_NEW","semanticKey":"table.governed",
         "registryEntry":{"familyId":"FAM.test","presetId":"PRESET.test","identityProfileId":"profile.test"}},
