@@ -4502,9 +4502,9 @@
       "sha256": "C4FF2A88378EF52730375FE74C0C3D31E3DB9ABE37BBD1B0FDAED3A155094489"
     },
     {
-      "bytes": 3959,
+      "bytes": 4534,
       "path": "tools/visual_promotion/canonical_registration/authority_adapters.py",
-      "sha256": "15660643FB0D6BFE8C57D8AAE824BD3D13C412946FE00F2C69B72D0817B0FC3C"
+      "sha256": "707E2D99E72A3C779DAC71A299B2E00B9AEF0722C9222FD423864A0E44F57FD9"
     },
     {
       "bytes": 6516,
@@ -4647,9 +4647,9 @@
       "sha256": "D217BC62F8A1DCCF635B7930A89A8B771EE166EB28DDD75924F83F5761F6E8D4"
     },
     {
-      "bytes": 22428,
+      "bytes": 22873,
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
-      "sha256": "58333834EA59011B933EA2C1B4A88422E65A5F77E2BD012FEFE85C630D5BBF02"
+      "sha256": "0C7944D74C92033C44C3628B227BD3F861F8581D446DE19C33C05ABEED39C20D"
     },
     {
       "bytes": 1782,
