@@ -11,7 +11,7 @@
     "ids":{"type":"object","required":["targetId","bindingId","recipeId"],"properties":{"targetId":{"type":"string"},"bindingId":{"type":"string"},"recipeId":{"type":"string"}}},
     "targetAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"bindingAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"recipeAction":{"enum":["CREATE_NEW","REUSE_EXISTING"]},
     "layerAction":{"type":"object","required":["applicationLayerId","policy","writerKind"]},
-    "projectionAction":{"type":"object"},"mutations":{"type":"array","items":{"type":"object"}},
+    "projectionAction":{"type":"object"},"collisionClassifications":{"type":"array","items":{"$ref":"canonical-registration-collision.schema.json"}},"mutations":{"type":"array","items":{"type":"object"}},
     "preconditions":{"type":"object","required":["expectedCurrentHead","currentTruthDigest","sourceDigest","registryDigests"]},
     "status":{"enum":["APPLY","NO_OP_IDEMPOTENT"]}
   }
