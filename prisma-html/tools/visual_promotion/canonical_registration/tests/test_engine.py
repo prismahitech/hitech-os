@@ -170,6 +170,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
                                   "exactBinding":exact_binding,"registryEntry":exact_binding},
                 "layerAction":{"applicationLayerId":"LYR.APP.TEST","policy":"EXACT_TARGET_ONLY","writerKind":"CANONICAL_REGISTRATION","authorityDomain":"rifat","decisionRef":"rifat::layer-policy.test"},
                 "projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False},
+                "workEntryHandoff":{"gate":"visual_application.visual_work_entry_gate","decision":"REGISTER_TARGET_FIRST","targetId":"TGT.CENSUS.TABLET.TEST.V1","evaluatedHead":"a"*40},
                 "idInputs":{},
             },
             "authorization":{
