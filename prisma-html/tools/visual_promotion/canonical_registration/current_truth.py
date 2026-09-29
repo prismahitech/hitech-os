@@ -40,10 +40,14 @@ def capture_current_truth(repo_root:Path, *, evidence_target_id:str, repo_head:s
     nd,nsrc=_glob_bundle(repo_root,NDC_ROOT)
     pd,psrc=_bundle(repo_root,PROJECTION_PATHS)
     if authority_mesh_path: am,amsrc=_bundle(repo_root,[authority_mesh_path])
-    elif authority_mesh_digest: am,amsrc=authority_mesh_digest,[{"externalRef":"authority-mesh","sha256":authority_mesh_digest}]
+    elif authority_mesh_digest:
+        ams=[{"externalRef":"authority-mesh","sha256":authority_mesh_digest}]
+        am,amsrc=sha256_json(ams),ams
     else: raise CanonicalRegistrationError("CURRENT_TRUTH_AUTHORITY_MESH_REQUIRED")
     if layer_map_path: lm,lmsrc=_bundle(repo_root,[layer_map_path])
-    elif layer_map_digest: lm,lmsrc=layer_map_digest,[{"externalRef":"layer-map","sha256":layer_map_digest}]
+    elif layer_map_digest:
+        lms=[{"externalRef":"layer-map","sha256":layer_map_digest}]
+        lm,lmsrc=sha256_json(lms),lms
     else: raise CanonicalRegistrationError("CURRENT_TRUTH_LAYER_MAP_REQUIRED")
     snap={"schema":"prisma.visual.current-truth-snapshot.v1","repoHead":head,"targetIndexDigest":tid,"identityDigest":iid,"rifatDigest":rid,"ndcDigest":nd,"projectionDigest":pd,"authorityMeshDigest":am,"layerMapDigest":lm,"targetEvidenceDigest":sha256_json(target_row),"evidenceTargetId":evidence_target_id,"sources":{"targetIndex":ts,"identity":isrc,"rifat":rsrc,"ndc":nsrc,"projection":psrc,"authorityMesh":amsrc,"layerMap":lmsrc}}
     snap["snapshotId"]=sha256_json(snap)
