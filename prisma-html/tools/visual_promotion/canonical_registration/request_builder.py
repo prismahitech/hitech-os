@@ -20,6 +20,11 @@ def build_request_from_readiness(
     source: dict[str, Any],
     work_entry_handoff: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if row.get("promotionReadinessDecision") != "READY_FOR_CANONICAL_REGISTRATION":
+        raise RequestBuilderError("READINESS_NOT_READY_FOR_CANONICAL_REGISTRATION")
+    if row.get("surfaceKey") not in {"tablet","pc","mobile","shared-ui"}:
+        raise RequestBuilderError("SURFACE_INVALID")
+    target_id = row.get("targetId")
     if not isinstance(work_entry_handoff, dict):
         raise RequestBuilderError("WORK_ENTRY_HANDOFF_REQUIRED")
     if work_entry_handoff.get("decision") != "REGISTER_TARGET_FIRST":
@@ -31,11 +36,6 @@ def build_request_from_readiness(
     if work_entry_handoff.get("gate") != "visual_application.visual_work_entry_gate":
         raise RequestBuilderError("WORK_ENTRY_HANDOFF_GATE_INVALID")
 
-    if row.get("promotionReadinessDecision") != "READY_FOR_CANONICAL_REGISTRATION":
-        raise RequestBuilderError("READINESS_NOT_READY_FOR_CANONICAL_REGISTRATION")
-    if row.get("surfaceKey") not in {"tablet","pc","mobile","shared-ui"}:
-        raise RequestBuilderError("SURFACE_INVALID")
-    target_id = row.get("targetId")
     if not isinstance(target_id,str) or not target_id.startswith("TGT.CENSUS."):
         raise RequestBuilderError("READINESS_MUST_REFERENCE_CENSUS_TARGET")
 
