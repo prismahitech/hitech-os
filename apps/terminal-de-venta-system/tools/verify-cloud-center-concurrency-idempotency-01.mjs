@@ -135,6 +135,7 @@ class D1Harness {
   async setFailure(pattern) {
     const r = await this.command("set_failure", { pattern });
     if (!r.ok) throw new Error(r.error || "SET_FAILURE_FAILED");
+    if (r.pattern !== pattern) throw new Error("SET_FAILURE_PATTERN_NOT_ACCEPTED");
   }
   async query(sql, params = []) {
     const r = await this.command("query", { sql, params });
@@ -305,7 +306,7 @@ async function main() {
   ]), "STARTER_SLOT_MATRIX_DRIFT", { starterSlots });
   checks.push("provisioning_only_starter_maps_to_commercial_sku");
 
-  // 2. Real concurrent claims on the same DB with separate connections.
+  // 3. Real concurrent claims on the same DB with separate connections.
   const setup = await createSetup(seed, "concurrent");
   const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];
   harnesses.push(...claimHarnesses);
@@ -323,7 +324,7 @@ async function main() {
   assert(claimedSlotCount === 2, "CONCURRENT_CLAIM_AGGREGATE_COUNTER_DRIFT", { claimedSlotCount });
   checks.push("concurrent_claims_respect_two_tablet_slots");
 
-  // 3. Idempotency / replay: same device cannot create a second claim.
+  // 4. Idempotency / replay: same device cannot create a second claim.
   const successfulDevice = successes[0].payload.device.deviceId;
   const beforeReplay = await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ?", [setup.setupId, successfulDevice]);
   const replay = await call(seed, "/api/customer/devices/claim", "POST", {
@@ -336,7 +337,7 @@ async function main() {
   assert(beforeReplay === afterReplay, "DEVICE_REPLAY_MUTATED_STATE");
   checks.push("device_claim_replay_is_idempotently_blocked");
 
-  // 4. Replacement releases the exact physical claim slot, then new device can reclaim it.
+  // 5. Replacement releases the exact physical claim slot, then new device can reclaim it.
   const oldDeviceId = successes[1].payload.device.deviceId;
   const replacement = await call(seed, "/api/admin/customer-devices/replacement/approve", "POST", {
     setupCode: setup.setupCode,
@@ -357,23 +358,24 @@ async function main() {
   assert(replacementClaim.status === 200 && replacementClaim.payload?.resultCode === "DEVICE_CLAIM_ACCEPTED", "REPLACEMENT_NEW_DEVICE_CLAIM_FAILED", { replacementClaim });
   checks.push("replacement_releases_and_reuses_exact_slot");
 
-  // 5. Atomic claim failure: audit failure rolls back claim, device and slot.
+  // 6. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
   const failClaimHarness = new D1Harness(dbPath);
   harnesses.push(failClaimHarness);
   await failClaimHarness.setFailure("audit_events (event_id");
+  const failClaimBefore = await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ?", [failClaimSetup.setupId, "g3-atomic-claim-device"]);
   const failedClaim = await call(failClaimHarness, "/api/customer/devices/claim", "POST", {
     setupCode: failClaimSetup.setupCode,
     surface: "tablet",
     deviceId: "g3-atomic-claim-device"
   });
-  assert(failedClaim.status === 500 && failedClaim.payload?.resultCode === "CUSTOMER_SETUP_UPSTREAM_FAILED", "ATOMIC_CLAIM_FAILURE_NOT_FAIL_CLOSED", { failedClaim });
+  assert(failClaimBefore === 0 && failedClaim.status === 500 && failedClaim.payload?.resultCode === "CUSTOMER_SETUP_UPSTREAM_FAILED", "ATOMIC_CLAIM_FAILURE_NOT_FAIL_CLOSED", { failedClaim });
   assert(await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ?", [failClaimSetup.setupId, "g3-atomic-claim-device"]) === 0, "ATOMIC_CLAIM_LEFT_CLAIM");
   assert(await directCount(seed, "devices", "tenant_slug = ? and device_id = ?", [failClaimSetup.tenantSlug, "g3-atomic-claim-device"]) === 0, "ATOMIC_CLAIM_LEFT_DEVICE");
   assert(await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [failClaimSetup.setupBundleId]) === 1 || await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [failClaimSetup.setupBundleId]) === 2, "ATOMIC_CLAIM_SLOT_NOT_ROLLED_BACK");
   checks.push("atomic_claim_failure_rolls_back_all_writes");
 
-  // 6. Atomic replacement failure: audit failure leaves old claim and slot intact.
+  // 7. Atomic replacement failure: audit failure leaves old claim and slot intact.
   const failReplacementSetup = await createSetup(seed, "replacement-failure");
   const successfulReplacementClaim = await call(seed, "/api/customer/devices/claim", "POST", {
     setupCode: failReplacementSetup.setupCode,
@@ -398,7 +400,7 @@ async function main() {
   assert(replacementSlotState?.status === "CLAIMED" && replacementSlotState?.device_id === "g3-replacement-atomic-old", "ATOMIC_REPLACEMENT_LEFT_SLOT_RELEASED", { replacementSlotState });
   checks.push("atomic_replacement_failure_rolls_back_all_writes");
 
-  // 7. Retry createCustomerSetup with identical identifiers must preserve an already claimed slot.
+  // 8. Retry createCustomerSetup with identical identifiers must preserve an already claimed slot.
   const retrySetup = await createSetup(seed, "setup-retry");
   const retryClaim = await call(seed, "/api/customer/devices/claim", "POST", {
     setupCode: retrySetup.setupCode,
