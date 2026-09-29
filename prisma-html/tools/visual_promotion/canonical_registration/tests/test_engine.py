@@ -245,6 +245,13 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.UnsafeMutationError):
             self.engine.register(request,self.root)
 
+    def test_register_and_rollback_share_transaction_lock_path(self):
+        request_id="lock-contract"
+        self.assertEqual(
+            self.engine._transaction_lock_path(self.root,request_id),
+            self.root/"prisma-html/governance/visual-promotion/canonical-registration/transactions"/f".{request_id}.lock",
+        )
+
     def test_rollback_is_transaction_scoped(self):
         request=self.request()
         self.engine.register(request,self.root)
