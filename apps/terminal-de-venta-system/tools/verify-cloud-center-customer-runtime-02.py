@@ -193,7 +193,26 @@ def main():
                 checks.append('deactivation_dropdown_homologation')
 
                 browser.close()
-            unexpected_console_errors = [item for item in console_errors if item.get('url') and '/api/' not in item.get('url')]
+            expected_cloud_409 = [
+                item for item in api_error_responses
+                if item.get('status') == 409 and item.get('url', '').endswith('/api/cloud-saas/summary')
+            ]
+            unexpected_api_errors = [
+                item for item in api_error_responses
+                if item not in expected_cloud_409
+            ]
+            expected_console_409 = [
+                item for item in console_errors
+                if 'status of 409 (Conflict)' in str(item.get('text') or '')
+            ]
+            unexpected_console_errors = [
+                item for item in console_errors
+                if item not in expected_console_409
+            ]
+            require(
+                len(expected_console_409) == len(expected_cloud_409) and not unexpected_api_errors,
+                f'API_4XX_5XX:{api_error_responses}; EXPECTED_LOCAL_CLOUD_409:{expected_cloud_409}'
+            )
             require(not unexpected_console_errors, f'BROWSER_CONSOLE_ERRORS:{unexpected_console_errors}; API_4XX_5XX:{api_error_responses}')
             require(not request_failures, f'LOCAL_REQUEST_FAILURES:{request_failures}; API_4XX_5XX:{api_error_responses}')
             checks.append('browser_console_network_clean')
