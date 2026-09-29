@@ -1258,6 +1258,11 @@ async function createCustomerSetup(request, env) {
 
   const persistedTenant = await tenant(env, pass.tenantSlug);
   const persistedLicense = await licenseById(env, pass.tenantSlug, pass.licenseId, licenseSchema);
+  const persistedLicenseDirect = await first(
+    env,
+    "select license_id as licenseId, tenant_slug as tenantSlug, status, plan, activation_status as activationStatus, valid_until as validUntil from licenses where license_id = ? limit 1",
+    [pass.licenseId]
+  );
   const persistedAssignment = await first(env, "select license_assignment_id as licenseAssignmentId, license_id as licenseId, setup_bundle_id as setupBundleId, plan_id as planId, status from license_assignments where license_assignment_id = ? limit 1", [pass.licenseAssignmentId]);
   const persistedSetup = await first(env, "select setup_id as setupId, setup_code as setupCode, status, expires_at as expiresAt from customer_setups where setup_id = ? limit 1", [pass.setupId]);
   const persistedBundle = await first(env, "select setup_bundle_id as setupBundleId, setup_id as setupId, license_id as licenseId, license_assignment_id as licenseAssignmentId, plan_id as planId, audit_event_id as auditEventId, status from customer_setup_bundles where setup_bundle_id = ? limit 1", [pass.setupBundleId]);
@@ -1336,6 +1341,13 @@ async function createCustomerSetup(request, env) {
           status: persistedLicense.status || null,
           plan: persistedLicense.plan || null,
           activationStatus: persistedLicense.activationStatus || persistedLicense.activation_status || null
+        } : null,
+        licenseObservedDirect: persistedLicenseDirect ? {
+          licenseId: persistedLicenseDirect.licenseId || null,
+          tenantSlug: persistedLicenseDirect.tenantSlug || null,
+          status: persistedLicenseDirect.status || null,
+          plan: persistedLicenseDirect.plan || null,
+          activationStatus: persistedLicenseDirect.activationStatus || null
         } : null,
         assignment: Boolean(persistedAssignment) && persistedAssignment.licenseId === pass.licenseId && persistedAssignment.setupBundleId === pass.setupBundleId && persistedAssignment.planId === pass.commercialPlanId && persistedAssignment.status === "assigned",
         setup: Boolean(persistedSetup) && persistedSetup.setupCode === pass.setupCode && persistedSetup.status === "active",
