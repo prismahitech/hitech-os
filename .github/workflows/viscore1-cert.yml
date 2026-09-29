@@ -37,6 +37,7 @@ jobs:
           set -euo pipefail
           EXPECTED_MAIN='d064110036bdebfa4db98e032fe9627a0a86fabc'
           test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = "$EXPECTED_MAIN"
+          git worktree add --detach "$RUNNER_TEMP/g01-main" "$EXPECTED_MAIN"
 
           cat > "$RUNNER_TEMP/g01-request.json" <<JSON
           {
@@ -48,11 +49,19 @@ jobs:
             "visualMutation":false
           }
           JSON
+          cd "$RUNNER_TEMP/g01-main"
           python "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py" --request "$RUNNER_TEMP/g01-request.json" | tee "$RUNNER_TEMP/g01-proposal.json"
+          python - "$RUNNER_TEMP/g01-proposal.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert d.get('result') == 'PASS_ANTI_REWORK_GATE', d
+          assert d.get('repoHead') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
+          assert d.get('errors') == [], d
+          print(json.dumps({'result':d.get('result'),'repoHead':d.get('repoHead'),'decisionDigest':d.get('decisionDigest')},indent=2))
+          PY
 
-          cd apps/terminal-de-venta-system
           TASK='Bounded G-01 integration slice for visual.canonical_promotion_integration_v1: connect existing NDC, Identity, RIFAT, Target Index, projection and Work Entry authorities through explicit read/validation adapters; establish transaction-scoped journal evidence and exact-head postcondition verification; no competing authority, no canonical ID minting, no product/runtime mutation and no GVAE APPLY.'
-          python tools/prisma-governance/authority_mesh_run.py --task "$TASK" --full --output "$RUNNER_TEMP/g01-authority-mesh" | tee "$RUNNER_TEMP/g01-mesh.json"
+          python apps/terminal-de-venta-system/tools/prisma-governance/authority_mesh_run.py --task "$TASK" --full --output "$RUNNER_TEMP/g01-authority-mesh" | tee "$RUNNER_TEMP/g01-mesh.json"
           python - "$RUNNER_TEMP/g01-mesh.json" <<'PY'
           import json,sys
           d=json.load(open(sys.argv[1],encoding='utf-8'))
@@ -60,8 +69,10 @@ jobs:
           assert d.get('verification') == 'PASS', d
           assert d.get('layerMapRequired') is True, d
           assert d.get('missingOutputs') == [], d
+          assert d.get('repoHead') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
           print(json.dumps({
               'status':d.get('status'),
+              'repoHead':d.get('repoHead'),
               'readset_count':d.get('readset_count'),
               'missing_count':d.get('missing_count'),
               'critical_missing_count':d.get('critical_missing_count'),
