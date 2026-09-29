@@ -8,6 +8,6 @@
     "capabilityId":{"const":"visual.canonical_promotion_integration_v1"},
     "requestId":{"type":"string"},"targetId":{"type":"string"},
     "status":{"enum":["APPLIED","NO_OP_IDEMPOTENT","BLOCKED","COLLISION","STALE","FAILED","ROLLED_BACK"]},
-    "ids":{"type":"object"},"evidenceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"}
+    "ids":{"type":"object"},"journalPath":{"type":"string"},"evidenceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"}
   }
 }
