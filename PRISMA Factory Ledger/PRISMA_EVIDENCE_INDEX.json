@@ -1368,9 +1368,43 @@
       ],
       "finding": "Wave 2 unmapped blocker output is missing requiresTaxonomyUpdate=true.",
       "nextGate": "Fresh Factory Ledger MUTATION gate for bounded FIX, then adversarial regression coverage and exact-head CI."
+    },
+    {
+      "capabilityId": "visual.operating_graph_v1",
+      "status": "PASS_LOCAL_VERIFIED",
+      "runId": "PR589_WAVE2_FIX_LOCAL_VERIFIED",
+      "artifact": "PR #589 / Visual Operating Graph Wave 2 bounded contract correction closure",
+      "type": "visual_operating_graph_wave2_fix_closure",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "prisma-html",
+        "visual-operating-graph",
+        "quality"
+      ],
+      "evidence": [
+        "Fresh Factory Ledger MUTATION gate 36549575540: PASS_ANTI_REWORK_GATE; requestedAction=FIX; mode=MUTATION; fresh Authority Mesh coverage=100%; visualMutation=false; artifactDigest sha256:8dd263f7499589ff4404c5c71adbe95523a515773e81d1e985b230ed218a50e7.",
+        "PR #589 merged as af6f16fbfa69c87630d1df8ec8f0bc91e652992c.",
+        "PR #589 exact-head checks: VISCORE1 36549930663 PASS; CI 36549930674 PASS; ForgeOS Quality Gate 36549930622 PASS; PRISMA Sync Sentinel Watch 36549930612 PASS.",
+        "Post-merge main checks: CI 36550083608 PASS; ForgeOS Quality Gate 36550083630 PASS; PRISMA Sync Sentinel Watch 36550083615 PASS.",
+        "FILES_MANIFEST and MASTER_MAP_SOURCESET lock were refreshed in PR #589 final head; FILES_MANIFEST file_count_excluding_manifest=911.",
+        "The source-set lock pins the current Factory Ledger and Evidence Index Git blobs after the Wave 2 correction."
+      ],
+      "proves": [
+        "The proven Wave 2 unmapped blocker defect is corrected: UNCLASSIFIED_SOURCE_BLOCKER output explicitly carries requiresTaxonomyUpdate=true.",
+        "Native adversarial regression coverage for the corrected contract is present and the exact PR head passed VISCORE1, CI, ForgeOS Quality Gate and Sync Sentinel.",
+        "Post-merge main CI, ForgeOS Quality Gate and Sync Sentinel passed on af6f16fbfa69c87630d1df8ec8f0bc91e652992c.",
+        "The generated deterministic manifest and source-set lock are current for the canonical inputs."
+      ],
+      "doesNotProve": [
+        "Canonical visual registration, semantic authority minting, binding repair, Work Entry mutation or GVAE APPLY.",
+        "Planner or simulator output authorizes mutation.",
+        "Runtime visual certification, production certification, distribution readiness or customer deployment.",
+        "Future correctness after source, authority, dependency or runtime drift."
+      ]
     }
   ],
-  "updatedAt": "2026-09-15T20:38:02Z",
+  "updatedAt": "2026-09-29T09:37:00Z",
   "entries": [
     {
       "capabilityId": "runtime.tablet.zero_idle_guard",
