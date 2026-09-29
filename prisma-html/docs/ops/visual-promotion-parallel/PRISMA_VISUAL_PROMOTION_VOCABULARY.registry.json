@@ -18,17 +18,18 @@
     "materialityCatalogPolicy": "STANDBY_USER_INVOKED_ONLY"
   },
   "authorityDomains": [
-    "ndc",
     "atlasfin",
-    "identity",
-    "rifat",
-    "visual-control",
-    "target-index",
-    "projection-manifest",
-    "factory-ledger",
+    "canonical-registration",
     "code-atlas",
-    "work-entry-gate",
-    "gvae"
+    "factory-ledger",
+    "gvae",
+    "identity",
+    "ndc",
+    "projection-manifest",
+    "rifat",
+    "target-index",
+    "visual-control",
+    "work-entry-gate"
   ],
   "humanQualifiedRefFormat": "<authorityDomain>::<rawId>",
   "machineQualifiedRefRequiredFields": [
@@ -328,28 +329,30 @@
     ]
   },
   "forbiddenParallelWorkerWrites": [
+    "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
+    "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+    "prisma-html/FILES_MANIFEST.json",
+    "prisma-html/authority/rifat/identity/compiled/**",
     "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json",
     "prisma-html/authority/rifat/identity/registries/recipe.registry.json",
-    "prisma-html/authority/rifat/identity/compiled/**",
     "prisma-html/authority/rifat/prisma-ui/visual-control/target-index/**",
     "prisma-html/authority/rifat/visual-source-manifest.json",
-    "prisma-html/FILES_MANIFEST.json",
-    "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
-    "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"
+    "prisma-html/tools/visual_promotion/canonical_registration/**"
   ],
   "hardTruths": [
-    "DISCOVERY_ONLY_IS_NOT_UNDISCOVERED",
-    "CURRENT_CENSUS_IS_REUSED",
     "ATLASFIN_IS_PRIORITY_REFERENCE_NOT_SECOND_EDITABLE_AUTHORITY",
-    "MATERIALITY_CATALOG_HAS_NO_AUTOMATIC_FALLBACK",
-    "WORKERS_PROPOSE_CANONICAL_COMPOSERS_ASSIGN",
-    "UNKNOWN_STAYS_UNKNOWN",
     "CANDIDATE_IS_NOT_AUTHORITY",
-    "SOURCE_STATIC_IS_NOT_RUNTIME_VISUAL_GREEN",
+    "CANONICAL_REGISTRATION_IS_TRANSACTION_BOUNDARY",
     "CERTIFIED_CORPUS_IS_IMMUTABLE_PHASE_INPUT",
+    "CURRENT_CENSUS_IS_REUSED",
+    "DISCOVERY_ONLY_IS_NOT_UNDISCOVERED",
+    "MATERIALITY_CATALOG_HAS_NO_AUTOMATIC_FALLBACK",
     "PROMOTION_READINESS_IS_NOT_CANONICAL_REGISTRATION",
+    "PROPOSAL_KEY_IS_NOT_CANONICAL_ID",
     "RECIPE_EQUALITY_IS_NOT_SEMANTIC_IDENTITY",
-    "PROPOSAL_KEY_IS_NOT_CANONICAL_ID"
+    "SOURCE_STATIC_IS_NOT_RUNTIME_VISUAL_GREEN",
+    "UNKNOWN_STAYS_UNKNOWN",
+    "WORKERS_PROPOSE_CANONICAL_COMPOSERS_ASSIGN"
   ],
   "coordinationStatusChannel": {
     "schema": "prisma.visual-promotion.status-channel.v1",
@@ -373,5 +376,19 @@
     "dedicatedBranchRequired": true,
     "crossChatMailboxWritesAllowed": false,
     "currentPhase": "CANONICAL_PROMOTION_READINESS_RESOLUTION"
+  },
+  "canonicalRegistration": {
+    "capabilityId": "visual.canonical_promotion_integration_v1",
+    "path": "prisma-html/tools/visual_promotion/canonical_registration/",
+    "role": "BOUNDED_CANONICAL_WRITE_BOUNDARY",
+    "semanticWriter": "ndc::NDC_CURATION",
+    "visualMeaningAuthority": "identity",
+    "exactLocationAuthority": "rifat",
+    "derivedProjectionOwner": "target-index",
+    "applicationEngine": "gvae",
+    "runtimeCertification": "SEPARATE",
+    "workerMayMutate": false,
+    "automaticSemanticInference": false,
+    "automaticApplicationSource": false
   }
 }

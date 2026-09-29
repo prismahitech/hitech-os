@@ -2,13 +2,14 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"prisma.visual.canonical-id-policy.v1",
   "type":"object","additionalProperties":false,
-  "required":["schema","existingIdsImmutable","workerMayMint","allocation","collisionPolicy","idempotency"],
+  "required":["schema","version","existingIdsImmutable","workerMayMintCanonicalIds","namespaces","forbiddenDerivationInputs","collisionCodes","concurrency","idempotency"],
   "properties":{
     "schema":{"const":"prisma.visual.canonical-id-policy.v1"},
-    "existingIdsImmutable":{"const":true},
-    "workerMayMint":{"const":false},
-    "allocation":{"type":"object","required":["visualMeaning","binding","recipe","target","applicationLayer"]},
-    "collisionPolicy":{"enum":["BLOCK_EXACT","BLOCK_SEMANTIC","BLOCK_BINDING","BLOCK_ID","BLOCK_LAYER","BLOCK_PROJECTION"]},
-    "idempotency":{"const":"same-request-and-current-truth-is-NO_OP_IDEMPOTENT"}
+    "version":{"type":"string"},"existingIdsImmutable":{"const":true},
+    "workerMayMintCanonicalIds":{"const":false},
+    "namespaces":{"type":"object","required":["visualMeaning","binding","recipe","target","applicationLayer"]},
+    "forbiddenDerivationInputs":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "collisionCodes":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "concurrency":{"type":"string"},"idempotency":{"type":"string"}
   }
 }
