@@ -167,6 +167,21 @@ jobs:
           set -euo pipefail
           pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:d1-graph-integrity
 
+      - name: Verify Cloud Center local runtime contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:runtime-config
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:inventory
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:no-duplicates
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:cloud-contract
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:route-map
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:no-secrets
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:no-db
+          pnpm --dir apps/terminal-de-venta-system run verify:licflow3:no-db-copy
+          pnpm --dir apps/terminal-de-venta-system run verify:customer-setup:plan-provisioning
+          pnpm --dir apps/terminal-de-venta-system run verify:customer-setup:no-secrets
+          node --check apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js
 
       - name: Enforce zero priority overrides
         shell: bash
