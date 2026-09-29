@@ -87,7 +87,7 @@ def build_request_from_readiness(
         },
         "targetAction":{"action":"CREATE_NEW","existingCanonicalTargetIds":sorted(set(authority.get("existingCanonicalTargetIds") or []))},
         "recipeAction":{"action":"REUSE_EXISTING","recipeId":recipe_id,"semanticKey":recipe_id},
-        "bindingAction":{"action":"CREATE_NEW","bindingId":authority.get("canonicalBindingId"),"semanticKey":f"{row['surfaceKey']}|{target_id}|{semantic_id}|{physical['implementationLayerId']}","exactBinding":{
+        "bindingAction":{"action":"CREATE_NEW","bindingId":authority.get("canonicalBindingId"),"semanticKey":f"{row['surfaceKey']}|{target_id}|{semantic_id}","exactBinding":{
             "selector":{"surfaceId":row["surfaceKey"],"neutralMeaningId":semantic_id},
             "status":"RESOLVED",
             "targets":[binding_target],
