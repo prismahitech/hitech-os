@@ -174,7 +174,7 @@ function assertPlanBasedProvisioningReadonly() {
     "claimSlotsCreated",
     "manualDeviceClaimRequired: false",
     "operatorActionCount: 1",
-    "claimed < allowed",
+    "currentClaimed >= currentAllowed",
     "status = 'AVAILABLE'",
     "status = 'CLAIMED'",
     "claimSlotId",
