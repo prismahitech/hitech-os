@@ -467,7 +467,11 @@ def register(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     request_digest = sha256_json({k: v for k, v in request.items() if k != "_repoRoot"})
     if receipt_path.exists():
         prior = _load(receipt_path)
-        if prior.get("requestDigest") == request_digest and prior.get("result"):
+        if (
+            prior.get("requestDigest") == request_digest
+            and prior.get("status") in {"APPLIED", "NO_OP_IDEMPOTENT"}
+            and prior.get("result")
+        ):
             return prior["result"]
 
     if plan["status"] == "NO_OP_IDEMPOTENT":
@@ -554,9 +558,33 @@ def register(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
         }
         _atomic_write_json(journal_path, journal)
 
+        try:
+            from .postconditions import verify_registration_postconditions
+            postconditions = verify_registration_postconditions(repo_root, plan)
+        except Exception as exc:
+            for rel, before_value in prestate.items():
+                path = repo_root / rel
+                current = sha256_json(_load(path))
+                completed = next(
+                    (row[2] for row in applied if str(row[0].relative_to(repo_root)).replace("\\", "/") == rel),
+                    None,
+                )
+                if completed is not None and current == completed:
+                    _atomic_write_json(path, before_value)
+            journal["status"] = "ROLLED_BACK_AFTER_POSTCONDITION_FAILURE"
+            journal["error"] = str(exc)
+            journal["rollbackVerified"] = True
+            _atomic_write_json(journal_path, journal)
+            evidence = _evidence(request, plan, "FAILED", applied, [str(exc)])
+            evidence["requestDigest"] = request_digest
+            evidence["journalPath"] = str(journal_path.relative_to(repo_root)).replace("\\", "/")
+            _atomic_write_json(receipt_path, evidence)
+            raise
+
         evidence = _evidence(request, plan, "APPLIED", applied, [])
         evidence["requestDigest"] = request_digest
         evidence["journalPath"] = str(journal_path.relative_to(repo_root)).replace("\\", "/")
+        evidence["postconditions"] = postconditions
         evidence["preStateValues"] = {
             str(path.relative_to(repo_root)).replace("\\", "/"): before
             for path, _, _, before in applied
