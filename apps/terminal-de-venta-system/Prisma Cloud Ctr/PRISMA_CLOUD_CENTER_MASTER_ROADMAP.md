@@ -110,7 +110,7 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 - [x] Make `recordAudit()` return verified persistence success/failure.
 - [x] Make critical mutations fail closed when audit cannot be verified.
-- [ ] Preserve sanitized diagnostic behavior.
+- [x] Preserve sanitized diagnostic behavior.
 
 **Gate G2:** `PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY`
 
@@ -118,36 +118,36 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ## G3 — Concurrency / idempotency
 
-- [ ] Same-slot simultaneous claims.
-- [ ] Same-device simultaneous claims.
-- [ ] Simultaneous replacement approvals.
-- [ ] Repeated identical requests.
-- [ ] Retry after injected intermediate failure.
-- [ ] Setup creation retries.
+- [x] Same-slot simultaneous claims.
+- [x] Same-device simultaneous claims.
+- [x] Simultaneous replacement approvals.
+- [x] Repeated identical requests.
+- [x] Retry after injected intermediate failure.
+- [x] Setup creation retries.
 - [ ] Refresh/revoke/renew conflict cases.
-- [ ] Prove device counters never exceed plan limits.
-- [ ] Prove no duplicate claims or double slot release.
-- [ ] Prove no orphan rows.
+- [x] Prove device counters never exceed plan limits.
+- [x] Prove no duplicate claims or double slot release.
+- [x] Prove no orphan rows.
 
 **G3 status note:** The repository now contains a same-DB multi-connection D1-compatible runtime harness covering concurrency, failure injection, retry preservation and graph integrity. **CI execution is the runtime gate.**
 
-**Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY`
+**Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY` — CI-certified on candidate `94c184f…`; refresh/revoke/renew conflict matrix remains open.
 
 ---
 
 ## G4 — D1 graph and invariant verification
 
-- [ ] Validate license -> assignment -> setup -> bundle graph.
-- [ ] Validate setup -> slot -> claim -> device graph.
-- [ ] Validate tenant ownership across all related rows.
-- [ ] Validate audit linkage.
-- [ ] Validate claimed counters against actual claim state.
+- [x] Validate license -> assignment -> setup -> bundle graph.
+- [x] Validate setup -> slot -> claim -> device graph.
+- [x] Validate tenant ownership across all related rows.
+- [x] Validate audit linkage.
+- [x] Validate claimed counters against actual claim state.
 - [ ] Validate blocked license states cannot perform customer actions.
-- [ ] Validate replaced devices cannot remain active.
+- [x] Validate replaced devices cannot remain active.
 - [ ] Validate expired/revoked setups fail closed.
-- [ ] Validate zero orphan/dangling/contradictory state.
+- [x] Validate zero orphan/dangling/contradictory state.
 
-**Gate G4:** `PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY`
+**Gate G4:** `PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY` — CI-certified on candidate `94c184f…`; blocked-license and expired/revoked behavioral fail-closed checks remain open.
 
 ---
 
@@ -331,8 +331,8 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G3 IMPLEMENTED — Concurrency / idempotency runtime harness added; candidate frozen at `90625dc…`  
-**Next:** G3 CI/runtime execution → G4 invariant certification  
+**Current:** G4 CI-CERTIFIED — G1/G2/G3/G4 PASS on candidate `94c184f…`  
+**Next:** G5 runtime/browser + live-readonly; then close G3 license-conflict and G4 blocked-state behavioral subgates.  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
 # Historical evidence rule
