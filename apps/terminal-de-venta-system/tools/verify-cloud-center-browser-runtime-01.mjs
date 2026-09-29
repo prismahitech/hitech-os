@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 const terminalRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const cloudRoot = path.join(terminalRoot, "Prisma Cloud Ctr");
 const playwrightRoot = process.env.CC_PLAYWRIGHT_ROOT || "playwright";
+const evidenceDir = process.env.CC_BROWSER_EVIDENCE_DIR || path.join(process.cwd(), "cloud-center-browser-evidence");
 const { chromium } = createRequire(import.meta.url)(playwrightRoot);
 const VIEWPORTS = [{name:"desktop",width:1440,height:1000},{name:"mobile",width:390,height:844}];
 const SURFACES = ["command","customers","entitlements","billing","fleet","provisioning","customer-setup","contracts","operations","support","security","tablet-lab","system"];
@@ -33,6 +34,7 @@ async function main(){
  const server=http.createServer((req,res)=>{const url=new URL(req.url||"/","http://127.0.0.1");if(url.pathname.startsWith("/api/")){json(res,200,apiPayload(url.pathname,req.method||"GET"));return;}const file=safePath(url.pathname);if(!file||!fs.existsSync(file)||!fs.statSync(file).isFile()){json(res,404,{ok:false,status:"NOT_FOUND"});return;}res.writeHead(200,{"content-type":contentType(file),"cache-control":"no-store"});fs.createReadStream(file).pipe(res);});
  await new Promise((resolve,reject)=>{server.listen(0,"127.0.0.1",resolve);server.once("error",reject);});
  const addr=server.address();const baseUrl="http://127.0.0.1:"+addr.port;const target=baseUrl+"/internal/web/cloud_command_center.html#command";
+ fs.mkdirSync(evidenceDir,{recursive:true});
  const result={ok:false,verifier:"verify-cloud-center-browser-runtime-01",generatedAt:new Date().toISOString(),target,surfaces:SURFACES.length,profiles:[],errors:[],resultCode:"FAIL_CLOUD_CENTER_BROWSER_RUNTIME"};
  const browser=await chromium.launch({headless:true});
  try{
@@ -49,12 +51,15 @@ async function main(){
    const bodyText=await page.locator("body").innerText();if(/PRISMA_ADMIN_TOKEN=|Bearer\s+[A-Za-z0-9._-]{16,}/i.test(bodyText))throw new Error(spec.name+": token-shaped content rendered");
    if(badResponses.length)throw new Error(spec.name+": unexpected HTTP errors "+JSON.stringify(badResponses));
    if(consoleErrors.length||pageErrors.length)throw new Error(spec.name+": console/page errors console="+consoleErrors.length+" page="+pageErrors.length);
-   result.profiles.push({name:spec.name,viewport:spec,surfaceCount:surfaces.length,finalSurface:await page.evaluate(()=>location.hash.replace(/^#/,""))});
+   const screenshot=path.join(evidenceDir,"cloud-center-core-"+spec.name+".png");
+   await page.screenshot({path:screenshot,fullPage:true});
+   result.profiles.push({name:spec.name,viewport:spec,surfaceCount:surfaces.length,finalSurface:await page.evaluate(()=>location.hash.replace(/^#/,"")),screenshot});
    await context.close();
   }
   result.ok=true;result.resultCode="PASS_CLOUD_CENTER_BROWSER_RUNTIME";
  }catch(error){result.errors.push(String(error&&error.stack||error));}
  finally{await browser.close();server.close();}
+ fs.writeFileSync(path.join(evidenceDir,"runtime-report.json"),JSON.stringify(result,null,2)+"\n","utf8");
  console.log(JSON.stringify(result,null,2));process.exit(result.ok?0:1);
 }
 main().catch(e=>{console.error(e);process.exit(1);});
