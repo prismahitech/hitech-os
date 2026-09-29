@@ -27,7 +27,7 @@ jobs:
 
       - name: Run deterministic self-test
         run: |
-          python tools/code-atlas/src/code_atlas/motors/prisma_workstream_collision.py --self-test
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py --self-test
 
       - name: Evaluate live PR workstream collisions
         env:
@@ -37,7 +37,7 @@ jobs:
           PRISMA_EXPECTED_HEAD: \${{ github.event.pull_request.head.sha || vars.PRISMA_EXPECTED_HEAD }}
         run: |
           set -euo pipefail
-          python tools/code-atlas/src/code_atlas/motors/prisma_workstream_collision.py \
+          python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py \
             --repo "$GITHUB_REPOSITORY" \
             --pr-number "$PRISMA_PR_NUMBER" \
             --token "$GITHUB_TOKEN" \
