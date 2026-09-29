@@ -180,7 +180,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         raise CanonicalRegistrationError("APPLICATION_LAYER_AUTHORITY_REFERENCE_REQUIRED")
     meaning_id=decision["semanticAuthority"]["canonicalMeaningId"]
 
-    existing_bindings=_load(repo_root/ALLOWED_CANONICAL_PATHS.pop() if False else repo_root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json")
+    existing_bindings=_load(repo_root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json")
     existing_binding_ids=_registry_ids(existing_bindings,"bindings")
     existing_target_ids={str(target_row.get("targetId")) for entry in existing_bindings.get("bindings",[]) if isinstance(entry,dict) for target_row in entry.get("targets",[]) if isinstance(target_row,dict) and target_row.get("targetId")}
     existing_recipe_registry=_load(repo_root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json")
