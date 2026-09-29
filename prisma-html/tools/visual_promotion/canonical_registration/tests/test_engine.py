@@ -43,7 +43,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(data["recipeCount"],0)
     def test_rollback_refuses_newer_work(self):
         r=self.request(); self.engine.register(r,self.root)
-        p=self.root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json"; p.write_text(p.read_text().replace("}",",\"newerWork\":true}"),encoding="utf-8")
+        p=self.root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json"; newer=json.loads(p.read_text()); newer["newerWork"]=True; p.write_text(json.dumps(newer),encoding="utf-8")
         with self.assertRaises(self.engine.UnsafeMutationError): self.engine.rollback(r["requestId"],self.root)
     def test_inferred_id_rejected(self):
         r=self.request(); r["decision"]["idInputs"]={"selector":".stockCell"}
