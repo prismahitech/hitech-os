@@ -165,7 +165,10 @@ function Build-CoreArgs {
 function Invoke-SingleSurfaceCore {
   $surfaceKey = Normalize-MamSurface $Surface
   $args = Build-CoreArgs -SurfaceName $surfaceKey -ChildWorkers $Workers -ChildArtifactRoot $ArtifactRoot -ChildNoZip ([bool]$NoZip)
-  & powershell @args
+  $selfShell = Get-Command powershell -ErrorAction SilentlyContinue
+  if (-not $selfShell) { $selfShell = Get-Command pwsh -ErrorAction SilentlyContinue }
+  if (-not $selfShell) { throw 'No encontre powershell/pwsh para ejecutar el core runner.' }
+  & $selfShell.Source @args
   exit $LASTEXITCODE
 }
 
@@ -315,7 +318,10 @@ if ($Mode -eq 'point-probe') {
   if (-not [string]::IsNullOrWhiteSpace($ComponentUiId)) { $ppArgs += @('-ComponentUiId', $ComponentUiId) }
   if (-not [string]::IsNullOrWhiteSpace($EvidencePhase)) { $ppArgs += @('-EvidencePhase', $EvidencePhase) }
   if ($NoZip) { $ppArgs += '-NoZip' }
-  & powershell @ppArgs
+  $selfShell = Get-Command powershell -ErrorAction SilentlyContinue
+  if (-not $selfShell) { $selfShell = Get-Command pwsh -ErrorAction SilentlyContinue }
+  if (-not $selfShell) { throw 'No encontre powershell/pwsh para ejecutar point-probe.' }
+  & $selfShell.Source @ppArgs
   exit $LASTEXITCODE
 }
 
