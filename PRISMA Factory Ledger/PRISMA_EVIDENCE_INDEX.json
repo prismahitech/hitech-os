@@ -1539,7 +1539,7 @@
     },
     {
       "capabilityId": "tooling.mamastrophic.universal_screenshot_artifacts",
-      "status": "BUILD_NOT_STARTED",
+      "status": "DONE_SOURCE_READY",
       "runId": "34993859090",
       "evidence": [
         "registration Authority Mesh run 34993331987 artifact 10405749136",
@@ -1548,8 +1548,13 @@
         "composed sha256 efbb3ad2042ffb805560f3922f78babe90b795ba799f13f1e4f8b6d62a59fcd2",
         "revalidation run 34993859090 artifact 10405998737",
         "PASS_NO_RELEVANT_DRIFT rebound to canonical main 8db4370d579014f8fed6e190ffce45e1589b33d9",
-        "revalidationDigest 68d03e535286cc14d77f45e0869e7d5495c8e0e71fbf20d64c78697d9ddc2308"
-      ]
+        "revalidationDigest 68d03e535286cc14d77f45e0869e7d5495c8e0e71fbf20d64c78697d9ddc2308",
+        "PR #578 merged d3fc4f184720ba2748549cde50a369016dec8647 implementing the universal packager, manual/reusable workflow and path-scoped unit tests from current main"
+      ],
+      "stateLabel": "MAMASTROPHIC_UNIVERSAL_SCREENSHOT_ARTIFACTS_SOURCE_READY",
+      "doNotRebuild": true,
+      "updatedAt": "2026-09-29T00:00:00-06:00",
+      "nextGate": "RUNTIME_EVIDENCE_VERIFICATION"
     }
   ]
 }

@@ -289,6 +289,14 @@
       "evidence": "PR #417 merge 01b1d2f6c3f654fbe51d2336bb2d7fc4741563eb / Cloud Authority run 32941404647 / INPUT_REQUIRED_NO_ESTIMATE preserved / final Authority refresh run 33872946950",
       "doNotRebuild": true,
       "nextGate": "CUSTOMER_BASELINE_INPUT_AND_MEASURED_PROJECTION"
+    },
+    "tooling.mamastrophic.universal_screenshot_artifacts": {
+      "status": "DONE_SOURCE_READY",
+      "updatedAt": "2026-09-29T00:00:00-06:00",
+      "evidence": "PR #578 / universal screenshot artifact packager + manual reusable workflow + unit tests",
+      "sourceEvidenceSha256": "d3fc4f184720ba2748549cde50a369016dec8647",
+      "doNotRebuild": true,
+      "nextGate": "RUNTIME_EVIDENCE_VERIFICATION"
     }
   },
   "updatedAt": "2026-09-04T12:29:49Z"
