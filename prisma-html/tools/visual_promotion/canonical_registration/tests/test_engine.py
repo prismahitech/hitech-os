@@ -1,5 +1,5 @@
 from __future__ import annotations
-import hashlib, json, tempfile, unittest
+import hashlib, json, os, tempfile, unittest
 from pathlib import Path
 from prisma_html_test_bootstrap import import_engine
 
@@ -8,6 +8,15 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.engine=import_engine(); self.root=Path(tempfile.mkdtemp())
         source=self.root/"candidate.json"; source.write_text("{\"candidate\":true}",encoding="utf-8")
         self.source_digest=hashlib.sha256(source.read_bytes()).hexdigest()
+        base=self.root/"prisma-html/authority/rifat/prisma-ui"
+        (base/"visual-control").mkdir(parents=True)
+        (base/"routes.json").write_text(json.dumps({"routes":[{"route_id":"route"}]}),encoding="utf-8")
+        owners={"componentOwnerSamples":[{"component_id":"owner"}],"cssOwnerSamples":[{"owner_id":"css"}],"regionOwnerSamples":[{"region_id":"region"}]}
+        (base/"visual-control/owners.json").write_text(json.dumps(owners),encoding="utf-8")
+        (base/"visual-control/components.json").write_text(json.dumps({"components":[{"component_id":"component"}]}),encoding="utf-8")
+        (base/"visual-control/editable-slots.json").write_text(json.dumps({"slotUnitSamples":[{"slot_unit_id":"slot"}]}),encoding="utf-8")
+        (base/"visual-control/layers.json").write_text(json.dumps({"layerSamples":[{"layer_id":"LYR.test"}],"certifiedLayers":[]}),encoding="utf-8")
+        os.environ["GITHUB_SHA"]="a"*40
         for name,data in [
             ("recipe.registry.json",{"schema":"prisma.identity.recipe.registry.v1","recipes":[],"recipeCount":0}),
             ("element-bindings.registry.json",{"schema":"prisma.identity.element-bindings.registry.v1","bindings":[]})]:
