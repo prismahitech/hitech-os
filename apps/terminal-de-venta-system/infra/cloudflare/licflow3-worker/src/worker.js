@@ -1255,7 +1255,6 @@ async function createCustomerSetup(request, env) {
       status: batch.status,
       resultCode: "CUSTOMER_SETUP_PROVISIONING_FAILED",
       d1Hint: batch.hint || null,
-      d1Error: batch.error || null,
       customerMessage: "No pudimos completar el alta del Customer Setup de forma atomica.",
       nextStep: "Revisa la evidencia sanitizada y no continues con el Setup Code.",
       secretsExposed: false
@@ -1264,11 +1263,6 @@ async function createCustomerSetup(request, env) {
 
   const persistedTenant = await tenant(env, pass.tenantSlug);
   const persistedLicense = await licenseById(env, pass.tenantSlug, pass.licenseId, licenseSchema);
-  const persistedLicenseDirect = await first(
-    env,
-    "select license_id as licenseId, tenant_slug as tenantSlug, status, plan, activation_status as activationStatus, valid_until as validUntil from licenses where license_id = ? limit 1",
-    [pass.licenseId]
-  );
   const persistedAssignment = await first(env, "select license_assignment_id as licenseAssignmentId, license_id as licenseId, setup_bundle_id as setupBundleId, plan_id as planId, status from license_assignments where license_assignment_id = ? limit 1", [pass.licenseAssignmentId]);
   const persistedSetup = await first(env, "select setup_id as setupId, setup_code as setupCode, status, expires_at as expiresAt from customer_setups where setup_id = ? limit 1", [pass.setupId]);
   const persistedBundle = await first(env, "select setup_bundle_id as setupBundleId, setup_id as setupId, license_id as licenseId, license_assignment_id as licenseAssignmentId, plan_id as planId, audit_event_id as auditEventId, status from customer_setup_bundles where setup_bundle_id = ? limit 1", [pass.setupBundleId]);
@@ -1352,32 +1346,7 @@ async function createCustomerSetup(request, env) {
       ok: false,
       status: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
       resultCode: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
-      persistenceDiagnostics: {
-        tenant: Boolean(persistedTenant) && persistedTenant.slug === pass.tenantSlug && persistedTenant.plan === pass.commercialPlanId,
-        license: Boolean(persistedLicense) && (persistedLicense.licenseId || persistedLicense.license_id) === pass.licenseId && persistedLicense.plan === pass.commercialPlanId && persistedLicense.status === "active",
-        licenseObserved: persistedLicense ? {
-          licenseId: persistedLicense.licenseId || null,
-          tenantSlug: persistedLicense.tenantSlug || persistedLicense.tenant_slug || null,
-          status: persistedLicense.status || null,
-          plan: persistedLicense.plan || null,
-          activationStatus: persistedLicense.activationStatus || persistedLicense.activation_status || null
-        } : null,
-        licenseObservedDirect: persistedLicenseDirect ? {
-          licenseId: persistedLicenseDirect.licenseId || null,
-          tenantSlug: persistedLicenseDirect.tenantSlug || null,
-          status: persistedLicenseDirect.status || null,
-          plan: persistedLicenseDirect.plan || null,
-          activationStatus: persistedLicenseDirect.activationStatus || null
-        } : null,
-        assignment: Boolean(persistedAssignment) && persistedAssignment.licenseId === pass.licenseId && persistedAssignment.setupBundleId === pass.setupBundleId && persistedAssignment.planId === pass.commercialPlanId && persistedAssignment.status === "assigned",
-        setup: Boolean(persistedSetup) && persistedSetup.setupCode === pass.setupCode && persistedSetup.status === "active",
-        bundle: Boolean(persistedBundle) && persistedBundle.setupId === pass.setupId && persistedBundle.licenseId === pass.licenseId && persistedBundle.licenseAssignmentId === pass.licenseAssignmentId && persistedBundle.planId === pass.planId && persistedBundle.auditEventId === provisionAuditEventId,
-        planRegistry: Boolean(persistedPlan) && Number(persistedPlan.maxTabletDevices) === Number(plan.maxTabletDevices) && Number(persistedPlan.maxPcDevices) === Number(plan.maxPcDevices) && Number(persistedPlan.maxMobileDevices) === Number(plan.maxMobileDevices) && Number(persistedPlan.maxTotalDevices) === Number(plan.maxTotalDevices),
-        aggregateSlots: aggregateMatches,
-        claimSlots: claimSlotMatches,
-        createAudit: createAuditVerified,
-        provisionAudit: provisionAuditVerified
-      },
+
       customerMessage: "El alta fue rechazada porque el grafo final de Customer Setup no pudo verificarse completamente.",
       nextStep: "No uses el Setup Code; inspecciona el estado D1 y las auditorias antes de reintentar.",
       secretsExposed: false
@@ -1458,7 +1427,7 @@ async function claimCustomerDevice(request, env) {
 
   if (currentClaimed >= currentAllowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
   const claimSlot = await nextAvailableClaimSlot(env, pass, surface);
-  if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", diagnostic: { guard: "claim_slot_lookup_empty", surface, setupId: pass.setupId }, secretsExposed: false }, 409);
+  if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
 
   const existingCanonicalDevice = await first(env, "select device_id, tenant_slug, status from devices where device_id = ? limit 1", [deviceId]);
   if (existingCanonicalDevice && existingCanonicalDevice.tenant_slug && existingCanonicalDevice.tenant_slug !== pass.tenantSlug) {
