@@ -227,7 +227,8 @@ function migrationSql() {
     "infra/cloudflare/licflow3-worker/migrations/0001_licflow3_core.sql",
     "infra/cloudflare/licflow3-worker/migrations/0002_customer_setup.sql",
     "infra/cloudflare/licflow3-worker/migrations/0003_plan_based_provisioning.sql",
-    "infra/cloudflare/licflow3-worker/migrations/0004_customer_device_claim_integrity.sql"
+    "infra/cloudflare/licflow3-worker/migrations/0004_customer_device_claim_integrity.sql",
+    "infra/cloudflare/licflow3-worker/migrations/0005_replacement_slot_reuse.sql"
   ];
   return paths.map((p) => fs.readFileSync(path.join(terminalRoot, p), "utf8")).join("\n");
 }
