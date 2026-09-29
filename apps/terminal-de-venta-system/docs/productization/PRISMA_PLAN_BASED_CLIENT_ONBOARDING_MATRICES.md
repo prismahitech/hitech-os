@@ -16,6 +16,12 @@ E2E/spec/result:
 E2E_012_PLAN_BASED_CLIENT_ONBOARDING
 ```
 
+## Plan Authority Boundary
+
+The matrix below is a provisioning matrix, not a commercial SKU catalog.
+
+`TABLET_SOLO`, `TABLET_PRO`, and `TABLET_PC_MANAGED` are commercial-plan identifiers that also participate in provisioning. `TABLET_PC_MOBILE_MANAGED` is provisioning-only and maps to the `PRISMA_TRIPLE_DEVICE_STARTER` Customer Setup package; it must not appear in commercial pricing or vendible-plan selectors.
+
 ## PLAN_PROVISIONING_MATRIX
 
 | planId | planName | maxTabletDevices | maxPcDevices | maxMobileDevices | maxTotalDevices | allowedSurfaces | features | claimMode | autoGenerateSlots | requiresManualApproval | status | evidence |
