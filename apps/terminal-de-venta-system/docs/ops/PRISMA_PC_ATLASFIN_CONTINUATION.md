@@ -1,7 +1,7 @@
 ---
 title: PRISMA PC Atlasfin Continuation
-status: HANDOFF_READY_IMPLEMENTATION_PENDING
-updated: 2026-08-30
+status: HANDOFF_READY_IMPLEMENTATION_BLOCKED
+updated: 2026-09-29
 surface: PC
 owner_scope: apps/terminal-de-venta-system/products/pc/app
 ---
@@ -16,7 +16,7 @@ Read this file and `docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md`, fetc
 
 ## Closure baseline
 
-- main at closure: `a751520bbc559adbfced29abdd82ef0dfa6e0566`
+- main at closure: `e68d1712ba0b033d74ef158b091caaba68d684b2`
 - finalize carrier: `1e651299aa6031bb8bdc4790276fa58f9fc95f52`
 - finalize run: `33302299904`
 - product/runtime mutation during closure: none
@@ -98,3 +98,16 @@ The first isolated PostCSS CI attempt failed because ESM resolution was tested f
 ## One-line restart prompt
 
 `Lee apps/terminal-de-venta-system/docs/ops/PRISMA_PC_ATLASFIN_CONTINUATION.md y el Field Manual; verifica que el target PC /catalog no haya drifted y continúa únicamente con el fresh Authority Mesh para autorar el identity-layer/element-binding contract source-only. No redescubras PC/Atlasfin desde cero y no apliques CSS todavía.`
+
+## Historical PR #496 closure — 2026-09-29
+
+PR #496 was closed without merge because its branch had accumulated a large historical change set while the exact `/catalog` target was still prohibited from visual APPLY. The useful source-provenance and readiness work is retained in this handoff and in the current machine-readable PC Visual Control evidence.
+
+Current repository truth after rebasing onto main:
+- `/catalog` is structurally `CERTIFIED` at the PC panel level.
+- `ProductMediaWorkspace` remains the exact owner of the product-media workspace target.
+- The current visual-promotion census still records the exact `.workspace` candidate with `identity.bindingStatus=BLOCKED` and `promotionStatus=REGISTER_TARGET_FIRST`.
+- Atlasfin `RCP.ATLAS.CONTENT.GLASS.02`, `PRESET.ATLAS.CONTENT.GLASS.01`, and `MAT.ATLAS.GLASS.CONTENT.01` remain Atlasfin-side candidates/references; they are not canonical Identity recipe/binding authority for this target.
+- No final PC `/catalog` visual APPLY, generated product projection, or runtime screenshot certification is claimed by this closure.
+
+Therefore the historical PR is fully closed as a superseded carrier, while the remaining work is explicitly converted into the next governed source-contract gate. Do not reopen the 26k-line branch; continue from current `main` and author the missing exact Identity/binding contract only when the canonical authority exists.
