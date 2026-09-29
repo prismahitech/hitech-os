@@ -23,10 +23,12 @@ Prisma has two related but different concepts:
 
 ```text
 PROVISIONING_ONLY_PLAN
-commercialSku: NONE
+commercialSku: TABLET_PC_MANAGED
 standalonePrice: NONE
 canonicalCommercialCatalog: ABSENT_BY_DESIGN
 ```
+
+The provisioning identifier remains `TABLET_PC_MOBILE_MANAGED`, while the underlying customer license/tenant commercial plan is `TABLET_PC_MANAGED`.
 
 It represents the `PRISMA_TRIPLE_DEVICE_STARTER` Customer Setup package with:
 
@@ -56,6 +58,8 @@ Future work must not introduce commercial pricing or commercial SKU ownership in
 
 - Commercial vendible set is exactly the canonical catalog's `vendible=true` set.
 - `TABLET_PC_MOBILE_MANAGED` is absent from that commercial vendible set.
+- Every provisioning plan has an explicit `commercialPlanId`; the starter maps to `TABLET_PC_MANAGED`.
+- `licenses.plan` and `tenants.plan` must always be a commercial SKU.
 - Customer Setup provisioning may support `TABLET_PC_MOBILE_MANAGED`.
 - Worker and shared provisioning definitions must agree on the provisioning plan set.
 - Commercial UI selectors must derive from the commercial catalog, never from Customer Setup provisioning definitions.
