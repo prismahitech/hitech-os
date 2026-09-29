@@ -2,7 +2,7 @@
   "authority_commit": "35ff9162c7fc1fafa28d8093f895f69a54095490",
   "authority_repo": "hitech-os-prisma-html/prisma-html",
   "generated": true,
-  "manifest_sha256": "d2f7f97da46bb3d33d6c3bcee8e623225efc6507161f551cbd75cf30fb8b63fc",
+  "manifest_sha256": "0add451d2c39095dbd7d2b9ee30f5622e3cb4ca4e9ee2b7fed5d182e7c04ed1e",
   "manual_edits_forbidden": true,
   "surface": "tablet",
   "visual_runtime_version": "2026.07.23-rifat.1"
