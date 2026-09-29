@@ -4,10 +4,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .engine import CanonicalRegistrationError
 from .policy import collision_code
 
-class CollisionClassificationError(CanonicalRegistrationError):
+class CollisionClassificationError(ValueError):
     pass
 
 def _load(path: Path) -> dict[str, Any]:
