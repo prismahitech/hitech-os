@@ -33,15 +33,24 @@ Before mutation the engine requires:
 4. explicit NDC semantic adjudication reference;
 5. exact RIFAT binding;
 6. explicit application-layer policy;
-7. mutation authorization.
+7. explicit Work Entry handoff;
+8. mutation authorization.
 
-The engine builds a complete mutation plan before writing. It uses a request lock, current-head check, per-registry preconditions, atomic writes, persisted journal, postcondition verification and transaction-scoped compensating rollback.
+The engine builds a complete mutation plan before writing. It uses a transaction lock, current-head check, per-registry preconditions, atomic writes, persisted journal, postcondition verification and transaction-scoped compensating rollback.
+
+Idempotent replay is fail-closed: request identity, expected HEAD and recorded post-state must still match before a prior result can be reused. Rollback is transaction-scoped and refuses to overwrite newer work.
 
 ## ID policy
 
-Existing IDs are immutable. Workers cannot mint canonical IDs. Automatic semantic inference is forbidden. CREATE_NEW cannot silently reuse an existing ID.
+Existing IDs are immutable. Workers cannot mint canonical IDs outside the canonical-registration policy. Automatic semantic inference is forbidden. CREATE_NEW cannot silently reuse an existing ID.
 
 Target and application-layer identifiers are not derived from selectors, filenames, routes, implementation-layer strings or visual similarity.
+
+## Authority integration
+
+The hardening now present on canonical main includes explicit read/validation adapters for the existing authority chain, exact current-truth verification, collision classification, application-policy validation, Work Entry handoff requirements and exact postcondition verification.
+
+This does not create replacement NDC, Identity, RIFAT, Target Index or GVAE authorities.
 
 ## Derived outputs
 
@@ -49,4 +58,8 @@ Canonical registration does not hand-edit the Target Index manifest or compiled 
 
 ## Current status
 
-This branch hardens the transaction boundary but does **not** claim G-01 fully closed yet. Existing-authority integration for all canonical write dimensions, final derived regeneration commit handling, Work Entry/GVAE handoff and runtime certification remain separate gates.
+The canonical-registration hardening is integrated on `main` after PR #599. Exact-head CI, VISCORE1, ForgeOS, Sync Sentinel and repository-navigation gates passed before merge.
+
+This is **not** G-01 closure. The remaining gate is a fresh exact-main authority/reconciliation pass that proves the concrete canonical registration scope for any target, including owning-authority evidence, Work Entry/GVAE handoff, derived regeneration and end-to-end postconditions. Runtime visual certification remains a separate later gate.
+
+The Tablet `/inventory` target remains blocked until its missing canonical Identity/Binding/Application authority is explicitly proven. No product/runtime visual mutation is authorized by this capability alone.
