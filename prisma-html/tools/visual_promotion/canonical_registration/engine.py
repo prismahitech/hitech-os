@@ -123,7 +123,7 @@ def _apply(repo_root: Path, mutation: dict[str,Any]) -> tuple[Path,str,str]:
 def _evidence(request,plan,status,applied,errors):
     return {"schema":EVIDENCE_SCHEMA,"requestId":request["requestId"],"requestDigest":sha256_json(request),
             "currentTruthDigest":plan["preconditions"]["currentTruthDigest"],"sourceDigest":plan["preconditions"]["sourceDigest"],
-            "preState":[{"path":str(p),"sha256":b} for p,b,_ in applied],"postState":[{"path":str(p),"sha256":a for p,_,a in applied],
+            "preState":[{"path":str(p),"sha256":b} for p,b,_ in applied],"postState":[{"path":str(p),"sha256":a} for p,_,a in applied],
             "ids":plan["ids"],"mutations":plan["mutations"],"status":status,"errors":errors}
 
 def register(request: dict[str,Any], repo_root: Path) -> dict[str,Any]:
