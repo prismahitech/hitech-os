@@ -107,6 +107,8 @@ def build_request_from_readiness(
             "applicationLayerId":application["applicationLayerId"],
             "policy":application["projectionPolicy"],
             "writerKind":"CANONICAL_REGISTRATION",
+            "authorityDomain":"rifat",
+            "decisionRef":authority.get("applicationLayerDecisionRef"),
         },
         "projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False},
         "idInputs":{"selector":None,"implementationLayerId":None},
