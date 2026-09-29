@@ -4567,9 +4567,9 @@
       "sha256": "50DB1035568DCC2C11F8C8124FB4F0BE94E3AF089B20D5154F8A0F046650DCFB"
     },
     {
-      "bytes": 5921,
       "path": "tools/visual_promotion/canonical_registration/request_builder.py",
-      "sha256": "18D73B73BC5671284D07C7E3918F2B8533CE028D89919822DEA60821FBFDE15F"
+      "bytes": 5877,
+      "sha256": "0C11A241300630E602D670E53762E9E4AD7D73DFCF8850F7D53C1FFFE4520944"
     },
     {
       "bytes": 1364,
@@ -4577,9 +4577,9 @@
       "sha256": "6B672E75C60982D46A06EF8A381082F552627950876C019D4B9A8472F705CF6F"
     },
     {
-      "bytes": 12817,
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
-      "sha256": "0C6BD60BBFD60CB8E378743770CC3803BD8BA685E910BE30C2C7C19A60214ECC"
+      "bytes": 12904,
+      "sha256": "83B74BF3185B2AC02BEFB06D0D98610313B72D9B22BF9036489B3FA3CBCDCC2B"
     },
     {
       "bytes": 2748,
