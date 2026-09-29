@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .current_truth import capture_current_truth
-from .engine import build_plan, register, rollback
+from .engine import build_plan, register, rollback, CanonicalRegistrationError
 from .derivation import plan_derivation
 
 def _load(path: Path) -> dict:
@@ -37,21 +37,31 @@ def main() -> int:
 
     args=parser.parse_args()
     root=args.repo_root.resolve()
-
-    if args.command=="snapshot":
-        out=capture_current_truth(root,evidence_target_id=args.evidence_target_id,
-            authority_mesh_path=args.authority_mesh_path,layer_map_path=args.layer_map_path,
-            authority_mesh_digest=args.authority_mesh_digest,layer_map_digest=args.layer_map_digest)
-    elif args.command=="plan":
-        out=build_plan(_load(args.request),root)
-    elif args.command=="register":
-        out=register(_load(args.request),root)
-    elif args.command=="rollback":
-        out=rollback(args.request_id,root)
-    else:
-        out=plan_derivation(root,args.target_id)
-    print(json.dumps(out,ensure_ascii=False,indent=2,sort_keys=True))
-    return 0
+    try:
+        if args.command=="snapshot":
+            out=capture_current_truth(root,evidence_target_id=args.evidence_target_id,
+                authority_mesh_path=args.authority_mesh_path,layer_map_path=args.layer_map_path,
+                authority_mesh_digest=args.authority_mesh_digest,layer_map_digest=args.layer_map_digest)
+        elif args.command=="plan":
+            out=build_plan(_load(args.request),root)
+        elif args.command=="register":
+            out=register(_load(args.request),root)
+        elif args.command=="rollback":
+            out=rollback(args.request_id,root)
+        else:
+            out=plan_derivation(root,args.target_id)
+        print(json.dumps(out,ensure_ascii=False,indent=2,sort_keys=True))
+        return 0
+    except (CanonicalRegistrationError, ValueError, OSError, json.JSONDecodeError) as exc:
+        out={
+            "schema":"prisma.visual.canonical-registration.cli-result.v1",
+            "status":"BLOCKED",
+            "errorCode":type(exc).__name__,
+            "error":str(exc),
+            "mutationAuthorized":False,
+        }
+        print(json.dumps(out,ensure_ascii=False,indent=2,sort_keys=True))
+        return 2
 
 if __name__=="__main__":
     raise SystemExit(main())
