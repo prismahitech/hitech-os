@@ -1303,6 +1303,40 @@
         "composed sha256:ce31ca5715e47d4151b6f5b9dfbcccebea146fb36db36ba6d7bce24f26a6d277",
         "uploaded artifact sha256:f220db69d34fc8ebc9dc139b9d7e13698967c4907fcdefd630ec68fceb006834"
       ]
+    },
+    {
+      "capabilityId": "visual.operating_graph_v1",
+      "status": "PASS_LOCAL_VERIFIED",
+      "runId": "PR585_WAVE2_LOCAL_VERIFIED",
+      "evidence": [
+        "PR #585 merged as 4b8eb9dce6f7918f3d219332f9318e43c435b5a6",
+        "CI 36540654017 PASS",
+        "GVAE All-Surface Authority 36540654006 PASS",
+        "ForgeOS Quality Gate 36540654089 PASS",
+        "PRISMA Sync Sentinel Watch 36540654023 PASS",
+        "PRISMA VISCORE1 Certification 36540654022 PASS",
+        "Fresh post-merge Authority Mesh run 36540982644 artifact 11020856487 sha256:2bb76f7089e5cea81930f2880c0df1d6acfea4202c768d1b15d6e0b579b7b01c"
+      ],
+      "proves": [
+        "Wave 2 read-only Next Safe Action Engine and What-if Digital Twin are merged on canonical main.",
+        "The implementation consumes existing Operating Graph/Factory Ledger/Authority Mesh/Code Atlas/NDC/Identity/RIFAT/Target Index/Visual Promotion/Work Entry/Change Assurance authority rather than creating a parallel authority engine.",
+        "Stale/unknown conditions, blocker classification, provenance and non-authorizing boundaries are represented in source.",
+        "Post-merge CI and fresh task-exact Authority Mesh completed successfully on the exact current main."
+      ],
+      "doesNotProve": [
+        "Canonical visual registration or semantic/binding authority creation.",
+        "GVAE APPLY, visual mutation, product/runtime mutation or runtime visual certification.",
+        "Production, distribution, customer deployment or human-usefulness certification.",
+        "Future correctness after source or authority drift."
+      ],
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "prisma-html",
+        "visual-operating-graph",
+        "quality"
+      ],
+      "type": "visual_operating_graph_wave2_read_only"
     }
   ],
   "updatedAt": "2026-09-15T20:38:02Z",
