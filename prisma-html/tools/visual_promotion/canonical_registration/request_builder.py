@@ -62,7 +62,7 @@ def build_request_from_readiness(
         raise RequestBuilderError("CANONICAL_TARGET_ID_ADJUDICATION_REQUIRED")
     validate_target_id(
         requested_id=requested_target,
-        semantic_key=f"{row['surfaceKey']}|{target_id}|{semantic_id}",
+        semantic_key=semantic_id,
         census_target_id=target_id,
         surface_key=row["surfaceKey"],
         existing_ids=set(authority.get("existingCanonicalTargetIds") or []),
