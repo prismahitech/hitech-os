@@ -82,3 +82,18 @@ def validate_target_id(
     if decision.action == "CREATE_NEW" and requested_id != expected:
         raise CanonicalRegistrationPolicyError("TARGET_ID_NOT_DETERMINISTIC")
     return decision
+
+
+def collision_code(kind: str) -> str:
+    codes = {
+        "exact": "DUPLICATE_EXACT",
+        "semantic": "SEMANTIC_COLLISION",
+        "binding": "BINDING_COLLISION",
+        "id": "ID_COLLISION",
+        "layer": "LAYER_COLLISION",
+        "projection": "PROJECTION_CONFLICT",
+    }
+    try:
+        return codes[kind]
+    except KeyError as exc:
+        raise CanonicalRegistrationPolicyError(f"UNKNOWN_COLLISION_KIND:{kind}") from exc
