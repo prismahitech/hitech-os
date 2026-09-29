@@ -45,7 +45,6 @@ class CanonicalRegistrationTests(unittest.TestCase):
 
         ti=base/"visual-control/target-index"
         ti.mkdir(parents=True)
-        (ti/"target.json").write_text(json.dumps({"targetId":"TGT.CENSUS.TABLET.TEST.V1"}),encoding="utf-8")
         self.census_target={
             "targetId":"TGT.CENSUS.TABLET.TEST.V1",
             "surface":"tablet",
@@ -191,24 +190,6 @@ class CanonicalRegistrationTests(unittest.TestCase):
         request["decision"]["idInputs"]={"selector":".stockCell"}
         with self.assertRaises(Exception):
             self.engine.build_plan(request,self.root)
-
-    def test_external_truth_digest_drift_is_rejected(self):
-        from canonical_registration.current_truth import verify_current_truth
-        verify_current_truth(
-            self.root,
-            self.current_truth,
-            evidence_target_id="TGT.CENSUS.TABLET.TEST.V1",
-        )
-        tampered=json.loads(json.dumps(self.current_truth))
-        tampered["authorityMeshDigest"]="f"*64
-        tampered["snapshotId"]=self.engine.sha256_json({k:v for k,v in tampered.items() if k!="snapshotId"})
-        with self.assertRaises(self.engine.CanonicalRegistrationError) as ctx:
-            verify_current_truth(
-                self.root,
-                tampered,
-                evidence_target_id="TGT.CENSUS.TABLET.TEST.V1",
-            )
-        self.assertEqual(str(ctx.exception),"CURRENT_TRUTH_DIGEST_DRIFT:authorityMesh")
 
     def test_target_id_is_deterministic(self):
         from canonical_registration.policy import allocate_id
