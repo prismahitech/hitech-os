@@ -3,7 +3,7 @@
   "generated": true,
   "manualEditsForbidden": true,
   "generator": "visual-operating-graph-wave1-sourceset-lock",
-  "observedMainSha": "21830e20fcc3d9d0df9997320137335b44154169",
+  "observedMainSha": "a127a52a1b68db7216baaf5cfed9f57947990dc3",
   "promotionReadinessClosure": {
     "pr": 554,
     "mergeSha": "46c9032d8734bcb5d13242b8ccd7b7cb3c8274e0",
@@ -142,7 +142,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-evidence-index",
-      "gitBlobSha": "3b94da9aa7d0267b4c6d92544cce4aa4eedb296e",
+      "gitBlobSha": "44d656dbd453134243cb0544588eff96f0edba5f",
       "schema": "1.0.0",
       "version": null
     },
@@ -158,7 +158,7 @@
       "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
       "authorityDomain": "factory-ledger",
       "role": "canonical-authority",
-      "gitBlobSha": "fc2a9f927e5239c281bf35a6c31dfc9626c0540a",
+      "gitBlobSha": "c230082deaca37f8f020379eab0c9f2bf481a5ff",
       "schema": "1.0.0",
       "version": null
     },
