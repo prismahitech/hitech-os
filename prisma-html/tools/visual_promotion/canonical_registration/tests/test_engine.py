@@ -215,6 +215,18 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(first["ids"]["targetId"],second["ids"]["targetId"])
         self.assertEqual(second["status"],"APPLIED")
 
+    def test_git_head_is_authoritative_over_environment_sha(self):
+        subprocess.run(["git","init"],cwd=self.root,check=True,capture_output=True)
+        subprocess.run(["git","config","user.email","test@example.com"],cwd=self.root,check=True,capture_output=True)
+        subprocess.run(["git","config","user.name","Test"],cwd=self.root,check=True,capture_output=True)
+        marker=self.root/"head-marker.txt"
+        marker.write_text("head",encoding="utf-8")
+        subprocess.run(["git","add","head-marker.txt"],cwd=self.root,check=True,capture_output=True)
+        subprocess.run(["git","commit","-m","fixture"],cwd=self.root,check=True,capture_output=True)
+        actual=subprocess.run(["git","rev-parse","HEAD"],cwd=self.root,check=True,capture_output=True,text=True).stdout.strip()
+        os.environ["GITHUB_SHA"]="b"*40
+        self.assertEqual(self.engine.current_repo_head(self.root),actual)
+
     def test_stale_head_blocks_replay(self):
         request=self.request()
         self.engine.register(request,self.root)
@@ -239,6 +251,9 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(rolled["status"],"ROLLED_BACK")
         bindings=json.loads((self.root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json").read_text())
         self.assertEqual(bindings["bindings"],[])
+        receipt=json.loads((self.root/"prisma-html/governance/visual-promotion/canonical-registration/receipts"/f"{request['requestId']}.json").read_text())
+        journal=json.loads((self.root/receipt["journalPath"]).read_text())
+        self.assertEqual(journal["status"],"ROLLED_BACK")
 
     def test_rollback_refuses_newer_work(self):
         request=self.request()
