@@ -19,7 +19,7 @@
     "source":{"type":"object","additionalProperties":false,"required":["digest","path"],"properties":{"digest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"path":{"type":"string","minLength":1},"candidateRef":{"type":"string"}}},
     "decision":{
       "type":"object","additionalProperties":false,
-      "required":["semanticAction","semanticAuthority","targetAction","recipeAction","bindingAction","layerAction"],
+      "required":["semanticAction","semanticAuthority","targetAction","recipeAction","bindingAction","layerAction","workEntryHandoff"],
       "properties":{
         "semanticAction":{"enum":["REUSE_EXISTING","CREATE_NEW"]},
         "semanticDecisionId":{"type":"string"},"approvalEvidenceRefs":{"type":"array","items":{"type":"string"}},
@@ -28,7 +28,7 @@
         "recipeAction":{"type":"object","properties":{"action":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"recipeId":{"type":"string"},"semanticKey":{"type":"string"},"registryEntry":{"type":"object"}}},
         "bindingAction":{"type":"object","properties":{"action":{"enum":["CREATE_NEW","REUSE_EXISTING"]},"bindingId":{"type":"string"},"semanticKey":{"type":"string"},"exactBinding":{"type":"object"},"registryEntry":{"type":"object"}}},
         "layerAction":{"type":"object","additionalProperties":false,"required":["applicationLayerId","policy","writerKind","authorityDomain","decisionRef"],"properties":{"applicationLayerId":{"type":"string","pattern":"^LYR\\."},"policy":{"enum":["EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"]},"writerKind":{"const":"CANONICAL_REGISTRATION"},"authorityDomain":{"const":"rifat"},"decisionRef":{"type":"string","minLength":1}}},
-        "projectionAction":{"type":"object"},"idInputs":{"type":"object"}
+        "projectionAction":{"type":"object"},"workEntryHandoff":{"type":"object","additionalProperties":false,"required":["gate","decision","targetId","evaluatedHead"],"properties":{"gate":{"const":"visual_application.visual_work_entry_gate"},"decision":{"const":"REGISTER_TARGET_FIRST"},"targetId":{"type":"string","pattern":"^TGT\\.CENSUS\\."},"evaluatedHead":{"type":"string","pattern":"^[0-9a-f]{40}$"}}},"idInputs":{"type":"object"}
       }
     },
     "authorization":{"type":"object","additionalProperties":false,"required":["canonicalRegistrationAuthorized","automaticSemanticInference","automaticApplicationSource"],"properties":{"canonicalRegistrationAuthorized":{"const":true},"automaticSemanticInference":{"const":false},"automaticApplicationSource":{"const":false}}}
