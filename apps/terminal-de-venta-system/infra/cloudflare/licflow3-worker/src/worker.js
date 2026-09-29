@@ -1275,13 +1275,21 @@ async function createCustomerSetup(request, env) {
   const persistedPlan = await first(env, "select plan_id as planId, max_tablet_devices as maxTabletDevices, max_pc_devices as maxPcDevices, max_mobile_devices as maxMobileDevices, max_total_devices as maxTotalDevices from license_plans where plan_id = ? limit 1", [pass.planId]);
   const persistedAggregateSlots = await all(env, "select surface, allowed, claimed from customer_setup_slots where setup_id = ? order by surface asc", [pass.setupId]);
   const persistedClaimSlots = await all(env, "select slot_id as slotId, surface, slot_index as slotIndex, status, device_id as deviceId, audit_event_id as auditEventId from customer_device_claim_slots where setup_bundle_id = ? order by surface asc, slot_index asc", [pass.setupBundleId]);
+  const persistedActiveClaims = await all(env, "select claim_slot_id as claimSlotId, surface, device_id as deviceId, status from customer_device_claims where setup_id = ? and status = 'claimed' order by created_at asc", [pass.setupId]);
   const createAuditVerified = await auditEventExists(env, auditMode, createAuditEventId);
   const provisionAuditVerified = await auditEventExists(env, auditMode, provisionAuditEventId);
 
+  // Validation must be idempotent: a setup retry may legitimately contain
+  // already-claimed slots. Reconstruct the expected aggregate from live active
+  // claims instead of assuming this invocation starts from an empty graph.
+  const claimedBySurface = new Map();
+  persistedActiveClaims.forEach((claim) => {
+    claimedBySurface.set(claim.surface, Number(claimedBySurface.get(claim.surface) || 0) + 1);
+  });
   const expectedAggregate = pass.slots.map((slot) => ({
     surface: slot.surface,
     allowed: Number(slot.allowed),
-    claimed: 0
+    claimed: Number(claimedBySurface.get(slot.surface) || 0)
   })).sort((a, b) => a.surface.localeCompare(b.surface));
   const actualAggregate = persistedAggregateSlots.map((slot) => ({
     surface: slot.surface,
@@ -1289,16 +1297,22 @@ async function createCustomerSetup(request, env) {
     claimed: Number(slot.claimed)
   })).sort((a, b) => a.surface.localeCompare(b.surface));
   const aggregateMatches = JSON.stringify(actualAggregate) === JSON.stringify(expectedAggregate);
+
+  const activeClaimBySlotId = new Map(persistedActiveClaims.map((claim) => [claim.claimSlotId, claim]));
   const claimSlotMatches = persistedClaimSlots.length === pass.deviceClaimSlots.length &&
-    pass.deviceClaimSlots.every((slot) => persistedClaimSlots.some(
-      (row) =>
-        row.slotId === slot.slotId &&
-        row.surface === slot.surface &&
-        row.status === "AVAILABLE" &&
-        Number(row.slotIndex) >= 1 &&
+    pass.deviceClaimSlots.every((slot) => {
+      const row = persistedClaimSlots.find((candidate) => candidate.slotId === slot.slotId);
+      if (!row || row.surface !== slot.surface || Number(row.slotIndex) < 1) return false;
+      const activeClaim = activeClaimBySlotId.get(slot.slotId);
+      if (activeClaim) {
+        return row.status === "CLAIMED" &&
+          row.deviceId === activeClaim.deviceId &&
+          row.auditEventId != null;
+      }
+      return row.status === "AVAILABLE" &&
         row.deviceId == null &&
-        row.auditEventId === provisionAuditEventId
-    ));
+        row.auditEventId === provisionAuditEventId;
+    });
 
   const finalOk =
     Boolean(persistedTenant) &&
