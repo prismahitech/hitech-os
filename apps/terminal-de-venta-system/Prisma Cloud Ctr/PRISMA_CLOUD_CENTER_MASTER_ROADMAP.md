@@ -68,6 +68,7 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [x] Define the canonical plan taxonomy.
 - [x] Reconcile commercial plans with Customer Setup plans/packages.
 - [x] Resolve `TABLET_PC_MOBILE_MANAGED` semantic status explicitly.
+- [x] Make `commercialPlanId` explicit and enforce provisioning→commercial SKU mapping at persistence boundaries.
 - [x] Build cross-contract matrix: plan, entitlement, surfaces, route, persistence, UI, owner.
 - [x] Detect duplicate/competing owners.
 - [x] Detect orphan terminology and undocumented aliases.
@@ -75,7 +76,8 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [x] Detect incompatible result codes/status vocabulary.
 - [x] Register terminology authority.
 
-**Gate G1:** `PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED` — source/invariant gate passed on the roadmap branch; CI status remains separately observable.
+ **Gate G1:** `PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED` — source/invariant gate revalidated after commercial/provisioning split; CI status remains separately observable.
+**G1 revalidation note:** `TABLET_PC_MOBILE_MANAGED` remains provisioning-only and maps to commercial SKU `TABLET_PC_MANAGED`; worker persistence now enforces that boundary.
 
 ---
 
@@ -126,6 +128,8 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [ ] Prove device counters never exceed plan limits.
 - [ ] Prove no duplicate claims or double slot release.
 - [ ] Prove no orphan rows.
+
+**G3 status note:** The repository now contains a same-DB multi-connection D1-compatible runtime harness covering concurrency, failure injection, retry preservation and graph integrity. **CI execution is the runtime gate.**
 
 **Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY`
 
@@ -327,8 +331,8 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G2 SOURCE PASSED — Persistence integrity hardened  
-**Next:** G3 — Concurrency / idempotency  
+**Current:** G3 IMPLEMENTED — Concurrency / idempotency runtime harness added  
+**Next:** G3 CI/runtime execution → G4 invariant certification  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
 # Historical evidence rule
