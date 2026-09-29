@@ -65,17 +65,17 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ## G1 — Contract / authority reconciliation
 
-- [ ] Define the canonical plan taxonomy.
-- [ ] Reconcile commercial plans with Customer Setup plans/packages.
-- [ ] Resolve `TABLET_PC_MOBILE_MANAGED` semantic status explicitly.
-- [ ] Build cross-contract matrix: plan, entitlement, surfaces, route, persistence, UI, owner.
-- [ ] Detect duplicate/competing owners.
-- [ ] Detect orphan terminology and undocumented aliases.
-- [ ] Detect routes documented but not implemented and implemented but undocumented.
-- [ ] Detect incompatible result codes/status vocabulary.
-- [ ] Register terminology authority.
+- [x] Define the canonical plan taxonomy.
+- [x] Reconcile commercial plans with Customer Setup plans/packages.
+- [x] Resolve `TABLET_PC_MOBILE_MANAGED` semantic status explicitly.
+- [x] Build cross-contract matrix: plan, entitlement, surfaces, route, persistence, UI, owner.
+- [x] Detect duplicate/competing owners.
+- [x] Detect orphan terminology and undocumented aliases.
+- [x] Detect routes documented but not implemented and implemented but undocumented.
+- [x] Detect incompatible result codes/status vocabulary.
+- [x] Register terminology authority.
 
-**Gate G1:** `PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED`
+**Gate G1:** `PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED` — source/invariant gate passed on the roadmap branch; CI status remains separately observable.
 
 ---
 
@@ -327,8 +327,8 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G0 PASSED — Step 1 baseline freeze closed  
-**Next:** G1 — Contract / authority reconciliation  
+**Current:** G1 PASSED — Contract / authority reconciliation closed  
+**Next:** G2 — Persistence integrity  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
 # Historical evidence rule
