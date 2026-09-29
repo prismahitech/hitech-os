@@ -168,7 +168,7 @@ function assertPlanBasedProvisioningReadonly() {
     "nextAvailableClaimSlot",
     "consumeClaimSlot",
     "PLAN_BASED_CUSTOMER_ONBOARDING_READY",
-    "PLAN_PROVISIONING_SCHEMA_REQUIRED",
+    "CUSTOMER_SETUP_SCHEMA_REQUIRED",
     "customer_setup.create",
     "customer_setup.plan_based_provision",
     "claimSlotsCreated",
