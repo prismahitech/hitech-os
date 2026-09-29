@@ -353,3 +353,9 @@ Stop and classify instead of forcing green when:
 - a different component owns the capability;
 - the final HEAD differs from the certified HEAD.
 
+
+
+### G4 CI pass note
+- G3 and G4 passed in the same CI authority cycle after the replacement-slot migration and idempotent Customer Setup hardening.
+- No live production mutation was performed.
+- G5A previously failed only because the verifier resolved the Worker syntax-check `cwd` one level above the repository; that path is now corrected.
