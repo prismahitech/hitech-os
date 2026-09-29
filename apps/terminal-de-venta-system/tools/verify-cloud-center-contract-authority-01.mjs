@@ -55,6 +55,10 @@ function main() {
     "PROVISIONING_ONLY_PLAN_TYPE_NOT_EXPLICIT");
   assert(contract.includes("CustomerSetupPlanId = CustomerSetupCommercialPlanId | CustomerSetupProvisioningOnlyPlanId;"),
     "PLAN_DOMAIN_SPLIT_NOT_EXPLICIT");
+  assert(contract.includes("commercialPlanId: CustomerSetupCommercialPlanId;"),
+    "COMMERCIAL_PLAN_MAPPING_TYPE_MISSING");
+  assert(contract.includes('planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,\n    commercialPlanId: "TABLET_PC_MANAGED"'),
+    "STARTER_COMMERCIAL_PLAN_MAPPING_DRIFT");
   assert(contract.includes("PLAN_BASED_PROVISIONING_CATALOG"),
     "PROVISIONING_CATALOG_MISSING");
   checks.push("shared_contract_semantic_split_explicit");
@@ -67,6 +71,10 @@ function main() {
   }
   assert(worker.includes("provisioning package plan, not a vendible commercial SKU"),
     "WORKER_SEMANTIC_GUARDRAIL_MISSING");
+  assert(worker.includes('commercialPlanId: "TABLET_PC_MOBILE_MANAGED"') === false,
+    "INVALID_LITERAL_COMMERCIAL_PLAN_PROPERTY");
+  assert(worker.includes('TABLET_PC_MOBILE_MANAGED: {') && worker.includes('commercialPlanId: "TABLET_PC_MANAGED"'),
+    "WORKER_STARTER_COMMERCIAL_MAPPING_DRIFT");
   checks.push("worker_provisioning_catalog_semantics_explicit");
 
   for (const expectedMapping of [
