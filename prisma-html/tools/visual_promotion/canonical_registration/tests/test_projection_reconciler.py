@@ -7,6 +7,10 @@ class ProjectionReconcilerTests(unittest.TestCase):
         self.r=load_projection_reconciler()
         self.truth={"schema":"prisma.visual.current-truth-snapshot.v1","snapshotId":"a"*64}
 
+    def test_current_projection_is_explicit_noop(self):
+        d=self.r.reconcile_projection(target_id="TGT.X",current_truth=self.truth,projection_classification="CURRENT")
+        self.assertEqual(d.decision,"ACCEPT_CURRENT")
+
     def test_missing_projection_registers_missing(self):
         d=self.r.reconcile_projection(target_id="TGT.X",current_truth=self.truth,projection_classification="CANONICAL_PROJECTION_REQUIRED_MISSING",canonical_source_sha256="b"*64,canonical_output_sha256="c"*64)
         self.assertEqual(d.decision,"REGISTER_MISSING_PROJECTION")
