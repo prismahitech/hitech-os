@@ -50,3 +50,8 @@ def load_collision_classifier():
 def load_application_policy():
     pkg=_ensure_package()
     return _load("canonical_registration.application_policy",pkg/"application_policy.py","canonical_registration")
+
+
+def load_runtime_bridge():
+    pkg=_ensure_package()
+    return _load("canonical_registration.runtime_evidence_bridge",pkg/"runtime_evidence_bridge.py","canonical_registration")
