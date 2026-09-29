@@ -1,0 +1,22 @@
+{
+  "schema":"prisma.visual.canonical-registration-policy.v1",
+  "version":"1.1.0",
+  "existingIdsImmutable":true,
+  "workerMayMintCanonicalIds":false,
+  "automaticSemanticInference":false,
+  "automaticApplicationSource":false,
+  "namespaces":{
+    "visualMeaning":{"prefix":"VIS.","scope":"global","allocator":"semantic-hash"},
+    "binding":{"prefix":"BND.","scope":"global","allocator":"coordinate-hash"},
+    "recipe":{"prefix":"REC.","scope":"identity","allocator":"semantic-hash"},
+    "target":{"prefix":"TGT.","scope":"target-index","allocator":"canonical-composer"},
+    "applicationLayer":{"prefix":"LYR.","scope":"rifat","allocator":"owner-authority-only"}
+  },
+  "forbiddenDerivationInputs":["selector","routeId","regionId","slotId","componentUiId","implementationLayerId","filename","atlasfinRecipeId","visualSimilarity"],
+  "collisionCodes":["DUPLICATE_EXACT","SEMANTIC_COLLISION","BINDING_COLLISION","ID_COLLISION","LAYER_COLLISION","PROJECTION_CONFLICT"],
+  "staleCodes":["STALE_HEAD","SOURCE_DRIFT","REGISTRY_PRECONDITION_CHANGED"],
+  "concurrency":"exclusive-request-lock-plus-current-head-check",
+  "idempotency":"same-request-and-current-truth-reuses-recorded-result-without-duplicate-mutation",
+  "rollback":"transaction-scoped-exact-prestate-only-newer-work-protected",
+  "targetIdentity":"censusTargetId is immutable physical evidence; targetId is canonical exact identity and may only be allocated by canonical registration policy"
+}
