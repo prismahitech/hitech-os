@@ -371,6 +371,35 @@ async function main() {
   assert(replacementClaim.status === 200 && replacementClaim.payload?.resultCode === "DEVICE_CLAIM_ACCEPTED", "REPLACEMENT_NEW_DEVICE_CLAIM_FAILED", { replacementClaim, replacementEligibleSlot, replacementSetupSlot, replacementSetupRow });
   checks.push("replacement_releases_and_reuses_exact_slot"); globalThis.__g3Checks = [...checks];
 
+  // 5b. Simultaneous replacement approvals: exactly one request may consume
+  // the active claim; the concurrent loser must not double-release the slot.
+  const concurrentReplacementSetup = await createSetup(seed, "replacement-concurrent");
+  const initialConcurrentClaim = await call(seed, "/api/customer/devices/claim", "POST", {
+    setupCode: concurrentReplacementSetup.setupCode,
+    surface: "tablet",
+    deviceId: "g3-replacement-concurrent-old"
+  });
+  assert(initialConcurrentClaim.status === 200, "CONCURRENT_REPLACEMENT_PRECONDITION_FAILED", { initialConcurrentClaim });
+
+  const replacementApproveHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath)];
+  harnesses.push(...replacementApproveHarnesses);
+  const concurrentApprovals = await Promise.all(replacementApproveHarnesses.map((h) =>
+    call(h, "/api/admin/customer-devices/replacement/approve", "POST", {
+      setupCode: concurrentReplacementSetup.setupCode,
+      surface: "tablet",
+      oldDeviceId: "g3-replacement-concurrent-old",
+      reason: "G3 concurrent replacement approval",
+      confirmAdminLicenseAction: true
+    }, true)
+  ));
+  const approvalSuccesses = concurrentApprovals.filter((r) => r.status === 200 && r.payload?.resultCode === "DEVICE_REPLACEMENT_APPROVED");
+  assert(approvalSuccesses.length === 1, "CONCURRENT_REPLACEMENT_SUCCESS_COUNT_DRIFT", { concurrentApprovals });
+  const remainingConcurrentClaims = await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ? and status = 'claimed'", [concurrentReplacementSetup.setupId, "g3-replacement-concurrent-old"]);
+  assert(remainingConcurrentClaims === 0, "CONCURRENT_REPLACEMENT_LEFT_ACTIVE_CLAIM", { remainingConcurrentClaims });
+  const concurrentSlot = await seed.first("select status, device_id from customer_device_claim_slots where setup_bundle_id = ? and surface = 'tablet' order by slot_index asc limit 1", [concurrentReplacementSetup.setupBundleId]);
+  assert(concurrentSlot?.status === "AVAILABLE" && concurrentSlot?.device_id == null, "CONCURRENT_REPLACEMENT_SLOT_NOT_AVAILABLE", { concurrentSlot });
+  checks.push("concurrent_replacements_are_single_consumer"); globalThis.__g3Checks = [...checks];
+
   // 6. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
   const failClaimHarness = new D1Harness(dbPath);
