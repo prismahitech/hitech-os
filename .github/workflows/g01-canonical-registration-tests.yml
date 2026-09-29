@@ -29,4 +29,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PYTHONPATH=tools python -m unittest discover             -s tools/visual_promotion/canonical_registration/tests             -t tools             -v
+          for test in tools/visual_promotion/canonical_registration/tests/test_*.py; do
+            PYTHONPATH=tools python "$test"
+          done
