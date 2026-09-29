@@ -32,7 +32,7 @@ class CollisionClassifierTests(unittest.TestCase):
         self.assertIn("SEMANTIC_COLLISION",[x["code"] for x in result])
 
     def _fixture(self, target_index):
-        import json, tempfile
+        import json, tempfile, sys, types
         from pathlib import Path
         root=Path(tempfile.mkdtemp())
         base=root/"prisma-html/authority/rifat/prisma-ui/visual-control/target-index"
@@ -49,8 +49,12 @@ class CollisionClassifierTests(unittest.TestCase):
         (rifat/"prisma-ui/visual-control/editable-slots.json").write_text(json.dumps({"slotUnitSamples":[]}),encoding="utf-8")
         (rifat/"prisma-ui/visual-control/layers.json").write_text(json.dumps({"layerSamples":[],"certifiedLayers":[]}),encoding="utf-8")
         (reg/"element-bindings.registry.json").write_text(json.dumps({"bindings":[]}),encoding="utf-8")
-        fake=__import__("sys").modules["visual_application.target_index"]
+        visual_pkg=types.ModuleType("visual_application")
+        visual_pkg.__path__=[]
+        fake=types.ModuleType("visual_application.target_index")
         fake.build_index=lambda root: target_index
+        sys.modules["visual_application"]=visual_pkg
+        sys.modules["visual_application.target_index"]=fake
         return root
 
 if __name__=="__main__":
