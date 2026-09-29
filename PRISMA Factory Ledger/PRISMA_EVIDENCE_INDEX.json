@@ -1337,6 +1337,37 @@
         "quality"
       ],
       "type": "visual_operating_graph_wave2_read_only"
+    },
+    {
+      "capabilityId": "visual.operating_graph_v1",
+      "status": "FIX_REQUIRED",
+      "runId": "PR585_WAVE2_POSTMERGE_ADVERSARIAL_AUDIT_20260929",
+      "artifact": "Visual Operating Graph Wave 2 post-merge adversarial audit / corrective reclassification",
+      "type": "visual_operating_graph_wave2_postmerge_adversarial_audit",
+      "scope": [
+        "factory_ledger",
+        "governance",
+        "prisma-html",
+        "visual-operating-graph",
+        "quality"
+      ],
+      "evidence": [
+        "Canonical main audited: 5ad615cd2264310a2e669adbf58ee4c12fd5c2ea",
+        "Fresh task-exact AutoMesh run 36548016503 artifact 11023820410 sha256:94ffc3ed4a97543022b21dbbe42e5d3a7989d5a3ee616620ac6066f293e76184; PASS_COMPOSED_AUTHORITY_MESH; 100% required authority coverage; zero blockers.",
+        "Contract review compared next_safe_action.py against PRISMA_PROCESS_PHASE_AND_BLOCKER_MODEL.md."
+      ],
+      "proves": [
+        "The Wave 2 engine exists as merged read-only source.",
+        "The source preserves original blocker codes and emits UNCLASSIFIED_SOURCE_BLOCKER for unmapped codes.",
+        "The published blocker model additionally requires requiresTaxonomyUpdate=true for unmapped codes."
+      ],
+      "doesNotProve": [
+        "The defect is corrected.",
+        "Runtime visual, production, distribution or customer deployment certification.",
+        "Any mutation authorization."
+      ],
+      "finding": "Wave 2 unmapped blocker output is missing requiresTaxonomyUpdate=true.",
+      "nextGate": "Fresh Factory Ledger MUTATION gate for bounded FIX, then adversarial regression coverage and exact-head CI."
     }
   ],
   "updatedAt": "2026-09-15T20:38:02Z",
