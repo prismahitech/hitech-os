@@ -9,6 +9,7 @@ from workstream_collision import (
     declaration_conflict,
     declaration_scope_gaps,
     exclusive_overlap_paths,
+    exclusive_scope_overlap,
     is_exclusive_path,
     is_governed_path,
     parse_declaration,
@@ -31,6 +32,28 @@ owner: engineer
         )
         self.assertEqual(d.workstream_id, "visual-canonical-registration-g01")
         self.assertEqual(d.role, "canonical")
+
+    def test_multiple_declarations_rejected(self):
+        with self.assertRaises(GateError):
+            parse_declaration(
+                """<!-- PRISMA-WORKSTREAM
+id: alpha
+role: proposal
+requested_action: VERIFY
+capabilities: visual.foo
+surfaces: governance
+scope: foo/**
+-->
+
+<!-- PRISMA-WORKSTREAM
+id: beta
+role: proposal
+requested_action: VERIFY
+capabilities: visual.foo
+surfaces: governance
+scope: bar/**
+-->"""
+            )
 
     def test_unsafe_scope_rejected(self):
         with self.assertRaises(GateError):
@@ -80,6 +103,21 @@ scope: ../../unsafe
                 ["foo/bar.py", "prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
             ),
             ["prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
+        )
+
+    def test_exclusive_scope_overlap_blocks_different_files(self):
+        d = Declaration("alpha", "canonical", "ADVANCE", ("visual.foo",), ("governance",), (
+            "prisma-html/tools/visual_promotion/canonical_registration/**",
+        ))
+        pa = PullRequestView(1, "A", "", "open", False, "a"*40, "b"*40, "", "", d, [
+            "prisma-html/tools/visual_promotion/canonical_registration/engine.py",
+        ])
+        pb = PullRequestView(2, "B", "", "open", False, "c"*40, "b"*40, "", "", d, [
+            "prisma-html/tools/visual_promotion/canonical_registration/policy.py",
+        ])
+        self.assertEqual(
+            exclusive_scope_overlap(pa, pb),
+            ["prisma-html/tools/visual_promotion/canonical_registration"],
         )
 
     def test_scope_match(self):
