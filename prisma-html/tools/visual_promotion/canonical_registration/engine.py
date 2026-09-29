@@ -148,10 +148,13 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     if not layer.get("applicationLayerId") or layer.get("policy") not in {"EXACT_TARGET_ONLY","BOUNDED_EXACT_TARGET_WAVE"}:
         raise CanonicalRegistrationError("APPLICATION_LAYER_POLICY_REQUIRED")
     if layer.get("writerKind")!="CANONICAL_REGISTRATION": raise CanonicalRegistrationError("WRITER_KIND_REQUIRED")
+    if layer.get("authorityDomain")!="rifat" or not layer.get("decisionRef"):
+        raise CanonicalRegistrationError("APPLICATION_LAYER_AUTHORITY_REFERENCE_REQUIRED")
     meaning_id=decision["semanticAuthority"]["canonicalMeaningId"]
 
     existing_bindings=_load(repo_root/ALLOWED_CANONICAL_PATHS.pop() if False else repo_root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json")
     existing_binding_ids=_registry_ids(existing_bindings,"bindings")
+    existing_target_ids={str(target_row.get("targetId")) for entry in existing_bindings.get("bindings",[]) if isinstance(entry,dict) for target_row in entry.get("targets",[]) if isinstance(target_row,dict) and target_row.get("targetId")}
     existing_recipe_registry=_load(repo_root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json")
     existing_recipe_ids=_registry_ids(existing_recipe_registry,"recipes")
 
@@ -162,9 +165,10 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
             semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}",
             census_target_id=target["censusTargetId"],
             surface_key=target["surfaceKey"],
-            existing_ids={str(x) for x in target_action.get("existingCanonicalTargetIds",[])},
+            existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])},
         )
-        if td.action not in {"CREATE_NEW","REUSE_EXISTING"}: raise CanonicalRegistrationError("TARGET_ID_DECISION_INVALID")
+        if td.action != "CREATE_NEW":
+            raise IdCollisionError("TARGET_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
     elif target_action.get("action")!="REUSE_EXISTING":
         raise CanonicalRegistrationError("TARGET_REGISTRATION_ACTION_REQUIRED")
 
