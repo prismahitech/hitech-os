@@ -210,7 +210,8 @@
     "ui:premium-mise:report": "node tools/quality/ui-premium-mise-en-place.mjs report --strict",
     "ui:premium-mise:certify": "node tools/quality/ui-premium-mise-en-place.mjs certify --strict",
     "verify:support-resolver:recon4": "node tools/verify-support-resolver-recon4.mjs",
-    "verify:support-resolver-recon5": "node tools/verify-support-resolver-recon5.mjs"
+    "verify:support-resolver-recon5": "node tools/verify-support-resolver-recon5.mjs",
+    "verify:cloud-center:contract-authority": "node tools/verify-cloud-center-contract-authority-01.mjs"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
