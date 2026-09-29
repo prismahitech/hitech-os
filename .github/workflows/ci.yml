@@ -136,6 +136,12 @@ jobs:
           install_end="$(date +%s)"
           echo "CI_METRIC_INSTALL_SECONDS=$((install_end-install_start))" >> "$GITHUB_ENV"
 
+      - name: Verify Cloud Center contract authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:contract-authority
+
       - name: Enforce zero priority overrides
         shell: bash
         run: |
