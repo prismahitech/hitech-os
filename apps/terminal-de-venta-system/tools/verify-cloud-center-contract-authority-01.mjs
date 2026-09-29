@@ -69,11 +69,31 @@ function main() {
     "WORKER_SEMANTIC_GUARDRAIL_MISSING");
   checks.push("worker_provisioning_catalog_semantics_explicit");
 
+  for (const expectedMapping of [
+    ["TABLET_SOLO", "TABLET_SOLO"],
+    ["TABLET_PRO", "TABLET_PRO"],
+    ["TABLET_PC_MANAGED", "TABLET_PC_MANAGED"],
+    ["TABLET_PC_MOBILE_MANAGED", "TABLET_PC_MANAGED"]
+  ]) {
+    const [provisioningPlan, commercialPlan] = expectedMapping;
+    const start = worker.indexOf(`${provisioningPlan}: {`);
+    assert(start >= 0, "WORKER_PROVISIONING_PLAN_BLOCK_MISSING", { provisioningPlan });
+    const end = worker.indexOf("\n  },", start);
+    const block = worker.slice(start, end >= 0 ? end : start + 1200);
+    assert(block.includes(`commercialPlanId: "${commercialPlan}"`), "WORKER_COMMERCIAL_PLAN_MAPPING_DRIFT", { provisioningPlan, commercialPlan });
+  }
+  checks.push("worker_commercial_plan_mapping_explicit");
+
+
+
   const store = read("Prisma Cloud Ctr/internal/py/command_center_store.py");
   assert(store.includes('if not isinstance(plan, dict) or not plan.get("vendible"):'),
     "CLOUD_CENTER_COMMERCIAL_SELECTOR_NOT_FILTERING_VENDIBLE");
   assert(store.includes("shared/licensing/plan-catalog.canonical.json"),
     "CLOUD_CENTER_COMMERCIAL_SELECTOR_SOURCE_DRIFT");
+  assert(contract.includes("Canonical commercial license SKU persisted in licenses/tenants."),
+    "SHARED_CONTRACT_COMMERCIAL_PERSISTENCE_SEMANTICS_MISSING");
+  checks.push("shared_contract_declares_commercial_persistence_owner");
   checks.push("commercial_selector_derives_from_canonical_vendible_catalog");
 
   const docs = [
