@@ -269,7 +269,12 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         recipe_entry["recipeId"]=recipe_id
         recipe_path=recipe_entry.get("path")
         if not isinstance(recipe_path,str): raise CanonicalRegistrationError("NEW_RECIPE_SOURCE_PATH_REQUIRED")
-        recipe_file=(repo_root/"prisma-html/authority/rifat/identity")/recipe_path
+        identity_root=(repo_root/"prisma-html/authority/rifat/identity").resolve()
+        raw_recipe_file=identity_root/recipe_path
+        if raw_recipe_file.is_symlink(): raise UnsafeMutationError("NEW_RECIPE_SOURCE_SYMLINK")
+        recipe_file=raw_recipe_file.resolve()
+        if recipe_file!=identity_root and identity_root not in recipe_file.parents:
+            raise UnsafeMutationError("NEW_RECIPE_SOURCE_PATH_ESCAPE")
         if not recipe_file.is_file(): raise CanonicalRegistrationError("NEW_RECIPE_SOURCE_NOT_FOUND")
         expected_recipe_sha=recipe_entry.get("fileSha256") or recipe_entry.get("canonicalRecipeSha256")
         if not isinstance(expected_recipe_sha,str) or file_sha256(recipe_file)!=expected_recipe_sha: raise SourceDriftError("NEW_RECIPE_SOURCE_DRIFT")
