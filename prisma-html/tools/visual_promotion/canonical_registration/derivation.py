@@ -15,6 +15,7 @@ def plan_derivation(repo_root: Path, target_id: str) -> dict:
         ],
         "verification":[
             [sys.executable,"prisma-html/tools/compile_identity_dictionary.py","--check"],
+            [sys.executable,"prisma-html/tools/validate_identity_bindings.py"],
             [sys.executable,"-m","visual_application.target_index","--check"],
             [sys.executable,"prisma-html/tools/validate_rifat_authority.py"],
         ],
@@ -24,8 +25,11 @@ def plan_derivation(repo_root: Path, target_id: str) -> dict:
 
 def verify_derivation(repo_root: Path, plan: dict) -> dict:
     results=[]
+    env=dict(__import__("os").environ)
+    tools_dir=str((repo_root/"prisma-html/tools").resolve())
+    env["PYTHONPATH"]=tools_dir + ((":" + env["PYTHONPATH"]) if env.get("PYTHONPATH") else "")
     for command in plan["verification"]:
-        proc=subprocess.run(command,cwd=repo_root,check=False,capture_output=True,text=True)
+        proc=subprocess.run(command,cwd=repo_root,env=env,check=False,capture_output=True,text=True)
         results.append({"command":command,"returncode":proc.returncode,"stdout":proc.stdout[-4000:],"stderr":proc.stderr[-4000:]})
         if proc.returncode!=0:
             raise CanonicalRegistrationError(f"DERIVATION_VERIFY_FAILED:{command}")
