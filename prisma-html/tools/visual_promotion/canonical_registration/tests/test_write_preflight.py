@@ -33,5 +33,20 @@ class WritePreflightTests(unittest.TestCase):
         c=self.ctx();self.src.write_text('{"candidate":false}',encoding="utf-8")
         with self.assertRaises(self.v.WritePreflightError): self.v.validate_write_preflight(self.root,c)
 
+
+    def test_source_path_escape_blocks(self):
+        c=self.ctx()
+        c["sourcePath"]="../outside.json"
+        outside=self.root.parent/"outside.json"
+        outside.write_text("outside",encoding="utf-8")
+        c["sourceDigest"]=hashlib.sha256(outside.read_bytes()).hexdigest()
+        with self.assertRaises(self.v.WritePreflightError):
+            self.v.validate_write_preflight(self.root,c)
+
+    def test_invalid_target_id_blocks(self):
+        c=self.ctx();c["targetId"]="REC.not-a-target"
+        with self.assertRaises(self.v.WritePreflightError):
+            self.v.validate_write_preflight(self.root,c)
+
 if __name__=="__main__":
     unittest.main()
