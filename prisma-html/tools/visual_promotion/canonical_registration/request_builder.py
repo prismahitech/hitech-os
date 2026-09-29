@@ -18,7 +18,19 @@ def build_request_from_readiness(
     expected_current_head: str,
     authorization: dict[str, Any],
     source: dict[str, Any],
+    work_entry_handoff: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if not isinstance(work_entry_handoff, dict):
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_REQUIRED")
+    if work_entry_handoff.get("decision") != "REGISTER_TARGET_FIRST":
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_DECISION_REQUIRED")
+    if work_entry_handoff.get("targetId") != target_id:
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_TARGET_MISMATCH")
+    if work_entry_handoff.get("evaluatedHead") != expected_current_head:
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_HEAD_MISMATCH")
+    if work_entry_handoff.get("gate") != "visual_application.visual_work_entry_gate":
+        raise RequestBuilderError("WORK_ENTRY_HANDOFF_GATE_INVALID")
+
     if row.get("promotionReadinessDecision") != "READY_FOR_CANONICAL_REGISTRATION":
         raise RequestBuilderError("READINESS_NOT_READY_FOR_CANONICAL_REGISTRATION")
     if row.get("surfaceKey") not in {"tablet","pc","mobile","shared-ui"}:
@@ -100,6 +112,7 @@ def build_request_from_readiness(
             "decisionRef":authority.get("applicationLayerDecisionRef"),
         },
         "projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False},
+        "workEntryHandoff":work_entry_handoff,
         "idInputs":{"selector":None,"implementationLayerId":None},
     }
     return {
