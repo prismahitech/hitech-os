@@ -15,6 +15,7 @@ def plan_derivation(repo_root: Path, target_id: str) -> dict:
         ],
         "verification":[
             [sys.executable,"prisma-html/tools/compile_identity_dictionary.py","--check"],
+            [sys.executable,"prisma-html/tools/validate_identity_bindings.py"],
             [sys.executable,"-m","visual_application.target_index","--check"],
             [sys.executable,"prisma-html/tools/validate_rifat_authority.py"],
         ],
