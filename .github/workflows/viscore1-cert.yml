@@ -70,7 +70,7 @@ jobs:
           assert d.get('verification') == 'PASS', d
           assert d.get('layerMapRequired') is True, d
           assert d.get('missingOutputs') == [], d
-          assert d.get('repoHead') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
+          assert d.get('sourceCommit') == 'd064110036bdebfa4db98e032fe9627a0a86fabc', d
           print(json.dumps({
               'status':d.get('status'),
               'sourceCommit':d.get('sourceCommit'),
