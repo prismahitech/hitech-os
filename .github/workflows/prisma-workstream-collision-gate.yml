@@ -4,6 +4,15 @@ on:
   pull_request_target:
     types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to evaluate"
+        required: true
+        type: string
+      expected_head:
+        description: "Expected PR head SHA"
+        required: true
+        type: string
 
 permissions:
   contents: read
