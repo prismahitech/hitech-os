@@ -294,6 +294,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         request=self.request()
         identity_root=self.root/"prisma-html/authority/rifat/identity"
         link=identity_root/"recipes/linked.recipe.json"
+        link.parent.mkdir(parents=True,exist_ok=True)
         link.symlink_to(self.root/"candidate.json")
         request["decision"]["recipeAction"]={
             "action":"CREATE_NEW",
