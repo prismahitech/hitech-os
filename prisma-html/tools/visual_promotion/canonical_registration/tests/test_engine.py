@@ -192,6 +192,22 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(Exception):
             self.engine.build_plan(request,self.root)
 
+    def test_external_truth_digest_drift_is_rejected(self):
+        from canonical_registration.current_truth import verify_current_truth
+        verify_current_truth(
+            self.root,
+            self.current_truth,
+            evidence_target_id="TGT.CENSUS.TABLET.TEST.V1",
+        )
+        tampered=json.loads(json.dumps(self.current_truth))
+        tampered["authorityMeshDigest"]="f"*64
+        with self.assertRaises(self.engine.CanonicalRegistrationError):
+            verify_current_truth(
+                self.root,
+                tampered,
+                evidence_target_id="TGT.CENSUS.TABLET.TEST.V1",
+            )
+
     def test_target_id_is_deterministic(self):
         from canonical_registration.policy import allocate_id
         one=allocate_id("target","tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary",set())
