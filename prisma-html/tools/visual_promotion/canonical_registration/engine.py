@@ -253,6 +253,8 @@ def _find_target_conflicts(bindings: dict[str, Any], target_id: str) -> list[dic
 
 def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     _validate_request(request)
+    from .current_truth import verify_current_truth
+    verify_current_truth(repo_root, request["currentTruth"], target_id=request["target"]["targetId"])
     _validate_source_pin(request, repo_root)
 
     decision = request["decision"]
