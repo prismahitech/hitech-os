@@ -30,7 +30,7 @@
       },
       {
         "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js",
-        "blobSha": "c520c76b9fb62e1d764ea4919313cd05e25d0d36"
+        "blobSha": "c149444948f799db5be15030c02215e6a4f80571"
       },
       {
         "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json"
@@ -101,6 +101,30 @@
       {
         "path": "apps/terminal-de-venta-system/docs/productization/PRISMA_CHANGE_INTELLIGENCE_CLOUD_CENTER_VERTICAL_CONTRACT.md",
         "blobSha": "2195d3253bdb1308647aceabe7db2f598cb7760a"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/migrations/0004_customer_device_claim_integrity.sql",
+        "blobSha": "3391bb37db412b199f5cda594791b9d849b7c6ee"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/migrations/0005_replacement_slot_reuse.sql",
+        "blobSha": "19471be7ae4d168551d765a1091080d7ca7116ed"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-contract-authority-01.mjs",
+        "blobSha": "3c0b71566c0116a408f6d9a8e146309ddcbf1c8b"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-persistence-hardening-01.mjs",
+        "blobSha": "a7ca76d166ccc630d615064c1d25a3f716149ccc"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-concurrency-idempotency-01.mjs",
+        "blobSha": "545bd0ed2800dee29618a2091ea803e335ca258f"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-d1-graph-integrity-01.py",
+        "blobSha": "d6ad041e0a2ca597d6cbeadb204b953449f369be"
       }
     ],
     "sourceNotes": [
@@ -109,7 +133,7 @@
       "Live base URL is https://app.hitechrts.com.",
       "Admin token is intended to remain backend-only and presence-only in UI/diagnostics."
     ],
-    "inventoryStatus": "KEY_AUTHORITY_SURFACES_CAPTURED"
+    "inventoryStatus": "G1_G2_G3_G4_CI_CERTIFIED"
   },
   "historicalEvidence": {
     "latestObservedLiveSmoke": "2026-07-07T22:29:07.271Z",
@@ -221,11 +245,11 @@
     }
   ],
   "certificationBoundary": {
-    "source": "not re-certified in this baseline document",
-    "local": "not re-certified in this baseline document",
-    "browser": "not re-certified in this baseline document",
-    "liveReadOnly": "historical evidence exists; current certification pending",
-    "liveMutation": "blocked pending explicit authorization",
+    "source": "G1-G4 CI-certified",
+    "local": "G1-G4 CI-certified; local/browser current runtime evidence pending",
+    "browser": "current browser runtime evidence pending",
+    "liveReadOnly": "historical July evidence only; current endpoint inaccessible from this environment",
+    "liveMutation": "blocked pending explicit operator authorization",
     "production": "not inferred"
   },
   "step1Status": {
@@ -244,11 +268,14 @@
       "Baseline consistency check completed on working branch."
     ],
     "remaining": [
-      "G1 contract/authority reconciliation."
+      "G5 runtime/browser",
+      "G5C current live-readonly",
+      "G3 refresh/revoke/renew conflict matrix",
+      "G4 blocked/expired behavioral checks"
     ],
     "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
-    "nextGate": "G3",
-    "note": "Baseline repinned to candidate HEAD after final G2 hardening. No live production mutation performed."
+    "nextGate": "G5",
+    "note": "G1-G4 are CI-certified on candidate code HEAD 94c184f. Subsequent commits on this branch are governance/documentation only unless stated otherwise."
   },
   "mutationSafety": {
     "liveMutationPerformed": false,
@@ -261,38 +288,38 @@
     "G1": {
       "status": "PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED",
       "verifiedAt": "2026-09-29",
-      "verificationMode": "independent repository invariant revalidation at candidate HEAD",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
       "result": "PASS"
     },
     "G2": {
-      "status": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY_SOURCE",
+      "status": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY",
       "verifiedAt": "2026-09-29",
-      "verificationMode": "independent repository invariant revalidation at candidate HEAD",
-      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-persistence-hardening-01.mjs",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
       "result": "PASS",
-      "scope": [
-        "Device Claim atomic batch and read-back",
-        "Device Replacement atomic claim-slot release and read-back",
-        "Customer Setup atomic provisioning and retry-safe upserts",
-        "Confirmed license mutation atomic tenant/license/audit path",
-        "Audit helper fail-closed persistence verification",
-        "Claim-slot identity migration and uniqueness guard"
-      ],
-      "runtimeLimit": "No live D1 mutation or production concurrency test performed. G3 remains the runtime concurrency/idempotency gate."
+      "sanitizedDiagnosticsHardened": true
     },
     "G3": {
-      "status": "IMPLEMENTED_CI_RUNTIME_PENDING",
-      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-concurrency-idempotency-01.mjs",
-      "scope": [
-        "multi-connection concurrent claims",
-        "atomic failure injection",
-        "replacement slot reuse",
-        "device replay",
-        "setup retry preservation",
-        "D1 graph integrity"
-      ],
-      "currentEvidence": "runtime harness present; CI execution not yet exposed by connector",
-      "candidateHead": "90625dc319866d5d77191efc1a384b1c9d2b5e1e"
+      "status": "PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY",
+      "verifiedAt": "2026-09-29",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS",
+      "remaining": [
+        "refresh/revoke/renew conflict matrix"
+      ]
+    },
+    "G4": {
+      "status": "PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY",
+      "verifiedAt": "2026-09-29",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS",
+      "remaining": [
+        "blocked license states behavioral gate",
+        "expired/revoked setup behavioral gate"
+      ]
     }
   },
   "step2Status": {
@@ -305,6 +332,10 @@
   "candidateState": {
     "branch": "governance/cloud-center-roadmap-step1-20260929",
     "head": "90625dc319866d5d77191efc1a384b1c9d2b5e1e",
-    "note": "Latest candidate HEAD after final G2 hardening; main baseline remains d064110... for auditability."
-  }
+    "note": "Latest candidate HEAD after final G2 hardening; main baseline remains d064110... for auditability.",
+    "codeCertificationHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+    "latestGovernanceHead": "27b63e88e7f678545d86b24d1032e231f88b2c5e",
+    "mainBaseline": "d064110036bdebfa4db98e032fe9627a0a86fabc"
+  },
+  "baselineVersion": "1.2.0"
 }
