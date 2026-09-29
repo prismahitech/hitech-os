@@ -10,8 +10,11 @@ PROJECTION_PATHS=("prisma-html/authority/rifat/visual-source-manifest.json",)
 
 def _paths(root:Path, paths:Iterable[str|Path])->list[Path]:
     out=[]
+    root_resolved=root.resolve()
     for raw in paths:
-        path=root/Path(raw)
+        path=(root/Path(raw)).resolve()
+        if path!=root_resolved and root_resolved not in path.parents:
+            raise CanonicalRegistrationError(f"CURRENT_TRUTH_PATH_ESCAPE:{raw}")
         if not path.is_file(): raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{raw}")
         out.append(path)
     return sorted(set(out),key=lambda p:str(p).replace("\\","/"))
@@ -22,6 +25,23 @@ def _bundle(root:Path, paths:Iterable[str|Path])->tuple[str,list[dict]]:
         rel=str(p.relative_to(root)).replace("\\","/")
         rows.append({"path":rel,"sha256":file_sha256(p),"bytes":p.stat().st_size})
     return sha256_json(rows),rows
+
+def _bucket_allowed_path(bucket:str, relative:str)->bool:
+    path=Path(relative)
+    if path.is_absolute() or ".." in path.parts:
+        return False
+    normalized=path.as_posix()
+    if bucket=="targetIndex":
+        return normalized.startswith("prisma-html/authority/rifat/prisma-ui/visual-control/target-index/") and normalized.endswith(".json")
+    if bucket=="identity":
+        return normalized.startswith("prisma-html/authority/rifat/identity/registries/") and normalized.endswith(".json")
+    if bucket=="ndc":
+        return normalized.startswith(NDC_ROOT.as_posix()+"/") and normalized.endswith(".json")
+    if bucket=="rifat":
+        return normalized in set(RIFAT_PATHS)
+    if bucket=="projection":
+        return normalized in set(PROJECTION_PATHS)
+    return bucket in {"authorityMesh","layerMap"}
 
 def _glob_bundle(root:Path, directory:Path)->tuple[str,list[dict]]:
     base=root/directory
@@ -65,9 +85,18 @@ def verify_current_truth(repo_root:Path, snapshot:dict, *, evidence_target_id:st
             if row.get("externalRef"):
                 actual.append({"externalRef":row["externalRef"],"sha256":row["sha256"]})
             else:
-                path=repo_root/str(row.get("path",""))
-                if not path.is_file(): raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{row.get('path')}")
-                actual.append({"path":row["path"],"sha256":file_sha256(path),"bytes":path.stat().st_size})
+                relative=str(row.get("path","") or "")
+                if not _bucket_allowed_path(bucket,relative):
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_UNEXPECTED_SOURCE_PATH:{bucket}:{relative}")
+                raw_path=repo_root/relative
+                if raw_path.is_symlink():
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SYMLINK:{bucket}:{relative}")
+                path=raw_path.resolve()
+                root=repo_root.resolve()
+                if path!=root and root not in path.parents:
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_PATH_ESCAPE:{relative}")
+                if not path.is_file(): raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{relative}")
+                actual.append({"path":relative,"sha256":file_sha256(path),"bytes":path.stat().st_size})
         actual.sort(key=lambda x:str(x.get("path") or x.get("externalRef")))
         if len(actual)==1 and "externalRef" in actual[0]:
             if actual[0].get("sha256") != snapshot.get(field):
