@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -71,13 +72,16 @@ def _atomic_write_json(path:Path,value:Any)->None:
 
 def current_repo_head(repo_root:Path)->str:
     env=os.environ.get("GITHUB_SHA")
-    if isinstance(env,str) and len(env)==40: return env
+    if isinstance(env,str) and len(env)==40:
+        return env
     try:
         proc=subprocess.run(["git","rev-parse","HEAD"],cwd=repo_root,check=True,capture_output=True,text=True)
-    except Exception as exc: raise StaleHeadError("CURRENT_REPO_HEAD_UNAVAILABLE") from exc
-    value=proc.stdout.strip()
-    if len(value)!=40: raise StaleHeadError("CURRENT_REPO_HEAD_INVALID")
-    return value
+        value=proc.stdout.strip()
+        if len(value)==40:
+            return value
+    except Exception:
+        pass
+    raise StaleHeadError("CURRENT_REPO_HEAD_UNAVAILABLE")
 
 def _acquire_lock(lock_dir:Path)->None:
     lock_dir.parent.mkdir(parents=True,exist_ok=True)
@@ -88,6 +92,23 @@ def _acquire_lock(lock_dir:Path)->None:
 def _release_lock(lock_dir:Path)->None:
     if (lock_dir/"LOCK.json").exists(): (lock_dir/"LOCK.json").unlink()
     if lock_dir.exists(): lock_dir.rmdir()
+
+def _transaction_lock_path(repo_root:Path,request_id:str)->Path:
+    return repo_root/TRANSACTIONS_ROOT/f".{request_id}.lock"
+
+def _assert_request_id(request_id:str)->None:
+    if not isinstance(request_id,str) or not re.fullmatch(r"cpr-[a-z0-9][a-z0-9._-]{0,95}",request_id):
+        raise UnsafeMutationError("REQUEST_ID_INVALID")
+
+def _assert_receipt_path(root:Path,path:Path,request_id:str)->None:
+    expected=(root/RESULTS_ROOT/f"{request_id}.json").resolve()
+    if path.resolve()!=expected:
+        raise UnsafeMutationError("RECEIPT_PATH_INVALID")
+
+def _assert_journal_path(root:Path,path:Path,request_id:str)->None:
+    expected=(root/TRANSACTIONS_ROOT/request_id/"journal.json").resolve()
+    if path.resolve()!=expected:
+        raise UnsafeMutationError("JOURNAL_PATH_INVALID")
 
 def _registry_ids(registry:dict[str,Any],key:str)->set[str]:
     out=set()
@@ -102,8 +123,15 @@ def _validate_request(request:dict[str,Any])->None:
     for field in ("requestId","target","expectedCurrentHead","currentTruth","source","decision","authorization"):
         if not request.get(field): raise CanonicalRegistrationError(f"REQUEST_FIELD_MISSING:{field}")
     target=request["target"]
-    if not target.get("targetId") or not target.get("censusTargetId") or not target.get("surfaceKey"):
-        raise CanonicalRegistrationError("TARGET_CANONICAL_AND_CENSUS_IDS_REQUIRED")
+    if not target.get("censusTargetId") or not target.get("surfaceKey"):
+        raise CanonicalRegistrationError("CENSUS_TARGET_ID_AND_SURFACE_REQUIRED")
+    target_action = (request["decision"].get("targetAction") or {}).get("action")
+    if target_action == "REUSE_EXISTING" and not target.get("targetId"):
+        raise CanonicalRegistrationError("EXISTING_CANONICAL_TARGET_ID_REQUIRED")
+    if target.get("targetId") is not None and (
+        not isinstance(target["targetId"], str) or not target["targetId"].startswith("TGT.")
+    ):
+        raise CanonicalRegistrationError("CANONICAL_TARGET_ID_INVALID")
     truth=request["currentTruth"]
     if truth.get("schema")!="prisma.visual.current-truth-snapshot.v1": raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_REQUIRED")
     required_truth={"repoHead","snapshotId","targetIndexDigest","identityDigest","rifatDigest","ndcDigest","projectionDigest","authorityMeshDigest","layerMapDigest","targetEvidenceDigest","evidenceTargetId"}
@@ -129,7 +157,9 @@ def _validate_request(request:dict[str,Any])->None:
     assert_no_inferred_id(decision.get("idInputs") or {})
 
 def _validate_source_pin(request:dict[str,Any],repo_root:Path)->None:
-    path=(repo_root/request["source"]["path"]).resolve()
+    raw_path=repo_root/request["source"]["path"]
+    if raw_path.is_symlink(): raise UnsafeMutationError("SOURCE_SYMLINK_FORBIDDEN")
+    path=raw_path.resolve()
     root=repo_root.resolve()
     if path!=root and root not in path.parents: raise UnsafeMutationError("SOURCE_PATH_ESCAPE")
     if not path.is_file(): raise CanonicalRegistrationError("SOURCE_FILE_NOT_FOUND")
@@ -152,7 +182,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         raise CanonicalRegistrationError("APPLICATION_LAYER_AUTHORITY_REFERENCE_REQUIRED")
     meaning_id=decision["semanticAuthority"]["canonicalMeaningId"]
 
-    existing_bindings=_load(repo_root/ALLOWED_CANONICAL_PATHS.pop() if False else repo_root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json")
+    existing_bindings=_load(repo_root/"prisma-html/authority/rifat/identity/registries/element-bindings.registry.json")
     existing_binding_ids=_registry_ids(existing_bindings,"bindings")
     existing_target_ids={str(target_row.get("targetId")) for entry in existing_bindings.get("bindings",[]) if isinstance(entry,dict) for target_row in entry.get("targets",[]) if isinstance(target_row,dict) and target_row.get("targetId")}
     existing_recipe_registry=_load(repo_root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json")
@@ -160,34 +190,74 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
     target_action=decision.get("targetAction") or {}
     if target_action.get("action")=="CREATE_NEW":
-        td=validate_target_id(
-            requested_id=target["targetId"],
-            semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}",
-            census_target_id=target["censusTargetId"],
-            surface_key=target["surfaceKey"],
-            existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])},
-        )
-        if td.action != "CREATE_NEW":
-            raise IdCollisionError("TARGET_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
-    elif target_action.get("action")!="REUSE_EXISTING":
+        semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}"
+        existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])}
+        if target.get("targetId") is None:
+            td=allocate_id("target",semantic_key,existing_ids)
+            if td.action != "CREATE_NEW":
+                raise IdCollisionError("TARGET_ID_ALREADY_EXISTS")
+            canonical_target_id=td.id
+        else:
+            td=validate_target_id(
+                requested_id=target["targetId"],
+                semantic_key=semantic_key,
+                census_target_id=target["censusTargetId"],
+                surface_key=target["surfaceKey"],
+                existing_ids=existing_ids,
+            )
+            if td.action != "CREATE_NEW":
+                raise IdCollisionError("TARGET_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
+            canonical_target_id=target["targetId"]
+    elif target_action.get("action")=="REUSE_EXISTING":
+        canonical_target_id=target["targetId"]
+        if canonical_target_id not in existing_target_ids:
+            raise CanonicalRegistrationError("TARGET_REUSE_NOT_FOUND")
+    else:
         raise CanonicalRegistrationError("TARGET_REGISTRATION_ACTION_REQUIRED")
 
+    exact=copy.deepcopy(binding.get("exactBinding") or {})
+    targets=exact.get("targets")
+    if not isinstance(targets,list) or len(targets)!=1:
+        raise CanonicalRegistrationError("EXACT_BINDING_MUST_HAVE_ONE_TARGET")
+    targets[0]["targetId"]=canonical_target_id
+    exact["targets"]=targets
+
+    from .application_policy import ApplicationPolicyError, validate_application_policy
+    try:
+        validate_application_policy({
+            **layer,
+            "implementationLayerId": exact["targets"][0].get("implementationLayerId"),
+        })
+    except ApplicationPolicyError as exc:
+        raise CanonicalRegistrationError(str(exc)) from exc
+
     if binding.get("action")=="CREATE_NEW":
-        b=allocate_id("binding",f"{target['surfaceKey']}|{target['targetId']}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
+        b=allocate_id("binding",f"{target['surfaceKey']}|{canonical_target_id}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
         if b.action!="CREATE_NEW": raise IdCollisionError("BINDING_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
         binding_id=b.id
     elif binding.get("action")=="REUSE_EXISTING":
         binding_id=binding.get("bindingId")
         if not binding_id or binding_id not in existing_binding_ids: raise CanonicalRegistrationError("BINDING_REUSE_NOT_FOUND")
+        existing_binding_entries=[
+            entry for entry in existing_bindings.get("bindings",[])
+            if isinstance(entry,dict) and entry.get("bindingId")==binding_id
+        ]
+        if len(existing_binding_entries)!=1:
+            raise BindingCollisionError("BINDING_REUSE_NOT_UNIQUE")
+        existing_exact=existing_binding_entries[0]
+        if existing_exact.get("selector")!=exact.get("selector") or existing_exact.get("targets")!=exact.get("targets"):
+            raise BindingCollisionError("BINDING_REUSE_EXACT_BINDING_MISMATCH")
     else: raise CanonicalRegistrationError("BINDING_ACTION_INVALID")
 
-    exact=binding.get("exactBinding")
     try:
-        validate_exact_binding(repo_root,exact,target["targetId"],target["surfaceKey"],meaning_id)
+        validate_exact_binding(repo_root,exact,canonical_target_id,target["surfaceKey"],meaning_id)
     except AuthorityBindingError as exc: raise CanonicalRegistrationError(str(exc)) from exc
     if binding.get("registryEntry") is not None and binding.get("action")=="CREATE_NEW":
         entry=copy.deepcopy(binding["registryEntry"]); entry["bindingId"]=binding_id
-        if entry!=exact: raise BindingCollisionError("REGISTRY_ENTRY_MUST_EQUAL_EXACT_BINDING")
+        entry_targets=entry.get("targets")
+        if not isinstance(entry_targets,list) or len(entry_targets)!=1: raise BindingCollisionError("REGISTRY_ENTRY_TARGET_REQUIRED")
+        entry_targets[0]["targetId"]=canonical_target_id; entry["targets"]=entry_targets
+        if entry.get("selector") != exact.get("selector") or entry_targets[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("REGISTRY_ENTRY_MUST_EQUAL_EXACT_BINDING")
     else:
         entry=exact
 
@@ -199,7 +269,12 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         recipe_entry["recipeId"]=recipe_id
         recipe_path=recipe_entry.get("path")
         if not isinstance(recipe_path,str): raise CanonicalRegistrationError("NEW_RECIPE_SOURCE_PATH_REQUIRED")
-        recipe_file=(repo_root/"prisma-html/authority/rifat/identity")/recipe_path
+        identity_root=(repo_root/"prisma-html/authority/rifat/identity").resolve()
+        raw_recipe_file=identity_root/recipe_path
+        if raw_recipe_file.is_symlink(): raise UnsafeMutationError("NEW_RECIPE_SOURCE_SYMLINK")
+        recipe_file=raw_recipe_file.resolve()
+        if recipe_file!=identity_root and identity_root not in recipe_file.parents:
+            raise UnsafeMutationError("NEW_RECIPE_SOURCE_PATH_ESCAPE")
         if not recipe_file.is_file(): raise CanonicalRegistrationError("NEW_RECIPE_SOURCE_NOT_FOUND")
         expected_recipe_sha=recipe_entry.get("fileSha256") or recipe_entry.get("canonicalRecipeSha256")
         if not isinstance(expected_recipe_sha,str) or file_sha256(recipe_file)!=expected_recipe_sha: raise SourceDriftError("NEW_RECIPE_SOURCE_DRIFT")
@@ -209,11 +284,34 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         recipe_entry=None
     else: raise CanonicalRegistrationError("RECIPE_ACTION_INVALID")
 
-    collisions=[t for bentry in existing_bindings.get("bindings",[]) if isinstance(bentry,dict) for t in bentry.get("targets",[]) if isinstance(t,dict) and t.get("targetId")==target["targetId"]]
+    from .collision_classifier import classify_collisions
+    collision_classifications=classify_collisions(
+        repo_root,
+        target_id=canonical_target_id,
+        surface_key=target["surfaceKey"],
+        semantic_meaning_id=meaning_id,
+        proposed_binding_target=exact["targets"][0],
+        proposed_binding_id=binding_id,
+        proposed_layer_id=exact["targets"][0].get("layerId"),
+        projection_expectation=decision.get("projectionAction") or {},
+    )
+    blocking_collisions=[x for x in collision_classifications if x["code"] not in {"DUPLICATE_EXACT"}]
+    if blocking_collisions:
+        primary=blocking_collisions[0]["code"]
+        exc_types={
+            "SEMANTIC_COLLISION":SemanticCollisionError,
+            "BINDING_COLLISION":BindingCollisionError,
+            "ID_COLLISION":IdCollisionError,
+            "LAYER_COLLISION":LayerCollisionError,
+            "PROJECTION_CONFLICT":ProjectionConflictError,
+        }
+        raise exc_types.get(primary,CollisionError)(primary)
+    collisions=[t for bentry in existing_bindings.get("bindings",[]) if isinstance(bentry,dict) for t in bentry.get("targets",[]) if isinstance(t,dict) and t.get("targetId")==canonical_target_id]
     if collisions:
         if len(collisions)>1: raise BindingCollisionError("MULTIPLE_EXISTING_TARGET_BINDINGS")
-        if collisions[0] != exact: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
+        if collisions[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
         if target_action.get("action")=="CREATE_NEW": raise BindingCollisionError("TARGET_ID_ALREADY_REGISTERED")
+        if binding.get("action")=="CREATE_NEW": raise BindingCollisionError("TARGET_ALREADY_HAS_DIFFERENT_BINDING_ID")
         status="NO_OP_IDEMPOTENT"
     else: status="APPLY"
 
@@ -225,9 +323,9 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
     return {
         "schema":PLAN_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],
-        "targetId":target["targetId"],"censusTargetId":target["censusTargetId"],"surfaceKey":target["surfaceKey"],
+        "targetId":canonical_target_id,"censusTargetId":target["censusTargetId"],"surfaceKey":target["surfaceKey"],
         "semanticAction":decision["semanticAction"],"semanticDecisionId":decision.get("semanticDecisionId"),
-        "ids":{"targetId":target["targetId"],"bindingId":binding_id,"recipeId":recipe_id},
+        "ids":{"targetId":canonical_target_id,"bindingId":binding_id,"recipeId":recipe_id},
         "bindingAction":binding.get("action"),"recipeAction":recipe.get("action"),"targetAction":target_action.get("action"),
         "layerAction":layer,"semanticAuthority":decision["semanticAuthority"],
         "projectionAction":decision.get("projectionAction",{"mode":"DEFERRED_DERIVATION","authorized":False}),
@@ -235,6 +333,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         "preconditions":{"expectedCurrentHead":request["expectedCurrentHead"],"currentTruthDigest":sha256_json(request["currentTruth"]),"sourceDigest":request["source"]["digest"],
                         "registryDigests":{"recipeRegistry":sha256_json(existing_recipe_registry),"bindingRegistry":sha256_json(existing_bindings)}},
         "status":status,
+        "collisionClassifications":collision_classifications,
     }
 
 def _apply(repo_root:Path,mutation:dict[str,Any])->tuple[Path,str,str,Any]:
@@ -259,23 +358,40 @@ def _evidence(request,plan,status,applied,errors):
 
 def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     request=copy.deepcopy(request); request["_repoRoot"]=str(repo_root.resolve())
-    receipt_path=repo_root/RESULTS_ROOT/f"{request['requestId']}.json"; receipt_path.parent.mkdir(parents=True,exist_ok=True)
+    request_id=request.get("requestId")
+    _assert_request_id(request_id)
+    receipt_path=repo_root/RESULTS_ROOT/f"{request_id}.json"; receipt_path.parent.mkdir(parents=True,exist_ok=True)
     request_digest=sha256_json({k:v for k,v in request.items() if k!="_repoRoot"})
-    if receipt_path.exists():
-        prior=_load(receipt_path)
-        if prior.get("requestDigest")==request_digest and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"} and prior.get("result"):
-            if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
-            return prior["result"]
-
-    plan=build_plan(request,repo_root)
-    journal_dir=repo_root/TRANSACTIONS_ROOT/request["requestId"]; journal_path=journal_dir/"journal.json"
-    if plan["status"]=="NO_OP_IDEMPOTENT":
-        evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
-        result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
-        evidence["result"]=result; _atomic_write_json(receipt_path,evidence); return result
-
-    lock=repo_root/TRANSACTIONS_ROOT/f".{request['requestId']}.lock"; _acquire_lock(lock)
+    lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
+        _assert_receipt_path(repo_root,receipt_path,request_id)
+        if receipt_path.exists():
+            prior=_load(receipt_path)
+            prior_digest=prior.get("requestDigest")
+            if prior_digest and prior_digest!=request_digest:
+                raise UnsafeMutationError("REQUEST_ID_REUSE_CONFLICT")
+            if prior_digest==request_digest and prior.get("status")=="APPLIED" and prior.get("result"):
+                if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
+                for row in prior.get("postState",[]):
+                    rel=row.get("path")
+                    expected_post=row.get("sha256")
+                    if rel not in ALLOWED_CANONICAL_PATHS or not isinstance(expected_post,str):
+                        raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_INVALID")
+                    current_path=repo_root/rel
+                    if not current_path.is_file() or sha256_json(_load(current_path))!=expected_post:
+                        raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_DRIFT:"+rel)
+                return prior["result"]
+
+
+        plan=build_plan(request,repo_root)
+        journal_dir=repo_root/TRANSACTIONS_ROOT/request["requestId"]; journal_path=journal_dir/"journal.json"
+        if plan["status"]=="NO_OP_IDEMPOTENT":
+            evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
+            result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
+            evidence["result"]=result; _atomic_write_json(receipt_path,evidence); return result
+        if not plan["mutations"]:
+            raise CanonicalRegistrationError("NO_CANONICAL_MUTATION_REQUIRED")
+
         head=current_repo_head(repo_root)
         if head!=request["expectedCurrentHead"]: raise StaleHeadError(f"CURRENT_HEAD_CHANGED:{head}:{request['expectedCurrentHead']}")
         prestate={m["path"]:_load(repo_root/m["path"]) for m in plan["mutations"]}
@@ -292,11 +408,18 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
             from .postconditions import verify_registration_postconditions
             post=verify_registration_postconditions(repo_root,plan)
         except Exception as exc:
+            rollback_verified=True
             for rel,before in prestate.items():
-                path=repo_root/rel; completed=next((x[2] for x in applied if str(x[0].relative_to(repo_root)).replace("\\","/")==rel),None)
-                if completed is not None and sha256_json(_load(path))==completed: _atomic_write_json(path,before)
-            journal["status"]="ROLLED_BACK_AFTER_FAILURE"; journal["error"]=str(exc); journal["rollbackVerified"]=True; _atomic_write_json(journal_path,journal)
+                path=repo_root/rel
+                completed=next((x[2] for x in applied if str(x[0].relative_to(repo_root)).replace("\\","/")==rel),None)
+                if completed is not None:
+                    if sha256_json(_load(path))==completed:
+                        _atomic_write_json(path,before)
+                    if sha256_json(_load(path))!=sha256_json(before):
+                        rollback_verified=False
+            journal["status"]="ROLLED_BACK_AFTER_FAILURE"; journal["error"]=str(exc); journal["rollbackVerified"]=rollback_verified; _atomic_write_json(journal_path,journal)
             evidence=_evidence(request,plan,"FAILED",applied,[str(exc)]); evidence["journalPath"]=str(journal_path.relative_to(repo_root)).replace("\\","/")
+            evidence["rollbackVerified"]=rollback_verified
             _atomic_write_json(receipt_path,evidence); raise
         journal["status"]="APPLIED"; journal["postStateDigests"]={str(p.relative_to(repo_root)).replace("\\","/"):a for p,_,a,_ in applied}; _atomic_write_json(journal_path,journal)
         evidence=_evidence(request,plan,"APPLIED",applied,[]); evidence["journalPath"]=str(journal_path.relative_to(repo_root)).replace("\\","/"); evidence["postconditions"]=post; evidence["preStateValues"]={str(p.relative_to(repo_root)).replace("\\","/"):b for p,_,_,b in applied}
@@ -306,17 +429,40 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         _release_lock(lock)
 
 def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
+    _assert_request_id(request_id)
     receipt=repo_root/RESULTS_ROOT/f"{request_id}.json"
-    if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
-    evidence=_load(receipt)
-    if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
-    restored=[]
-    for row in evidence.get("postState",[]):
-        rel=row["path"]; path=repo_root/rel
-        if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
-        prior=evidence.get("preStateValues",{}).get(rel)
-        if prior is None: raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:"+rel)
-        _atomic_write_json(path,prior); restored.append(rel)
-    evidence["status"]="ROLLED_BACK"; evidence["rollback"]={"restoredPaths":restored,"transactionScoped":True,"newerWorkProtection":True}
-    _atomic_write_json(receipt,evidence)
-    return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":restored}
+    lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
+    try:
+        if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
+        evidence=_load(receipt)
+        if evidence.get("status")=="ROLLED_BACK":
+            return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":evidence.get("rollback",{}).get("restoredPaths",[])}
+        if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
+        post_state=evidence.get("postState")
+        pre_state=evidence.get("preStateValues")
+        if not isinstance(post_state,list) or not post_state or not isinstance(pre_state,dict) or not pre_state:
+            raise UnsafeMutationError("ROLLBACK_RECEIPT_STATE_INCOMPLETE")
+        journal_path=evidence.get("journalPath")
+        if not isinstance(journal_path,str): raise UnsafeMutationError("ROLLBACK_JOURNAL_REQUIRED")
+        journal_file=repo_root/journal_path
+        _assert_journal_path(repo_root,journal_file,request_id)
+        if not journal_file.is_file(): raise UnsafeMutationError("ROLLBACK_JOURNAL_NOT_FOUND")
+        restored=[]
+        for row in post_state:
+            rel=row["path"]; path=repo_root/rel
+            if rel not in ALLOWED_CANONICAL_PATHS: raise UnsafeMutationError("ROLLBACK_PATH_NOT_GOVERNED:"+str(rel))
+            if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
+            prior=evidence.get("preStateValues",{}).get(rel)
+            if prior is None: raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:"+rel)
+            _atomic_write_json(path,prior); restored.append(rel)
+        evidence["status"]="ROLLED_BACK"; evidence["rollback"]={"restoredPaths":restored,"transactionScoped":True,"newerWorkProtection":True}
+        _atomic_write_json(receipt,evidence)
+        journal=_load(journal_file)
+        if journal.get("requestId")!=request_id or journal.get("requestDigest")!=evidence.get("requestDigest"):
+            raise UnsafeMutationError("ROLLBACK_JOURNAL_IDENTITY_MISMATCH")
+        journal["status"]="ROLLED_BACK"
+        journal["rollback"]=evidence["rollback"]
+        _atomic_write_json(journal_file,journal)
+        return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":restored}
+    finally:
+        _release_lock(lock)
