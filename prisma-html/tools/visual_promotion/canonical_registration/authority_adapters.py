@@ -48,5 +48,9 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
     lookup={"ownerId":"componentOwners","routeId":"routes","regionId":"regionOwners","slotId":"slots","componentUiId":"components","layerId":"layers"}
     for field,bucket in lookup.items():
         if target[field] not in idx[bucket]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_{field.upper()}:{target[field]}")
+    implementation_layer=target.get("implementationLayerId")
+    if implementation_layer is not None:
+        if not isinstance(implementation_layer,str) or not implementation_layer or implementation_layer not in idx["layers"]:
+            raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_IMPLEMENTATIONLAYERID:{implementation_layer}")
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
