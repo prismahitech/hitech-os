@@ -40,7 +40,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         (base/"visual-control/components.json").write_text(json.dumps({"components":[{"component_id":"component"}]}),encoding="utf-8")
         (base/"visual-control/editable-slots.json").write_text(json.dumps({"slotUnitSamples":[{"slot_unit_id":"slot"}]}),encoding="utf-8")
         (base/"visual-control/layers.json").write_text(json.dumps({
-            "layerSamples":[{"layer_id":"LYR.test"}],"certifiedLayers":[]
+            "layerSamples":[{"layer_id":"LYR.test"},{"layer_id":"physical.css.test"}],"certifiedLayers":[]
         }),encoding="utf-8")
 
         ti=base/"visual-control/target-index"
