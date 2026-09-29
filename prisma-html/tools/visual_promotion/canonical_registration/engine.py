@@ -380,11 +380,11 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
 def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
     receipt=repo_root/RESULTS_ROOT/f"{request_id}.json"
-    if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
-    evidence=_load(receipt)
-    if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
     lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
+        if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
+        evidence=_load(receipt)
+        if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
         restored=[]
         for row in evidence.get("postState",[]):
             rel=row["path"]; path=repo_root/rel
