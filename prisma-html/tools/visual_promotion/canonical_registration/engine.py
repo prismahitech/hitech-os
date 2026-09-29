@@ -157,7 +157,9 @@ def _validate_request(request:dict[str,Any])->None:
     assert_no_inferred_id(decision.get("idInputs") or {})
 
 def _validate_source_pin(request:dict[str,Any],repo_root:Path)->None:
-    path=(repo_root/request["source"]["path"]).resolve()
+    raw_path=repo_root/request["source"]["path"]
+    if raw_path.is_symlink(): raise UnsafeMutationError("SOURCE_SYMLINK_FORBIDDEN")
+    path=raw_path.resolve()
     root=repo_root.resolve()
     if path!=root and root not in path.parents: raise UnsafeMutationError("SOURCE_PATH_ESCAPE")
     if not path.is_file(): raise CanonicalRegistrationError("SOURCE_FILE_NOT_FOUND")
@@ -421,8 +423,17 @@ def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
         if evidence.get("status")=="ROLLED_BACK":
             return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":evidence.get("rollback",{}).get("restoredPaths",[])}
         if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
+        post_state=evidence.get("postState")
+        pre_state=evidence.get("preStateValues")
+        if not isinstance(post_state,list) or not post_state or not isinstance(pre_state,dict) or not pre_state:
+            raise UnsafeMutationError("ROLLBACK_RECEIPT_STATE_INCOMPLETE")
+        journal_path=evidence.get("journalPath")
+        if not isinstance(journal_path,str): raise UnsafeMutationError("ROLLBACK_JOURNAL_REQUIRED")
+        journal_file=repo_root/journal_path
+        _assert_journal_path(repo_root,journal_file,request_id)
+        if not journal_file.is_file(): raise UnsafeMutationError("ROLLBACK_JOURNAL_NOT_FOUND")
         restored=[]
-        for row in evidence.get("postState",[]):
+        for row in post_state:
             rel=row["path"]; path=repo_root/rel
             if rel not in ALLOWED_CANONICAL_PATHS: raise UnsafeMutationError("ROLLBACK_PATH_NOT_GOVERNED:"+str(rel))
             if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
@@ -431,15 +442,12 @@ def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
             _atomic_write_json(path,prior); restored.append(rel)
         evidence["status"]="ROLLED_BACK"; evidence["rollback"]={"restoredPaths":restored,"transactionScoped":True,"newerWorkProtection":True}
         _atomic_write_json(receipt,evidence)
-        journal_path=evidence.get("journalPath")
-        if isinstance(journal_path,str):
-            journal_file=repo_root/journal_path
-            _assert_journal_path(repo_root,journal_file,request_id)
-            if journal_file.is_file():
-                journal=_load(journal_file)
-                journal["status"]="ROLLED_BACK"
-                journal["rollback"]=evidence["rollback"]
-                _atomic_write_json(journal_file,journal)
+        journal=_load(journal_file)
+        if journal.get("requestId")!=request_id or journal.get("requestDigest")!=evidence.get("requestDigest"):
+            raise UnsafeMutationError("ROLLBACK_JOURNAL_IDENTITY_MISMATCH")
+        journal["status"]="ROLLED_BACK"
+        journal["rollback"]=evidence["rollback"]
+        _atomic_write_json(journal_file,journal)
         return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":restored}
     finally:
         _release_lock(lock)
