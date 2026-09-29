@@ -147,6 +147,11 @@ class D1Harness {
     if (!r.ok) throw new Error(r.error || "D1_FIRST_FAILED");
     return r.row;
   }
+  async all(sql, params = []) {
+    const r = await this.command("query", { sql, params });
+    if (!r.ok) throw new Error(r.error || "D1_ALL_FAILED");
+    return r.rows;
+  }
   async run(sql, params = []) {
     const r = await this.command("run", { sql, params });
     if (!r.ok) throw new Error(r.error || "D1_RUN_FAILED");
