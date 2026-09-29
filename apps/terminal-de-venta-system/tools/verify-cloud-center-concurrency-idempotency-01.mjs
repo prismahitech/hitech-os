@@ -171,7 +171,7 @@ class D1Harness {
         params,
         run: () => harness.run(sql, params),
         first: () => harness.first(sql, params),
-        all: () => harness.all(sql, params)
+        all: async () => ({ results: await harness.all(sql, params) })
       })
     };
   }
