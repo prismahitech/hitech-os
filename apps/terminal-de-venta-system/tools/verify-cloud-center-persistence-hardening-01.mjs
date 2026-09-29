@@ -61,6 +61,9 @@ function main() {
   assert(replacement.includes("runBatch(env, ["), "REPLACEMENT_NOT_TRANSACTIONAL");
   assert(replacement.includes("D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED"), "REPLACEMENT_READ_AFTER_WRITE_MISSING");
   assert(replacement.includes("select count(*) as count from customer_device_claims"), "REPLACEMENT_RECOMPUTES_ACTIVE_CLAIM_COUNT");
+  assert(replacement.includes("set status = 'AVAILABLE', device_id = null"), "REPLACEMENT_DOES_NOT_RELEASE_EXACT_CLAIM_SLOT");
+  assert(replacement.includes("D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED"), "REPLACEMENT_READ_AFTER_WRITE_MISSING");
+  assert(replacement.includes("releasedClaimSlot"), "REPLACEMENT_SLOT_READBACK_MISSING");
   assert(replacement.includes("auditEventExists"), "REPLACEMENT_AUDIT_READBACK_MISSING");
   checksPush("replacement_atomic_and_readback");
 
@@ -75,6 +78,8 @@ function main() {
   checksPush("audit_helper_fail_closed");
 
   assert(migration0004.includes("ALTER TABLE customer_device_claims ADD COLUMN claim_slot_id TEXT;"), "CLAIM_SLOT_COLUMN_MIGRATION_MISSING");
+  assert(migration0004.includes("UPDATE customer_device_claims"), "CLAIM_SLOT_LEGACY_BACKFILL_MISSING");
+  assert(migration0004.includes("customer_device_claim_slots.device_id = customer_device_claims.device_id"), "CLAIM_SLOT_BACKFILL_NOT_DEVICE_BOUND");
   assert(migration0004.includes("ux_customer_device_claims_setup_surface_slot"), "CLAIM_SLOT_UNIQUE_INDEX_MISSING");
   assert(migration0002.includes("UNIQUE (setup_id, device_id)"), "BASE_DEVICE_ID_IDEMPOTENCY_CONSTRAINT_MISSING");
   checksPush("schema_constraints_support_atomic_claim");
