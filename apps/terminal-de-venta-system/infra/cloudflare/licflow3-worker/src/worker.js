@@ -1616,7 +1616,12 @@ async function approveDeviceReplacement(request, env) {
   const pass = await setupByCode(env, setupCode);
   if (!pass) return customerError("SETUP_NOT_FOUND", "SETUP_NOT_FOUND", "No encontramos este setup.", "Revisa el Setup Code o pide un link nuevo.", 404);
   const claim = await activeClaimForDevice(env, pass.setupId, oldDeviceId);
-  if (!claim || claim.surface !== surface) return json(operatorResult("replacement.approve", "confirmed", "DEVICE_REPLACEMENT_NOT_ALLOWED", { ok: false, safeToMutate: false, operatorMessage: "No hay claim activo para liberar.", nextStep: "Verifica setup, surface y oldDeviceId." }), 404);
+  if (!claim || claim.surface !== surface) {
+    const prior = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
+    if (!prior || prior.status !== "replaced") {
+      return json(operatorResult("replacement.approve", "confirmed", "DEVICE_REPLACEMENT_NOT_ALLOWED", { ok: false, safeToMutate: false, operatorMessage: "No hay claim activo para liberar.", nextStep: "Verifica setup, surface y oldDeviceId." }), 404);
+    }
+  }
 
   const auditMode = await auditSchemaMode(env);
   if (auditMode === "none") return json(operatorResult("replacement.approve", "confirmed", "AUDIT_TABLE_REQUIRED", { ok: false, safeToMutate: false, operatorMessage: "No hay tabla de auditoria compatible.", nextStep: "Inspecciona audit_events/audit_log antes de reintentar." }), 500);
@@ -1626,20 +1631,25 @@ async function approveDeviceReplacement(request, env) {
   const auditStatement = auditInsertStatement(auditMode, auditEventId, pass.tenantSlug, "customer_device.replacement.approve", { setupCode, surface, oldDeviceId, reason, replacementAt });
   if (!auditStatement) return json(operatorResult("replacement.approve", "confirmed", "AUDIT_TABLE_REQUIRED", { ok: false, safeToMutate: false, operatorMessage: "No pudimos construir el registro de auditoria.", nextStep: "Inspecciona audit_events/audit_log antes de reintentar." }), 500);
 
-  // Replacement approval is atomic: claim state, aggregate slot count and
-  // audit event are committed together or not at all. The aggregate slot
-  // count is recomputed from active claims to avoid double-decrement races.
+  // Replacement approval atomically marks the old claim replaced, releases
+  // its exact prepared claim slot, recomputes aggregate occupancy, and writes audit.
+  // The replacementAt predicate prevents a concurrent retry from releasing a
+  // slot that a newer replacement/claim operation has already reused.
   const batch = await runBatch(env, [
     {
       sql: "update customer_device_claims set status = 'replaced', replaced_at = ? where setup_id = ? and device_id = ? and surface = ? and status = 'claimed'",
       params: [replacementAt, pass.setupId, oldDeviceId, surface]
     },
     {
+      sql: "update customer_device_claim_slots set status = 'AVAILABLE', device_id = null, claimed_at = null, audit_event_id = ?, updated_at = ? where slot_id = (select claim_slot_id from customer_device_claims where setup_id = ? and device_id = ? and surface = ? and replaced_at = ? limit 1) and status = 'CLAIMED'",
+      params: [auditEventId, now(), pass.setupId, oldDeviceId, surface, replacementAt]
+    },
+    {
       sql: "update customer_setup_slots set claimed = (select count(*) from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'), updated_at = ? where setup_id = ? and surface = ?",
       params: [pass.setupId, surface, now(), pass.setupId, surface]
     },
     auditStatement
-  ], { operation: "customer_device_replacement_approve", table: "customer_device_claims+customer_setup_slots+audit" });
+  ], { operation: "customer_device_replacement_approve", table: "customer_device_claims+customer_device_claim_slots+customer_setup_slots+audit" });
 
   if (!batch.ok) {
     return json(operatorResult("replacement.approve", "confirmed", batch.status, {
@@ -1651,39 +1661,43 @@ async function approveDeviceReplacement(request, env) {
     }), 500);
   }
 
-  const persistedClaim = await activeClaimForDevice(env, pass.setupId, oldDeviceId);
-  const replacedClaim = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by updated_at desc, created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
+  const replacedClaim = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt, claim_slot_id as claimSlotId from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by updated_at desc, created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
   const persistedSetupSlot = await first(env, "select claimed, allowed from customer_setup_slots where setup_id = ? and surface = ? limit 1", [pass.setupId, surface]);
-  const expectedActiveClaims = Number((await first(env, "select count(*) as count from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'", [pass.setupId, surface]))?.count || 0);
+  const activeClaims = Number((await first(env, "select count(*) as count from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'", [pass.setupId, surface]))?.count || 0);
+  const releasedClaimSlot = replacedClaim?.claimSlotId
+    ? await first(env, "select slot_id as slotId, status, device_id as deviceId, audit_event_id as auditEventId from customer_device_claim_slots where slot_id = ? limit 1", [replacedClaim.claimSlotId])
+    : null;
   const auditVerified = await auditEventExists(env, auditMode, auditEventId);
 
-  const claimIsReplaced = !persistedClaim && replacedClaim?.status === "replaced" && replacedClaim.replacedAt === replacementAt;
-  const claimAlreadyReplaced = !persistedClaim && replacedClaim?.status === "replaced";
+  const claimIsNewlyReplaced = replacedClaim?.status === "replaced" && replacedClaim.replacedAt === replacementAt;
+  const claimAlreadyReplaced = replacedClaim?.status === "replaced" && !claimIsNewlyReplaced;
+  const slotReleased = releasedClaimSlot?.status === "AVAILABLE" && releasedClaimSlot.deviceId == null;
   if (
-    (!claimIsReplaced && !claimAlreadyReplaced) ||
+    (!claimIsNewlyReplaced && !claimAlreadyReplaced) ||
+    !slotReleased ||
     !persistedSetupSlot ||
-    Number(persistedSetupSlot.claimed) !== expectedActiveClaims ||
+    Number(persistedSetupSlot.claimed) !== activeClaims ||
     Number(persistedSetupSlot.claimed) > Number(persistedSetupSlot.allowed) ||
     !auditVerified
   ) {
     return json(operatorResult("replacement.approve", "confirmed", "D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED", {
       ok: false,
       safeToMutate: false,
-      operatorMessage: "La aprobacion no fue declarada verde porque el estado final no pudo verificarse.",
-      nextStep: "Inspecciona claim, aggregate slot y audit antes de reintentar.",
-      safeToMutateChecks: { readAfterWrite: "failed", auditEvent: auditVerified ? "verified" : "not_verified" }
+      operatorMessage: "La aprobacion no fue declarada verde porque claim, slot y audit no quedaron verificables.",
+      nextStep: "Inspecciona claim, claim slot, aggregate slot y audit antes de reintentar.",
+      safeToMutateChecks: { readAfterWrite: "failed", auditEvent: auditVerified ? "verified" : "not_verified", releasedClaimSlot: slotReleased }
     }), 500);
   }
 
-  const idempotent = !claimIsReplaced;
   return json(operatorResult("replacement.approve", "confirmed", "DEVICE_REPLACEMENT_APPROVED", {
     safeToMutate: true,
     persisted: true,
-    idempotent,
+    idempotent: !claimIsNewlyReplaced,
     auditEventVerified: true,
+    slotReleased: true,
     operatorMessage: "Slot liberado para reclamar el nuevo dispositivo.",
     nextStep: "Ejecuta Device Claim con el nuevo deviceId.",
-    extra: { setupCode, surface, oldDeviceId, auditEventId }
+    extra: { setupCode, surface, oldDeviceId, claimSlotId: replacedClaim.claimSlotId, auditEventId }
   }));
 }
 
