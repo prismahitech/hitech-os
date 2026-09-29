@@ -129,17 +129,12 @@ class CanonicalRegistrationTests(unittest.TestCase):
         )
 
     def request(self):
-        from canonical_registration.policy import allocate_id
-        target_id=allocate_id(
-            "target","tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary",
-            set(),
-        ).id
         exact_binding={
             "bindingId":"BND.test.table",
             "selector":{"surfaceId":"tablet","neutralMeaningId":"ACT.primary"},
             "status":"RESOLVED",
             "targets":[{
-                "targetId":target_id,
+                "targetId":None,
                 "ownerId":"owner","routeId":"route","regionId":"region","slotId":"slot",
                 "componentUiId":"component","layerId":"LYR.test","ownerCssId":"css",
                 "selector":".table",
@@ -149,7 +144,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         return {
             "schema":"prisma.visual.canonical-promotion-request.v1",
             "requestId":"cpr-test-001",
-            "target":{"targetId":target_id,"censusTargetId":"TGT.CENSUS.TABLET.TEST.V1","surfaceKey":"tablet"},
+            "target":{"targetId":None,"censusTargetId":"TGT.CENSUS.TABLET.TEST.V1","surfaceKey":"tablet"},
             "expectedCurrentHead":"a"*40,
             "currentTruth":self.current_truth,
             "source":{"digest":self.source_digest,"candidateRef":"candidate.test","path":"candidate.json"},
@@ -201,7 +196,8 @@ class CanonicalRegistrationTests(unittest.TestCase):
 
     def test_existing_target_id_cannot_be_reused_as_create(self):
         request=self.request()
-        request["decision"]["targetAction"]["existingCanonicalTargetIds"]=[request["target"]["targetId"]]
+        from canonical_registration.policy import allocate_id
+        request["decision"]["targetAction"]["existingCanonicalTargetIds"]=[allocate_id("target","tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary",set()).id]
         with self.assertRaises(self.engine.IdCollisionError):
             self.engine.build_plan(request,self.root)
 
@@ -216,6 +212,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         first=self.engine.register(request,self.root)
         second=self.engine.register(request,self.root)
         self.assertEqual(first["status"],"APPLIED")
+        self.assertEqual(first["ids"]["targetId"],second["ids"]["targetId"])
         self.assertEqual(second["status"],"APPLIED")
 
     def test_stale_head_blocks_replay(self):
