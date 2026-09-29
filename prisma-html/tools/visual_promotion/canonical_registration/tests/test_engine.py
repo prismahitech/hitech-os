@@ -23,7 +23,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         "selector":{"surfaceId":"tablet","neutralMeaningId":"VIS.test"},"targets":[{"targetId":"TGT.TEST.EXACT.V1","ownerId":"owner","routeId":"route","regionId":"region","slotId":"slot","componentUiId":"component","layerId":"LYR.test"}]},
         "registryEntry":{"bindingId":"BND.test.table","selector":{"surfaceId":"tablet","neutralMeaningId":"VIS.test"},"status":"RESOLVED",
         "targets":[{"targetId":"TGT.TEST.EXACT.V1","ownerId":"owner","routeId":"route","regionId":"region","slotId":"slot","componentUiId":"component","layerId":"LYR.test"}]}},
-        "layerAction":{"applicationLayerId":"APP.test","policy":"EXACT_TARGET_ONLY"},"projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False}},
+        "layerAction":{"applicationLayerId":"APP.test","policy":"EXACT_TARGET_ONLY","writerKind":"CANONICAL_REGISTRATION"},"projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False}},
         "authorization":{"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False}}
     def test_requires_authorization(self):
         r=self.request(); r["authorization"]["canonicalRegistrationAuthorized"]=False
@@ -43,7 +43,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(data["recipeCount"],0)
     def test_rollback_refuses_newer_work(self):
         r=self.request(); self.engine.register(r,self.root)
-        p=self.root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json"; p.write_text(p.read_text()+"\n",encoding="utf-8")
+        p=self.root/"prisma-html/authority/rifat/identity/registries/recipe.registry.json"; p.write_text(p.read_text().replace("}",",\"newerWork\":true}"),encoding="utf-8")
         with self.assertRaises(self.engine.UnsafeMutationError): self.engine.rollback(r["requestId"],self.root)
     def test_inferred_id_rejected(self):
         r=self.request(); r["decision"]["idInputs"]={"selector":".stockCell"}
