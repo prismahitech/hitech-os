@@ -197,6 +197,7 @@ def classify_blockers(
                 "family": "UNCLASSIFIED_SOURCE_BLOCKER",
                 "owningAuthority": None,
                 "classification": "UNCLASSIFIED",
+                "requiresTaxonomyUpdate": True,
             }
         )
     return out
