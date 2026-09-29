@@ -331,7 +331,7 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G3 IMPLEMENTED — Concurrency / idempotency runtime harness added  
+**Current:** G3 IMPLEMENTED — Concurrency / idempotency runtime harness added; candidate frozen at `90625dc…`  
 **Next:** G3 CI/runtime execution → G4 invariant certification  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
