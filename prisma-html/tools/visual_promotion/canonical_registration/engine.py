@@ -208,6 +208,8 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
             canonical_target_id=target["targetId"]
     elif target_action.get("action")=="REUSE_EXISTING":
         canonical_target_id=target["targetId"]
+        if canonical_target_id not in existing_target_ids:
+            raise CanonicalRegistrationError("TARGET_REUSE_NOT_FOUND")
     else:
         raise CanonicalRegistrationError("TARGET_REGISTRATION_ACTION_REQUIRED")
 
@@ -234,6 +236,15 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     elif binding.get("action")=="REUSE_EXISTING":
         binding_id=binding.get("bindingId")
         if not binding_id or binding_id not in existing_binding_ids: raise CanonicalRegistrationError("BINDING_REUSE_NOT_FOUND")
+        existing_binding_entries=[
+            entry for entry in existing_bindings.get("bindings",[])
+            if isinstance(entry,dict) and entry.get("bindingId")==binding_id
+        ]
+        if len(existing_binding_entries)!=1:
+            raise BindingCollisionError("BINDING_REUSE_NOT_UNIQUE")
+        existing_exact=existing_binding_entries[0]
+        if existing_exact.get("selector")!=exact.get("selector") or existing_exact.get("targets")!=exact.get("targets"):
+            raise BindingCollisionError("BINDING_REUSE_EXACT_BINDING_MISMATCH")
     else: raise CanonicalRegistrationError("BINDING_ACTION_INVALID")
 
     try:
@@ -293,6 +304,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         if len(collisions)>1: raise BindingCollisionError("MULTIPLE_EXISTING_TARGET_BINDINGS")
         if collisions[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
         if target_action.get("action")=="CREATE_NEW": raise BindingCollisionError("TARGET_ID_ALREADY_REGISTERED")
+        if binding.get("action")=="CREATE_NEW": raise BindingCollisionError("TARGET_ALREADY_HAS_DIFFERENT_BINDING_ID")
         status="NO_OP_IDEMPOTENT"
     else: status="APPLY"
 
