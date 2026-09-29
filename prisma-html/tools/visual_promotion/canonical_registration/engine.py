@@ -102,8 +102,15 @@ def _validate_request(request:dict[str,Any])->None:
     for field in ("requestId","target","expectedCurrentHead","currentTruth","source","decision","authorization"):
         if not request.get(field): raise CanonicalRegistrationError(f"REQUEST_FIELD_MISSING:{field}")
     target=request["target"]
-    if not target.get("targetId") or not target.get("censusTargetId") or not target.get("surfaceKey"):
-        raise CanonicalRegistrationError("TARGET_CANONICAL_AND_CENSUS_IDS_REQUIRED")
+    if not target.get("censusTargetId") or not target.get("surfaceKey"):
+        raise CanonicalRegistrationError("CENSUS_TARGET_ID_AND_SURFACE_REQUIRED")
+    target_action = (request["decision"].get("targetAction") or {}).get("action")
+    if target_action == "REUSE_EXISTING" and not target.get("targetId"):
+        raise CanonicalRegistrationError("EXISTING_CANONICAL_TARGET_ID_REQUIRED")
+    if target.get("targetId") is not None and (
+        not isinstance(target["targetId"], str) or not target["targetId"].startswith("TGT.")
+    ):
+        raise CanonicalRegistrationError("CANONICAL_TARGET_ID_INVALID")
     truth=request["currentTruth"]
     if truth.get("schema")!="prisma.visual.current-truth-snapshot.v1": raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_REQUIRED")
     required_truth={"repoHead","snapshotId","targetIndexDigest","identityDigest","rifatDigest","ndcDigest","projectionDigest","authorityMeshDigest","layerMapDigest","targetEvidenceDigest","evidenceTargetId"}
@@ -160,17 +167,35 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
     target_action=decision.get("targetAction") or {}
     if target_action.get("action")=="CREATE_NEW":
-        td=validate_target_id(
-            requested_id=target["targetId"],
-            semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}",
-            census_target_id=target["censusTargetId"],
-            surface_key=target["surfaceKey"],
-            existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])},
-        )
-        if td.action != "CREATE_NEW":
-            raise IdCollisionError("TARGET_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
-    elif target_action.get("action")!="REUSE_EXISTING":
+        semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}"
+        existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])}
+        if target.get("targetId") is None:
+            td=allocate_id("target",semantic_key,existing_ids)
+            if td.action != "CREATE_NEW":
+                raise IdCollisionError("TARGET_ID_ALREADY_EXISTS")
+            canonical_target_id=td.id
+        else:
+            td=validate_target_id(
+                requested_id=target["targetId"],
+                semantic_key=semantic_key,
+                census_target_id=target["censusTargetId"],
+                surface_key=target["surfaceKey"],
+                existing_ids=existing_ids,
+            )
+            if td.action != "CREATE_NEW":
+                raise IdCollisionError("TARGET_ID_REUSE_REQUIRES_EXPLICIT_ACTION")
+            canonical_target_id=target["targetId"]
+    elif target_action.get("action")=="REUSE_EXISTING":
+        canonical_target_id=target["targetId"]
+    else:
         raise CanonicalRegistrationError("TARGET_REGISTRATION_ACTION_REQUIRED")
+
+    exact=copy.deepcopy(binding.get("exactBinding") or {})
+    targets=exact.get("targets")
+    if not isinstance(targets,list) or len(targets)!=1:
+        raise CanonicalRegistrationError("EXACT_BINDING_MUST_HAVE_ONE_TARGET")
+    targets[0]["targetId"]=canonical_target_id
+    exact["targets"]=targets
 
     if binding.get("action")=="CREATE_NEW":
         b=allocate_id("binding",f"{target['surfaceKey']}|{target['targetId']}|{meaning_id}",existing_binding_ids,requested_id=binding.get("bindingId"))
@@ -183,11 +208,14 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
     exact=binding.get("exactBinding")
     try:
-        validate_exact_binding(repo_root,exact,target["targetId"],target["surfaceKey"],meaning_id)
+        validate_exact_binding(repo_root,exact,canonical_target_id,target["surfaceKey"],meaning_id)
     except AuthorityBindingError as exc: raise CanonicalRegistrationError(str(exc)) from exc
     if binding.get("registryEntry") is not None and binding.get("action")=="CREATE_NEW":
         entry=copy.deepcopy(binding["registryEntry"]); entry["bindingId"]=binding_id
-        if entry!=exact: raise BindingCollisionError("REGISTRY_ENTRY_MUST_EQUAL_EXACT_BINDING")
+        entry_targets=entry.get("targets")
+        if not isinstance(entry_targets,list) or len(entry_targets)!=1: raise BindingCollisionError("REGISTRY_ENTRY_TARGET_REQUIRED")
+        entry_targets[0]["targetId"]=canonical_target_id; entry["targets"]=entry_targets
+        if entry.get("selector") != exact.get("selector") or entry_targets[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("REGISTRY_ENTRY_MUST_EQUAL_EXACT_BINDING")
     else:
         entry=exact
 
@@ -212,7 +240,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     collisions=[t for bentry in existing_bindings.get("bindings",[]) if isinstance(bentry,dict) for t in bentry.get("targets",[]) if isinstance(t,dict) and t.get("targetId")==target["targetId"]]
     if collisions:
         if len(collisions)>1: raise BindingCollisionError("MULTIPLE_EXISTING_TARGET_BINDINGS")
-        if collisions[0] != exact: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
+        if collisions[0] != exact.get("targets",[{}])[0]: raise BindingCollisionError("EXACT_TARGET_BINDING_COLLISION")
         if target_action.get("action")=="CREATE_NEW": raise BindingCollisionError("TARGET_ID_ALREADY_REGISTERED")
         status="NO_OP_IDEMPOTENT"
     else: status="APPLY"
@@ -225,7 +253,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
 
     return {
         "schema":PLAN_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],
-        "targetId":target["targetId"],"censusTargetId":target["censusTargetId"],"surfaceKey":target["surfaceKey"],
+        "targetId":canonical_target_id,"censusTargetId":target["censusTargetId"],"surfaceKey":target["surfaceKey"],
         "semanticAction":decision["semanticAction"],"semanticDecisionId":decision.get("semanticDecisionId"),
         "ids":{"targetId":target["targetId"],"bindingId":binding_id,"recipeId":recipe_id},
         "bindingAction":binding.get("action"),"recipeAction":recipe.get("action"),"targetAction":target_action.get("action"),
