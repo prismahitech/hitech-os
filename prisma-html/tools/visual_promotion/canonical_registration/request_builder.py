@@ -54,9 +54,6 @@ def build_request_from_readiness(
     recipe_id=identity.get("identityRecipeId")
     if not recipe_id:
         raise RequestBuilderError("IDENTITY_RECIPE_REQUIRED")
-    binding_id=identity.get("existingBindingId")
-    if not binding_id:
-        raise RequestBuilderError("EXACT_BINDING_REQUIRED")
 
     # The canonical target allocator is deterministic but consumes the physical
     # census identity as evidence, never as a semantic guess.
@@ -77,14 +74,18 @@ def build_request_from_readiness(
         "routeId":physical["routeId"],
         "regionId":physical["regionId"],
         "slotId":physical["slotId"],
-        "componentUiId":physical.get("componentUiId") or physical["componentId"],
+        "componentUiId":physical.get("componentUiId"),
         "layerId":authority.get("canonicalLayerId"),
         "ownerCssId":physical.get("ownerCssId"),
         "selector":physical.get("selector"),
         "missingBindings":[],
     }
+    if not binding_target["componentUiId"]:
+        raise RequestBuilderError("EXACT_COMPONENT_UI_ID_REQUIRED")
     if not binding_target["layerId"]:
         raise RequestBuilderError("CANONICAL_LAYER_ID_ADJUDICATION_REQUIRED")
+    if not authority.get("applicationPolicy"):
+        raise RequestBuilderError("APPLICATION_POLICY_ADJUDICATION_REQUIRED")
 
     decision={
         "semanticAction":"CREATE_NEW" if semantic_resolution=="PROPOSE_NEW" else "REUSE_EXISTING",
@@ -105,7 +106,7 @@ def build_request_from_readiness(
         }},
         "layerAction":{
             "applicationLayerId":application["applicationLayerId"],
-            "policy":application["projectionPolicy"],
+            "policy":authority.get("applicationPolicy"),
             "writerKind":"CANONICAL_REGISTRATION",
             "authorityDomain":"rifat",
             "decisionRef":authority.get("applicationLayerDecisionRef"),
