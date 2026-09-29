@@ -891,7 +891,7 @@ async function upsertLicenseAssignment(env, pass) {
     pass.tenantId,
     pass.tenantSlug,
     pass.businessId,
-    pass.planId,
+    pass.commercialPlanId,
     "assigned",
     now()
   ]);
