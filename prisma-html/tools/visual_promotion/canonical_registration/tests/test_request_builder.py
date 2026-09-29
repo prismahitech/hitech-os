@@ -51,6 +51,10 @@ class RequestBuilderTests(unittest.TestCase):
         self.assertEqual(request["decision"]["layerAction"]["policy"],"EXACT_TARGET_ONLY")
         self.assertEqual(request["decision"]["layerAction"]["authorityDomain"],"rifat")
         self.assertEqual(request["decision"]["layerAction"]["decisionRef"],"rifat::policy.test")
+        self.assertEqual(
+            request["decision"]["bindingAction"]["exactBinding"]["targets"][0]["implementationLayerId"],
+            "physical.layer",
+        )
 
 
     def test_builder_does_not_supply_canonical_target_id(self):
