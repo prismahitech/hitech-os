@@ -324,6 +324,14 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         prior=_load(receipt_path)
         if prior.get("requestDigest")==request_digest and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"} and prior.get("result"):
             if current_repo_head(repo_root)!=request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
+            for row in prior.get("postState",[]):
+                rel=row.get("path")
+                expected_post=row.get("sha256")
+                if not isinstance(rel,str) or not isinstance(expected_post,str):
+                    raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_INVALID")
+                current_path=repo_root/rel
+                if not current_path.is_file() or sha256_json(_load(current_path))!=expected_post:
+                    raise UnsafeMutationError("IDEMPOTENT_RECEIPT_POSTSTATE_DRIFT:"+rel)
             return prior["result"]
 
     plan=build_plan(request,repo_root)
