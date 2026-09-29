@@ -2,6 +2,7 @@ const SERVICE = "PRISMA LICFLOW3 Cloud Licensing Support Bridge";
 const VERSION = "0.2.0-prisma-cloud-semilla-routing";
 const TENANT = "prisma-original-customer";
 const PLAN = "TABLET_PC_MANAGED";
+const COMMERCIAL_PLAN_IDS = new Set(["TABLET_SOLO", "TABLET_PRO", "TABLET_PC_MANAGED"]);
 const LICFLOW3_LIVE_STATUS = "LICFLOW3_CLOUDFLARE_ROUTES_LIVE";
 const CUSTOMER_SETUP_SCHEMA_VERSION = "1.0.0";
 const DEFAULT_SETUP_CODE = "PRISMA-SETUP-STARTER";
@@ -15,6 +16,7 @@ const SLOT_LABELS = {
 // Provisioning catalog owner for Customer Setup. Commercial SKU/price authority remains shared/licensing/plan-catalog.canonical.json.\nconst PLAN_PROVISIONING_CATALOG = {
   TABLET_SOLO: {
     planId: "TABLET_SOLO",
+    commercialPlanId: "TABLET_SOLO",
     planName: "Tablet Solo",
     maxTabletDevices: 1,
     maxPcDevices: 0,
@@ -31,6 +33,7 @@ const SLOT_LABELS = {
   },
   TABLET_PRO: {
     planId: "TABLET_PRO",
+    commercialPlanId: "TABLET_PRO",
     planName: "Tablet Pro",
     maxTabletDevices: 2,
     maxPcDevices: 0,
@@ -47,6 +50,7 @@ const SLOT_LABELS = {
   },
   TABLET_PC_MANAGED: {
     planId: "TABLET_PC_MANAGED",
+    commercialPlanId: "TABLET_PC_MANAGED",
     planName: "Tablet + PC Managed",
     maxTabletDevices: 2,
     maxPcDevices: 1,
@@ -63,6 +67,7 @@ const SLOT_LABELS = {
   },
   TABLET_PC_MOBILE_MANAGED: {
     planId: DEFAULT_SETUP_PLAN,
+    commercialPlanId: "TABLET_PC_MANAGED",
     planName: "Tablet + PC + Mobile Managed",
     maxTabletDevices: 1,
     maxPcDevices: 1,
@@ -984,6 +989,7 @@ async function createCustomerSetup(request, env) {
     customerId: body.customerId || `cust_${tenantSlug.replace(/-/g, "_")}`,
     tenantId: body.tenantId || `tenant_${tenantSlug.replace(/-/g, "_")}`,
     tenantSlug,
+    commercialPlanId: plan.commercialPlanId,
     businessId: body.businessId || `biz_${tenantSlug.replace(/-/g, "_")}`,
     businessName,
     planId: plan.planId,
@@ -1029,11 +1035,11 @@ async function createCustomerSetup(request, env) {
     licenseStatement = existingLicense
       ? {
           sql: "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = ?, updated_at = ? where license_id = ?",
-          params: [pass.tenantSlug, "active", plan.planId, "active", validUntil || null, now(), pass.licenseId]
+          params: [pass.tenantSlug, "active", pass.commercialPlanId, "active", validUntil || null, now(), pass.licenseId]
         }
       : {
           sql: "insert into licenses (license_id, tenant_slug, status, plan, activation_status, valid_until, updated_at) values (?, ?, ?, ?, ?, ?, ?)",
-          params: [pass.licenseId, pass.tenantSlug, "active", plan.planId, "active", validUntil || null, now()]
+          params: [pass.licenseId, pass.tenantSlug, "active", pass.commercialPlanId, "active", validUntil || null, now()]
         };
   } else {
     licenseStatement = existingLicense
@@ -1247,10 +1253,10 @@ async function createCustomerSetup(request, env) {
   const finalOk =
     Boolean(persistedTenant) &&
     persistedTenant.slug === pass.tenantSlug &&
-    persistedTenant.plan === pass.planId &&
+    persistedTenant.plan === pass.commercialPlanId &&
     Boolean(persistedLicense) &&
     persistedLicense.licenseId === pass.licenseId &&
-    persistedLicense.plan === pass.planId &&
+    persistedLicense.plan === pass.commercialPlanId &&
     persistedLicense.status === "active" &&
     Boolean(persistedAssignment) &&
     persistedAssignment.licenseId === pass.licenseId &&
@@ -1984,6 +1990,17 @@ async function activateLicense(request, env, mode) {
     }), 400);
   }
   const licenseId = providedLicenseId || `licflow3-${mode}-${crypto.randomUUID()}`;
+  const requestedPlan = String(requestedPlan).trim().toUpperCase();
+  if (!COMMERCIAL_PLAN_IDS.has(requestedPlan)) {
+    return json(operatorResult(mode, mutationMode, "COMMERCIAL_LICENSE_PLAN_REQUIRED", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "Confirmed License Operation requiere un SKU comercial canonico; provisioning-only IDs no son licencias comerciales.",
+      nextStep: "Usa TABLET_SOLO, TABLET_PRO o TABLET_PC_MANAGED como plan comercial.",
+      latencyMs: Date.now() - started,
+      extra: { tenantSlug: slug, licenseId, requestedPlan }
+    }), 422);
+  }
   const requestedState = String(body.status || body.commercialStatus || "").trim().toLowerCase();
   const status = mode === "revoke" ? "revoked" : mode === "renew" ? "renewed" : mode === "commercial-state" && COMMERCIAL_STATES.has(requestedState) ? requestedState : mode === "refresh" ? "active" : "active";
   const validUntil = body.validUntil || (mode === "renew" ? addDays(365) : null);
@@ -2067,8 +2084,8 @@ async function activateLicense(request, env, mode) {
     }), 409);
   }
 
-  const tenantStatement = await buildTenantMutationStatement(env, slug, body.businessName || slug, body.plan || PLAN);
-  const licenseMutation = await buildLicenseMutationStatement(env, slug, licenseId, status, body.plan || PLAN, validUntil);
+  const tenantStatement = await buildTenantMutationStatement(env, slug, body.businessName || slug, requestedPlan);
+  const licenseMutation = await buildLicenseMutationStatement(env, slug, licenseId, status, requestedPlan, validUntil);
   const auditMode = await auditSchemaMode(env);
   if (!tenantStatement || !licenseMutation.statement || auditMode === "none") {
     return json(operatorResult(mode, mutationMode, "LICENSE_OPERATION_SCHEMA_REQUIRED", {
@@ -2157,7 +2174,7 @@ async function activateLicense(request, env, mode) {
     extra: {
       tenantSlug: slug,
       licenseId,
-      license: { licenseId, status, plan: body.plan || PLAN, validUntil, signedLicenseIssued: false },
+      license: { licenseId, status, plan: requestedPlan, validUntil, signedLicenseIssued: false },
       persistence: { schemaMode: licenseMutation.schemaMode, auditTable: auditMode, auditEventId }
     }
   }), 200);
