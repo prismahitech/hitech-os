@@ -457,8 +457,6 @@ def _evidence(
 def register(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     request = copy.deepcopy(request)
     request["_repoRoot"] = str(repo_root.resolve())
-    plan = build_plan(request, repo_root)
-
     receipt_path = repo_root / RESULTS_ROOT / f"{request['requestId']}.json"
     journal_dir = repo_root / TRANSACTIONS_ROOT / request["requestId"]
     journal_path = journal_dir / "journal.json"
