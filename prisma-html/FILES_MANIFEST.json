@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 935,
+  "file_count_excluding_manifest": 950,
   "files": [
     {
       "bytes": 156,
@@ -4477,6 +4477,11 @@
       "sha256": "CCAE987E5E0042CCE6042FBDA55F26F6F86F35FA74B0AB0EBAFA49E0FC97354B"
     },
     {
+      "bytes": 1797,
+      "path": "tools/visual_promotion/canonical_registration/application_policy.py",
+      "sha256": "C4FF2A88378EF52730375FE74C0C3D31E3DB9ABE37BBD1B0FDAED3A155094489"
+    },
+    {
       "bytes": 3563,
       "path": "tools/visual_promotion/canonical_registration/authority_adapters.py",
       "sha256": "B7C55214740899831E0B48A1241BD82DC2D0259C9FAE46FC53A9EF8B6D78FCCB"
@@ -4485,6 +4490,11 @@
       "bytes": 1457,
       "path": "tools/visual_promotion/canonical_registration/CANONICAL_REGISTRATION_POLICY.json",
       "sha256": "893116BE62CFA54BB45132AFF3DEED18959E91E1844DAA7EBDB7F010AD98842E"
+    },
+    {
+      "bytes": 6516,
+      "path": "tools/visual_promotion/canonical_registration/collision_classifier.py",
+      "sha256": "34E4AB805AB6E93DD0A1F453D1CCC9707A7359F45207E9AD99AE536FBE6ACF46"
     },
     {
       "bytes": 741,
@@ -4527,6 +4537,11 @@
       "sha256": "0F02881430E3EACF8D5A44ED29AD1DA85F42D065C69A607543D760D31DA40FD2"
     },
     {
+      "bytes": 894,
+      "path": "tools/visual_promotion/canonical_registration/contracts/canonical-registration-collision.schema.json",
+      "sha256": "53730BD909E9B3DD829E9F23F65C433C6B65E67E5262D439799F4A0860C28019"
+    },
+    {
       "bytes": 1507,
       "path": "tools/visual_promotion/canonical_registration/contracts/current-truth-snapshot.schema.json",
       "sha256": "100DE1C95099CC9883D8304733F1C2B251B5D633531251EB083D79A5B3D8E719"
@@ -4535,6 +4550,16 @@
       "bytes": 894,
       "path": "tools/visual_promotion/canonical_registration/contracts/id-policy.schema.json",
       "sha256": "48B68D7D15F8C8BD80864E14EDDEF1C19A66B1A1FE41768F5D0318A717F6680A"
+    },
+    {
+      "bytes": 677,
+      "path": "tools/visual_promotion/canonical_registration/contracts/projection-reconciliation.schema.json",
+      "sha256": "FFEE5DD2D648263FB3B4569CED312C4838132B76117ADC6BF224A883E598182E"
+    },
+    {
+      "bytes": 2084,
+      "path": "tools/visual_promotion/canonical_registration/contracts/runtime-evidence.schema.json",
+      "sha256": "E3E0AEE7EE128F009DA6F2A17618E02A59E2E2EFD5E85F59362D05C1594354B6"
     },
     {
       "bytes": 5895,
@@ -4552,6 +4577,11 @@
       "sha256": "F48AE39BB9AF7721FE6C4B4804375E2E7D15CFFCE83F26FFF5E68E1CA18007E5"
     },
     {
+      "bytes": 1890,
+      "path": "tools/visual_promotion/canonical_registration/lifecycle_state.py",
+      "sha256": "B62710CFA936E28329FFD3966A12D2EB108C7929A02AA21960187E63C0393092"
+    },
+    {
       "bytes": 3375,
       "path": "tools/visual_promotion/canonical_registration/policy.py",
       "sha256": "80A22885AE63B3B7C0738E26965085B617B5B5D62CF8B27171C427249611D5CC"
@@ -4560,6 +4590,11 @@
       "bytes": 2447,
       "path": "tools/visual_promotion/canonical_registration/postconditions.py",
       "sha256": "233F1BC6CCFEA48F82DF9848A55974C391D7B1DFC554D1E87384640D4F3AA8AD"
+    },
+    {
+      "bytes": 4911,
+      "path": "tools/visual_promotion/canonical_registration/projection_reconciler.py",
+      "sha256": "1BE931EC67A45796D1E6D79FB6C55125C8FDC00C46FBDE93B1ED5356EE1B0B5E"
     },
     {
       "bytes": 2448,
@@ -4572,9 +4607,29 @@
       "sha256": "89DA3FBDB070DCAEAEB753FA4D63A516CEEB1B99C422D1A0E8D70008216FECFD"
     },
     {
+      "bytes": 4780,
+      "path": "tools/visual_promotion/canonical_registration/runtime_evidence_bridge.py",
+      "sha256": "53030C0FB826E1F69B7009E4CBC60F28C778C966D2599E53B4771D8DCC0EFD23"
+    },
+    {
+      "bytes": 1508,
+      "path": "tools/visual_promotion/canonical_registration/target_status.py",
+      "sha256": "97DDCBE4E640CC3CD59F280B0CF89A5160471BFD545EB0683E6AF6BF466122DC"
+    },
+    {
       "path": "tools/visual_promotion/canonical_registration/tests/prisma_html_test_bootstrap.py",
       "bytes": 1526,
       "sha256": "169B9D423328E332281984055F045AF5C1F8BB8421DFFF223A344A2111684AE5"
+    },
+    {
+      "bytes": 1308,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_application_policy.py",
+      "sha256": "828CCBB4F5A8FD1BB12D0CFC99D9DE2F68196A98F365D1ABE3A7DC69BD2AD8EA"
+    },
+    {
+      "bytes": 3421,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_collision_classifier.py",
+      "sha256": "39299969D175CAD49817D982A770B3B5EA19576478E615157CFAF0215199C8C3"
     },
     {
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
@@ -4582,9 +4637,29 @@
       "sha256": "ADA0A8FD521659FFFC955C5B7785FE0E5B9734675AEFFFF4211DFB411A5F53FC"
     },
     {
+      "bytes": 1782,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_projection_reconciler.py",
+      "sha256": "79FA5F24574C97FA1BAA8D7F71B7182FCF822254948DA55DE7161B94CF9DE109"
+    },
+    {
       "path": "tools/visual_promotion/canonical_registration/tests/test_request_builder.py",
       "bytes": 3534,
       "sha256": "2AD3FCF61450F1A8B29ADF0CCC0BBCC9E926AEFFF372C8D0D2D11A680A8E81FA"
+    },
+    {
+      "bytes": 2295,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_runtime_evidence_bridge.py",
+      "sha256": "29DB6E2BEA677343DEBEE2A554C8CB395C9B158196A3B5356E56B0C9FD4D3ACB"
+    },
+    {
+      "bytes": 1719,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_write_preflight.py",
+      "sha256": "2C49AE74FE01147482DFDC1AE9373AC16296242A1859795AB3E63EF67A0C0055"
+    },
+    {
+      "bytes": 2208,
+      "path": "tools/visual_promotion/canonical_registration/write_preflight.py",
+      "sha256": "C6B42E56A5C01B20E9ACA2A18183D41E5526F7BE1C2F09F80B1B8CB4FF602620"
     },
     {
       "bytes": 22596,
