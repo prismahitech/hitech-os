@@ -73,16 +73,20 @@ def main() -> None:
                 ("g4-setup", surface, surface, 1, 0),
             )
         conn.execute(
-            "INSERT INTO customer_setup_bundles(setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            ("g4-bundle", "g4-setup", "G4-SETUP", "https://test.invalid/G4-SETUP", "G4", "g4-customer", "g4-tenant-id", "g4-tenant", "g4-business", "G4 Business", "g4-license", "g4-assignment", "TABLET_PC_MOBILE_MANAGED", 1, 0, "active"),
+            "INSERT INTO customer_setup_bundles(setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            ("g4-bundle", "g4-setup", "G4-SETUP", "https://test.invalid/G4-SETUP", "G4", "g4-customer", "g4-tenant-id", "g4-tenant", "g4-business", "G4 Business", "g4-license", "g4-assignment", "TABLET_PC_MOBILE_MANAGED", 1, 0, "g4-provision", "active"),
         )
         conn.execute(
-            "INSERT INTO customer_device_claim_slots(slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, expires_at, status) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-            ("g4-slot-tablet-1", "g4-bundle", "g4-setup", "g4-customer", "g4-license", "TABLET_PC_MOBILE_MANAGED", "tablet", 1, "G4-SETUP-TABLET-01", "2099-01-01T00:00:00Z", "AVAILABLE"),
+            "INSERT INTO customer_device_claim_slots(slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, expires_at, status, audit_event_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            ("g4-slot-tablet-1", "g4-bundle", "g4-setup", "g4-customer", "g4-license", "TABLET_PC_MOBILE_MANAGED", "tablet", 1, "G4-SETUP-TABLET-01", "2099-01-01T00:00:00Z", "AVAILABLE", "g4-provision"),
         )
         conn.execute(
             "INSERT INTO audit_events(event_id, tenant_slug, event_type, payload_json) VALUES(?,?,?,?)",
             ("g4-audit", "g4-tenant", "customer_setup.create", "{}"),
+        )
+        conn.execute(
+            "INSERT INTO audit_events(event_id, tenant_slug, event_type, payload_json) VALUES(?,?,?,?)",
+            ("g4-provision", "g4-tenant", "customer_setup.plan_based_provision", "{}"),
         )
         conn.commit()
 
@@ -124,7 +128,58 @@ def main() -> None:
         require(dangling_bundles == 0, "VALID_GRAPH_DANGLING_BUNDLE", {"dangling_bundles": dangling_bundles})
         require(dangling_slots == 0, "VALID_GRAPH_DANGLING_SLOT", {"dangling_slots": dangling_slots})
         require(counter_mismatches == 0, "VALID_GRAPH_COUNTER_MISMATCH", {"counter_mismatches": counter_mismatches})
-        checks.extend(["valid_graph_claims", "valid_graph_bundles", "valid_graph_slots", "valid_graph_counters"])
+
+        tenant_ownership_violations = scalar(
+            conn,
+            "SELECT COUNT(*) FROM licenses l LEFT JOIN tenants t ON t.slug=l.tenant_slug "
+            "WHERE t.slug IS NULL OR l.tenant_slug != t.slug",
+        )
+        tenant_ownership_violations += scalar(
+            conn,
+            "SELECT COUNT(*) FROM license_assignments a LEFT JOIN tenants t ON t.slug=a.tenant_slug "
+            "WHERE t.slug IS NULL OR a.tenant_slug != t.slug",
+        )
+        tenant_ownership_violations += scalar(
+            conn,
+            "SELECT COUNT(*) FROM customer_setups s LEFT JOIN tenants t ON t.slug=s.tenant_slug "
+            "WHERE t.slug IS NULL OR s.tenant_slug != t.slug",
+        )
+        tenant_ownership_violations += scalar(
+            conn,
+            "SELECT COUNT(*) FROM customer_setup_bundles b LEFT JOIN tenants t ON t.slug=b.tenant_slug "
+            "WHERE t.slug IS NULL OR b.tenant_slug != t.slug",
+        )
+        audit_link_violations = scalar(
+            conn,
+            "SELECT COUNT(*) FROM customer_setup_bundles b "
+            "LEFT JOIN audit_events e ON e.event_id=b.audit_event_id AND e.tenant_slug=b.tenant_slug "
+            "WHERE b.audit_event_id IS NULL OR e.event_id IS NULL",
+        )
+        audit_link_violations += scalar(
+            conn,
+            "SELECT COUNT(*) FROM customer_device_claim_slots cs "
+            "LEFT JOIN customer_setup_bundles b ON b.setup_bundle_id=cs.setup_bundle_id "
+            "LEFT JOIN audit_events e ON e.event_id=cs.audit_event_id AND e.tenant_slug=b.tenant_slug "
+            "WHERE cs.audit_event_id IS NULL OR e.event_id IS NULL",
+        )
+        replaced_active_violations = scalar(
+            conn,
+            "SELECT COUNT(*) FROM customer_device_claims c "
+            "JOIN customer_device_claim_slots cs ON cs.slot_id=c.claim_slot_id "
+            "WHERE c.status='replaced' AND cs.status='CLAIMED' AND cs.device_id=c.device_id",
+        )
+        require(tenant_ownership_violations == 0, "VALID_GRAPH_TENANT_OWNERSHIP", {"tenant_ownership_violations": tenant_ownership_violations})
+        require(audit_link_violations == 0, "VALID_GRAPH_AUDIT_LINKAGE", {"audit_link_violations": audit_link_violations})
+        require(replaced_active_violations == 0, "VALID_GRAPH_REPLACED_DEVICE_ACTIVE", {"replaced_active_violations": replaced_active_violations})
+        checks.extend([
+            "valid_graph_claims",
+            "valid_graph_bundles",
+            "valid_graph_slots",
+            "valid_graph_counters",
+            "valid_graph_tenant_ownership",
+            "valid_graph_audit_linkage",
+            "valid_graph_replaced_not_active",
+        ])
 
         # Corruption drills: each invariant must detect a deliberately broken graph.
         conn.execute(
@@ -170,6 +225,31 @@ def main() -> None:
         )
         conn.rollback()
         checks.append("corruption_drill_aggregate_counter")
+
+        # Active claim-slot uniqueness must be enforced by the partial unique index.
+        try:
+            conn.execute(
+                "INSERT INTO customer_device_claims(claim_id, setup_id, setup_code, tenant_slug, surface, device_id, status, claim_slot_id) VALUES(?,?,?,?,?,?,?,?)",
+                ("g4-dup-active-slot", "g4-setup", "G4-SETUP", "g4-tenant", "tablet", "g4-dup-device", "claimed", "g4-slot-tablet-1"),
+            )
+        except sqlite3.IntegrityError:
+            checks.append("corruption_drill_duplicate_active_claim_slot_blocked")
+        else:
+            raise AssertionError("CORRUPTION_DRILL_DUPLICATE_ACTIVE_SLOT_NOT_BLOCKED")
+
+        # A replaced claim may not leave its physical slot active for the same device.
+        conn.execute("INSERT INTO customer_device_claims(claim_id, setup_id, setup_code, tenant_slug, surface, device_id, status, claim_slot_id) VALUES(?,?,?,?,?,?,?,?)",
+                     ("g4-replaced-device", "g4-setup", "G4-SETUP", "g4-tenant", "tablet", "g4-replaced-device", "replaced", "g4-slot-tablet-1"))
+        conn.execute("UPDATE customer_device_claim_slots SET status='CLAIMED', device_id='g4-replaced-device' WHERE slot_id='g4-slot-tablet-1'")
+        require(
+            scalar(
+                conn,
+                "SELECT COUNT(*) FROM customer_device_claims c JOIN customer_device_claim_slots cs ON cs.slot_id=c.claim_slot_id "
+                "WHERE c.status='replaced' AND cs.status='CLAIMED' AND cs.device_id=c.device_id",
+            ) == 1,
+            "CORRUPTION_DRILL_REPLACED_ACTIVE_NOT_DETECTED",
+        )
+        checks.append("corruption_drill_replaced_claim_left_active")
 
         conn.close()
 
