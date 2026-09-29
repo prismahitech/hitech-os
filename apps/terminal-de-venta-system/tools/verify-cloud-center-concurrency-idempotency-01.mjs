@@ -354,7 +354,7 @@ async function main() {
     reason: "G3 replacement slot release test",
     confirmAdminLicenseAction: true
   }, true);
-  assert(replacement.status === 200 && replacement.payload?.resultCode === "DEVICE_REPLACEMENT_APPROVED" && replacement.payload?.slotReleased === true, "REPLACEMENT_SLOT_NOT_RELEASED", { replacement });
+  assert(replacement.status === 200 && replacement.payload?.resultCode === "DEVICE_REPLACEMENT_APPROVED" && replacement.payload?.extra?.slotReleased === true, "REPLACEMENT_SLOT_NOT_RELEASED", { replacement });
   const activeAfterReplacement = await directCount(seed, "customer_device_claims", "setup_id = ? and surface = 'tablet' and status = 'claimed'", [setup.setupId]);
   const availableSlotsAfterReplacement = await directCount(seed, "customer_device_claim_slots", "setup_bundle_id = ? and surface = 'tablet' and status = 'AVAILABLE'", [setup.setupBundleId]);
   assert(activeAfterReplacement === 1 && availableSlotsAfterReplacement >= 1, "REPLACEMENT_STATE_DRIFT", { activeAfterReplacement, availableSlotsAfterReplacement });
