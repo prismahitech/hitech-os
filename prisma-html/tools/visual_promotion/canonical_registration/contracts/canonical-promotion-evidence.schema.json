@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-promotion-evidence.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","requestId","requestDigest","currentTruthDigest","sourceDigest","preState","postState","ids","mutations","status","errors"],
+  "properties":{
+    "schema":{"const":"prisma.visual.canonical-promotion-evidence.v1"},
+    "requestId":{"type":"string"},"requestDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "currentTruthDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "sourceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "preState":{"type":"array"},"postState":{"type":"array"},"ids":{"type":"object"},
+    "mutations":{"type":"array"},"status":{"type":"string"},"errors":{"type":"array","items":{"type":"string"}}
+  }
+}
