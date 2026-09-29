@@ -486,7 +486,8 @@ function buildSetupPass(row = {}, slots = null, deviceClaimSlots = null) {
     setupCode,
     customerId,
     licenseId,
-    planId: plan.planId
+    planId: plan.planId,
+    commercialPlanId: plan.commercialPlanId
   };
   return {
     ok: true,
@@ -504,6 +505,7 @@ function buildSetupPass(row = {}, slots = null, deviceClaimSlots = null) {
     packageCode: row.packageCode || row.package_code || DEFAULT_SETUP_PACKAGE,
     planId: plan.planId,
     planCode: plan.planId,
+    commercialPlanId: plan.commercialPlanId,
     licenseId,
     licenseAssignmentId,
     status,
@@ -982,6 +984,17 @@ async function createCustomerSetup(request, env) {
   const licenseId = body.licenseId || `lic_${setupId}`;
   const licenseAssignmentId = body.licenseAssignmentId || `assign_${setupId}`;
 
+  if (!plan || !COMMERCIAL_PLAN_IDS.has(plan.commercialPlanId)) {
+    return json({
+      ok: false,
+      status: "COMMERCIAL_PLAN_MAPPING_REQUIRED",
+      resultCode: "COMMERCIAL_PLAN_MAPPING_REQUIRED",
+      customerMessage: "El paquete de provisioning no tiene un SKU comercial canonico.",
+      nextStep: "Corrige el mapping del plan antes de crear el Customer Setup.",
+      secretsExposed: false
+    }, 422);
+  }
+
   const pass = buildSetupPass({
     setupId,
     setupBundleId,
@@ -1009,17 +1022,17 @@ async function createCustomerSetup(request, env) {
   if (existingTenant) {
     tenantStatement = {
       sql: "update tenants set display_name = ?, status = ?, plan = ?, updated_at = ? where slug = ?",
-      params: [pass.businessName, "active", plan.planId, now(), pass.tenantSlug]
+      params: [pass.businessName, "active", pass.commercialPlanId, now(), pass.tenantSlug]
     };
   } else if (tenantColumns.has("id")) {
     tenantStatement = {
       sql: "insert into tenants (id, slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?, ?)",
-      params: [pass.tenantId, pass.tenantSlug, pass.businessName, "active", plan.planId, now()]
+      params: [pass.tenantId, pass.tenantSlug, pass.businessName, "active", pass.commercialPlanId, now()]
     };
   } else if (tenantColumns.has("slug")) {
     tenantStatement = {
       sql: "insert into tenants (slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?)",
-      params: [pass.tenantSlug, pass.businessName, "active", plan.planId, now()]
+      params: [pass.tenantSlug, pass.businessName, "active", pass.commercialPlanId, now()]
     };
   } else {
     return json({ ...pass, ok: false, status: "TENANTS_SCHEMA_UNSUPPORTED", resultCode: "TENANTS_SCHEMA_UNSUPPORTED", secretsExposed: false }, 500);
@@ -1045,11 +1058,11 @@ async function createCustomerSetup(request, env) {
     licenseStatement = existingLicense
       ? {
           sql: "update licenses set plan = ?, status = ?, expires_at = ?, updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?)",
-          params: [plan.planId, "active", validUntil || null, now(), pass.licenseId, pass.tenantSlug]
+          params: [pass.commercialPlanId, "active", validUntil || null, now(), pass.licenseId, pass.tenantSlug]
         }
       : {
           sql: "insert into licenses (id, tenant_id, plan, status, expires_at, updated_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)",
-          params: [pass.licenseId, pass.tenantSlug, plan.planId, "active", validUntil || null, now()]
+          params: [pass.licenseId, pass.tenantSlug, pass.commercialPlanId, "active", validUntil || null, now()]
         };
   }
 
@@ -1067,6 +1080,7 @@ async function createCustomerSetup(request, env) {
     licenseId: pass.licenseId,
     licenseAssignmentId: pass.licenseAssignmentId,
     planId: plan.planId,
+    commercialPlanId: pass.commercialPlanId,
     claimSlotsCreated: pass.deviceClaimSlots.length,
     operatorActionCount: 1,
     manualDeviceClaimRequired: false
@@ -1116,7 +1130,7 @@ async function createCustomerSetup(request, env) {
         pass.tenantId,
         pass.tenantSlug,
         pass.businessId,
-        pass.planId,
+        pass.commercialPlanId,
         "assigned",
         now()
       ]
@@ -1261,7 +1275,7 @@ async function createCustomerSetup(request, env) {
     Boolean(persistedAssignment) &&
     persistedAssignment.licenseId === pass.licenseId &&
     persistedAssignment.setupBundleId === pass.setupBundleId &&
-    persistedAssignment.planId === pass.planId &&
+    persistedAssignment.planId === pass.commercialPlanId &&
     persistedAssignment.status === "assigned" &&
     Boolean(persistedSetup) &&
     persistedSetup.setupCode === pass.setupCode &&
@@ -1474,7 +1488,7 @@ async function claimCustomerDevice(request, env) {
     nextStep: "Continua en la app.",
     customer: { customerId: pass.customerId, displayName: pass.businessName },
     business: { businessId: pass.businessId, displayName: pass.businessName },
-    license: { licenseId: licenseRow.licenseId, planCode: pass.planCode, state: licenseStateForCustomer(licenseRow), validUntil: licenseRow.validUntil },
+    license: { licenseId: licenseRow.licenseId, planCode: pass.commercialPlanId, state: licenseStateForCustomer(licenseRow), validUntil: licenseRow.validUntil },
     device: { deviceId, surface, slotLabel: SLOT_LABELS[surface], claimId, claimSlotId: claimSlot.slotId, claimCode: claimSlot.claimCode },
     slots: updatedPass.slots,
     deviceClaimSlots: updatedPass.deviceClaimSlots,
@@ -1552,7 +1566,7 @@ async function customerPortal(env, url) {
     setup: { setupCode: pass.setupCode, setupLink: pass.setupUrl, setupQr: pass.qrPayload, status: pass.status, expiresAt: pass.expiresAt },
     slots: pass.slots,
     devices: claims.map((claim) => ({ deviceId: claim.deviceId, deviceName: claim.deviceName, surface: claim.surface, status: claim.status, claimedAt: claim.claimedAt, replacedAt: claim.replacedAt })),
-    license: { licenseId: licenseRow.licenseId, status: licenseStateForCustomer(licenseRow), planCode: pass.planCode, validUntil: licenseRow.validUntil },
+    license: { licenseId: licenseRow.licenseId, status: licenseStateForCustomer(licenseRow), planCode: pass.commercialPlanId, validUntil: licenseRow.validUntil },
     magicLink: { href: pass.setupUrl, scope: "setup-pass-only", admin: false },
     support: { replacementRequestAvailable: true, nextStep: "Solicita soporte/replacement si cambiaste de equipo." },
     secretsExposed: false
@@ -1990,7 +2004,7 @@ async function activateLicense(request, env, mode) {
     }), 400);
   }
   const licenseId = providedLicenseId || `licflow3-${mode}-${crypto.randomUUID()}`;
-  const requestedPlan = String(requestedPlan).trim().toUpperCase();
+  const requestedPlan = String(body.plan || PLAN).trim().toUpperCase();
   if (!COMMERCIAL_PLAN_IDS.has(requestedPlan)) {
     return json(operatorResult(mode, mutationMode, "COMMERCIAL_LICENSE_PLAN_REQUIRED", {
       ok: false,
@@ -2022,7 +2036,7 @@ async function activateLicense(request, env, mode) {
   }
   if (mode === "revoke") {
     const operationRequestId = requestId("licops");
-    const revokeResult = await revokeLicenseAtomically(env, slug, licenseId, body.plan || PLAN, validUntil, body.reason, operationRequestId);
+    const revokeResult = await revokeLicenseAtomically(env, slug, licenseId, requestedPlan, validUntil, body.reason, operationRequestId);
     return json(operatorResult(mode, mutationMode, revokeResult.resultCode || revokeResult.status, {
       ok: revokeResult.ok,
       status: revokeResult.ok ? "revoked" : revokeResult.status,
@@ -2044,7 +2058,7 @@ async function activateLicense(request, env, mode) {
       extra: {
         tenantSlug: slug,
         licenseId,
-        license: revokeResult.license ? { ...revokeResult.license, signedLicenseIssued: false } : { licenseId, status: revokeResult.status, plan: body.plan || PLAN, validUntil, signedLicenseIssued: false },
+        license: revokeResult.license ? { ...revokeResult.license, signedLicenseIssued: false } : { licenseId, status: revokeResult.status, plan: requestedPlan, validUntil, signedLicenseIssued: false },
         revokePersistence: {
           persisted: revokeResult.persisted === true,
           readAfterWrite: revokeResult.ok ? "confirmed" : "not_confirmed",
