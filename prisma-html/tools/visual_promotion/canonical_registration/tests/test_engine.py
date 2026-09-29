@@ -43,6 +43,12 @@ class CanonicalRegistrationTests(unittest.TestCase):
         (base/"visual-control/layers.json").write_text(json.dumps({
             "layerSamples":[{"layer_id":"LYR.test","surface":"tablet","selector":".table","implementationLayerId":"physical.layer","ownerCss":"css"}],"certifiedLayers":[]
         }),encoding="utf-8")
+        expanded=base/"visual-control/expanded/tablet"
+        expanded.mkdir(parents=True,exist_ok=True)
+        (expanded/"routes.jsonl").write_text(json.dumps({"route_id":"route","surface":"tablet","route":"/"})+"\n",encoding="utf-8")
+        (expanded/"owners-componentOwners.jsonl").write_text(json.dumps({"component_id":"component","surface":"tablet","path":"products/tablet/app/components.test.tsx"})+"\n",encoding="utf-8")
+        (expanded/"owners-regionOwners.jsonl").write_text(json.dumps({"region_id":"region","surface":"tablet","ownerComponent":"component","route":"/"})+"\n",encoding="utf-8")
+        (expanded/"editable-slots.jsonl").write_text(json.dumps({"slot_unit_id":"slot","surface":"tablet","target":"slot"})+"\n",encoding="utf-8")
 
         ti=base/"visual-control/target-index"
         ti.mkdir(parents=True)
