@@ -1,0 +1,25 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.canonical-promotion-request.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","requestId","target","expectedCurrentHead","currentTruth","source","decision","authorization"],
+  "properties":{
+    "schema":{"const":"prisma.visual.canonical-promotion-request.v1"},
+    "requestId":{"type":"string","pattern":"^cpr-[a-z0-9][a-z0-9._-]{0,95}$"},
+    "target":{"type":"object","additionalProperties":false,"required":["targetId","surfaceKey"],"properties":{"targetId":{"type":"string","minLength":1},"surfaceKey":{"enum":["tablet","pc","mobile","shared-ui"]}}},
+    "expectedCurrentHead":{"type":"string","pattern":"^[0-9a-f]{40}$"},
+    "currentTruth":{"$ref":"prisma.visual.current-truth-snapshot.v1"},
+    "source":{"type":"object","additionalProperties":false,"required":["digest","path"],"properties":{"digest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"path":{"type":"string","minLength":1},"candidateRef":{"type":"string"}}},
+    "decision":{
+      "type":"object","additionalProperties":false,
+      "required":["semanticAction","recipeAction","bindingAction","layerAction"],
+      "properties":{
+        "semanticAction":{"enum":["REUSE_EXISTING","CREATE_NEW"]},
+        "semanticDecisionId":{"type":"string"},"approvalEvidenceRefs":{"type":"array","items":{"type":"string"}},
+        "semanticAuthority":{"type":"object","additionalProperties":false,"required":["authorityDomain","writerKind","canonicalMeaningId","decisionRef"],"properties":{"authorityDomain":{"const":"ndc"},"writerKind":{"const":"NDC_CURATION"},"canonicalMeaningId":{"type":"string"},"decisionRef":{"type":"string"}}},
+        "recipeAction":{"type":"object"},"bindingAction":{"type":"object"},"layerAction":{"type":"object"},"projectionAction":{"type":"object"},"idInputs":{"type":"object"}
+      }
+    },
+    "authorization":{"type":"object","additionalProperties":false,"required":["canonicalRegistrationAuthorized","automaticSemanticInference","automaticApplicationSource"],"properties":{"canonicalRegistrationAuthorized":{"const":true},"automaticSemanticInference":{"const":false},"automaticApplicationSource":{"const":false}}}
+  }
+}
