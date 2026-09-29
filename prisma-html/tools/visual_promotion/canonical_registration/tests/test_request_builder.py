@@ -25,7 +25,7 @@ class RequestBuilderTests(unittest.TestCase):
             "semanticAuthority":{
                 "authorityDomain":"ndc","writerKind":"NDC_CURATION",
                 "canonicalMeaningId":"ACT.primary","decisionRef":"ndc::decision.test",
-                "canonicalTargetId":"TGT.test.canonical.V1","canonicalLayerId":"LYR.test",
+                "canonicalTargetId":"TGT.tablet.TGT.CENSUS.TABLET.TEST.V1.ACT.primary.dd3eb0ff2d0b.V1","canonicalLayerId":"LYR.test",
                 "applicationPolicy":"EXACT_TARGET_ONLY","applicationLayerDecisionRef":"rifat::policy.test",
             },
         }
