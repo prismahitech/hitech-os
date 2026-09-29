@@ -4522,14 +4522,14 @@
       "sha256": "BA6D2D2DFDFE35B7A926CDCA2C0791A3826D491AB7BB4344F5CADD52A0882276"
     },
     {
-      "bytes": 1075,
+      "bytes": 1463,
       "path": "tools/visual_promotion/canonical_registration/contracts/canonical-promotion-evidence.schema.json",
-      "sha256": "768953793F94E5EF42549B56ED158D280E4A651340F49D8AE7F18BAEFC4BEBF4"
+      "sha256": "81E092EA0BC3ED967F0452477F2E37B0A6D48D349765D6DC10A61DD7BB88E991"
     },
     {
-      "bytes": 1012,
+      "bytes": 1400,
       "path": "tools/visual_promotion/canonical_registration/contracts/canonical-promotion-journal.schema.json",
-      "sha256": "677E5C34163B5DE4DF9F3FFF528037D052572779CD811D1CF0130C674BCA9947"
+      "sha256": "FCA30D92FAB5035ABDED22E74F88E462719273AF855C746C0964E2C8293ED10F"
     },
     {
       "bytes": 1668,
@@ -4587,9 +4587,9 @@
       "sha256": "D15CC8680B7C9F11EDB96071554105567E8B06D1CA89EA7C24FC2A0693DCA52F"
     },
     {
-      "bytes": 30058,
+      "bytes": 30203,
       "path": "tools/visual_promotion/canonical_registration/engine.py",
-      "sha256": "2128F50C1498272F56F8D5F319919CD467342B5B057B10C0A4CC0A870733488C"
+      "sha256": "D72D323D53913F7D6695D10C2198703F034114D66623D667335F9757B265F004"
     },
     {
       "bytes": 1890,
@@ -4647,9 +4647,9 @@
       "sha256": "D217BC62F8A1DCCF635B7930A89A8B771EE166EB28DDD75924F83F5761F6E8D4"
     },
     {
-      "bytes": 23967,
+      "bytes": 24439,
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
-      "sha256": "991ED109B5A87EC603C67BC767B06C075CE94B5C7C039FC6FDA7DAA6D3517AEB"
+      "sha256": "16FA9B6B532A13C775372647769AA3C23CD7A015FCDA101973685538A1E1C4F1"
     },
     {
       "bytes": 1782,
