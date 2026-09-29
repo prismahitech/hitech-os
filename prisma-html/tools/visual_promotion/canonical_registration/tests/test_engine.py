@@ -223,6 +223,39 @@ class CanonicalRegistrationTests(unittest.TestCase):
         with self.assertRaises(self.engine.IdCollisionError):
             self.engine.build_plan(request,self.root)
 
+
+    def test_reuse_existing_target_requires_registered_target(self):
+        request=self.request()
+        request["decision"]["targetAction"]={"action":"REUSE_EXISTING"}
+        request["target"]["targetId"]="TGT.MISSING"
+        with self.assertRaises(self.engine.CanonicalRegistrationError):
+            self.engine.build_plan(request,self.root)
+
+    def test_reuse_existing_binding_requires_exact_match(self):
+        request=self.request()
+        first=self.engine.register(request,self.root)
+        replay=self.request()
+        replay["target"]["targetId"]=first["targetId"]
+        replay["decision"]["targetAction"]={"action":"REUSE_EXISTING"}
+        replay["decision"]["bindingAction"]["action"]="REUSE_EXISTING"
+        replay["decision"]["bindingAction"]["bindingId"]=first["ids"]["bindingId"]
+        replay["decision"]["bindingAction"].pop("registryEntry",None)
+        plan=self.engine.build_plan(replay,self.root)
+        self.assertEqual(plan["bindingAction"],"REUSE_EXISTING")
+        self.assertEqual(plan["targetId"],first["targetId"])
+
+    def test_reuse_existing_binding_rejects_mismatched_exact_target(self):
+        request=self.request()
+        first=self.engine.register(request,self.root)
+        replay=self.request()
+        replay["target"]["targetId"]=first["targetId"]
+        replay["decision"]["targetAction"]={"action":"REUSE_EXISTING"}
+        replay["decision"]["bindingAction"]["action"]="REUSE_EXISTING"
+        replay["decision"]["bindingAction"]["bindingId"]=first["ids"]["bindingId"]
+        replay["decision"]["bindingAction"]["exactBinding"]["targets"][0]["selector"]=".different"
+        with self.assertRaises(self.engine.BindingCollisionError):
+            self.engine.build_plan(replay,self.root)
+
     def test_source_drift_is_rejected(self):
         request=self.request()
         (self.root/"candidate.json").write_text('{"candidate":false}',encoding="utf-8")
