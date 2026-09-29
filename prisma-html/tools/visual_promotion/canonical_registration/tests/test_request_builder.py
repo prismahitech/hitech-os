@@ -57,6 +57,16 @@ class RequestBuilderTests(unittest.TestCase):
         )
 
 
+    def test_binding_semantic_key_uses_canonical_identity_only(self):
+        request=self.builder.build_request_from_readiness(
+            self.row(),current_truth={"schema":"prisma.visual.current-truth-snapshot.v1"},
+            expected_current_head="a"*40,
+            authorization={"canonicalRegistrationAuthorized":True,"automaticSemanticInference":False,"automaticApplicationSource":False},
+            source={"digest":"b"*64,"path":"candidate.json"},
+        )
+        self.assertEqual(request["decision"]["bindingAction"]["semanticKey"],"tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary")
+        self.assertNotIn("physical.layer",request["decision"]["bindingAction"]["semanticKey"])
+
     def test_builder_does_not_supply_canonical_target_id(self):
         request=self.builder.build_request_from_readiness(
             self.row(),current_truth={"schema":"prisma.visual.current-truth-snapshot.v1"},
