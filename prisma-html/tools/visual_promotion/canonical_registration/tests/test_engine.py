@@ -40,7 +40,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         (base/"visual-control/components.json").write_text(json.dumps({"components":[{"component_id":"component"}]}),encoding="utf-8")
         (base/"visual-control/editable-slots.json").write_text(json.dumps({"slotUnitSamples":[{"slot_unit_id":"slot"}]}),encoding="utf-8")
         (base/"visual-control/layers.json").write_text(json.dumps({
-            "layerSamples":[{"layer_id":"LYR.test"},{"layer_id":"physical.css.test"}],"certifiedLayers":[]
+            "layerSamples":[{"layer_id":"LYR.test","implementationLayerId":"physical.layer"}],"certifiedLayers":[]
         }),encoding="utf-8")
 
         ti=base/"visual-control/target-index"
@@ -141,7 +141,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
             "targets":[{
                 "targetId":target_id,
                 "ownerId":"owner","routeId":"route","regionId":"region","slotId":"slot",
-                "componentUiId":"component","layerId":"LYR.test","implementationLayerId":"physical.css.test","ownerCssId":"css",
+                "componentUiId":"component","layerId":"LYR.test","implementationLayerId":"physical.layer","ownerCssId":"css",
                 "selector":".table",
                 "missingBindings":[],
             }],
