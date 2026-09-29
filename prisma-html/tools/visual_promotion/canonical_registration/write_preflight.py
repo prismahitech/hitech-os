@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -36,12 +35,14 @@ def validate_write_preflight(repo_root:Path, context:dict[str,Any])->WritePrefli
     if writer != "CANONICAL_REGISTRATION": raise WritePreflightError("WRITER_KIND_INVALID")
     if domain != "canonical-registration": raise WritePreflightError("AUTHORITY_DOMAIN_INVALID")
     target_id=context.get("targetId")
-    if not isinstance(target_id,str) or not target_id: raise WritePreflightError("TARGET_ID_REQUIRED")
+    if not isinstance(target_id,str) or not target_id.startswith("TGT."): raise WritePreflightError("TARGET_ID_REQUIRED")
     source_path=context.get("sourcePath")
     source_digest=context.get("sourceDigest")
     if not isinstance(source_path,str) or not isinstance(source_digest,str) or len(source_digest)!=64: raise WritePreflightError("SOURCE_PIN_REQUIRED")
-    path=repo_root/source_path
-    if not path.is_file(): raise WritePreflightError("SOURCE_FILE_NOT_FOUND")
+    path=(repo_root/source_path).resolve()
+    root=repo_root.resolve()
+    if path!=root and root not in path.parents: raise WritePreflightError("SOURCE_PATH_ESCAPE")
+    if not path.is_file() or path.is_symlink(): raise WritePreflightError("SOURCE_FILE_NOT_FOUND")
     if _sha(path)!=source_digest: raise WritePreflightError("SOURCE_DRIFT")
     if context.get("runtimeMutationAllowed") is not False: raise WritePreflightError("RUNTIME_MUTATION_FORBIDDEN")
     return WritePreflight("PASS",writer,domain,expected,source_digest,target_id,True)
