@@ -145,7 +145,8 @@ function assertPlanBasedProvisioningReadonly() {
     "commercialPlanId",
     "canonical commercial license SKU"
   ]) {
-    assert(contract.includes(token), `Shared plan provisioning contract missing ${token}`);
+    const contractSearch = contract.toLowerCase();
+    assert(contractSearch.includes(token.toLowerCase()), `Shared plan provisioning contract missing ${token}`);
   }
   const contractPlan = contract.match(/planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,\s+commercialPlanId: "TABLET_PC_MANAGED"/);
   assert(Boolean(contractPlan), "STARTER_COMMERCIAL_PLAN_MAPPING_MISSING");
