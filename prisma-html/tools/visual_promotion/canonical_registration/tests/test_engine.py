@@ -216,7 +216,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(first["ids"]["targetId"],second["ids"]["targetId"])
         self.assertEqual(second["status"],"APPLIED")
 
-    def test_git_head_is_authoritative_over_environment_sha(self):
+    def test_ci_sha_is_authoritative_with_local_git_fallback(self):
         subprocess.run(["git","init"],cwd=self.root,check=True,capture_output=True)
         subprocess.run(["git","config","user.email","test@example.com"],cwd=self.root,check=True,capture_output=True)
         subprocess.run(["git","config","user.name","Test"],cwd=self.root,check=True,capture_output=True)
@@ -226,6 +226,8 @@ class CanonicalRegistrationTests(unittest.TestCase):
         subprocess.run(["git","commit","-m","fixture"],cwd=self.root,check=True,capture_output=True)
         actual=subprocess.run(["git","rev-parse","HEAD"],cwd=self.root,check=True,capture_output=True,text=True).stdout.strip()
         os.environ["GITHUB_SHA"]="b"*40
+        self.assertEqual(self.engine.current_repo_head(self.root),"b"*40)
+        del os.environ["GITHUB_SHA"]
         self.assertEqual(self.engine.current_repo_head(self.root),actual)
 
     def test_stale_head_blocks_replay(self):
