@@ -18,8 +18,9 @@ SET claim_slot_id = (
 )
 WHERE claim_slot_id IS NULL;
 
-CREATE UNIQUE INDEX IF NOT EXISTS ux_customer_device_claims_setup_surface_slot
-  ON customer_device_claims(setup_id, surface, claim_slot_id);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_customer_device_claims_setup_surface_slot_active
+  ON customer_device_claims(setup_id, surface, claim_slot_id)
+  WHERE status = 'claimed';
 
 CREATE INDEX IF NOT EXISTS idx_customer_device_claims_claim_slot
   ON customer_device_claims(claim_slot_id);
