@@ -63,6 +63,7 @@ def build_request_from_readiness(
         "slotId":physical["slotId"],
         "componentUiId":physical.get("componentUiId"),
         "layerId":authority.get("canonicalLayerId"),
+        "implementationLayerId":physical["implementationLayerId"],
         "ownerCssId":physical.get("ownerCssId"),
         "selector":physical.get("selector"),
         "missingBindings":[],
