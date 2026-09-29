@@ -359,6 +359,7 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     request_digest=sha256_json({k:v for k,v in request.items() if k!="_repoRoot"})
     lock=_transaction_lock_path(repo_root,request_id); _acquire_lock(lock)
     try:
+        _assert_receipt_path(repo_root,receipt_path,request_id)
         if receipt_path.exists():
             prior=_load(receipt_path)
             prior_digest=prior.get("requestDigest")
@@ -383,6 +384,8 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
             evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
             result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
             evidence["result"]=result; _atomic_write_json(receipt_path,evidence); return result
+        if not plan["mutations"]:
+            raise CanonicalRegistrationError("NO_CANONICAL_MUTATION_REQUIRED")
 
         head=current_repo_head(repo_root)
         if head!=request["expectedCurrentHead"]: raise StaleHeadError(f"CURRENT_HEAD_CHANGED:{head}:{request['expectedCurrentHead']}")
@@ -400,11 +403,18 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
             from .postconditions import verify_registration_postconditions
             post=verify_registration_postconditions(repo_root,plan)
         except Exception as exc:
+            rollback_verified=True
             for rel,before in prestate.items():
-                path=repo_root/rel; completed=next((x[2] for x in applied if str(x[0].relative_to(repo_root)).replace("\\","/")==rel),None)
-                if completed is not None and sha256_json(_load(path))==completed: _atomic_write_json(path,before)
-            journal["status"]="ROLLED_BACK_AFTER_FAILURE"; journal["error"]=str(exc); journal["rollbackVerified"]=True; _atomic_write_json(journal_path,journal)
+                path=repo_root/rel
+                completed=next((x[2] for x in applied if str(x[0].relative_to(repo_root)).replace("\\","/")==rel),None)
+                if completed is not None:
+                    if sha256_json(_load(path))==completed:
+                        _atomic_write_json(path,before)
+                    if sha256_json(_load(path))!=sha256_json(before):
+                        rollback_verified=False
+            journal["status"]="ROLLED_BACK_AFTER_FAILURE"; journal["error"]=str(exc); journal["rollbackVerified"]=rollback_verified; _atomic_write_json(journal_path,journal)
             evidence=_evidence(request,plan,"FAILED",applied,[str(exc)]); evidence["journalPath"]=str(journal_path.relative_to(repo_root)).replace("\\","/")
+            evidence["rollbackVerified"]=rollback_verified
             _atomic_write_json(receipt_path,evidence); raise
         journal["status"]="APPLIED"; journal["postStateDigests"]={str(p.relative_to(repo_root)).replace("\\","/"):a for p,_,a,_ in applied}; _atomic_write_json(journal_path,journal)
         evidence=_evidence(request,plan,"APPLIED",applied,[]); evidence["journalPath"]=str(journal_path.relative_to(repo_root)).replace("\\","/"); evidence["postconditions"]=post; evidence["preStateValues"]={str(p.relative_to(repo_root)).replace("\\","/"):b for p,_,_,b in applied}
