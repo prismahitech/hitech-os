@@ -76,9 +76,47 @@ def verify_current_truth(repo_root:Path, snapshot:dict, *, evidence_target_id:st
     if not sid or sid!=sha256_json({k:v for k,v in snapshot.items() if k!="snapshotId"}): raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_ID_INVALID")
     sources=snapshot.get("sources") or {}
     fields={"targetIndex":"targetIndexDigest","identity":"identityDigest","rifat":"rifatDigest","ndc":"ndcDigest","projection":"projectionDigest","authorityMesh":"authorityMeshDigest","layerMap":"layerMapDigest"}
+    canonical_internal={"targetIndex","identity","rifat","ndc","projection"}
     for bucket,field in fields.items():
         rows=sources.get(bucket)
-        if not isinstance(rows,list) or not rows: raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SET_MISSING:{bucket}")
+        if not isinstance(rows,list) or not rows:
+            raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SET_MISSING:{bucket}")
+
+        if bucket in canonical_internal:
+            if any(isinstance(row,dict) and row.get("externalRef") for row in rows):
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_EXTERNAL_REF_FOR_CANONICAL_BUCKET:{bucket}")
+            if bucket=="targetIndex":
+                expected_digest,expected_rows=_glob_bundle(
+                    repo_root,
+                    Path("prisma-html/authority/rifat/prisma-ui/visual-control/target-index"),
+                )
+            elif bucket=="identity":
+                expected_digest,expected_rows=_glob_bundle(repo_root,IDENTITY_ROOT)
+            elif bucket=="ndc":
+                expected_digest,expected_rows=_glob_bundle(repo_root,NDC_ROOT)
+            elif bucket=="rifat":
+                expected_digest,expected_rows=_bundle(repo_root,RIFAT_PATHS)
+            else:
+                expected_digest,expected_rows=_bundle(repo_root,PROJECTION_PATHS)
+            normalized=[]
+            for row in rows:
+                if not isinstance(row,dict):
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_ROW_INVALID:{bucket}")
+                relative=str(row.get("path","") or "")
+                if not _bucket_allowed_path(bucket,relative):
+                    raise CanonicalRegistrationError(f"CURRENT_TRUTH_UNEXPECTED_SOURCE_PATH:{bucket}:{relative}")
+                normalized.append({
+                    "path":relative,
+                    "sha256":row.get("sha256"),
+                    "bytes":row.get("bytes"),
+                })
+            normalized.sort(key=lambda x:x["path"])
+            if normalized!=expected_rows:
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SET_DRIFT:{bucket}")
+            if snapshot.get(field)!=expected_digest:
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
+            continue
+
         actual=[]
         for row in rows:
             if not isinstance(row,dict): raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_ROW_INVALID:{bucket}")
