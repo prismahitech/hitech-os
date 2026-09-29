@@ -395,13 +395,13 @@ function auditInsertStatement(auditMode, eventId, slug, eventType, payload) {
   const payloadJson = JSON.stringify(payload || {});
   if (auditMode === "audit_events") {
     return {
-      sql: "insert into audit_events (event_id, tenant_slug, event_type, payload_json) values (?, ?, ?, ?)",
+      sql: "insert or ignore into audit_events (event_id, tenant_slug, event_type, payload_json) values (?, ?, ?, ?)",
       params: [eventId, slug, eventType, payloadJson]
     };
   }
   if (auditMode === "audit_log") {
     return {
-      sql: "insert into audit_log (id, actor, action, entity_type, entity_id, payload_json) values (?, ?, ?, ?, ?, ?)",
+      sql: "insert or ignore into audit_log (id, actor, action, entity_type, entity_id, payload_json) values (?, ?, ?, ?, ?, ?)",
       params: [eventId, "licflow3-worker", eventType, "tenant", slug, payloadJson]
     };
   }
