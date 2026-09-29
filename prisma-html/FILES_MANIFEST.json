@@ -4569,7 +4569,7 @@
     {
       "path": "tools/visual_promotion/canonical_registration/request_builder.py",
       "bytes": 5877,
-      "sha256": "0C11A241300630E602D670E53762E9E4AD7D73DFCF8850F7D53C1FFFE4520944"
+      "sha256": "D2A8B778104D83EFA7C669ED25E7A6057EDD02E3BF214FE67DB9A44A656E37F1"
     },
     {
       "bytes": 1364,
@@ -4579,7 +4579,7 @@
     {
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
       "bytes": 12904,
-      "sha256": "83B74BF3185B2AC02BEFB06D0D98610313B72D9B22BF9036489B3FA3CBCDCC2B"
+      "sha256": "0FC947724072F903CB4D7A24649C9894033C649A7FA232A110055F5E53EDE6B1"
     },
     {
       "bytes": 2748,
