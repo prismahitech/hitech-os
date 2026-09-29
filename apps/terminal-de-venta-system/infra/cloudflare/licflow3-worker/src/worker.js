@@ -1248,6 +1248,8 @@ async function createCustomerSetup(request, env) {
       ok: false,
       status: batch.status,
       resultCode: "CUSTOMER_SETUP_PROVISIONING_FAILED",
+      d1Hint: batch.hint || null,
+      d1Error: batch.error || null,
       customerMessage: "No pudimos completar el alta del Customer Setup de forma atomica.",
       nextStep: "Revisa la evidencia sanitizada y no continues con el Setup Code.",
       secretsExposed: false
