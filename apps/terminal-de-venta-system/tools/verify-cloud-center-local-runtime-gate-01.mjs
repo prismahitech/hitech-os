@@ -11,7 +11,7 @@ const commands = [
   ["licflow3-cloud-contract", "verify:licflow3:cloud-contract"],
   ["licflow3-route-map", "verify:licflow3:route-map"],
   ["licflow3-no-secrets", "verify:licflow3:no-secrets"],
-  ["licflow3-no-db", "verify:licflow3:no-db"],
+  ["licflow3-no-db-commit", "verify:licflow3:no-db-commit"],
   ["licflow3-no-db-copy", "verify:licflow3:no-db-copy"],
   ["customer-setup-plan-provisioning", "verify:customer-setup:plan-provisioning"],
   ["customer-setup-no-secrets", "verify:customer-setup:no-secrets"],
