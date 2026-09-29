@@ -215,7 +215,8 @@
     "verify:cloud-center:persistence-hardening": "node tools/verify-cloud-center-persistence-hardening-01.mjs",
     "verify:cloud-center:concurrency-idempotency": "node tools/verify-cloud-center-concurrency-idempotency-01.mjs",
     "verify:cloud-center:d1-graph-integrity": "python3 tools/verify-cloud-center-d1-graph-integrity-01.py",
-    "verify:cloud-center:customer-runtime": "python3 tools/verify-cloud-center-customer-runtime-02.py --out-dir tools/_local/reports/ci/cloud-center-runtime"
+    "verify:cloud-center:customer-runtime": "python3 tools/verify-cloud-center-customer-runtime-02.py --out-dir tools/_local/reports/ci/cloud-center-runtime",
+    "verify:cloud-center:browser-runtime": "node tools/verify-cloud-center-browser-runtime-01.mjs"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
