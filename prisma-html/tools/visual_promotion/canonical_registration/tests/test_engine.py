@@ -31,8 +31,8 @@ class CanonicalRegistrationTests(unittest.TestCase):
 
         base=self.root/"prisma-html/authority/rifat/prisma-ui"
         (base/"visual-control").mkdir(parents=True)
-        (base/"routes.json").write_text(json.dumps({"routes":[{"route_id":"route"}]}),encoding="utf-8")
-        (base/"surfaces.json").write_text(json.dumps({"surfaces":[{"surface_id":"tablet"}]}),encoding="utf-8")
+        (base/"routes.json").write_text(json.dumps({"routes":[{"route_id":"route","surface":"tablet"}]}),encoding="utf-8")
+        (base/"surfaces.json").write_text(json.dumps({"surfaces":[{"id":"tablet","surface":"tablet"}]}),encoding="utf-8")
         (base/"visual-control/owners.json").write_text(json.dumps({
             "componentOwnerSamples":[{"component_id":"owner"}],
             "cssOwnerSamples":[{"owner_id":"css"}],
@@ -255,6 +255,14 @@ class CanonicalRegistrationTests(unittest.TestCase):
         replay["decision"]["bindingAction"]["exactBinding"]["targets"][0]["selector"]=".different"
         with self.assertRaises(self.engine.BindingCollisionError):
             self.engine.build_plan(replay,self.root)
+
+    def test_route_surface_mismatch_is_rejected(self):
+        request=self.request()
+        (self.root/"prisma-html/authority/rifat/prisma-ui/routes.json").write_text(
+            json.dumps({"routes":[{"route_id":"route","surface":"pc"}]}),encoding="utf-8"
+        )
+        with self.assertRaises(self.engine.CanonicalRegistrationError):
+            self.engine.build_plan(request,self.root)
 
     def test_source_drift_is_rejected(self):
         request=self.request()
