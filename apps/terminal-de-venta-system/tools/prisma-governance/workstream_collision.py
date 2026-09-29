@@ -115,13 +115,18 @@ class GitHubClient:
             raise GateError(f"GITHUB_API_UNAVAILABLE:{exc}") from exc
 
     def open_pull_requests(self) -> list[dict[str, Any]]:
-        rows = self.get(
-            f"/repos/{self.repo}/pulls",
-            {"state": "open", "per_page": "100", "sort": "created", "direction": "asc"},
-        )
-        if not isinstance(rows, list):
-            raise GateError("INVALID_OPEN_PRS_RESPONSE")
-        return [row for row in rows if isinstance(row, dict)]
+        result: list[dict[str, Any]] = []
+        for page in range(1, 11):
+            rows = self.get(
+                f"/repos/{self.repo}/pulls",
+                {"state": "open", "per_page": "100", "page": str(page), "sort": "created", "direction": "asc"},
+            )
+            if not isinstance(rows, list):
+                raise GateError("INVALID_OPEN_PRS_RESPONSE")
+            result.extend(row for row in rows if isinstance(row, dict))
+            if len(rows) < 100:
+                return result
+        raise GateError("OPEN_PR_SET_EXCEEDS_SAFE_SCAN_LIMIT")
 
     def pull_request(self, number: int) -> dict[str, Any]:
         row = self.get(f"/repos/{self.repo}/pulls/{number}")
