@@ -89,13 +89,10 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
     component_record=expanded["componentOwners"][target["componentUiId"]]
     region_record=expanded["regionOwners"][target["regionId"]]
     slot_record=expanded["slots"][target["slotId"]]
-    for label,record in (("COMPONENT",component_record),("REGION",region_record),("SLOT",slot_record)):
+    owner_record=expanded["componentOwners"][target["ownerId"]]
+    for label,record in (("OWNER",owner_record),("COMPONENT",component_record),("REGION",region_record),("SLOT",slot_record)):
         if record.get("surface")!=expected_surface:
             raise AuthorityBindingError(f"EXACT_BINDING_{label}_SURFACE_MISMATCH")
-    if component_record.get("component_id")!=target["ownerId"]:
-        raise AuthorityBindingError("EXACT_BINDING_OWNER_COMPONENT_MISMATCH")
-    if region_record.get("ownerComponent") not in {target["ownerId"],target["componentUiId"]}:
-        raise AuthorityBindingError("EXACT_BINDING_REGION_OWNER_MISMATCH")
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
     implementation_layer=target["implementationLayerId"]
