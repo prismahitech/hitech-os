@@ -15,6 +15,7 @@ def _load(path: Path) -> dict[str, Any]:
 def rifat_indexes(repo_root: Path) -> dict[str, dict[str, Any]]:
     base = repo_root / "prisma-html/authority/rifat/prisma-ui"
     sources = {
+        "surfaces": (base / "surfaces.json", "surfaces", "id"),
         "routes": (base / "routes.json", "routes", "route_id"),
         "componentOwners": (base / "visual-control/owners.json", "componentOwnerSamples", "component_id"),
         "cssOwners": (base / "visual-control/owners.json", "cssOwnerSamples", "owner_id"),
@@ -42,11 +43,15 @@ def validate_exact_binding(repo_root: Path, binding: dict[str, Any], target_id: 
     if target.get("missingBindings"): raise AuthorityBindingError("EXACT_BINDING_HAS_MISSING_FIELDS")
     selector=binding.get("selector") or {}
     if selector.get("surfaceId")!=expected_surface: raise AuthorityBindingError("EXACT_BINDING_SURFACE_MISMATCH")
+    if expected_surface not in idx["surfaces"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_SURFACE:{expected_surface}")
     if selector.get("neutralMeaningId")!=expected_meaning_id: raise AuthorityBindingError("EXACT_BINDING_SEMANTIC_MISMATCH")
     if not isinstance(target.get("selector"),str) or not target["selector"]: raise AuthorityBindingError("EXACT_BINDING_SELECTOR_REQUIRED")
     idx=rifat_indexes(repo_root)
     lookup={"ownerId":"componentOwners","routeId":"routes","regionId":"regionOwners","slotId":"slots","componentUiId":"components","layerId":"layers"}
     for field,bucket in lookup.items():
         if target[field] not in idx[bucket]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_{field.upper()}:{target[field]}")
+    route_record=idx["routes"][target["routeId"]]
+    if route_record.get("surface")!=expected_surface:
+        raise AuthorityBindingError("EXACT_BINDING_ROUTE_SURFACE_MISMATCH")
     owner_css=target.get("ownerCssId")
     if owner_css is not None and owner_css not in idx["cssOwners"]: raise AuthorityBindingError(f"EXACT_BINDING_ORPHAN_OWNERCSSID:{owner_css}")
