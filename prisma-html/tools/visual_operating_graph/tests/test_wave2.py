@@ -119,6 +119,8 @@ class VisualOperatingGraphWave2Tests(unittest.TestCase):
         )
         self.assertEqual(result["recommendedNextSafeAction"], "STOP_BLOCKED")
         self.assertIn("UNCLASSIFIED_SOURCE_BLOCKER", [row["family"] for row in result["blockerFamilies"]])
+        unknown_family = next(row for row in result["blockerFamilies"] if row["family"] == "UNCLASSIFIED_SOURCE_BLOCKER")
+        self.assertTrue(unknown_family["requiresTaxonomyUpdate"])
         self.assertEqual(result["staleUnknownFlags"]["unknown"], [])
 
     def test_stale_graph_requires_revalidation(self):

@@ -1,0 +1,79 @@
+name: PRISMA Visual Operating Graph Wave 2 Derived Refresh (temporary)
+
+on:
+  pull_request:
+    paths:
+      - 'PRISMA Factory Ledger/**'
+      - 'prisma-html/**'
+      - '.github/workflows/visual-operating-graph-wave2-derived-refresh.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-derived:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Refresh source-set lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd prisma-html
+          PYTHONPATH=tools python -m visual_operating_graph.refresh_source_set_lock --write
+          PYTHONPATH=tools python -m visual_operating_graph.refresh_source_set_lock --check
+
+      - name: Validate Operating Graph generation from refreshed sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd prisma-html
+          PYTHONPATH=tools python -m visual_operating_graph.builder \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --out-dir "$RUNNER_TEMP/prisma-operating-graph" \
+            --write
+          PYTHONPATH=tools python -m visual_operating_graph.builder \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --out-dir "$RUNNER_TEMP/prisma-operating-graph" \
+            --check
+          python tools/refresh_files_manifest.py --write
+          python tools/refresh_files_manifest.py --check
+
+      - name: Commit exact generated governance candidates
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- \
+            prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json \
+            prisma-html/FILES_MANIFEST.json; then
+            echo "No generated governance drift."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json \
+            prisma-html/FILES_MANIFEST.json
+          git commit -m "chore(visual-graph): refresh generated governance artifacts"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+
+      - name: Upload exact generated governance candidates
+        uses: actions/upload-artifact@v7
+        with:
+          name: prisma-visual-graph-derived-candidates
+          path: |
+            prisma-html/governance/visual-operating-graph/MASTER_MAP_SOURCESET.lock.json
+            prisma-html/FILES_MANIFEST.json
+          if-no-files-found: error
+          retention-days: 7
