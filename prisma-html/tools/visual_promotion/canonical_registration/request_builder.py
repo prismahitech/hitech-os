@@ -5,8 +5,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .policy import validate_target_id
-
 class RequestBuilderError(ValueError):
     pass
 
@@ -57,19 +55,8 @@ def build_request_from_readiness(
 
     # The canonical target allocator is deterministic but consumes the physical
     # census identity as evidence, never as a semantic guess.
-    requested_target = authority.get("canonicalTargetId")
-    if not requested_target:
-        raise RequestBuilderError("CANONICAL_TARGET_ID_ADJUDICATION_REQUIRED")
-    validate_target_id(
-        requested_id=requested_target,
-        semantic_key=f"{row['surfaceKey']}|{target_id}|{semantic_id}",
-        census_target_id=target_id,
-        surface_key=row["surfaceKey"],
-        existing_ids=set(authority.get("existingCanonicalTargetIds") or []),
-    )
-
     binding_target={
-        "targetId":requested_target,
+        "targetId":None,
         "ownerId":physical["ownerId"],
         "routeId":physical["routeId"],
         "regionId":physical["regionId"],
@@ -116,8 +103,8 @@ def build_request_from_readiness(
     }
     return {
         "schema":"prisma.visual.canonical-promotion-request.v1",
-        "requestId":"cpr."+_digest({"targetId":requested_target,"source":source.get("digest"),"decision":decision})[:24],
-        "target":{"targetId":requested_target,"censusTargetId":target_id,"surfaceKey":row["surfaceKey"]},
+        "requestId":"cpr-"+_digest({"targetId":requested_target,"source":source.get("digest"),"decision":decision})[:24],
+        "target":{"targetId":None,"censusTargetId":target_id,"surfaceKey":row["surfaceKey"]},
         "expectedCurrentHead":expected_current_head,
         "currentTruth":current_truth,
         "source":source,
