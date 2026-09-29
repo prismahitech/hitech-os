@@ -1111,3 +1111,15 @@ Operational rules:
 - CI and VISCORE must run the universal PR diff gate in addition to the existing exact-target receipt gate.
 
 This source/static governance gate does not prove browser/runtime visual certification, whole-surface APPLY readiness, production readiness, distribution readiness, or customer deployment readiness.
+
+
+### 2026-09-29 - PR #560: universal screenshot artifact capability source closure
+
+**Tipo:** PACKAGING_LEARNING / EVIDENCE_LEARNING / GOVERNANCE_LEARNING  
+**Superficie:** Tooling / PC / Tablet / Mobile-PWA / Web / Chart Lab / Control Center
+
+The reusable universal screenshot artifact packager and its tests are now present from current `main`. The hosted workflow is a single parameterized manual/reusable adapter; it does not run on normal PRs. Existing Mamastrophic capture/discovery/DeepScroll/per-app packaging remains the owner.
+
+**Rule:** package evidence once with a deterministic manifest/index/provenance/hash contract; do not create six divergent screenshot engines or use artifact generation as mutation authority.
+
+**Boundary:** source-ready tooling does not constitute fresh six-surface runtime evidence, visual approval, production readiness or deployment certification.
