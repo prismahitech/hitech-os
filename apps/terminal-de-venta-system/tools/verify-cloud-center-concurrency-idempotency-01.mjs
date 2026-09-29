@@ -358,7 +358,7 @@ async function main() {
   // 5. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
   const failClaimHarness = new D1Harness(dbPath);\n  harnesses.push(failClaimHarness);
-  await failClaimHarness.setFailure("insert into audit_events");
+  await failClaimHarness.setFailure("audit_events (event_id");
   const failedClaim = await call(failClaimHarness, "/api/customer/devices/claim", "POST", {
     setupCode: failClaimSetup.setupCode,
     surface: "tablet",
@@ -379,7 +379,7 @@ async function main() {
   });
   assert(successfulReplacementClaim.status === 200, "PRECONDITION_REPLACEMENT_CLAIM_FAILED", { successfulReplacementClaim });
   const failReplacementHarness = new D1Harness(dbPath);\n  harnesses.push(failReplacementHarness);
-  await failReplacementHarness.setFailure("insert into audit_events");
+  await failReplacementHarness.setFailure("audit_events (event_id");
   const failedReplacement = await call(failReplacementHarness, "/api/admin/customer-devices/replacement/approve", "POST", {
     setupCode: failReplacementSetup.setupCode,
     surface: "tablet",
