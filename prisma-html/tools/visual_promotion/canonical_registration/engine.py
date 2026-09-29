@@ -338,6 +338,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         "bindingAction":binding.get("action"),"recipeAction":recipe.get("action"),"targetAction":target_action.get("action"),
         "layerAction":layer,"semanticAuthority":decision["semanticAuthority"],
         "projectionAction":decision.get("projectionAction",{"mode":"DEFERRED_DERIVATION","authorized":False}),
+        "workEntryHandoff":decision["workEntryHandoff"],
         "mutations":mutations,
         "preconditions":{"expectedCurrentHead":request["expectedCurrentHead"],"currentTruthDigest":sha256_json(request["currentTruth"]),"sourceDigest":request["source"]["digest"],
                         "registryDigests":{"recipeRegistry":sha256_json(existing_recipe_registry),"bindingRegistry":sha256_json(existing_bindings)}},
@@ -363,7 +364,7 @@ def _evidence(request,plan,status,applied,errors):
             "currentTruthDigest":plan["preconditions"]["currentTruthDigest"],"sourceDigest":plan["preconditions"]["sourceDigest"],
             "preState":[{"path":str(p.relative_to(root)).replace("\\","/"),"sha256":b} for p,b,_,_ in applied],
             "postState":[{"path":str(p.relative_to(root)).replace("\\","/"),"sha256":a} for p,_,a,_ in applied],
-            "ids":plan["ids"],"mutations":plan["mutations"],"status":status,"errors":errors}
+            "ids":plan["ids"],"mutations":plan["mutations"],"workEntryHandoff":plan["workEntryHandoff"],"status":status,"errors":errors}
 
 def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     request=copy.deepcopy(request); request["_repoRoot"]=str(repo_root.resolve())
@@ -405,7 +406,7 @@ def register(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
         if head!=request["expectedCurrentHead"]: raise StaleHeadError(f"CURRENT_HEAD_CHANGED:{head}:{request['expectedCurrentHead']}")
         prestate={m["path"]:_load(repo_root/m["path"]) for m in plan["mutations"]}
         journal={"schema":JOURNAL_SCHEMA,"requestId":request["requestId"],"requestDigest":request_digest,"status":"PREPARED","expectedCurrentHead":head,
-                 "currentTruthDigest":plan["preconditions"]["currentTruthDigest"],"preStateValues":prestate,"preStateDigests":{p:sha256_json(v) for p,v in prestate.items()},"mutations":plan["mutations"]}
+                 "currentTruthDigest":plan["preconditions"]["currentTruthDigest"],"workEntryHandoff":plan["workEntryHandoff"],"preStateValues":prestate,"preStateDigests":{p:sha256_json(v) for p,v in prestate.items()},"mutations":plan["mutations"]}
         _atomic_write_json(journal_path,journal)
         applied=[]
         try:
