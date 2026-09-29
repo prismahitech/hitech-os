@@ -920,6 +920,7 @@ async function createCustomerSetup(request, env) {
   const expiresAt = body.expiresAt || addDays(30);
   const licenseId = body.licenseId || `lic_${setupId}`;
   const licenseAssignmentId = body.licenseAssignmentId || `assign_${setupId}`;
+
   const pass = buildSetupPass({
     setupId,
     setupBundleId,
@@ -937,40 +938,66 @@ async function createCustomerSetup(request, env) {
     status: "active"
   }, aggregateSlotsForPlan(plan));
   pass.deviceClaimSlots = buildDeviceClaimSlotsForPlan(pass, plan, expiresAt);
+
   if (!d1(env)) return json({ ...pass, ok: false, status: "D1_BINDING_REQUIRED", sourceReady: true }, 503);
-  const planResult = await upsertLicensePlan(env, plan);
-  if (!planResult.ok) return json({ ...pass, ok: false, status: planResult.status, resultCode: "PLAN_PROVISIONING_SCHEMA_REQUIRED", nextStep: "Apply migration 0003_plan_based_provisioning.sql before live provisioning.", secretsExposed: false }, 500);
-  await upsertTenant(env, pass.tenantSlug, pass.businessName, plan.planId);
-  const assignmentResult = await upsertLicenseAssignment(env, pass);
-  if (!assignmentResult.ok) return json({ ...pass, ok: false, status: assignmentResult.status, resultCode: "LICENSE_ASSIGNMENT_CREATE_FAILED", secretsExposed: false }, 500);
-  await upsertLicense(env, pass.tenantSlug, pass.licenseId, "active", plan.planId, validUntil);
-  const result = await run(env, "insert or replace into customer_setups (setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status, expires_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-    pass.setupId,
-    pass.setupCode,
-    pass.setupUrl,
-    pass.qrPayload,
-    pass.customerId,
-    pass.tenantId,
-    pass.tenantSlug,
-    pass.businessId,
-    pass.businessName,
-    pass.packageCode,
-    pass.planCode,
-    pass.status,
-    pass.expiresAt,
-    now()
-  ]);
-  if (!result.ok) return json({ ...pass, ok: false, status: result.status, secretsExposed: false }, 500);
-  for (const slot of pass.slots) {
-    await run(env, "insert or replace into customer_setup_slots (setup_id, surface, label, allowed, claimed, updated_at) values (?, ?, ?, ?, ?, ?)", [
-      pass.setupId,
-      slot.surface,
-      slot.label,
-      slot.allowed,
-      slot.claimed,
-      now()
-    ]);
+
+  const tenantColumns = await tableColumns(env, "tenants");
+  const existingTenant = await first(env, "select slug from tenants where slug = ? limit 1", [pass.tenantSlug]);
+  let tenantStatement = null;
+  if (existingTenant) {
+    tenantStatement = {
+      sql: "update tenants set display_name = ?, status = ?, plan = ?, updated_at = ? where slug = ?",
+      params: [pass.businessName, "active", plan.planId, now(), pass.tenantSlug]
+    };
+  } else if (tenantColumns.has("id")) {
+    tenantStatement = {
+      sql: "insert into tenants (id, slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?, ?)",
+      params: [pass.tenantId, pass.tenantSlug, pass.businessName, "active", plan.planId, now()]
+    };
+  } else if (tenantColumns.has("slug")) {
+    tenantStatement = {
+      sql: "insert into tenants (slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?)",
+      params: [pass.tenantSlug, pass.businessName, "active", plan.planId, now()]
+    };
+  } else {
+    return json({ ...pass, ok: false, status: "TENANTS_SCHEMA_UNSUPPORTED", resultCode: "TENANTS_SCHEMA_UNSUPPORTED", secretsExposed: false }, 500);
   }
+
+  const licenseSchema = await licenseSchemaMode(env);
+  if (licenseSchema === "unknown") {
+    return json({ ...pass, ok: false, status: "LICENSE_SCHEMA_UNSUPPORTED", resultCode: "LICENSE_SCHEMA_UNSUPPORTED", secretsExposed: false }, 500);
+  }
+  const existingLicense = await licenseById(env, pass.tenantSlug, pass.licenseId, licenseSchema);
+  let licenseStatement = null;
+  if (licenseSchema === "canonical") {
+    licenseStatement = existingLicense
+      ? {
+          sql: "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = ?, updated_at = ? where license_id = ?",
+          params: [pass.tenantSlug, "active", plan.planId, "active", validUntil || null, now(), pass.licenseId]
+        }
+      : {
+          sql: "insert into licenses (license_id, tenant_slug, status, plan, activation_status, valid_until, updated_at) values (?, ?, ?, ?, ?, ?, ?)",
+          params: [pass.licenseId, pass.tenantSlug, "active", plan.planId, "active", validUntil || null, now()]
+        };
+  } else {
+    licenseStatement = existingLicense
+      ? {
+          sql: "update licenses set plan = ?, status = ?, expires_at = ?, updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?)",
+          params: [plan.planId, "active", validUntil || null, now(), pass.licenseId, pass.tenantSlug]
+        }
+      : {
+          sql: "insert into licenses (id, tenant_id, plan, status, expires_at, updated_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)",
+          params: [pass.licenseId, pass.tenantSlug, plan.planId, "active", validUntil || null, now()]
+        };
+  }
+
+  const auditMode = await auditSchemaMode(env);
+  if (auditMode === "none") {
+    return json({ ...pass, ok: false, status: "AUDIT_TABLE_REQUIRED", resultCode: "AUDIT_TABLE_REQUIRED", secretsExposed: false }, 500);
+  }
+
+  const createAuditEventId = `customer_setup.create-${crypto.randomUUID()}`;
+  const provisionAuditEventId = `customer_setup.plan_based_provision-${crypto.randomUUID()}`;
   const auditPayload = {
     setupId: pass.setupId,
     setupBundleId: pass.setupBundleId,
@@ -982,32 +1009,242 @@ async function createCustomerSetup(request, env) {
     operatorActionCount: 1,
     manualDeviceClaimRequired: false
   };
-  const createAuditEventId = await recordAudit(env, pass.tenantSlug, "customer_setup.create", auditPayload);
-  const auditEventId = await recordAudit(env, pass.tenantSlug, "customer_setup.plan_based_provision", auditPayload);
-  pass.auditEventId = auditEventId;
+  const createAuditStatement = auditInsertStatement(auditMode, createAuditEventId, pass.tenantSlug, "customer_setup.create", auditPayload);
+  const provisionAuditStatement = auditInsertStatement(auditMode, provisionAuditEventId, pass.tenantSlug, "customer_setup.plan_based_provision", auditPayload);
+  if (!createAuditStatement || !provisionAuditStatement) {
+    return json({ ...pass, ok: false, status: "AUDIT_TABLE_REQUIRED", resultCode: "AUDIT_TABLE_REQUIRED", secretsExposed: false }, 500);
+  }
+
+  pass.auditEventId = provisionAuditEventId;
   pass.auditEventIds = {
     create: createAuditEventId,
-    planBasedProvision: auditEventId
+    planBasedProvision: provisionAuditEventId
   };
-  pass.deviceClaimSlots = buildDeviceClaimSlotsForPlan(pass, plan, expiresAt, auditEventId);
-  const bundleResult = await upsertSetupBundle(env, pass, auditEventId);
-  if (!bundleResult.ok) return json({ ...pass, ok: false, status: bundleResult.status, resultCode: "SETUP_BUNDLE_CREATE_FAILED", secretsExposed: false }, 500);
+  pass.deviceClaimSlots = buildDeviceClaimSlotsForPlan(pass, plan, expiresAt, provisionAuditEventId);
+
+  const statements = [
+    {
+      sql: "insert or replace into license_plans (plan_id, plan_name, max_tablet_devices, max_pc_devices, max_mobile_devices, max_total_devices, allowed_surfaces_json, features_json, setup_mode, claim_mode, requires_manual_approval, expiration_policy, grace_policy, renewal_policy, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params: [
+        plan.planId,
+        plan.planName,
+        plan.maxTabletDevices,
+        plan.maxPcDevices,
+        plan.maxMobileDevices,
+        plan.maxTotalDevices,
+        JSON.stringify(plan.allowedSurfaces),
+        JSON.stringify(plan.features),
+        plan.setupMode,
+        plan.claimMode,
+        plan.requiresManualApproval ? 1 : 0,
+        plan.expirationPolicy,
+        plan.gracePolicy,
+        plan.renewalPolicy,
+        now()
+      ]
+    },
+    tenantStatement,
+    {
+      sql: "insert or replace into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params: [
+        pass.licenseAssignmentId,
+        pass.licenseId,
+        pass.setupBundleId,
+        pass.customerId,
+        pass.tenantId,
+        pass.tenantSlug,
+        pass.businessId,
+        pass.planId,
+        "assigned",
+        now()
+      ]
+    },
+    licenseStatement,
+    {
+      sql: "insert or replace into customer_setups (setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status, expires_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params: [
+        pass.setupId,
+        pass.setupCode,
+        pass.setupUrl,
+        pass.qrPayload,
+        pass.customerId,
+        pass.tenantId,
+        pass.tenantSlug,
+        pass.businessId,
+        pass.businessName,
+        pass.packageCode,
+        pass.planCode,
+        pass.status,
+        pass.expiresAt,
+        now()
+      ]
+    },
+    ...pass.slots.map((slot) => ({
+      sql: "insert or replace into customer_setup_slots (setup_id, surface, label, allowed, claimed, updated_at) values (?, ?, ?, ?, ?, ?)",
+      params: [pass.setupId, slot.surface, slot.label, slot.allowed, 0, now()]
+    })),
+    createAuditStatement,
+    provisionAuditStatement,
+    {
+      sql: "insert or replace into customer_setup_bundles (setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status, expires_at, created_by, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params: [
+        pass.setupBundleId,
+        pass.setupId,
+        pass.setupCode,
+        pass.setupUrl,
+        pass.qrPayload,
+        pass.customerId,
+        pass.tenantId,
+        pass.tenantSlug,
+        pass.businessId,
+        pass.businessName,
+        pass.licenseId,
+        pass.licenseAssignmentId,
+        pass.planId,
+        1,
+        0,
+        provisionAuditEventId,
+        pass.status,
+        pass.expiresAt,
+        "licflow3-worker",
+        now()
+      ]
+    }
+  ];
+
   const slotIndexBySurface = {};
-  for (let index = 0; index < pass.deviceClaimSlots.length; index += 1) {
-    const claimSlot = pass.deviceClaimSlots[index];
+  for (const claimSlot of pass.deviceClaimSlots) {
     slotIndexBySurface[claimSlot.surface] = Number(slotIndexBySurface[claimSlot.surface] || 0) + 1;
-    const slotResult = await upsertDeviceClaimSlot(env, pass, claimSlot, slotIndexBySurface[claimSlot.surface], auditEventId);
-    if (!slotResult.ok) return json({ ...pass, ok: false, status: slotResult.status, resultCode: "DEVICE_CLAIM_SLOT_CREATE_FAILED", secretsExposed: false }, 500);
+    statements.push({
+      sql: "insert or replace into customer_device_claim_slots (slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, device_id, claimed_at, expires_at, status, audit_event_id, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params: [
+        claimSlot.slotId,
+        pass.setupBundleId,
+        pass.setupId,
+        pass.customerId,
+        pass.licenseId,
+        pass.planId,
+        claimSlot.surface,
+        slotIndexBySurface[claimSlot.surface],
+        claimSlot.claimCode,
+        null,
+        null,
+        claimSlot.expiresAt,
+        "AVAILABLE",
+        provisionAuditEventId,
+        now()
+      ]
+    });
   }
+
+  // Customer Setup provisioning is one D1 transaction. No partial tenant/license/setup/
+  // bundle/slot/audit graph is accepted when any statement fails.
+  const batch = await runBatch(env, statements, {
+    operation: "customer_setup_create",
+    table: "tenants+licenses+assignments+customer_setups+slots+audits+bundle+claim_slots"
+  });
+  if (!batch.ok) {
+    return json({
+      ...pass,
+      ok: false,
+      status: batch.status,
+      resultCode: "CUSTOMER_SETUP_PROVISIONING_FAILED",
+      customerMessage: "No pudimos completar el alta del Customer Setup de forma atomica.",
+      nextStep: "Revisa la evidencia sanitizada y no continues con el Setup Code.",
+      secretsExposed: false
+    }, 500);
+  }
+
+  const persistedTenant = await tenant(env, pass.tenantSlug);
+  const persistedLicense = await licenseById(env, pass.tenantSlug, pass.licenseId, licenseSchema);
+  const persistedAssignment = await first(env, "select license_assignment_id as licenseAssignmentId, license_id as licenseId, setup_bundle_id as setupBundleId, plan_id as planId, status from license_assignments where license_assignment_id = ? limit 1", [pass.licenseAssignmentId]);
+  const persistedSetup = await first(env, "select setup_id as setupId, setup_code as setupCode, status, expires_at as expiresAt from customer_setups where setup_id = ? limit 1", [pass.setupId]);
+  const persistedBundle = await first(env, "select setup_bundle_id as setupBundleId, setup_id as setupId, license_id as licenseId, license_assignment_id as licenseAssignmentId, plan_id as planId, audit_event_id as auditEventId, status from customer_setup_bundles where setup_bundle_id = ? limit 1", [pass.setupBundleId]);
+  const persistedPlan = await first(env, "select plan_id as planId, max_tablet_devices as maxTabletDevices, max_pc_devices as maxPcDevices, max_mobile_devices as maxMobileDevices, max_total_devices as maxTotalDevices from license_plans where plan_id = ? limit 1", [pass.planId]);
+  const persistedAggregateSlots = await all(env, "select surface, allowed, claimed from customer_setup_slots where setup_id = ? order by surface asc", [pass.setupId]);
+  const persistedClaimSlots = await all(env, "select slot_id as slotId, surface, slot_index as slotIndex, status, device_id as deviceId, audit_event_id as auditEventId from customer_device_claim_slots where setup_bundle_id = ? order by surface asc, slot_index asc", [pass.setupBundleId]);
+  const createAuditVerified = await auditEventExists(env, auditMode, createAuditEventId);
+  const provisionAuditVerified = await auditEventExists(env, auditMode, provisionAuditEventId);
+
+  const expectedAggregate = pass.slots.map((slot) => ({
+    surface: slot.surface,
+    allowed: Number(slot.allowed),
+    claimed: 0
+  })).sort((a, b) => a.surface.localeCompare(b.surface));
+  const actualAggregate = persistedAggregateSlots.map((slot) => ({
+    surface: slot.surface,
+    allowed: Number(slot.allowed),
+    claimed: Number(slot.claimed)
+  })).sort((a, b) => a.surface.localeCompare(b.surface));
+  const aggregateMatches = JSON.stringify(actualAggregate) === JSON.stringify(expectedAggregate);
+  const claimSlotMatches = persistedClaimSlots.length === pass.deviceClaimSlots.length &&
+    pass.deviceClaimSlots.every((slot) => persistedClaimSlots.some(
+      (row) =>
+        row.slotId === slot.slotId &&
+        row.surface === slot.surface &&
+        row.status === "AVAILABLE" &&
+        Number(row.slotIndex) >= 1 &&
+        row.deviceId == null &&
+        row.auditEventId === provisionAuditEventId
+    ));
+
+  const finalOk =
+    Boolean(persistedTenant) &&
+    persistedTenant.slug === pass.tenantSlug &&
+    persistedTenant.plan === pass.planId &&
+    Boolean(persistedLicense) &&
+    persistedLicense.licenseId === pass.licenseId &&
+    persistedLicense.plan === pass.planId &&
+    persistedLicense.status === "active" &&
+    Boolean(persistedAssignment) &&
+    persistedAssignment.licenseId === pass.licenseId &&
+    persistedAssignment.setupBundleId === pass.setupBundleId &&
+    persistedAssignment.planId === pass.planId &&
+    persistedAssignment.status === "assigned" &&
+    Boolean(persistedSetup) &&
+    persistedSetup.setupCode === pass.setupCode &&
+    persistedSetup.status === "active" &&
+    Boolean(persistedBundle) &&
+    persistedBundle.setupId === pass.setupId &&
+    persistedBundle.licenseId === pass.licenseId &&
+    persistedBundle.licenseAssignmentId === pass.licenseAssignmentId &&
+    persistedBundle.planId === pass.planId &&
+    persistedBundle.auditEventId === provisionAuditEventId &&
+    Boolean(persistedPlan) &&
+    Number(persistedPlan.maxTabletDevices) === Number(plan.maxTabletDevices) &&
+    Number(persistedPlan.maxPcDevices) === Number(plan.maxPcDevices) &&
+    Number(persistedPlan.maxMobileDevices) === Number(plan.maxMobileDevices) &&
+    Number(persistedPlan.maxTotalDevices) === Number(plan.maxTotalDevices) &&
+    aggregateMatches &&
+    claimSlotMatches &&
+    createAuditVerified &&
+    provisionAuditVerified;
+
+  if (!finalOk) {
+    return json({
+      ...pass,
+      ok: false,
+      status: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
+      resultCode: "D1_CUSTOMER_SETUP_PERSISTENCE_VERIFY_FAILED",
+      customerMessage: "El alta fue rechazada porque el grafo final de Customer Setup no pudo verificarse completamente.",
+      nextStep: "No uses el Setup Code; inspecciona el estado D1 y las auditorias antes de reintentar.",
+      secretsExposed: false
+    }, 500);
+  }
+
   return json({
     ...pass,
+    ok: true,
     license: { licenseId: pass.licenseId, state: "active", validUntil },
     licenseAssignment: { licenseAssignmentId: pass.licenseAssignmentId, status: "assigned" },
     setupBundle: { setupBundleId: pass.setupBundleId, setupCode: pass.setupCode, setupLink: pass.setupUrl, setupQrPayload: pass.qrPayload },
     plan,
     operatorActionCount: 1,
     manualDeviceClaimRequired: false,
-    resultCode: "PLAN_BASED_CUSTOMER_ONBOARDING_READY"
+    resultCode: "PLAN_BASED_CUSTOMER_ONBOARDING_READY",
+    persistenceVerified: true,
+    auditVerified: true,
+    provisioningAtomic: true
   });
 }
 
