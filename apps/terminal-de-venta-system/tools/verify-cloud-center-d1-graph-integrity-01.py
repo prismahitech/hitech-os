@@ -64,8 +64,8 @@ def main() -> None:
             ("g4-assignment", "g4-license", "g4-bundle", "g4-customer", "g4-tenant-id", "g4-tenant", "g4-business", "TABLET_PC_MANAGED", "assigned"),
         )
         conn.execute(
-            "INSERT INTO customer_setups(setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
-            ("g4-setup", "G4-SETUP", "https://test.invalid/G4-SETUP", "G4", "g4-customer", "g4-tenant-id", "g4-tenant", "g4-business", "G4 Business", "PRISMA_TRIPLE_DEVICE_STARTER", "TABLET_PC_MOBILE_MANAGED", "active"),
+            "INSERT INTO customer_setups(setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status, expires_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            ("g4-setup", "G4-SETUP", "https://test.invalid/G4-SETUP", "G4", "g4-customer", "g4-tenant-id", "g4-tenant", "g4-business", "G4 Business", "PRISMA_TRIPLE_DEVICE_STARTER", "TABLET_PC_MOBILE_MANAGED", "active", "2099-01-01T00:00:00Z"),
         )
         for surface in ("tablet", "pc", "mobile"):
             conn.execute(
