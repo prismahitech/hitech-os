@@ -105,3 +105,49 @@ def capture_current_truth(
     }
     snapshot["snapshotId"] = sha256_json(snapshot)
     return snapshot
+
+
+def verify_current_truth(repo_root: Path, snapshot: dict, *, target_id: str) -> None:
+    if snapshot.get("schema") != "prisma.visual.current-truth-snapshot.v1":
+        raise CanonicalRegistrationError("CURRENT_TRUTH_SCHEMA_INVALID")
+    if snapshot.get("targetEvidenceDigest") is None:
+        raise CanonicalRegistrationError("CURRENT_TRUTH_TARGET_EVIDENCE_DIGEST_MISSING")
+    sources = snapshot.get("sources")
+    if not isinstance(sources, dict):
+        raise CanonicalRegistrationError("CURRENT_TRUTH_SOURCES_MISSING")
+    expected = {
+        "targetIndex": "targetIndexDigest",
+        "identity": "identityDigest",
+        "rifat": "rifatDigest",
+        "ndc": "ndcDigest",
+        "projection": "projectionDigest",
+        "authorityMesh": "authorityMeshDigest",
+        "layerMap": "layerMapDigest",
+    }
+    for bucket, digest_field in expected.items():
+        rows = sources.get(bucket)
+        if not isinstance(rows, list) or not rows:
+            raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_SET_MISSING:{bucket}")
+        actual_rows = []
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get("path"), str):
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_SOURCE_ROW_INVALID:{bucket}")
+            path = repo_root / row["path"]
+            if not path.is_file():
+                raise CanonicalRegistrationError(f"CURRENT_TRUTH_FILE_MISSING:{row['path']}")
+            actual_rows.append({"path": row["path"], "sha256": file_sha256(path), "bytes": path.stat().st_size})
+        actual_rows.sort(key=lambda item: item["path"])
+        if sha256_json(actual_rows) != snapshot.get(digest_field):
+            raise CanonicalRegistrationError(f"CURRENT_TRUTH_DIGEST_DRIFT:{bucket}")
+
+    from visual_application.target_index import build_index
+    target_index = build_index(repo_root)
+    matches = [row for row in target_index.get("records", []) if row.get("targetId") == target_id]
+    if len(matches) != 1:
+        raise CanonicalRegistrationError(f"CURRENT_TRUTH_TARGET_NOT_EXACT:{target_id}")
+    if sha256_json(matches[0]) != snapshot.get("targetEvidenceDigest"):
+        raise CanonicalRegistrationError("CURRENT_TRUTH_TARGET_EVIDENCE_DRIFT")
+
+    actual_head = snapshot.get("repoHead")
+    if actual_head != current_repo_head(repo_root):
+        raise CanonicalRegistrationError("CURRENT_TRUTH_REPO_HEAD_DRIFT")
