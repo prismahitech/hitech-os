@@ -57,6 +57,7 @@ def _validate_request(request: dict[str, Any]) -> None:
     if truth.get("schema") != "prisma.visual.current-truth-snapshot.v1": raise CanonicalRegistrationError("CURRENT_TRUTH_SNAPSHOT_REQUIRED")
     if truth.get("repoHead") != request["expectedCurrentHead"]: raise StaleHeadError("CURRENT_TRUTH_HEAD_MISMATCH")
     if not isinstance(request["source"].get("digest"),str) or len(request["source"]["digest"]) != 64: raise CanonicalRegistrationError("SOURCE_DIGEST_REQUIRED")
+    if not request["source"].get("path"): raise CanonicalRegistrationError("SOURCE_PATH_REQUIRED")
     decision = request["decision"]
     if decision.get("semanticAction") not in {"REUSE_EXISTING","CREATE_NEW"}: raise CanonicalRegistrationError("SEMANTIC_ADJUDICATION_REQUIRED")
     if decision.get("semanticAction") == "CREATE_NEW" and (not decision.get("semanticDecisionId") or not decision.get("approvalEvidenceRefs")):
@@ -69,6 +70,10 @@ def _validate_request(request: dict[str, Any]) -> None:
 
 def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     _validate_request(request)
+    source_path = repo_root / request["source"]["path"]
+    if not source_path.is_file(): raise CanonicalRegistrationError("SOURCE_FILE_NOT_FOUND")
+    actual_source = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    if actual_source != request["source"]["digest"]: raise CanonicalRegistrationError("SOURCE_DRIFT")
     d, target = request["decision"], request["target"]
     recipe_action, binding_action, layer_action = d.get("recipeAction",{}), d.get("bindingAction",{}), d.get("layerAction",{})
     if not layer_action.get("applicationLayerId") or not layer_action.get("policy"): raise CanonicalRegistrationError("APPLICATION_LAYER_POLICY_REQUIRED")
@@ -156,7 +161,7 @@ def register(request: dict[str,Any], repo_root: Path) -> dict[str,Any]:
     receipt=repo_root/RESULTS_ROOT/f"{request['requestId']}.json"; receipt.parent.mkdir(parents=True,exist_ok=True)
     if receipt.exists():
         prior=_load(receipt)
-        if prior.get("requestDigest")==sha256_json(request): return prior["result"]
+        if prior.get("requestDigest")==sha256_json(request) and prior.get("status") in {"APPLIED","NO_OP_IDEMPOTENT"}: return prior["result"]
     if plan["status"]=="NO_OP_IDEMPOTENT":
         evidence=_evidence(request,plan,"NO_OP_IDEMPOTENT",[],[])
         result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"NO_OP_IDEMPOTENT","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
