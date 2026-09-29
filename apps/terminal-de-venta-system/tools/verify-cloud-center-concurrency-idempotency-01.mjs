@@ -162,10 +162,17 @@ class D1Harness {
     return r.results.map((result) => ({ success: true, meta: { changes: result.changes } }));
   }
   prepare(sql) {
+    const harness = this;
     return {
       sql,
       params: [],
-      bind: (...params) => ({ sql, params }),
+      bind: (...params) => ({
+        sql,
+        params,
+        run: () => harness.run(sql, params),
+        first: () => harness.first(sql, params),
+        all: () => harness.all(sql, params)
+      })
     };
   }
   close() {
@@ -247,14 +254,16 @@ async function directCount(harness, table, where, params) {
 
 async function main() {
   const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "prisma-cloud-center-g3-")), "g3.sqlite");
+  const harnesses = [];
   const seed = new D1Harness(dbPath);
+  harnesses.push(seed);
   const migrations = migrationSql();
   await seed.init(migrations);
 
   const checks = [];
 
   // 1. Atomic create failure: no partial setup graph.
-  const setupFailHarness = new D1Harness(dbPath);
+  const setupFailHarness = new D1Harness(dbPath);\n  harnesses.push(setupFailHarness);
   await setupFailHarness.setFailure("insert into customer_setup_bundles");
   const failedSetupIds = unique("setup_atomic_fail");
   const failedSetup = {
@@ -281,7 +290,7 @@ async function main() {
 
   // 2. Real concurrent claims on the same DB with separate connections.
   const setup = await createSetup(seed, "concurrent");
-  const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];
+  const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];\n  harnesses.push(...claimHarnesses);
   const claimResponses = await Promise.all(claimHarnesses.map((h, i) =>
     call(h, "/api/customer/devices/claim", "POST", {
       setupCode: setup.setupCode,
@@ -332,7 +341,7 @@ async function main() {
 
   // 5. Atomic claim failure: audit failure rolls back claim, device and slot.
   const failClaimSetup = await createSetup(seed, "claim-failure");
-  const failClaimHarness = new D1Harness(dbPath);
+  const failClaimHarness = new D1Harness(dbPath);\n  harnesses.push(failClaimHarness);
   await failClaimHarness.setFailure("insert into audit_events");
   const failedClaim = await call(failClaimHarness, "/api/customer/devices/claim", "POST", {
     setupCode: failClaimSetup.setupCode,
@@ -353,7 +362,7 @@ async function main() {
     deviceId: "g3-replacement-atomic-old"
   });
   assert(successfulReplacementClaim.status === 200, "PRECONDITION_REPLACEMENT_CLAIM_FAILED", { successfulReplacementClaim });
-  const failReplacementHarness = new D1Harness(dbPath);
+  const failReplacementHarness = new D1Harness(dbPath);\n  harnesses.push(failReplacementHarness);
   await failReplacementHarness.setFailure("insert into audit_events");
   const failedReplacement = await call(failReplacementHarness, "/api/admin/customer-devices/replacement/approve", "POST", {
     setupCode: failReplacementSetup.setupCode,
@@ -394,7 +403,7 @@ async function main() {
     checks
   }, null, 2));
 
-  [...claimHarnesses, setupFailHarness, failClaimHarness, failReplacementHarness, seed].forEach((h) => h.close());
+  harnesses.forEach((h) => h.close());
 }
 
 try {
