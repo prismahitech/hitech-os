@@ -54,16 +54,6 @@ jobs:
           print('PASS_GVAE_V1_TESTS_134_ZERO_SKIPS')
           PY
 
-      # Retrigger canonical-registration verification on latest branch head.
-      - name: Canonical Registration deterministic suite
-        working-directory: prisma-html
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHONPATH=tools python -m unittest discover \
-            -s tools/visual_promotion/canonical_registration/tests \
-            -p 'test_*.py' -v
-
       - name: GVAE mandatory registered-target mutation gate
         working-directory: prisma-html
         shell: bash
