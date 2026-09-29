@@ -104,34 +104,55 @@ No `LYR.*` ID was inferred.
 
 ## Canonical registration integration-path audit
 
-The repository was searched for an explicit canonical-registration writer capable of taking this proposal through:
+The current main was re-audited after G-01 hardening and the canonical-registration integration is now present in:
 
-`visual meaning -> Identity recipe -> exact binding/slot/component -> application layer/policy -> target registration`.
+- `prisma-html/tools/visual_promotion/canonical_registration/engine.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/request_builder.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/current_truth.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/authority_adapters.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/collision_classifier.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/application_policy.py`
+- `prisma-html/tools/visual_promotion/canonical_registration/policy.py`
 
-Findings:
+This is the governed capability `visual.canonical_promotion_integration_v1`. It is a bounded canonical-registration writer, not a replacement authority. Its documented/runtime-checked boundary requires, before mutation:
 
-- `prisma-html/tools/visual_promotion/control_plane.py` contains `composer_plan()`, but it is explicitly a **planning/reconciliation** function. Its output hard-codes:
-  - `canonicalMutationPerformed = false`;
-  - `canonicalIdsAssigned = false`;
-  - `runtimeVisualGreen = false`;
-  - `productionReady = false`.
-  It does not write canonical Identity/RIFAT registries.
-- `prisma-html/tools/visual_promotion/promotion_readiness.py` composes readiness and emits `canonicalMutationAuthorized=false`; it does not register canonical Identity/RIFAT authority.
-- `prisma-html/tools/identity_binding_resolver.py` / `identity_binding_resolver_core.py` resolve existing binding evidence and authority snapshots; they do not create a new canonical binding from a proposal.
-- `prisma-html/extras/atlasfin/generator/build_canonical_visual_control.py` is tied to the already-certified Cobrar path and keeps product application disabled. It is not a generic table-registration composer.
-- The Identity registries themselves are instruction-only and currently source-ready, with no repository-local generic writer found that safely performs the required multi-authority transaction.
-- The interoperability contract explicitly says workers may not create canonical `BND.*`, `LYR.*`, Identity `REC.*), or new exact targets. New canonical IDs are assigned only by a deterministic canonical composer after dedupe, collision checks and evidence review.
-- The promotion contracts state that if canonical registration is not explicitly machine-authorized, the phase stops at `READY_FOR_CANONICAL_PROMOTION_INTEGRATION`.
+1. exact census evidence pinned in current truth;
+2. expected current HEAD;
+3. source digest/path;
+4. explicit NDC semantic adjudication;
+5. exact RIFAT binding;
+6. explicit `LYR.*` application-layer authority and policy;
+7. Work Entry `REGISTER_TARGET_FIRST` handoff;
+8. explicit canonical-registration authorization.
 
-Therefore no repository-local, machine-authorized generic registration path was proven for this target. **No registry writer was invoked.**
+The engine also performs transaction locking, current-head checks, registry preconditions, collision classification, atomic writes, persisted journal, postcondition verification, idempotent replay protection and transaction-scoped rollback.
 
-## Why no speculative writer was added
+### Target-specific result
 
-Adding a new registry writer here would itself constitute a new mutation architecture, not merely using an existing governed path. It would also require defining and validating the transaction semantics for multiple authorities, including collision/dedupe, canonical ID allocation, rollback, idempotency, manifest refresh, Authority Mesh/Layer Map freshness and Work Entry admission.
+The existence of this engine **does not unblock Tablet /inventory**. The target still cannot produce a valid registration request because the current target evidence lacks:
 
-The repository's own governance says to use native tools rather than invent a new workflow layer, and to stop rather than guess around `REGISTER_TARGET_FIRST`.
+- canonical NDC meaning/adjudication;
+- Identity recipe;
+- exact binding;
+- exact slot;
+- canonical `LYR.*` application-layer authority/policy;
+- exact target registration inputs.
 
-Accordingly, this checkpoint deliberately does **not** introduce a speculative registration engine.
+The current Identity recipe registry still contains only `REC.button.primary`; the current binding registry still has no exact `.stockCell` binding; and no canonical layer record was proven for the target implementation-layer string.
+
+Therefore **the canonical writer was not invoked**. This is now a real governed path waiting for missing authority, not a missing-engine problem.
+
+## Why no registration was invoked
+
+Invoking the writer with guessed semantic, binding, slot, recipe or application-layer inputs would fail the writer's own fail-closed contracts and would violate the authority split. In particular:
+
+- Atlasfin `REC.table.governed.v2` remains support/reference evidence and is not an Identity recipe.
+- The existing `unknown.buttons` slot is a button/action-zone authority and cannot be generalized to `.stockCell`.
+- The implementation-layer observation cannot be transformed into a `LYR.*` ID.
+- A canonical NDC meaning cannot be minted by this worker.
+- The canonical-registration engine cannot manufacture missing RIFAT/Identity authority from physical similarity.
+
+Accordingly, no registry mutation, target registration, product projection edit or GVAE APPLY is authorized by this checkpoint.
 
 ## Result
 
