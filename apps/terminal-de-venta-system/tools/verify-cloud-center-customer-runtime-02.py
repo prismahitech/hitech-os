@@ -61,7 +61,7 @@ def main():
             except Exception as exc:
                 raise RuntimeError('PLAYWRIGHT_NOT_INSTALLED') from exc
             with sync_playwright() as pw:
-                browser=pw.chromium.launch(channel='chrome',headless=True)
+                browser=pw.chromium.launch(headless=True)
                 page=browser.new_page(viewport={'width':1440,'height':1000})
                 page.on('console',lambda msg: console_errors.append(msg.text) if msg.type=='error' else None)
                 page.on('requestfailed',lambda req: request_failures.append(req.url) if req.url.startswith(base) else None)
