@@ -757,7 +757,10 @@ async function activeClaimForDevice(env, setupId, deviceId) {
 }
 
 async function nextAvailableClaimSlot(env, pass, surface) {
-  return first(env, "select slot_id as slotId, setup_bundle_id as setupBundleId, claim_code as claimCode, expires_at as expiresAt, status from customer_device_claim_slots where setup_id = ? and surface = ? and status = 'AVAILABLE' and (expires_at is null or expires_at > ?) order by slot_index asc limit 1", [pass.setupId, surface, now()]);
+  const row = await first(env, "select slot_id as slotId, setup_bundle_id as setupBundleId, claim_code as claimCode, expires_at as expiresAt, status from customer_device_claim_slots where setup_id = ? and surface = ? and status = 'AVAILABLE' order by slot_index asc limit 1", [pass.setupId, surface]);
+  if (!row) return null;
+  if (row.expiresAt && isExpired(row.expiresAt)) return null;
+  return row;
 }
 
 async function consumeClaimSlot(env, claimSlot, deviceId, auditEventId) {
