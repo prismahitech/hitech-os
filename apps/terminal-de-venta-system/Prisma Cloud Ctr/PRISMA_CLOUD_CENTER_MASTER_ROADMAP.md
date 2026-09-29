@@ -83,31 +83,31 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ### Device Claim
 
-- [ ] Audit all writes in `claimCustomerDevice()`.
-- [ ] Make claim provisioning transactional or explicitly compensating.
-- [ ] Ensure slot consumption cannot succeed independently of the claim graph.
-- [ ] Ensure audit persistence is part of the success contract.
-- [ ] Add read-after-write verification.
-- [ ] Forbid `DEVICE_CLAIM_ACCEPTED` on partial state.
+- [x] Audit all writes in `claimCustomerDevice()`. Source-hardened.
+- [x] Make claim provisioning transactional. D1 batch + claim-slot linkage.
+- [x] Ensure slot consumption cannot succeed independently of the claim graph.
+- [x] Ensure audit persistence is part of the success contract.
+- [x] Add read-after-write verification.
+- [x] Forbid `DEVICE_CLAIM_ACCEPTED` on partial state.
 
 ### Device Replacement
 
-- [ ] Check every write result in `approveDeviceReplacement()`.
-- [ ] Add fail-closed behavior.
-- [ ] Add read-after-write verification for claim + slot + audit.
-- [ ] Forbid `DEVICE_REPLACEMENT_APPROVED` on uncertain state.
+- [x] Check every write result in `approveDeviceReplacement()`.
+- [x] Add fail-closed behavior.
+- [x] Add read-after-write verification for claim + slot + audit.
+- [x] Forbid `DEVICE_REPLACEMENT_APPROVED` on uncertain state.
 
 ### Customer Setup
 
-- [ ] Audit provisioning sequence.
-- [ ] Introduce transaction/saga/compensation strategy.
-- [ ] Ensure no half-created tenant/license/setup graph is reported as success.
-- [ ] Add full graph verification.
+- [x] Audit provisioning sequence.
+- [x] Introduce transaction strategy with explicit schema preflight.
+- [x] Ensure no half-created tenant/license/setup graph is reported as success.
+- [x] Add full graph verification.
 
 ### Audit
 
-- [ ] Make `recordAudit()` return verified persistence success/failure.
-- [ ] Make critical mutations fail closed when audit cannot be verified.
+- [x] Make `recordAudit()` return verified persistence success/failure.
+- [x] Make critical mutations fail closed when audit cannot be verified.
 - [ ] Preserve sanitized diagnostic behavior.
 
 **Gate G2:** `PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY`
@@ -327,8 +327,8 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G1 PASSED — Contract / authority reconciliation closed  
-**Next:** G2 — Persistence integrity  
+**Current:** G2 SOURCE PASSED — Persistence integrity hardened  
+**Next:** G3 — Concurrency / idempotency  
 **Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
 
 # Historical evidence rule
