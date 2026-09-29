@@ -60,3 +60,8 @@ def load_runtime_bridge():
 def load_projection_reconciler():
     pkg=_ensure_package()
     return _load("canonical_registration.projection_reconciler",pkg/"projection_reconciler.py","canonical_registration")
+
+
+def load_write_preflight():
+    pkg=_ensure_package()
+    return _load("canonical_registration.write_preflight",pkg/"write_preflight.py","canonical_registration")
