@@ -142,6 +142,12 @@ jobs:
           set -euo pipefail
           pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:contract-authority
 
+      - name: Verify Cloud Center persistence hardening
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:persistence-hardening
+
       - name: Enforce zero priority overrides
         shell: bash
         run: |
