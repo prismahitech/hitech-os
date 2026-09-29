@@ -302,8 +302,12 @@ async function runBatch(env, statements, context = {}) {
   if (!db) return { ok: false, status: "D1_BINDING_REQUIRED", operation: context.operation || "unknown" };
   try {
     const prepared = statements.map((statement) => db.prepare(statement.sql).bind(...(statement.params || [])));
-    await db.batch(prepared);
-    return { ok: true, statements: statements.length };
+    const results = await db.batch(prepared);
+    return {
+      ok: true,
+      statements: statements.length,
+      results: Array.isArray(results) ? results : []
+    };
   } catch (error) {
     return {
       ok: false,
@@ -875,6 +879,24 @@ async function upsertDeviceClaimSlot(env, pass, slot, index, auditEventId) {
   ]);
 }
 
+async function deviceRegistrationStatement(env, pass, surface, deviceId, deviceName, claimId) {
+  const columns = await tableColumns(env, "devices");
+  const safeDeviceName = String(deviceName || deviceId).slice(0, 160);
+  if (columns.has("device_id") && columns.has("tenant_slug")) {
+    return {
+      sql: "insert or replace into devices (device_id, tenant_slug, device_name, role, platform, status, updated_at) select ?, ?, ?, ?, ?, ?, ? from customer_device_claims where claim_id = ?",
+      params: [deviceId, pass.tenantSlug, safeDeviceName, surface, surface, "registered", now(), claimId]
+    };
+  }
+  if (columns.has("id") && columns.has("tenant_id") && columns.has("device_code") && columns.has("label")) {
+    return {
+      sql: "insert or replace into devices (id, tenant_id, device_code, label, status, updated_at) select ?, (select id from tenants where slug = ?), ?, ?, ?, ? from customer_device_claims where claim_id = ?",
+      params: [deviceId, pass.tenantSlug, deviceId, safeDeviceName, "registered", now(), claimId]
+    };
+  }
+  return null;
+}
+
 async function registerClaimedDevice(env, pass, surface, deviceId, deviceName) {
   let result = await run(env, "insert or replace into devices (device_id, tenant_slug, device_name, role, platform, status, updated_at) values (?, ?, ?, ?, ?, ?, ?)", [deviceId, pass.tenantSlug, deviceName || deviceId, surface, surface, "registered", now()]);
   if (!result.ok) {
@@ -1023,42 +1045,126 @@ async function claimCustomerDevice(request, env) {
       secretsExposed: false
     });
   }
+
   const pass = await setupByCode(env, setupCode);
   if (!pass) return json({ ok: false, status: "SETUP_NOT_FOUND", resultCode: "SETUP_NOT_FOUND", customerMessage: "No encontramos este setup.", nextStep: "Revisa el Setup Code o pide un link nuevo.", secretsExposed: false }, 404);
   const setupBlock = setupBlocksCustomerAction(pass);
   if (setupBlock) return customerError(setupBlock.status, setupBlock.status, setupBlock.customerMessage, setupBlock.nextStep, setupBlock.httpStatus);
+
   const licenseRow = normalizeLicense(await license(env, pass.tenantSlug));
   const licenseBlock = licenseBlocksCustomerAction(licenseRow);
   if (licenseBlock) return customerError(`LICENSE_${licenseBlock.state.toUpperCase()}`, `LICENSE_${licenseBlock.state.toUpperCase()}`, licenseBlock.customerMessage, licenseBlock.nextStep, 403);
+
   const slot = pass.slots.find((item) => item.surface === surface);
   if (!slot) return json({ ok: false, status: "SURFACE_NOT_ALLOWED", resultCode: "SURFACE_NOT_ALLOWED", customerMessage: "Este paquete no incluye esta app.", nextStep: "Revisa tu plan o contacta soporte.", secretsExposed: false }, 422);
-  const existing = await first(env, "select claim_id, device_id, surface, status from customer_device_claims where setup_id = ? and device_id = ? and status = 'claimed' limit 1", [pass.setupId, deviceId]);
-  if (existing) return json({ ok: false, status: "DEVICE_ALREADY_CLAIMED", resultCode: "DEVICE_ALREADY_CLAIMED", customerMessage: "Este dispositivo ya esta activado.", nextStep: "Continua usando la app o revisa soporte si cambiaste de equipo.", secretsExposed: false }, 409);
+  const existing = await first(env, "select claim_id, device_id, surface, status from customer_device_claims where setup_id = ? and device_id = ? limit 1", [pass.setupId, deviceId]);
+  if (existing?.status === "claimed") return json({ ok: false, status: "DEVICE_ALREADY_CLAIMED", resultCode: "DEVICE_ALREADY_CLAIMED", customerMessage: "Este dispositivo ya esta activado.", nextStep: "Continua usando la app o revisa soporte si cambiaste de equipo.", secretsExposed: false }, 409);
+
   if (slot.claimed >= slot.allowed) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
   const claimSlot = await nextAvailableClaimSlot(env, pass, surface);
   if (!claimSlot) return json({ ok: false, status: "DEVICE_SLOT_FULL", resultCode: "DEVICE_SLOT_FULL", customerMessage: "Ya se uso el cupo para este tipo de dispositivo.", nextStep: "Solicita reemplazo autorizado o un cupo adicional.", secretsExposed: false }, 409);
+
+  const existingCanonicalDevice = await first(env, "select device_id, tenant_slug, status from devices where device_id = ? limit 1", [deviceId]);
+  if (existingCanonicalDevice && existingCanonicalDevice.tenant_slug && existingCanonicalDevice.tenant_slug !== pass.tenantSlug) {
+    return json({ ok: false, status: "DEVICE_ALREADY_ASSIGNED", resultCode: "CUSTOMER_SETUP_UPSTREAM_FAILED", customerMessage: "Este dispositivo ya pertenece a otra cuenta.", nextStep: "Verifica el dispositivo o contacta soporte.", secretsExposed: false }, 409);
+  }
+
+  const deviceStatement = await deviceRegistrationStatement(env, pass, surface, deviceId, String(body.deviceName || deviceId).slice(0, 160), "");
+  const auditMode = await auditSchemaMode(env);
+  if (!deviceStatement || auditMode === "none") {
+    return json({ ok: false, status: "CUSTOMER_SETUP_SCHEMA_REQUIRED", resultCode: "CUSTOMER_SETUP_UPSTREAM_FAILED", customerMessage: "No pudimos completar el registro seguro del dispositivo.", nextStep: "Inspecciona las tablas de devices y audit antes de reintentar.", secretsExposed: false }, 500);
+  }
+
   const claimId = `claim_${crypto.randomUUID()}`;
-  const deviceName = String(body.deviceName || deviceId).slice(0, 160);
-  const result = await run(env, "insert into customer_device_claims (claim_id, setup_id, setup_code, tenant_slug, surface, device_id, device_name, installation_fingerprint, app_version, operator_label, status, claimed_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-    claimId,
-    pass.setupId,
-    pass.setupCode,
-    pass.tenantSlug,
+  const auditEventId = `customer_device.claim-${crypto.randomUUID()}`;
+  const claimInsert = {
+    sql: "insert into customer_device_claims (claim_id, setup_id, setup_code, tenant_slug, surface, device_id, device_name, installation_fingerprint, app_version, operator_label, status, claimed_at, claim_slot_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    params: [
+      claimId,
+      pass.setupId,
+      pass.setupCode,
+      pass.tenantSlug,
+      surface,
+      deviceId,
+      String(body.deviceName || deviceId).slice(0, 160),
+      String(body.installationFingerprint || "").slice(0, 160),
+      String(body.appVersion || "").slice(0, 80),
+      String(body.operatorLabel || "").slice(0, 160),
+      "claimed",
+      now(),
+      claimSlot.slotId
+    ]
+  };
+  const auditStatement = auditInsertStatement(auditMode, auditEventId, pass.tenantSlug, "customer_device.claim", {
+    setupCode,
     surface,
     deviceId,
-    deviceName,
-    String(body.installationFingerprint || "").slice(0, 160),
-    String(body.appVersion || "").slice(0, 80),
-    String(body.operatorLabel || "").slice(0, 160),
-    "claimed",
-    now()
-  ]);
-  if (!result.ok) return json({ ok: false, status: result.status, resultCode: "CUSTOMER_SETUP_UPSTREAM_FAILED", customerMessage: "No pudimos validar el setup.", nextStep: "Reintenta o contacta soporte con evidencia sanitizada.", secretsExposed: false }, 500);
-  await registerClaimedDevice(env, pass, surface, deviceId, deviceName);
-  const auditEventId = await recordAudit(env, pass.tenantSlug, "customer_device.claim", { setupCode, surface, deviceId, claimSlotId: claimSlot.slotId, licenseId: pass.licenseId, planId: pass.planId });
-  const consumeResult = await consumeClaimSlot(env, claimSlot, deviceId, auditEventId);
-  if (!consumeResult.ok) return json({ ok: false, status: consumeResult.status, resultCode: "DEVICE_CLAIM_SLOT_CONSUME_FAILED", customerMessage: "No pudimos reservar el cupo preparado.", nextStep: "Reintenta o contacta soporte con evidencia sanitizada.", secretsExposed: false }, 500);
-  await run(env, "update customer_setup_slots set claimed = claimed + 1, updated_at = ? where setup_id = ? and surface = ? and claimed < allowed", [now(), pass.setupId, surface]);
+    claimSlotId: claimSlot.slotId,
+    licenseId: pass.licenseId,
+    planId: pass.planId
+  });
+  if (!auditStatement) {
+    return json({ ok: false, status: "AUDIT_TABLE_REQUIRED", resultCode: "CUSTOMER_SETUP_UPSTREAM_FAILED", customerMessage: "No pudimos asegurar el registro de auditoria.", nextStep: "Inspecciona la tabla de auditoria antes de reintentar.", secretsExposed: false }, 500);
+  }
+
+  // All claim-side writes are one D1 transaction. D1 batch aborts/rolls back
+  // the whole sequence if any statement fails. The unique claim-slot index
+  // makes simultaneous requests for the same prepared slot mutually exclusive.
+  deviceStatement.params = [...deviceStatement.params.slice(0, -1), claimId];
+  const statements = [
+    claimInsert,
+    deviceStatement,
+    {
+      sql: "update customer_device_claim_slots set status = 'CLAIMED', device_id = ?, claimed_at = ?, audit_event_id = ?, updated_at = ? where slot_id = (select claim_slot_id from customer_device_claims where claim_id = ?) and status = 'AVAILABLE'",
+      params: [deviceId, now(), auditEventId, now(), claimId]
+    },
+    {
+      sql: "update customer_setup_slots set claimed = (select count(*) from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'), updated_at = ? where setup_id = ? and surface = ?",
+      params: [pass.setupId, surface, now(), pass.setupId, surface]
+    },
+    auditStatement
+  ];
+  const batch = await runBatch(env, statements, { operation: "customer_device_claim", table: "customer_device_claims+customer_device_claim_slots+devices+audit" });
+  if (!batch.ok) {
+    const conflict = batch.hint === "unique_constraint_conflict";
+    return json({
+      ok: false,
+      status: conflict ? "DEVICE_SLOT_FULL" : batch.status,
+      resultCode: conflict ? "DEVICE_SLOT_FULL" : "CUSTOMER_SETUP_UPSTREAM_FAILED",
+      customerMessage: conflict ? "El cupo fue ocupado por otro dispositivo; reintenta para obtener el siguiente cupo." : "No pudimos completar el registro seguro del dispositivo.",
+      nextStep: "Reintenta o contacta soporte con evidencia sanitizada.",
+      secretsExposed: false
+    }, conflict ? 409 : 500);
+  }
+
+  const persistedClaim = await first(env, "select claim_id as claimId, claim_slot_id as claimSlotId, status, device_id as deviceId from customer_device_claims where claim_id = ? limit 1", [claimId]);
+  const persistedSlot = await first(env, "select slot_id as slotId, status, device_id as deviceId, audit_event_id as auditEventId from customer_device_claim_slots where slot_id = ? limit 1", [claimSlot.slotId]);
+  const persistedSetupSlot = await first(env, "select claimed, allowed from customer_setup_slots where setup_id = ? and surface = ? limit 1", [pass.setupId, surface]);
+  const auditVerified = await auditEventExists(env, auditMode, auditEventId);
+  if (
+    !persistedClaim ||
+    persistedClaim.status !== "claimed" ||
+    persistedClaim.deviceId !== deviceId ||
+    persistedClaim.claimSlotId !== claimSlot.slotId ||
+    !persistedSlot ||
+    persistedSlot.status !== "CLAIMED" ||
+    persistedSlot.deviceId !== deviceId ||
+    persistedSlot.auditEventId !== auditEventId ||
+    !persistedSetupSlot ||
+    Number(persistedSetupSlot.claimed) < 1 ||
+    Number(persistedSetupSlot.claimed) > Number(persistedSetupSlot.allowed) ||
+    !auditVerified
+  ) {
+    return json({
+      ok: false,
+      status: "D1_CLAIM_PERSISTENCE_VERIFY_FAILED",
+      resultCode: "D1_CLAIM_PERSISTENCE_VERIFY_FAILED",
+      customerMessage: "El registro fue rechazado porque no pudimos verificar el estado final.",
+      nextStep: "No continúes la configuración; revisa el estado D1 antes de reintentar.",
+      secretsExposed: false
+    }, 500);
+  }
+
   const updatedPass = await setupByCode(env, setupCode) || pass;
   return json({
     ok: true,
@@ -1207,23 +1313,84 @@ async function approveDeviceReplacement(request, env) {
   if (denied) return denied;
   const body = await readJson(request);
   if (body.confirmAdminLicenseAction !== true) return json(operatorResult("replacement.approve", "confirmed", "ADMIN_ACTION_CONFIRMATION_REQUIRED", { ok: false, safeToMutate: false, operatorMessage: "Confirma la accion administrativa antes de mutar slots.", nextStep: "Envia confirmAdminLicenseAction: true." }), 409);
+
   const setupCode = normalizeSetupCode(body.setupCode);
   const surface = normalizeSurface(body.surface);
   const oldDeviceId = String(body.oldDeviceId || body.deviceId || "").trim();
   const reason = String(body.reason || "").trim();
   if (!setupCode || !surface || !oldDeviceId || !reason) return json(operatorResult("replacement.approve", "confirmed", "INVALID_REPLACEMENT_APPROVAL", { ok: false, safeToMutate: false, operatorMessage: "Faltan datos para aprobar replacement.", nextStep: "Incluye setupCode, surface, oldDeviceId y reason." }), 400);
+
   const pass = await setupByCode(env, setupCode);
   if (!pass) return customerError("SETUP_NOT_FOUND", "SETUP_NOT_FOUND", "No encontramos este setup.", "Revisa el Setup Code o pide un link nuevo.", 404);
   const claim = await activeClaimForDevice(env, pass.setupId, oldDeviceId);
   if (!claim || claim.surface !== surface) return json(operatorResult("replacement.approve", "confirmed", "DEVICE_REPLACEMENT_NOT_ALLOWED", { ok: false, safeToMutate: false, operatorMessage: "No hay claim activo para liberar.", nextStep: "Verifica setup, surface y oldDeviceId." }), 404);
-  await run(env, "update customer_device_claims set status = 'replaced', replaced_at = ? where setup_id = ? and device_id = ? and surface = ? and status = 'claimed'", [now(), pass.setupId, oldDeviceId, surface]);
-  await run(env, "update customer_setup_slots set claimed = case when claimed > 0 then claimed - 1 else 0 end, updated_at = ? where setup_id = ? and surface = ?", [now(), pass.setupId, surface]);
-  await recordAudit(env, pass.tenantSlug, "customer_device.replacement.approve", { setupCode, surface, oldDeviceId, reason });
+
+  const auditMode = await auditSchemaMode(env);
+  if (auditMode === "none") return json(operatorResult("replacement.approve", "confirmed", "AUDIT_TABLE_REQUIRED", { ok: false, safeToMutate: false, operatorMessage: "No hay tabla de auditoria compatible.", nextStep: "Inspecciona audit_events/audit_log antes de reintentar." }), 500);
+
+  const replacementAt = now();
+  const auditEventId = `customer_device.replacement.approve-${crypto.randomUUID()}`;
+  const auditStatement = auditInsertStatement(auditMode, auditEventId, pass.tenantSlug, "customer_device.replacement.approve", { setupCode, surface, oldDeviceId, reason, replacementAt });
+  if (!auditStatement) return json(operatorResult("replacement.approve", "confirmed", "AUDIT_TABLE_REQUIRED", { ok: false, safeToMutate: false, operatorMessage: "No pudimos construir el registro de auditoria.", nextStep: "Inspecciona audit_events/audit_log antes de reintentar." }), 500);
+
+  // Replacement approval is atomic: claim state, aggregate slot count and
+  // audit event are committed together or not at all. The aggregate slot
+  // count is recomputed from active claims to avoid double-decrement races.
+  const batch = await runBatch(env, [
+    {
+      sql: "update customer_device_claims set status = 'replaced', replaced_at = ? where setup_id = ? and device_id = ? and surface = ? and status = 'claimed'",
+      params: [replacementAt, pass.setupId, oldDeviceId, surface]
+    },
+    {
+      sql: "update customer_setup_slots set claimed = (select count(*) from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'), updated_at = ? where setup_id = ? and surface = ?",
+      params: [pass.setupId, surface, now(), pass.setupId, surface]
+    },
+    auditStatement
+  ], { operation: "customer_device_replacement_approve", table: "customer_device_claims+customer_setup_slots+audit" });
+
+  if (!batch.ok) {
+    return json(operatorResult("replacement.approve", "confirmed", batch.status, {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "No se pudo completar atomicamente la aprobacion del reemplazo.",
+      nextStep: "Revisa la evidencia sanitizada y no declares la operacion verde.",
+      safeToMutateChecks: { readAfterWrite: "not_confirmed", auditEvent: "not_confirmed" }
+    }), 500);
+  }
+
+  const persistedClaim = await activeClaimForDevice(env, pass.setupId, oldDeviceId);
+  const replacedClaim = await first(env, "select claim_id as claimId, status, replaced_at as replacedAt from customer_device_claims where setup_id = ? and device_id = ? and surface = ? order by updated_at desc, created_at desc limit 1", [pass.setupId, oldDeviceId, surface]);
+  const persistedSetupSlot = await first(env, "select claimed, allowed from customer_setup_slots where setup_id = ? and surface = ? limit 1", [pass.setupId, surface]);
+  const expectedActiveClaims = Number((await first(env, "select count(*) as count from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'", [pass.setupId, surface]))?.count || 0);
+  const auditVerified = await auditEventExists(env, auditMode, auditEventId);
+
+  const claimIsReplaced = !persistedClaim && replacedClaim?.status === "replaced" && replacedClaim.replacedAt === replacementAt;
+  const claimAlreadyReplaced = !persistedClaim && replacedClaim?.status === "replaced";
+  if (
+    (!claimIsReplaced && !claimAlreadyReplaced) ||
+    !persistedSetupSlot ||
+    Number(persistedSetupSlot.claimed) !== expectedActiveClaims ||
+    Number(persistedSetupSlot.claimed) > Number(persistedSetupSlot.allowed) ||
+    !auditVerified
+  ) {
+    return json(operatorResult("replacement.approve", "confirmed", "D1_REPLACEMENT_PERSISTENCE_VERIFY_FAILED", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "La aprobacion no fue declarada verde porque el estado final no pudo verificarse.",
+      nextStep: "Inspecciona claim, aggregate slot y audit antes de reintentar.",
+      safeToMutateChecks: { readAfterWrite: "failed", auditEvent: auditVerified ? "verified" : "not_verified" }
+    }), 500);
+  }
+
+  const idempotent = !claimIsReplaced;
   return json(operatorResult("replacement.approve", "confirmed", "DEVICE_REPLACEMENT_APPROVED", {
     safeToMutate: true,
+    persisted: true,
+    idempotent,
+    auditEventVerified: true,
     operatorMessage: "Slot liberado para reclamar el nuevo dispositivo.",
     nextStep: "Ejecuta Device Claim con el nuevo deviceId.",
-    extra: { setupCode, surface, oldDeviceId }
+    extra: { setupCode, surface, oldDeviceId, auditEventId }
   }));
 }
 
