@@ -45,6 +45,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
 
         ti=base/"visual-control/target-index"
         ti.mkdir(parents=True)
+        (ti/"target.json").write_text(json.dumps({"targetId":"TGT.CENSUS.TABLET.TEST.V1"}),encoding="utf-8")
         self.census_target={
             "targetId":"TGT.CENSUS.TABLET.TEST.V1",
             "surface":"tablet",
