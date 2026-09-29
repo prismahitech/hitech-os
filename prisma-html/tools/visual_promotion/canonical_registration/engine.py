@@ -472,8 +472,13 @@ def register(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
             and prior.get("status") in {"APPLIED", "NO_OP_IDEMPOTENT"}
             and prior.get("result")
         ):
+            from .current_truth import verify_current_truth
+            if current_repo_head(repo_root) != request["expectedCurrentHead"]:
+                raise StaleHeadError("CURRENT_HEAD_CHANGED_FOR_IDEMPOTENT_REPLAY")
+            verify_current_truth(repo_root, request["currentTruth"], target_id=request["target"]["targetId"])
             return prior["result"]
 
+    plan = build_plan(request, repo_root)
     if plan["status"] == "NO_OP_IDEMPOTENT":
         evidence = _evidence(request, plan, "NO_OP_IDEMPOTENT", [], [])
         evidence["requestDigest"] = request_digest
