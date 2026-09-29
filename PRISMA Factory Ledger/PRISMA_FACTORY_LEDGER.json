@@ -2114,7 +2114,50 @@
         "claim certified legal, accounting, fiscal, labor, financial, compliance or regulatory practice from these contracts",
         "fabricate historical generated coverage/evidence artifacts to obtain a green validator"
       ]
+    },
+    {
+      "id": "visual.canonical_promotion_integration_v1",
+      "displayName": "PRISMA Visual Canonical Promotion Integration V1",
+      "domain": "visual",
+      "surfaces": [
+        "prisma-html",
+        "governance",
+        "quality"
+      ],
+      "classification": "BUILD",
+      "status": "SOURCE_READY",
+      "stateLabel": "PASS_VISUAL_CANONICAL_PROMOTION_INTEGRATION_FOUNDATION_SOURCE_READY",
+      "doNotRebuild": true,
+      "nextGate": "On exact current main after this registration is merged, run the universal Factory Ledger anti-rework PROPOSAL gate for visual.canonical_promotion_integration_v1, then obtain a fresh task-exact Authority Mesh + Layer Map for the bounded G-01 integration slice before any further repository writes. Reuse the merged transaction boundary from PR #591. Connect existing NDC, Identity, RIFAT, Target Index, projection and Work Entry authorities through explicit adapters; persist transaction-scoped evidence without creating a competing authority; regenerate derived outputs only through their owning generators; verify postconditions on the exact current head. Do not claim G-01 closed until those adapters, journal integration, derived regeneration and postcondition verification are independently evidenced.",
+      "evidence": [
+        "PR #591 merged as 300ad756791a85c8f432f0381366141922a78e42; the merged source establishes visual.canonical_promotion_integration_v1 transaction-boundary tooling under prisma-html/tools/visual_promotion/canonical_registration without product/runtime mutation.",
+        "Fresh task-scoped Authority Mesh preflight run 36552962802 / artifact 11024913262 bound to main@300ad756791a85c8f432f0381366141922a78e42: PASS; readset_count=977; missing_count=0; critical_missing_count=0; Layer Map required and verification PASS; uploaded artifact sha256=6946ba53e527b0f5f09ef61a007299aa029c77c8a0336db4bb010fa0092bb38a.",
+        "PR #591 exact-head validation passed VISCORE1 36552475472, CI 36552475468, ForgeOS Quality Gate 36552475477 and PRISMA Sync Sentinel Watch 36552475533 after the deterministic FILES_MANIFEST refresh.",
+        "The foundation explicitly preserves existing NDC, Identity, RIFAT, Target Index, Visual Promotion, Work Entry and GVAE ownership; workers do not mint competing canonical authorities."
+      ],
+      "doesNotProve": [
+        "G-01 is fully closed.",
+        "Existing-authority adapters, persisted multi-authority journal integration, derived regeneration or postcondition verification have been completed.",
+        "Any canonical visual registration, semantic authority minting, binding repair, Target Index mutation, GVAE APPLY or product/runtime mutation.",
+        "Runtime visual certification, production certification, distribution readiness or customer deployment."
+      ],
+      "allowedActions": [
+        "reuse the merged transaction boundary and its adversarial tests without rebuilding it",
+        "connect existing authorities through explicit read/validation adapters with exact source digests and fail-closed drift handling",
+        "persist transaction-scoped registration evidence/journal state only inside the governed visual-promotion namespace",
+        "regenerate derived projections only through their existing owning generators and verify exact-head postconditions",
+        "return to a stronger maturity state only after fresh task-exact authority and evidence prove the resulting slice"
+      ],
+      "forbiddenActions": [
+        "create a second NDC, RIFAT, Identity, Target Index or GVAE authority",
+        "mint canonical target or application-layer IDs without the owning authority/composer",
+        "hand-edit generated Target Index or product projections",
+        "bypass the Universal Visual Work Entry Gate, Factory Ledger or Authority Mesh",
+        "treat Atlasfin similarity as semantic authority",
+        "claim G-01 closure from the registration foundation alone",
+        "touch product/runtime, databases, Prisma generation, deployment, processes or ports as part of this capability"
+      ]
     }
   ],
-  "updatedAt": "2026-09-29T09:37:00Z"
+  "updatedAt": "2026-09-29T10:20:00Z"
 }
