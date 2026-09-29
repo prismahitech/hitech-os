@@ -4572,9 +4572,9 @@
       "sha256": "3D940EAE1F5271DD6A793153F8B898CD6A4A35F55F67FFB28F218D53BA6A94E2"
     },
     {
-      "bytes": 1364,
       "path": "tools/visual_promotion/canonical_registration/tests/prisma_html_test_bootstrap.py",
-      "sha256": "6B672E75C60982D46A06EF8A381082F552627950876C019D4B9A8472F705CF6F"
+      "bytes": 1526,
+      "sha256": "169B9D423328E332281984055F045AF5C1F8BB8421DFFF223A344A2111684AE5"
     },
     {
       "path": "tools/visual_promotion/canonical_registration/tests/test_engine.py",
