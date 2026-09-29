@@ -1,5 +1,16 @@
 # Prisma Cloud Center Changelog
 
+## 2026-09-29 — Cloud Center certification hardening
+
+- Completed and CI-certified Cloud Center gates G1 (contract authority), G2 (persistence integrity), G3 (concurrency/idempotency), and G4 (D1 graph integrity) on candidate `e92feb8…`.
+- Separated Customer Setup provisioning IDs from canonical commercial SKUs; `TABLET_PC_MOBILE_MANAGED` maps to `TABLET_PC_MANAGED` for underlying license/tenant commercial state.
+- Hardened Customer Setup, device claim, replacement, audit, and license mutation flows with atomic D1 batches and read-after-write verification.
+- Added replacement-safe claim-slot uniqueness migration and idempotent setup retry behavior.
+- Added current certification matrix and retained the July live-readonly evidence as historical rather than current.
+- No production deployment or live D1 mutation was performed in this work.
+
+
+
 ## 2026-07-04
 
 - Canonized visible license terminology for Prisma Cloud Center.
