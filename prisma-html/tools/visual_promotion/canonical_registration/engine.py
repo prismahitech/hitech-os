@@ -162,7 +162,7 @@ def build_plan(request:dict[str,Any],repo_root:Path)->dict[str,Any]:
     if target_action.get("action")=="CREATE_NEW":
         td=validate_target_id(
             requested_id=target["targetId"],
-            semantic_key=meaning_id,
+            semantic_key=f"{target['surfaceKey']}|{target['censusTargetId']}|{meaning_id}",
             census_target_id=target["censusTargetId"],
             surface_key=target["surfaceKey"],
             existing_ids=existing_target_ids | {str(x) for x in target_action.get("existingCanonicalTargetIds",[])},
