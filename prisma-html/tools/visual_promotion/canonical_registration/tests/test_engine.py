@@ -380,7 +380,10 @@ class CanonicalRegistrationTests(unittest.TestCase):
             "records":[{
                 "targetId":plan["targetId"],
                 "recordKind":"EXACT_APPLICATION_TARGET",
-                "enforcement":"GVAE_ENFORCED"
+                "enforcement":"GVAE_ENFORCED",
+                "bindingId":plan["ids"]["bindingId"],
+                "surface":plan["surfaceKey"],
+                "status":"READY"
             }]
         }),encoding="utf-8")
         post=verify_registration_postconditions(self.root,plan)
