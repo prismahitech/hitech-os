@@ -221,6 +221,13 @@ class CanonicalRegistrationTests(unittest.TestCase):
         self.assertEqual(one.id,two.id)
         self.assertTrue(one.id.startswith("TGT."))
 
+    def test_plan_persists_work_entry_handoff(self):
+        plan=self.engine.build_plan(self.request(),self.root)
+        self.assertEqual(plan["workEntryHandoff"]["gate"],"visual_application.visual_work_entry_gate")
+        self.assertEqual(plan["workEntryHandoff"]["decision"],"REGISTER_TARGET_FIRST")
+        self.assertEqual(plan["workEntryHandoff"]["targetId"],"TGT.CENSUS.TABLET.TEST.V1")
+        self.assertEqual(plan["workEntryHandoff"]["evaluatedHead"],"a"*40)
+
     def test_plan_persists_allocated_target_id(self):
         plan=self.engine.build_plan(self.request(),self.root)
         self.assertIsNotNone(plan["targetId"])
