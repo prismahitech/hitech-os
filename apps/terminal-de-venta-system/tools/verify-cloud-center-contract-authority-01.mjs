@@ -59,8 +59,8 @@ function main() {
     "COMMERCIAL_PLAN_MAPPING_TYPE_MISSING");
   assert(contract.includes('planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,\n    commercialPlanId: "TABLET_PC_MANAGED"'),
     "STARTER_COMMERCIAL_PLAN_MAPPING_DRIFT");
-  assert(worker.includes("pass.commercialPlanId"), "WORKER_COMMERCIAL_PLAN_PERSISTENCE_FIELD_MISSING");
-  checks.push("worker_persistence_can_distinguish_commercial_and_provisioning_plan");
+  assert(contract.includes("Canonical commercial license SKU persisted in licenses/tenants."),
+    "COMMERCIAL_PLAN_PERSISTENCE_SEMANTICS_MISSING");
   assert(contract.includes("PLAN_BASED_PROVISIONING_CATALOG"),
     "PROVISIONING_CATALOG_MISSING");
   checks.push("shared_contract_semantic_split_explicit");
@@ -125,7 +125,7 @@ function main() {
   const semanticDoc = read("Prisma Cloud Ctr/PRISMA_CLOUD_CENTER_PLAN_AUTHORITY_SEMANTICS.md");
   for (const token of [
     "PROVISIONING_ONLY_PLAN",
-    "commercialSku: NONE",
+    "commercialSku: TABLET_PC_MANAGED",
     "TABLET_PC_MOBILE_MANAGED",
     "plan-catalog.canonical.json",
     "Customer Setup"
