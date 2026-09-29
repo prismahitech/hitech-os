@@ -1813,11 +1813,54 @@ async function revokeLicenseAtomically(env, slug, licenseId, plan, validUntil, r
 async function recordAudit(env, slug, eventType, payload) {
   const eventId = `${eventType}-${crypto.randomUUID()}`;
   const auditMode = await auditSchemaMode(env);
-  const statement = auditInsertStatement(auditMode, eventId, slug, eventType, payload);
-  if (statement) {
-    await run(env, statement.sql, statement.params);
+  if (auditMode === "none") {
+    return {
+      ok: false,
+      status: "AUDIT_TABLE_REQUIRED",
+      eventId,
+      auditMode
+    };
   }
-  return eventId;
+
+  const statement = auditInsertStatement(auditMode, eventId, slug, eventType, payload);
+  if (!statement) {
+    return {
+      ok: false,
+      status: "AUDIT_STATEMENT_UNAVAILABLE",
+      eventId,
+      auditMode
+    };
+  }
+
+  const write = await run(env, statement.sql, statement.params);
+  if (!write.ok) {
+    return {
+      ok: false,
+      status: "AUDIT_WRITE_FAILED",
+      eventId,
+      auditMode,
+      hint: write.hint,
+      error: write.error
+    };
+  }
+
+  const verified = await auditEventExists(env, auditMode, eventId);
+  if (!verified) {
+    return {
+      ok: false,
+      status: "AUDIT_PERSISTENCE_VERIFY_FAILED",
+      eventId,
+      auditMode
+    };
+  }
+
+  return {
+    ok: true,
+    status: "AUDIT_PERSISTED",
+    eventId,
+    auditMode,
+    verified: true
+  };
 }
 
 async function activateLicense(request, env, mode) {
