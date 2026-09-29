@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from .policy import allocate_id, assert_no_inferred_id
+from .authority_adapters import AuthorityBindingError, validate_exact_binding
 
 CAPABILITY_ID = "visual.canonical_promotion_integration_v1"
 SCHEMA = "prisma.visual.canonical-promotion-request.v1"
@@ -259,8 +260,10 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
         raise CanonicalRegistrationError("APPLICATION_POLICY_INVALID")
     if layer_action.get("writerKind") not in {"CANONICAL_REGISTRATION", "GVAE"}:
         raise CanonicalRegistrationError("WRITER_KIND_REQUIRED")
-    if not binding_action.get("exactBinding"):
-        raise CanonicalRegistrationError("EXACT_BINDING_REQUIRED")
+    try:
+        validate_exact_binding(repo_root, binding_action.get("exactBinding"), target["targetId"])
+    except AuthorityBindingError as exc:
+        raise CanonicalRegistrationError(str(exc)) from exc
 
     recipe_path = repo_root / "prisma-html/authority/rifat/identity/registries/recipe.registry.json"
     binding_path = repo_root / "prisma-html/authority/rifat/identity/registries/element-bindings.registry.json"
