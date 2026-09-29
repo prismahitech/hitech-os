@@ -393,7 +393,9 @@ async function main() {
     }, true)
   ));
   const approvalSuccesses = concurrentApprovals.filter((r) => r.status === 200 && r.payload?.resultCode === "DEVICE_REPLACEMENT_APPROVED");
-  assert(approvalSuccesses.length === 1, "CONCURRENT_REPLACEMENT_SUCCESS_COUNT_DRIFT", { concurrentApprovals });
+  const freshApprovals = approvalSuccesses.filter((r) => r.payload?.idempotent === false);
+  const idempotentApprovals = approvalSuccesses.filter((r) => r.payload?.idempotent === true);
+  assert(approvalSuccesses.length === 2 && freshApprovals.length === 1 && idempotentApprovals.length === 1, "CONCURRENT_REPLACEMENT_IDEMPOTENCY_COUNT_DRIFT", { concurrentApprovals });
   const remainingConcurrentClaims = await directCount(seed, "customer_device_claims", "setup_id = ? and device_id = ? and status = 'claimed'", [concurrentReplacementSetup.setupId, "g3-replacement-concurrent-old"]);
   assert(remainingConcurrentClaims === 0, "CONCURRENT_REPLACEMENT_LEFT_ACTIVE_CLAIM", { remainingConcurrentClaims });
   const concurrentSlot = await seed.first("select status, device_id from customer_device_claim_slots where setup_bundle_id = ? and surface = 'tablet' order by slot_index asc limit 1", [concurrentReplacementSetup.setupBundleId]);
