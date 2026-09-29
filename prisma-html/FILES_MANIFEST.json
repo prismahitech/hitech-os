@@ -4482,9 +4482,9 @@
       "sha256": "C4FF2A88378EF52730375FE74C0C3D31E3DB9ABE37BBD1B0FDAED3A155094489"
     },
     {
-      "bytes": 3563,
+      "bytes": 3587,
       "path": "tools/visual_promotion/canonical_registration/authority_adapters.py",
-      "sha256": "B7C55214740899831E0B48A1241BD82DC2D0259C9FAE46FC53A9EF8B6D78FCCB"
+      "sha256": "C5B294281DEBCA43FA4700AC513055E26564F350365AA4EB21925675AC6D80C3"
     },
     {
       "bytes": 1457,
@@ -4517,9 +4517,9 @@
       "sha256": "677E5C34163B5DE4DF9F3FFF528037D052572779CD811D1CF0130C674BCA9947"
     },
     {
-      "bytes": 1560,
+      "bytes": 1668,
       "path": "tools/visual_promotion/canonical_registration/contracts/canonical-promotion-plan.schema.json",
-      "sha256": "74F514971B165FF9C539F88D5CD2494E9EAF1AA15480CE3AA9D835E2F511EBCF"
+      "sha256": "2CE6EC1DA93B12D6A3203E8D07C555F9BB07D4AA6B4E376DAA2A4F05E548B18A"
     },
     {
       "bytes": 935,
