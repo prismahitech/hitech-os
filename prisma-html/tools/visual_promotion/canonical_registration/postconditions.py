@@ -48,7 +48,22 @@ def verify_registration_postconditions(repo_root: Path, plan: dict) -> dict:
         ]
     if len(target_rows)>1:
         raise CanonicalRegistrationError("POSTCONDITION_TARGET_INDEX_DUPLICATE")
-    target_status="VERIFIED_EXACT_TARGET" if len(target_rows)==1 else "DERIVATION_PENDING_TARGET_INDEX"
+    if len(target_rows)==1:
+        target_row=target_rows[0]
+        required_match={
+            "recordKind":"EXACT_APPLICATION_TARGET",
+            "enforcement":"GVAE_ENFORCED",
+            "bindingId":binding_id,
+            "surface":plan["surfaceKey"],
+        }
+        for field,expected in required_match.items():
+            if target_row.get(field)!=expected:
+                raise CanonicalRegistrationError(f"POSTCONDITION_TARGET_INDEX_{field.upper()}_MISMATCH")
+        if target_row.get("status") not in {"READY","APPLY_READY","RUNTIME_VERIFIED","BLOCKED"}:
+            raise CanonicalRegistrationError("POSTCONDITION_TARGET_INDEX_STATUS_INVALID")
+        target_status="VERIFIED_EXACT_TARGET"
+    else:
+        target_status="DERIVATION_PENDING_TARGET_INDEX"
 
     body={
         "targetId":target_id,
