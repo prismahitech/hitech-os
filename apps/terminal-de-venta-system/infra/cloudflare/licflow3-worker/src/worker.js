@@ -7,13 +7,15 @@ const LICFLOW3_LIVE_STATUS = "LICFLOW3_CLOUDFLARE_ROUTES_LIVE";
 const CUSTOMER_SETUP_SCHEMA_VERSION = "1.0.0";
 const DEFAULT_SETUP_CODE = "PRISMA-SETUP-STARTER";
 const DEFAULT_SETUP_PACKAGE = "PRISMA_TRIPLE_DEVICE_STARTER";
-// DEFAULT_SETUP_PLAN is a provisioning package plan, not a vendible commercial SKU.\nconst DEFAULT_SETUP_PLAN = "TABLET_PC_MOBILE_MANAGED";
+// DEFAULT_SETUP_PLAN is a provisioning package plan, not a vendible commercial SKU.
+const DEFAULT_SETUP_PLAN = "TABLET_PC_MOBILE_MANAGED";
 const SLOT_LABELS = {
   tablet: "Tablet POS Slot",
   pc: "PC Admin Slot",
   mobile: "Mobile Companion Slot"
 };
-// Provisioning catalog owner for Customer Setup. Commercial SKU/price authority remains shared/licensing/plan-catalog.canonical.json.\nconst PLAN_PROVISIONING_CATALOG = {
+// Provisioning catalog owner for Customer Setup. Commercial SKU/price authority remains shared/licensing/plan-catalog.canonical.json.
+const PLAN_PROVISIONING_CATALOG = {
   TABLET_SOLO: {
     planId: "TABLET_SOLO",
     commercialPlanId: "TABLET_SOLO",
