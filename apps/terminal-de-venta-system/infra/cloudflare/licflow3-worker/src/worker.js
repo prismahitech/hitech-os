@@ -1044,7 +1044,6 @@ async function createCustomerSetup(request, env) {
       ]
     },
     tenantStatement,
-    licenseStatement,
     {
       sql: "insert into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(license_assignment_id) do update set license_id = excluded.license_id, setup_bundle_id = excluded.setup_bundle_id, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, plan_id = excluded.plan_id, status = excluded.status, updated_at = excluded.updated_at",
       params: [
@@ -1062,7 +1061,7 @@ async function createCustomerSetup(request, env) {
     },
     licenseStatement,
     {
-      sql: "insert or replace into customer_setups (setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status, expires_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "insert into customer_setups (setup_id, setup_code, setup_url, qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, package_code, plan_code, status, expires_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(setup_id) do update set setup_code = excluded.setup_code, setup_url = excluded.setup_url, qr_payload = excluded.qr_payload, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, business_name = excluded.business_name, package_code = excluded.package_code, plan_code = excluded.plan_code, status = excluded.status, expires_at = excluded.expires_at, updated_at = excluded.updated_at)",
       params: [
         pass.setupId,
         pass.setupCode,
