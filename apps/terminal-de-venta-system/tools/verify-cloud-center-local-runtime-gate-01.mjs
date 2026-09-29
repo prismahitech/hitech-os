@@ -57,7 +57,7 @@ for (const [label, scriptName] of commands) {
 }
 
 const workerCheck = spawnSync(process.execPath, ["--check", "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js"], {
-  cwd: new URL("../../../..", import.meta.url),
+  cwd: repoRoot,
   encoding: "utf8",
   stdio: ["ignore", "pipe", "pipe"],
 });
