@@ -70,14 +70,17 @@ def _atomic_write_json(path:Path,value:Any)->None:
         if os.path.exists(tmp): os.unlink(tmp)
 
 def current_repo_head(repo_root:Path)->str:
-    env=os.environ.get("GITHUB_SHA")
-    if isinstance(env,str) and len(env)==40: return env
     try:
         proc=subprocess.run(["git","rev-parse","HEAD"],cwd=repo_root,check=True,capture_output=True,text=True)
-    except Exception as exc: raise StaleHeadError("CURRENT_REPO_HEAD_UNAVAILABLE") from exc
-    value=proc.stdout.strip()
-    if len(value)!=40: raise StaleHeadError("CURRENT_REPO_HEAD_INVALID")
-    return value
+        value=proc.stdout.strip()
+        if len(value)==40:
+            return value
+    except Exception:
+        pass
+    env=os.environ.get("GITHUB_SHA")
+    if isinstance(env,str) and len(env)==40:
+        return env
+    raise StaleHeadError("CURRENT_REPO_HEAD_UNAVAILABLE")
 
 def _acquire_lock(lock_dir:Path)->None:
     lock_dir.parent.mkdir(parents=True,exist_ok=True)
@@ -377,13 +380,26 @@ def rollback(request_id:str,repo_root:Path)->dict[str,Any]:
     if not receipt.exists(): raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
     evidence=_load(receipt)
     if evidence.get("status")!="APPLIED": raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
-    restored=[]
-    for row in evidence.get("postState",[]):
-        rel=row["path"]; path=repo_root/rel
-        if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
-        prior=evidence.get("preStateValues",{}).get(rel)
-        if prior is None: raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:"+rel)
-        _atomic_write_json(path,prior); restored.append(rel)
-    evidence["status"]="ROLLED_BACK"; evidence["rollback"]={"restoredPaths":restored,"transactionScoped":True,"newerWorkProtection":True}
-    _atomic_write_json(receipt,evidence)
-    return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":restored}
+    lock=repo_root/TRANSACTIONS_ROOT/f".rollback-{request_id}.lock"
+    _acquire_lock(lock)
+    try:
+        restored=[]
+        for row in evidence.get("postState",[]):
+            rel=row["path"]; path=repo_root/rel
+            if sha256_json(_load(path))!=row["sha256"]: raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:"+rel)
+            prior=evidence.get("preStateValues",{}).get(rel)
+            if prior is None: raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:"+rel)
+            _atomic_write_json(path,prior); restored.append(rel)
+        evidence["status"]="ROLLED_BACK"; evidence["rollback"]={"restoredPaths":restored,"transactionScoped":True,"newerWorkProtection":True}
+        _atomic_write_json(receipt,evidence)
+        journal_path=evidence.get("journalPath")
+        if isinstance(journal_path,str):
+            journal_file=repo_root/journal_path
+            if journal_file.is_file():
+                journal=_load(journal_file)
+                journal["status"]="ROLLED_BACK"
+                journal["rollback"]=evidence["rollback"]
+                _atomic_write_json(journal_file,journal)
+        return {"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request_id,"status":"ROLLED_BACK","restoredPaths":restored}
+    finally:
+        _release_lock(lock)
