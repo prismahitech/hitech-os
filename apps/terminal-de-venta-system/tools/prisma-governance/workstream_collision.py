@@ -310,7 +310,13 @@ def merged_history_conflicts(client: GitHubClient, current: PullRequestView) -> 
         if number == current.number:
             continue
         full = client.pull_request(number)
-        if full.get("merged_at") and ws in str(full.get("body") or ""):
+        if not full.get("merged_at"):
+            continue
+        try:
+            prior = parse_declaration(str(full.get("body") or ""))
+        except GateError:
+            prior = None
+        if prior and prior.workstream_id == ws:
             conflicts.append({
                 "number": number,
                 "title": full.get("title"),
@@ -319,9 +325,13 @@ def merged_history_conflicts(client: GitHubClient, current: PullRequestView) -> 
             })
     return conflicts
 
+def declaration_scope_gaps(declaration: Declaration, changed_files: Iterable[str]) -> list[str]:
+    return sorted(path for path in changed_files if is_governed_path(path) and not scope_matches_any(declaration.scope, path))
 
 def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> dict[str, Any]:
     current = pr_view(client, client.pull_request(pr_number))
+    if current.state != "open":
+        raise GateError(f"PR_NOT_OPEN:{current.number}:{current.state}")
     if expected_head and current.head_sha != expected_head:
         raise GateError(f"HEAD_MISMATCH:{current.head_sha}:{expected_head}")
 
@@ -365,6 +375,22 @@ def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> d
         return out
 
     current.declaration = declaration
+    scope_gaps = declaration_scope_gaps(declaration, current.changed_files)
+    if scope_gaps:
+        out = {
+            "schemaVersion": SCHEMA,
+            "result": "BLOCKED_WORKSTREAM_SCOPE_MISMATCH",
+            "pr": current.number,
+            "headSha": current.head_sha,
+            "changedFiles": len(current.changed_files),
+            "workstream": declaration.workstream_id,
+            "capabilities": list(declaration.capabilities),
+            "scopeGaps": scope_gaps,
+            "declarationRequired": True,
+        }
+        out["decisionDigest"] = digest(out)
+        return out
+
     unknown_caps = sorted(set(declaration.capabilities) - client.canonical_ledger_capabilities())
     if unknown_caps:
         out = {
@@ -395,24 +421,34 @@ def evaluate(client: GitHubClient, pr_number: int, expected_head: str = "") -> d
 
     conflicts: list[dict[str, Any]] = []
     for other in others:
+        if other.declaration is None:
+            conflicts.append({
+                "pr": other.number,
+                "title": other.title,
+                "role": None,
+                "workstreamId": None,
+                "reasons": ["UNDECLARED_GOVERNED_PEER"],
+                "overlapPaths": [],
+                "overlapCount": 0,
+                "disposition": "current_must_stop",
+            })
+            continue
         hard, reasons, overlap = declaration_conflict(current, other)
-        undeclared_exclusive_paths = exclusive_overlap_paths(current, other) if not other.declaration else []
-        undeclared_exclusive = bool(undeclared_exclusive_paths)
-        if not hard and not undeclared_exclusive:
+        if not hard:
             continue
         disposition = (
             "peer_must_stop"
-            if current.declaration.role == "canonical" and (other.declaration is None or other.declaration.role != "canonical")
+            if current.declaration.role == "canonical" and other.declaration.role != "canonical"
             else "current_must_stop"
         )
         conflicts.append({
             "pr": other.number,
             "title": other.title,
-            "role": other.declaration.role if other.declaration else None,
-            "workstreamId": other.declaration.workstream_id if other.declaration else None,
-            "reasons": reasons + (["undeclared_exclusive_overlap"] if undeclared_exclusive else []),
-            "overlapPaths": overlap or undeclared_exclusive_paths or sorted(set(current.changed_files) & set(other.changed_files))[:100],
-            "overlapCount": len(overlap or undeclared_exclusive_paths or (set(current.changed_files) & set(other.changed_files))),
+            "role": other.declaration.role,
+            "workstreamId": other.declaration.workstream_id,
+            "reasons": reasons,
+            "overlapPaths": overlap or sorted(set(current.changed_files) & set(other.changed_files))[:100],
+            "overlapCount": len(overlap or (set(current.changed_files) & set(other.changed_files))),
             "disposition": disposition,
         })
 
