@@ -7,6 +7,7 @@ from prisma_workstream_collision import (
     GateError,
     PullRequestView,
     declaration_conflict,
+    exclusive_overlap_paths,
     is_exclusive_path,
     is_governed_path,
     parse_declaration,
@@ -56,6 +57,19 @@ scope: ../../unsafe
         hard, reasons, _ = declaration_conflict(pa, pb)
         self.assertTrue(hard)
         self.assertIn("same_workstream_id", reasons)
+
+    def test_undeclared_exclusive_overlap_is_detectable(self):
+        d = Declaration("alpha", "canonical", "ADVANCE", ("visual.foo",), ("governance",), ("foo/**",))
+        pa = PullRequestView(1, "A", "", "open", False, "a"*40, "b"*40, "", "", d, [
+            "prisma-html/tools/visual_promotion/canonical_registration/engine.py",
+        ])
+        pb = PullRequestView(2, "B", "", "open", False, "", "b"*40, "", "", None, [
+            "prisma-html/tools/visual_promotion/canonical_registration/engine.py",
+        ])
+        self.assertEqual(
+            exclusive_overlap_paths(pa, pb),
+            ["prisma-html/tools/visual_promotion/canonical_registration/engine.py"],
+        )
 
     def test_scope_match(self):
         self.assertTrue(scope_matches("foo/**", "foo/bar/baz.py"))
