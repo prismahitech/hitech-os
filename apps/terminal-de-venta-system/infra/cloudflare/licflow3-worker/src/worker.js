@@ -2058,6 +2058,21 @@ async function activateLicense(request, env, mode) {
     }), 400);
   }
   const licenseId = providedLicenseId || `licflow3-${mode}-${crypto.randomUUID()}`;
+  const currentLicense = await licenseById(env, slug, licenseId);
+  if (currentLicense && String(currentLicense.status || "").trim().toLowerCase() === "revoked" && mode !== "revoke") {
+    return json(operatorResult(mode, mutationMode, "LICENSE_REVOKED_TERMINAL", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "Una licencia revocada no puede volver a activarse, renovarse ni refrescarse.",
+      nextStep: "Crea una licencia nueva o realiza una revisión administrativa explícita.",
+      latencyMs: Date.now() - started,
+      extra: {
+        tenantSlug: slug,
+        licenseId,
+        currentState: "revoked"
+      }
+    }), 409);
+  }
   const requestedPlan = String(body.plan || PLAN).trim().toUpperCase();
   if (!COMMERCIAL_PLAN_IDS.has(requestedPlan)) {
     return json(operatorResult(mode, mutationMode, "COMMERCIAL_LICENSE_PLAN_REQUIRED", {
