@@ -1402,9 +1402,40 @@
         "Runtime visual certification, production certification, distribution readiness or customer deployment.",
         "Future correctness after source, authority, dependency or runtime drift."
       ]
+    },
+    {
+      "capabilityId": "visual.canonical_promotion_integration_v1",
+      "status": "PASS_REGISTRATION_AUTHORITY_ONLY",
+      "runId": "36552962802",
+      "artifact": "Visual Canonical Registration Foundation — registration authority preflight",
+      "type": "visual_canonical_promotion_integration_registration_authority",
+      "scope": [
+        "factory-ledger",
+        "governance",
+        "prisma-html",
+        "visual-promotion",
+        "quality"
+      ],
+      "evidence": [
+        "Fresh task-scoped Authority Mesh preflight run 36552962802 bound to main@300ad756791a85c8f432f0381366141922a78e42.",
+        "Authority Mesh result: PASS; readset_count=977; missing_count=0; critical_missing_count=0; Layer Map required=true; verification=PASS.",
+        "Uploaded evidence artifact 11024913262 sha256:6946ba53e527b0f5f09ef61a007299aa029c77c8a0336db4bb010fa0092bb38a.",
+        "PR #591 merged as 300ad756791a85c8f432f0381366141922a78e42 and its exact-head VISCORE1/CI/ForgeOS/Sync checks passed."
+      ],
+      "proves": [
+        "The merged canonical registration transaction-boundary foundation has a governed Factory Ledger registration authority.",
+        "The registration preflight found no missing required authorities and produced a verified Layer Map for the visual task.",
+        "The registered capability is bounded to a source-ready transaction foundation; its remaining G-01 adapters and postcondition work stay explicitly open."
+      ],
+      "doesNotProve": [
+        "G-01 completion.",
+        "Any runtime/product visual mutation or GVAE APPLY authorization.",
+        "Canonical semantic or target ID minting.",
+        "Production or customer-live readiness."
+      ]
     }
   ],
-  "updatedAt": "2026-09-29T09:37:00Z",
+  "updatedAt": "2026-09-29T10:20:00Z",
   "entries": [
     {
       "capabilityId": "runtime.tablet.zero_idle_guard",
