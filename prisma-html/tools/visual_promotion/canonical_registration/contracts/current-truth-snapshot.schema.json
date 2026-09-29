@@ -2,17 +2,13 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"prisma.visual.current-truth-snapshot.v1",
   "type":"object","additionalProperties":false,
-  "required":["schema","repoHead","targetIndexDigest","identityDigest","rifatDigest","ndcDigest","projectionDigest","authorityMeshDigest","layerMapDigest","targetEvidenceDigest"],
+  "required":["schema","snapshotId","repoHead","targetIndexDigest","identityDigest","rifatDigest","ndcDigest","projectionDigest","authorityMeshDigest","layerMapDigest","targetEvidenceDigest","evidenceTargetId","sources"],
   "properties":{
     "schema":{"const":"prisma.visual.current-truth-snapshot.v1"},
+    "snapshotId":{"type":"string","pattern":"^[0-9a-f]{64}$"},
     "repoHead":{"type":"string","pattern":"^[0-9a-f]{40}$"},
-    "targetIndexDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "identityDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "rifatDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "ndcDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "projectionDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "authorityMeshDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "layerMapDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "targetEvidenceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"}
+    "targetIndexDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"identityDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"rifatDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"ndcDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"projectionDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"authorityMeshDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"layerMapDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},"targetEvidenceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "evidenceTargetId":{"type":"string"},
+    "sources":{"type":"object","additionalProperties":false,"required":["targetIndex","identity","rifat","ndc","projection","authorityMesh","layerMap"],"properties":{"targetIndex":{"type":"array"},"identity":{"type":"array"},"rifat":{"type":"array"},"ndc":{"type":"array"},"projection":{"type":"array"},"authorityMesh":{"type":"array"},"layerMap":{"type":"array"}}}
   }
 }
