@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "1.0.0",
+  "baselineId": "CLOUD_CENTER_BASELINE_2026-09-29",
+  "capturedAt": "2026-09-29",
+  "repository": "prismahitech/hitech-os",
+  "defaultBranch": "main",
+  "head": "d064110036bdebfa4db98e032fe9627a0a86fabc",
+  "headSource": "latest observed main merge PR #593",
+  "branchCreated": "governance/cloud-center-roadmap-step1-20260929",
+  "scope": {
+    "canonicalRoot": "apps/terminal-de-venta-system/Prisma Cloud Ctr",
+    "licflow3Worker": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker",
+    "sharedLicensing": "apps/terminal-de-venta-system/shared/licensing",
+    "changeAssurance": "PRISMA Change Assurance vertical inside Cloud Center"
+  },
+  "sourceSnapshot": {
+    "files": [
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/README.md",
+        "sha": "23793189ddeb483b6b1eecebb264cd6a97082f1c"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/ARCHITECTURE.md",
+        "sha": "4a75a2f027c49f47e6c2c6c92cf737e56663a986"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/SECURITY.md",
+        "sha": "0c99a0f5b1e9ba08f39dcfd141bfce4d34dfeeff"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/shared/licensing/plan-catalog.canonical.json",
+        "sha": "3f524c669e7f5803d59c45327cccb86ce11242b9"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js",
+        "sha": "5b1428252c7f9c6b5c698f798944baa5ceb636e3"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json",
+        "sha": "75c6664f92d100f8321f1aff085382b6b9318fbf"
+      },
+      {
+        "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json",
+        "sha": "current-main-observed"
+      }
+    ],
+    "sourceNotes": [
+      "Cloud Center is local-only on 127.0.0.1:3160.",
+      "Cloud License Gateway canonical Worker is prisma-cloud-semilla.",
+      "Live base URL is https://app.hitechrts.com.",
+      "Admin token is intended to remain backend-only and presence-only in UI/diagnostics."
+    ]
+  },
+  "historicalEvidence": {
+    "latestObservedLiveSmoke": "2026-07-07T22:29:07.271Z",
+    "status": "HISTORICAL_NOT_CURRENT",
+    "artifacts": [
+      "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json",
+      "apps/terminal-de-venta-system/docs/ops/licscope/live_smoke_outputs/cloud-center-live-readiness.json",
+      "apps/terminal-de-venta-system/docs/ops/licscope/live_smoke_outputs/cloudflare-d1-oauth-certification.json"
+    ],
+    "rule": "Do not use July evidence as proof of September 29 current live health without fresh recertification."
+  },
+  "ciStatus": {
+    "currentHeadCombinedStatus": "UNKNOWN",
+    "reason": "GitHub connector returned no combined status entries; absence of entries is not treated as PASS or FAIL."
+  },
+  "overlapInventory": {
+    "openCloudCenterIssues": [
+      {
+        "number": 250,
+        "title": "PRISMA Change Intelligence — Commercial Ledger & Go-to-Market Continuity"
+      },
+      {
+        "number": 319,
+        "title": "PRISMA Parallel Work Coordinator"
+      }
+    ],
+    "openPRSearches": [
+      "cloud center",
+      "LICFLOW3",
+      "customer setup"
+    ],
+    "currentResult": "No open PR returned by those scoped searches at baseline capture.",
+    "relevantHistoricalPRs": [
+      {
+        "number": 593,
+        "title": "chore(factory): register canonical visual promotion integration",
+        "mergedToHead": true
+      },
+      {
+        "number": 538,
+        "title": "Change Assurance: make ownership boundaries explicit"
+      },
+      {
+        "number": 531,
+        "title": "Change Assurance: normalize Cloud identity and runtime proof"
+      },
+      {
+        "number": 386,
+        "title": "feat(ca): project real Analysis Runs into Cloud Center"
+      },
+      {
+        "number": 326,
+        "title": "feat(ca): formalize PRISMA Change Assurance V1 governance"
+      },
+      {
+        "number": 303,
+        "title": "feat(cloud-center): add isolated PRISMA Change Intelligence vertical"
+      },
+      {
+        "number": 254,
+        "title": "Cloud Center: homologate customer registration runtime and dropdowns"
+      },
+      {
+        "number": 161,
+        "title": "LICFLOW4 Admin Bridge for Prisma Cloud Ctr"
+      },
+      {
+        "number": 160,
+        "title": "AutoGit: Prisma Cloud Center: finish repo-native license control center in terminal-de-ven"
+      }
+    ],
+    "note": "Historical PR search is broad; individual PR scope must still be verified before reuse or modification."
+  },
+  "knownReconciliationFindings": [
+    {
+      "id": "CC-F1",
+      "severity": "HIGH_ATTENTION",
+      "finding": "Commercial plan catalog lists TABLET_SOLO, TABLET_PRO, TABLET_PC_MANAGED as vendible; Customer Setup and Worker also define TABLET_PC_MOBILE_MANAGED.",
+      "currentClassification": "RECONCILIATION_REQUIRED",
+      "nextGate": "G1"
+    },
+    {
+      "id": "CC-F2",
+      "severity": "MEDIUM",
+      "finding": "claimCustomerDevice() contains multiple persistence steps whose partial-failure behavior requires transaction/compensation verification.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F3",
+      "severity": "MEDIUM_HIGH",
+      "finding": "approveDeviceReplacement() historically did not inspect every run() result or perform read-after-write verification.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F4",
+      "severity": "MEDIUM",
+      "finding": "recordAudit() historically returns an event identifier without verifying audit persistence.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F5",
+      "severity": "MEDIUM",
+      "finding": "createCustomerSetup() contains multiple writes with mixed error checking; partial provisioning requires explicit saga/compensation proof.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    }
+  ],
+  "certificationBoundary": {
+    "source": "not re-certified in this baseline document",
+    "local": "not re-certified in this baseline document",
+    "browser": "not re-certified in this baseline document",
+    "liveReadOnly": "historical evidence exists; current certification pending",
+    "liveMutation": "blocked pending explicit authorization",
+    "production": "not inferred"
+  },
+  "step1Status": {
+    "name": "Baseline freeze",
+    "status": "IN_PROGRESS",
+    "completed": [
+      "Exact main HEAD captured.",
+      "Canonical Cloud Center/LICFLOW3/shared licensing surfaces identified.",
+      "Historical evidence timestamp captured.",
+      "Relevant open issue/PR overlap searched.",
+      "Current combined CI status classified UNKNOWN rather than assumed green.",
+      "Initial high-attention reconciliation findings recorded."
+    ],
+    "remaining": [
+      "Complete exhaustive source surface inventory with exact file hashes.",
+      "Bind the baseline to final evidence/index objects.",
+      "Close G0 gate before source modifications."
+    ]
+  },
+  "mutationSafety": {
+    "liveMutationPerformed": false,
+    "deploymentPerformed": false,
+    "d1LiveWritePerformed": false,
+    "adminTokenRequested": false,
+    "rule": "Read-only repository inspection only for Step 1."
+  }
+}
