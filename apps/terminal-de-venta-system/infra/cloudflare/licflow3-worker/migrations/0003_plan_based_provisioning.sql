@@ -1,4 +1,7 @@
--- Operational Customer Setup provisioning registry.\n-- This table is NOT the commercial SKU/price authority; that remains\n-- shared/licensing/plan-catalog.canonical.json.\nCREATE TABLE IF NOT EXISTS license_plans (
+-- Operational Customer Setup provisioning registry.
+-- This table is NOT the commercial SKU/price authority; that remains
+-- shared/licensing/plan-catalog.canonical.json.
+CREATE TABLE IF NOT EXISTS license_plans (
   plan_id TEXT PRIMARY KEY,
   plan_name TEXT NOT NULL,
   max_tablet_devices INTEGER NOT NULL DEFAULT 0,
