@@ -17,6 +17,7 @@ jobs:
   publish-pointer:
     if: >-
       github.event.workflow_run.event == 'issue_comment' &&
+      github.event.workflow_run.conclusion != 'skipped' &&
       (
         github.event.workflow_run.triggering_actor.login == 'chatgpt-codex-connector[bot]' ||
         github.event.workflow_run.triggering_actor.login == 'alanharrryy-wq'
