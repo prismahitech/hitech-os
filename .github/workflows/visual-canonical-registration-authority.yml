@@ -1,0 +1,95 @@
+name: PRISMA Visual Canonical Registration Authority Preflight (temporary)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/visual-canonical-registration-authority.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  registration-authority:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Bind authority to current main
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_MAIN='300ad756791a85c8f432f0381366141922a78e42'
+          test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = "$EXPECTED_MAIN"
+          git worktree add --detach "$RUNNER_TEMP/authority-base" "$EXPECTED_MAIN"
+
+      - name: Run fresh task-scoped Authority Mesh
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/authority-base/apps/terminal-de-venta-system"
+          TASK='Register the existing merged visual.canonical_promotion_integration_v1 foundation in the PRISMA Factory Ledger as BUILD / NOT_STARTED / doNotRebuild=false; establish governed registration authority only; reuse existing NDC, Identity, RIFAT, Target Index, Visual Promotion, Work Entry and GVAE authorities; no new semantic/target/binding authority, no product/runtime mutation, no GVAE APPLY.'
+          python tools/prisma-governance/authority_mesh_run.py \
+            --task "$TASK" \
+            --full \
+            --output .governance/visual-canonical-registration-authority \
+            | tee "$RUNNER_TEMP/authority-mesh-result.json"
+
+      - name: Enforce clean authority result
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - "$RUNNER_TEMP/authority-mesh-result.json" <<'PY'
+          import json
+          import sys
+
+          data = json.load(open(sys.argv[1], encoding="utf-8"))
+          assert data.get("status") == "PASS", data
+          assert data.get("verification") == "PASS", data
+          assert data.get("layerMapRequired") is True, data
+          assert data.get("missingOutputs") == [], data
+          assert int(data.get("readset_count", 0)) > 0, data
+          print(json.dumps({
+              "status": data["status"],
+              "readset_count": data.get("readset_count"),
+              "missing_count": data.get("missing_count"),
+              "layerMapRequired": data.get("layerMapRequired"),
+              "verification": data.get("verification")
+          }, indent=2))
+          PY
+
+      - name: Package authority evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/authority-evidence"
+          cp "$RUNNER_TEMP/authority-mesh-result.json" "$RUNNER_TEMP/authority-evidence/AUTHORITY_MESH_RESULT.json"
+          cp -R "$RUNNER_TEMP/authority-base/apps/terminal-de-venta-system/.governance/visual-canonical-registration-authority" "$RUNNER_TEMP/authority-evidence/mesh-output"
+          python - "$RUNNER_TEMP/authority-evidence" <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          lines = []
+          for path in sorted(p for p in root.rglob("*") if p.is_file()):
+              rel = path.relative_to(root).as_posix()
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              lines.append(f"{digest}  {rel}")
+          (root / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")
+          PY
+
+      - name: Upload authority evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-canonical-registration-authority
+          path: ${{ runner.temp }}/authority-evidence
+          if-no-files-found: error
