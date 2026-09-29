@@ -45,3 +45,8 @@ def load_collision_classifier():
     pkg=_ensure_package()
     import_engine()
     return _load("canonical_registration.collision_classifier",pkg/"collision_classifier.py","canonical_registration")
+
+
+def load_application_policy():
+    pkg=_ensure_package()
+    return _load("canonical_registration.application_policy",pkg/"application_policy.py","canonical_registration")
