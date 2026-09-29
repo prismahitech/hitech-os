@@ -162,7 +162,7 @@ class CanonicalRegistrationTests(unittest.TestCase):
                 "recipeAction":{"action":"REUSE_EXISTING","recipeId":"REC.test.table","semanticKey":"ACT.primary"},
                 "bindingAction":{"action":"CREATE_NEW","bindingId":"BND.test.table","semanticKey":"tablet.table",
                                   "exactBinding":exact_binding,"registryEntry":exact_binding},
-                "layerAction":{"applicationLayerId":"LYR.APP.TEST","policy":"EXACT_TARGET_ONLY","writerKind":"CANONICAL_REGISTRATION"},
+                "layerAction":{"applicationLayerId":"LYR.APP.TEST","policy":"EXACT_TARGET_ONLY","writerKind":"CANONICAL_REGISTRATION","authorityDomain":"rifat","decisionRef":"rifat::layer-policy.test"},
                 "projectionAction":{"mode":"DEFERRED_DERIVATION","authorized":False},
                 "idInputs":{},
             },
@@ -197,6 +197,12 @@ class CanonicalRegistrationTests(unittest.TestCase):
         two=allocate_id("target","tablet|TGT.CENSUS.TABLET.TEST.V1|ACT.primary",set())
         self.assertEqual(one.id,two.id)
         self.assertTrue(one.id.startswith("TGT."))
+
+    def test_existing_target_id_cannot_be_reused_as_create(self):
+        request=self.request()
+        request["decision"]["targetAction"]["existingCanonicalTargetIds"]=[request["target"]["targetId"]]
+        with self.assertRaises(self.engine.IdCollisionError):
+            self.engine.build_plan(request,self.root)
 
     def test_source_drift_is_rejected(self):
         request=self.request()
