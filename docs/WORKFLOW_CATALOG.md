@@ -94,3 +94,7 @@ Historical Code Atlas external-replay/usefulness/rental workflows may remain man
 A normal unrelated PR should no longer wake placeholder jobs, the four-job Repo Analyzer Qt suite, or the completed PC Wave 1 / Wave 2 three-job certification suite. Routine hosted CI should be dominated by the consolidated `CI` job plus the branch-protection-required ForgeOS compatibility job, with specialist workflows activating only for their owned paths.
 
 This catalog describes workflow intent. The YAML files remain the executable source of truth.
+
+
+### `mamastrophic-universal-screenshots.yml`
+Manual/reusable visual evidence workflow for the existing Mamastrophic engine. It accepts one supported runtime surface or all six, packages the selected capture with the universal artifact contract, and is intentionally excluded from normal PR/push triggers. The cheap packager unit suite runs path-scoped on pull requests.
