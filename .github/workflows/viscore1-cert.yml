@@ -263,6 +263,49 @@ jobs:
             exit 1
           fi
 
+      - name: TEMP canonical registration Authority Mesh preflight
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'preflight/visual-canonical-registration-authority-20260929' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_MAIN='300ad756791a85c8f432f0381366141922a78e42'
+          test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = "$EXPECTED_MAIN"
+          git worktree add --detach "$RUNNER_TEMP/authority-base" "$EXPECTED_MAIN"
+          cd "$RUNNER_TEMP/authority-base/apps/terminal-de-venta-system"
+          TASK='Register the existing merged visual.canonical_promotion_integration_v1 foundation in the PRISMA Factory Ledger as BUILD / NOT_STARTED / doNotRebuild=false; establish governed registration authority only; reuse existing NDC, Identity, RIFAT, Target Index, Visual Promotion, Work Entry and GVAE authorities; no new semantic/target/binding authority, no product/runtime mutation, no GVAE APPLY.'
+          python tools/prisma-governance/authority_mesh_run.py \
+            --task "$TASK" \
+            --full \
+            --output .governance/visual-canonical-registration-authority \
+            | tee "$RUNNER_TEMP/authority-mesh-result.json"
+          python - "$RUNNER_TEMP/authority-mesh-result.json" <<'PY'
+          import json, sys
+          data = json.load(open(sys.argv[1], encoding='utf-8'))
+          assert data.get('status') == 'PASS', data
+          assert data.get('verification') == 'PASS', data
+          assert data.get('layerMapRequired') is True, data
+          assert data.get('missingOutputs') == [], data
+          print(json.dumps({
+              'status': data.get('status'),
+              'verification': data.get('verification'),
+              'readset_count': data.get('readset_count'),
+              'missing_count': data.get('missing_count'),
+              'layerMapRequired': data.get('layerMapRequired')
+          }, indent=2))
+          PY
+          mkdir -p "$RUNNER_TEMP/canonical-registration-authority"
+          cp "$RUNNER_TEMP/authority-mesh-result.json" "$RUNNER_TEMP/canonical-registration-authority/AUTHORITY_MESH_RESULT.json"
+          cp -R "$RUNNER_TEMP/authority-base/apps/terminal-de-venta-system/.governance/visual-canonical-registration-authority" "$RUNNER_TEMP/canonical-registration-authority/mesh-output"
+
+      - name: Upload TEMP canonical registration authority evidence
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'preflight/visual-canonical-registration-authority-20260929' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-canonical-registration-authority
+          path: ${{ runner.temp }}/canonical-registration-authority
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Upload deterministic manifest candidate
         if: always()
         uses: actions/upload-artifact@v4
