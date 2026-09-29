@@ -39,3 +39,9 @@ def load_builder():
     pkg=_ensure_package()
     import_engine()
     return _load("canonical_registration.request_builder",pkg/"request_builder.py","canonical_registration")
+
+
+def load_collision_classifier():
+    pkg=_ensure_package()
+    import_engine()
+    return _load("canonical_registration.collision_classifier",pkg/"collision_classifier.py","canonical_registration")
