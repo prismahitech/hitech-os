@@ -1,0 +1,21 @@
+{
+  "schema":"prisma.visual.canonical-registration-policy.v1",
+  "version":"1.0.0",
+  "existingIdsImmutable":true,
+  "workerMayMintCanonicalIds":false,
+  "automaticSemanticInference":false,
+  "automaticApplicationSource":false,
+  "namespaces":{
+    "visualMeaning":{"prefix":"VIS.","scope":"global","allocation":"sha256(namespace|semanticKey)","reuseRequiresExplicitAction":true},
+    "binding":{"prefix":"BND.","scope":"global","allocation":"sha256(namespace|semanticKey)","reuseRequiresExplicitAction":true},
+    "recipe":{"prefix":"REC.","scope":"identity","allocation":"sha256(namespace|semanticKey)","reuseRequiresExplicitAction":true},
+    "target":{"prefix":"TGT.","scope":"target-index","allocation":"OWNER_GENERATOR_ONLY","reuseRequiresExplicitAction":true},
+    "applicationLayer":{"prefix":"LYR.","scope":"rifat","allocation":"OWNER_AUTHORITY_ONLY","reuseRequiresExplicitAction":true}
+  },
+  "forbiddenDerivationInputs":["selector","routeId","implementationLayerId","filename","atlasfinRecipeId"],
+  "collisionCodes":["SEMANTIC_COLLISION","BINDING_COLLISION","ID_COLLISION","LAYER_COLLISION","PROJECTION_CONFLICT"],
+  "staleCodes":["STALE_HEAD","SOURCE_DRIFT","REGISTRY_PRECONDITION_CHANGED"],
+  "concurrency":"exclusive-request-lock-plus-current-head-check",
+  "idempotency":"same-request-and-current-truth-reuses-recorded-result-without-duplicate-mutation",
+  "rollback":"transaction-scoped-exact-prestate-only-newer-work-protected"
+}
