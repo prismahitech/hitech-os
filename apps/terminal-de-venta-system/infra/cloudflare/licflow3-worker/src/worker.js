@@ -746,6 +746,62 @@ async function consumeClaimSlot(env, claimSlot, deviceId, auditEventId) {
   return run(env, "update customer_device_claim_slots set status = 'CLAIMED', device_id = ?, claimed_at = ?, audit_event_id = ?, updated_at = ? where slot_id = ? and status = 'AVAILABLE'", [deviceId, now(), auditEventId, now(), claimSlot.slotId]);
 }
 
+async function buildTenantMutationStatement(env, slug, displayName, plan) {
+  const columns = await tableColumns(env, "tenants");
+  const existing = await first(env, "select slug from tenants where slug = ? limit 1", [slug]);
+  if (existing) {
+    return {
+      sql: "update tenants set display_name = ?, status = ?, plan = ?, updated_at = ? where slug = ?",
+      params: [displayName, "active", plan, now(), slug]
+    };
+  }
+  if (columns.has("id")) {
+    return {
+      sql: "insert into tenants (id, slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?, ?)",
+      params: [`tenant_${slug}`, slug, displayName, "active", plan, now()]
+    };
+  }
+  if (columns.has("slug")) {
+    return {
+      sql: "insert into tenants (slug, display_name, status, plan, updated_at) values (?, ?, ?, ?, ?)",
+      params: [slug, displayName, "active", plan, now()]
+    };
+  }
+  return null;
+}
+
+async function buildLicenseMutationStatement(env, slug, licenseId, status, plan, validUntil) {
+  const schemaMode = await licenseSchemaMode(env);
+  if (schemaMode === "unknown") return { schemaMode, statement: null };
+  const existing = await licenseById(env, slug, licenseId, schemaMode);
+  if (schemaMode === "canonical") {
+    return {
+      schemaMode,
+      statement: existing
+        ? {
+            sql: "update licenses set tenant_slug = ?, status = ?, plan = ?, activation_status = ?, valid_until = coalesce(?, valid_until), updated_at = ? where license_id = ? and tenant_slug = ?",
+            params: [slug, status, plan, status, validUntil || null, now(), licenseId, slug]
+          }
+        : {
+            sql: "insert into licenses (license_id, tenant_slug, status, plan, activation_status, valid_until, updated_at) values (?, ?, ?, ?, ?, ?, ?)",
+            params: [licenseId, slug, status, plan, status, validUntil || null, now()]
+          }
+    };
+  }
+  return {
+    schemaMode,
+    statement: existing
+      ? {
+          sql: "update licenses set plan = ?, status = ?, expires_at = coalesce(?, expires_at), updated_at = ? where id = ? and tenant_id = (select id from tenants where slug = ?)",
+          params: [plan, status, validUntil || null, now(), licenseId, slug]
+        }
+      : {
+          sql: "insert into licenses (id, tenant_id, plan, status, expires_at, updated_at) values (?, (select id from tenants where slug = ?), ?, ?, ?, ?)",
+          params: [licenseId, slug, plan, status, validUntil || null, now()]
+        }
+  };
+}
+
 async function upsertTenant(env, slug, displayName, plan) {
   const columns = await tableColumns(env, "tenants");
   const existing = await first(env, "select slug from tenants where slug = ? limit 1", [slug]);
@@ -1932,9 +1988,6 @@ async function activateLicense(request, env, mode) {
       extra: { tenantSlug: slug, licenseId, plannedStatus: status }
     }));
   }
-  if (mode !== "revoke") {
-    await upsertTenant(env, slug, body.businessName || slug, body.plan || PLAN);
-  }
   if (mode === "revoke") {
     const operationRequestId = requestId("licops");
     const revokeResult = await revokeLicenseAtomically(env, slug, licenseId, body.plan || PLAN, validUntil, body.reason, operationRequestId);
@@ -1978,6 +2031,7 @@ async function activateLicense(request, env, mode) {
       }
     }), revokeResult.ok ? 200 : revokeResult.httpStatus || 500);
   }
+
   const clientContext = await requireLicenseClientContext(env, slug, licenseId, status, mode);
   if (!clientContext.ok) {
     return json(operatorResult(mode, mutationMode, clientContext.resultCode, {
@@ -1997,29 +2051,101 @@ async function activateLicense(request, env, mode) {
       extra: { tenantSlug: slug, licenseId }
     }), 409);
   }
-  const result = await upsertLicense(env, slug, licenseId, status, body.plan || PLAN, validUntil);
-  await recordAudit(env, slug, `license.${mode}`, { licenseId, status, reason: body.reason || null });
-  return json(operatorResult(mode, mutationMode, result.ok ? resultCode : result.status, {
-    ok: result.ok,
-    status: result.ok ? status : result.status,
-    safeToMutate: result.ok,
-    safeToMutateReason: result.ok ? "Confirmed operation gates passed and Cloud License Database mutation completed." : "Cloud License Database mutation failed.",
+
+  const tenantStatement = await buildTenantMutationStatement(env, slug, body.businessName || slug, body.plan || PLAN);
+  const licenseMutation = await buildLicenseMutationStatement(env, slug, licenseId, status, body.plan || PLAN, validUntil);
+  const auditMode = await auditSchemaMode(env);
+  if (!tenantStatement || !licenseMutation.statement || auditMode === "none") {
+    return json(operatorResult(mode, mutationMode, "LICENSE_OPERATION_SCHEMA_REQUIRED", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "No hay un esquema compatible para completar la operacion de licencia atomicamente.",
+      nextStep: "Inspecciona tenants, licenses y audit_events/audit_log antes de reintentar.",
+      latencyMs: Date.now() - started
+    }), 500);
+  }
+
+  const auditEventId = `license.${mode}-${crypto.randomUUID()}`;
+  const auditStatement = auditInsertStatement(auditMode, auditEventId, slug, `license.${mode}`, {
+    licenseId,
+    status,
+    reason: body.reason || null
+  });
+  if (!auditStatement) {
+    return json(operatorResult(mode, mutationMode, "AUDIT_TABLE_REQUIRED", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "No pudimos preparar la auditoria de la operacion de licencia.",
+      nextStep: "Inspecciona la tabla de auditoria antes de reintentar.",
+      latencyMs: Date.now() - started
+    }), 500);
+  }
+
+  // Confirmed license mutations are atomic: tenant state, license state and
+  // audit persistence commit together or the complete transaction rolls back.
+  const batch = await runBatch(env, [tenantStatement, licenseMutation.statement, auditStatement], {
+    operation: `license_${mode}`,
+    table: "tenants+licenses+audit"
+  });
+  if (!batch.ok) {
+    return json(operatorResult(mode, mutationMode, batch.status, {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "Confirmed License Operation fallo antes de una persistencia verificable.",
+      nextStep: "Revisa la evidencia sanitizada antes de reintentar.",
+      safeToMutateChecks: { readAfterWrite: "not_confirmed", auditEvent: "not_confirmed" },
+      latencyMs: Date.now() - started
+    }), 500);
+  }
+
+  const persistedLicense = await licenseById(env, slug, licenseId, licenseMutation.schemaMode);
+  const persistedTenant = await tenant(env, slug);
+  const auditVerified = await auditEventExists(env, auditMode, auditEventId);
+  const licenseOk = Boolean(persistedLicense) &&
+    persistedLicense.licenseId === licenseId &&
+    persistedLicense.status === status &&
+    persistedLicense.plan === (body.plan || PLAN);
+  const tenantOk = Boolean(persistedTenant) && persistedTenant.slug === slug;
+  if (!licenseOk || !tenantOk || !auditVerified) {
+    return json(operatorResult(mode, mutationMode, "D1_LICENSE_OPERATION_PERSISTENCE_VERIFY_FAILED", {
+      ok: false,
+      safeToMutate: false,
+      operatorMessage: "La operacion no fue declarada verde porque el estado final no pudo verificarse.",
+      nextStep: "Inspecciona tenant, license y audit antes de reintentar.",
+      safeToMutateChecks: {
+        readAfterWrite: licenseOk && tenantOk ? "partial" : "failed",
+        auditEvent: auditVerified ? "verified" : "not_verified"
+      },
+      latencyMs: Date.now() - started
+    }), 500);
+  }
+
+  return json(operatorResult(mode, mutationMode, resultCode, {
+    ok: true,
+    status,
+    safeToMutate: true,
+    persisted: true,
+    auditVerified: true,
+    safeToMutateReason: "Confirmed License Operation transaction and read-after-write checks passed.",
     safeToMutateChecks: {
       adminToken: "validated_server_side",
       confirmation: true,
-      revokePhrase: mode === "revoke" ? true : "not_required",
-      reason: mode === "revoke" ? "present" : "not_required"
+      revokePhrase: "not_required",
+      reason: "not_required",
+      readAfterWrite: "confirmed",
+      auditEvent: "verified"
     },
-    revokePhraseAccepted: mode === "revoke",
-    operatorMessage: result.ok ? "Confirmed License Operation completed." : "Confirmed License Operation failed.",
-    nextStep: result.ok ? "Review License Operation Audit and customer status." : "Inspect sanitized diagnostics.",
+    operatorMessage: "Confirmed License Operation completed and verified.",
+    nextStep: "Review License Operation Audit and customer status.",
+    requestId: auditEventId,
     latencyMs: Date.now() - started,
     extra: {
       tenantSlug: slug,
       licenseId,
-      license: { licenseId, status, plan: body.plan || PLAN, validUntil, signedLicenseIssued: false }
+      license: { licenseId, status, plan: body.plan || PLAN, validUntil, signedLicenseIssued: false },
+      persistence: { schemaMode: licenseMutation.schemaMode, auditTable: auditMode, auditEventId }
     }
-  }), result.ok ? 200 : 500);
+  }), 200);
 }
 
 async function registerDevice(request, env) {
