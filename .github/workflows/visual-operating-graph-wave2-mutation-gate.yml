@@ -1,0 +1,63 @@
+name: PRISMA Visual Operating Graph Wave 2 Mutation Gate (temporary)
+
+on:
+  pull_request:
+    paths:
+      - 'prisma-html/tools/visual_operating_graph/next_safe_action.py'
+      - 'prisma-html/tools/visual_operating_graph/tests/test_wave2.py'
+      - '.github/workflows/visual-operating-graph-wave2-mutation-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  mutation-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Check mutation authority is bound to current main
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = 'd7dc4cdcd386ac4d0d07a684a39cc6543a31a0b8'
+          git worktree add --detach "$RUNNER_TEMP/base" 'd7dc4cdcd386ac4d0d07a684a39cc6543a31a0b8'
+          cd "$RUNNER_TEMP/base"
+          cat > "$RUNNER_TEMP/gate.request.json" <<'JSON'
+          {
+            "schemaVersion":"prisma.factory-ledger.anti-rework-gate.v1",
+            "mode":"MUTATION",
+            "expectedHead":"d7dc4cdcd386ac4d0d07a684a39cc6543a31a0b8",
+            "task":"Bounded FIX for visual.operating_graph_v1: correct Wave 2 unmapped blocker classification so the source blocker remains UNCLASSIFIED_SOURCE_BLOCKER and explicitly carries requiresTaxonomyUpdate=true. Add one adversarial regression test. No architecture rebuild, authority minting, product/runtime mutation or visual APPLY.",
+            "capabilities":[
+              {"id":"visual.operating_graph_v1","requestedAction":"FIX"}
+            ],
+            "authorityMesh":{
+              "status":"PASS_COMPOSED_AUTHORITY_MESH",
+              "repoHead":"d7dc4cdcd386ac4d0d07a684a39cc6543a31a0b8",
+              "requiredAuthorityCoveragePct":100,
+              "blockers":0,
+              "requestDigest":"c1fedc0b49e257f4a3fb99be65fb6c4386a23810859b7d79ebd862bb0b20c696",
+              "artifactDigest":"sha256:8dd263f7499589ff4404c5c71adbe95523a515773e81d1e985b230ed218a50e7"
+            },
+            "visualMutation":false
+          }
+          JSON
+          python "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py" --request "$RUNNER_TEMP/gate.request.json" | tee "$RUNNER_TEMP/gate.result.json"
+          python - "$RUNNER_TEMP/gate.result.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert d.get('result') == 'PASS_ANTI_REWORK_GATE', d
+          assert d.get('errors') == [], d
+          assert d.get('repoHead') == 'd7dc4cdcd386ac4d0d07a684a39cc6543a31a0b8', d
+          assert d.get('selected',[{}])[0].get('requestedAction') == 'FIX', d
+          PY
