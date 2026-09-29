@@ -800,7 +800,7 @@ async function requireLicenseClientContext(env, slug, licenseId, status, mode) {
 }
 
 async function upsertLicensePlan(env, plan) {
-  return run(env, "insert or replace into license_plans (plan_id, plan_name, max_tablet_devices, max_pc_devices, max_mobile_devices, max_total_devices, allowed_surfaces_json, features_json, setup_mode, claim_mode, requires_manual_approval, expiration_policy, grace_policy, renewal_policy, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+  return run(env, "insert into license_plans (plan_id, plan_name, max_tablet_devices, max_pc_devices, max_mobile_devices, max_total_devices, allowed_surfaces_json, features_json, setup_mode, claim_mode, requires_manual_approval, expiration_policy, grace_policy, renewal_policy, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(plan_id) do update set plan_name = excluded.plan_name, max_tablet_devices = excluded.max_tablet_devices, max_pc_devices = excluded.max_pc_devices, max_mobile_devices = excluded.max_mobile_devices, max_total_devices = excluded.max_total_devices, allowed_surfaces_json = excluded.allowed_surfaces_json, features_json = excluded.features_json, setup_mode = excluded.setup_mode, claim_mode = excluded.claim_mode, requires_manual_approval = excluded.requires_manual_approval, expiration_policy = excluded.expiration_policy, grace_policy = excluded.grace_policy, renewal_policy = excluded.renewal_policy, updated_at = excluded.updated_at", [
     plan.planId,
     plan.planName,
     plan.maxTabletDevices,
@@ -820,7 +820,7 @@ async function upsertLicensePlan(env, plan) {
 }
 
 async function upsertLicenseAssignment(env, pass) {
-  return run(env, "insert or replace into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+  return run(env, "insert into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(license_assignment_id) do update set license_id = excluded.license_id, setup_bundle_id = excluded.setup_bundle_id, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, plan_id = excluded.plan_id, status = excluded.status, updated_at = excluded.updated_at", [
     pass.licenseAssignmentId,
     pass.licenseId,
     pass.setupBundleId,
@@ -835,7 +835,7 @@ async function upsertLicenseAssignment(env, pass) {
 }
 
 async function upsertSetupBundle(env, pass, auditEventId) {
-  return run(env, "insert or replace into customer_setup_bundles (setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status, expires_at, created_by, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+  return run(env, "insert into customer_setup_bundles (setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status, expires_at, created_by, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(setup_bundle_id) do update set setup_id = excluded.setup_id, setup_code = excluded.setup_code, setup_link = excluded.setup_link, setup_qr_payload = excluded.setup_qr_payload, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, business_name = excluded.business_name, license_id = excluded.license_id, license_assignment_id = excluded.license_assignment_id, plan_id = excluded.plan_id, operator_action_count = excluded.operator_action_count, manual_device_claim_required = excluded.manual_device_claim_required, audit_event_id = excluded.audit_event_id, status = excluded.status, expires_at = excluded.expires_at, created_by = excluded.created_by, updated_at = excluded.updated_at", [
     pass.setupBundleId,
     pass.setupId,
     pass.setupCode,
@@ -860,7 +860,7 @@ async function upsertSetupBundle(env, pass, auditEventId) {
 }
 
 async function upsertDeviceClaimSlot(env, pass, slot, index, auditEventId) {
-  return run(env, "insert or replace into customer_device_claim_slots (slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, device_id, claimed_at, expires_at, status, audit_event_id, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+  return run(env, "insert into customer_device_claim_slots (slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, device_id, claimed_at, expires_at, status, audit_event_id, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(slot_id) do update set setup_bundle_id = excluded.setup_bundle_id, setup_id = excluded.setup_id, customer_id = excluded.customer_id, license_id = excluded.license_id, plan_id = excluded.plan_id, surface = excluded.surface, slot_index = excluded.slot_index, claim_code = excluded.claim_code, expires_at = excluded.expires_at, updated_at = excluded.updated_at", [
     slot.slotId,
     pass.setupBundleId,
     pass.setupId,
@@ -1024,7 +1024,7 @@ async function createCustomerSetup(request, env) {
 
   const statements = [
     {
-      sql: "insert or replace into license_plans (plan_id, plan_name, max_tablet_devices, max_pc_devices, max_mobile_devices, max_total_devices, allowed_surfaces_json, features_json, setup_mode, claim_mode, requires_manual_approval, expiration_policy, grace_policy, renewal_policy, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "insert into license_plans (plan_id, plan_name, max_tablet_devices, max_pc_devices, max_mobile_devices, max_total_devices, allowed_surfaces_json, features_json, setup_mode, claim_mode, requires_manual_approval, expiration_policy, grace_policy, renewal_policy, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(plan_id) do update set plan_name = excluded.plan_name, max_tablet_devices = excluded.max_tablet_devices, max_pc_devices = excluded.max_pc_devices, max_mobile_devices = excluded.max_mobile_devices, max_total_devices = excluded.max_total_devices, allowed_surfaces_json = excluded.allowed_surfaces_json, features_json = excluded.features_json, setup_mode = excluded.setup_mode, claim_mode = excluded.claim_mode, requires_manual_approval = excluded.requires_manual_approval, expiration_policy = excluded.expiration_policy, grace_policy = excluded.grace_policy, renewal_policy = excluded.renewal_policy, updated_at = excluded.updated_at",
       params: [
         plan.planId,
         plan.planName,
@@ -1044,8 +1044,9 @@ async function createCustomerSetup(request, env) {
       ]
     },
     tenantStatement,
+    licenseStatement,
     {
-      sql: "insert or replace into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "insert into license_assignments (license_assignment_id, license_id, setup_bundle_id, customer_id, tenant_id, tenant_slug, business_id, plan_id, status, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(license_assignment_id) do update set license_id = excluded.license_id, setup_bundle_id = excluded.setup_bundle_id, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, plan_id = excluded.plan_id, status = excluded.status, updated_at = excluded.updated_at",
       params: [
         pass.licenseAssignmentId,
         pass.licenseId,
@@ -1080,13 +1081,13 @@ async function createCustomerSetup(request, env) {
       ]
     },
     ...pass.slots.map((slot) => ({
-      sql: "insert or replace into customer_setup_slots (setup_id, surface, label, allowed, claimed, updated_at) values (?, ?, ?, ?, ?, ?)",
-      params: [pass.setupId, slot.surface, slot.label, slot.allowed, 0, now()]
+      sql: "insert into customer_setup_slots (setup_id, surface, label, allowed, claimed, updated_at) values (?, ?, ?, ?, (select count(*) from customer_device_claims where setup_id = ? and surface = ? and status = 'claimed'), ?) on conflict(setup_id, surface) do update set label = excluded.label, allowed = excluded.allowed, claimed = (select count(*) from customer_device_claims where setup_id = excluded.setup_id and surface = excluded.surface and status = 'claimed'), updated_at = excluded.updated_at",
+      params: [pass.setupId, slot.surface, slot.label, slot.allowed, pass.setupId, slot.surface, now()]
     })),
     createAuditStatement,
     provisionAuditStatement,
     {
-      sql: "insert or replace into customer_setup_bundles (setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status, expires_at, created_by, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "insert into customer_setup_bundles (setup_bundle_id, setup_id, setup_code, setup_link, setup_qr_payload, customer_id, tenant_id, tenant_slug, business_id, business_name, license_id, license_assignment_id, plan_id, operator_action_count, manual_device_claim_required, audit_event_id, status, expires_at, created_by, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(setup_bundle_id) do update set setup_id = excluded.setup_id, setup_code = excluded.setup_code, setup_link = excluded.setup_link, setup_qr_payload = excluded.setup_qr_payload, customer_id = excluded.customer_id, tenant_id = excluded.tenant_id, tenant_slug = excluded.tenant_slug, business_id = excluded.business_id, business_name = excluded.business_name, license_id = excluded.license_id, license_assignment_id = excluded.license_assignment_id, plan_id = excluded.plan_id, operator_action_count = excluded.operator_action_count, manual_device_claim_required = excluded.manual_device_claim_required, audit_event_id = excluded.audit_event_id, status = excluded.status, expires_at = excluded.expires_at, created_by = excluded.created_by, updated_at = excluded.updated_at",
       params: [
         pass.setupBundleId,
         pass.setupId,
@@ -1116,7 +1117,7 @@ async function createCustomerSetup(request, env) {
   for (const claimSlot of pass.deviceClaimSlots) {
     slotIndexBySurface[claimSlot.surface] = Number(slotIndexBySurface[claimSlot.surface] || 0) + 1;
     statements.push({
-      sql: "insert or replace into customer_device_claim_slots (slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, device_id, claimed_at, expires_at, status, audit_event_id, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "insert into customer_device_claim_slots (slot_id, setup_bundle_id, setup_id, customer_id, license_id, plan_id, surface, slot_index, claim_code, device_id, claimed_at, expires_at, status, audit_event_id, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) on conflict(slot_id) do update set setup_bundle_id = excluded.setup_bundle_id, setup_id = excluded.setup_id, customer_id = excluded.customer_id, license_id = excluded.license_id, plan_id = excluded.plan_id, surface = excluded.surface, slot_index = excluded.slot_index, claim_code = excluded.claim_code, expires_at = excluded.expires_at, updated_at = excluded.updated_at",
       params: [
         claimSlot.slotId,
         pass.setupBundleId,
