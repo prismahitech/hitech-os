@@ -153,6 +153,12 @@ jobs:
           set -euo pipefail
           pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:concurrency-idempotency
 
+      - name: Verify Cloud Center D1 graph integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:d1-graph-integrity
+
 
       - name: Enforce zero priority overrides
         shell: bash
