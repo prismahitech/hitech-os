@@ -507,7 +507,7 @@ scope: ../../unsafe
     pa = PullRequestView(1, "A", "", "open", False, "a"*40, "b"*40, "", "", a, ["foo/bar.py"])
     pb = PullRequestView(2, "B", "", "open", False, "c"*40, "b"*40, "", "", b, ["foo/bar.py"])
     hard, reasons, paths = declaration_conflict(pa, pb)
-    assert hard and "same_workstream_id" in reasons and paths == []
+    assert hard and "same_workstream_id" in reasons and paths == ["foo/bar.py"]
 
     print("PASS_PRISMA_WORKSTREAM_COLLISION_GATE_SELF_TEST")
 
