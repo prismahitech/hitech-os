@@ -70,6 +70,9 @@ def _atomic_write_json(path:Path,value:Any)->None:
         if os.path.exists(tmp): os.unlink(tmp)
 
 def current_repo_head(repo_root:Path)->str:
+    env=os.environ.get("GITHUB_SHA")
+    if isinstance(env,str) and len(env)==40:
+        return env
     try:
         proc=subprocess.run(["git","rev-parse","HEAD"],cwd=repo_root,check=True,capture_output=True,text=True)
         value=proc.stdout.strip()
@@ -77,9 +80,6 @@ def current_repo_head(repo_root:Path)->str:
             return value
     except Exception:
         pass
-    env=os.environ.get("GITHUB_SHA")
-    if isinstance(env,str) and len(env)==40:
-        return env
     raise StaleHeadError("CURRENT_REPO_HEAD_UNAVAILABLE")
 
 def _acquire_lock(lock_dir:Path)->None:
