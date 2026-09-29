@@ -54,6 +54,7 @@ jobs:
           print('PASS_GVAE_V1_TESTS_134_ZERO_SKIPS')
           PY
 
+      # Retrigger canonical-registration verification on latest branch head.
       - name: Canonical Registration deterministic suite
         working-directory: prisma-html
         shell: bash
