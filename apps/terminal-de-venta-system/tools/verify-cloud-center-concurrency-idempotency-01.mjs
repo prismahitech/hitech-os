@@ -288,6 +288,22 @@ async function main() {
   assert(await directCount(seed, "tenants", "slug = ?", [failedSetup.tenantSlug]) === 0, "ATOMIC_SETUP_LEFT_TENANT");
   checks.push("atomic_customer_setup_rollback");
 
+  // 2. Provisioning-only package must persist the canonical commercial SKU separately.
+  const starter = await createSetup(seed, "starter", { planId: "TABLET_PC_MOBILE_MANAGED" });
+  const starterLicense = await seed.first("select plan, status from licenses where license_id = ?", [starter.licenseId]);
+  const starterTenant = await seed.first("select plan, status from tenants where slug = ?", [starter.tenantSlug]);
+  const starterSetupRow = await seed.first("select plan_code, package_code from customer_setups where setup_id = ?", [starter.setupId]);
+  const starterSlots = await seed.query("select surface, allowed from customer_setup_slots where setup_id = ? order by surface", [starter.setupId]);
+  assert(starterLicense?.plan === "TABLET_PC_MANAGED", "STARTER_LICENSE_PLAN_NOT_COMMERCIAL");
+  assert(starterTenant?.plan === "TABLET_PC_MANAGED", "STARTER_TENANT_PLAN_NOT_COMMERCIAL");
+  assert(starterSetupRow?.plan_code === "TABLET_PC_MOBILE_MANAGED" && starterSetupRow?.package_code === "PRISMA_TRIPLE_DEVICE_STARTER", "STARTER_PROVISIONING_ID_LOST");
+  assert(JSON.stringify(starterSlots) === JSON.stringify([
+    { surface: "mobile", allowed: 1 },
+    { surface: "pc", allowed: 1 },
+    { surface: "tablet", allowed: 1 }
+  ]), "STARTER_SLOT_MATRIX_DRIFT", { starterSlots });
+  checks.push("provisioning_only_starter_maps_to_commercial_sku");
+
   // 2. Real concurrent claims on the same DB with separate connections.
   const setup = await createSetup(seed, "concurrent");
   const claimHarnesses = [new D1Harness(dbPath), new D1Harness(dbPath), new D1Harness(dbPath)];\n  harnesses.push(...claimHarnesses);
