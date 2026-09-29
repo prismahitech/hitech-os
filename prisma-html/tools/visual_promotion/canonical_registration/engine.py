@@ -108,7 +108,7 @@ def build_plan(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
             "mutations":mutations,"preconditions":{"expectedCurrentHead":request["expectedCurrentHead"],
             "currentTruthDigest":sha256_json(request["currentTruth"]),"sourceDigest":request["source"]["digest"]},"status":status}
 
-def _apply(repo_root: Path, mutation: dict[str,Any]) -> tuple[Path,str,str]:
+def _apply(repo_root: Path, mutation: dict[str,Any]) -> tuple[Path,str,str,Any]:
     if mutation["path"] not in ALLOWED_CANONICAL_PATHS: raise UnsafeMutationError("PATH_NOT_GOVERNED")
     path=repo_root/mutation["path"]; before=_load(path); before_sha=sha256_json(before); after=copy.deepcopy(before); value=mutation["value"]
     if mutation["operation"]=="append_recipe":
@@ -118,13 +118,38 @@ def _apply(repo_root: Path, mutation: dict[str,Any]) -> tuple[Path,str,str]:
         if any(x.get("bindingId")==value.get("bindingId") for x in after.get("bindings",[])): raise CollisionError("BINDING_ID_COLLISION")
         after["bindings"]=[*after.get("bindings",[]),value]
     else: raise UnsafeMutationError("UNKNOWN_MUTATION_OPERATION")
-    after_sha=sha256_json(after); _atomic_write_json(path,after); return path,before_sha,after_sha
+    after_sha=sha256_json(after); _atomic_write_json(path,after); return path,before_sha,after_sha,before
 
 def _evidence(request,plan,status,applied,errors):
     return {"schema":EVIDENCE_SCHEMA,"requestId":request["requestId"],"requestDigest":sha256_json(request),
             "currentTruthDigest":plan["preconditions"]["currentTruthDigest"],"sourceDigest":plan["preconditions"]["sourceDigest"],
-            "preState":[{"path":str(p),"sha256":b} for p,b,_ in applied],"postState":[{"path":str(p),"sha256":a} for p,_,a in applied],
+            "preState":[{"path":str(p),"sha256":b} for p,b,_,_ in applied],"postState":[{"path":str(p),"sha256":a} for p,_,a,_ in applied],
             "ids":plan["ids"],"mutations":plan["mutations"],"status":status,"errors":errors}
+
+
+def rollback(request_id: str, repo_root: Path) -> dict[str, Any]:
+    receipt = repo_root / RESULTS_ROOT / f"{request_id}.json"
+    if not receipt.exists():
+        raise CanonicalRegistrationError("RECEIPT_NOT_FOUND")
+    evidence = _load(receipt)
+    if evidence.get("status") != "APPLIED":
+        raise CanonicalRegistrationError("ROLLBACK_REQUIRES_APPLIED_TRANSACTION")
+    restored = []
+    for row in evidence.get("postState", []):
+        path = repo_root / row["path"]
+        current = sha256_json(_load(path))
+        if current != row["sha256"]:
+            raise UnsafeMutationError("ROLLBACK_WOULD_OVERWRITE_NEWER_WORK:" + row["path"])
+        prior_value = evidence.get("preStateValues", {}).get(row["path"])
+        if prior_value is None:
+            raise UnsafeMutationError("ROLLBACK_PRESTATE_VALUE_MISSING:" + row["path"])
+        _atomic_write_json(path, prior_value)
+        restored.append(row["path"])
+    evidence["status"] = "ROLLED_BACK"
+    evidence["rollback"] = {"restoredPaths": restored, "transactionScoped": True}
+    _atomic_write_json(receipt, evidence)
+    return {"schema": RESULT_SCHEMA, "capabilityId": CAPABILITY_ID, "requestId": request_id, "status": "ROLLED_BACK", "restoredPaths": restored}
+
 
 def register(request: dict[str,Any], repo_root: Path) -> dict[str,Any]:
     plan=build_plan(request,repo_root)
@@ -143,5 +168,6 @@ def register(request: dict[str,Any], repo_root: Path) -> dict[str,Any]:
         # V1 fails closed. Persist pre/post hashes for any mutation that completed; do not overwrite newer work.
         raise
     evidence=_evidence(request,plan,"APPLIED",applied,[])
+    evidence["preStateValues"]={str(p):before for p,_,_,before in applied}
     result={"schema":RESULT_SCHEMA,"capabilityId":CAPABILITY_ID,"requestId":request["requestId"],"targetId":plan["targetId"],"status":"APPLIED","ids":plan["ids"],"evidenceDigest":sha256_json(evidence)}
     evidence["result"]=result; _atomic_write_json(receipt,evidence); return result
