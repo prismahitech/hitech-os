@@ -35,6 +35,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      - name: Diagnose public Cloud Center reachability
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          curl -sS --connect-timeout 10 --max-time 20 -o /dev/null \\
+            -w 'Cloud Center health preflight: HTTP=%{http_code} REMOTE_IP=%{remote_ip} CONNECT=%{time_connect} TOTAL=%{time_total}\\n' \\
+            https://app.hitechrts.com/health
+          rc=$?
+          set -e
+          printf 'Cloud Center health preflight curl_exit=%s\\n' "$rc"
+          exit 0
+
       - name: Run Cloud Center public live read-only verifier
         run: |
           set -euo pipefail
