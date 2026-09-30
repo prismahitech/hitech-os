@@ -1,0 +1,36 @@
+name: PRISMA Merge Governance Hardening Tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions: {}
+
+jobs:
+  merge-governance-hardening:
+    name: merge-governance-hardening
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR source without repository permissions
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Python syntax validation
+        run: |
+          set -euo pipefail
+          python -m py_compile             tools/prisma-governance/prisma_required_merge_gate.py             tools/prisma-governance/test_prisma_required_merge_gate.py             autogit/engine/autogit_engine/config.py             autogit/engine/autogit_engine/github_cli.py             autogit/engine/autogit_engine/pr_gate.py             autogit/engine/autogit_engine/flight_cli.py             autogit/engine/autogit_engine/ag98_dashboard.py             autogit/engine/test_merge_gate_hardening.py             autogit/engine/test_flight_merge_hardening.py
+
+      - name: Merge governance regression suite
+        run: |
+          set -euo pipefail
+          python -m unittest -v             tools/prisma-governance/test_prisma_required_merge_gate.py
+          python -m unittest -v             autogit/engine/test_merge_gate_hardening.py             autogit/engine/test_flight_merge_hardening.py
+
+      - name: Static bypass scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -RInE --exclude-dir=.git             --include='*.py'             -- 'AUTOGIT_ALLOW_ADMIN_MERGE|--allow-merge-no-checks|--admin|admin=True'             autogit/engine/autogit_engine tools/prisma-governance
