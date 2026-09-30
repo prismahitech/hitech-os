@@ -38,21 +38,22 @@ jobs:
       - name: Diagnose public Cloud Center reachability
         shell: bash
         run: |
-          set -euo pipefail
+          set -u
+          printf 'Cloud Center DNS preflight:\n'
+          getent hosts app.hitechrts.com || true
           set +e
-          curl -sS --connect-timeout 10 --max-time 20 -o /dev/null \\
-            -w 'Cloud Center health preflight: HTTP=%{http_code} REMOTE_IP=%{remote_ip} CONNECT=%{time_connect} TOTAL=%{time_total}\\n' \\
-            https://app.hitechrts.com/health
+          curl -sS --connect-timeout 10 --max-time 20 -o /dev/null -w 'Cloud Center health preflight: HTTP=%{http_code} REMOTE_IP=%{remote_ip} CONNECT=%{time_connect} TOTAL=%{time_total}\n' https://app.hitechrts.com/health
           rc=$?
           set -e
-          printf 'Cloud Center health preflight curl_exit=%s\\n' "$rc"
+          printf 'Cloud Center health preflight curl_exit=%s\n' "$rc"
           exit 0
 
       - name: Run Cloud Center public live read-only verifier
+        working-directory: apps/terminal-de-venta-system
         run: |
           set -euo pipefail
-          mkdir -p apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live
-          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:live-readiness --             --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_LIVE_READONLY_VERIFY.json
+          mkdir -p tools/_local/reports/ci/cloud-center-live
+          node tools/verify-cloud-center-live-readiness.mjs --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_LIVE_READONLY_VERIFY.json
 
       - name: Upload live read-only evidence
         if: always()
