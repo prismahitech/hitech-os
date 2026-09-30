@@ -15,4 +15,4 @@ def test_no_no_check_merge_flag_in_flight_cli():
 
 def test_dashboard_does_not_authorize_no_check_merge():
     text = DASHBOARD.read_text(encoding="utf-8")
-    assert "decision["merge_allowed"] = False" in text
+    assert 'decision["merge_allowed"] = False' in text
