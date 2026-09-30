@@ -76,44 +76,39 @@ jobs:
 
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
 
-          worker_http_response="$(
-            curl --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
-              --write-out '\n__HTTP_STATUS__:%{http_code}' \
-              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers" \
-              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-          )"
-
-          worker_status="${worker_http_response##*__HTTP_STATUS__:}"
-          worker_json="${worker_http_response%\n__HTTP_STATUS__:*}"
-
-          test "${worker_status}" = "200" || {
-            echo "Cloudflare Worker inventory endpoint returned HTTP ${worker_status}";
-            exit 1;
-          }
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -o "${RUNNER_TEMP}/cloud-center-worker-inventory.json" \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
 
           preview_url="$(
-            printf '%s' "${worker_json}" |
-              node -e '
-                let input="";
-                process.stdin.on("data", chunk => input += chunk);
-                process.stdin.on("end", () => {
-                  const data = JSON.parse(input);
-                  const workers = Array.isArray(data.result) ? data.result : [];
-                  const worker = workers.find(item => item && item.name === process.env.WORKER_NAME);
-                  const subdomain = worker?.subdomain || {};
-                  if (subdomain.previews_enabled !== true) process.exit(2);
-                  const raw = String(subdomain.preview_url_suffix || subdomain.url || "").trim();
-                  if (!raw) process.exit(3);
-                  const candidate = raw.startsWith("http") ? raw : "https://" + raw;
-                  const parsed = new URL(candidate);
-                  const labels = parsed.hostname.split(".");
-                  const workerIndex = labels.findIndex(label => label === process.env.WORKER_NAME);
-                  if (workerIndex < 0) process.exit(4);
-                  labels[workerIndex] = process.env.PREVIEW_ALIAS + "-" + labels[workerIndex];
-                  parsed.hostname = labels.join(".");
-                  process.stdout.write(parsed.toString().replace(/\/$/, ""));
-                });
-              '
+            node -e '
+              const fs = require("node:fs");
+              const data = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-inventory.json", "utf8"));
+              const workers = Array.isArray(data.result) ? data.result : [];
+              const worker = workers.find(item => item && item.name === process.env.WORKER_NAME);
+              const subdomain = worker?.subdomain || {};
+              if (subdomain.previews_enabled !== true) {
+                process.stderr.write("Cloudflare reports Worker Preview URLs are disabled for " + process.env.WORKER_NAME + "\n");
+                process.exit(2);
+              }
+              const suffix = String(subdomain.preview_url_suffix || "").trim();
+              if (!suffix) {
+                process.stderr.write("Cloudflare returned no preview_url_suffix for " + process.env.WORKER_NAME + "\n");
+                process.exit(3);
+              }
+              const host = suffix.startsWith("http://") || suffix.startsWith("https://")
+                ? new URL(suffix).host
+                : suffix.replace(/^/+/, "");
+              const previewHost = host.startsWith("-")
+                ? process.env.PREVIEW_ALIAS + host
+                : process.env.PREVIEW_ALIAS + "-" + host;
+              if (!previewHost.endsWith(".workers.dev")) {
+                process.stderr.write("Resolved preview host is not workers.dev\n");
+                process.exit(4);
+              }
+              process.stdout.write("https://" + previewHost);
+            '
           )"
 
           test -n "${preview_url}" || {
@@ -123,6 +118,7 @@ jobs:
 
           printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
+
       - name: Verify read-only Version URL
         env:
           PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
