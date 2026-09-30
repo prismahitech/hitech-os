@@ -38,6 +38,21 @@ async function requestJson(method, route, body) {
       json = { rawText: text.slice(0, 500) };
     }
     return { route, method, status: response.status, ok: response.ok, json: jsonPreview(json) };
+  } catch (error) {
+    const cause = error?.cause;
+    return {
+      route,
+      method,
+      status: 0,
+      ok: false,
+      json: {
+        error: String(error?.message || error),
+        errorName: String(error?.name || "Error"),
+        causeCode: cause?.code ? String(cause.code) : null,
+        causeName: cause?.name ? String(cause.name) : null,
+        causeMessage: cause?.message ? String(cause.message) : null
+      }
+    };
   } finally {
     clearTimeout(timer);
   }
