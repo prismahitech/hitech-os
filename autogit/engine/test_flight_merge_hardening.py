@@ -1,6 +1,6 @@
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 FLIGHT = ROOT / "autogit/engine/autogit_engine/flight_cli.py"
 DASHBOARD = ROOT / "autogit/engine/autogit_engine/ag98_dashboard.py"
 
