@@ -4,6 +4,14 @@
   "main": "src/worker.js",
   "compatibility_date": "2026-07-02",
   "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "cloud-center-preview.hitechrts.com",
+      "custom_domain": true,
+      "enabled": false,
+      "previews_enabled": true
+    }
+  ],
   "preview_urls": true,
   "d1_databases": [
     {
