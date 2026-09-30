@@ -579,7 +579,8 @@ function New-Surf8ExpectedMarkdown([object]$Summary, [object]$Manifest, [string]
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $toolRoot = (Resolve-Path -LiteralPath (Join-Path $scriptRoot '..')).Path
-$defaultTermRoot = 'F:\repos\hitech-os\apps\terminal-de-venta-system'
+$repoRoot = (Resolve-Path -LiteralPath (Join-Path $toolRoot '..\..')).Path
+$defaultTermRoot = Join-Path $repoRoot 'apps\terminal-de-venta-system'
 $termRootCandidate = if ($env:PRISMA_TERMINAL_ROOT -and -not [string]::IsNullOrWhiteSpace($env:PRISMA_TERMINAL_ROOT)) { $env:PRISMA_TERMINAL_ROOT } else { $defaultTermRoot }
 $termRoot = (Resolve-Path -LiteralPath $termRootCandidate).Path
 $pcRoot = Join-Path $termRoot 'products\pc\app'
