@@ -30,3 +30,11 @@ def test_required_gate_declares_trusted_execution_contract():
     assert '"sourceExecutionFromPR":False' in source
     assert '"adminMergeAllowed":False' in source
     assert "HEAD_MOVED_DURING_GATE" in source
+
+def test_branch_protection_must_cover_admins_and_canonical_context():
+    payload = {"protection": {"enabled": True, "required_status_checks": {"enforcement_level": "non_admins", "contexts": ["forgeos-quality-gate"]}}}
+    assert module.branch_protection_errors(payload) == ["MAIN_REQUIRED_CHECKS_NOT_ENFORCED_FOR_ADMINS"]
+
+def test_branch_protection_requires_canonical_context():
+    payload = {"protection": {"enabled": True, "required_status_checks": {"enforcement_level": "everyone", "contexts": ["other"]}}}
+    assert module.branch_protection_errors(payload) == ["MAIN_CANONICAL_GATE_CONTEXT_MISSING"]
