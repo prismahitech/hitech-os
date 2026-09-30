@@ -187,10 +187,11 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [ ] sanitized diagnostics.
 - [ ] D1/OAuth/read-only health.
 - [x] Current evidence timestamp (historical live evidence explicitly marked stale).
+- [ ] Fresh live-readonly recertification: workflow #5 (`36670756664`) reached the corrected diagnostic/verifier, but public DNS did not resolve `app.hitechrts.com` (`HTTP=000`, curl exit 6; Node `ENOTFOUND`). Evidence artifact: `cloud-center-live-readonly-36670756664-1`.
 
-**Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME` — PASS in CI #2307.  
-**Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — PASS in CI #2307 with desktop/mobile evidence artifact.  
-**Gate G5C:** `PASS_CLOUD_CENTER_LIVE_READONLY_CERTIFIED`
+**Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME` — PASS in CI #2314.  
+**Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — PASS in CI #2314 with desktop/mobile evidence artifact.  
+**Gate G5C:** `OPEN — LIVE_READONLY_RECERTIFICATION_BLOCKED_BY_PUBLIC_DNS`
 
 ---
 
