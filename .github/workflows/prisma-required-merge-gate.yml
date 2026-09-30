@@ -1,0 +1,44 @@
+name: PRISMA Required Merge Gate
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: prisma-required-merge-gate-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+  cancel-in-progress: false
+
+jobs:
+  prisma-required-merge-gate:
+    name: forgeos-quality-gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout trusted merge-gate sources from base
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Execute canonical PRISMA merge gate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PRISMA_PR_NUMBER: ${{ github.event.pull_request.number }}
+          PRISMA_EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          python tools/prisma-governance/prisma_required_merge_gate.py             --repo "$GITHUB_REPOSITORY"             --pr-number "$PRISMA_PR_NUMBER"             --token "$GITHUB_TOKEN"             --expected-head "$PRISMA_EXPECTED_HEAD"             | tee "$RUNNER_TEMP/prisma-required-merge-gate.json"
+
+      - name: Publish canonical merge-gate evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$RUNNER_TEMP/prisma-required-merge-gate.json"
+          cat "$RUNNER_TEMP/prisma-required-merge-gate.json" >> "$GITHUB_STEP_SUMMARY"
