@@ -1,5 +1,14 @@
 # Prisma Cloud Center Changelog
 
+## 2026-09-30 — G5C live-readonly recertification
+
+- Fixed the live-readonly workflow diagnostics command and removed the redundant pnpm argument delimiter from the verifier invocation.
+- Corrected verifier argument handling so network failures are preserved as structured evidence rather than aborting before the report is written.
+- CI workflow #5 (`36670756664`) executed the corrected diagnostic and verifier against `https://app.hitechrts.com`.
+- Public reachability failed at DNS: HTTP preflight `000`, curl exit `6`; Node fetch reported `ENOTFOUND app.hitechrts.com`. No authentication, admin mutation, D1 mutation, or secret exposure occurred.
+- Evidence artifact: `cloud-center-live-readonly-36670756664-1`.
+- G5C remains OPEN. No production deployment or live mutation was performed.
+
 ## 2026-09-29 — G5 runtime recertification
 
 - CI #2307 passed on candidate `63c70f0…` for Cloud Center customer runtime, G1 contract authority, G2 persistence integrity, G3 concurrency/idempotency, G4 D1 graph integrity, G5A local runtime, and G5B browser runtime.
