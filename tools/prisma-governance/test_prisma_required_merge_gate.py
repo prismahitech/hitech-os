@@ -64,3 +64,7 @@ jobs:
     pattern = r"ref\s*:\s*\$\{\{\s*github\.event\.pull_request\.head\.sha\s*\}\}"
     assert re.search(pattern, unsafe)
     assert not re.search(pattern, safe)
+
+def test_visual_checks_split_by_domain():
+    names = [x[0] for x in module.required_checks(["prisma-html/x.py", "apps/terminal-de-venta-system/.prisma-ui/x.json"])]
+    assert names == ["guardrails", "visual authority / readiness gates", "all-surface-authority"]
