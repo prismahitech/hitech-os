@@ -1,6 +1,6 @@
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 CONFIG = ROOT / "autogit/engine/autogit_engine/config.py"
 PR_GATE = ROOT / "autogit/engine/autogit_engine/pr_gate.py"
 GH = ROOT / "autogit/engine/autogit_engine/github_cli.py"
