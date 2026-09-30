@@ -4,7 +4,7 @@
   "main": "src/worker.js",
   "compatibility_date": "2026-07-02",
   "workers_dev": false,
-  "preview_urls": false,
+  "preview_urls": true,
   "d1_databases": [
     {
       "binding": "PRISMA_LICFLOW3_D1",
