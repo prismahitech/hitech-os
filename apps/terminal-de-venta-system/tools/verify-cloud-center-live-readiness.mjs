@@ -108,8 +108,8 @@ async function main() {
     "customerLicenseRefresh",
     "billingRenewal",
     "gracePeriod",
-    "tenant_status",
-    "contract_fetch"
+    "tenantStatus",
+    "contractFetch"
   ];
 
   const checks = [
