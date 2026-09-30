@@ -191,10 +191,18 @@ function Invoke-NativeCapture([string]$Exe, [object[]]$Arguments, [string]$Cwd, 
 }
 function Get-PythonLauncher() {
   $py = Get-Command py -ErrorAction SilentlyContinue
-  if ($py) { return @($py.Source, '-3') }
+  if ($py -and $py.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($py.Source) -and (Test-Path -LiteralPath $py.Source -PathType Leaf)) {
+    return @($py.Source, '-3')
+  }
   $python = Get-Command python -ErrorAction SilentlyContinue
-  if ($python) { return @($python.Source) }
-  throw 'No encontre Python en PATH.'
+  if ($python -and $python.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($python.Source) -and (Test-Path -LiteralPath $python.Source -PathType Leaf)) {
+    return @($python.Source)
+  }
+  $python3 = Get-Command python3 -ErrorAction SilentlyContinue
+  if ($python3 -and $python3.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($python3.Source) -and (Test-Path -LiteralPath $python3.Source -PathType Leaf)) {
+    return @($python3.Source)
+  }
+  throw 'No encontre un ejecutable de Python en PATH.'
 }
 function Test-HttpPort([int]$port) {
   try {
