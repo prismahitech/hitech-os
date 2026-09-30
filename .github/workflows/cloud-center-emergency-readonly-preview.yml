@@ -61,6 +61,60 @@ jobs:
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
           pnpm dlx wrangler@4.143.0 whoami
 
+      - name: Enable Worker Preview routing without production traffic
+        env:
+          WORKER_NAME: prisma-cloud-semilla
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain"
+          before="${RUNNER_TEMP}/cloud-center-worker-subdomain-before.json"
+          after="${RUNNER_TEMP}/cloud-center-worker-subdomain-after.json"
+
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -o "${before}" \
+            "${endpoint}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+
+          enabled="$(node -e '
+            const fs = require("node:fs");
+            const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+            if (data.success !== true || typeof data.result?.enabled !== "boolean" || typeof data.result?.previews_enabled !== "boolean") {
+              process.stderr.write("Cloudflare returned an invalid Worker subdomain state\n");
+              process.exit(2);
+            }
+            process.stdout.write(String(data.result.enabled));
+          ' "${before}")"
+
+          previews_enabled="$(node -e '
+            const fs = require("node:fs");
+            const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+            process.stdout.write(String(data.result.previews_enabled));
+          ' "${before}")"
+
+          if [ "${previews_enabled}" = "true" ]; then
+            echo "Worker Preview URLs already enabled; production workers.dev state remains ${enabled}."
+            exit 0
+          fi
+
+          echo "Worker Preview URLs are disabled; enabling preview routing while preserving production workers.dev state (${enabled})."
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -X POST \
+            "${endpoint}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "content-type: application/json" \
+            --data "{\"enabled\":${enabled},\"previews_enabled\":true}" \
+            -o "${after}"
+
+          node -e '
+            const fs = require("node:fs");
+            const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+            if (data.success !== true || data.result?.previews_enabled !== true || data.result?.enabled !== JSON.parse(process.argv[2])) {
+              throw new Error("Cloudflare did not confirm preview routing enabled while preserving production workers.dev state");
+            }
+            process.stdout.write("Preview routing enabled; production workers.dev state preserved as " + String(data.result.enabled) + ".\n");
+          ' "${after}" "${enabled}"
       - name: Create or update isolated Worker Preview
         id: preview
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
