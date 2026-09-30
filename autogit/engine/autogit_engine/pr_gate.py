@@ -60,7 +60,7 @@ def run_pr_gate(ctx, git, gh):
     reused=_try_reuse_open_pr(ctx,gh,head_sha)
     if reused: pr=reused; ctx.opened_pr=pr; ctx.write_state("pr-reused",pr)
     else:
-        branch=f"{ctx.policy.remote_branch_prefix}-{dt.datetime.now().strftime("%Y%m%d-%H%M%S")}"
+        branch=f"{ctx.policy.remote_branch_prefix}-{dt.datetime.now().strftime('%Y%m%d-%H%M%S')}"
         git.push_head(branch,remote); pr_obj=gh.create_pr(PR_TITLE,str(pr_body),base,branch); pr=pr_obj.__dict__; pr["reused"]=False; ctx.opened_pr=pr; ctx.write_state("pr-created",pr)
     ok,checks=gh.checks_watch(pr["url"]); ctx.artifact("gh_checks_watch.txt").write_text(checks,encoding="utf-8")
     if not ok: gh.capture_failed_check_logs(pr["url"],ctx.report_dir,"checks_failed"); raise GitHubError("GitHub checks failed",phase="pr-gate")
@@ -69,6 +69,7 @@ def run_pr_gate(ctx, git, gh):
     merged,text=gh.merge(pr["url"],auto=False,delete_branch=True); ctx.artifact("gh_merge_attempt.txt").write_text(text,encoding="utf-8"); auto=False
     if not merged:
         if not _policy_blocked(text): gh.capture_failed_check_logs(pr["url"],ctx.report_dir,"merge_failed"); raise GitHubError("PR merge failed",phase="pr-gate",detail={"text":text})
+        auto=True
         ok_auto,text_auto=gh.merge(pr["url"],auto=True,delete_branch=True); ctx.artifact("gh_auto_merge_enable.txt").write_text(text_auto,encoding="utf-8")
         if ok_auto:
             status,view=gh.wait_merged(pr["url"],ctx.policy.auto_merge_wait_seconds,30); _write_pr_summary(ctx,"gh_auto_merge_final.json",{"status":status,"view":view})
