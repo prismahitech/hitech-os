@@ -1,5 +1,13 @@
 # Prisma Cloud Center Changelog
 
+## 2026-09-29 — G5 runtime recertification
+
+- CI #2307 passed on candidate `63c70f0…` for Cloud Center customer runtime, G1 contract authority, G2 persistence integrity, G3 concurrency/idempotency, G4 D1 graph integrity, G5A local runtime, and G5B browser runtime.
+- G3 current verifier covers blocked-license, expired/revoked setup and refresh/revoke/renew conflict behavior; G4 graph corruption drills pass.
+- Browser certification produced desktop and 390x844 evidence in CI artifact `cloud-center-browser-runtime-36644998368-1`.
+- G5C remains intentionally open because the repository's last live-readonly evidence is dated July 7, 2026; no September 29 live recertification is claimed.
+- No production deployment, D1 live write, or live mutation was performed.
+
 ## 2026-09-29 — Cloud Center certification hardening
 
 - Completed and CI-certified Cloud Center gates G1 (contract authority), G2 (persistence integrity), G3 (concurrency/idempotency), and G4 (D1 graph integrity) on candidate `e92feb8…`.
