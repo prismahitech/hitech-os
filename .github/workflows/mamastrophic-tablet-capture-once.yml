@@ -1,8 +1,9 @@
 name: Mamastrophic Tablet Capture (one-shot)
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
+    branches:
+      - mamastrophic-tablet-capture-once-20260930
 
 permissions:
   contents: read
