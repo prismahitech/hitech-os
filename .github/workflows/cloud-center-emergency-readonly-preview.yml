@@ -99,7 +99,7 @@ jobs:
               }
               const host = suffix.startsWith("http://") || suffix.startsWith("https://")
                 ? new URL(suffix).host
-                : suffix.replace(/^/+/, "");
+                : suffix.split("/").filter(Boolean).join("/");
               const previewHost = host.startsWith("-")
                 ? process.env.PREVIEW_ALIAS + host
                 : process.env.PREVIEW_ALIAS + "-" + host;
