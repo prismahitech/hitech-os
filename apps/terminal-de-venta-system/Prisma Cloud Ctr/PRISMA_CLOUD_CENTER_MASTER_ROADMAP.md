@@ -124,14 +124,14 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [x] Repeated identical requests.
 - [x] Retry after injected intermediate failure.
 - [x] Setup creation retries.
-- [ ] Refresh/revoke/renew conflict cases.
+- [x] Refresh/revoke/renew conflict cases.
 - [x] Prove device counters never exceed plan limits.
 - [x] Prove no duplicate claims or double slot release.
 - [x] Prove no orphan rows.
 
-**G3 status note:** The repository now contains a same-DB multi-connection D1-compatible runtime harness covering concurrency, failure injection, retry preservation and graph integrity. **CI execution is the runtime gate.**
+**G3 status note:** The repository now contains a same-DB multi-connection D1-compatible runtime harness covering concurrency, failure injection, retry preservation, blocked/expired fail-closed behavior, refresh/revoke/renew conflict handling and graph integrity. **CI execution is the runtime gate; current candidate CI #2307 passed.**
 
-**Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY` — CI-certified on candidate `94c184f…`; refresh/revoke/renew conflict matrix remains open.
+**Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY` — CI-certified on current candidate HEAD `63c70f0…` in CI #2307; the previously documented refresh/revoke/renew conflict gap is now covered by the passing verifier.
 
 ---
 
@@ -142,12 +142,12 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [x] Validate tenant ownership across all related rows.
 - [x] Validate audit linkage.
 - [x] Validate claimed counters against actual claim state.
-- [ ] Validate blocked license states cannot perform customer actions.
+- [x] Validate blocked license states cannot perform customer actions.
 - [x] Validate replaced devices cannot remain active.
-- [ ] Validate expired/revoked setups fail closed.
+- [x] Validate expired/revoked setups fail closed.
 - [x] Validate zero orphan/dangling/contradictory state.
 
-**Gate G4:** `PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY` — CI-certified on candidate `94c184f…`; blocked-license and expired/revoked behavioral fail-closed checks remain open.
+**Gate G4:** `PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY` — CI-certified on current candidate HEAD `63c70f0…` in CI #2307; blocked-license and expired/revoked setup fail-closed behavior is now covered by the passing verification cycle.
 
 ---
 
@@ -155,7 +155,7 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ### Local
 
-- [x] Local server bootstrap (verifier/tooling integrated; runtime execution pending CI/operator environment).
+- [x] Local server bootstrap and runtime execution — CI #2307.
 - [x] Port/bind safety.
 - [x] Route map.
 - [x] Health.
@@ -167,15 +167,15 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ### Browser
 
-- [x] Desktop runtime verifier implemented; CI evidence pending.
-- [x] Mobile runtime verifier implemented; CI evidence pending.
+- [x] Desktop runtime verifier — CI #2307 PASS with artifact evidence.
+- [x] Mobile runtime verifier — CI #2307 PASS with artifact evidence.
 - [x] All 13 Cloud Center core surfaces are covered by browser verifier.
 - [x] Hash/surface navigation covered by browser verifier.
 - [x] Console error capture/fail-closed assertion covered by browser verifier.
 - [x] Page error capture/fail-closed assertion covered by browser verifier.
 - [x] HTTP contract checks included in browser verifier via isolated test stub.
 - [ ] Expected disconnected probes classified correctly.
-- [ ] Screenshot evidence (CI artifact capture for core verifier can be added once G5B baseline is green).
+- [x] Screenshot evidence captured by CI #2307 artifact `cloud-center-browser-runtime-36644998368-1`.
 
 ### Live read-only
 
@@ -188,8 +188,8 @@ These surfaces may share contracts, but they do not inherit certification from e
 - [ ] D1/OAuth/read-only health.
 - [x] Current evidence timestamp (historical live evidence explicitly marked stale).
 
-**Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME`  
-**Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — verifier implemented; current candidate awaits CI execution.  
+**Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME` — PASS in CI #2307.  
+**Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — PASS in CI #2307 with desktop/mobile evidence artifact.  
 **Gate G5C:** `PASS_CLOUD_CENTER_LIVE_READONLY_CERTIFIED`
 
 ---
