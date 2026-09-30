@@ -27,8 +27,8 @@ def test_check_resolution_requires_completed_success():
 
 def test_required_gate_declares_trusted_execution_contract():
     source = TARGET.read_text(encoding="utf-8")
-    assert '"sourceExecutionFromPR":False' in source
-    assert '"adminMergeAllowed":False' in source
+    assert '"sourceExecutionFromPR": False' in source
+    assert '"adminMergeAllowed": False' in source
     assert "HEAD_MOVED_DURING_GATE" in source
 
 def test_branch_protection_must_cover_admins_and_canonical_context():
