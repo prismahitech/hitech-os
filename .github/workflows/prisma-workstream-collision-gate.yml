@@ -63,10 +63,10 @@ jobs:
 
       - name: Evaluate live PR workstream collisions
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          PRISMA_PR_NUMBER: \${{ github.event.pull_request.number || vars.PRISMA_PR_NUMBER }}
-          PRISMA_EXPECTED_HEAD: \${{ github.event.pull_request.head.sha || vars.PRISMA_EXPECTED_HEAD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PRISMA_PR_NUMBER: ${{ github.event.pull_request.number || vars.PRISMA_PR_NUMBER }}
+          PRISMA_EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || vars.PRISMA_EXPECTED_HEAD }}
         run: |
           set -euo pipefail
           python apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py \
@@ -79,7 +79,7 @@ jobs:
       - name: Publish decision summary
         if: always()
         env:
-          RESULT_PATH: \${{ runner.temp }}/prisma-workstream-collision-result.json
+          RESULT_PATH: ${{ runner.temp }}/prisma-workstream-collision-result.json
         run: |
           python - "$RESULT_PATH" >> "$GITHUB_STEP_SUMMARY" <<'PY'
           import json, sys
