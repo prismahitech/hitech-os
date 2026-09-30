@@ -24,5 +24,8 @@ def test_check_resolution_requires_completed_success():
     assert "REQUIRED_CHECK_NOT_GREEN:guardrails:failure" in blockers
     assert not any("visual authority" in x for x in blockers)
 
-def test_required_gate_is_not_pr_source_execution():
-    assert "sourceExecutionFromPR" in module.evaluate("x", 1, "t", "h") if False else True
+def test_required_gate_declares_trusted_execution_contract():
+    source = TARGET.read_text(encoding="utf-8")
+    assert '"sourceExecutionFromPR":False' in source
+    assert '"adminMergeAllowed":False' in source
+    assert "HEAD_MOVED_DURING_GATE" in source
