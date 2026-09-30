@@ -190,19 +190,31 @@ function Invoke-NativeCapture([string]$Exe, [object[]]$Arguments, [string]$Cwd, 
   return [pscustomobject]@{ ExitCode=$p.ExitCode; StdOut=$stdout; StdErr=$stderr; Text=$combined; Command=(@($Exe) + @($Arguments)); Cwd=$Cwd }
 }
 function Get-PythonLauncher() {
-  $py = Get-Command py -ErrorAction SilentlyContinue
-  if ($py -and $py.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($py.Source) -and (Test-Path -LiteralPath $py.Source -PathType Leaf)) {
-    return @($py.Source, '-3')
+  $candidates = New-Object System.Collections.Generic.List[object]
+  if ($env:pythonLocation -and -not [string]::IsNullOrWhiteSpace($env:pythonLocation)) {
+    foreach ($name in @('python.exe','python','bin\\python.exe','bin\\python','bin/python3','bin/python')) {
+      try {
+        $candidate = Join-Path $env:pythonLocation $name
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+          [void]$candidates.Add(@($candidate))
+        }
+      } catch {}
+    }
   }
-  $python = Get-Command python -ErrorAction SilentlyContinue
-  if ($python -and $python.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($python.Source) -and (Test-Path -LiteralPath $python.Source -PathType Leaf)) {
-    return @($python.Source)
+  foreach ($commandName in @('python3','python','py')) {
+    $cmd = Get-Command $commandName -ErrorAction SilentlyContinue
+    if ($cmd -and $cmd.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($cmd.Source) -and (Test-Path -LiteralPath $cmd.Source -PathType Leaf)) {
+      if ($commandName -eq 'py') {
+        [void]$candidates.Add(@($cmd.Source, '-3'))
+      } else {
+        [void]$candidates.Add(@($cmd.Source))
+      }
+    }
   }
-  $python3 = Get-Command python3 -ErrorAction SilentlyContinue
-  if ($python3 -and $python3.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($python3.Source) -and (Test-Path -LiteralPath $python3.Source -PathType Leaf)) {
-    return @($python3.Source)
+  if ($candidates.Count -gt 0) {
+    return @($candidates[0])
   }
-  throw 'No encontre un ejecutable de Python en PATH.'
+  throw 'No encontre un ejecutable de Python en PATH/Agente.'
 }
 function Test-HttpPort([int]$port) {
   try {
