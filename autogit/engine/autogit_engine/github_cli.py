@@ -55,8 +55,10 @@ class GitHub:
             return False, text + "\nREQUIRED_CONTEXT_NOT_GREEN:" + required_context + "\n" + detail_text
         return True, text + "\n" + detail_text
 
-    def merge(self, pr_url: str, *, auto: bool = False, delete_branch: bool = False) -> tuple[bool, str]:
+    def merge(self, pr_url: str, *, auto: bool = False, delete_branch: bool = False, expected_head: str | None = None) -> tuple[bool, str]:
         cmd = [self.gh, "pr", "merge", pr_url, "--merge"]
+        if expected_head:
+            cmd.extend(["--match-head-commit", expected_head])
         if auto: cmd.append("--auto")
         if delete_branch: cmd.append("--delete-branch")
         suffix = "auto" if auto else "normal"
