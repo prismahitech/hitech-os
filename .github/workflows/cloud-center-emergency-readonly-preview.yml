@@ -54,6 +54,47 @@ jobs:
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
           pnpm dlx wrangler@4.143.0 whoami
 
+      - name: Enable Worker Preview URLs without production traffic
+        env:
+          WORKER_NAME: prisma-cloud-semilla
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -o "${RUNNER_TEMP}/cloud-center-worker-subdomain-before.json"             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+
+          node <<'NODE'
+          const fs = require("node:fs");
+          const path = process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-before.json";
+          const data = JSON.parse(fs.readFileSync(path, "utf8"));
+          if (data.success !== true || !data.result || typeof data.result.enabled !== "boolean" || typeof data.result.previews_enabled !== "boolean") {
+            throw new Error("Cloudflare returned an invalid Worker subdomain state");
+          }
+          fs.writeFileSync(
+            process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-state.json",
+            JSON.stringify(data.result)
+          );
+          if (data.result.previews_enabled === true) {
+            process.stdout.write("Worker Preview URLs already enabled; no control-plane change needed.\n");
+            process.exit(0);
+          }
+          process.stdout.write("Worker Preview URLs disabled; enabling previews while preserving workers.dev traffic state.\n");
+          NODE
+
+          enabled="$(node -p 'JSON.parse(require("fs").readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-state.json", "utf8")).enabled')"
+
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -X POST             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"             -H "content-type: application/json"             --data "{\"enabled\":${enabled},\"previews_enabled\":true}"             -o "${RUNNER_TEMP}/cloud-center-worker-subdomain-after.json"
+
+          node <<'NODE'
+          const fs = require("node:fs");
+          const path = process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-after.json";
+          const data = JSON.parse(fs.readFileSync(path, "utf8"));
+          if (data.success !== true || data.result?.previews_enabled !== true) {
+            throw new Error("Cloudflare did not confirm Worker Preview URLs enabled");
+          }
+          process.stdout.write("Worker Preview URLs enabled; workers.dev traffic state preserved as " + String(data.result.enabled) + ".\n");
+          NODE
+
       - name: Upload emergency read-only Worker version
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
         shell: bash
