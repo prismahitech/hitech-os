@@ -38,3 +38,29 @@ def test_branch_protection_must_cover_admins_and_canonical_context():
 def test_branch_protection_requires_canonical_context():
     payload = {"protection": {"enabled": True, "required_status_checks": {"enforcement_level": "everyone", "contexts": ["other"]}}}
     assert module.branch_protection_errors(payload) == ["MAIN_CANONICAL_GATE_CONTEXT_MISSING"]
+
+def test_control_plane_checkout_rule_is_specific():
+    import re
+    unsafe = """
+on:
+  pull_request_target:
+jobs:
+  x:
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+"""
+    safe = """
+on:
+  pull_request_target:
+jobs:
+  x:
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+"""
+    pattern = r"ref\s*:\s*\$\{\{\s*github\.event\.pull_request\.head\.sha\s*\}\}"
+    assert re.search(pattern, unsafe)
+    assert not re.search(pattern, safe)
