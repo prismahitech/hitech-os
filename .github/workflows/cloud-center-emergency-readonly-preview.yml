@@ -107,54 +107,40 @@ jobs:
         id: url
         env:
           WORKER_NAME: prisma-cloud-semilla
-          PREVIEW_ALIAS: cloud-center-recovery
         shell: bash
         run: |
           set -euo pipefail
 
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
 
-          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
-            -o "${RUNNER_TEMP}/cloud-center-worker-inventory.json" \
-            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers" \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+          version_id="$(sed -n 's/.*Worker Version ID: //p' "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" | tail -n 1 | tr -d '[:space:]')"
+          test -n "${version_id}" || {
+            echo "No Worker Version ID found in Wrangler output";
+            cat "${RUNNER_TEMP}/cloud-center-wrangler-upload.log";
+            exit 1;
+          }
+
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -o "${RUNNER_TEMP}/cloud-center-worker-version.json"             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/${WORKER_NAME}/versions/${version_id}"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
 
           preview_url="$(
             node -e '
               const fs = require("node:fs");
-              const data = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-inventory.json", "utf8"));
-              const workers = Array.isArray(data.result) ? data.result : [];
-              const worker = workers.find(item => item && item.name === process.env.WORKER_NAME);
-              const subdomain = worker?.subdomain || {};
-              if (subdomain.previews_enabled !== true) {
-                process.stderr.write("Cloudflare reports Worker Preview URLs are disabled for " + process.env.WORKER_NAME + "\n");
+              const data = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-version.json", "utf8"));
+              const urls = Array.isArray(data.result?.urls) ? data.result.urls.filter(url => typeof url === "string" && url.trim()) : [];
+              const url = urls.find(value => value.includes(".workers.dev")) || urls[0] || "";
+              if (!url) {
+                process.stderr.write("Cloudflare returned no routable URL for Worker Version " + process.env.WORKER_VERSION_ID + "\n");
                 process.exit(2);
               }
-              const suffix = String(subdomain.preview_url_suffix || "").trim();
-              if (!suffix) {
-                process.stderr.write("Cloudflare returned no preview_url_suffix for " + process.env.WORKER_NAME + "\n");
-                process.exit(3);
-              }
-              const host = suffix.startsWith("http://") || suffix.startsWith("https://")
-                ? new URL(suffix).host
-                : suffix.split("/").filter(Boolean).join("/");
-              const previewHost = host.startsWith("-")
-                ? process.env.PREVIEW_ALIAS + host
-                : process.env.PREVIEW_ALIAS + "-" + host;
-              if (!previewHost.endsWith(".workers.dev")) {
-                process.stderr.write("Resolved preview host is not workers.dev\n");
-                process.exit(4);
-              }
-              process.stdout.write("https://" + previewHost);
+              process.stdout.write(url.replace(/\/$/, ""));
             '
           )"
 
-          test -n "${preview_url}" || {
-            echo "Could not resolve deterministic workers.dev Preview URL for ${WORKER_NAME}";
-            exit 1;
-          }
+          test -n "${preview_url}" || { echo "No routable URL resolved for uploaded Worker Version"; exit 1; }
 
+          printf 'version_id=%s\n' "${version_id}" >> "${GITHUB_OUTPUT}"
           printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
+          printf 'PREVIEW_VERSION_ID=%s\n' "${version_id}"
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
 
       - name: Verify read-only Version URL
