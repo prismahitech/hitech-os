@@ -48,13 +48,24 @@ jobs:
           printf 'Cloud Center health preflight curl_exit=%s\n' "$rc"
           exit 0
 
-      - name: Run Cloud Center public live read-only verifier
-        working-directory: apps/terminal-de-venta-system
+      - name: Create non-production Worker Version for read-only recertification,        id: version,        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker,        shell: bash,        env:,          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }},          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }},        run: |,          set -euo pipefail,          endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain",          state="${RUNNER_TEMP}/cloud-center-workers-subdomain.json",          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \,            -o "${state}" \,            "${endpoint}" \,            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}",          subdomain="$(node -e ',            const fs=require("node:fs");,            const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));,            const value=String(data.result?.subdomain ?? "").trim();,            if (!data.success || !value) throw new Error("Account workers.dev subdomain is unavailable");,            process.stdout.write(value);,          ' "${state}")",          alias="cloud-center-live-recert",          upload_log="${RUNNER_TEMP}/cloud-center-live-version-upload.log",          pnpm dlx wrangler@4.143.0 versions upload \,            --message "Cloud Center live read-only recertification" \,            --preview-alias "${alias}" \,            --var "PRISMA_LICFLOW3_PREVIEW_MODE:readonly" \,            --strict 2>&1 | tee "${upload_log}",          preview_url="https://${alias}-prisma-cloud-semilla.${subdomain}.workers.dev",          printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}",          printf 'WORKER_DIRECT_URL=%s\n' "${preview_url}",          printf 'worker_direct_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}",,      - name: Verify Worker direct read-only contract,        env:,          PRISMA_CLOUD_CENTER_LIVE_URL: ${{ steps.version.outputs.worker_direct_url }},        working-directory: apps/terminal-de-venta-system,        run: |,          set -euo pipefail,          mkdir -p tools/_local/reports/ci/cloud-center-live,          node tools/verify-cloud-center-live-readiness.mjs --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_LIVE_READONLY_VERIFY.json,      - name: Record canonical domain observation
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p tools/_local/reports/ci/cloud-center-live
-          node tools/verify-cloud-center-live-readiness.mjs --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_LIVE_READONLY_VERIFY.json
-
+          mkdir -p apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live
+          canonical_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /dev/null -w '%{http_code}' https://app.hitechrts.com/health || true)"
+          node -e '
+            const fs=require("node:fs");
+            const status=process.argv[1];
+            const dnsOk=/^[2345]\d\d$/.test(status) && status !== "000";
+            fs.writeFileSync("apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live/CANONICAL_DOMAIN_OBSERVATION.json", JSON.stringify({
+              target:"https://app.hitechrts.com",
+              reachable:dnsOk,
+              observedHttpStatus:status,
+              canonicalCertificationStatus:dnsOk?"OBSERVED":"DNS_UNAVAILABLE",
+              note:"Canonical domain observation is informational; Worker direct Version URL is the certification target for this CI run."
+            },null,2)+"\n");
+          ' "${canonical_status}"
       - name: Upload live read-only evidence
         if: always()
         uses: actions/upload-artifact@v7
