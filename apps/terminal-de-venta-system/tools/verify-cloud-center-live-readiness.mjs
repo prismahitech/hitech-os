@@ -69,7 +69,7 @@ function hasCapabilities(json, names) {
 function adminBlocked(result) {
   if (![401, 403].includes(result.status)) return false;
   const text = JSON.stringify(result.json ?? {});
-  return /ADMIN_TOKEN_REQUIRED|admin|token|unauthorized|forbidden/i.test(text);
+  return /ADMIN_TOKEN_REQUIRED|READ_ONLY_PREVIEW|read-only preview|rejects all mutation|admin|token|unauthorized|forbidden/i.test(text);
 }
 
 function mutationPrevented(result) {
@@ -118,7 +118,14 @@ async function main() {
     check(capabilities.status === 200 && capabilities.json?.ok === true, "live capabilities returns 200 ok", capabilities),
     check(hasCapabilities(capabilities.json, requiredCapabilities), "live capabilities include customer setup, slots, claims, renewal, tenant status and contract fetch", { requiredCapabilities, capabilities: capabilities.json?.capabilities ?? null }),
     check(tenantStatus.status === 200 && tenantStatus.json?.ok === true, "live tenant status returns 200 ok", tenantStatus),
-    check(clientContract.status === 200 && clientContract.json?.ok === true, "live client contract returns 200 ok", clientContract),
+    check(
+      clientContract.status === 200
+        && clientContract.json?.tenantSlug === "prisma-original-customer"
+        && typeof clientContract.json?.contractVersion === "string"
+        && typeof clientContract.json?.hostedCloudEvidence === "string",
+      "live client contract returns 200 with the expected tenant contract shape",
+      clientContract
+    ),
     check(mutationPrevented(adminSetupNoToken), "admin customer setup is blocked or simulation-only without token", adminSetupNoToken),
     check(mutationPrevented(adminActivateNoToken), "admin license activation is blocked or simulation-only without token", adminActivateNoToken)
   ];
