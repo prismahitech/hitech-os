@@ -42,9 +42,6 @@ jobs:
         with:
           version: 9.15.0
 
-      - name: Install workspace dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts
-
       - name: Validate Cloudflare credentials
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
         shell: bash
