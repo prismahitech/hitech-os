@@ -1,28 +1,69 @@
 name: ForgeOS Quality Gate
 
 on:
-  workflow_dispatch:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
-  group: forgeos-quality-gate-${{ github.ref }}
-  cancel-in-progress: true
+  group: forgeos-quality-gate-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}-${{ github.sha }}
+  cancel-in-progress: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   forgeos-quality-gate:
+    name: forgeos-quality-gate
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout trusted main gate sources only
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Run canonical PRISMA merge gate from trusted main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PRISMA_PR_NUMBER: ${{ github.event.pull_request.number }}
+          PRISMA_EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          python tools/prisma-governance/prisma_required_merge_gate.py             --repo "$GITHUB_REPOSITORY"             --pr-number "$PRISMA_PR_NUMBER"             --token "$GITHUB_TOKEN"             --expected-head "$PRISMA_EXPECTED_HEAD"             | tee "$RUNNER_TEMP/prisma-required-merge-gate.json"
+
+      - name: Publish merge-gate evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          test -f "$RUNNER_TEMP/prisma-required-merge-gate.json"
+          cat "$RUNNER_TEMP/prisma-required-merge-gate.json" >> "$GITHUB_STEP_SUMMARY"
+
+  forgeos-source-quality:
+    name: forgeos-source-quality
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
+      - name: Checkout PR source without repository token
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Detect ForgeOS scope
         id: scope
@@ -58,12 +99,12 @@ jobs:
             -ForgeOSRoot "${{ github.workspace }}/forgeos" `
             -EvidenceDir "${{ github.workspace }}/tools/_local/evidence"
 
-      - name: Skip non-ForgeOS changes
+      - name: Non-ForgeOS source changes are non-governing
         if: steps.scope.outputs.run_gate != 'true'
         shell: bash
         run: |
           set -euo pipefail
-          echo "No ForgeOS-related changes detected. Check marked as PASS."
+          echo "No ForgeOS-related changes detected; canonical forgeos-quality-gate is the governing merge barrier."
 
       - name: Upload ForgeOS quality evidence
         if: steps.scope.outputs.run_gate == 'true'
