@@ -126,6 +126,7 @@ async function main() {
 }
 
 main().catch((error) => {
+  const cause = error?.cause;
   console.error(JSON.stringify({
     ok: false,
     status: "FAIL",
@@ -135,7 +136,11 @@ main().catch((error) => {
     adminMutationPerformed: false,
     d1MutationPerformed: false,
     secretsPrinted: false,
-    error: String(error?.message || error)
+    error: String(error?.message || error),
+    errorName: String(error?.name || "Error"),
+    causeCode: cause?.code ? String(cause.code) : null,
+    causeName: cause?.name ? String(cause.name) : null,
+    causeMessage: cause?.message ? String(cause.message) : null
   }, null, 2));
   process.exit(1);
 });
