@@ -131,7 +131,46 @@ jobs:
             exit 1
           }
 
-          preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json")"
+          preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" 2>/dev/null || true)"
+
+          if [ -z "${preview_url}" ]; then
+            worker_metadata="${RUNNER_TEMP}/cloud-center-worker-metadata.json"
+            worker_endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/prisma-cloud-semilla"
+
+            curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 2 \
+              -o "${worker_metadata}" \
+              "${worker_endpoint}" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+
+            preview_url="$(node -e '
+              const fs = require("node:fs");
+              const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+              const previewName = "cloud-center-recovery";
+              const subdomain = data.result?.subdomain ?? {};
+              if (subdomain.previews_enabled !== true) {
+                throw new Error("Cloudflare reports Worker Preview URLs are disabled");
+              }
+              const raw = String(subdomain.preview_url_suffix ?? "").trim();
+              if (!raw) {
+                throw new Error("Cloudflare returned no workers.dev preview_url_suffix; no Preview host is configured for this Worker");
+              }
+              const value = raw.startsWith("http://") || raw.startsWith("https://") ? raw : "https://" + raw;
+              const url = new URL(value);
+              const host = url.hostname;
+              const labels = host.split(".");
+              const worker = "prisma-cloud-semilla";
+              const idx = labels.findIndex((label) => label === worker);
+              if (idx < 0) {
+                url.hostname = previewName + "-" + host;
+              } else {
+                labels[idx] = previewName + "-" + labels[idx];
+                url.hostname = labels.join(".");
+              }
+              process.stdout.write(url.origin);
+            ' "${worker_metadata}")"
+          fi
+
+          test -n "${preview_url}" || { echo "No routable Cloudflare Preview URL resolved"; exit 1; }
           printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
 
