@@ -51,114 +51,30 @@ jobs:
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
           pnpm dlx wrangler@4.143.0 whoami
 
-      - name: Enable Worker Preview URLs without production traffic
-        env:
-          WORKER_NAME: prisma-cloud-semilla
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -o "${RUNNER_TEMP}/cloud-center-worker-subdomain-before.json"             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-
-          node <<'NODE'
-          const fs = require("node:fs");
-          const path = process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-before.json";
-          const data = JSON.parse(fs.readFileSync(path, "utf8"));
-          if (data.success !== true || !data.result || typeof data.result.enabled !== "boolean" || typeof data.result.previews_enabled !== "boolean") {
-            throw new Error("Cloudflare returned an invalid Worker subdomain state");
-          }
-          fs.writeFileSync(
-            process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-state.json",
-            JSON.stringify(data.result)
-          );
-          if (data.result.previews_enabled === true) {
-            process.stdout.write("Worker Preview URLs already enabled; no control-plane change needed.\n");
-            process.exit(0);
-          }
-          process.stdout.write("Worker Preview URLs disabled; enabling previews while preserving workers.dev traffic state.\n");
-          NODE
-
-          enabled="$(node -p 'JSON.parse(require("fs").readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-state.json", "utf8")).enabled')"
-
-          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -X POST             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"             -H "content-type: application/json"             --data "{\"enabled\":${enabled},\"previews_enabled\":true}"             -o "${RUNNER_TEMP}/cloud-center-worker-subdomain-after.json"
-
-          node <<'NODE'
-          const fs = require("node:fs");
-          const path = process.env.RUNNER_TEMP + "/cloud-center-worker-subdomain-after.json";
-          const data = JSON.parse(fs.readFileSync(path, "utf8"));
-          if (data.success !== true || data.result?.previews_enabled !== true) {
-            throw new Error("Cloudflare did not confirm Worker Preview URLs enabled");
-          }
-          process.stdout.write("Worker Preview URLs enabled; workers.dev traffic state preserved as " + String(data.result.enabled) + ".\n");
-          NODE
-
-      - name: Upload emergency read-only Worker version
+      - name: Create or update isolated Worker Preview
+        id: preview
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
         shell: bash
         run: |
           set -euo pipefail
-          pnpm dlx wrangler@4.143.0 versions upload \
-            --message "Cloud Center emergency read-only recovery preview" \
-            --preview-alias cloud-center-recovery \
-            --var "PRISMA_LICFLOW3_PREVIEW_MODE:readonly" \
-            --strict 2>&1 | tee "${RUNNER_TEMP}/cloud-center-wrangler-upload.log"
+          pnpm dlx wrangler@4.143.0 preview             --name "cloud-center-recovery"             --message "Cloud Center emergency read-only recovery preview"             --json | tee "${RUNNER_TEMP}/cloud-center-wrangler-preview.json"
 
-      - name: Resolve Version URL
-        id: url
-        env:
-          WORKER_NAME: prisma-cloud-semilla
-          PREVIEW_ALIAS: cloud-center-recovery
-        shell: bash
-        run: |
-          set -euo pipefail
+          test -s "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" || {
+            echo "Wrangler Preview output is empty"
+            exit 1
+          }
 
-          test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
-
-          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2             -o "${RUNNER_TEMP}/cloud-center-worker-metadata.json"             "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/${WORKER_NAME}"             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-
-          preview_url="$(
-            node -e '
-              const fs = require("node:fs");
-              const data = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/cloud-center-worker-metadata.json", "utf8"));
-              const subdomain = data.result?.subdomain || {};
-              if (subdomain.previews_enabled !== true) {
-                process.stderr.write("Cloudflare reports Worker Preview URLs are disabled for " + process.env.WORKER_NAME + "\n");
-                process.exit(2);
-              }
-
-              const raw = String(subdomain.preview_url_suffix || subdomain.url || "").trim();
-              if (!raw) {
-                process.stderr.write("Cloudflare returned no workers.dev host metadata for " + process.env.WORKER_NAME + "\n");
-                process.exit(3);
-              }
-
-              const candidate = raw.startsWith("http://") || raw.startsWith("https://")
-                ? raw
-                : "https://" + raw;
-              const parsed = new URL(candidate);
-              const labels = parsed.hostname.split(".");
-              const workerIndex = labels.findIndex(label => label === process.env.WORKER_NAME);
-
-              if (workerIndex < 0) {
-                process.stderr.write("Worker name was not present in Cloudflare workers.dev hostname\n");
-                process.exit(4);
-              }
-
-              labels[workerIndex] = process.env.PREVIEW_ALIAS + "-" + labels[workerIndex];
-              parsed.hostname = labels.join(".");
-              const result = parsed.toString();
-              process.stdout.write(result.endsWith("/") ? result.slice(0, -1) : result);
-            '
-          )"
-
-          test -n "${preview_url}" || { echo "No workers.dev Preview URL resolved"; exit 1; }
+          preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json")"
+          deployment_url="$(jq -er '.preview.deploymentUrls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json")"
 
           printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
+          printf 'deployment_url=%s\n' "${deployment_url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
+          printf 'DEPLOYMENT_URL=%s\n' "${deployment_url}"
 
       - name: Verify read-only Version URL
         env:
-          PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
         shell: bash
         run: |
           set -euo pipefail
@@ -189,7 +105,7 @@ jobs:
 
       - name: Write recovery evidence
         env:
-          PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
         shell: bash
         run: |
           set -euo pipefail
@@ -224,4 +140,4 @@ jobs:
             tenant-status.json
             contract.json
             mutation-body.json
-            ${{ runner.temp }}/cloud-center-wrangler-upload.log
+            ${{ runner.temp }}/cloud-center-wrangler-preview.json
