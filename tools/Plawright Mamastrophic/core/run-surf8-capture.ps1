@@ -190,13 +190,12 @@ function Invoke-NativeCapture([string]$Exe, [object[]]$Arguments, [string]$Cwd, 
   return [pscustomobject]@{ ExitCode=$p.ExitCode; StdOut=$stdout; StdErr=$stderr; Text=$combined; Command=(@($Exe) + @($Arguments)); Cwd=$Cwd }
 }
 function Get-PythonLauncher() {
-  $candidates = New-Object System.Collections.Generic.List[object]
   if ($env:pythonLocation -and -not [string]::IsNullOrWhiteSpace($env:pythonLocation)) {
     foreach ($name in @('python.exe','python','bin\\python.exe','bin\\python','bin/python3','bin/python')) {
       try {
         $candidate = Join-Path $env:pythonLocation $name
         if (Test-Path -LiteralPath $candidate -PathType Leaf) {
-          [void]$candidates.Add(@($candidate))
+          return @($candidate)
         }
       } catch {}
     }
@@ -205,14 +204,10 @@ function Get-PythonLauncher() {
     $cmd = Get-Command $commandName -ErrorAction SilentlyContinue
     if ($cmd -and $cmd.CommandType -eq 'Application' -and -not [string]::IsNullOrWhiteSpace($cmd.Source) -and (Test-Path -LiteralPath $cmd.Source -PathType Leaf)) {
       if ($commandName -eq 'py') {
-        [void]$candidates.Add(@($cmd.Source, '-3'))
-      } else {
-        [void]$candidates.Add(@($cmd.Source))
+        return @($cmd.Source, '-3')
       }
+      return @($cmd.Source)
     }
-  }
-  if ($candidates.Count -gt 0) {
-    return @($candidates[0])
   }
   throw 'No encontre un ejecutable de Python en PATH/Agente.'
 }
