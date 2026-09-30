@@ -1,8 +1,6 @@
 name: ForgeOS Quality Gate
 
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited, ready_for_review]
   pull_request:
     types: [opened, reopened, synchronize, edited, ready_for_review]
   push:
@@ -11,54 +9,19 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
 
 concurrency:
-  group: forgeos-quality-gate-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}-${{ github.sha }}
-  cancel-in-progress: false
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  group: forgeos-source-quality-${{ github.event.pull_request.number || github.ref }}-${{ github.sha }}
+  cancel-in-progress: true
 
 jobs:
-  forgeos-quality-gate:
-    name: forgeos-quality-gate
-    if: github.event_name == 'pull_request_target'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Checkout trusted main gate sources only
-        uses: actions/checkout@v6
-        with:
-          ref: main
-          fetch-depth: 1
-
-      - name: Run canonical PRISMA merge gate from trusted main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          PRISMA_PR_NUMBER: ${{ github.event.pull_request.number }}
-          PRISMA_EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          python tools/prisma-governance/prisma_required_merge_gate.py             --repo "$GITHUB_REPOSITORY"             --pr-number "$PRISMA_PR_NUMBER"             --token "$GITHUB_TOKEN"             --expected-head "$PRISMA_EXPECTED_HEAD"             | tee "$RUNNER_TEMP/prisma-required-merge-gate.json"
-
-      - name: Publish merge-gate evidence
-        if: always()
-        run: |
-          set -euo pipefail
-          test -f "$RUNNER_TEMP/prisma-required-merge-gate.json"
-          cat "$RUNNER_TEMP/prisma-required-merge-gate.json" >> "$GITHUB_STEP_SUMMARY"
-
   forgeos-source-quality:
     name: forgeos-source-quality
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions: {}
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
       - name: Checkout PR source without repository token
         uses: actions/checkout@v6
         with:
@@ -70,21 +33,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base_sha=""
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            base_sha="${{ github.event.pull_request.base.sha }}"
-          else
-            base_sha="${{ github.event.before }}"
-          fi
-          if [ -z "${base_sha}" ] || [ "${base_sha}" = "0000000000000000000000000000000000000000" ]; then
-            base_sha="$(git rev-parse HEAD~1)"
-          fi
-          changed_files="$(git diff --name-only "${base_sha}" "${GITHUB_SHA}")"
+          base_sha="${{ github.event.pull_request.base.sha }}"
+          changed_files="$(git diff --name-only "$base_sha" "${GITHUB_SHA}")"
           if echo "${changed_files}" | grep -E '^(forgeos/|docs/forgeos-foundation/|\.github/workflows/forgeos-quality-gate\.yml)' >/dev/null; then
             echo "run_gate=true" >> "$GITHUB_OUTPUT"
-            exit 0
+          else
+            echo "run_gate=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "run_gate=false" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v6
         if: steps.scope.outputs.run_gate == 'true'
@@ -104,14 +59,4 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "No ForgeOS-related changes detected; canonical forgeos-quality-gate is the governing merge barrier."
-
-      - name: Upload ForgeOS quality evidence
-        if: steps.scope.outputs.run_gate == 'true'
-        uses: actions/upload-artifact@v7
-        with:
-          name: forgeos-quality-gate-${{ github.run_id }}-${{ github.run_attempt }}
-          if-no-files-found: error
-          path: |
-            tools/_local/evidence/forgeos_import_boundaries_report.json
-            tools/_local/evidence/forgeos_package_dry_run_report.json
+          echo "No ForgeOS-related changes detected; canonical PRISMA merge gate is the governing branch-protection check."
