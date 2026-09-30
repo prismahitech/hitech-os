@@ -70,13 +70,13 @@ def write_ci_decision(report: Path, stdout: str, stderr: str, returncode: int, c
         "context": context,
         "created_at": dt.datetime.now().isoformat(),
         "returncode": returncode,
-        "ok": returncode == 0 or "no checks" in ((stdout or "") + (stderr or "")).lower(),
+        "ok": returncode == 0 and "no checks" not in ((stdout or "") + (stderr or "")).lower(),
         "parsed": parsed,
         "merge_allowed": (returncode == 0 and not parsed.get("failures") and not parsed.get("pending")),
     }
     if "no checks" in ((stdout or "") + (stderr or "")).lower():
         decision["merge_allowed"] = False
-        decision["requires_explicit_allow_merge_no_checks"] = True
+        decision["blocked_reason"] = "canonical_merge_gate_missing"
     _write_json(report / "CI_DECISION.json", decision)
     lines = ["# CI Decision", "", f"Context: `{context}`", f"Return code: `{returncode}`", f"Merge allowed: `{decision['merge_allowed']}`", "", "## Checks"]
     for r in parsed.get("rows", [])[:100]:
