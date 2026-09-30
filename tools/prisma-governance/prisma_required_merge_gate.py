@@ -152,11 +152,16 @@ def branch_protection_errors(payload: dict[str, Any]) -> list[str]:
         return ["MAIN_CANONICAL_GATE_CONTEXT_MISSING"]
     return []
 
-def main_branch_protection(repo: str, token: str) -> dict[str, Any]:
-    payload = api_get(f"https://api.github.com/repos/{repo}/branches/main", token)
-    if not isinstance(payload, dict):
-        raise RuntimeError("INVALID_MAIN_BRANCH_RESPONSE")
-    return payload
+def branch_protection_runtime_errors() -> list[str]:
+    # The Actions GITHUB_TOKEN does not expose the repository Administration
+    # permission required to read /branches/main/protection. GitHub exposes
+    # GITHUB_REF_PROTECTED to the workflow, so the canonical gate can at least
+    # fail closed when main is not reported as protected. Exact required
+    # contexts and admin-bypass settings remain server-side branch controls.
+    protected = os.environ.get("GITHUB_REF_PROTECTED", "").strip().lower()
+    if protected not in {"true", "1", "yes"}:
+        return ["MAIN_BRANCH_PROTECTION_SIGNAL_MISSING"]
+    return []
 
 def control_plane_safety(repo: str, head_sha: str, token: str, changed: list[str]) -> tuple[list[str], list[str]]:
     errors: list[str] = []
@@ -167,7 +172,7 @@ def control_plane_safety(repo: str, head_sha: str, token: str, changed: list[str
         low = content.lower()
         if re.search(r"^\s*contents\s*:\s*write\b", content, re.MULTILINE):
             errors.append("CONTROL_PLANE_WORKFLOW_WRITE_PERMISSION:" + path)
-        if "pull_request_target" in low and re.search(r"ref\\s*:\\s*\\${\\{\\s*github\\.event\\.pull_request\\.head\\.sha\\s*\\}\\}", content):
+        if "pull_request_target" in low and re.search(r"ref\s*:\s*\$\{\{\s*github\.event\.pull_request\.head\.sha\s*\}\}", content):
             errors.append("CONTROL_PLANE_TARGET_CHECKOUTS_PR_HEAD:" + path)
         if "pull_request_target" in low and re.search(r"\bgit\s+push\b", low):
             errors.append("CONTROL_PLANE_TARGET_GIT_PUSH:" + path)
@@ -271,9 +276,8 @@ def evaluate(repository: str, number: int, token: str, expected_head: str) -> di
             "errors": [f"EXPECTED_HEAD:{expected_head}", f"ACTUAL_HEAD:{head_sha}"],
         }
 
-    protection = main_branch_protection(repository, token)
-    errors = branch_protection_errors(protection)
-    observations = ["MAIN_BRANCH_PROTECTION_CHECKED"]
+    errors = branch_protection_runtime_errors()
+    observations = ["MAIN_BRANCH_PROTECTION_RUNTIME_SIGNAL_CHECKED"]
 
     changed = get_pr_files(repository, number, token)
     if not changed:
