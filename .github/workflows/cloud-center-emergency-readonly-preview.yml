@@ -35,7 +35,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -71,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
-          url="$(grep -Eo "https://[^[:space:]\\"',)]+workers\\.dev" "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" | tail -n 1 || true)"
+          url="$(grep -Eo "https://[^[:space:]\\\"',)]+workers\\.dev" "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" | tail -n 1 || true)"
           test -n "${url}" || { echo "No workers.dev Version URL found in Wrangler output"; cat "${RUNNER_TEMP}/cloud-center-wrangler-upload.log"; exit 1; }
           printf 'preview_url=%s\n' "${url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${url}"
