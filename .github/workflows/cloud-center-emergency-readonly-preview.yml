@@ -23,7 +23,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: cloud-center-emergency-readonly-${{ github.ref }}
+  group: cloud-center-emergency-readonly-${{ github.event.pull_request.head.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
