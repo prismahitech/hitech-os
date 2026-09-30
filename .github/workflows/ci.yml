@@ -88,6 +88,13 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Validate canonical merge-governance hardening
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile             tools/prisma-governance/prisma_required_merge_gate.py             autogit/engine/autogit_engine/config.py             autogit/engine/autogit_engine/github_cli.py             autogit/engine/autogit_engine/pr_gate.py
+          python -m unittest -v             tools/prisma-governance/test_prisma_required_merge_gate.py
+          python -m unittest -v             autogit/engine/test_merge_gate_hardening.py
       - name: Install Graphviz runtime for guardrails
         shell: bash
         run: |
