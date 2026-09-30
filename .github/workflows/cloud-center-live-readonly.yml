@@ -1,0 +1,50 @@
+name: Cloud Center Live Read-only Recertification
+
+on:
+  push:
+    branches:
+      - governance/cloud-center-roadmap-step1-20260929
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloud-center-live-readonly-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live-readonly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Run Cloud Center public live read-only verifier
+        run: |
+          set -euo pipefail
+          mkdir -p apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:live-readiness --             --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_LIVE_READONLY_VERIFY.json
+
+      - name: Upload live read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloud-center-live-readonly-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          path: apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live/
