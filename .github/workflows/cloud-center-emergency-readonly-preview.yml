@@ -99,7 +99,7 @@ jobs:
             enabled: false,
             previews_enabled: true
           };
-          src.routes = [...(src.routes ?? []).filter((item) => item.pattern !== route.pattern), route];
+          src.routes = [route];
           if (src.workers_dev !== false) throw new Error("Production workers.dev must remain disabled");
           fs.writeFileSync("wrangler.preview.jsonc", JSON.stringify(src, null, 2) + "\n");
           NODE
