@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   emergency-preview:
-    name: Upload read-only Cloud Center preview
+    name: Create read-only Cloud Center preview
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -57,7 +57,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          pnpm dlx wrangler@4.143.0 preview             --name "cloud-center-recovery"             --message "Cloud Center emergency read-only recovery preview"             --json | tee "${RUNNER_TEMP}/cloud-center-wrangler-preview.json"
+          pnpm dlx wrangler@4.143.0 preview \
+            --name "cloud-center-recovery" \
+            --message "Cloud Center emergency read-only recovery preview" \
+            --json | tee "${RUNNER_TEMP}/cloud-center-wrangler-preview.json"
 
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" || {
             echo "Wrangler Preview output is empty"
@@ -72,7 +75,7 @@ jobs:
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
           printf 'DEPLOYMENT_URL=%s\n' "${deployment_url}"
 
-      - name: Verify read-only Version URL
+      - name: Verify read-only Preview
         env:
           PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
         shell: bash
@@ -89,10 +92,10 @@ jobs:
           const caps = JSON.parse(fs.readFileSync("capabilities.json", "utf8"));
           const tenant = JSON.parse(fs.readFileSync("tenant-status.json", "utf8"));
           const contract = JSON.parse(fs.readFileSync("contract.json", "utf8"));
-          if (health.ok !== true || health.dbHealth !== "D1_BOUND") throw new Error("Version URL health/D1 check failed");
-          if (caps.ok !== true) throw new Error("Version URL capabilities check failed");
-          if (!tenant || typeof tenant !== "object") throw new Error("Version URL tenant status check failed");
-          if (!contract || typeof contract !== "object") throw new Error("Version URL contract check failed");
+          if (health.ok !== true || health.dbHealth !== "D1_BOUND") throw new Error("Preview health/D1 check failed");
+          if (caps.ok !== true) throw new Error("Preview capabilities check failed");
+          if (!tenant || typeof tenant !== "object") throw new Error("Preview tenant status check failed");
+          if (!contract || typeof contract !== "object") throw new Error("Preview contract check failed");
           NODE
 
           status=$(curl --silent --output mutation-body.json --write-out "%{http_code}" \
