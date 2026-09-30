@@ -119,7 +119,9 @@ def import_module(path: Path, name: str):
     if spec is None or spec.loader is None: raise RuntimeError(f"IMPORT_FAILED:{path}")
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); return mod
 
-def is_control_plane(path: str) -> bool: return path in CONTROL_PLANE or path.startswith(".github/workflows/")\ndef governed(path: str, wc) -> bool: return wc.is_governed_path(path)
+def is_control_plane(path: str) -> bool: return path in CONTROL_PLANE or path.startswith(".github/workflows/")
+
+def governed(path: str, wc) -> bool: return wc.is_governed_path(path)
 def prefix(path: str, prefixes) -> bool: return any(path == p.rstrip("/") or path.startswith(p) for p in prefixes)
 
 def required_checks(changed):
