@@ -10,6 +10,8 @@ def test_no_no_check_merge_flag_in_flight_cli():
     assert "def require_canonical_merge_check" in text
     assert "def read_pr_head" in text
     assert "--match-head-commit" in text
+    assert "def write_post_merge_proof" in text
+    assert "post_merge_proof.json" in text
 
 def test_dashboard_does_not_authorize_no_check_merge():
     text = DASHBOARD.read_text(encoding="utf-8")
