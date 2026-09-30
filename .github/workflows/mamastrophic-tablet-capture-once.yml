@@ -1,0 +1,19 @@
+name: Mamastrophic Tablet Capture (one-shot)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  tablet:
+    name: Tablet screenshots via canonical Mamastrophic
+    uses: ./.github/workflows/mamastrophic-universal-screenshots.yml
+    with:
+      surface: tablet
+      mode: screenshots
+      workers: "4"
+      allow_partial: true
+      deep_scroll: auto
