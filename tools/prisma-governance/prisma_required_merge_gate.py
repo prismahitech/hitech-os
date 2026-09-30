@@ -17,6 +17,8 @@ CONTROL_PLANE = {
     ".github/workflows/prisma-remote-automesh-revalidate.yml",
     ".github/workflows/gvae-all-surface-authority.yml",
     ".github/workflows/viscore1-cert.yml",
+    ".github/workflows/ci.yml",
+    ".github/workflows/prisma-sync-sentinel-watch.yml",
     "tools/prisma-governance/prisma_required_merge_gate.py",
     "apps/terminal-de-venta-system/tools/prisma-governance/workstream_collision.py",
     "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py",
@@ -57,6 +59,32 @@ def checks(repo: str, sha: str, token: str):
     rows = value.get("check_runs") if isinstance(value, dict) else None
     if not isinstance(rows, list): raise RuntimeError("INVALID_CHECK_RUNS_RESPONSE")
     return [x for x in rows if isinstance(x, dict)]
+
+def wait_for_required_checks(repo: str, sha: str, token: str, changed: list[str], timeout_seconds: int = 900, poll_seconds: int = 15):
+    required = required_checks(changed)
+    if not required: return [], []
+    import time
+    deadline = time.time() + timeout_seconds
+    last_rows = []
+    while True:
+        last_rows = checks(repo, sha, token)
+        blockers, observations = [], []
+        for name, mode in required:
+            row = resolve_check(last_rows, name, mode)
+            if row is None:
+                blockers.append("REQUIRED_CHECK_MISSING:" + name)
+                continue
+            status = str(row.get("status") or "").lower(); conclusion = str(row.get("conclusion") or "").lower()
+            observations.append(f"CHECK:{name}:{status}:{conclusion}")
+            if status != "completed":
+                blockers.append(f"REQUIRED_CHECK_NOT_COMPLETE:{name}:{status}")
+            elif conclusion != "success":
+                blockers.append(f"REQUIRED_CHECK_NOT_GREEN:{name}:{conclusion}")
+        if not blockers or all(x.startswith("REQUIRED_CHECK_NOT_GREEN:") for x in blockers):
+            return blockers, observations
+        if time.time() >= deadline:
+            return blockers + ["REQUIRED_CHECK_WAIT_TIMEOUT"], observations
+        time.sleep(poll_seconds)
 
 def import_module(path: Path, name: str):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -116,13 +144,9 @@ def evaluate(repo: str, number: int, token: str, expected_head: str):
             fres = factory.decide(ROOT, authority, request, current_head=base_sha, dirty=[])
             observations.append("FACTORY_LEDGER:" + str(fres.get("result")))
             if fres.get("result") != "PASS_ANTI_REWORK_GATE": errors.append("FACTORY_LEDGER_BLOCK:" + ";".join(fres.get("errors") or []))
-    for name, mode in required_checks(changed):
-        row = resolve_check(run_rows, name, mode)
-        if row is None: errors.append("REQUIRED_CHECK_MISSING:" + name); continue
-        status = str(row.get("status") or "").lower(); conclusion = str(row.get("conclusion") or "").lower()
-        observations.append(f"CHECK:{name}:{status}:{conclusion}")
-        if status != "completed": errors.append(f"REQUIRED_CHECK_NOT_COMPLETE:{name}:{status}")
-        elif conclusion != "success": errors.append(f"REQUIRED_CHECK_NOT_GREEN:{name}:{conclusion}")
+    ext_errors, ext_observations = wait_for_required_checks(repo, head_sha, token, changed)
+    errors.extend(ext_errors)
+    observations.extend(ext_observations)
     final_item = pr(repo, number, token)
     final_head = str(((final_item.get("head") or {}) if isinstance(final_item.get("head"), dict) else {}).get("sha") or "")
     if final_head != head_sha: errors.append(f"HEAD_MOVED_DURING_GATE:{head_sha}:{final_head}")
