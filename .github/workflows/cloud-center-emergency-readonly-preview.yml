@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cloud-center-emergency-readonly-preview-${{ github.run_id }}-${{ github.run_attempt }}
-          if-no-files-found: error
+          if-no-files-found: ignore
           path: |
             cloud-center-emergency-preview.json
             health.json
