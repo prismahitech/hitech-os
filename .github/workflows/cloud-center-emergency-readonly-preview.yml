@@ -39,7 +39,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event.pull_request.head.sha || github.ref_name }}
           fetch-depth: 1
 
       - name: Setup Node
