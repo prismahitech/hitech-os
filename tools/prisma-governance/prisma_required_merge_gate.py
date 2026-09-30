@@ -156,7 +156,7 @@ def control_plane_safety(repo: str, head_sha: str, token: str, changed: list[str
         low = content.lower()
         if re.search(r"^\s*contents\s*:\s*write\b", content, re.MULTILINE):
             errors.append("CONTROL_PLANE_WORKFLOW_WRITE_PERMISSION:" + path)
-        if "pull_request_target" in low and "github.event.pull_request.head.sha" in low and "actions/checkout" in low:
+        if "pull_request_target" in low and re.search(r"ref\\s*:\\s*\\${\\{\\s*github\\.event\\.pull_request\\.head\\.sha\\s*\\}\\}", content):
             errors.append("CONTROL_PLANE_TARGET_CHECKOUTS_PR_HEAD:" + path)
         if "pull_request_target" in low and re.search(r"\bgit\s+push\b", low):
             errors.append("CONTROL_PLANE_TARGET_GIT_PUSH:" + path)
