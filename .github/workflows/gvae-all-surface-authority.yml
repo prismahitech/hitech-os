@@ -15,7 +15,8 @@ on:
       - '.github/workflows/gvae-all-surface-authority.yml'
 
 permissions:
-  contents: write
+  contents: read
+  pull-requests: read
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
@@ -202,28 +203,15 @@ jobs:
             python tools/refresh_files_manifest.py --check
           )
 
-      - name: Materialize fresh all-surface authority on PR branch
-        if: github.event.pull_request.head.repo.full_name == github.repository
+      - name: Assert candidate remains non-mutating in CI
         shell: bash
-        env:
-          HEAD_REF: ${{ github.head_ref }}
         run: |
           set -euo pipefail
-          git add -- \
-            prisma-html/authority/rifat/prisma-ui/visual-control \
-            prisma-html/authority/rifat/identity/registries/bindings.registry.json \
-            prisma-html/authority/rifat/identity/registries/surface-adapters.registry.json \
-            prisma-html/authority/rifat/identity/compiled/current \
-            prisma-html/FILES_MANIFEST.json
-          if git diff --cached --quiet; then
-            echo "PASS_ALL_SURFACE_AUTHORITY_ALREADY_MATERIALIZED"
-            exit 0
+          if git diff --name-only --             prisma-html/authority/rifat/prisma-ui/visual-control             prisma-html/authority/rifat/identity/registries             prisma-html/authority/rifat/identity/compiled/current             prisma-html/FILES_MANIFEST.json | grep -q .; then
+            echo "Candidate promotion produced local ephemeral authority changes only; CI has no writeback capability."
+          else
+            echo "PASS_GVAE_NO_CANONICAL_WRITEBACK"
           fi
-          git config user.name "prisma-gvae-bot"
-          git config user.email "prisma-gvae-bot@users.noreply.github.com"
-          git commit -m "chore(visual): materialize fresh all-surface authority"
-          git push origin "HEAD:$HEAD_REF"
-          echo "PASS_ALL_SURFACE_AUTHORITY_MATERIALIZED"
 
       - name: Stage deterministic candidate bundle
         if: always()
