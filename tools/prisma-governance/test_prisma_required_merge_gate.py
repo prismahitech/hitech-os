@@ -39,6 +39,20 @@ def test_branch_protection_requires_canonical_context():
     payload = {"protection": {"enabled": True, "required_status_checks": {"enforcement_level": "everyone", "contexts": ["other"]}}}
     assert module.branch_protection_errors(payload) == ["MAIN_CANONICAL_GATE_CONTEXT_MISSING"]
 
+def test_branch_protection_runtime_signal_is_fail_closed():
+    import os
+    old = os.environ.get("GITHUB_REF_PROTECTED")
+    try:
+        os.environ["GITHUB_REF_PROTECTED"] = "true"
+        assert module.branch_protection_runtime_errors() == []
+        os.environ["GITHUB_REF_PROTECTED"] = "false"
+        assert module.branch_protection_runtime_errors() == ["MAIN_BRANCH_PROTECTION_SIGNAL_MISSING"]
+    finally:
+        if old is None:
+            os.environ.pop("GITHUB_REF_PROTECTED", None)
+        else:
+            os.environ["GITHUB_REF_PROTECTED"] = old
+
 def test_control_plane_checkout_rule_is_specific():
     import re
     unsafe = """
