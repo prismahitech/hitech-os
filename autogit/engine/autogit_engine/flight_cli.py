@@ -683,6 +683,7 @@ def apply_plan(args):
             merged={"returncode":m.returncode,"stdout":m.stdout,"stderr":m.stderr,"ok":m.returncode==0,"matched_head":merge_head}
             if m.returncode != 0:
                 raise FlightError("PR merge failed")
+            merged["post_merge_proof"] = write_post_merge_proof(runner, url, merge_head)
     hygiene = ag100_write_post_run_hygiene_report(repo, runner, report, context="apply_plan")
     summary={"result":"ok","branch":branch,"created_commits":created,"pr":pr,"checks":checks,"merged":merged,"post_run_hygiene":hygiene,"rollback":"Use generated revert commands; no reset --hard was executed."}
     # AG98_APPLY_DASHBOARD_HOOK_V1
@@ -764,6 +765,47 @@ def read_pr_head(runner: Runner, pr: str) -> str:
         raise FlightError("PR head SHA is invalid; merge blocked")
     return head
 
+def write_post_merge_proof(runner: Runner, pr: str, matched_head: str) -> dict:
+    view = runner.run(
+        ["gh", "pr", "view", pr, "--json", "state,mergedAt,mergeCommit,headRefOid"],
+        timeout=120,
+        name="gh_pr_post_merge_view",
+    )
+    if view.returncode != 0:
+        raise FlightError("Could not read post-merge PR state")
+    try:
+        payload = json.loads(view.stdout or "{}")
+    except Exception as exc:
+        raise FlightError("Invalid post-merge PR state response") from exc
+    merged_at = str(payload.get("mergedAt") or "")
+    merge_obj = payload.get("mergeCommit") if isinstance(payload.get("mergeCommit"), dict) else {}
+    merge_sha = str(merge_obj.get("oid") or "")
+    actual_head = str(payload.get("headRefOid") or "")
+    if not merged_at or not merge_sha:
+        raise FlightError("Post-merge proof missing merge SHA or mergedAt")
+    if actual_head and actual_head != matched_head:
+        raise FlightError("Post-merge PR head differs from certified head")
+    runner.run(["git", "fetch", "origin", "main"], check=True, timeout=600, name="post_merge_fetch_main")
+    canonical = runner.run(["git", "rev-parse", "origin/main"], check=True, timeout=120, name="post_merge_main_head").stdout.strip()
+    ancestor = runner.run(["git", "merge-base", "--is-ancestor", merge_sha, canonical], timeout=120, name="post_merge_ancestry_check")
+    if ancestor.returncode != 0:
+        raise FlightError("Merged commit is not an ancestor of canonical main")
+    proof = {
+        "schemaVersion": "prisma.autogit.post-merge-proof.v1",
+        "prNumberOrUrl": pr,
+        "prHeadSha": matched_head,
+        "mergeSha": merge_sha,
+        "canonicalMainHead": canonical,
+        "mergedAt": merged_at,
+        "headExactBeforeMerge": True,
+        "mergeShaObservedByGitHub": True,
+    }
+    (runner.report / "post_merge_proof.json").write_text(
+        json.dumps(proof, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    return proof
+
 def merge_command(args):
     if not args.allow_merge:
         raise FlightError("merge command requires --allow-merge")
@@ -782,6 +824,8 @@ def merge_command(args):
         name="gh_pr_merge",
     )
     summary={"result":"ok" if m.returncode==0 else "failed", "returncode":m.returncode, "stdout":m.stdout, "stderr":m.stderr, "matched_head":merge_head}
+    if m.returncode == 0:
+        summary["post_merge_proof"] = write_post_merge_proof(runner, args.pr, merge_head)
     summary["post_run_hygiene"] = ag100_write_post_run_hygiene_report(repo, runner, report, context="merge_command")
     # AG98_SYNC_LOCAL_MAIN_HOOK_V1
     if m.returncode == 0 and getattr(args, "sync_local_main", False):
