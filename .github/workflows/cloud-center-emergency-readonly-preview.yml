@@ -78,12 +78,8 @@ jobs:
           }
 
           preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json")"
-          deployment_url="$(jq -er '.preview.deploymentUrls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json")"
-
           printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
-          printf 'deployment_url=%s\n' "${deployment_url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${preview_url}"
-          printf 'DEPLOYMENT_URL=%s\n' "${deployment_url}"
 
       - name: Verify read-only Preview
         env:
