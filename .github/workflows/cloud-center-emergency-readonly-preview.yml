@@ -1,0 +1,149 @@
+name: Cloud Center Emergency Read-only Preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - governance/cloud-center-roadmap-step1-20260929
+    paths:
+      - "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/**"
+      - "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py"
+      - ".github/workflows/cloud-center-emergency-readonly-preview.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  emergency-preview:
+    name: Upload read-only Cloud Center preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler.ndjson
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate Wrangler authentication without printing secrets
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN}" || { echo "Missing GitHub secret: CLOUDFLARE_API_TOKEN"; exit 2; }
+          test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
+          pnpm exec wrangler whoami
+
+      - name: Upload emergency read-only version
+        id: upload
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        run: |
+          set -euo pipefail
+          rm -f "${WRANGLER_OUTPUT_FILE_PATH}"
+          pnpm exec wrangler versions upload \
+            --message "Cloud Center emergency read-only recovery preview" \
+            --preview-alias cloud-center-recovery \
+            --var "PRISMA_LICFLOW3_PREVIEW_MODE:readonly" \
+            --strict
+
+      - name: Extract preview URL
+        id: url
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        run: |
+          set -euo pipefail
+          test -s "${WRANGLER_OUTPUT_FILE_PATH}" || { echo "Wrangler structured output file was not created"; exit 1; }
+          node <<'NODE'
+          const fs = require("node:fs");
+          const text = fs.readFileSync(process.env.WRANGLER_OUTPUT_FILE_PATH, "utf8");
+          const urls = [...text.matchAll(/https:\/\/[^\s"']+workers\.dev\b/g)].map((m) => m[0].replace(/[),.]+$/, ""));
+          const unique = [...new Set(urls)];
+          if (!unique.length) {
+            console.error(text);
+            process.exit(1);
+          }
+          const url = unique[unique.length - 1];
+          fs.writeFileSync(process.env.GITHUB_OUTPUT, `preview_url=${url}\n`);
+          console.log(`PREVIEW_URL=${url}`);
+          NODE
+
+      - name: Verify read-only preview
+        env:
+          PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/health" > health.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/public/capabilities" > capabilities.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/public/tenants/prisma-original-customer/status" > tenant-status.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/client/contract?tenant=prisma-original-customer" > contract.json
+
+          node <<'NODE'
+          const fs = require("node:fs");
+          const health = JSON.parse(fs.readFileSync("health.json", "utf8"));
+          const caps = JSON.parse(fs.readFileSync("capabilities.json", "utf8"));
+          const tenant = JSON.parse(fs.readFileSync("tenant-status.json", "utf8"));
+          const contract = JSON.parse(fs.readFileSync("contract.json", "utf8"));
+          if (health.ok !== true || health.dbHealth !== "D1_BOUND") throw new Error("Preview health/D1 check failed");
+          if (caps.ok !== true) throw new Error("Preview capabilities check failed");
+          if (!tenant || typeof tenant !== "object") throw new Error("Preview tenant status check failed");
+          if (!contract || typeof contract !== "object") throw new Error("Preview contract check failed");
+          NODE
+
+          status=$(curl --silent --output mutation-body.json --write-out "%{http_code}" \
+            -X POST "${PREVIEW_URL}/api/licenses/activate" \
+            -H "content-type: application/json" \
+            --data '{"dryRun":true,"tenantSlug":"cloud-center-emergency-preview","licenseId":"cloud-center-emergency-preview"}')
+
+          test "${status}" = "403" || { echo "Expected preview mutation guard 403, got ${status}"; cat mutation-body.json; exit 1; }
+          grep -q '"READ_ONLY_PREVIEW"' mutation-body.json || { echo "Preview mutation guard marker missing"; cat mutation-body.json; exit 1; }
+
+      - name: Write recovery evidence
+        env:
+          PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("node:fs");
+          const evidence = {
+            status: "PASS_EMERGENCY_READONLY_PREVIEW",
+            previewUrl: process.env.PREVIEW_URL,
+            worker: "prisma-cloud-semilla",
+            d1: "prisma_cloud_semilla",
+            publicTarget: "https://app.hitechrts.com",
+            productionTrafficChanged: false,
+            dnsChanged: false,
+            d1MutationPerformed: false,
+            mutationGuard: "POST -> 403 READ_ONLY_PREVIEW",
+            generatedAt: new Date().toISOString()
+          };
+          fs.writeFileSync("cloud-center-emergency-preview.json", JSON.stringify(evidence, null, 2) + "\n");
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Cloud Center emergency preview\n\n**Preview URL:** ${process.env.PREVIEW_URL}\n\nProduction traffic was not promoted; DNS was not changed; preview mutation guard returned 403.\n`);
+          NODE
+
+      - name: Upload recovery evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloud-center-emergency-readonly-preview-${{ github.run_id }}
+          path: |
+            cloud-center-emergency-preview.json
+            health.json
+            capabilities.json
+            tenant-status.json
+            contract.json
+            mutation-body.json
+            ${{ env.WRANGLER_OUTPUT_FILE_PATH }}
+          if-no-files-found: error
