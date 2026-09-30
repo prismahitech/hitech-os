@@ -61,23 +61,51 @@ jobs:
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
           pnpm dlx wrangler@4.143.0 whoami
 
+      - name: Discover administrable Cloudflare zone for isolated Preview
+        id: zone
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="${RUNNER_TEMP}/cloud-center-zones.json"
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -o "${response}" \
+            "https://api.cloudflare.com/client/v4/zones?status=active&per_page=50" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+          zone_name="$(node -e '
+            const fs=require("node:fs");
+            const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+            const zones=Array.isArray(data.result)?data.result:[];
+            if (!data.success || zones.length===0) throw new Error("Cloudflare API token has no active administrable zones");
+            process.stdout.write(String(zones[0].name));
+          ' "${response}")"
+          printf 'ZONE_NAME=%s\n' "${zone_name}" >> "${GITHUB_ENV}"
+          printf 'zone_name=%s\n' "${zone_name}" >> "${GITHUB_OUTPUT}"
+          printf 'Cloudflare Preview zone selected: %s\n' "${zone_name}"
+
       - name: Apply isolated Preview custom domain
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        env:
+          ZONE_NAME: ${{ steps.zone.outputs.zone_name }}
         shell: bash
         run: |
           set -euo pipefail
 
-          node -e '
-            const fs = require("node:fs");
-            const data = JSON.parse(fs.readFileSync("wrangler.jsonc", "utf8").replace(/\/\/.*$/gm, ""));
-            if (data.workers_dev !== false) throw new Error("Production workers.dev must remain disabled");
-            const route = (data.routes ?? []).find((item) => item.pattern === "cloud-center-preview.hitechrts.com");
-            if (!route || route.custom_domain !== true || route.enabled !== false || route.previews_enabled !== true) {
-              throw new Error("Preview-only custom domain route is not configured as required");
-            }
-          '
+          node <<'NODE'
+          const fs = require("node:fs");
+          const src = JSON.parse(fs.readFileSync("wrangler.jsonc", "utf8").replace(/\/\/.*$/gm, ""));
+          const route = {
+            pattern: `prisma-cloud-preview.${process.env.ZONE_NAME}`,
+            custom_domain: true,
+            enabled: false,
+            previews_enabled: true
+          };
+          src.routes = [...(src.routes ?? []).filter((item) => item.pattern !== route.pattern), route];
+          if (src.workers_dev !== false) throw new Error("Production workers.dev must remain disabled");
+          fs.writeFileSync("wrangler.preview.jsonc", JSON.stringify(src, null, 2) + "\n");
+          NODE
 
           pnpm dlx wrangler@4.143.0 deploy \
+            --config wrangler.preview.jsonc \
             --name "prisma-cloud-semilla" \
             --message "Configure isolated Cloud Center Preview custom domain"
       - name: Enable Worker Preview routing without production traffic
