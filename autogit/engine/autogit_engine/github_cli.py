@@ -26,10 +26,34 @@ class GitHub:
         m = re.search(r"/pull/(\d+)", url)
         return PullRequest(url, m.group(1) if m else "", head, base)
 
-    def checks_watch(self, pr_url: str) -> tuple[bool, str]:
+    def checks_watch(self, pr_url: str, required_context: str = "forgeos-quality-gate") -> tuple[bool, str]:
         r = self.sh.run([self.gh, "pr", "checks", pr_url, "--watch", "--fail-fast"], timeout=1800, name="gh_pr_checks")
         text = (r.stdout or "") + "\n" + (r.stderr or "")
-        return (r.code == 0 or "no check" in text.lower()), text
+        if r.code != 0 or "no check" in text.lower():
+            return False, text
+        detail = self.sh.run(
+            [self.gh, "pr", "checks", pr_url, "--json", "name,state,bucket,link"],
+            timeout=120,
+            name="gh_pr_checks_json_required_context",
+        )
+        detail_text = (detail.stdout or "") + "\n" + (detail.stderr or "")
+        if detail.code != 0:
+            return False, text + "\n" + detail_text
+        try:
+            rows = json.loads(detail.stdout or "[]")
+        except Exception:
+            return False, text + "\n" + detail_text
+        matches = [row for row in rows if str(row.get("name") or "") == required_context]
+        if not matches:
+            return False, text + "\nREQUIRED_CONTEXT_MISSING:" + required_context
+        green = any(
+            str(row.get("state") or "").upper() == "SUCCESS"
+            and str(row.get("bucket") or "").lower() in {"pass", "success"}
+            for row in matches
+        )
+        if not green:
+            return False, text + "\nREQUIRED_CONTEXT_NOT_GREEN:" + required_context + "\n" + detail_text
+        return True, text + "\n" + detail_text
 
     def merge(self, pr_url: str, *, auto: bool = False, delete_branch: bool = False) -> tuple[bool, str]:
         cmd = [self.gh, "pr", "merge", pr_url, "--merge"]
