@@ -52,14 +52,14 @@ jobs:
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN}" || { echo "Missing GitHub secret: CLOUDFLARE_API_TOKEN"; exit 2; }
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
-          pnpm dlx wrangler@4.93.0 whoami
+          pnpm dlx wrangler@4.143.0 whoami
 
       - name: Upload emergency read-only Worker version
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
         shell: bash
         run: |
           set -euo pipefail
-          pnpm dlx wrangler@4.93.0 versions upload \
+          pnpm dlx wrangler@4.143.0 versions upload \
             --message "Cloud Center emergency read-only recovery preview" \
             --preview-alias cloud-center-recovery \
             --var "PRISMA_LICFLOW3_PREVIEW_MODE:readonly" \
