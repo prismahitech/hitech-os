@@ -54,6 +54,34 @@ def files(repo: str, number: int, token: str):
     if len(out) > 1000: raise RuntimeError("PR_TOO_MANY_CHANGED_FILES")
     return sorted(set(out))
 
+def fetch_head_file(repo: str, path: str, ref: str, token: str) -> str:
+    from urllib.parse import quote
+    row = api_get(f"https://api.github.com/repos/{repo}/contents/{quote(path, safe='/')}?ref={quote(ref, safe='')}", token)
+    if not isinstance(row, dict) or not isinstance(row.get("content"), str):
+        raise RuntimeError(f"CONTROL_PLANE_FILE_UNAVAILABLE:{path}")
+    try:
+        import base64
+        return base64.b64decode(row["content"]).decode("utf-8")
+    except Exception as exc:
+        raise RuntimeError(f"CONTROL_PLANE_FILE_DECODE_FAILED:{path}:{type(exc).__name__}") from exc
+
+def control_plane_safety(repo: str, head_sha: str, token: str, changed: list[str]) -> tuple[list[str], list[str]]:
+    errors=[]; observations=[]
+    workflow_files=[p for p in changed if p.startswith(".github/workflows/")]
+    for path in workflow_files:
+        text=fetch_head_file(repo,path,head_sha,token)
+        low=text.lower()
+        if "contents: write" in low:
+            errors.append("CONTROL_PLANE_WORKFLOW_WRITE_PERMISSION:" + path)
+        if "pull_request_target" in low and "github.event.pull_request.head.sha" in low and "actions/checkout" in low:
+            errors.append("CONTROL_PLANE_TARGET_CHECKOUTS_PR_HEAD:" + path)
+        if "pull_request_target" in low and "git push" in low:
+            errors.append("CONTROL_PLANE_TARGET_GIT_PUSH:" + path)
+        if "pull_request_target" in low and "secrets." in low and "pull_request.head.sha" in low:
+            errors.append("CONTROL_PLANE_TARGET_PR_SECRET_BOUNDARY:" + path)
+        observations.append("CONTROL_PLANE_WORKFLOW_SCANNED:" + path)
+    return sorted(set(errors)), observations
+
 def checks(repo: str, sha: str, token: str):
     value = api_get(f"https://api.github.com/repos/{repo}/commits/{sha}/check-runs?per_page=100", token)
     rows = value.get("check_runs") if isinstance(value, dict) else None
@@ -91,7 +119,7 @@ def import_module(path: Path, name: str):
     if spec is None or spec.loader is None: raise RuntimeError(f"IMPORT_FAILED:{path}")
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); return mod
 
-def is_control_plane(path: str) -> bool: return path in CONTROL_PLANE\ndef governed(path: str, wc) -> bool: return wc.is_governed_path(path)
+def is_control_plane(path: str) -> bool: return path in CONTROL_PLANE or path.startswith(".github/workflows/")\ndef governed(path: str, wc) -> bool: return wc.is_governed_path(path)
 def prefix(path: str, prefixes) -> bool: return any(path == p.rstrip("/") or path.startswith(p) for p in prefixes)
 
 def required_checks(changed):
@@ -122,6 +150,10 @@ def evaluate(repo: str, number: int, token: str, expected_head: str):
     control_changed = [p for p in changed if is_control_plane(p)]
     if control_changed and head_repo != repo: errors.append("CONTROL_PLANE_CHANGE_FROM_FORK")
     if control_changed: observations.append("CONTROL_PLANE_CHANGED:" + ",".join(control_changed))
+    if control_changed:
+        cp_errors, cp_observations = control_plane_safety(repo, head_sha, token, changed)
+        errors.extend(cp_errors)
+        observations.extend(cp_observations)
     wc = import_module(WORKSTREAM_DIR / "workstream_collision.py", "prisma_workstream_collision")
     governed_scope = any(governed(p, wc) for p in changed)
     if governed_scope:
