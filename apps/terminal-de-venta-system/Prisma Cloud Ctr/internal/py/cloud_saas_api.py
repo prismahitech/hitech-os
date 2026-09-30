@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -81,7 +82,8 @@ def _endpoint(name: str) -> str:
 
 
 def _base_url() -> str:
-    return str(_config_value(["apiBaseUrl"], DEFAULT_BASE_URL)).rstrip("/")
+    override = str(os.environ.get("PRISMA_CLOUD_CENTER_API_BASE_URL") or "").strip()
+    return (override or str(_config_value(["apiBaseUrl"], DEFAULT_BASE_URL))).rstrip("/")
 
 
 def _tenant_slug() -> str:
