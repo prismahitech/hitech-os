@@ -147,8 +147,11 @@ def evaluate(repo: str, number: int, token: str, expected_head: str):
     if base_ref != "main": return {"result":"BLOCKED_WRONG_BASE","errors":[f"BASE_REF:{base_ref}"]}
     if not re.fullmatch(r"[0-9a-f]{40}", head_sha): return {"result":"BLOCKED_INVALID_HEAD","errors":["HEAD_SHA_INVALID"]}
     if expected_head and expected_head != head_sha: return {"result":"BLOCKED_HEAD_MISMATCH","errors":[f"EXPECTED_HEAD:{expected_head}",f"ACTUAL_HEAD:{head_sha}"]}
+    protection = main_branch_protection(repo, token)
+    errors = branch_protection_errors(protection)
+    observations = ["MAIN_BRANCH_PROTECTION_CHECKED"]
     changed = files(repo, number, token); run_rows = checks(repo, head_sha, token)
-    errors = []; observations = []
+
     control_changed = [p for p in changed if is_control_plane(p)]
     if control_changed and head_repo != repo: errors.append("CONTROL_PLANE_CHANGE_FROM_FORK")
     if control_changed: observations.append("CONTROL_PLANE_CHANGED:" + ",".join(control_changed))
