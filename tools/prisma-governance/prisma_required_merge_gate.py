@@ -169,7 +169,7 @@ def evaluate(repo: str, number: int, token: str, expected_head: str):
             authority = factory.read_authority(ROOT)
             request = {
                 "schemaVersion": factory.SCHEMA, "mode": "PROPOSAL", "expectedHead": base_sha,
-                "task": f"PR #{number}: {item.get("title","")}",
+                "task": f"PR #{number}: {item.get('title', '')}",
                 "capabilities": [{"id": str(x), "requestedAction": "VERIFY"} if isinstance(x, str) else {"id": str(x.get("id") or ""), "requestedAction": str(x.get("requestedAction") or "VERIFY")} for x in declaration_caps],
                 "visualMutation": any(prefix(p, VISUAL_PREFIXES) for p in changed),
             }
