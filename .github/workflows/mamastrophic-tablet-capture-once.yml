@@ -1,5 +1,7 @@
 name: Mamastrophic Tablet Capture (one-shot)
 
+# trigger: final portable evidence run
+
 on:
   push:
     branches:
