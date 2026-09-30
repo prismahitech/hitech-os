@@ -34,7 +34,8 @@ jobs:
         run: |
           set -euo pipefail
           base_sha="${{ github.event.pull_request.base.sha }}"
-          changed_files="$(git diff --name-only "$base_sha" "${GITHUB_SHA}")"
+          head_sha="${{ github.event.pull_request.head.sha }}"
+          changed_files="$(git diff --name-only "$base_sha" "$head_sha")"
           if echo "${changed_files}" | grep -E '^(forgeos/|docs/forgeos-foundation/|\.github/workflows/forgeos-quality-gate\.yml)' >/dev/null; then
             echo "run_gate=true" >> "$GITHUB_OUTPUT"
           else
