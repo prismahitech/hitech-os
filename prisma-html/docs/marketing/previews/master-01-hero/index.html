@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRISMA Marketing — Master 01 Hero</title>
+<style>
+:root{--bg:#07111d;--panel:rgba(10,24,39,.72);--line:rgba(180,215,240,.18);--text:#f2f7fb;--muted:#9eb2c4;--cyan:#27ddd6;--blue:#5d94ff;--violet:#9d73ff;--amber:#f3b746;--green:#47d79e}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:#050b12;color:var(--text)}
+body{display:grid;place-items:center;overflow:auto}
+.hero{position:relative;width:min(1440px,100vw);min-height:810px;overflow:hidden;background:
+radial-gradient(circle at 75% 25%,rgba(31,184,221,.24),transparent 28%),
+radial-gradient(circle at 85% 75%,rgba(132,87,255,.18),transparent 30%),
+linear-gradient(115deg,#06101b 0%,#0b1b2c 46%,#101a28 100%)}
+.hero:before{content:"";position:absolute;inset:0;background:
+linear-gradient(90deg,rgba(4,12,21,.96) 0%,rgba(4,12,21,.72) 37%,rgba(4,12,21,.12) 70%,rgba(4,12,21,.48) 100%),
+repeating-linear-gradient(90deg,transparent 0 110px,rgba(100,170,210,.05) 111px 112px),
+repeating-linear-gradient(0deg,transparent 0 90px,rgba(100,170,210,.04) 91px 92px)}
+.ambient{position:absolute;right:-4%;top:0;width:55%;height:100%;opacity:.85;background:
+linear-gradient(135deg,transparent 10%,rgba(39,221,214,.08) 50%,transparent 72%),
+radial-gradient(ellipse at 70% 35%,rgba(255,255,255,.13),transparent 2%),
+radial-gradient(ellipse at 48% 68%,rgba(93,148,255,.13),transparent 2%)}
+.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:28px 42px}
+.brand{display:flex;gap:13px;align-items:center;font-weight:800;letter-spacing:.18em}.mark{width:38px;height:38px;border:1px solid rgba(130,180,255,.7);border-radius:11px;display:grid;place-items:center;background:rgba(10,30,48,.7);box-shadow:0 0 28px rgba(60,150,255,.15)}
+.mark:before{content:"";width:17px;height:17px;transform:rotate(45deg);border:2px solid #91c8ff;border-radius:4px}
+.badge{border:1px solid var(--line);background:rgba(10,25,39,.55);padding:9px 14px;border-radius:999px;color:#c8d9e7;font-size:12px}
+.content{position:relative;z-index:2;padding:70px 7% 80px;max-width:800px}
+.kicker{font-size:13px;letter-spacing:.24em;color:var(--cyan);font-weight:800;margin-bottom:18px}
+h1{font-size:clamp(48px,6.5vw,92px);line-height:.96;margin:0 0 24px;letter-spacing:-.055em}
+h1 span{display:block;background:linear-gradient(90deg,#fff,#ccecff 55%,#5be8e1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(17px,2vw,23px);line-height:1.45;color:#c1d0dc;max-width:650px;margin-bottom:32px}
+.cta{display:inline-flex;align-items:center;gap:12px;padding:14px 20px;border-radius:13px;background:linear-gradient(135deg,#28ddd6,#3e9fff);color:#04111b;font-weight:800;box-shadow:0 15px 45px rgba(39,221,214,.2)}
+.ui{position:absolute;z-index:3;right:5%;top:18%;width:min(570px,42vw);min-width:390px;border:1px solid rgba(180,220,245,.2);background:rgba(8,20,33,.68);backdrop-filter:blur(18px);border-radius:24px;box-shadow:0 35px 100px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.08);padding:18px}
+.uihead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.uihead b{font-size:15px}.status{font-size:11px;color:#7df0bf;background:rgba(70,215,158,.09);padding:7px 10px;border-radius:999px;border:1px solid rgba(70,215,158,.25)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.kpi{padding:16px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035)}.kpi small{display:block;color:#93a8b9;font-size:10px;margin-bottom:8px}.kpi strong{font-size:23px}.cyan{color:var(--cyan)}.blue{color:var(--blue)}.violet{color:var(--violet)}
+.chart{height:190px;margin-top:10px;padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));position:relative;overflow:hidden}
+.chart:before{content:"";position:absolute;inset:28px 20px 25px;background:linear-gradient(180deg,transparent 48%,rgba(130,180,220,.08) 49%,transparent 50%),linear-gradient(90deg,transparent 32%,rgba(130,180,220,.07) 33%,transparent 34%,transparent 65%,rgba(130,180,220,.07) 66%,transparent 67%)}
+.line{position:absolute;left:22px;right:22px;bottom:42px;height:92px;border-bottom:3px solid var(--cyan);transform:skewY(-10deg);filter:drop-shadow(0 0 9px rgba(39,221,214,.6))}
+.table{margin-top:10px;border:1px solid var(--line);border-radius:16px;overflow:hidden}.row{display:grid;grid-template-columns:1.4fr 1fr .7fr;padding:12px 14px;border-bottom:1px solid rgba(180,215,240,.08);font-size:11px}.row:last-child{border:0}.row.head{color:#8298aa;font-size:9px;text-transform:uppercase;letter-spacing:.12em}.pill{justify-self:end;padding:4px 8px;border-radius:999px;background:rgba(70,215,158,.09);color:#71eab8}
+.note{position:absolute;right:8%;bottom:8%;z-index:2;color:#7f96aa;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:900px){.hero{min-height:100vh}.ui{position:relative;right:auto;top:auto;margin:0 7% 60px;width:auto;min-width:0}.content{padding-top:35px}.note{display:none}.top{padding:20px}.content{padding-left:7%;padding-right:7%}}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="ambient"></div>
+<header class="top"><div class="brand"><div class="mark"></div><span>PRISMA</span></div><div class="badge">MARKETING SYSTEM · MASTER 01</div></header>
+<div class="content">
+<div class="kicker">PRISMA OS · VISUAL PRODUCT STORY</div>
+<h1>Tu operación.<span>Visible.</span></h1>
+<p class="sub">Una sola vista para entender lo que está pasando, detectar lo que requiere atención y actuar con información clara.</p>
+<div class="cta">Conoce PRISMA <span>→</span></div>
+</div>
+<div class="ui">
+<div class="uihead"><b>Panorama general</b><div class="status">● Datos en tiempo real</div></div>
+<div class="kpis">
+<div class="kpi"><small>VENTAS HOY</small><strong class="cyan">$42,840</strong></div>
+<div class="kpi"><small>OPERACIÓN</small><strong class="blue">96.4%</strong></div>
+<div class="kpi"><small>ALERTAS</small><strong class="violet">03</strong></div>
+</div>
+<div class="chart"><div style="font-size:10px;color:#8ea4b6">Rendimiento operativo</div><div class="line"></div></div>
+<div class="table">
+<div class="row head"><span>Área</span><span>Estado</span><span>Valor</span></div>
+<div class="row"><span>Ventas</span><span>En curso</span><span class="pill">96%</span></div>
+<div class="row"><span>Inventario</span><span>Normal</span><span class="pill">98%</span></div>
+<div class="row"><span>Alertas</span><span>Atención</span><span style="justify-self:end;color:#f3b746">03</span></div>
+</div>
+</div>
+<div class="note">MASTER · Reutilizable para todas las verticales</div>
+</section>
+</body>
+</html>
