@@ -1,0 +1,280 @@
+{
+  "schema": "prisma.marketing-master-registry.v1",
+  "version": "1.0.0",
+  "status": "GOVERNED_DRAFT",
+  "owner": "Sharon",
+  "authority": {
+    "visualIdentity": "prisma.clear-operational.v1",
+    "sourceOfTruth": "prisma-html/authority/rifat/identity",
+    "locationTruth": "prisma-html/authority/rifat/prisma-ui",
+    "visualControl": "prisma-html/extras/atlasfin",
+    "htmlSystem": "prisma-html/sistema-ui"
+  },
+  "doctrine": {
+    "principle": "Marketing masters are governed projections of PRISMA visual authority, not competing visual identities.",
+    "pipeline": [
+      "visual-authority",
+      "canonical-family",
+      "canonical-preset",
+      "canonical-recipe",
+      "surface-adapter",
+      "prisma-html-pattern",
+      "marketing-master",
+      "surface-projection"
+    ],
+    "forbidden": [
+      "inventing canonical family IDs from visual similarity",
+      "inventing canonical recipes for marketing roles",
+      "treating Atlasfin-only scene recipes as global marketing authority",
+      "creating vertical-specific visual identities",
+      "using product UI as decoration without evidentiary relationship"
+    ]
+  },
+  "masters": [
+    {
+      "id": "MASTER.HERO.V1",
+      "name": "Hero",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "purpose": "Primary positioning and awareness surface.",
+      "canonicalBases": [
+        "navigation",
+        "typography",
+        "surface",
+        "button",
+        "atmosphere"
+      ],
+      "knownCanonicalRecipes": [
+        "REC.navigation.governed.v2",
+        "REC.panel.governed.v2",
+        "REC.button.governed.v2"
+      ],
+      "htmlPatterns": [".prisma-hero", "narrative-page"],
+      "allowedSurfaces": ["web", "landing", "social", "presentation", "one-pager", "video"],
+      "controlledVariables": ["scene", "headline", "supporting-copy", "kpi", "ui-evidence", "cta"],
+      "doNotCreate": ["FAM.HERO", "REC.hero"]
+    },
+    {
+      "id": "MASTER.HEADLINE.V1",
+      "name": "Headline",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "purpose": "Editorial hierarchy for section and campaign messaging.",
+      "canonicalBases": ["typography", "label", "content", "optional-button"],
+      "htmlPatterns": ["eyebrow", "section-heading"],
+      "allowedSurfaces": ["web", "social", "presentation", "one-pager"],
+      "controlledVariables": ["eyebrow", "headline", "supporting-copy", "cta"]
+    },
+    {
+      "id": "MASTER.SERVICE.V1",
+      "name": "Service Card",
+      "type": "projection",
+      "status": "CANONICAL_MAPPING",
+      "canonical": {
+        "familyId": "FAM.CARD.RAISED",
+        "presetId": "PRESET.CARD.RAISED.V2",
+        "recipeId": "REC.card.governed.v2"
+      },
+      "purpose": "Services, capabilities and offer units.",
+      "allowedSurfaces": ["web", "landing", "social", "one-pager", "presentation"],
+      "controlledVariables": ["icon", "title", "description", "benefit", "cta"]
+    },
+    {
+      "id": "MASTER.FEATURE.V1",
+      "name": "Feature Card",
+      "type": "projection",
+      "status": "CANONICAL_MAPPING",
+      "canonical": {
+        "familyId": "FAM.CARD.FLAT",
+        "presetId": "PRESET.CARD.FLAT.V2",
+        "recipeId": "REC.card.governed.v2"
+      },
+      "purpose": "Features, benefits and supporting capabilities.",
+      "allowedSurfaces": ["web", "landing", "social", "carousel", "one-pager"],
+      "controlledVariables": ["icon", "title", "description", "proof"]
+    },
+    {
+      "id": "MASTER.PROOF.V1",
+      "name": "Proof Card",
+      "type": "projection",
+      "status": "CANONICAL_COMPOSITION",
+      "canonical": {
+        "familyId": "FAM.CARD.FLOATING",
+        "presetId": "PRESET.CARD.FLOATING.V2",
+        "recipeId": "REC.card.governed.v2"
+      },
+      "purpose": "Evidence, differentiators, testimonials and proof points.",
+      "allowedSurfaces": ["web", "landing", "social", "carousel", "one-pager", "presentation"],
+      "controlledVariables": ["proof-type", "evidence", "metric", "source", "caption"]
+    },
+    {
+      "id": "MASTER.KPI.V1",
+      "name": "KPI",
+      "type": "projection",
+      "status": "CANONICAL_MAPPING",
+      "canonical": {
+        "familyId": "FAM.CARD.METRIC",
+        "presetId": "PRESET.CARD.METRIC.V2",
+        "recipeId": "REC.card.governed.v2"
+      },
+      "purpose": "Large numerical evidence and operational results.",
+      "allowedSurfaces": ["web", "dashboard-hero", "social", "carousel", "presentation", "one-pager"],
+      "controlledVariables": ["value", "label", "delta", "period", "source"]
+    },
+    {
+      "id": "MASTER.PANEL.V1",
+      "name": "Glass Information Panel",
+      "type": "projection",
+      "status": "CANONICAL_MAPPING",
+      "canonical": {
+        "familyId": "FAM.PANEL.GLASS",
+        "presetId": "PRESET.PANEL.GLASS.V2",
+        "recipeId": "REC.panel.governed.v2"
+      },
+      "purpose": "Premium information, narrative and overlay containers.",
+      "allowedSurfaces": ["web", "landing", "presentation", "one-pager", "social"]
+    },
+    {
+      "id": "MASTER.LEAD-CAPTURE.V1",
+      "name": "Lead Capture",
+      "type": "composition",
+      "status": "CANONICAL_COMPOSITION",
+      "canonicalBases": [
+        "FAM.INPUT.GLASS",
+        "FAM.BUTTON.PRIMARY.SOLID"
+      ],
+      "canonicalRecipes": [
+        "REC.input.governed.v2",
+        "REC.button.governed.v2"
+      ],
+      "purpose": "Contact, quote and conversion forms.",
+      "allowedSurfaces": ["web", "landing"],
+      "controlledVariables": ["fields", "labels", "validation", "cta", "success-state"]
+    },
+    {
+      "id": "MASTER.CTA.V1",
+      "name": "CTA",
+      "type": "projection",
+      "status": "CANONICAL_MAPPING",
+      "canonical": {
+        "familyId": "FAM.BUTTON.PRIMARY.SOLID",
+        "presetId": "PRESET.BUTTON.PRIMARY.SOLID.V2",
+        "recipeId": "REC.button.governed.v2"
+      },
+      "purpose": "Primary conversion action.",
+      "allowedSurfaces": ["web", "landing", "social", "presentation", "one-pager", "video"],
+      "controlledVariables": ["copy", "destination", "state"]
+    },
+    {
+      "id": "MASTER.PROCESS.V1",
+      "name": "Process / How It Works",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "canonicalBases": ["card", "panel", "typography", "indicator", "state", "button"],
+      "htmlPatterns": [".prisma-operational-flow", "gramatica-operativa"],
+      "purpose": "Explain an operational or product flow.",
+      "allowedSurfaces": ["web", "landing", "carousel", "presentation", "one-pager"],
+      "doNotCreate": ["FAM.FLOW", "REC.flow"]
+    },
+    {
+      "id": "MASTER.PROBLEM-SOLUTION.V1",
+      "name": "Problem / Solution",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "canonicalBases": ["panel", "card", "typography", "metric", "button"],
+      "htmlPatterns": [".prisma-definition", ".prisma-outcomes", ".difference-map"],
+      "purpose": "Frame a business problem and its governed solution.",
+      "allowedSurfaces": ["web", "landing", "social", "carousel", "presentation", "one-pager"]
+    },
+    {
+      "id": "MASTER.CAMPAIGN.V1",
+      "name": "Campaign / Narrative",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "canonicalBases": ["navigation", "hero", "headline", "panel", "card", "metric", "process", "proof", "cta"],
+      "htmlPatterns": ["narrative-page"],
+      "purpose": "Long-form campaign or case-study narrative.",
+      "allowedSurfaces": ["web", "landing", "presentation", "one-pager", "social"]
+    },
+    {
+      "id": "MASTER.CORPORATE-DECK.V1",
+      "name": "Corporate / Investor Deck",
+      "type": "composition",
+      "status": "GOVERNED_COMPOSITION",
+      "canonicalBases": ["navigation", "hero", "headline", "metric", "card", "panel", "process", "proof", "cta"],
+      "htmlPatterns": ["investor-deck"],
+      "purpose": "Corporate presentation and investor-facing narrative.",
+      "allowedSurfaces": ["presentation", "pdf", "web"],
+      "doNotCreate": ["REC.investor", "FAM.INVESTOR"]
+    }
+  ],
+  "surfaceAdapters": {
+    "web": "ADP.WEB.RESPONSIVE.V2",
+    "desktop-admin": "ADP.PC.ADMIN.V2",
+    "tablet": "ADP.TB.TOUCH.V2",
+    "mobile": "ADP.MB.TOUCH.V2",
+    "shared-neutral": "ADP.SHARED.NEUTRAL.V2"
+  },
+  "states": {
+    "registry": "STATESET.INTERACTIVE.COMPLETE.V1",
+    "requiredPrinciples": ["focus-visible", "reduced-motion"],
+    "marketingMustPreserve": ["default", "hover", "focus-visible", "pressed", "disabled", "loading", "success", "warning", "error"]
+  },
+  "verticalProjection": {
+    "controlledVariablesOnly": [
+      "scene",
+      "business-problem",
+      "kpis",
+      "ui-modules",
+      "copy",
+      "cta",
+      "imagery"
+    ],
+    "mustNotChange": [
+      "visual-identity",
+      "canonical-family-semantics",
+      "canonical-recipe-semantics",
+      "governed-state-model",
+      "accessibility-floor"
+    ]
+  },
+  "assetFamilies": {
+    "osVertical": [
+      "hero",
+      "dashboard-hero",
+      "problem",
+      "solution",
+      "educational-carousel",
+      "one-pager",
+      "short-video",
+      "story-status"
+    ],
+    "changeAssurance": [
+      "hero",
+      "problem-ungoverned-changes",
+      "six-stage-map",
+      "evidence-chain",
+      "pass-blocked-unknown",
+      "change-studio",
+      "authority-pack",
+      "verify",
+      "evidence-report",
+      "thought-leadership-carousel",
+      "demo-video",
+      "enterprise-one-pager"
+    ]
+  },
+  "governance": {
+    "atlasfinRole": "visual-control-cockpit",
+    "atlasfinIsNot": [
+      "marketing-authority",
+      "route-owner-authority",
+      "replacement-for-rifat-identity",
+      "replacement-for-prisma-ui"
+    ],
+    "identityProfile": "prisma.clear-operational.v1",
+    "marketingRule": "Clone the master; change controlled variables; preserve authority.",
+    "evidenceRule": "Product UI is evidence of the message, not decoration.",
+    "claimRule": "Do not claim capabilities, certifications or readiness without separate evidence."
+  }
+}
