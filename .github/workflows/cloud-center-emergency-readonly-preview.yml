@@ -9,6 +9,15 @@ on:
       - "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py"
       - ".github/workflows/cloud-center-emergency-readonly-preview.yml"
   workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/**"
+      - "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py"
+      - ".github/workflows/cloud-center-emergency-readonly-preview.yml"
 
 permissions:
   contents: read
@@ -19,6 +28,7 @@ concurrency:
 
 jobs:
   emergency-preview:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     name: Create read-only Cloud Center preview
     runs-on: ubuntu-latest
     timeout-minutes: 20
