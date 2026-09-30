@@ -76,57 +76,53 @@ jobs:
 
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
 
-          account_response="$(
-            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
-              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain" \
+          worker_http_response="$(
+            curl --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+              --write-out '\n__HTTP_STATUS__:%{http_code}' \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers" \
               -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
           )"
 
-          subdomain="$(
-            printf '%s' "${account_response}" |
-              node -e '
-                let input="";
-                process.stdin.on("data", chunk => input += chunk);
-                process.stdin.on("end", () => {
-                  const data = JSON.parse(input);
-                  if (data.success !== true || typeof data.result?.subdomain !== "string" || !data.result.subdomain.trim()) {
-                    process.exit(2);
-                  }
-                  process.stdout.write(data.result.subdomain.trim());
-                });
-              '
-          )"
+          worker_status="${worker_http_response##*__HTTP_STATUS__:}"
+          worker_json="${worker_http_response%\n__HTTP_STATUS__:*}"
 
-          script_response="$(
-            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
-              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain" \
-              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-          )"
-
-          previews_enabled="$(
-            printf '%s' "${script_response}" |
-              node -e '
-                let input="";
-                process.stdin.on("data", chunk => input += chunk);
-                process.stdin.on("end", () => {
-                  const data = JSON.parse(input);
-                  if (data.success !== true || data.result?.previews_enabled !== true) {
-                    process.exit(3);
-                  }
-                  process.stdout.write("true");
-                });
-              '
-          )"
-
-          test "${previews_enabled}" = "true" || {
-            echo "Cloudflare reports workers.dev Preview URLs are not enabled for ${WORKER_NAME}";
+          test "${worker_status}" = "200" || {
+            echo "Cloudflare Worker inventory endpoint returned HTTP ${worker_status}";
             exit 1;
           }
 
-          url="https://${PREVIEW_ALIAS}-${WORKER_NAME}.${subdomain}.workers.dev"
-          printf 'preview_url=%s\n' "${url}" >> "${GITHUB_OUTPUT}"
-          printf 'PREVIEW_URL=%s\n' "${url}"
+          preview_url="$(
+            printf '%s' "${worker_json}" |
+              node -e '
+                let input="";
+                process.stdin.on("data", chunk => input += chunk);
+                process.stdin.on("end", () => {
+                  const data = JSON.parse(input);
+                  const workers = Array.isArray(data.result) ? data.result : [];
+                  const worker = workers.find(item => item && item.name === process.env.WORKER_NAME);
+                  const subdomain = worker?.subdomain || {};
+                  if (subdomain.previews_enabled !== true) process.exit(2);
+                  const raw = String(subdomain.preview_url_suffix || subdomain.url || "").trim();
+                  if (!raw) process.exit(3);
+                  const candidate = raw.startsWith("http") ? raw : "https://" + raw;
+                  const parsed = new URL(candidate);
+                  const labels = parsed.hostname.split(".");
+                  const workerIndex = labels.findIndex(label => label === process.env.WORKER_NAME);
+                  if (workerIndex < 0) process.exit(4);
+                  labels[workerIndex] = process.env.PREVIEW_ALIAS + "-" + labels[workerIndex];
+                  parsed.hostname = labels.join(".");
+                  process.stdout.write(parsed.toString().replace(/\/$/, ""));
+                });
+              '
+          )"
 
+          test -n "${preview_url}" || {
+            echo "Could not resolve deterministic workers.dev Preview URL for ${WORKER_NAME}";
+            exit 1;
+          }
+
+          printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
+          printf 'PREVIEW_URL=%s\n' "${preview_url}"
       - name: Verify read-only Version URL
         env:
           PREVIEW_URL: ${{ steps.url.outputs.preview_url }}
