@@ -133,7 +133,7 @@ jobs:
 
           preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" 2>/dev/null || true)"
 
-          if [ -z "${preview_url}" ]; then
+          if [ -z "${preview_url}" ] || [ "${preview_url}" = "null" ]; then
             worker_metadata="${RUNNER_TEMP}/cloud-center-worker-metadata.json"
             worker_endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/prisma-cloud-semilla"
 
