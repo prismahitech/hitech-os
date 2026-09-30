@@ -61,53 +61,63 @@ jobs:
           test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
           pnpm dlx wrangler@4.143.0 whoami
 
-      - name: Discover administrable Cloudflare zone for isolated Preview
-        id: zone
+      - name: Ensure account workers.dev subdomain for isolated Preview
         shell: bash
         run: |
           set -euo pipefail
-          response="${RUNNER_TEMP}/cloud-center-zones.json"
-          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
-            -o "${response}" \
-            "https://api.cloudflare.com/client/v4/zones?status=active&per_page=50" \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-          zone_name="$(node -e '
+
+          endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain"
+          state="${RUNNER_TEMP}/cloud-center-workers-subdomain.json"
+
+          http_status="$(curl --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -o "${state}" -w "%{http_code}" \
+            "${endpoint}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")"
+
+          if [ "${http_status}" = "200" ]; then
+            subdomain="$(node -e '
+              const fs=require("node:fs");
+              const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+              const value=String(data.result?.subdomain ?? "").trim();
+              if (!data.success || !value) throw new Error("Cloudflare returned no account workers.dev subdomain");
+              process.stdout.write(value);
+            ' "${state}")"
+            echo "Using existing account workers.dev subdomain: ${subdomain}.workers.dev"
+          elif [ "${http_status}" = "404" ]; then
+            echo "Account has no workers.dev subdomain; requesting dedicated hitechos-preview subdomain."
+            response_status="$(curl --silent --show-error \
+              -o "${state}" -w "%{http_code}" \
+              -X PUT "${endpoint}" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "content-type: application/json" \
+              --data '{"subdomain":"hitechos-preview"}')"
+            echo "Account workers.dev subdomain API status: ${response_status}"
+            if [ "${response_status}" != "200" ]; then
+              node -e '
+                const fs=require("node:fs");
+                const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+                const errors=Array.isArray(data.errors)?data.errors:[];
+                const messages=Array.isArray(data.messages)?data.messages:[];
+                for (const item of [...errors,...messages]) {
+                  if (item && (item.code !== undefined || item.message !== undefined)) process.stdout.write(String(item.code ?? "")+" "+String(item.message ?? "")+"\n");
+                }
+              ' "${state}"
+              exit 1
+            fi
+            echo "Account workers.dev subdomain created."
+          else
+            echo "Unexpected account workers.dev subdomain GET status: ${http_status}"
+            cat "${state}"
+            exit 1
+          fi
+
+          node -e '
             const fs=require("node:fs");
             const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
-            const zones=Array.isArray(data.result)?data.result:[];
-            if (!data.success || zones.length===0) throw new Error("Cloudflare API token has no active administrable zones");
-            process.stdout.write(String(zones[0].name));
-          ' "${response}")"
-          printf 'ZONE_NAME=%s\n' "${zone_name}" >> "${GITHUB_ENV}"
-          printf 'zone_name=%s\n' "${zone_name}" >> "${GITHUB_OUTPUT}"
-          printf 'Cloudflare Preview zone selected: %s\n' "${zone_name}"
-
-      - name: Apply isolated Preview custom domain
-        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
-        env:
-          ZONE_NAME: ${{ steps.zone.outputs.zone_name }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          node <<'NODE'
-          const fs = require("node:fs");
-          const src = JSON.parse(fs.readFileSync("wrangler.jsonc", "utf8").replace(/\/\/.*$/gm, ""));
-          const route = {
-            pattern: `prisma-cloud-preview.${process.env.ZONE_NAME}`,
-            custom_domain: true,
-            enabled: false,
-            previews_enabled: true
-          };
-          src.routes = [route];
-          if (src.workers_dev !== false) throw new Error("Production workers.dev must remain disabled");
-          fs.writeFileSync("wrangler.preview.jsonc", JSON.stringify(src, null, 2) + "\n");
-          NODE
-
-          pnpm dlx wrangler@4.143.0 deploy \
-            --config wrangler.preview.jsonc \
-            --name "prisma-cloud-semilla" \
-            --message "Configure isolated Cloud Center Preview custom domain"
+            const value=String(data.result?.subdomain ?? "").trim();
+            if (!data.success || !value) throw new Error("Unable to resolve account workers.dev subdomain after setup");
+            process.stdout.write("Resolved account workers.dev subdomain: "+value+".workers.dev\\n");
+          ' "${state}"
       - name: Create or update isolated Worker Preview
         id: preview
         working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
@@ -115,7 +125,6 @@ jobs:
         run: |
           set -euo pipefail
           pnpm dlx wrangler@4.143.0 preview \
-            --config wrangler.preview.jsonc \
             --name "cloud-center-recovery" \
             --message "Cloud Center emergency read-only recovery preview" \
             --json | tee "${RUNNER_TEMP}/cloud-center-wrangler-preview.json"
