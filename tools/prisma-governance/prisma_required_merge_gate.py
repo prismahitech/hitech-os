@@ -42,6 +42,17 @@ VISUAL_PREFIXES = (
     "apps/terminal-de-venta-system/.prisma-ui/",
     "apps/terminal-de-venta-system/tools/quality/",
 )
+VISCORE_PREFIXES = ("prisma-html/",)
+GVAE_PREFIXES = (
+    "apps/terminal-de-venta-system/.prisma-ui/",
+    "apps/terminal-de-venta-system/tools/quality/ui-visual-control.mjs",
+    "apps/terminal-de-venta-system/tools/quality/ui-certainty.mjs",
+    "prisma-html/tools/promote_visual_control_all_surfaces.py",
+    "prisma-html/identity_dictionary_core.py",
+    "prisma-html/tools/visual_application/",
+    "prisma-html/authority/rifat/prisma-ui/visual-control/",
+    "prisma-html/authority/rifat/identity/",
+)
 
 SYNC_PREFIXES = (
     "tools/prisma-sentinels/sync-sentinel/",
@@ -184,8 +195,10 @@ def path_prefix(path: str, prefixes: tuple[str, ...]) -> bool:
 
 def required_checks(changed: list[str]) -> list[tuple[str, str]]:
     required: list[tuple[str, str]] = [("guardrails", "exact")]
-    if any(path_prefix(path, VISUAL_PREFIXES) for path in changed):
+    if any(path_prefix(path, VISCORE_PREFIXES) for path in changed):
         required.append(("visual authority / readiness gates", "exact"))
+    if any(path_prefix(path, GVAE_PREFIXES) for path in changed):
+        required.append(("all-surface-authority", "exact"))
     if any(path_prefix(path, SYNC_PREFIXES) for path in changed):
         required.append(("Sentinel ", "prefix"))
     if any(path_prefix(path, FORGEOS_PREFIXES) for path in changed):
