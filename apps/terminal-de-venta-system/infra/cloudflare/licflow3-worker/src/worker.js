@@ -135,6 +135,10 @@ function d1(env) {
   return env && env.PRISMA_LICFLOW3_D1 && typeof env.PRISMA_LICFLOW3_D1.prepare === "function" ? env.PRISMA_LICFLOW3_D1 : null;
 }
 
+function previewReadOnly(env) {
+  return String(env?.PRISMA_LICFLOW3_PREVIEW_MODE || "").trim().toLowerCase() === "readonly";
+}
+
 function tenantSlugFromUrl(url) {
   return url.searchParams.get("tenant") || TENANT;
 }
@@ -2392,6 +2396,14 @@ async function route(request, env) {
   const url = new URL(request.url);
   const method = request.method.toUpperCase();
   if (method === "OPTIONS") return json({ ok: true });
+  if (method !== "GET" && previewReadOnly(env)) {
+    return json({
+      ok: false,
+      service: SERVICE,
+      status: "READ_ONLY_PREVIEW",
+      reason: "This emergency Cloud Center preview is read-only and rejects all mutation requests."
+    }, 403);
+  }
   if (method === "GET" && url.pathname === "/health") return json(await health(env));
   if (method === "GET" && url.pathname === "/api/public/capabilities") return json(await capabilities(env));
   const tenantStatusMatch = url.pathname.match(/^\/api\/public\/tenants\/([^/]+)\/status$/);
