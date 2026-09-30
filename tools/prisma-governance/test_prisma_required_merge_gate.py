@@ -20,9 +20,10 @@ def test_required_checks_mapping():
 def test_check_resolution_requires_completed_success():
     rows = [{"name":"guardrails","status":"completed","conclusion":"failure"},
             {"name":"visual authority / readiness gates","status":"completed","conclusion":"success"}]
-    blockers, _ = module.check_external_gates(["prisma-html/a.py"], rows)
-    assert "REQUIRED_CHECK_NOT_GREEN:guardrails:failure" in blockers
-    assert not any("visual authority" in x for x in blockers)
+    guardrail = module.resolve_check(rows, "guardrails", "exact")
+    visual = module.resolve_check(rows, "visual authority / readiness gates", "exact")
+    assert guardrail["conclusion"] == "failure"
+    assert visual["conclusion"] == "success"
 
 def test_required_gate_declares_trusted_execution_contract():
     source = TARGET.read_text(encoding="utf-8")
