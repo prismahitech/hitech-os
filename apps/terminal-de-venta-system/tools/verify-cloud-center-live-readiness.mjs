@@ -83,6 +83,8 @@ function mutationPrevented(result) {
 async function main() {
   const health = await requestJson("GET", "/health");
   const capabilities = await requestJson("GET", "/api/public/capabilities");
+  const tenantStatus = await requestJson("GET", "/api/public/tenants/prisma-original-customer/status");
+  const clientContract = await requestJson("GET", "/api/client/contract?tenant=prisma-original-customer");
   const adminSetupNoToken = await requestJson("POST", "/api/admin/customer-setups/create", {
     dryRun: true,
     source: "codex-live-readonly-guard"
@@ -105,14 +107,18 @@ async function main() {
     "customerPortal",
     "customerLicenseRefresh",
     "billingRenewal",
-    "gracePeriod"
+    "gracePeriod",
+    "tenant_status",
+    "contract_fetch"
   ];
 
   const checks = [
     check(health.status === 200 && health.json?.ok === true, "live health returns 200 ok", health),
     check(health.json?.dbHealth === "D1_BOUND", "live D1 binding is reported", { dbHealth: health.json?.dbHealth, counts: health.json?.counts ?? null }),
     check(capabilities.status === 200 && capabilities.json?.ok === true, "live capabilities returns 200 ok", capabilities),
-    check(hasCapabilities(capabilities.json, requiredCapabilities), "live capabilities include customer setup, slots, claims and renewal", { requiredCapabilities, capabilities: capabilities.json?.capabilities ?? null }),
+    check(hasCapabilities(capabilities.json, requiredCapabilities), "live capabilities include customer setup, slots, claims, renewal, tenant status and contract fetch", { requiredCapabilities, capabilities: capabilities.json?.capabilities ?? null }),
+    check(tenantStatus.status === 200 && tenantStatus.json?.ok === true, "live tenant status returns 200 ok", tenantStatus),
+    check(clientContract.status === 200 && clientContract.json?.ok === true, "live client contract returns 200 ok", clientContract),
     check(mutationPrevented(adminSetupNoToken), "admin customer setup is blocked or simulation-only without token", adminSetupNoToken),
     check(mutationPrevented(adminActivateNoToken), "admin license activation is blocked or simulation-only without token", adminActivateNoToken)
   ];
