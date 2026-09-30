@@ -65,14 +65,65 @@ jobs:
             --var "PRISMA_LICFLOW3_PREVIEW_MODE:readonly" \
             --strict 2>&1 | tee "${RUNNER_TEMP}/cloud-center-wrangler-upload.log"
 
-      - name: Extract Version URL
+      - name: Resolve Version URL
         id: url
+        env:
+          WORKER_NAME: prisma-cloud-semilla
+          PREVIEW_ALIAS: cloud-center-recovery
         shell: bash
         run: |
           set -euo pipefail
+
           test -s "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" || { echo "Wrangler upload log is empty"; exit 1; }
-          url="$(grep -Eo "https://[^[:space:]\\\"',)]+workers\\.dev" "${RUNNER_TEMP}/cloud-center-wrangler-upload.log" | tail -n 1 || true)"
-          test -n "${url}" || { echo "No workers.dev Version URL found in Wrangler output"; cat "${RUNNER_TEMP}/cloud-center-wrangler-upload.log"; exit 1; }
+
+          account_response="$(
+            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+          )"
+
+          subdomain="$(
+            printf '%s' "${account_response}" |
+              node -e '
+                let input="";
+                process.stdin.on("data", chunk => input += chunk);
+                process.stdin.on("end", () => {
+                  const data = JSON.parse(input);
+                  if (data.success !== true || typeof data.result?.subdomain !== "string" || !data.result.subdomain.trim()) {
+                    process.exit(2);
+                  }
+                  process.stdout.write(data.result.subdomain.trim());
+                });
+              '
+          )"
+
+          script_response="$(
+            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${WORKER_NAME}/subdomain" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+          )"
+
+          previews_enabled="$(
+            printf '%s' "${script_response}" |
+              node -e '
+                let input="";
+                process.stdin.on("data", chunk => input += chunk);
+                process.stdin.on("end", () => {
+                  const data = JSON.parse(input);
+                  if (data.success !== true || data.result?.previews_enabled !== true) {
+                    process.exit(3);
+                  }
+                  process.stdout.write("true");
+                });
+              '
+          )"
+
+          test "${previews_enabled}" = "true" || {
+            echo "Cloudflare reports workers.dev Preview URLs are not enabled for ${WORKER_NAME}";
+            exit 1;
+          }
+
+          url="https://${PREVIEW_ALIAS}-${WORKER_NAME}.${subdomain}.workers.dev"
           printf 'preview_url=%s\n' "${url}" >> "${GITHUB_OUTPUT}"
           printf 'PREVIEW_URL=%s\n' "${url}"
 
