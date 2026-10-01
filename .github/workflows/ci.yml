@@ -381,8 +381,17 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
+      actions: read
       models: read
+      copilot-requests: write
     steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+      - name: Install current Copilot CLI
+        run: npm install -g @github/copilot@latest
+      - name: Show Copilot CLI version
+        run: copilot --version
       - name: Probe external Claude evaluator through GitHub Models
         id: probe
         uses: actions/ai-inference@v2
@@ -420,7 +429,15 @@ jobs:
     permissions:
       actions: read
       models: read
+      copilot-requests: write
     steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+      - name: Install current Copilot CLI
+        run: npm install -g @github/copilot@latest
+      - name: Show Copilot CLI version
+        run: copilot --version
       - uses: actions/download-artifact@v7
         with:
           name: g-all-task-packets
