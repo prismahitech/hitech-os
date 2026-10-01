@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"prisma.visual.projection-reconciliation.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema","targetId","decision","reason","evidenceRefs"],
+  "properties":{
+    "schema":{"const":"prisma.visual.projection-reconciliation.v1"},
+    "targetId":{"type":"string","minLength":1},
+    "decision":{"enum":["RESTORE_CANONICAL_PROJECTION","ACCEPT_NEWER_RUNTIME","ACCEPT_INTENTIONAL_DIVERGENCE","REGISTER_MISSING_PROJECTION","BLOCK_AMBIGUOUS","BLOCK_UNSAFE"]},
+    "reason":{"type":"string","minLength":1},
+    "evidenceRefs":{"type":"array","items":{"type":"string"},"uniqueItems":true}
+  }
+}

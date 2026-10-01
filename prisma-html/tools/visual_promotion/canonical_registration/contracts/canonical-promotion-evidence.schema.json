@@ -2,13 +2,16 @@
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"prisma.visual.canonical-promotion-evidence.v1",
   "type":"object","additionalProperties":false,
-  "required":["schema","requestId","requestDigest","currentTruthDigest","sourceDigest","preState","postState","ids","mutations","status","errors"],
+  "required":["schema","requestId","requestDigest","currentTruthDigest","sourceDigest","preState","postState","ids","mutations","workEntryHandoff","status","errors"],
   "properties":{
     "schema":{"const":"prisma.visual.canonical-promotion-evidence.v1"},
     "requestId":{"type":"string"},"requestDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
     "currentTruthDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "sourceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "preState":{"type":"array"},"postState":{"type":"array"},"ids":{"type":"object"},
-    "mutations":{"type":"array"},"status":{"type":"string"},"errors":{"type":"array","items":{"type":"string"}}
+    "workEntryHandoff":{"type":"object","additionalProperties":false,"required":["gate","decision","targetId","evaluatedHead"],"properties":{"gate":{"const":"visual_application.visual_work_entry_gate"},"decision":{"const":"REGISTER_TARGET_FIRST"},"targetId":{"type":"string","pattern":"^TGT\\.CENSUS\\."},"evaluatedHead":{"type":"string","pattern":"^[0-9a-f]{40}$"}}},"sourceDigest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "preState":{"type":"array","items":{"type":"object"}},"postState":{"type":"array","items":{"type":"object"}},
+    "preStateValues":{"type":"object"},"ids":{"type":"object"},"mutations":{"type":"array"},
+    "journalPath":{"type":"string"},"postconditions":{"type":"object"},
+    "status":{"enum":["APPLIED","NO_OP_IDEMPOTENT","FAILED","ROLLED_BACK"]},
+    "errors":{"type":"array","items":{"type":"string"}},"result":{"type":"object"}
   }
 }
