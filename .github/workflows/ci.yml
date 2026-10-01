@@ -136,6 +136,66 @@ jobs:
           install_end="$(date +%s)"
           echo "CI_METRIC_INSTALL_SECONDS=$((install_end-install_start))" >> "$GITHUB_ENV"
 
+      - name: Verify Cloud Center customer runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check --no-input "playwright==1.60.0"
+          python3 -m playwright install chromium
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:customer-runtime
+
+      - name: Verify Cloud Center contract authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:contract-authority
+
+      - name: Verify Cloud Center persistence hardening
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:persistence-hardening
+      - name: Verify Cloud Center concurrency and idempotency
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:concurrency-idempotency
+
+      - name: Verify Cloud Center D1 graph integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:d1-graph-integrity
+
+      - name: Verify Cloud Center local runtime contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:local-runtime-gate
+
+      - name: Verify Cloud Center browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cloud-center-playwright"
+          cd "$RUNNER_TEMP/cloud-center-playwright"
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install --with-deps chromium
+          cd "$GITHUB_WORKSPACE"
+          CC_PLAYWRIGHT_ROOT="$RUNNER_TEMP/cloud-center-playwright/node_modules/playwright" \
+          CC_BROWSER_EVIDENCE_DIR="$GITHUB_WORKSPACE/cloud-center-browser-evidence" \
+            pnpm --dir apps/terminal-de-venta-system run verify:cloud-center:browser-runtime
+
+      - name: Upload Cloud Center browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloud-center-browser-runtime-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          path: cloud-center-browser-evidence/
+
+
       - name: Enforce zero priority overrides
         shell: bash
         run: |

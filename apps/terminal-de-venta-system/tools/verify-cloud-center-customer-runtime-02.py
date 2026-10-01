@@ -45,7 +45,7 @@ def main():
     app=Path(__file__).resolve().parents[1]
     cloud=app/'Prisma Cloud Ctr'
     server=cloud/'internal'/'py'/'prisma_unified_lab_v3.py'
-    checks=[]; console_errors=[]; request_failures=[]; api_requests=[]; draft_responses=[]
+    checks=[]; console_errors=[]; request_failures=[]; api_requests=[]; api_error_responses=[]; draft_responses=[]
     with tempfile.TemporaryDirectory(prefix='prisma-cloud-runtime-') as td:
         td=Path(td); port=free_port(); base=f'http://127.0.0.1:{port}'
         env=os.environ.copy(); env['PRISMA_COMMAND_CENTER_DB_PATH']=str(td/'runtime.db'); env['PRISMA_CLOUD_CENTER_RUNTIME_DIR']=str(td/'runtime-contracts')
@@ -61,12 +61,46 @@ def main():
             except Exception as exc:
                 raise RuntimeError('PLAYWRIGHT_NOT_INSTALLED') from exc
             with sync_playwright() as pw:
-                browser=pw.chromium.launch(channel='chrome',headless=True)
+                browser=pw.chromium.launch(headless=True)
                 page=browser.new_page(viewport={'width':1440,'height':1000})
-                page.on('console',lambda msg: console_errors.append(msg.text) if msg.type=='error' else None)
-                page.on('requestfailed',lambda req: request_failures.append(req.url) if req.url.startswith(base) else None)
-                page.on('request',lambda req: api_requests.append({'method':req.method,'url':req.url}) if '/api/' in req.url else None)
-                page.on('response',lambda res: draft_responses.append(res) if '/api/command-center/draft-client' in res.url else None)
+                def on_console(msg):
+                    if msg.type == 'error':
+                        location = msg.location or {}
+                        console_errors.append({
+                            'text': msg.text,
+                            'url': location.get('url'),
+                            'line': location.get('lineNumber'),
+                            'column': location.get('columnNumber')
+                        })
+                def on_response(res):
+                    if '/api/' not in res.url:
+                        return
+                    api_requests.append({'method': res.request.method, 'url': res.url, 'status': res.status})
+                    if res.status >= 400:
+                        code = None
+                        raw = None
+                        try:
+                            payload = res.json()
+                            if isinstance(payload, dict):
+                                code = payload.get('resultCode') or payload.get('status') or payload.get('code')
+                        except Exception:
+                            try:
+                                raw = (res.text() or '')[:300]
+                            except Exception:
+                                raw = None
+                        api_error_responses.append({
+                            'method': res.request.method,
+                            'url': res.url,
+                            'status': res.status,
+                            'resultCode': code,
+                            'bodyPreview': raw
+                        })
+                    if '/api/command-center/draft-client' in res.url:
+                        draft_responses.append(res)
+                page.on('console', on_console)
+                page.on('requestfailed',lambda req: request_failures.append({'method':req.method,'url':req.url,'status':0}) if req.url.startswith(base) else None)
+                page.on('request',lambda req: api_requests.append({'method':req.method,'url':req.url,'status':None}) if '/api/' in req.url else None)
+                page.on('response', on_response)
                 page.goto(base+'/',wait_until='domcontentloaded',timeout=30000)
                 # Initial boot performs asynchronous API fan-out after DOMContentLoaded. Wait for
                 # that bootstrap to settle before starting operator interaction, avoiding a test-only
@@ -159,8 +193,28 @@ def main():
                 checks.append('deactivation_dropdown_homologation')
 
                 browser.close()
-            require(not console_errors, f'BROWSER_CONSOLE_ERRORS:{console_errors}')
-            require(not request_failures, f'LOCAL_REQUEST_FAILURES:{request_failures}')
+            expected_cloud_409 = [
+                item for item in api_error_responses
+                if item.get('status') == 409 and item.get('url', '').endswith('/api/cloud-saas/summary')
+            ]
+            unexpected_api_errors = [
+                item for item in api_error_responses
+                if item not in expected_cloud_409
+            ]
+            expected_console_409 = [
+                item for item in console_errors
+                if 'status of 409 (Conflict)' in str(item.get('text') or '')
+            ]
+            unexpected_console_errors = [
+                item for item in console_errors
+                if item not in expected_console_409
+            ]
+            require(
+                len(expected_console_409) == len(expected_cloud_409) and not unexpected_api_errors,
+                f'API_4XX_5XX:{api_error_responses}; EXPECTED_LOCAL_CLOUD_409:{expected_cloud_409}'
+            )
+            require(not unexpected_console_errors, f'BROWSER_CONSOLE_ERRORS:{unexpected_console_errors}; API_4XX_5XX:{api_error_responses}')
+            require(not request_failures, f'LOCAL_REQUEST_FAILURES:{request_failures}; API_4XX_5XX:{api_error_responses}')
             checks.append('browser_console_network_clean')
         finally:
             proc.terminate()
@@ -170,7 +224,7 @@ def main():
             output=(proc.stdout.read() if proc.stdout else '')
             (out/'cloud-center-runtime-server.log').write_text(output,encoding='utf-8')
 
-    report={'status':'PASS','result':'PASS_CLOUD_CENTER_CUSTOMER_RUNTIME_VISUAL_VERIFIED','checkCount':len(checks),'checks':checks,'consoleErrors':console_errors,'localRequestFailures':request_failures,'realDatabaseTouched':False,'liveProcessesTouched':False,'screenshots':['cloud-center-customer-provisioning.png','cloud-center-customers.png'],'diagnostics':['PICKER_DIAGNOSTIC.json','CREATE_CLIENT_DIAGNOSTIC.json','DRAFT_CLIENT_RESPONSE.json'],'doesNotProve':['live cloud customer creation','real customer data correctness','Tablet/PC/Mobile visual state']}
+    report={'status':'PASS','result':'PASS_CLOUD_CENTER_CUSTOMER_RUNTIME_VISUAL_VERIFIED','checkCount':len(checks),'checks':checks,'consoleErrors':console_errors,'localRequestFailures':request_failures,'apiErrorResponses':api_error_responses,'realDatabaseTouched':False,'liveProcessesTouched':False,'screenshots':['cloud-center-customer-provisioning.png','cloud-center-customers.png'],'diagnostics':['PICKER_DIAGNOSTIC.json','CREATE_CLIENT_DIAGNOSTIC.json','DRAFT_CLIENT_RESPONSE.json'],'doesNotProve':['live cloud customer creation','real customer data correctness','Tablet/PC/Mobile visual state']}
     (out/'CLOUD_CENTER_CUSTOMER_RUNTIME_VERIFY.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
     print(report['result']); print(f"checks={len(checks)}")
 

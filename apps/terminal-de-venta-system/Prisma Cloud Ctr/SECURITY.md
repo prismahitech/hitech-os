@@ -73,3 +73,7 @@ License Diagnostics may include License Admin Bridge status, License Route Map, 
 ## Local Server Safety
 
 The local server binds to `127.0.0.1`. It does not kill processes or free ports.
+
+## 2026-09-29 hardening note
+
+Customer Setup failure responses no longer expose raw D1 errors or internal slot-guard diagnostics. Administrative diagnostics retain only sanitized classifications. Temporary persistence-observation payloads were removed after the CI certification cycle.

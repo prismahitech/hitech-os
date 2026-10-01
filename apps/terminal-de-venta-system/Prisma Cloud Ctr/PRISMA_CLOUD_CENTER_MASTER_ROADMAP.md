@@ -1,0 +1,369 @@
+# PRISMA Cloud Center — Master Roadmap & Certification Checklist
+
+**Status:** G0 PASSED — STEP 1 BASELINE CLOSED  
+**Baseline date:** 2026-09-29  
+**Target repository:** `prismahitech/hitech-os`  
+**Canonical component:** `apps/terminal-de-venta-system/Prisma Cloud Ctr`
+
+## Mission
+
+Take Prisma Cloud Center from "implemented / historically verified" to a **current, reproducible, evidence-backed certification state** without rebuilding certified components, creating duplicate authorities, or conflating local, browser, live read-only, live mutation, and production certification.
+
+The operating rule is:
+
+> **No evidence. No green. No duplicate authority. No rebuild of certified work.**
+
+## Scope boundaries
+
+This roadmap governs three related but distinct surfaces:
+
+1. **Prisma Cloud Center Core**
+   - local control center
+   - local API / bridge
+   - browser runtime
+   - cloud metadata/read-only integration
+   - operator diagnostics and supporting views
+
+2. **Cloud License Gateway / LICFLOW3**
+   - Cloudflare Worker
+   - D1
+   - licensing routes
+   - Customer Setup
+   - device claims and replacement
+   - licensing audit/state transitions
+
+3. **PRISMA Change Assurance**
+   - isolated Cloud Center vertical
+   - Code Atlas projections
+   - Authority Pack / Evidence references
+   - entitlements projection
+   - ROI projection
+   - explicit `productionCertified=false` boundary unless independently proven
+
+These surfaces may share contracts, but they do not inherit certification from each other automatically.
+
+---
+
+# MASTER CHECKLIST
+
+## G0 — Baseline freeze
+
+- [ ] Record exact `main` HEAD.
+- [ ] Record repository/default branch state.
+- [ ] Record source file SHAs for all Cloud Center / LICFLOW3 / shared licensing owners.
+- [ ] Record existing evidence artifacts and generation timestamps.
+- [ ] Record current Factory Ledger classifications/statuses and `doNotRebuild`.
+- [ ] Search open PRs and issues for Cloud Center / LICFLOW3 / Customer Setup overlap.
+- [ ] Record current CI/status visibility; never assume green when status is unavailable.
+- [ ] Generate machine-readable baseline.
+- [ ] Mark stale evidence as historical rather than current.
+- [ ] Freeze the baseline reference before source changes begin.
+
+**Gate G0:** `PASS_CLOUD_CENTER_BASELINE_CAPTURED`
+
+---
+
+## G1 — Contract / authority reconciliation
+
+- [x] Define the canonical plan taxonomy.
+- [x] Reconcile commercial plans with Customer Setup plans/packages.
+- [x] Resolve `TABLET_PC_MOBILE_MANAGED` semantic status explicitly.
+- [x] Make `commercialPlanId` explicit and enforce provisioning→commercial SKU mapping at persistence boundaries.
+- [x] Build cross-contract matrix: plan, entitlement, surfaces, route, persistence, UI, owner.
+- [x] Detect duplicate/competing owners.
+- [x] Detect orphan terminology and undocumented aliases.
+- [x] Detect routes documented but not implemented and implemented but undocumented.
+- [x] Detect incompatible result codes/status vocabulary.
+- [x] Register terminology authority.
+
+ **Gate G1:** `PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED` — source/invariant gate revalidated after commercial/provisioning split; CI status remains separately observable.
+**G1 revalidation note:** `TABLET_PC_MOBILE_MANAGED` remains provisioning-only and maps to commercial SKU `TABLET_PC_MANAGED`; worker persistence now enforces that boundary.
+
+---
+
+## G2 — Persistence integrity
+
+### Device Claim
+
+- [x] Audit all writes in `claimCustomerDevice()`. Source-hardened.
+- [x] Make claim provisioning transactional. D1 batch + claim-slot linkage.
+- [x] Ensure slot consumption cannot succeed independently of the claim graph.
+- [x] Ensure audit persistence is part of the success contract.
+- [x] Add read-after-write verification.
+- [x] Forbid `DEVICE_CLAIM_ACCEPTED` on partial state.
+
+### Device Replacement
+
+- [x] Check every write result in `approveDeviceReplacement()`.
+- [x] Add fail-closed behavior.
+- [x] Add read-after-write verification for claim + slot + audit.
+- [x] Forbid `DEVICE_REPLACEMENT_APPROVED` on uncertain state.
+
+### Customer Setup
+
+- [x] Audit provisioning sequence.
+- [x] Introduce transaction strategy with explicit schema preflight.
+- [x] Ensure no half-created tenant/license/setup graph is reported as success.
+- [x] Add full graph verification.
+
+### Audit
+
+- [x] Make `recordAudit()` return verified persistence success/failure.
+- [x] Make critical mutations fail closed when audit cannot be verified.
+- [x] Preserve sanitized diagnostic behavior.
+
+**Gate G2:** `PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY` — **PASS in CI #2238** on candidate `e92feb8…`
+
+---
+
+## G3 — Concurrency / idempotency
+
+- [x] Same-slot simultaneous claims.
+- [x] Same-device simultaneous claims.
+- [x] Simultaneous replacement approvals.
+- [x] Repeated identical requests.
+- [x] Retry after injected intermediate failure.
+- [x] Setup creation retries.
+- [x] Refresh/revoke/renew conflict cases.
+- [x] Prove device counters never exceed plan limits.
+- [x] Prove no duplicate claims or double slot release.
+- [x] Prove no orphan rows.
+
+**G3 status note:** The repository now contains a same-DB multi-connection D1-compatible runtime harness covering concurrency, failure injection, retry preservation, blocked/expired fail-closed behavior, refresh/revoke/renew conflict handling and graph integrity. **CI execution is the runtime gate; current candidate CI #2307 passed.**
+
+**Gate G3:** `PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY` — CI-certified on current candidate HEAD `63c70f0…` in CI #2307; the previously documented refresh/revoke/renew conflict gap is now covered by the passing verifier.
+
+---
+
+## G4 — D1 graph and invariant verification
+
+- [x] Validate license -> assignment -> setup -> bundle graph.
+- [x] Validate setup -> slot -> claim -> device graph.
+- [x] Validate tenant ownership across all related rows.
+- [x] Validate audit linkage.
+- [x] Validate claimed counters against actual claim state.
+- [x] Validate blocked license states cannot perform customer actions.
+- [x] Validate replaced devices cannot remain active.
+- [x] Validate expired/revoked setups fail closed.
+- [x] Validate zero orphan/dangling/contradictory state.
+
+**Gate G4:** `PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY` — CI-certified on current candidate HEAD `63c70f0…` in CI #2307; blocked-license and expired/revoked setup fail-closed behavior is now covered by the passing verification cycle.
+
+---
+
+## G5 — Runtime verification
+
+### Local
+
+- [x] Local server bootstrap and runtime execution — CI #2307.
+- [x] Port/bind safety.
+- [x] Route map.
+- [x] Health.
+- [x] Cloud adapter.
+- [x] License Admin Bridge.
+- [x] Diagnostics.
+- [x] Secret boundary.
+- [x] No destructive process/port behavior.
+
+### Browser
+
+- [x] Desktop runtime verifier — CI #2307 PASS with artifact evidence.
+- [x] Mobile runtime verifier — CI #2307 PASS with artifact evidence.
+- [x] All 13 Cloud Center core surfaces are covered by browser verifier.
+- [x] Hash/surface navigation covered by browser verifier.
+- [x] Console error capture/fail-closed assertion covered by browser verifier.
+- [x] Page error capture/fail-closed assertion covered by browser verifier.
+- [x] HTTP contract checks included in browser verifier via isolated test stub.
+- [ ] Expected disconnected probes classified correctly.
+- [x] Screenshot evidence captured by CI #2307 artifact `cloud-center-browser-runtime-36644998368-1`.
+
+### Live read-only
+
+- [x] `/health` via the exact remote Worker Preview.
+- [x] public capabilities.
+- [x] tenant status.
+- [ ] safe customer setup resolution where available.
+- [x] unauthorized admin boundary.
+- [ ] sanitized diagnostics.
+- [x] D1/OAuth/read-only health.
+- [x] Fresh live-readonly recertification through isolated Worker Preview.
+- [x] Current evidence timestamp and immutable CI artifact recorded.
+- [x] Canonical domain observation remains separate from the certification gate.
+- [ ] Canonical `app.hitechrts.com` reachability. The current public DNS observation is external and remains `DNS_UNAVAILABLE`; it does not invalidate Worker Preview certification.
+
+**Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME` — PASS in CI #2314.  
+**Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — PASS in CI #2314 with desktop/mobile evidence artifact.  
+**Gate G5C:** `PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY` — certified against the real remote Worker through `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev` in CI run `36789056912`; no production traffic, DNS or D1 mutation was performed.
+
+---
+
+## G6 — Live mutation ceremony (separate gate)
+
+This gate is **not implied** by OAuth/D1 or read-only certification.
+
+- [ ] Explicit operator authorization.
+- [ ] Token remains presence-only outside backend.
+- [ ] Dry run first.
+- [ ] Synthetic isolated customer/setup.
+- [ ] Create setup.
+- [ ] Claim Tablet/PC/Mobile as applicable.
+- [ ] Negative claim cases.
+- [ ] Refresh.
+- [ ] Renewal/commercial transitions.
+- [ ] Replacement request/approval/reclaim.
+- [ ] Revoke.
+- [ ] Audit read-back.
+- [ ] Final state read-back.
+- [ ] Cleanup/neutralization.
+- [ ] Verify no production customer was touched.
+- [ ] Verify no secret entered evidence.
+
+**Gate G6:** `PASS_CLOUD_CENTER_LIVE_MUTATION_E2E_CERTIFIED`
+
+---
+
+## G7 — Security certification
+
+- [ ] Secret scanning.
+- [ ] Browser exposure review.
+- [ ] Diagnostics review.
+- [ ] Logs/reports/evidence review.
+- [ ] Raw header leakage review.
+- [ ] D1 error sanitization review.
+- [ ] Tenant enumeration review.
+- [ ] Setup-code exposure review.
+- [ ] Magic-link scope review.
+- [ ] Admin authentication boundary review.
+- [ ] Customer authorization does not depend on tenant slug alone.
+
+**Gate G7:** `PASS_CLOUD_CENTER_SECURITY_CERTIFIED`
+
+---
+
+## G8 — Documentation / terminology
+
+- [ ] README.
+- [ ] ARCHITECTURE.
+- [ ] SECURITY.
+- [ ] MANUAL / runbook.
+- [ ] CHANGELOG.
+- [ ] Current-state document.
+- [ ] Certification status document.
+- [ ] Canonical terminology registry.
+- [ ] Cross-link all evidence and gates.
+- [ ] Remove or formally mark stale claims.
+- [ ] Homologate Cloud Center / Cloud License Gateway / LICFLOW3 / LICFLOW4 / Change Assurance vocabulary.
+
+**Gate G8:** `PASS_CLOUD_CENTER_DOCUMENTATION_HOMOLOGATED`
+
+---
+
+## G9 — Certification matrix
+
+Maintain one matrix with distinct columns for:
+
+```
+SOURCE
+LOCAL
+BROWSER
+LIVE_READONLY
+LIVE_MUTATION
+PRODUCTION
+VISUAL
+```
+
+No single `PASS` may imply all columns.
+
+**Gate G9:** `PASS_CLOUD_CENTER_CERTIFICATION_MATRIX_CURRENT`
+
+---
+
+## G10 — Final closure
+
+- [ ] Full lint/type/compile battery.
+- [ ] Cloud Center source verifiers.
+- [ ] Authority Mesh.
+- [ ] anti-rework / Factory Ledger.
+- [ ] route map.
+- [ ] D1 graph verifier.
+- [ ] negative tests.
+- [ ] concurrency/idempotency.
+- [ ] local runtime.
+- [ ] browser desktop/mobile.
+- [ ] security.
+- [ ] documentation consistency.
+- [ ] current live read-only.
+- [ ] authorized live mutation if explicitly approved.
+- [ ] evidence packaging and hashes.
+- [ ] final HEAD revalidation.
+- [ ] final tree revalidation.
+- [ ] classify every final diff as AUTHORIZED / DERIVED / UNRELATED / ACCIDENTAL.
+
+**Gate G10:** `PASS_CLOUD_CENTER_FINAL_CERTIFICATION`
+
+---
+
+## G11 — Freeze
+
+- [ ] Record certified HEAD.
+- [ ] Record source hashes.
+- [ ] Record verifier versions.
+- [ ] Record evidence hashes.
+- [ ] Record D1 schema reference.
+- [ ] Record terminology version.
+- [ ] Register final Factory Ledger state.
+- [ ] Mark certified capabilities `doNotRebuild=true`.
+- [ ] Define drift-triggered recertification rules.
+
+**Gate G11:** `CLOUD_CENTER_CERTIFIED_BASELINE_FROZEN`
+
+---
+
+# Non-negotiable operating rules
+
+1. **No rebuild of certified capability without demonstrated drift.**
+2. **No second owner for an existing contract or runtime capability.**
+3. **No live mutation before live-read certification.**
+4. **No critical mutation PASS without read-after-write verification.**
+5. **No critical mutation PASS without verifiable audit.**
+6. **No current certification from stale historical evidence.**
+7. **No terminology drift without explicit canonical mapping.**
+8. **No production certification claim from local/source evidence alone.**
+9. **No token value in frontend, logs, diagnostics, screenshots, reports, or evidence.**
+10. **The final certification must match the exact HEAD that remains governed.**
+
+# Current execution pointer
+
+**Current:** G5C WORKER-PREVIEW-CERTIFIED — G1/G2/G3/G4/G5A/G5B/G5C read-only evidence is green on candidate `82c512751267db134bc8f012d6e3a01a403ef197`.  
+**Next:** merge PR #597, recertify the resulting `main` HEAD, then continue G7/G8/G9/G10 closure work as applicable.  
+**Production boundary:** `app.hitechrts.com` remains a separate canonical-domain observation; no production certification is inferred from the Worker Preview.  
+**Mutation policy:** live mutation remains prohibited until G6 receives explicit operator authorization and its own read/write ceremony is executed.
+
+# Historical evidence rule
+
+Evidence generated in July/August 2026 remains useful as historical baseline and provenance, but does not automatically certify the September 29, 2026 state.
+
+# Stop conditions
+
+Stop and classify instead of forcing green when:
+
+- evidence is missing or stale;
+- authority is ambiguous;
+- a write result is unchecked;
+- state cannot be read back;
+- a secret boundary is uncertain;
+- a live mutation lacks explicit authorization;
+- a change conflicts with Factory Ledger `doNotRebuild`;
+- a different component owns the capability;
+- the final HEAD differs from the certified HEAD.
+
+
+
+### G5C closure note — 2026-09-30
+- The live-readonly workflow now certifies the exact remote Worker Preview instead of requiring the canonical public DNS path.
+- CI run `36789056912` created and exercised `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev`.
+- The Preview returned the required health, D1, capabilities, tenant-status and client-contract evidence and rejected mutation attempts with `403 READ_ONLY_PREVIEW`.
+- `app.hitechrts.com` is observed separately as a canonical production-domain dependency; its DNS state does not gate the Worker Preview certification.
+- The Preview reuses the real D1 binding but is mutation-blocked by `PRISMA_LICFLOW3_PREVIEW_MODE=readonly`; no D1 mutation was performed.
+- The emergency recovery Preview also passed in CI run `36789056978`.
+- The live-readonly workflow is now configured to run on both the governed candidate branch and `main`, so post-merge recertification is reproducible.

@@ -1,0 +1,248 @@
+name: Cloud Center Emergency Read-only Preview
+
+on:
+  push:
+    branches:
+      - governance/cloud-center-roadmap-step1-20260929
+    paths:
+      - "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/**"
+      - "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py"
+      - ".github/workflows/cloud-center-emergency-readonly-preview.yml"
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/**"
+      - "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py"
+      - ".github/workflows/cloud-center-emergency-readonly-preview.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloud-center-emergency-readonly-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  emergency-preview:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    name: Create read-only Cloud Center preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref_name }}
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Validate Cloudflare credentials
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN}" || { echo "Missing GitHub secret: CLOUDFLARE_API_TOKEN"; exit 2; }
+          test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
+          pnpm dlx wrangler@4.143.0 whoami
+
+      - name: Ensure account workers.dev subdomain for isolated Preview
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain"
+          state="${RUNNER_TEMP}/cloud-center-workers-subdomain.json"
+
+          http_status="$(curl --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 \
+            -o "${state}" -w "%{http_code}" \
+            "${endpoint}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")"
+
+          if [ "${http_status}" = "200" ]; then
+            subdomain="$(node -e '
+              const fs=require("node:fs");
+              const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+              const value=String(data.result?.subdomain ?? "").trim();
+              if (!data.success || !value) throw new Error("Cloudflare returned no account workers.dev subdomain");
+              process.stdout.write(value);
+            ' "${state}")"
+            echo "Using existing account workers.dev subdomain: ${subdomain}.workers.dev"
+          elif [ "${http_status}" = "404" ]; then
+            echo "Account has no workers.dev subdomain; requesting dedicated hitechos-preview subdomain."
+            response_status="$(curl --silent --show-error \
+              -o "${state}" -w "%{http_code}" \
+              -X PUT "${endpoint}" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "content-type: application/json" \
+              --data '{"subdomain":"hitechos-preview"}')"
+            echo "Account workers.dev subdomain API status: ${response_status}"
+            if [ "${response_status}" != "200" ]; then
+              node -e '
+                const fs=require("node:fs");
+                const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+                const errors=Array.isArray(data.errors)?data.errors:[];
+                const messages=Array.isArray(data.messages)?data.messages:[];
+                for (const item of [...errors,...messages]) {
+                  if (item && (item.code !== undefined || item.message !== undefined)) process.stdout.write(String(item.code ?? "")+" "+String(item.message ?? "")+"\n");
+                }
+              ' "${state}"
+              exit 1
+            fi
+            echo "Account workers.dev subdomain created."
+          else
+            echo "Unexpected account workers.dev subdomain GET status: ${http_status}"
+            cat "${state}"
+            exit 1
+          fi
+
+          node -e '
+            const fs=require("node:fs");
+            const data=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));
+            const value=String(data.result?.subdomain ?? "").trim();
+            if (!data.success || !value) throw new Error("Unable to resolve account workers.dev subdomain after setup");
+            process.stdout.write("Resolved account workers.dev subdomain: "+value+".workers.dev\\n");
+          ' "${state}"
+      - name: Create or update isolated Worker Preview
+        id: preview
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm dlx wrangler@4.143.0 preview \
+            --name "cloud-center-recovery" \
+            --message "Cloud Center emergency read-only recovery preview" \
+            --json | tee "${RUNNER_TEMP}/cloud-center-wrangler-preview.json"
+
+          test -s "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" || {
+            echo "Wrangler Preview output is empty"
+            exit 1
+          }
+
+          preview_url="$(jq -er '.preview.urls[0]' "${RUNNER_TEMP}/cloud-center-wrangler-preview.json" 2>/dev/null || true)"
+
+          if [ -z "${preview_url}" ] || [ "${preview_url}" = "null" ]; then
+            worker_metadata="${RUNNER_TEMP}/cloud-center-worker-metadata.json"
+            worker_endpoint="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/prisma-cloud-semilla"
+
+            curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 2 \
+              -o "${worker_metadata}" \
+              "${worker_endpoint}" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+
+            preview_url="$(node -e '
+              const fs = require("node:fs");
+              const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+              const previewName = "cloud-center-recovery";
+              const subdomain = data.result?.subdomain ?? {};
+              if (subdomain.previews_enabled !== true) {
+                throw new Error("Cloudflare reports Worker Preview URLs are disabled");
+              }
+              const raw = String(subdomain.preview_url_suffix ?? "").trim();
+              if (!raw) {
+                throw new Error("Cloudflare returned no workers.dev preview_url_suffix; no Preview host is configured for this Worker");
+              }
+              const value = raw.startsWith("http://") || raw.startsWith("https://") ? raw : "https://" + raw;
+              const url = new URL(value);
+              const host = url.hostname;
+              const labels = host.split(".");
+              const worker = "prisma-cloud-semilla";
+              const idx = labels.findIndex((label) => label === worker);
+              if (idx < 0) {
+                url.hostname = previewName + "-" + host;
+              } else {
+                labels[idx] = previewName + "-" + labels[idx];
+                url.hostname = labels.join(".");
+              }
+              process.stdout.write(url.origin);
+            ' "${worker_metadata}")"
+          fi
+
+          test -n "${preview_url}" || { echo "No routable Cloudflare Preview URL resolved"; exit 1; }
+          printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
+          printf 'PREVIEW_URL=%s\n' "${preview_url}"
+
+      - name: Verify read-only Preview
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/health" > health.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/public/capabilities" > capabilities.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/public/tenants/prisma-original-customer/status" > tenant-status.json
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 2 "${PREVIEW_URL}/api/client/contract?tenant=prisma-original-customer" > contract.json
+
+          node <<'NODE'
+          const fs = require("node:fs");
+          const health = JSON.parse(fs.readFileSync("health.json", "utf8"));
+          const caps = JSON.parse(fs.readFileSync("capabilities.json", "utf8"));
+          const tenant = JSON.parse(fs.readFileSync("tenant-status.json", "utf8"));
+          const contract = JSON.parse(fs.readFileSync("contract.json", "utf8"));
+          if (health.ok !== true || health.dbHealth !== "D1_BOUND") throw new Error("Preview health/D1 check failed");
+          if (caps.ok !== true) throw new Error("Preview capabilities check failed");
+          if (!tenant || typeof tenant !== "object") throw new Error("Preview tenant status check failed");
+          if (!contract || typeof contract !== "object") throw new Error("Preview contract check failed");
+          NODE
+
+          status=$(curl --silent --output mutation-body.json --write-out "%{http_code}" \
+            -X POST "${PREVIEW_URL}/api/licenses/activate" \
+            -H "content-type: application/json" \
+            --data '{"dryRun":true,"tenantSlug":"cloud-center-emergency-preview","licenseId":"cloud-center-emergency-preview"}')
+
+          test "${status}" = "403" || { echo "Expected read-only guard 403, got ${status}"; cat mutation-body.json; exit 1; }
+          grep -q '"READ_ONLY_PREVIEW"' mutation-body.json || { echo "Read-only guard marker missing"; cat mutation-body.json; exit 1; }
+
+      - name: Write recovery evidence
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("node:fs");
+          const evidence = {
+            status: "PASS_EMERGENCY_READONLY_PREVIEW",
+            previewUrl: process.env.PREVIEW_URL,
+            worker: "prisma-cloud-semilla",
+            d1: "prisma_cloud_semilla",
+            publicTarget: "https://app.hitechrts.com",
+            productionTrafficChanged: false,
+            dnsChanged: false,
+            d1MutationPerformed: false,
+            mutationGuard: "POST -> 403 READ_ONLY_PREVIEW",
+            generatedAt: new Date().toISOString()
+          };
+          fs.writeFileSync("cloud-center-emergency-preview.json", JSON.stringify(evidence, null, 2) + "\n");
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, "## Cloud Center emergency preview\n\n**Preview URL:** " + process.env.PREVIEW_URL + "\n\nProduction traffic was not promoted; DNS was not changed; preview mutation guard returned 403.\n");
+          NODE
+
+      - name: Upload recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloud-center-emergency-readonly-preview-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          path: |
+            cloud-center-emergency-preview.json
+            health.json
+            capabilities.json
+            tenant-status.json
+            contract.json
+            mutation-body.json
+            ${{ runner.temp }}/cloud-center-wrangler-preview.json

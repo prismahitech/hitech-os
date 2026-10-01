@@ -38,6 +38,21 @@ async function requestJson(method, route, body) {
       json = { rawText: text.slice(0, 500) };
     }
     return { route, method, status: response.status, ok: response.ok, json: jsonPreview(json) };
+  } catch (error) {
+    const cause = error?.cause;
+    return {
+      route,
+      method,
+      status: 0,
+      ok: false,
+      json: {
+        error: String(error?.message || error),
+        errorName: String(error?.name || "Error"),
+        causeCode: cause?.code ? String(cause.code) : null,
+        causeName: cause?.name ? String(cause.name) : null,
+        causeMessage: cause?.message ? String(cause.message) : null
+      }
+    };
   } finally {
     clearTimeout(timer);
   }
@@ -54,7 +69,7 @@ function hasCapabilities(json, names) {
 function adminBlocked(result) {
   if (![401, 403].includes(result.status)) return false;
   const text = JSON.stringify(result.json ?? {});
-  return /ADMIN_TOKEN_REQUIRED|admin|token|unauthorized|forbidden/i.test(text);
+  return /ADMIN_TOKEN_REQUIRED|READ_ONLY_PREVIEW|read-only preview|rejects all mutation|admin|token|unauthorized|forbidden/i.test(text);
 }
 
 function mutationPrevented(result) {
@@ -68,6 +83,8 @@ function mutationPrevented(result) {
 async function main() {
   const health = await requestJson("GET", "/health");
   const capabilities = await requestJson("GET", "/api/public/capabilities");
+  const tenantStatus = await requestJson("GET", "/api/public/tenants/prisma-original-customer/status");
+  const clientContract = await requestJson("GET", "/api/client/contract?tenant=prisma-original-customer");
   const adminSetupNoToken = await requestJson("POST", "/api/admin/customer-setups/create", {
     dryRun: true,
     source: "codex-live-readonly-guard"
@@ -90,21 +107,36 @@ async function main() {
     "customerPortal",
     "customerLicenseRefresh",
     "billingRenewal",
-    "gracePeriod"
+    "gracePeriod",
+    "tenantStatus",
+    "contractFetch"
   ];
 
   const checks = [
     check(health.status === 200 && health.json?.ok === true, "live health returns 200 ok", health),
     check(health.json?.dbHealth === "D1_BOUND", "live D1 binding is reported", { dbHealth: health.json?.dbHealth, counts: health.json?.counts ?? null }),
     check(capabilities.status === 200 && capabilities.json?.ok === true, "live capabilities returns 200 ok", capabilities),
-    check(hasCapabilities(capabilities.json, requiredCapabilities), "live capabilities include customer setup, slots, claims and renewal", { requiredCapabilities, capabilities: capabilities.json?.capabilities ?? null }),
+    check(hasCapabilities(capabilities.json, requiredCapabilities), "live capabilities include customer setup, slots, claims, renewal, tenant status and contract fetch", { requiredCapabilities, capabilities: capabilities.json?.capabilities ?? null }),
+    check(tenantStatus.status === 200 && tenantStatus.json?.ok === true, "live tenant status returns 200 ok", tenantStatus),
+    check(
+      clientContract.status === 200
+        && clientContract.json?.tenantSlug === "prisma-original-customer"
+        && typeof clientContract.json?.contractVersion === "string"
+        && typeof clientContract.json?.hostedCloudEvidence === "string",
+      "live client contract returns 200 with the expected tenant contract shape",
+      clientContract
+    ),
     check(mutationPrevented(adminSetupNoToken), "admin customer setup is blocked or simulation-only without token", adminSetupNoToken),
     check(mutationPrevented(adminActivateNoToken), "admin license activation is blocked or simulation-only without token", adminActivateNoToken)
   ];
 
+  const previewMode = /^https?:\/\/[^/]+\.workers\.dev$/i.test(baseUrl);
   const payload = {
     ok: checks.every((item) => item.status === "PASS"),
-    status: checks.every((item) => item.status === "PASS") ? "PASS_PUBLIC_LIVE_READONLY" : "FAIL",
+    status: checks.every((item) => item.status === "PASS")
+      ? (previewMode ? "PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY" : "PASS_PUBLIC_LIVE_READONLY")
+      : "FAIL",
+    evidenceClass: previewMode ? "WORKER_PREVIEW_DIRECT" : "CANONICAL_PUBLIC_LIVE",
     checkedAt,
     baseUrl,
     authenticated: false,
@@ -126,16 +158,22 @@ async function main() {
 }
 
 main().catch((error) => {
+  const cause = error?.cause;
   console.error(JSON.stringify({
     ok: false,
     status: "FAIL",
+    evidenceClass: /^https?:\/\/[^/]+\.workers\.dev$/i.test(baseUrl) ? "WORKER_PREVIEW_DIRECT" : "CANONICAL_PUBLIC_LIVE",
     checkedAt,
     baseUrl,
     authenticated: false,
     adminMutationPerformed: false,
     d1MutationPerformed: false,
     secretsPrinted: false,
-    error: String(error?.message || error)
+    error: String(error?.message || error),
+    errorName: String(error?.name || "Error"),
+    causeCode: cause?.code ? String(cause.code) : null,
+    causeName: cause?.name ? String(cause.name) : null,
+    causeMessage: cause?.message ? String(cause.message) : null
   }, null, 2));
   process.exit(1);
 });

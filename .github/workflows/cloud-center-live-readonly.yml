@@ -1,0 +1,161 @@
+name: Cloud Center Live Read-only Recertification
+
+on:
+  push:
+    branches:
+      - governance/cloud-center-roadmap-step1-20260929
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/**"
+      - "apps/terminal-de-venta-system/tools/verify-cloud-center-live-readiness.mjs"
+      - ".github/workflows/cloud-center-live-readonly.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloud-center-live-readonly-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  live-readonly:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref_name }}
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Validate Cloudflare credentials
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN}" || { echo "Missing GitHub secret: CLOUDFLARE_API_TOKEN"; exit 2; }
+          test -n "${CLOUDFLARE_ACCOUNT_ID}" || { echo "Missing GitHub secret: CLOUDFLARE_ACCOUNT_ID"; exit 2; }
+          pnpm dlx wrangler@4.143.0 whoami
+
+      - name: Create isolated Worker Preview for live recertification
+        id: preview
+        working-directory: apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="${RUNNER_TEMP}/cloud-center-live-wrangler-preview.json"
+          pnpm dlx wrangler@4.143.0 preview \
+            --name "cloud-center-live-recert" \
+            --message "Cloud Center live read-only recertification" \
+            --json | tee "${output}"
+
+          test -s "${output}" || { echo "Wrangler Preview output is empty"; exit 1; }
+          preview_url="$(jq -er '.preview.urls[0]' "${output}" 2>/dev/null || true)"
+
+          if [ -z "${preview_url}" ] || [ "${preview_url}" = "null" ]; then
+            metadata="${RUNNER_TEMP}/cloud-center-live-worker-metadata.json"
+            curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 2 \
+              -o "${metadata}" \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/workers/prisma-cloud-semilla" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+
+            preview_url="$(node -e '
+              const fs = require("node:fs");
+              const data = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+              const raw = String(data.result?.subdomain?.preview_url_suffix ?? "").trim();
+              if (!raw) throw new Error("Cloudflare returned no preview_url_suffix for prisma-cloud-semilla");
+              const value = raw.startsWith("http://") || raw.startsWith("https://") ? raw : "https://" + raw;
+              const url = new URL(value);
+              process.stdout.write(url.origin);
+            ' "${metadata}")"
+          fi
+
+          test -n "${preview_url}" || { echo "No routable Worker Preview URL resolved"; exit 1; }
+          printf 'preview_url=%s\n' "${preview_url}" >> "${GITHUB_OUTPUT}"
+          printf 'WORKER_DIRECT_PREVIEW_URL=%s\n' "${preview_url}"
+
+      - name: Verify Worker direct read-only contract
+        env:
+          PRISMA_CLOUD_CENTER_LIVE_URL: ${{ steps.preview.outputs.preview_url }}
+        working-directory: apps/terminal-de-venta-system
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools/_local/reports/ci/cloud-center-live
+          node tools/verify-cloud-center-live-readiness.mjs \
+            --out=tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_WORKER_DIRECT_READONLY_VERIFY.json
+
+      - name: Record canonical domain observation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live
+          canonical_status="$(curl -sS --connect-timeout 10 --max-time 20 -o /dev/null -w '%{http_code}' https://app.hitechrts.com/health || true)"
+          node -e '
+            const fs = require("node:fs");
+            const status = process.argv[1];
+            const resolved = status !== "000" && status !== "";
+            fs.writeFileSync(
+              "apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live/CANONICAL_DOMAIN_OBSERVATION.json",
+              JSON.stringify({
+                target: "https://app.hitechrts.com",
+                reachable: resolved,
+                observedHttpStatus: status,
+                canonicalCertificationStatus: resolved ? "OBSERVED" : "DNS_UNAVAILABLE",
+                note: "Canonical DNS is observed separately; this CI gate certifies the exact remote Worker Preview without changing production traffic."
+              }, null, 2) + "\n"
+            );
+          ' "${canonical_status}"
+
+      - name: Write read-only recertification evidence
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("node:fs");
+          const evidence = {
+            status: "PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY",
+            previewUrl: process.env.PREVIEW_URL,
+            worker: "prisma-cloud-semilla",
+            d1: "prisma_cloud_semilla",
+            publicTarget: "https://app.hitechrts.com",
+            productionTrafficChanged: false,
+            dnsChanged: false,
+            d1MutationPerformed: false,
+            generatedAt: new Date().toISOString()
+          };
+          fs.writeFileSync(
+            "apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live/CLOUD_CENTER_WORKER_DIRECT_READONLY_EVIDENCE.json",
+            JSON.stringify(evidence, null, 2) + "\n"
+          );
+          NODE
+
+      - name: Upload live read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloud-center-live-readonly-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          path: apps/terminal-de-venta-system/tools/_local/reports/ci/cloud-center-live/

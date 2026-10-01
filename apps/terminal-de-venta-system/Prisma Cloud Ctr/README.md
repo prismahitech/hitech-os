@@ -60,3 +60,13 @@ Local protected routes:
 The bridge keeps `ADMIN_TOKEN` server-side. Browser UI sees only booleans, sanitized status/result codes, and sanitized audit summaries. Mutating calls require `confirmAdminLicenseAction: true`; revoke also requires `confirmRevoke: "REVOKE_LICENSE"`.
 
 For full operating instructions, read `MANUAL.md`.
+
+## Governance Roadmap
+
+The current certification roadmap and the 2026-09-29 baseline are maintained here:
+
+- `PRISMA_CLOUD_CENTER_MASTER_ROADMAP.md`
+- `PRISMA_CLOUD_CENTER_BASELINE_2026-09-29.json`
+
+The roadmap is the execution checklist. The baseline records the exact source/evidence state from which the certification work proceeds. Historical PASS evidence must not be treated as current certification without fresh evidence.
+

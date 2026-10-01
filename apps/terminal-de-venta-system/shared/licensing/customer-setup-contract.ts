@@ -9,7 +9,17 @@ export type CustomerSetupStatus = "active" | "expired" | "revoked" | "draft" | "
 export type DeviceClaimStatus = "claimed" | "already_claimed" | "slot_full" | "replacement_required" | "replaced" | "source_ready";
 export type DeviceClaimSlotStatus = "AVAILABLE" | "CLAIMED" | "EXPIRED" | "REVOKED";
 export type CustomerLicenseCommercialStatus = "active" | "expiring" | "grace_period" | "suspended" | "revoked" | "renewed";
-export type CustomerSetupPlanId = "TABLET_SOLO" | "TABLET_PRO" | "TABLET_PC_MANAGED" | typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN;
+/** Commercial plan IDs owned by shared/licensing/plan-catalog.canonical.json. */
+export type CustomerSetupCommercialPlanId = "TABLET_SOLO" | "TABLET_PRO" | "TABLET_PC_MANAGED";
+
+/** Provisioning-only plan/package IDs. These are not vendible license SKUs. */
+export type CustomerSetupProvisioningOnlyPlanId = typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN;
+
+/**
+ * Customer Setup plan IDs span commercial plans plus provisioning-only packages.
+ * Consumers must not treat every CustomerSetupPlanId as a vendible commercial SKU.
+ */
+export type CustomerSetupPlanId = CustomerSetupCommercialPlanId | CustomerSetupProvisioningOnlyPlanId;
 export type CustomerSetupMode = "setup_link_code_qr";
 export type CustomerClaimMode = "auto_generated_claim_slots";
 
@@ -42,7 +52,10 @@ export type CustomerSetupSlot = {
 };
 
 export type PlanProvisioningDefinition = {
+  /** Provisioning identifier used by Customer Setup and slot generation. */
   planId: CustomerSetupPlanId;
+  /** Canonical commercial license SKU persisted in licenses/tenants. */
+  commercialPlanId: CustomerSetupCommercialPlanId;
   planName: string;
   maxTabletDevices: number;
   maxPcDevices: number;
@@ -63,7 +76,10 @@ export type DeviceClaimSlot = {
   setupBundleId: string;
   clientId: string;
   licenseId: string;
+  /** Provisioning plan/package identifier for the claim slot. */
   planId: CustomerSetupPlanId | string;
+  /** Canonical commercial SKU attached to the underlying license. */
+  commercialPlanId?: CustomerSetupCommercialPlanId;
   surface: CustomerSetupSurface;
   status: DeviceClaimSlotStatus;
   claimCode: string;
@@ -89,6 +105,7 @@ export type PlanBasedProvisioningResult = {
   operatorActionCount: 1;
   manualDeviceClaimRequired: false;
   auditEventId: string | null;
+  commercialPlanId: CustomerSetupCommercialPlanId;
 };
 
 export type CustomerSetupPass = {
@@ -104,8 +121,12 @@ export type CustomerSetupPass = {
   businessId: string;
   businessName: string;
   packageCode: typeof PRISMA_TRIPLE_DEVICE_STARTER | string;
+  /** Provisioning plan/package identifier. */
   planId: CustomerSetupPlanId | string;
+  /** Provisioning plan code retained for Customer Setup compatibility. */
   planCode: typeof PRISMA_TRIPLE_DEVICE_STARTER_PLAN | string;
+  /** Canonical commercial license SKU represented by this setup. */
+  commercialPlanId: CustomerSetupCommercialPlanId;
   licenseId: string;
   licenseAssignmentId: string;
   status: CustomerSetupStatus;
@@ -334,9 +355,15 @@ export const PRISMA_TRIPLE_DEVICE_STARTER_SLOTS: readonly CustomerSetupSlot[] = 
   { surface: "mobile", label: CUSTOMER_SETUP_SLOT_LABELS.mobile, allowed: 1, claimed: 0 }
 ];
 
+/**
+ * Canonical Customer Setup provisioning owner.
+ * Commercial status is owned by plan-catalog.canonical.json; the starter plan below
+ * is provisioning-only and has no standalone commercial SKU/price.
+ */
 export const PLAN_BASED_PROVISIONING_CATALOG: Record<CustomerSetupPlanId, PlanProvisioningDefinition> = {
   TABLET_SOLO: {
     planId: "TABLET_SOLO",
+    commercialPlanId: "TABLET_SOLO",
     planName: "Tablet Solo",
     maxTabletDevices: 1,
     maxPcDevices: 0,
@@ -353,6 +380,7 @@ export const PLAN_BASED_PROVISIONING_CATALOG: Record<CustomerSetupPlanId, PlanPr
   },
   TABLET_PRO: {
     planId: "TABLET_PRO",
+    commercialPlanId: "TABLET_PRO",
     planName: "Tablet Pro",
     maxTabletDevices: 2,
     maxPcDevices: 0,
@@ -369,6 +397,7 @@ export const PLAN_BASED_PROVISIONING_CATALOG: Record<CustomerSetupPlanId, PlanPr
   },
   TABLET_PC_MANAGED: {
     planId: "TABLET_PC_MANAGED",
+    commercialPlanId: "TABLET_PC_MANAGED",
     planName: "Tablet + PC Managed",
     maxTabletDevices: 2,
     maxPcDevices: 1,
@@ -385,6 +414,7 @@ export const PLAN_BASED_PROVISIONING_CATALOG: Record<CustomerSetupPlanId, PlanPr
   },
   TABLET_PC_MOBILE_MANAGED: {
     planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,
+    commercialPlanId: "TABLET_PC_MANAGED",
     planName: "Tablet + PC + Mobile Managed",
     maxTabletDevices: 1,
     maxPcDevices: 1,

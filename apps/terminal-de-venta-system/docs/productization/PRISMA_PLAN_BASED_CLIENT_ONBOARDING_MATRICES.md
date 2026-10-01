@@ -16,14 +16,20 @@ E2E/spec/result:
 E2E_012_PLAN_BASED_CLIENT_ONBOARDING
 ```
 
+## Plan Authority Boundary
+
+The matrix below is a provisioning matrix, not a commercial SKU catalog.
+
+`TABLET_SOLO`, `TABLET_PRO`, and `TABLET_PC_MANAGED` are commercial-plan identifiers that also participate in provisioning. `TABLET_PC_MOBILE_MANAGED` is provisioning-only and maps to the `PRISMA_TRIPLE_DEVICE_STARTER` Customer Setup package; it must not appear in commercial pricing or vendible-plan selectors.
+
 ## PLAN_PROVISIONING_MATRIX
 
-| planId | planName | maxTabletDevices | maxPcDevices | maxMobileDevices | maxTotalDevices | allowedSurfaces | features | claimMode | autoGenerateSlots | requiresManualApproval | status | evidence |
-| --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- | --- |
-| TABLET_SOLO | Tablet Solo | 1 | 0 | 0 | 1 | tablet | pos.local_sale, catalog.local, cash.local | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_SOLO` |
-| TABLET_PRO | Tablet Pro | 2 | 0 | 1 | 3 | tablet, mobile | pos.local_sale, returns, outbox.visible, mobile.supervision | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PRO` |
-| TABLET_PC_MANAGED | Tablet + PC Managed | 2 | 1 | 1 | 4 | tablet, pc, mobile | pos.local_sale, pc.backoffice, sync.audit, mobile.supervision | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PC_MANAGED` |
-| TABLET_PC_MOBILE_MANAGED | Tablet + PC + Mobile Managed | 1 | 1 | 1 | 3 | tablet, pc, mobile | pos.local_sale, pc.backoffice, mobile.companion, customer.setup | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PC_MOBILE_MANAGED` |
+| planId | commercialPlanId | planName | maxTabletDevices | maxPcDevices | maxMobileDevices | maxTotalDevices | allowedSurfaces | features | claimMode | autoGenerateSlots | requiresManualApproval | status | evidence |
+| --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- | --- |
+| TABLET_SOLO | TABLET_SOLO | Tablet Solo | 1 | 0 | 0 | 1 | tablet | pos.local_sale, catalog.local, cash.local | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_SOLO` |
+| TABLET_PRO | TABLET_PRO | Tablet Pro | 2 | 0 | 1 | 3 | tablet, mobile | pos.local_sale, returns, outbox.visible, mobile.supervision | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PRO` |
+| TABLET_PC_MANAGED | TABLET_PC_MANAGED | Tablet + PC Managed | 2 | 1 | 1 | 4 | tablet, pc, mobile | pos.local_sale, pc.backoffice, sync.audit, mobile.supervision | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PC_MANAGED` |
+| TABLET_PC_MOBILE_MANAGED | TABLET_PC_MANAGED | Tablet + PC + Mobile Managed | 1 | 1 | 1 | 3 | tablet, pc, mobile | pos.local_sale, pc.backoffice, mobile.companion, customer.setup | auto_generated_claim_slots | true | false | SOURCE_READY | `PLAN_BASED_PROVISIONING_CATALOG.TABLET_PC_MOBILE_MANAGED` |
 
 ## SETUP_BUNDLE_MATRIX
 

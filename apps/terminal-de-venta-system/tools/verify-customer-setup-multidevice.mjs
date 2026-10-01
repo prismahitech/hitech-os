@@ -141,10 +141,16 @@ function assertPlanBasedProvisioningReadonly() {
     "gracePolicy",
     "renewalPolicy",
     "manualDeviceClaimRequired: false",
-    "operatorActionCount: 1"
+    "operatorActionCount: 1",
+    "commercialPlanId",
+    "canonical commercial license SKU"
   ]) {
-    assert(contract.includes(token), `Shared plan provisioning contract missing ${token}`);
+    const contractSearch = contract.toLowerCase();
+    assert(contractSearch.includes(token.toLowerCase()), `Shared plan provisioning contract missing ${token}`);
   }
+  const contractPlan = contract.match(/planId: PRISMA_TRIPLE_DEVICE_STARTER_PLAN,\s+commercialPlanId: "TABLET_PC_MANAGED"/);
+  assert(Boolean(contractPlan), "STARTER_COMMERCIAL_PLAN_MAPPING_MISSING");
+
   for (const planId of ["TABLET_SOLO", "TABLET_PRO", "TABLET_PC_MANAGED", "TABLET_PC_MOBILE_MANAGED"]) {
     assert(contract.includes(planId), `Shared plan catalog missing ${planId}`);
     assert(worker.includes(planId), `Worker plan catalog missing ${planId}`);
@@ -162,13 +168,13 @@ function assertPlanBasedProvisioningReadonly() {
     "nextAvailableClaimSlot",
     "consumeClaimSlot",
     "PLAN_BASED_CUSTOMER_ONBOARDING_READY",
-    "PLAN_PROVISIONING_SCHEMA_REQUIRED",
+    "CUSTOMER_SETUP_SCHEMA_REQUIRED",
     "customer_setup.create",
     "customer_setup.plan_based_provision",
     "claimSlotsCreated",
     "manualDeviceClaimRequired: false",
     "operatorActionCount: 1",
-    "claimed < allowed",
+    "currentClaimed >= currentAllowed",
     "status = 'AVAILABLE'",
     "status = 'CLAIMED'",
     "claimSlotId",

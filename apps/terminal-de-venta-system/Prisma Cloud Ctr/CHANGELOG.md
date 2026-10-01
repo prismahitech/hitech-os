@@ -1,5 +1,46 @@
 # Prisma Cloud Center Changelog
 
+## 2026-09-30 — G5C closed through isolated Worker Preview
+
+- Reclassified G5C from a public-DNS dependency to a direct remote Worker Preview certification path, preserving `app.hitechrts.com` as a separate canonical-domain observation.
+- CI run `36789056912` successfully created `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev` and verified health, D1 binding, capabilities, tenant status and client contract.
+- Read-only protection was exercised against license activation and returned `403 READ_ONLY_PREVIEW`; no D1 mutation, DNS mutation, production traffic promotion or secret exposure occurred.
+- Evidence artifact: `cloud-center-live-readonly-36789056912-1`.
+- Emergency recovery Preview also passed in CI run `36789056978`; evidence artifact: `cloud-center-emergency-readonly-preview-36789056978-1`.
+- The verifier now labels Preview evidence as `PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY` instead of implying canonical public-domain certification.
+- The live-readonly workflow now runs on both the governed candidate branch and `main` so the post-merge certification is reproducible.
+
+## 2026-09-30 — G5C live-readonly recertification
+
+
+## 2026-09-30 — G5C live-readonly recertification
+
+- Fixed the live-readonly workflow diagnostics command and removed the redundant pnpm argument delimiter from the verifier invocation.
+- Corrected verifier argument handling so network failures are preserved as structured evidence rather than aborting before the report is written.
+- CI workflow #5 (`36670756664`) executed the corrected diagnostic and verifier against `https://app.hitechrts.com`.
+- Public reachability failed at DNS: HTTP preflight `000`, curl exit `6`; Node fetch reported `ENOTFOUND app.hitechrts.com`. No authentication, admin mutation, D1 mutation, or secret exposure occurred.
+- Evidence artifact: `cloud-center-live-readonly-36670756664-1`.
+- G5C remains OPEN. No production deployment or live mutation was performed.
+
+## 2026-09-29 — G5 runtime recertification
+
+- CI #2307 passed on candidate `63c70f0…` for Cloud Center customer runtime, G1 contract authority, G2 persistence integrity, G3 concurrency/idempotency, G4 D1 graph integrity, G5A local runtime, and G5B browser runtime.
+- G3 current verifier covers blocked-license, expired/revoked setup and refresh/revoke/renew conflict behavior; G4 graph corruption drills pass.
+- Browser certification produced desktop and 390x844 evidence in CI artifact `cloud-center-browser-runtime-36644998368-1`.
+- G5C remains intentionally open because the repository's last live-readonly evidence is dated July 7, 2026; no September 29 live recertification is claimed.
+- No production deployment, D1 live write, or live mutation was performed.
+
+## 2026-09-29 — Cloud Center certification hardening
+
+- Completed and CI-certified Cloud Center gates G1 (contract authority), G2 (persistence integrity), G3 (concurrency/idempotency), and G4 (D1 graph integrity) on candidate `e92feb8…`.
+- Separated Customer Setup provisioning IDs from canonical commercial SKUs; `TABLET_PC_MOBILE_MANAGED` maps to `TABLET_PC_MANAGED` for underlying license/tenant commercial state.
+- Hardened Customer Setup, device claim, replacement, audit, and license mutation flows with atomic D1 batches and read-after-write verification.
+- Added replacement-safe claim-slot uniqueness migration and idempotent setup retry behavior.
+- Added current certification matrix and retained the July live-readonly evidence as historical rather than current.
+- No production deployment or live D1 mutation was performed in this work.
+
+
+
 ## 2026-07-04
 
 - Canonized visible license terminology for Prisma Cloud Center.

@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "1.1.0",
+  "baselineId": "CLOUD_CENTER_BASELINE_2026-09-29",
+  "capturedAt": "2026-09-29",
+  "repository": "prismahitech/hitech-os",
+  "defaultBranch": "main",
+  "head": "d064110036bdebfa4db98e032fe9627a0a86fabc",
+  "headSource": "latest observed main merge PR #593",
+  "branchCreated": "governance/cloud-center-roadmap-step1-20260929",
+  "scope": {
+    "canonicalRoot": "apps/terminal-de-venta-system/Prisma Cloud Ctr",
+    "licflow3Worker": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker",
+    "sharedLicensing": "apps/terminal-de-venta-system/shared/licensing",
+    "changeAssurance": "PRISMA Change Assurance vertical inside Cloud Center"
+  },
+  "sourceSnapshot": {
+    "files": [
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/README.md"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/ARCHITECTURE.md"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/SECURITY.md"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/shared/licensing/plan-catalog.canonical.json",
+        "blobSha": "3f524c669e7f5803d59c45327cccb86ce11242b9"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/src/worker.js",
+        "blobSha": "c149444948f799db5be15030c02215e6a4f80571"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json"
+      },
+      {
+        "path": "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/MANUAL.md",
+        "blobSha": "9af5d9a958587bd5428f5be9c0e2cc09e95978fd"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/PRISMA_CLOUD_CENTER_MANUAL_FACTORY_STANDARD.md",
+        "blobSha": "e2dad2579110aa92d9309070d95ae23e97d10542"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/prisma_unified_lab_v3.py",
+        "blobSha": "b8ba736c5ed2e1074332d3713b167d39d906e2f6"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/licflow4_admin_bridge.py",
+        "blobSha": "fd0b0e70f3f89b1ff4e3f008f0b1feb9bbc6f576"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/cloud_saas_api.py",
+        "blobSha": "eb9b8a0a5bf034dee91e1a65dee16635ce5aac1e"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/py/license_ops_api.py",
+        "blobSha": "62045f639785ca3514ce7b2038d96dea783d491f"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/web/cloud_command_center.html",
+        "blobSha": "8f44748fab78841b25afb3225475552330603906"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/web/cloud_command_center.js",
+        "blobSha": "c82a5b18a34ff49f4da2e25a1830a78add1c69fe"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/config/cloud_saas.json",
+        "blobSha": "e67842684eea53181132bca6d5df4f66f46042eb"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/Prisma Cloud Ctr/internal/config/change_intelligence_cloud.json",
+        "blobSha": "abd2ebc398b9033a36e33951bba4c385eefba5c1"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-licflow3.mts",
+        "blobSha": "fed757febd4c0d61a4a0a929ff73d7febb27be83"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-licflow4.mts",
+        "blobSha": "9aa56a6d31aef6749943c1b90ec9e90e5744f169"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-customer-setup-multidevice.mjs",
+        "blobSha": "b45527a75bdf783aeec776c1070415cf34d857fa"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-change-intelligence-runtime-01.mjs",
+        "blobSha": "8479ddbc507e03e65431f0fdb98842385b86eb21"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-change-intelligence-01.py",
+        "blobSha": "f9e43c8fd27b9bcbfbbb13502ae2cc146e20a7be"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/docs/productization/PRISMA_CHANGE_INTELLIGENCE_CLOUD_CENTER_VERTICAL_CONTRACT.md",
+        "blobSha": "2195d3253bdb1308647aceabe7db2f598cb7760a"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/migrations/0004_customer_device_claim_integrity.sql",
+        "blobSha": "3391bb37db412b199f5cda594791b9d849b7c6ee"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/infra/cloudflare/licflow3-worker/migrations/0005_replacement_slot_reuse.sql",
+        "blobSha": "19471be7ae4d168551d765a1091080d7ca7116ed"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-contract-authority-01.mjs",
+        "blobSha": "3c0b71566c0116a408f6d9a8e146309ddcbf1c8b"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-persistence-hardening-01.mjs",
+        "blobSha": "a7ca76d166ccc630d615064c1d25a3f716149ccc"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-concurrency-idempotency-01.mjs",
+        "blobSha": "545bd0ed2800dee29618a2091ea803e335ca258f"
+      },
+      {
+        "path": "apps/terminal-de-venta-system/tools/verify-cloud-center-d1-graph-integrity-01.py",
+        "blobSha": "d6ad041e0a2ca597d6cbeadb204b953449f369be"
+      }
+    ],
+    "sourceNotes": [
+      "Cloud Center is local-only on 127.0.0.1:3160.",
+      "Cloud License Gateway canonical Worker is prisma-cloud-semilla.",
+      "Live base URL is https://app.hitechrts.com.",
+      "Admin token is intended to remain backend-only and presence-only in UI/diagnostics."
+    ],
+    "inventoryStatus": "G1_G2_G3_G4_CI_CERTIFIED"
+  },
+  "historicalEvidence": {
+    "latestObservedLiveSmoke": "2026-07-07T22:29:07.271Z",
+    "status": "HISTORICAL_NOT_CURRENT",
+    "artifacts": [
+      "apps/terminal-de-venta-system/docs/ops/licscope/deploy/LIVE_SMOKE_BLOCKERS.json",
+      "apps/terminal-de-venta-system/docs/ops/licscope/live_smoke_outputs/cloud-center-live-readiness.json",
+      "apps/terminal-de-venta-system/docs/ops/licscope/live_smoke_outputs/cloudflare-d1-oauth-certification.json"
+    ],
+    "rule": "Do not use July evidence as proof of September 29 current live health without fresh recertification."
+  },
+  "ciStatus": {
+    "currentHeadCombinedStatus": "UNKNOWN",
+    "reason": "GitHub connector returned no combined status entries; absence of entries is not treated as PASS or FAIL."
+  },
+  "overlapInventory": {
+    "openCloudCenterIssues": [
+      {
+        "number": 250,
+        "title": "PRISMA Change Intelligence — Commercial Ledger & Go-to-Market Continuity"
+      },
+      {
+        "number": 319,
+        "title": "PRISMA Parallel Work Coordinator"
+      }
+    ],
+    "openPRSearches": [
+      "cloud center",
+      "LICFLOW3",
+      "customer setup"
+    ],
+    "currentResult": "No open PR returned by those scoped searches at baseline capture.",
+    "relevantHistoricalPRs": [
+      {
+        "number": 593,
+        "title": "chore(factory): register canonical visual promotion integration",
+        "mergedToHead": true
+      },
+      {
+        "number": 538,
+        "title": "Change Assurance: make ownership boundaries explicit"
+      },
+      {
+        "number": 531,
+        "title": "Change Assurance: normalize Cloud identity and runtime proof"
+      },
+      {
+        "number": 386,
+        "title": "feat(ca): project real Analysis Runs into Cloud Center"
+      },
+      {
+        "number": 326,
+        "title": "feat(ca): formalize PRISMA Change Assurance V1 governance"
+      },
+      {
+        "number": 303,
+        "title": "feat(cloud-center): add isolated PRISMA Change Intelligence vertical"
+      },
+      {
+        "number": 254,
+        "title": "Cloud Center: homologate customer registration runtime and dropdowns"
+      },
+      {
+        "number": 161,
+        "title": "LICFLOW4 Admin Bridge for Prisma Cloud Ctr"
+      },
+      {
+        "number": 160,
+        "title": "AutoGit: Prisma Cloud Center: finish repo-native license control center in terminal-de-ven"
+      }
+    ],
+    "note": "Historical PR search is broad; individual PR scope must still be verified before reuse or modification."
+  },
+  "knownReconciliationFindings": [
+    {
+      "id": "CC-F1",
+      "severity": "HIGH_ATTENTION",
+      "finding": "Commercial plan catalog lists TABLET_SOLO, TABLET_PRO, TABLET_PC_MANAGED as vendible; Customer Setup and Worker also define TABLET_PC_MOBILE_MANAGED.",
+      "currentClassification": "RECONCILIATION_REQUIRED",
+      "nextGate": "G1"
+    },
+    {
+      "id": "CC-F2",
+      "severity": "MEDIUM",
+      "finding": "claimCustomerDevice() contains multiple persistence steps whose partial-failure behavior requires transaction/compensation verification.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F3",
+      "severity": "MEDIUM_HIGH",
+      "finding": "approveDeviceReplacement() historically did not inspect every run() result or perform read-after-write verification.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F4",
+      "severity": "MEDIUM",
+      "finding": "recordAudit() historically returns an event identifier without verifying audit persistence.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    },
+    {
+      "id": "CC-F5",
+      "severity": "MEDIUM",
+      "finding": "createCustomerSetup() contains multiple writes with mixed error checking; partial provisioning requires explicit saga/compensation proof.",
+      "currentClassification": "FIX_OR_PROVE",
+      "nextGate": "G2"
+    }
+  ],
+  "certificationBoundary": {
+    "source": "G1-G4 CI-certified",
+    "local": "G1-G4 CI-certified; local/browser current runtime evidence pending",
+    "browser": "current browser runtime evidence pending",
+    "liveReadOnly": "historical July evidence only; current endpoint inaccessible from this environment",
+    "liveMutation": "blocked pending explicit operator authorization",
+    "production": "not inferred"
+  },
+  "step1Status": {
+    "name": "Baseline freeze",
+    "status": "COMPLETE",
+    "completed": [
+      "Exact main HEAD captured.",
+      "Historical evidence timestamp captured.",
+      "Relevant open issue/PR overlap searched.",
+      "Current combined CI status classified UNKNOWN rather than assumed green.",
+      "Initial high-attention reconciliation findings recorded.",
+      "Canonical Cloud Center/LICFLOW3/shared licensing surfaces identified.",
+      "Expanded key source/verifier/config inventory with exact blob SHAs.",
+      "Exact source owner/verifier/config inventory captured with blob SHAs.",
+      "Roadmap linked from Cloud Center README.",
+      "Baseline consistency check completed on working branch."
+    ],
+    "remaining": [
+      "G5 runtime/browser",
+      "G5C current live-readonly",
+      "G3 refresh/revoke/renew conflict matrix",
+      "G4 blocked/expired behavioral checks"
+    ],
+    "gate": "PASS_CLOUD_CENTER_BASELINE_CAPTURED",
+    "nextGate": "G5A",
+    "note": "G1-G4 are CI-verified. Candidate now awaits G5A/G5B runtime recertification plus live read-only certification. Live mutation remains blocked."
+  },
+  "mutationSafety": {
+    "liveMutationPerformed": false,
+    "deploymentPerformed": false,
+    "d1LiveWritePerformed": false,
+    "adminTokenRequested": false,
+    "rule": "Read-only repository inspection only for Step 1."
+  },
+  "gates": {
+    "G1": {
+      "status": "PASS_CLOUD_CENTER_CONTRACT_AUTHORITY_RECONCILED",
+      "verifiedAt": "2026-09-29",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS"
+    },
+    "G2": {
+      "status": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY",
+      "verifiedAt": "2026-09-29",
+      "ciRun": 2242,
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS",
+      "sanitizedDiagnosticsHardened": true
+    },
+    "G3": {
+      "status": "PASS_CLOUD_CENTER_CONCURRENCY_IDEMPOTENCY",
+      "verifiedAt": "2026-09-29",
+      "ciRun": "CI run 2234",
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS",
+      "remaining": [
+        "refresh/revoke/renew conflict matrix"
+      ]
+    },
+    "G4": {
+      "status": "PASS_CLOUD_CENTER_D1_GRAPH_INTEGRITY",
+      "verifiedAt": "2026-09-29",
+      "ciRun": "CI run 2234",
+      "candidateCodeHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+      "result": "PASS",
+      "remaining": [
+        "blocked license states behavioral gate",
+        "expired/revoked setup behavioral gate"
+      ]
+    },
+    "G5A": {
+      "status": "PATCHED_CI_PENDING",
+      "verifier": "apps/terminal-de-venta-system/tools/verify-cloud-center-local-runtime-gate-01.mjs",
+      "lastFailure": "worker syntax check used repository parent as cwd",
+      "fix": "worker syntax check now uses repoRoot"
+    },
+    "collisionGate": {
+      "status": "PATCHED_DEPENDENCY_PRESENT_CI_PENDING",
+      "fix": "restored canonical workstream_collision.py and test_workstream_collision.py from main"
+    }
+  },
+  "step2Status": {
+    "name": "G2 persistence hardening",
+    "status": "COMPLETE_SOURCE_PENDING_RUNTIME",
+    "sourceGate": "PASS_CLOUD_CENTER_PERSISTENCE_INTEGRITY_SOURCE",
+    "nextGate": "G3",
+    "liveMutationPerformed": false
+  },
+  "candidateState": {
+    "branch": "governance/cloud-center-roadmap-step1-20260929",
+    "head": "90625dc319866d5d77191efc1a384b1c9d2b5e1e",
+    "note": "Latest candidate HEAD after final G2 hardening; main baseline remains d064110... for auditability.",
+    "codeCertificationHead": "94c184fb9b139d466f96e689a3bcc8f7763e3054",
+    "latestGovernanceHead": "27b63e88e7f678545d86b24d1032e231f88b2c5e",
+    "mainBaseline": "d064110036bdebfa4db98e032fe9627a0a86fabc"
+  },
+  "baselineVersion": "1.2.0"
+}
