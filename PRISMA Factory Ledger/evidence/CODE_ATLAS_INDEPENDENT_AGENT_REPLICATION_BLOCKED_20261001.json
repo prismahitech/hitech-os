@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "code_atlas_independent_agent_replication_blocked_evidence.v1",
+  "status": "BLOCKED",
+  "classification": "VERIFY / EXTERNAL EVIDENCE / BLOCKED",
+  "canonicalMainBeforeAttempt": "c75550c622ca925978b32916725d54b5511b4a25",
+  "latestAttempt": {
+    "pullRequest": 614,
+    "workflowRunId": 36904320909,
+    "workflowRunNumber": 2430,
+    "headSha": "13861615499fa65d43545755f2b6d9e075b8722d",
+    "availabilityJobId": 110511008126,
+    "availabilityJobConclusion": "failure",
+    "evaluatorRoute": "direct Anthropic Messages API",
+    "evaluatorModel": "claude-sonnet-4-6",
+    "secretName": "ANTHROPIC_API_KEY",
+    "secretPresent": false,
+    "observedResult": "BLOCKED_G_ANTHROPIC_API_KEY_MISSING"
+  },
+  "priorAttemptAlsoConfirmed": {
+    "workflowRunId": 36903996492,
+    "availabilityJobId": 110509840861,
+    "copilotCliVersion": "1.0.91",
+    "copilotRequestsPermission": "write",
+    "observedResult": "Access denied by policy settings",
+    "requestId": "D028:1C979F:17C0BAC:195FDF5:6ABEA088"
+  },
+  "conclusion": "No independent evaluator session executed. Score remains unavailable. The gate is correctly fail-closed.",
+  "sessionCountExecuted": 0,
+  "scoreProduced": false,
+  "productFailure": false,
+  "fixAuthorized": false,
+  "humanUsefulness": "NOT_MEASURED",
+  "coreRebuilt": false,
+  "nextAction": "Provide an actually available independent evaluator credential/service (for example ANTHROPIC_API_KEY) or enable a permitted Copilot evaluator policy, then rerun the six paired tasks.",
+  "secretValuesExposed": false
+}
