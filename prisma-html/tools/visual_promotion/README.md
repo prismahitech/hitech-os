@@ -23,6 +23,10 @@ Commands:
 
 The composer is proposal-only. canonicalMutationPerformed, canonicalIdsAssigned, runtimeVisualGreen and productionReady remain false.
 
+## Exact-target lifecycle coordination
+
+`visual_promotion.lifecycle_orchestrator` provides a sequential, receipt-backed lifecycle over the existing authorities. It does not own surface discovery, semantic meaning, exact bindings, mutation authorization, product runtime, derived projections, or runtime certification. Read the [lifecycle orchestrator guide](lifecycle_orchestrator/README.md) for the transition contract, CLI, required evidence, rollback, supersession, and current capability limits.
+
 ## Candidate corpus certification
 
 The raw-worker normalizer is fail-closed and recognizes only the exact legacy worker heads and file hashes in `legacy-worker-intake.registry.json`. Original worker bytes remain immutable and normalization may change representation only.

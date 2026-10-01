@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 CANONICAL_STATES={"NOT_STARTED","OPEN","READY_FOR_HANDOFF","CLOSED","SUPERSEDED","BLOCKED"}
-SOURCE_STATES={"NOT_STARTED","IN_PROGRESS","BLOCKED","WAITING_EXTERNAL","READY_FOR_INTEGRATION","DONE","FAILED"}
+SOURCE_STATES={"NOT_STARTED","IN_PROGRESS","BLOCKED","WAITING_EXTERNAL","READY_FOR_INTEGRATION","DONE","FAILED","SUPERSEDED"}
 
 @dataclass(frozen=True)
 class LifecycleNormalization:
@@ -27,6 +27,7 @@ def normalize_lifecycle(status:dict[str,Any])->LifecycleNormalization:
         "READY_FOR_INTEGRATION":"READY_FOR_HANDOFF",
         "DONE":"CLOSED",
         "FAILED":"BLOCKED",
+        "SUPERSEDED":"SUPERSEDED",
     }
     blockers=list(status.get("blockerCodes") or [])
     if source=="WAITING_EXTERNAL": blockers.append("WAITING_EXTERNAL")
