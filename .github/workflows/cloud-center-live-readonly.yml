@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - governance/cloud-center-roadmap-step1-20260929
+      - main
   pull_request:
     types:
       - opened
