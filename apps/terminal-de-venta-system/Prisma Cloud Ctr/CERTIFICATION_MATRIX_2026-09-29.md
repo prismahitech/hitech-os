@@ -1,4 +1,4 @@
-# PRISMA Cloud Center — Certification Matrix — 2026-09-29
+# PRISMA Cloud Center — Certification Matrix — 2026-09-30
 
 | Surface / Gate | SOURCE | LOCAL | BROWSER | LIVE_READONLY | LIVE_MUTATION | PRODUCTION | VISUAL |
 |---|---|---|---|---|---|---|---|
@@ -17,14 +17,23 @@
 ## Current authority
 
 - Candidate branch: `governance/cloud-center-roadmap-step1-20260929`
-- Candidate HEAD: `d1200ca3841d5a15d98152f024aaba1c5b1678e9` (documentation commit; runtime evidence remains CI #2314)
-- CI run: `#2307`
-- G1/G2/G3/G4/G5A/G5B: PASS in CI #2314 on the current candidate lineage.
-- Browser evidence artifact: `cloud-center-browser-runtime-36644998368-1`.
-- G5C remains OPEN: workflow #5 (`36670756664`) failed at public DNS resolution for `app.hitechrts.com`; evidence artifact `cloud-center-live-readonly-36670756664-1`.
-- `main` baseline remains the historical reference captured separately.
+- Candidate HEAD before this documentation update: `82c512751267db134bc8f012d6e3a01a403ef197`.
+- Live Worker Preview certification run: `36789056912`.
+- Emergency read-only Preview run: `36789056978`.
+- Worker direct read-only artifact: `cloud-center-live-readonly-36789056912-1`.
+- Emergency Preview artifact: `cloud-center-emergency-readonly-preview-36789056978-1`.
+- Preview certification URL: `https://cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev`.
+- G1/G2/G3/G4/G5A/G5B/G5C: PASS for the named evidence classes on the candidate lineage.
+- `app.hitechrts.com` remains a separate canonical-domain observation and is not represented as production-certified.
+- The live-readonly workflow now runs on the governed candidate branch and on `main` for post-merge recertification.
 
 ## Certification rule
 
-A green gate covers only the evidence class it names. The July live-readonly evidence remains historical and does not certify September 29 live health. The current CI run certifies G5A/G5B only. G5C still requires a fresh live-readonly execution. No production certification is inferred from repository, fixture, or browser evidence.
+A green gate covers only the evidence class it names. The September 30 G5C certification is specifically a direct Worker Preview certification. It proves the remote Worker contract and read-only boundary through the Cloudflare Preview URL, while canonical `app.hitechrts.com` reachability remains an external production-domain observation. No production certification is inferred from Worker Preview evidence. The July live-readonly evidence remains historical provenance only.
 
+
+## Closure boundary
+
+- Production custom-domain certification: NOT CLAIMED.
+- Live mutation G6: NOT EXECUTED; explicit operator authorization remains required.
+- Post-merge `main` recertification: REQUIRED after PR #597 is integrated.
