@@ -1,0 +1,308 @@
+name: Code Atlas Independent Agent Replication V1
+
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/g_independent_replication_v1.py'
+      - '.github/workflows/g-independent-replication-v1.yml'
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  PYTHONUTF8: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTHONPATH: tools/code-atlas/src
+  G_EVALUATOR_MODEL: claude-sonnet-5-5
+
+jobs:
+  protocol:
+    name: G protocol and blind packet preparation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      manifest_digest: ${{ steps.manifest.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Compile and self-test
+        run: |
+          python -m py_compile .github/scripts/g_independent_replication_v1.py .github/scripts/caext_usefulness_pilot_v1.py
+          python .github/scripts/g_independent_replication_v1.py selftest
+      - name: Prepare twelve blind session packets
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/g-prepared"
+          mkdir -p "$RUNNER_TEMP/g-prepared"
+          python .github/scripts/g_independent_replication_v1.py prepare --output "$RUNNER_TEMP/g-prepared"
+      - name: Enforce blind packet boundary
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / "g-prepared"
+          packets = root / "task_packets"
+          truth = root / "ground_truth"
+          files = sorted(packets.glob("U*_*.json"))
+          assert len(files) == 12, len(files)
+          assert len(list(truth.glob("U*.json"))) == 6
+          manifest = json.loads((packets / "MANIFEST.json").read_text(encoding="utf-8"))
+          assert manifest["sessionCount"] == 12
+          assert manifest["conditions"] == {"BASELINE": 6, "ASSISTED": 6}
+          for p in files:
+              value = json.loads(p.read_text(encoding="utf-8"))
+              assert value["groundTruthIncluded"] is False
+              forbidden = {"actualChangedPaths", "actualCompanionPaths", "actualChangedTestPaths", "groundTruthDigest"}
+              assert not forbidden.intersection(value), p.name
+          print("PASS_G_BLIND_PACKET_BOUNDARY")
+      - id: manifest
+        name: Export manifest digest
+        shell: bash
+        run: |
+          digest="$(python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"g-prepared"/"task_packets"/"MANIFEST.json"
+          print(json.loads(p.read_text())["manifestDigest"])
+          PY
+          )"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v7
+        name: Upload all evaluator packets
+        with:
+          name: g-all-task-packets
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/g-prepared/task_packets/**
+      - uses: actions/upload-artifact@v7
+        name: Upload sealed ground truth
+        with:
+          name: g-ground-truth-sealed
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/g-prepared/ground_truth/**
+
+  availability:
+    name: External evaluator availability gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      available: ${{ steps.probe.outputs.available }}
+    steps:
+      - id: probe
+        name: Probe Anthropic Messages API without exposing credentials
+        shell: python
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          import json, os, sys, urllib.error, urllib.request
+          key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+          if not key:
+              print("BLOCKED_G_ANTHROPIC_API_KEY_MISSING")
+              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
+              sys.exit(1)
+          body = {
+              "model": "claude-sonnet-5-5",
+              "max_tokens": 32,
+              "system": "Availability probe. Return the single token OK.",
+              "messages": [{"role": "user", "content": "OK"}],
+          }
+          req = urllib.request.Request(
+              "https://api.anthropic.com/v1/messages",
+              data=json.dumps(body).encode("utf-8"),
+              headers={
+                  "content-type": "application/json",
+                  "x-api-key": key,
+                  "anthropic-version": "2023-06-01",
+              },
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=60) as resp:
+                  value=json.loads(resp.read().decode("utf-8"))
+              print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
+              print("provider=Anthropic")
+              print("model="+str(value.get("model")))
+              print("messageId="+str(value.get("id")))
+              print("available=true", file=open(os.environ["GITHUB_OUTPUT"], "a"))
+          except urllib.error.HTTPError as exc:
+              detail=exc.read().decode("utf-8", errors="replace")
+              print(f"BLOCKED_G_ANTHROPIC_HTTP_{exc.code}:{detail[:800]}")
+              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
+              sys.exit(1)
+          except Exception as exc:
+              print(f"BLOCKED_G_ANTHROPIC_PROBE:{type(exc).__name__}:{exc}")
+              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
+              sys.exit(1)
+
+  evaluate:
+    name: External evaluator ${{ matrix.task }} / ${{ matrix.condition }}
+    needs: [protocol, availability]
+    if: needs.availability.result == 'success' && needs.availability.outputs.available == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [U1, U2, U3, U4, U5, U6]
+        condition: [BASELINE, ASSISTED]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/all-packets
+      - name: Isolate exactly one packet
+        shell: bash
+        env:
+          TASK: ${{ matrix.task }}
+          CONDITION: ${{ matrix.condition }}
+        run: |
+          set -euo pipefail
+          packet="$RUNNER_TEMP/all-packets/$TASK_$CONDITION.json"
+          test -f "$packet"
+          mkdir -p "$RUNNER_TEMP/eval"
+          cp "$packet" "$RUNNER_TEMP/eval/packet.json"
+          rm -rf "$RUNNER_TEMP/all-packets"
+          test -f "$RUNNER_TEMP/eval/packet.json"
+          test ! -e "$RUNNER_TEMP/all-packets"
+      - name: Run blind Anthropic evaluation
+        shell: python
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PACKET: ${{ runner.temp }}/eval/packet.json
+          OUT: ${{ runner.temp }}/eval-out
+        run: |
+          import hashlib, json, os, urllib.error, urllib.request
+          from pathlib import Path
+          packet=json.loads(Path(os.environ["PACKET"]).read_text(encoding="utf-8"))
+          schema=packet["responseSchema"]
+          prompt=(
+              "You are an independent external evaluator in a controlled, agent-neutral software-change replication study.\n\n"
+              "Evaluate ONLY the bounded evidence packet below. You are operationally separate from the producing Code Atlas agent.\n"
+              "Do not browse the repository, use web search, inspect files outside this packet, use future commits or diffs, or infer hidden producer reasoning.\n"
+              "Do not invent ground truth. Do not treat historical truth as authorization. UNKNOWN is valid.\n\n"
+              "Return exactly one JSON object matching the response schema and nothing else.\n"
+              "editableScope: only the packet target is pre-authorized. inspectValidateScope and testPathsToValidate must use only supplied evidence.\n"
+              "unknowns must contain material unknowns. evidenceReferences may contain only packet availableEvidenceIds.\n"
+              "decision must be READY, BLOCKED, or UNKNOWN. Impact Radius never grants authorization.\n\n"
+              "Response schema:\n"+json.dumps(schema, ensure_ascii=False, sort_keys=True)+
+              "\n\nPacket:\n"+json.dumps(packet, ensure_ascii=False, sort_keys=True)
+          )
+          body={
+              "model":"claude-sonnet-5-5",
+              "max_tokens":1800,
+              "system":"You are an independent evaluator. Use only the supplied evidence package. Do not use tools, browsing, repository access, future history, or hidden producer context.",
+              "messages":[{"role":"user","content":prompt}],
+          }
+          req=urllib.request.Request(
+              "https://api.anthropic.com/v1/messages",
+              data=json.dumps(body).encode("utf-8"),
+              headers={
+                  "content-type":"application/json",
+                  "x-api-key":os.environ["ANTHROPIC_API_KEY"],
+                  "anthropic-version":"2023-06-01",
+              },
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=180) as resp:
+                  api=json.loads(resp.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              detail=exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(f"ANTHROPIC_HTTP_{exc.code}:{detail[:1000]}")
+          raw="\n".join(
+              b.get("text","") for b in api.get("content",[])
+              if isinstance(b,dict) and b.get("type")=="text"
+          ).strip()
+          response=json.loads(raw)
+          required=set(schema["requiredFields"])
+          missing=sorted(required-set(response))
+          if missing: raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
+          if str(response.get("taskId")) != str(packet["taskId"]): raise SystemExit("TASK_ID_MISMATCH")
+          if str(response.get("packetDigest")) != str(packet["packetDigest"]): raise SystemExit("PACKET_DIGEST_MISMATCH")
+          if response.get("decision") not in {"READY","BLOCKED","UNKNOWN"}: raise SystemExit("INVALID_DECISION")
+          record={
+              "schemaVersion":"caext_independent_agent_response_record.v1",
+              "replicationSchema":"caext_independent_replication.v1",
+              "sessionId":packet["sessionId"],
+              "pairId":packet["pairId"],
+              "taskId":packet["taskId"],
+              "condition":packet["condition"],
+              "packetDigest":packet["packetDigest"],
+              "evaluator":{
+                  "provider":"Anthropic",
+                  "model":api.get("model","claude-sonnet-5-5"),
+                  "api":"Messages API",
+                  "apiVersion":"2023-06-01",
+                  "independence":"separate_external_model_provider_direct_api_call",
+                  "repositoryCheckoutPresent":False,
+                  "groundTruthPresent":False,
+                  "toolsUsed":False
+              },
+              "api":{
+                  "messageId":api.get("id"),
+                  "stopReason":api.get("stop_reason"),
+                  "usage":api.get("usage")
+              },
+              "response":response,
+              "rawTextSha256":hashlib.sha256(raw.encode("utf-8")).hexdigest()
+          }
+          out=Path(os.environ["OUT"])
+          out.mkdir(parents=True,exist_ok=True)
+          (out/"response.json").write_text(json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+          (out/"raw_response.txt").write_text(raw+"\n",encoding="utf-8")
+          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":api.get("model")},sort_keys=True))
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-response-${{ matrix.task }}-${{ matrix.condition }}
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/eval-out/**
+
+  score:
+    name: Score blinded paired replication
+    needs: [protocol, availability, evaluate]
+    if: always() && needs.protocol.result == 'success' && needs.availability.result == 'success' && needs.evaluate.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/g-prepared/task_packets
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-ground-truth-sealed
+          path: ${{ runner.temp }}/g-prepared/ground_truth
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: g-response-*
+          path: ${{ runner.temp }}/responses
+          merge-multiple: false
+      - name: Score blinded result
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/g_independent_replication_v1.py score \
+            --prepared-root "$RUNNER_TEMP/g-prepared" \
+            --responses-root "$RUNNER_TEMP/responses" \
+            --output "$RUNNER_TEMP/g-score"
+          cat "$RUNNER_TEMP/g-score/G_INDEPENDENT_AGENT_REPLICATION_RESULT.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-replication-score
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/g-score/**
