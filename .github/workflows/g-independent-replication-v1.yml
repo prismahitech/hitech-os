@@ -82,7 +82,7 @@ jobs:
       models: read
     steps:
       - name: Probe GitHub Models with external Claude evaluator
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@v2
         with:
           model: claude-sonnet-4.5
           max-tokens: 16
@@ -147,7 +147,7 @@ jobs:
           (eval_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
       - name: Run blind external evaluator
         id: inference
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@v2
         with:
           model: claude-sonnet-4.5
           max-tokens: 1800
