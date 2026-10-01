@@ -1,5 +1,18 @@
 # Prisma Cloud Center Changelog
 
+## 2026-09-30 — G5C closed through isolated Worker Preview
+
+- Reclassified G5C from a public-DNS dependency to a direct remote Worker Preview certification path, preserving `app.hitechrts.com` as a separate canonical-domain observation.
+- CI run `36789056912` successfully created `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev` and verified health, D1 binding, capabilities, tenant status and client contract.
+- Read-only protection was exercised against license activation and returned `403 READ_ONLY_PREVIEW`; no D1 mutation, DNS mutation, production traffic promotion or secret exposure occurred.
+- Evidence artifact: `cloud-center-live-readonly-36789056912-1`.
+- Emergency recovery Preview also passed in CI run `36789056978`; evidence artifact: `cloud-center-emergency-readonly-preview-36789056978-1`.
+- The verifier now labels Preview evidence as `PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY` instead of implying canonical public-domain certification.
+- The live-readonly workflow now runs on both the governed candidate branch and `main` so the post-merge certification is reproducible.
+
+## 2026-09-30 — G5C live-readonly recertification
+
+
 ## 2026-09-30 — G5C live-readonly recertification
 
 - Fixed the live-readonly workflow diagnostics command and removed the redundant pnpm argument delimiter from the verifier invocation.
