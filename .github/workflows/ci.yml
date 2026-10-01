@@ -317,3 +317,259 @@ jobs:
           name: ci-observability-health-${{ github.run_id }}-${{ github.run_attempt }}
           if-no-files-found: warn
           path: tools/_local/reports/ci/engineering_health.json
+
+
+  g-independent-protocol:
+    name: Code Atlas G protocol and blind packet preparation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Compile and self-test G harness
+        run: |
+          python -m py_compile .github/scripts/g_independent_replication_v1.py .github/scripts/caext_usefulness_pilot_v1.py
+          python .github/scripts/g_independent_replication_v1.py selftest
+      - name: Prepare twelve blind session packets
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/g-prepared"
+          mkdir -p "$RUNNER_TEMP/g-prepared"
+          python .github/scripts/g_independent_replication_v1.py prepare --output "$RUNNER_TEMP/g-prepared"
+      - name: Enforce sealed ground-truth boundary
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"g-prepared"
+          packets=root/"task_packets"
+          truth=root/"ground_truth"
+          files=sorted(packets.glob("U*_*.json"))
+          assert len(files)==12, len(files)
+          assert len(list(truth.glob("U*.json")))==6
+          for path in files:
+              value=json.loads(path.read_text(encoding="utf-8"))
+              assert value["groundTruthIncluded"] is False
+              forbidden={"actualChangedPaths","actualCompanionPaths","actualChangedTestPaths","groundTruthDigest"}
+              assert not forbidden.intersection(value), path.name
+          print("PASS_G_BLIND_PACKET_BOUNDARY")
+      - uses: actions/upload-artifact@v7
+        name: Upload G evaluator packets
+        with:
+          name: g-all-task-packets
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/g-prepared/task_packets/**
+      - uses: actions/upload-artifact@v7
+        name: Upload sealed G ground truth
+        with:
+          name: g-ground-truth-sealed
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/g-prepared/ground_truth/**
+
+  g-independent-availability:
+    name: Code Atlas G external evaluator availability
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      models: read
+    steps:
+      - name: Probe external Claude evaluator through GitHub Models
+        id: probe
+        uses: actions/ai-inference@v2
+        with:
+          model: claude-sonnet-4.5
+          max-tokens: 32
+          system-prompt: |
+            You are an external evaluator availability probe.
+            Return exactly one JSON object with this shape and no other text:
+            {"status":"G_OK"}
+          prompt: |
+            Return exactly {"status":"G_OK"} and nothing else.
+      - name: Validate availability probe
+        shell: python
+        env:
+          RESPONSE_FILE: ${{ steps.probe.outputs.response-file }}
+        run: |
+          import json, os
+          from pathlib import Path
+          value=json.loads(Path(os.environ["RESPONSE_FILE"]).read_text(encoding="utf-8"))
+          if value.get("status") != "G_OK":
+              raise SystemExit(f"UNEXPECTED_EXTERNAL_EVALUATOR_RESPONSE:{value!r}")
+          print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
+
+  g-independent-evaluate:
+    name: Code Atlas G ${{ matrix.task }} ${{ matrix.condition }}
+    needs: [g-independent-protocol, g-independent-availability]
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [U1, U2, U3, U4, U5, U6]
+        condition: [BASELINE, ASSISTED]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      models: read
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/all-packets
+      - name: Isolate exactly one blind packet
+        shell: python
+        env:
+          TASK: ${{ matrix.task }}
+          CONDITION: ${{ matrix.condition }}
+        run: |
+          import json, os, shutil
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])
+          selected=root/"all-packets"/f'$TASK_$CONDITION.json'
+          if not selected.is_file():
+              raise SystemExit(f"MISSING_PACKET:{selected.name}")
+          value=json.loads(selected.read_text(encoding="utf-8"))
+          assert value["groundTruthIncluded"] is False
+          forbidden={"actualChangedPaths","actualCompanionPaths","actualChangedTestPaths","groundTruthDigest"}
+          assert not forbidden.intersection(value)
+          eval_dir=root/"eval"
+          eval_dir.mkdir(parents=True,exist_ok=True)
+          (eval_dir/"packet.json").write_text(selected.read_text(encoding="utf-8"),encoding="utf-8")
+          shutil.rmtree(root/"all-packets")
+          schema=value["responseSchema"]
+          prompt=(
+              "You are an independent external evaluator in a controlled, agent-neutral software-change replication study.\n\n"
+              "Evaluate ONLY the bounded evidence packet below. You are operationally separate from the producing Code Atlas agent.\n"
+              "Do not browse the repository, use web search, inspect files outside this packet, use future commits or diffs, or infer hidden producer reasoning.\n"
+              "Do not invent ground truth. Do not treat historical truth as authorization. UNKNOWN is valid.\n"
+              "Return exactly one JSON object matching the response schema and nothing else.\n"
+              "editableScope: only the packet target is pre-authorized.\n"
+              "inspectValidateScope and testPathsToValidate use only supplied evidence.\n"
+              "unknowns must contain material unknowns. evidenceReferences may contain only packet availableEvidenceIds.\n"
+              "decision must be READY, BLOCKED, or UNKNOWN. Impact Radius never grants authorization.\n"
+              "Never claim production, enterprise, security/privacy, hosted, or human-usefulness certification.\n\n"
+              "Response schema:\n"+json.dumps(schema,ensure_ascii=False,sort_keys=True)+
+              "\n\nPacket:\n"+json.dumps(value,ensure_ascii=False,sort_keys=True)
+          )
+          (eval_dir/"prompt.txt").write_text(prompt,encoding="utf-8")
+      - name: Run blind external Claude evaluator
+        id: inference
+        uses: actions/ai-inference@v2
+        with:
+          model: claude-sonnet-4.5
+          max-tokens: 1800
+          prompt-file: ${{ runner.temp }}/eval/prompt.txt
+          system-prompt: |
+            You are an independent evaluator.
+            Use only the supplied evidence package.
+            Do not use repository access, browsing, tools, future history, or hidden producer context.
+            Return JSON only.
+      - name: Validate and persist evaluator response
+        shell: python
+        env:
+          RESPONSE_FILE: ${{ steps.inference.outputs.response-file }}
+          OUT: ${{ runner.temp }}/eval-out
+        run: |
+          import hashlib, json, os
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])
+          packet=json.loads((root/"eval"/"packet.json").read_text(encoding="utf-8"))
+          raw=Path(os.environ["RESPONSE_FILE"]).read_text(encoding="utf-8").strip()
+          try:
+              response=json.loads(raw)
+          except json.JSONDecodeError:
+              start,end=raw.find("{"),raw.rfind("}")
+              if start<0 or end<=start:
+                  raise SystemExit("EVALUATOR_RESPONSE_NOT_JSON")
+              response=json.loads(raw[start:end+1])
+          required=set(packet["responseSchema"]["requiredFields"])
+          missing=sorted(required-set(response))
+          if missing: raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
+          if str(response.get("taskId")) != str(packet["taskId"]): raise SystemExit("TASK_ID_MISMATCH")
+          if str(response.get("packetDigest")) != str(packet["packetDigest"]): raise SystemExit("PACKET_DIGEST_MISMATCH")
+          if response.get("decision") not in {"READY","BLOCKED","UNKNOWN"}: raise SystemExit("INVALID_DECISION")
+          record={
+              "schemaVersion":"caext_independent_agent_response_record.v1",
+              "replicationSchema":"caext_independent_replication.v1",
+              "sessionId":packet["sessionId"],
+              "pairId":packet["pairId"],
+              "taskId":packet["taskId"],
+              "condition":packet["condition"],
+              "packetDigest":packet["packetDigest"],
+              "evaluator":{
+                  "provider":"GitHub Models",
+                  "model":"claude-sonnet-4.5",
+                  "api":"GitHub Models inference",
+                  "independence":"separate_external_model_provider_via_github_models",
+                  "repositoryCheckoutPresent":False,
+                  "groundTruthPresent":False,
+                  "toolsUsed":False
+              },
+              "response":response,
+              "rawTextSha256":hashlib.sha256(raw.encode("utf-8")).hexdigest()
+          }
+          out=Path(os.environ["OUT"])
+          out.mkdir(parents=True,exist_ok=True)
+          (out/"response.json").write_text(json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+          (out/"raw_response.txt").write_text(raw+"\n",encoding="utf-8")
+          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":"claude-sonnet-4.5"},sort_keys=True))
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-response-${{ matrix.task }}-${{ matrix.condition }}
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/eval-out/**
+
+  g-independent-score:
+    name: Code Atlas G paired replication score
+    needs: [g-independent-protocol, g-independent-availability, g-independent-evaluate]
+    if: always() && needs.g-independent-protocol.result == 'success' && needs.g-independent-availability.result == 'success' && needs.g-independent-evaluate.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/g-prepared/task_packets
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-ground-truth-sealed
+          path: ${{ runner.temp }}/g-prepared/ground_truth
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: g-response-*
+          path: ${{ runner.temp }}/responses
+          merge-multiple: false
+      - name: Score blinded paired replication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/g_independent_replication_v1.py score \
+            --prepared-root "$RUNNER_TEMP/g-prepared" \
+            --responses-root "$RUNNER_TEMP/responses" \
+            --output "$RUNNER_TEMP/g-score"
+          cat "$RUNNER_TEMP/g-score/G_INDEPENDENT_AGENT_REPLICATION_RESULT.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-replication-score
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/g-score/**
