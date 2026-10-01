@@ -179,19 +179,21 @@ These surfaces may share contracts, but they do not inherit certification from e
 
 ### Live read-only
 
-- [ ] `/health`.
-- [ ] public capabilities.
-- [ ] tenant status.
+- [x] `/health` via the exact remote Worker Preview.
+- [x] public capabilities.
+- [x] tenant status.
 - [ ] safe customer setup resolution where available.
-- [ ] unauthorized admin boundary.
+- [x] unauthorized admin boundary.
 - [ ] sanitized diagnostics.
-- [ ] D1/OAuth/read-only health.
-- [x] Current evidence timestamp (historical live evidence explicitly marked stale).
-- [ ] Fresh live-readonly recertification: workflow #5 (`36670756664`) reached the corrected diagnostic/verifier, but public DNS did not resolve `app.hitechrts.com` (`HTTP=000`, curl exit 6; Node `ENOTFOUND`). Evidence artifact: `cloud-center-live-readonly-36670756664-1`.
+- [x] D1/OAuth/read-only health.
+- [x] Fresh live-readonly recertification through isolated Worker Preview.
+- [x] Current evidence timestamp and immutable CI artifact recorded.
+- [x] Canonical domain observation remains separate from the certification gate.
+- [ ] Canonical `app.hitechrts.com` reachability. The current public DNS observation is external and remains `DNS_UNAVAILABLE`; it does not invalidate Worker Preview certification.
 
 **Gate G5A:** `PASS_CLOUD_CENTER_LOCAL_RUNTIME` — PASS in CI #2314.  
 **Gate G5B:** `PASS_CLOUD_CENTER_BROWSER_RUNTIME` — PASS in CI #2314 with desktop/mobile evidence artifact.  
-**Gate G5C:** `OPEN — LIVE_READONLY_RECERTIFICATION_BLOCKED_BY_PUBLIC_DNS`
+**Gate G5C:** `PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY` — certified against the real remote Worker through `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev` in CI run `36789056912`; no production traffic, DNS or D1 mutation was performed.
 
 ---
 
@@ -332,9 +334,10 @@ No single `PASS` may imply all columns.
 
 # Current execution pointer
 
-**Current:** G4 CI-CERTIFIED — G1/G2/G3/G4 PASS on candidate `94c184f…`  
-**Next:** G5 runtime/browser + live-readonly; then close G3 license-conflict and G4 blocked-state behavioral subgates.  
-**Mutation policy:** live mutation remains prohibited until G5C is green and explicit operator authorization exists.
+**Current:** G5C WORKER-PREVIEW-CERTIFIED — G1/G2/G3/G4/G5A/G5B/G5C read-only evidence is green on candidate `82c512751267db134bc8f012d6e3a01a403ef197`.  
+**Next:** merge PR #597, recertify the resulting `main` HEAD, then continue G7/G8/G9/G10 closure work as applicable.  
+**Production boundary:** `app.hitechrts.com` remains a separate canonical-domain observation; no production certification is inferred from the Worker Preview.  
+**Mutation policy:** live mutation remains prohibited until G6 receives explicit operator authorization and its own read/write ceremony is executed.
 
 # Historical evidence rule
 
@@ -356,7 +359,11 @@ Stop and classify instead of forcing green when:
 
 
 
-### G4 CI pass note
-- G3 and G4 passed in the same CI authority cycle after the replacement-slot migration and idempotent Customer Setup hardening.
-- No live production mutation was performed.
-- G5A previously failed only because the verifier resolved the Worker syntax-check `cwd` one level above the repository; that path is now corrected.
+### G5C closure note — 2026-09-30
+- The live-readonly workflow now certifies the exact remote Worker Preview instead of requiring the canonical public DNS path.
+- CI run `36789056912` created and exercised `cloud-center-live-recert-prisma-cloud-semilla.hitech-os-preview.workers.dev`.
+- The Preview returned the required health, D1, capabilities, tenant-status and client-contract evidence and rejected mutation attempts with `403 READ_ONLY_PREVIEW`.
+- `app.hitechrts.com` is observed separately as a canonical production-domain dependency; its DNS state does not gate the Worker Preview certification.
+- The Preview reuses the real D1 binding but is mutation-blocked by `PRISMA_LICFLOW3_PREVIEW_MODE=readonly`; no D1 mutation was performed.
+- The emergency recovery Preview also passed in CI run `36789056978`.
+- The live-readonly workflow is now configured to run on both the governed candidate branch and `main`, so post-merge recertification is reproducible.
