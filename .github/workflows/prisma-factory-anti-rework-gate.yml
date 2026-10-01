@@ -55,3 +55,151 @@ jobs:
           test -f 'PRISMA Factory Ledger/tools/verify_change_intelligence_capability_gate.py'
           test -f 'PRISMA Factory Ledger/PRISMA_CHANGE_INTELLIGENCE_CAPABILITY_MAP.json'
           test -f '.github/workflows/change-intelligence-capability-gate.yml'
+
+      - name: Execute request-level Factory Ledger PROPOSAL
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          event = json.loads(
+              Path(os.environ["GITHUB_EVENT_PATH"]).read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          pr = event["pull_request"]
+          body = pr.get("body") or ""
+
+          start = body.find("<!-- PRISMA-WORKSTREAM")
+          end = body.find("-->", start)
+
+          if start < 0 or end < 0:
+              raise SystemExit("PRISMA_WORKSTREAM_METADATA_MISSING")
+
+          metadata = body[start:end].splitlines()
+
+          values = {}
+          for line in metadata:
+              if ":" not in line:
+                  continue
+              key, value = line.split(":", 1)
+              values[key.strip()] = value.strip()
+
+          capability_text = values.get("capabilities", "")
+          capability_ids = [
+              item.strip()
+              for item in capability_text.split(",")
+              if item.strip()
+          ]
+
+          if not capability_ids:
+              raise SystemExit("PRISMA_WORKSTREAM_CAPABILITIES_MISSING")
+
+          requested_action = (
+              values.get("requested_action", "ADVANCE")
+              .strip()
+              .upper()
+          )
+
+          allowed_actions = {
+              "REUSE",
+              "VERIFY",
+              "ADVANCE",
+              "FIX",
+              "BUILD",
+              "REBUILD",
+              "EXTERNAL",
+          }
+
+          if requested_action not in allowed_actions:
+              raise SystemExit(
+                  "PRISMA_WORKSTREAM_REQUESTED_ACTION_INVALID:"
+                  + requested_action
+              )
+
+          scope = values.get("scope", "bounded PR workstream")
+
+          task = (
+              f"PR #{pr['number']} request-level anti-rework proposal "
+              f"for the bounded workstream '{scope}'. "
+              f"Requested action: {requested_action}. "
+              f"Reuse canonical Factory Ledger capability truth; "
+              f"do not rebuild capabilities marked doNotRebuild; "
+              f"do not perform product/runtime mutation in PROPOSAL mode."
+          )
+
+          request = {
+              "schemaVersion": "prisma.factory-ledger.anti-rework-gate.v1",
+              "mode": "PROPOSAL",
+              "expectedHead": pr["head"]["sha"],
+              "task": task,
+              "capabilities": [
+                  {
+                      "id": capability_id,
+                      "requestedAction": requested_action,
+                  }
+                  for capability_id in capability_ids
+              ],
+              "visualMutation": False,
+          }
+
+          target = (
+              Path(os.environ["RUNNER_TEMP"])
+              / "prisma-factory-proposal.request.json"
+          )
+
+          target.write_text(
+              json.dumps(
+                  request,
+                  ensure_ascii=False,
+                  indent=2,
+                  sort_keys=True,
+              ) + "\n",
+              encoding="utf-8",
+          )
+
+          print("PROPOSAL REQUEST:", target)
+          PY
+
+          python "PRISMA Factory Ledger/tools/verify_prisma_anti_rework_gate.py" \
+            --request "$RUNNER_TEMP/prisma-factory-proposal.request.json" \
+            | tee "$RUNNER_TEMP/prisma-factory-proposal.result.json"
+
+          python - "$RUNNER_TEMP/prisma-factory-proposal.result.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          path = Path(sys.argv[1])
+          result = json.loads(path.read_text(encoding="utf-8"))
+
+          if result.get("result") != "PASS_ANTI_REWORK_GATE":
+              print(
+                  "BLOCKED_ANTI_REWORK:",
+                  result.get("result"),
+                  result.get("errors"),
+              )
+              raise SystemExit(2)
+
+          print(
+              "PASS_REQUEST_LEVEL_FACTORY_PROPOSAL:",
+              result.get("decisionDigest"),
+          )
+          PY
+
+      - name: Publish request-level proposal evidence
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: prisma-factory-proposal-evidence
+          path: |
+            ${{ runner.temp }}/prisma-factory-proposal.request.json
+            ${{ runner.temp }}/prisma-factory-proposal.result.json
+          if-no-files-found: warn
+          retention-days: 14
+
