@@ -430,16 +430,8 @@ jobs:
     timeout-minutes: 10
     permissions:
       actions: read
-      models: read
-      copilot-requests: write
+      contents: read
     steps:
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "20"
-      - name: Install current Copilot CLI
-        run: npm install -g @github/copilot@latest
-      - name: Show Copilot CLI version
-        run: copilot --version
       - uses: actions/download-artifact@v7
         with:
           name: g-all-task-packets
@@ -492,55 +484,38 @@ jobs:
           test -n "${ANTHROPIC_API_KEY:-}" || { echo "BLOCKED_G_ANTHROPIC_API_KEY_MISSING"; exit 1; }
           python .github/scripts/g_independent_replication_v1.py evaluate --packet "$PACKET" --output "$OUT"
 
-      - name: Validate and persist evaluator response
+      - name: Validate evaluator response record
         shell: python
         env:
-          RESPONSE_FILE: ${{ runner.temp }}/eval/raw-response.txt
           OUT: ${{ runner.temp }}/eval-out
         run: |
-          import hashlib, json, os
+          import json, os
           from pathlib import Path
-          root=Path(os.environ["RUNNER_TEMP"])
-          packet=json.loads((root/"eval"/"packet.json").read_text(encoding="utf-8"))
-          raw=Path(os.environ["RESPONSE_FILE"]).read_text(encoding="utf-8").strip()
-          try:
-              response=json.loads(raw)
-          except json.JSONDecodeError:
-              start,end=raw.find("{"),raw.rfind("}")
-              if start<0 or end<=start:
-                  raise SystemExit("EVALUATOR_RESPONSE_NOT_JSON")
-              response=json.loads(raw[start:end+1])
+          out=Path(os.environ["OUT"])
+          record=json.loads((out/"response.json").read_text(encoding="utf-8"))
+          packet=json.loads((Path(os.environ["RUNNER_TEMP"])/"eval"/"packet.json").read_text(encoding="utf-8"))
+          response=record["response"]
           required=set(packet["responseSchema"]["requiredFields"])
           missing=sorted(required-set(response))
-          if missing: raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
-          if str(response.get("taskId")) != str(packet["taskId"]): raise SystemExit("TASK_ID_MISMATCH")
-          if str(response.get("packetDigest")) != str(packet["packetDigest"]): raise SystemExit("PACKET_DIGEST_MISMATCH")
-          if response.get("decision") not in {"READY","BLOCKED","UNKNOWN"}: raise SystemExit("INVALID_DECISION")
-          record={
-              "schemaVersion":"caext_independent_agent_response_record.v1",
-              "replicationSchema":"caext_independent_replication.v1",
-              "sessionId":packet["sessionId"],
-              "pairId":packet["pairId"],
-              "taskId":packet["taskId"],
-              "condition":packet["condition"],
-              "packetDigest":packet["packetDigest"],
-              "evaluator":{
-                  "provider":"GitHub Models",
-                  "model":"gpt-4.1",
-                  "api":"GitHub Models inference",
-                  "independence":"separate_external_model_provider_via_github_models",
-                  "repositoryCheckoutPresent":False,
-                  "groundTruthPresent":False,
-                  "toolsUsed":False
-              },
-              "response":response,
-              "rawTextSha256":hashlib.sha256(raw.encode("utf-8")).hexdigest()
-          }
-          out=Path(os.environ["OUT"])
-          out.mkdir(parents=True,exist_ok=True)
-          (out/"response.json").write_text(json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-          (out/"raw_response.txt").write_text(raw+"\n",encoding="utf-8")
-          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":"gpt-4.1"},sort_keys=True))
+          if missing:
+              raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
+          if record["packetDigest"] != packet["packetDigest"]:
+              raise SystemExit("PACKET_DIGEST_MISMATCH")
+          if response["packetDigest"] != packet["packetDigest"]:
+              raise SystemExit("RESPONSE_PACKET_DIGEST_MISMATCH")
+          if response["taskId"] != packet["taskId"]:
+              raise SystemExit("TASK_ID_MISMATCH")
+          if record["evaluator"]["provider"] != "Anthropic":
+              raise SystemExit("EVALUATOR_PROVIDER_MISMATCH")
+          if record["evaluator"]["model"] != "claude-sonnet-4-6":
+              raise SystemExit("EVALUATOR_MODEL_MISMATCH")
+          if record["evaluator"]["repositoryCheckoutPresent"] is not False:
+              raise SystemExit("REPOSITORY_CHECKOUT_BOUNDARY_VIOLATION")
+          if record["evaluator"]["groundTruthPresent"] is not False:
+              raise SystemExit("GROUND_TRUTH_BOUNDARY_VIOLATION")
+          if record["evaluator"]["toolsUsed"] is not False:
+              raise SystemExit("TOOLS_BOUNDARY_VIOLATION")
+          print("PASS_G_EVALUATOR_RESPONSE")
       - uses: actions/upload-artifact@v7
         with:
           name: g-response-${{ matrix.task }}-${{ matrix.condition }}
