@@ -2,6 +2,9 @@
 name: Code Atlas Independent Agent Replication V1
 
 on:
+  push:
+    branches:
+      - evidence/g-independent-replication-20261001
   pull_request:
     paths:
       - '.github/scripts/g_independent_replication_v1.py'
