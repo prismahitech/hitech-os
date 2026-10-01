@@ -17,6 +17,17 @@ def _json_bytes(raw:bytes, label:str)->dict[str,Any]:
         raise AuthorizationError(f"{label} must be an object")
     return value
 
+def _layer_map_bytes(raw:bytes)->dict[str,Any]|list[dict[str,Any]]:
+    try:
+        value=json.loads(raw.decode("utf-8"))
+    except Exception as exc:
+        raise AuthorizationError("LAYERS_MAP invalid JSON") from exc
+    if isinstance(value,dict):
+        return value
+    if isinstance(value,list) and all(isinstance(layer,dict) for layer in value):
+        return value
+    raise AuthorizationError("LAYERS_MAP must be an object or an array of objects")
+
 def _canonical_digest(value:Any)->str:
     raw=json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(",",":"),allow_nan=False).encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
@@ -80,7 +91,7 @@ def verify_mesh_artifact(auth:dict[str,Any],repo_root:Path,authority_commit:str)
         cert=_json_bytes(legacy.read("PARALLEL_CERTIFICATION.json"),"PARALLEL_CERTIFICATION")
         if layer_json not in lnames:
             raise AuthorizationError("mandatory task Layer Map missing")
-        layer_map=_json_bytes(legacy.read(layer_json),"LAYERS_MAP")
+        layer_map=_layer_map_bytes(legacy.read(layer_json))
     if cert.get("status")!="PASS" or cert.get("read_only_repo") is not True or cert.get("provenance_verified") is not True:
         raise AuthorizationError("parallel Authority Mesh certification is not PASS/read-only/provenance-verified")
     drift=cert.get("repo_drift") or {}

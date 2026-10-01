@@ -18,6 +18,11 @@ class AuthorityHardeningTests(unittest.TestCase):
     def test_mesh_artifact_is_verified_structurally(self):
         out=verify_mesh_artifact(self.auth,self.root,'a'*40)
         self.assertEqual(out['status'],'PASS_COMPOSED_AUTHORITY_MESH'); self.assertTrue(out['layerMapPresent'])
+    def test_mesh_artifact_accepts_automesh_layer_map_array(self):
+        mesh,mesh_sha,digest=make_mesh_artifact(self.root,layer_map=[{"path":"ui/component.tsx","layer_kind":"visual_owner"}])
+        auth=dict(self.auth); auth.update(authorityMeshArtifact=mesh,authorityMeshArtifactSha256=mesh_sha,authorityMeshRequestDigest=digest)
+        out=verify_mesh_artifact(auth,self.root,'a'*40)
+        self.assertEqual(out['status'],'PASS_COMPOSED_AUTHORITY_MESH'); self.assertTrue(out['layerMapPresent'])
     def test_mesh_hash_mismatch_blocks(self):
         a=dict(self.auth); a['authorityMeshArtifactSha256']='0'*64
         with self.assertRaises(AuthorizationError): verify_mesh_artifact(a,self.root,'a'*40)
