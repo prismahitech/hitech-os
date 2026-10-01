@@ -28,6 +28,7 @@ concurrency:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  PYTHONPATH: tools/code-atlas/src
 
 jobs:
   guardrails:
@@ -382,7 +383,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       actions: read
-      models: read
+      contents: read
       copilot-requests: write
     steps:
       - uses: actions/setup-node@v6
@@ -392,29 +393,23 @@ jobs:
         run: npm install -g @github/copilot@latest
       - name: Show Copilot CLI version
         run: copilot --version
-      - name: Probe external Claude evaluator through GitHub Models
-        id: probe
-        uses: actions/ai-inference@v2
-        with:
-          model: gpt-4.1
-          max-tokens: 32
-          system-prompt: |
-            You are an external evaluator availability probe.
-            Return exactly one JSON object with this shape and no other text:
-            {"status":"G_OK"}
-          prompt: |
-            Return exactly {"status":"G_OK"} and nothing else.
-      - name: Validate availability probe
-        shell: python
+      - name: Probe external evaluator with current Copilot CLI
         env:
-          RESPONSE_FILE: ${{ steps.probe.outputs.response-file }}
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
+          set -euo pipefail
+          response="$(copilot -p 'Return exactly one JSON object: {"status":"G_OK"} and nothing else.' -s --no-ask-user --model gpt-4.1 --disable-builtin-mcps --available-tools="")"
+          printf '%s\n' "$response" > "$RUNNER_TEMP/g-availability-response.txt"
+          python - <<'PY'
           import json, os
           from pathlib import Path
-          value=json.loads(Path(os.environ["RESPONSE_FILE"]).read_text(encoding="utf-8"))
+          path = Path(os.environ["RUNNER_TEMP"]) / "g-availability-response.txt"
+          value = json.loads(path.read_text(encoding="utf-8"))
           if value.get("status") != "G_OK":
               raise SystemExit(f"UNEXPECTED_EXTERNAL_EVALUATOR_RESPONSE:{value!r}")
           print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
+          PY
 
   g-independent-evaluate:
     name: Code Atlas G ${{ matrix.task }} ${{ matrix.condition }}
@@ -451,7 +446,7 @@ jobs:
           import json, os, shutil
           from pathlib import Path
           root=Path(os.environ["RUNNER_TEMP"])
-          selected=root/"all-packets"/f'$TASK_$CONDITION.json'
+          selected=root/"all-packets"/f'{os.environ["TASK"]}_{os.environ["CONDITION"]}.json'
           if not selected.is_file():
               raise SystemExit(f"MISSING_PACKET:{selected.name}")
           value=json.loads(selected.read_text(encoding="utf-8"))
@@ -478,22 +473,21 @@ jobs:
               "\n\nPacket:\n"+json.dumps(value,ensure_ascii=False,sort_keys=True)
           )
           (eval_dir/"prompt.txt").write_text(prompt,encoding="utf-8")
-      - name: Run blind external Claude evaluator
-        id: inference
-        uses: actions/ai-inference@v2
-        with:
-          model: gpt-4.1
-          max-tokens: 1800
-          prompt-file: ${{ runner.temp }}/eval/prompt.txt
-          system-prompt: |
-            You are an independent evaluator.
-            Use only the supplied evidence package.
-            Do not use repository access, browsing, tools, future history, or hidden producer context.
-            Return JSON only.
+      - name: Run blind external evaluator with current Copilot CLI
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PROMPT_FILE: ${{ runner.temp }}/eval/prompt.txt
+          RESPONSE_FILE: ${{ runner.temp }}/eval/raw-response.txt
+        shell: bash
+        run: |
+          set -euo pipefail
+          copilot -p "$(cat "$PROMPT_FILE")" -s --no-ask-user --model gpt-4.1 --disable-builtin-mcps --available-tools="" > "$RESPONSE_FILE"
+          test -s "$RESPONSE_FILE"
+
       - name: Validate and persist evaluator response
         shell: python
         env:
-          RESPONSE_FILE: ${{ steps.inference.outputs.response-file }}
+          RESPONSE_FILE: ${{ runner.temp }}/eval/raw-response.txt
           OUT: ${{ runner.temp }}/eval-out
         run: |
           import hashlib, json, os
