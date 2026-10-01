@@ -37,7 +37,7 @@ from caext_usefulness_pilot_v1 import (
 )
 
 SCHEMA = "caext_independent_replication.v1"
-MODEL = os.environ.get("G_EVALUATOR_MODEL", "gpt-4.1")
+MODEL = os.environ.get("G_EVALUATOR_MODEL", "claude-sonnet-4-6")
 API_VERSION = "2023-06-01"
 API_URL = os.environ.get("ANTHROPIC_API_URL", "https://api.anthropic.com/v1/messages")
 
@@ -163,9 +163,9 @@ def prepare(out: Path) -> None:
         "schemaVersion": "caext_independent_replication_manifest.v1",
         "classification": "VERIFY / EXTERNAL EVIDENCE",
         "claimCeiling": "BOUNDED SIX SAME-TASK PAIRS / TWELVE SESSIONS",
-        "evaluatorProvider": "GitHub Models",
+        "evaluatorProvider": "Anthropic",
         "evaluatorModel": MODEL,
-        "evaluatorApi": "GitHub Models inference",
+        "evaluatorApi": "Messages API",
         "apiVersion": API_VERSION,
         "pairCount": 6,
         "sessionCount": 12,
@@ -289,11 +289,11 @@ def evaluate(packet_path: Path, out: Path) -> None:
         "condition": packet["condition"],
         "packetDigest": packet["packetDigest"],
         "evaluator": {
-            "provider": "GitHub Models",
+            "provider": "Anthropic",
             "model": api.get("model", MODEL),
-            "api": "GitHub Models inference",
+            "api": "Messages API",
             "apiVersion": API_VERSION,
-            "independence": "separate_external_model_provider_via_github_models",
+            "independence": "separate_external_model_provider_direct_api_call",
             "repositoryCheckoutPresent": False,
             "groundTruthPresent": False,
             "toolsUsed": False,
@@ -353,7 +353,7 @@ def score(prepared_root: Path, responses_root: Path, out: Path) -> dict[str, Any
         truth = truths[packet["taskId"]]
         if rec["packetDigest"] != packet["packetDigest"] or response["packetDigest"] != packet["packetDigest"]:
             raise RuntimeError(f"G_PACKET_DIGEST_MISMATCH:{session}")
-        if rec["evaluator"]["provider"] != "GitHub Models":
+        if rec["evaluator"]["provider"] != "Anthropic":
             raise RuntimeError(f"G_PROVIDER_MISMATCH:{session}")
         if rec["evaluator"]["groundTruthPresent"] is not False or rec["evaluator"]["repositoryCheckoutPresent"] is not False:
             raise RuntimeError(f"G_BLINDNESS_METADATA_VIOLATION:{session}")
