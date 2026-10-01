@@ -387,7 +387,7 @@ jobs:
         id: probe
         uses: actions/ai-inference@v2
         with:
-          model: claude-sonnet-4.5
+          model: gpt-4.1
           max-tokens: 32
           system-prompt: |
             You are an external evaluator availability probe.
@@ -465,7 +465,7 @@ jobs:
         id: inference
         uses: actions/ai-inference@v2
         with:
-          model: claude-sonnet-4.5
+          model: gpt-4.1
           max-tokens: 1800
           prompt-file: ${{ runner.temp }}/eval/prompt.txt
           system-prompt: |
@@ -507,7 +507,7 @@ jobs:
               "packetDigest":packet["packetDigest"],
               "evaluator":{
                   "provider":"GitHub Models",
-                  "model":"claude-sonnet-4.5",
+                  "model":"gpt-4.1",
                   "api":"GitHub Models inference",
                   "independence":"separate_external_model_provider_via_github_models",
                   "repositoryCheckoutPresent":False,
@@ -521,7 +521,7 @@ jobs:
           out.mkdir(parents=True,exist_ok=True)
           (out/"response.json").write_text(json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
           (out/"raw_response.txt").write_text(raw+"\n",encoding="utf-8")
-          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":"claude-sonnet-4.5"},sort_keys=True))
+          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":"gpt-4.1"},sort_keys=True))
       - uses: actions/upload-artifact@v7
         with:
           name: g-response-${{ matrix.task }}-${{ matrix.condition }}
