@@ -382,34 +382,41 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
-      actions: read
       contents: read
-      copilot-requests: write
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-python@v6
         with:
-          node-version: "20"
-      - name: Install current Copilot CLI
-        run: npm install -g @github/copilot@latest
-      - name: Show Copilot CLI version
-        run: copilot --version
-      - name: Probe external evaluator with current Copilot CLI
+          python-version: "3.11"
+      - name: Probe direct Anthropic evaluator availability
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        shell: bash
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          G_EVALUATOR_MODEL: claude-sonnet-4-6
+        shell: python
         run: |
-          set -euo pipefail
-          response="$(copilot -p 'Return exactly one JSON object: {"status":"G_OK"} and nothing else.' -s --no-ask-user --model gpt-4.1 --disable-builtin-mcps --available-tools="")"
-          printf '%s\n' "$response" > "$RUNNER_TEMP/g-availability-response.txt"
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          path = Path(os.environ["RUNNER_TEMP"]) / "g-availability-response.txt"
-          value = json.loads(path.read_text(encoding="utf-8"))
-          if value.get("status") != "G_OK":
-              raise SystemExit(f"UNEXPECTED_EXTERNAL_EVALUATOR_RESPONSE:{value!r}")
+          import json, os, urllib.error, urllib.request
+          key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+          if not key:
+              raise SystemExit("BLOCKED_G_ANTHROPIC_API_KEY_MISSING")
+          body = {
+              "model": os.environ["G_EVALUATOR_MODEL"],
+              "max_tokens": 32,
+              "system": "Availability probe. Return exactly one JSON object.",
+              "messages": [{"role": "user", "content": "Return exactly {\"status\":\"G_OK\"} and nothing else."}],
+          }
+          req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=json.dumps(body).encode("utf-8"), headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01"}, method="POST")
+          try:
+              with urllib.request.urlopen(req, timeout=60) as resp:
+                  value = json.loads(resp.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              detail = exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(f"BLOCKED_G_ANTHROPIC_HTTP_{exc.code}:{detail[:1000]}")
+          raw = "".join(part.get("text", "") for part in value.get("content", []) if isinstance(part, dict) and part.get("type") == "text").strip()
+          parsed = json.loads(raw)
+          if parsed.get("status") != "G_OK":
+              raise SystemExit(f"UNEXPECTED_EXTERNAL_EVALUATOR_RESPONSE:{parsed!r}")
           print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
-          PY
+          print("model="+str(value.get("model")))
+          print("messageId="+str(value.get("id")))
 
   g-independent-evaluate:
     name: Code Atlas G ${{ matrix.task }} ${{ matrix.condition }}
@@ -473,16 +480,17 @@ jobs:
               "\n\nPacket:\n"+json.dumps(value,ensure_ascii=False,sort_keys=True)
           )
           (eval_dir/"prompt.txt").write_text(prompt,encoding="utf-8")
-      - name: Run blind external evaluator with current Copilot CLI
+      - name: Run blind external evaluator with direct Anthropic API
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          PROMPT_FILE: ${{ runner.temp }}/eval/prompt.txt
-          RESPONSE_FILE: ${{ runner.temp }}/eval/raw-response.txt
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          G_EVALUATOR_MODEL: claude-sonnet-4-6
+          PACKET: ${{ runner.temp }}/eval/packet.json
+          OUT: ${{ runner.temp }}/eval-out
         shell: bash
         run: |
           set -euo pipefail
-          copilot -p "$(cat "$PROMPT_FILE")" -s --no-ask-user --model gpt-4.1 --disable-builtin-mcps --available-tools="" > "$RESPONSE_FILE"
-          test -s "$RESPONSE_FILE"
+          test -n "${ANTHROPIC_API_KEY:-}" || { echo "BLOCKED_G_ANTHROPIC_API_KEY_MISSING"; exit 1; }
+          python .github/scripts/g_independent_replication_v1.py evaluate --packet "$PACKET" --output "$OUT"
 
       - name: Validate and persist evaluator response
         shell: python
