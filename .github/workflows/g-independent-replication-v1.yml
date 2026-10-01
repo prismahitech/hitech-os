@@ -1,3 +1,4 @@
+# G evaluator route: GitHub Models / external Claude, no repository checkout in evaluator jobs
 name: Code Atlas Independent Agent Replication V1
 
 on:
