@@ -130,9 +130,13 @@ async function main() {
     check(mutationPrevented(adminActivateNoToken), "admin license activation is blocked or simulation-only without token", adminActivateNoToken)
   ];
 
+  const previewMode = /^https?:\/\/[^/]+\.workers\.dev$/i.test(baseUrl);
   const payload = {
     ok: checks.every((item) => item.status === "PASS"),
-    status: checks.every((item) => item.status === "PASS") ? "PASS_PUBLIC_LIVE_READONLY" : "FAIL",
+    status: checks.every((item) => item.status === "PASS")
+      ? (previewMode ? "PASS_CLOUD_CENTER_WORKER_DIRECT_READONLY" : "PASS_PUBLIC_LIVE_READONLY")
+      : "FAIL",
+    evidenceClass: previewMode ? "WORKER_PREVIEW_DIRECT" : "CANONICAL_PUBLIC_LIVE",
     checkedAt,
     baseUrl,
     authenticated: false,
@@ -158,6 +162,7 @@ main().catch((error) => {
   console.error(JSON.stringify({
     ok: false,
     status: "FAIL",
+    evidenceClass: /^https?:\/\/[^/]+\.workers\.dev$/i.test(baseUrl) ? "WORKER_PREVIEW_DIRECT" : "CANONICAL_PUBLIC_LIVE",
     checkedAt,
     baseUrl,
     authenticated: false,
