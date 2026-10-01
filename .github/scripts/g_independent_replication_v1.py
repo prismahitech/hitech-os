@@ -37,7 +37,7 @@ from caext_usefulness_pilot_v1 import (
 )
 
 SCHEMA = "caext_independent_replication.v1"
-MODEL = os.environ.get("G_EVALUATOR_MODEL", "claude-sonnet-4.5")
+MODEL = os.environ.get("G_EVALUATOR_MODEL", "gpt-4.1")
 API_VERSION = "2023-06-01"
 API_URL = os.environ.get("ANTHROPIC_API_URL", "https://api.anthropic.com/v1/messages")
 
