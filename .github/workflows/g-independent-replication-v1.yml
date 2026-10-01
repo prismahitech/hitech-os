@@ -88,8 +88,8 @@ jobs:
           max-tokens: 16
           system-prompt: |
             You are an independent evaluator availability probe.
-            Return exactly G_OK and nothing else.
-          prompt: Return exactly G_OK.
+            Return exactly one JSON object: {"status":"G_OK"} and nothing else.
+          prompt: Return exactly one JSON object: {"status":"G_OK"} and nothing else.
 
   evaluate:
     name: External evaluator ${{ matrix.task }} / ${{ matrix.condition }}
