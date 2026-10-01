@@ -14,15 +14,13 @@ env:
   PYTHONUTF8: '1'
   PYTHONUNBUFFERED: '1'
   PYTHONPATH: tools/code-atlas/src
-  G_EVALUATOR_MODEL: claude-sonnet-5-5
+  G_EVALUATOR_MODEL: claude-sonnet-4.5
 
 jobs:
   protocol:
     name: G protocol and blind packet preparation
     runs-on: ubuntu-24.04
     timeout-minutes: 60
-    outputs:
-      manifest_digest: ${{ steps.manifest.outputs.digest }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -55,24 +53,12 @@ jobs:
           manifest = json.loads((packets / "MANIFEST.json").read_text(encoding="utf-8"))
           assert manifest["sessionCount"] == 12
           assert manifest["conditions"] == {"BASELINE": 6, "ASSISTED": 6}
-          for p in files:
-              value = json.loads(p.read_text(encoding="utf-8"))
+          for path in files:
+              value = json.loads(path.read_text(encoding="utf-8"))
               assert value["groundTruthIncluded"] is False
               forbidden = {"actualChangedPaths", "actualCompanionPaths", "actualChangedTestPaths", "groundTruthDigest"}
-              assert not forbidden.intersection(value), p.name
+              assert not forbidden.intersection(value), path.name
           print("PASS_G_BLIND_PACKET_BOUNDARY")
-      - id: manifest
-        name: Export manifest digest
-        shell: bash
-        run: |
-          digest="$(python - <<'PY'
-          import json, os
-          from pathlib import Path
-          p=Path(os.environ["RUNNER_TEMP"])/"g-prepared"/"task_packets"/"MANIFEST.json"
-          print(json.loads(p.read_text())["manifestDigest"])
-          PY
-          )"
-          echo "digest=$digest" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v7
         name: Upload all evaluator packets
         with:
@@ -92,59 +78,23 @@ jobs:
     name: External evaluator availability gate
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    outputs:
-      available: ${{ steps.probe.outputs.available }}
+    permissions:
+      models: read
     steps:
-      - id: probe
-        name: Probe Anthropic Messages API without exposing credentials
-        shell: python
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          import json, os, sys, urllib.error, urllib.request
-          key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-          if not key:
-              print("BLOCKED_G_ANTHROPIC_API_KEY_MISSING")
-              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
-              sys.exit(1)
-          body = {
-              "model": "claude-sonnet-5-5",
-              "max_tokens": 32,
-              "system": "Availability probe. Return the single token OK.",
-              "messages": [{"role": "user", "content": "OK"}],
-          }
-          req = urllib.request.Request(
-              "https://api.anthropic.com/v1/messages",
-              data=json.dumps(body).encode("utf-8"),
-              headers={
-                  "content-type": "application/json",
-                  "x-api-key": key,
-                  "anthropic-version": "2023-06-01",
-              },
-              method="POST",
-          )
-          try:
-              with urllib.request.urlopen(req, timeout=60) as resp:
-                  value=json.loads(resp.read().decode("utf-8"))
-              print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
-              print("provider=Anthropic")
-              print("model="+str(value.get("model")))
-              print("messageId="+str(value.get("id")))
-              print("available=true", file=open(os.environ["GITHUB_OUTPUT"], "a"))
-          except urllib.error.HTTPError as exc:
-              detail=exc.read().decode("utf-8", errors="replace")
-              print(f"BLOCKED_G_ANTHROPIC_HTTP_{exc.code}:{detail[:800]}")
-              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
-              sys.exit(1)
-          except Exception as exc:
-              print(f"BLOCKED_G_ANTHROPIC_PROBE:{type(exc).__name__}:{exc}")
-              print("available=false", file=open(os.environ["GITHUB_OUTPUT"], "a"))
-              sys.exit(1)
+      - name: Probe GitHub Models with external Claude evaluator
+        uses: actions/ai-inference@v1
+        with:
+          model: claude-sonnet-4.5
+          max-tokens: 16
+          system-prompt: |
+            You are an independent evaluator availability probe.
+            Return exactly G_OK and nothing else.
+          prompt: Return exactly G_OK.
 
   evaluate:
     name: External evaluator ${{ matrix.task }} / ${{ matrix.condition }}
     needs: [protocol, availability]
-    if: needs.availability.result == 'success' && needs.availability.outputs.available == 'true'
+    if: needs.availability.result == 'success'
     strategy:
       fail-fast: false
       matrix:
@@ -152,82 +102,88 @@ jobs:
         condition: [BASELINE, ASSISTED]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      models: read
     steps:
       - uses: actions/download-artifact@v7
         with:
           name: g-all-task-packets
           path: ${{ runner.temp }}/all-packets
-      - name: Isolate exactly one packet
-        shell: bash
+      - name: Isolate one blind packet
+        shell: python
         env:
           TASK: ${{ matrix.task }}
           CONDITION: ${{ matrix.condition }}
         run: |
-          set -euo pipefail
-          packet="$RUNNER_TEMP/all-packets/$TASK_$CONDITION.json"
-          test -f "$packet"
-          mkdir -p "$RUNNER_TEMP/eval"
-          cp "$packet" "$RUNNER_TEMP/eval/packet.json"
-          rm -rf "$RUNNER_TEMP/all-packets"
-          test -f "$RUNNER_TEMP/eval/packet.json"
-          test ! -e "$RUNNER_TEMP/all-packets"
-      - name: Run blind Anthropic evaluation
+          import json, os, shutil
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"])
+          selected = root / "all-packets" / f'$TASK_$CONDITION.json'
+          if not selected.is_file():
+              raise SystemExit(f"MISSING_PACKET:{selected.name}")
+          value = json.loads(selected.read_text(encoding="utf-8"))
+          assert value["groundTruthIncluded"] is False
+          forbidden = {"actualChangedPaths", "actualCompanionPaths", "actualChangedTestPaths", "groundTruthDigest"}
+          assert not forbidden.intersection(value)
+          eval_dir = root / "eval"
+          eval_dir.mkdir(parents=True, exist_ok=True)
+          (eval_dir / "packet.json").write_text(selected.read_text(encoding="utf-8"), encoding="utf-8")
+          shutil.rmtree(root / "all-packets")
+          schema = value["responseSchema"]
+          prompt = (
+              "You are an independent external evaluator in a controlled, agent-neutral software-change replication study.\n\n"
+              "Evaluate ONLY the evidence packet below. You are operationally separate from the producing Code Atlas agent.\n"
+              "Do not browse the repository, use web search, inspect files outside this packet, use future commits or diffs, or infer hidden producer reasoning.\n"
+              "Do not invent ground truth. Do not treat historical truth as authorization. UNKNOWN is valid.\n"
+              "Return exactly one JSON object matching the response schema and nothing else.\n"
+              "editableScope: only the packet target is pre-authorized.\n"
+              "inspectValidateScope and testPathsToValidate use only supplied evidence.\n"
+              "unknowns must contain material unknowns. evidenceReferences may contain only packet availableEvidenceIds.\n"
+              "decision must be READY, BLOCKED, or UNKNOWN. Impact Radius never grants authorization.\n"
+              "Never claim production, enterprise, security/privacy, hosted, or human-usefulness certification.\n\n"
+              "Response schema:\n" + json.dumps(schema, ensure_ascii=False, sort_keys=True) +
+              "\n\nPacket:\n" + json.dumps(value, ensure_ascii=False, sort_keys=True)
+          )
+          (eval_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
+      - name: Run blind external evaluator
+        id: inference
+        uses: actions/ai-inference@v1
+        with:
+          model: claude-sonnet-4.5
+          max-tokens: 1800
+          prompt-file: ${{ runner.temp }}/eval/prompt.txt
+          system-prompt: |
+            You are an independent evaluator.
+            Use only the supplied evidence package.
+            Do not use repository access, browsing, tools, future history, or hidden producer context.
+            Return JSON only.
+      - name: Validate and persist evaluator response
         shell: python
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          PACKET: ${{ runner.temp }}/eval/packet.json
+          RESPONSE_FILE: ${{ steps.inference.outputs.response-file }}
           OUT: ${{ runner.temp }}/eval-out
         run: |
-          import hashlib, json, os, urllib.error, urllib.request
+          import hashlib, json, os
           from pathlib import Path
-          packet=json.loads(Path(os.environ["PACKET"]).read_text(encoding="utf-8"))
-          schema=packet["responseSchema"]
-          prompt=(
-              "You are an independent external evaluator in a controlled, agent-neutral software-change replication study.\n\n"
-              "Evaluate ONLY the bounded evidence packet below. You are operationally separate from the producing Code Atlas agent.\n"
-              "Do not browse the repository, use web search, inspect files outside this packet, use future commits or diffs, or infer hidden producer reasoning.\n"
-              "Do not invent ground truth. Do not treat historical truth as authorization. UNKNOWN is valid.\n\n"
-              "Return exactly one JSON object matching the response schema and nothing else.\n"
-              "editableScope: only the packet target is pre-authorized. inspectValidateScope and testPathsToValidate must use only supplied evidence.\n"
-              "unknowns must contain material unknowns. evidenceReferences may contain only packet availableEvidenceIds.\n"
-              "decision must be READY, BLOCKED, or UNKNOWN. Impact Radius never grants authorization.\n\n"
-              "Response schema:\n"+json.dumps(schema, ensure_ascii=False, sort_keys=True)+
-              "\n\nPacket:\n"+json.dumps(packet, ensure_ascii=False, sort_keys=True)
-          )
-          body={
-              "model":"claude-sonnet-5-5",
-              "max_tokens":1800,
-              "system":"You are an independent evaluator. Use only the supplied evidence package. Do not use tools, browsing, repository access, future history, or hidden producer context.",
-              "messages":[{"role":"user","content":prompt}],
-          }
-          req=urllib.request.Request(
-              "https://api.anthropic.com/v1/messages",
-              data=json.dumps(body).encode("utf-8"),
-              headers={
-                  "content-type":"application/json",
-                  "x-api-key":os.environ["ANTHROPIC_API_KEY"],
-                  "anthropic-version":"2023-06-01",
-              },
-              method="POST",
-          )
+
+          root = Path(os.environ["RUNNER_TEMP"])
+          packet = json.loads((root / "eval" / "packet.json").read_text(encoding="utf-8"))
+          raw = Path(os.environ["RESPONSE_FILE"]).read_text(encoding="utf-8").strip()
           try:
-              with urllib.request.urlopen(req, timeout=180) as resp:
-                  api=json.loads(resp.read().decode("utf-8"))
-          except urllib.error.HTTPError as exc:
-              detail=exc.read().decode("utf-8", errors="replace")
-              raise SystemExit(f"ANTHROPIC_HTTP_{exc.code}:{detail[:1000]}")
-          raw="\n".join(
-              b.get("text","") for b in api.get("content",[])
-              if isinstance(b,dict) and b.get("type")=="text"
-          ).strip()
-          response=json.loads(raw)
-          required=set(schema["requiredFields"])
-          missing=sorted(required-set(response))
+              response = json.loads(raw)
+          except json.JSONDecodeError:
+              start, end = raw.find("{"), raw.rfind("}")
+              if start < 0 or end <= start:
+                  raise SystemExit("EVALUATOR_RESPONSE_NOT_JSON")
+              response = json.loads(raw[start:end+1])
+
+          missing = sorted(set(packet["responseSchema"]["requiredFields"]) - set(response))
           if missing: raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
           if str(response.get("taskId")) != str(packet["taskId"]): raise SystemExit("TASK_ID_MISMATCH")
           if str(response.get("packetDigest")) != str(packet["packetDigest"]): raise SystemExit("PACKET_DIGEST_MISMATCH")
           if response.get("decision") not in {"READY","BLOCKED","UNKNOWN"}: raise SystemExit("INVALID_DECISION")
-          record={
+
+          record = {
               "schemaVersion":"caext_independent_agent_response_record.v1",
               "replicationSchema":"caext_independent_replication.v1",
               "sessionId":packet["sessionId"],
@@ -236,28 +192,23 @@ jobs:
               "condition":packet["condition"],
               "packetDigest":packet["packetDigest"],
               "evaluator":{
-                  "provider":"Anthropic",
-                  "model":api.get("model","claude-sonnet-5-5"),
-                  "api":"Messages API",
-                  "apiVersion":"2023-06-01",
-                  "independence":"separate_external_model_provider_direct_api_call",
+                  "provider":"GitHub Models",
+                  "model":"claude-sonnet-4.5",
+                  "api":"GitHub Models inference",
+                  "independence":"separate_external_model_provider_via_github_models",
                   "repositoryCheckoutPresent":False,
                   "groundTruthPresent":False,
                   "toolsUsed":False
               },
-              "api":{
-                  "messageId":api.get("id"),
-                  "stopReason":api.get("stop_reason"),
-                  "usage":api.get("usage")
-              },
               "response":response,
               "rawTextSha256":hashlib.sha256(raw.encode("utf-8")).hexdigest()
           }
+
           out=Path(os.environ["OUT"])
           out.mkdir(parents=True,exist_ok=True)
           (out/"response.json").write_text(json.dumps(record,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
           (out/"raw_response.txt").write_text(raw+"\n",encoding="utf-8")
-          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":api.get("model")},sort_keys=True))
+          print(json.dumps({"status":"PASS_G_EVALUATOR_RESPONSE","sessionId":packet["sessionId"],"model":"claude-sonnet-4.5"},sort_keys=True))
       - uses: actions/upload-artifact@v7
         with:
           name: g-response-${{ matrix.task }}-${{ matrix.condition }}
@@ -291,7 +242,7 @@ jobs:
           pattern: g-response-*
           path: ${{ runner.temp }}/responses
           merge-multiple: false
-      - name: Score blinded result
+      - name: Score blinded paired replication
         shell: bash
         run: |
           set -euo pipefail
