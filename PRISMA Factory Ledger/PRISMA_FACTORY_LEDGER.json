@@ -598,7 +598,7 @@
       ],
       "classification": "VERIFY",
       "status": "LOCAL_VERIFIED",
-      "stateLabel": "LOCAL_VERIFIED_INDEPENDENT_EVALUATOR_BLOCKED",
+      "stateLabel": "LOCAL_VERIFIED_INDEPENDENT_EVALUATOR_UNAVAILABLE_CONFIRMED",
       "doNotRebuild": true,
       "evidence": [
         "PR #269",
@@ -636,7 +636,11 @@
         "PR #294 independent evaluator gate closed without merge",
         "Copilot Actions availability run 31916081998 artifact 9254928517 sha256:9b66acf2461bc765727cf3ff8b6eca6c63c1931e628c47e89e5cf406d4b433f9",
         "Copilot CLI 1.0.80 with CopilotRequests: write rejected by GitHub: Access denied by policy settings",
-        "independent-evaluator blocker closure Authority Mesh run 31916191500 artifact 9254953865 sha256:bb15de6aa6394d61ea22eabe8f2e3a11ddb178429b6430a11a800566fb0184bb"
+        "independent-evaluator blocker closure Authority Mesh run 31916191500 artifact 9254953865 sha256:bb15de6aa6394d61ea22eabe8f2e3a11ddb178429b6430a11a800566fb0184bb",
+        "G final attempt PR #614 / CI run 36904320909",
+        "G external evaluator direct Anthropic probe failed closed: ANTHROPIC_API_KEY secret not configured",
+        "G latest Copilot CLI 1.0.91 probe run 36903996492 rejected by GitHub with Access denied by policy settings",
+        "G final blocker evidence: PRISMA Factory Ledger/evidence/CODE_ATLAS_INDEPENDENT_AGENT_REPLICATION_BLOCKED_20261001.json"
       ],
       "allowedActions": [
         "read-only verification on unrelated external repositories",
@@ -682,7 +686,7 @@
         "Independent multi-agent replication",
         "Successful independent-agent replication; the planned 12 sessions were not executed because the external evaluator was policy-blocked"
       ],
-      "nextGate": "Prove availability of an independent external evaluator, then rerun the same-task paired replication; bounded human usefulness remains a separate future study. Do not rebuild Code Atlas core to work around GitHub Copilot policy settings."
+      "nextGate": "Prove availability of an independent external evaluator by enabling a permitted evaluator credential/service or Copilot policy, then rerun the same-task paired replication. Bounded human usefulness remains a separate future study. Do not rebuild Code Atlas core to work around the external evaluator blocker."
     },
     {
       "id": "tablet.sync.runtime_truth",
@@ -2159,5 +2163,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-09-29T10:20:00Z"
+  "updatedAt": "2026-10-01T18:07:31.985Z"
 }

@@ -1433,6 +1433,36 @@
         "Canonical semantic or target ID minting.",
         "Production or customer-live readiness."
       ]
+    },
+    {
+      "artifact": "Code Atlas Independent Agent Replication — definitive blocker / 2026-10-01",
+      "type": "code_atlas_independent_agent_replication_blocked_evidence",
+      "scope": [
+        "code_atlas",
+        "change_intelligence",
+        "external_evidence",
+        "governance"
+      ],
+      "status": "BLOCKED",
+      "proves": [
+        "The six-task paired independent-agent replication remains unexecuted because an independent evaluator was not actually available.",
+        "A current Copilot CLI 1.0.91 attempt with CopilotRequests: write was denied by policy settings.",
+        "A direct Anthropic evaluator fallback was attempted and failed closed because the Actions secret ANTHROPIC_API_KEY is not configured.",
+        "No evaluator sessions or score were fabricated and no Code Atlas core was rebuilt."
+      ],
+      "doesNotProve": [
+        "Independent-agent replication PASS.",
+        "Human usefulness.",
+        "Production, enterprise, hosted, security/privacy or legal certification.",
+        "Causal usefulness uplift."
+      ],
+      "evidence": [
+        "PRISMA Factory Ledger/evidence/CODE_ATLAS_INDEPENDENT_AGENT_REPLICATION_BLOCKED_20261001.json",
+        "workflow run 36904320909",
+        "workflow run 36903996492",
+        "PR #614",
+        "head 13861615499fa65d43545755f2b6d9e075b8722d"
+      ]
     }
   ],
   "updatedAt": "2026-09-29T10:20:00Z",

@@ -165,23 +165,23 @@
       "accuracyThresholds": "NONE_BY_DESIGN",
       "cases": {
         "cobra_go": {
-          "recallPct": 25.0,
-          "precisionPct": 100.0,
-          "companionRecallPct": 0.0,
+          "recallPct": 25,
+          "precisionPct": 100,
+          "companionRecallPct": 0,
           "actualChangedCount": 4,
           "predictedImpactCount": 1
         },
         "spring_java": {
-          "recallPct": 50.0,
-          "precisionPct": 100.0,
-          "companionRecallPct": 0.0,
+          "recallPct": 50,
+          "precisionPct": 100,
+          "companionRecallPct": 0,
           "actualChangedCount": 2,
           "predictedImpactCount": 1
         },
         "pybind_mixed": {
           "recallPct": 33.33,
-          "precisionPct": 100.0,
-          "companionRecallPct": 0.0,
+          "precisionPct": 100,
+          "companionRecallPct": 0,
           "actualChangedCount": 3,
           "predictedImpactCount": 1
         },
@@ -199,21 +199,21 @@
       "conditions": {
         "ASSISTED": {
           "taskCount": 3,
-          "authorizationWideningRatePct": 0.0,
-          "targetIncludedEditablePct": 100.0,
-          "meanHistoricalChangedTestRecallPct": 100.0,
+          "authorizationWideningRatePct": 0,
+          "targetIncludedEditablePct": 100,
+          "meanHistoricalChangedTestRecallPct": 100,
           "meanHistoricalCompanionInspectionRecallPct": 88.89,
-          "validEvidenceReferenceRatePct": 100.0,
+          "validEvidenceReferenceRatePct": 100,
           "fakeGreenCount": 0,
           "unknownOmissionCount": 0
         },
         "BASELINE": {
           "taskCount": 3,
-          "authorizationWideningRatePct": 0.0,
+          "authorizationWideningRatePct": 0,
           "targetIncludedEditablePct": 33.33,
-          "meanHistoricalChangedTestRecallPct": 0.0,
-          "meanHistoricalCompanionInspectionRecallPct": 0.0,
-          "validEvidenceReferenceRatePct": 100.0
+          "meanHistoricalChangedTestRecallPct": 0,
+          "meanHistoricalCompanionInspectionRecallPct": 0,
+          "validEvidenceReferenceRatePct": 100
         }
       },
       "causalUpliftClaimAllowed": false,
@@ -222,11 +222,11 @@
       "historyAuthorizes": false,
       "rawObservedRoi": {
         "outOfScopeChangeRate": {
-          "value": 0.0,
+          "value": 0,
           "unit": "ratio"
         },
         "evidenceCompletenessRate": {
-          "value": 1.0,
+          "value": 1,
           "unit": "ratio"
         },
         "financialEstimate": null
@@ -257,7 +257,7 @@
       "productFailure": false,
       "fixAuthorized": false,
       "maturityAdvanced": false,
-      "blocker": "GITHUB_COPILOT_POLICY_SETTINGS",
+      "blocker": "INDEPENDENT_EVALUATOR_UNAVAILABLE",
       "availabilityEvidence": {
         "directCopilotAssigneeAttempt": "HTTP_403_FROM_CHAT_GITHUB_CONNECTOR",
         "prMentionAttempt": "NO_AGENT_RESPONSE_OR_HEAD_MOVEMENT",
@@ -266,8 +266,35 @@
         "actionsArtifactDigest": "sha256:9b66acf2461bc765727cf3ff8b6eca6c63c1931e628c47e89e5cf406d4b433f9",
         "githubTokenPermission": "CopilotRequests: write",
         "copilotCliVersion": "1.0.80",
-        "requestResult": "Access denied by policy settings"
-      }
+        "requestResult": "Access denied by policy settings",
+        "latestCopilotPolicyAttempt": {
+          "workflowRunId": 36903996492,
+          "availabilityJobId": 110509840861,
+          "copilotCliVersion": "1.0.91",
+          "githubTokenPermission": "CopilotRequests: write",
+          "requestId": "D028:1C979F:17C0BAC:195FDF5:6ABEA088",
+          "requestResult": "Access denied by policy settings"
+        },
+        "latestDirectAnthropicAttempt": {
+          "workflowRunId": 36904320909,
+          "availabilityJobId": 110511008126,
+          "model": "claude-sonnet-4-6",
+          "secretPresent": false,
+          "requestResult": "ANTHROPIC_API_KEY_MISSING"
+        }
+      },
+      "latestAttempt": {
+        "workflowRunId": 36904320909,
+        "pullRequest": 614,
+        "headSha": "13861615499fa65d43545755f2b6d9e075b8722d",
+        "availabilityJobId": 110511008126,
+        "evaluatorRoute": "direct Anthropic Messages API",
+        "evaluatorModel": "claude-sonnet-4-6",
+        "secretName": "ANTHROPIC_API_KEY",
+        "secretPresent": false,
+        "observedResult": "BLOCKED_G_ANTHROPIC_API_KEY_MISSING"
+      },
+      "nextGate": "Demonstrate an actually available independent external evaluator by enabling a permitted evaluator credential/service or Copilot policy, then rerun the six same-task BASELINE/ASSISTED pairs. Human usefulness remains a separate future gate."
     }
   },
   "excludedSurfaces": [
@@ -298,7 +325,7 @@
     "independent multi-agent replication",
     "successful independent-agent replication while the current external evaluator policy blocker remains"
   ],
-  "nextGate": "Demonstrate an actually available independent external evaluator, then rerun the paired independent-agent replication. A bounded human usefulness study remains a separate future gate. Keep hosted/security and production certification separate, and do not rebuild core from this external policy blocker.",
+  "nextGate": "Demonstrate an actually available independent external evaluator by enabling a permitted evaluator credential/service or Copilot policy, then rerun the six same-task BASELINE/ASSISTED pairs. Human usefulness remains a separate future gate.",
   "externalEvidence": {
     "status": "BOUNDED_EXTERNAL_DIVERSITY_PASS_7_REPOS_2_OS",
     "sourceRepairPr": 275,
