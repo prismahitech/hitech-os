@@ -1,0 +1,455 @@
+name: Code Atlas G Final Independent Evaluator
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "PRISMA Factory Ledger/evidence/G_EVALUATOR_RUN_REQUEST.json"
+
+concurrency:
+  group: code-atlas-g-final-evaluator
+  cancel-in-progress: false
+
+jobs:
+  g-independent-protocol:
+    name: Code Atlas G protocol and blind packet preparation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Compile and self-test G harness
+        env:
+          PYTHONPATH: tools/code-atlas/src
+        run: |
+          set -euo pipefail
+          python -m py_compile .github/scripts/g_independent_replication_v1.py .github/scripts/caext_usefulness_pilot_v1.py
+          python .github/scripts/g_independent_replication_v1.py selftest
+      - name: Prepare twelve blind session packets
+        env:
+          PYTHONPATH: tools/code-atlas/src
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/g-prepared"
+          mkdir -p "$RUNNER_TEMP/g-prepared"
+          python .github/scripts/g_independent_replication_v1.py prepare --output "$RUNNER_TEMP/g-prepared"
+      - name: Enforce sealed ground-truth boundary
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"g-prepared"
+          packets=root/"task_packets"
+          truth=root/"ground_truth"
+          files=sorted(packets.glob("U*_*.json"))
+          assert len(files)==12, len(files)
+          assert len(list(truth.glob("U*.json")))==6
+          for path in files:
+              value=json.loads(path.read_text(encoding="utf-8"))
+              assert value["groundTruthIncluded"] is False
+              forbidden={"actualChangedPaths","actualCompanionPaths","actualChangedTestPaths","groundTruthDigest"}
+              assert not forbidden.intersection(value), path.name
+          print("PASS_G_BLIND_PACKET_BOUNDARY")
+      - uses: actions/upload-artifact@v7
+        name: Upload G evaluator packets
+        with:
+          name: g-all-task-packets
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/g-prepared/task_packets/**
+      - uses: actions/upload-artifact@v7
+        name: Upload sealed G ground truth
+        with:
+          name: g-ground-truth-sealed
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/g-prepared/ground_truth/**
+
+  g-independent-availability:
+    name: Code Atlas G external evaluator availability
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Probe direct Anthropic evaluator availability
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          G_EVALUATOR_MODEL: claude-sonnet-4-6
+        shell: python
+        run: |
+          import json, os, urllib.error, urllib.request
+          key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+          if not key:
+              raise SystemExit("BLOCKED_G_ANTHROPIC_API_KEY_MISSING")
+          body = {
+              "model": os.environ["G_EVALUATOR_MODEL"],
+              "max_tokens": 32,
+              "system": "Availability probe. Return exactly one JSON object.",
+              "messages": [{"role": "user", "content": 'Return exactly {"status":"G_OK"} and nothing else.'}],
+          }
+          req = urllib.request.Request(
+              "https://api.anthropic.com/v1/messages",
+              data=json.dumps(body).encode("utf-8"),
+              headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01"},
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=60) as resp:
+                  value = json.loads(resp.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              detail = exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(f"BLOCKED_G_ANTHROPIC_HTTP_{exc.code}:{detail[:1000]}")
+          raw = "".join(part.get("text","") for part in value.get("content",[]) if isinstance(part,dict) and part.get("type")=="text").strip()
+          parsed = json.loads(raw)
+          if parsed.get("status") != "G_OK":
+              raise SystemExit(f"UNEXPECTED_EXTERNAL_EVALUATOR_RESPONSE:{parsed!r}")
+          print("PASS_G_EXTERNAL_EVALUATOR_AVAILABLE")
+          print("model="+str(value.get("model")))
+          print("messageId="+str(value.get("id")))
+
+  g-independent-evaluate:
+    name: Code Atlas G ${{ matrix.task }} ${{ matrix.condition }}
+    needs: [g-independent-protocol, g-independent-availability]
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [U1, U2, U3, U4, U5, U6]
+        condition: [BASELINE, ASSISTED]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/all-packets
+      - name: Isolate exactly one blind packet
+        shell: python
+        env:
+          TASK: ${{ matrix.task }}
+          CONDITION: ${{ matrix.condition }}
+        run: |
+          import json, os, shutil
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])
+          selected=root/"all-packets"/f'{os.environ["TASK"]}_{os.environ["CONDITION"]}.json'
+          if not selected.is_file():
+              raise SystemExit(f"MISSING_PACKET:{selected.name}")
+          value=json.loads(selected.read_text(encoding="utf-8"))
+          assert value["groundTruthIncluded"] is False
+          forbidden={"actualChangedPaths","actualCompanionPaths","actualChangedTestPaths","groundTruthDigest"}
+          assert not forbidden.intersection(value)
+          eval_dir=root/"eval"
+          eval_dir.mkdir(parents=True,exist_ok=True)
+          (eval_dir/"packet.json").write_text(selected.read_text(encoding="utf-8"),encoding="utf-8")
+          shutil.rmtree(root/"all-packets")
+      - name: Run blind external evaluator with direct Anthropic API
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          G_EVALUATOR_MODEL: claude-sonnet-4-6
+          PACKET: ${{ runner.temp }}/eval/packet.json
+          OUT: ${{ runner.temp }}/eval-out
+          PYTHONPATH: tools/code-atlas/src
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${ANTHROPIC_API_KEY:-}" || { echo "BLOCKED_G_ANTHROPIC_API_KEY_MISSING"; exit 1; }
+          python .github/scripts/g_independent_replication_v1.py evaluate --packet "$PACKET" --output "$OUT"
+      - name: Validate evaluator response record
+        shell: python
+        env:
+          OUT: ${{ runner.temp }}/eval-out
+        run: |
+          import json, os
+          from pathlib import Path
+          out=Path(os.environ["OUT"])
+          record=json.loads((out/"response.json").read_text(encoding="utf-8"))
+          packet=json.loads((Path(os.environ["RUNNER_TEMP"])/"eval"/"packet.json").read_text(encoding="utf-8"))
+          response=record["response"]
+          required=set(packet["responseSchema"]["requiredFields"])
+          missing=sorted(required-set(response))
+          if missing:
+              raise SystemExit(f"RESPONSE_MISSING_FIELDS:{missing}")
+          if record["packetDigest"] != packet["packetDigest"]:
+              raise SystemExit("PACKET_DIGEST_MISMATCH")
+          if response["packetDigest"] != packet["packetDigest"]:
+              raise SystemExit("RESPONSE_PACKET_DIGEST_MISMATCH")
+          if response["taskId"] != packet["taskId"]:
+              raise SystemExit("TASK_ID_MISMATCH")
+          if record["evaluator"]["provider"] != "Anthropic":
+              raise SystemExit("EVALUATOR_PROVIDER_MISMATCH")
+          if record["evaluator"]["model"] != "claude-sonnet-4-6":
+              raise SystemExit("EVALUATOR_MODEL_MISMATCH")
+          if record["evaluator"]["repositoryCheckoutPresent"] is not False:
+              raise SystemExit("REPOSITORY_CHECKOUT_BOUNDARY_VIOLATION")
+          if record["evaluator"]["groundTruthPresent"] is not False:
+              raise SystemExit("GROUND_TRUTH_BOUNDARY_VIOLATION")
+          if record["evaluator"]["toolsUsed"] is not False:
+              raise SystemExit("TOOLS_BOUNDARY_VIOLATION")
+          print("PASS_G_EVALUATOR_RESPONSE")
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-response-${{ matrix.task }}-${{ matrix.condition }}
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/eval-out/**
+
+  g-independent-score:
+    name: Code Atlas G paired replication score
+    needs: [g-independent-protocol, g-independent-availability, g-independent-evaluate]
+    if: always() && needs.g-independent-protocol.result == 'success' && needs.g-independent-availability.result == 'success' && needs.g-independent-evaluate.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/g-prepared/task_packets
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-ground-truth-sealed
+          path: ${{ runner.temp }}/g-prepared/ground_truth
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: g-response-*
+          path: ${{ runner.temp }}/responses
+          merge-multiple: false
+      - name: Score blinded paired replication
+        env:
+          PYTHONPATH: tools/code-atlas/src
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/g_independent_replication_v1.py score             --prepared-root "$RUNNER_TEMP/g-prepared"             --responses-root "$RUNNER_TEMP/responses"             --output "$RUNNER_TEMP/g-score"
+          cat "$RUNNER_TEMP/g-score/G_INDEPENDENT_AGENT_REPLICATION_RESULT.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g-replication-score
+          if-no-files-found: error
+          retention-days: 30
+          path: ${{ runner.temp }}/g-score/**
+
+  g-finalize:
+    name: Code Atlas G evidence closure
+    needs: [g-independent-protocol, g-independent-availability, g-independent-evaluate, g-independent-score]
+    if: needs.g-independent-score.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-all-task-packets
+          path: ${{ runner.temp }}/evidence/task_packets
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-ground-truth-sealed
+          path: ${{ runner.temp }}/evidence/ground_truth
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: g-response-*
+          path: ${{ runner.temp }}/evidence/responses
+          merge-multiple: false
+      - uses: actions/download-artifact@v7
+        with:
+          name: g-replication-score
+          path: ${{ runner.temp }}/evidence/score
+      - name: Materialize canonical G evidence and advance governance state
+        env:
+          REPO_ROOT: ${{ github.workspace }}
+          EVIDENCE_ROOT: ${{ runner.temp }}/evidence
+          RUN_ID: ${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
+          MODEL: claude-sonnet-4-6
+        shell: python
+        run: |
+          import json, os, shutil
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root=Path(os.environ["REPO_ROOT"])
+          src=Path(os.environ["EVIDENCE_ROOT"])
+          run_id=os.environ["RUN_ID"]
+          run_number=int(os.environ["RUN_NUMBER"])
+          now=datetime.now(timezone.utc).isoformat()
+
+          score_dir=src/"score"
+          result=json.loads((score_dir/"G_INDEPENDENT_AGENT_REPLICATION_RESULT.json").read_text(encoding="utf-8"))
+          if result.get("status") != "PASS_INDEPENDENT_AGENT_REPLICATION":
+              raise SystemExit(f"UNEXPECTED_G_RESULT_STATUS:{result.get('status')}")
+          if result.get("sessionCount") != 12 or result.get("validSessionCount") != 12:
+              raise SystemExit("G_SESSION_COUNT_NOT_12")
+          verification=result.get("verification") or {}
+          for field in ("allExpectedSessionsPresent","allPacketDigestsMatch","allBlindnessMetadataValid","groundTruthWasSeparated","evaluatorDidNotReceiveGroundTruth","evaluatorDidNotReceiveRepositoryCheckout"):
+              if verification.get(field) is not True:
+                  raise SystemExit(f"G_VERIFICATION_FIELD_NOT_TRUE:{field}")
+          if verification.get("invalidEvidenceReferenceCount") != 0:
+              raise SystemExit("G_INVALID_EVIDENCE_REFERENCES")
+          if verification.get("fakeGreenCount") != 0:
+              raise SystemExit("G_FAKE_GREEN_DETECTED")
+          if verification.get("unknownOmissionCount") != 0:
+              raise SystemExit("G_UNKNOWN_OMISSION_DETECTED")
+
+          evidence_dir=root/"PRISMA Factory Ledger"/"evidence"/"code-atlas-g"/f"20261001-run-{run_id}"
+          evidence_dir.mkdir(parents=True,exist_ok=True)
+          for name in ["G_INDEPENDENT_AGENT_REPLICATION_RESULT.json","G_INDEPENDENT_AGENT_REPLICATION_TASKS.json","G_INDEPENDENT_AGENT_REPLICATION_PAIRS.json"]:
+              shutil.copy2(score_dir/name, evidence_dir/name)
+          shutil.copytree(src/"task_packets", evidence_dir/"task_packets", dirs_exist_ok=True)
+          shutil.copytree(src/"ground_truth", evidence_dir/"ground_truth", dirs_exist_ok=True)
+          shutil.copytree(src/"responses", evidence_dir/"responses", dirs_exist_ok=True)
+
+          metadata={
+            "schemaVersion":"code_atlas_independent_agent_replication_closure.v1",
+            "status":"PASS_INDEPENDENT_AGENT_REPLICATION",
+            "workflowRunId":int(run_id),
+            "workflowRunNumber":run_number,
+            "evaluatorProvider":"Anthropic",
+            "evaluatorModel":os.environ["MODEL"],
+            "sessionCountExecuted":12,
+            "scoreProduced":True,
+            "sourceOfScore":"blind paired replication score after all 12 evaluator responses persisted",
+            "canonicalEvidenceDirectory":str(evidence_dir.relative_to(root)).replace("\\","/"),
+            "humanUsefulness":"NOT_MEASURED",
+            "causalUpliftClaimAllowed":False,
+            "productionCertified":False,
+            "coreRebuilt":False,
+            "secretValuesExposed":False,
+            "closedIssue":433
+          }
+          (evidence_dir/"CLOSURE_METADATA.json").write_text(json.dumps(metadata,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+
+          contract_path=root/"tools/code-atlas/docs/CODE_ATLAS_CUSTOMER_WOW_V1.contract.json"
+          ledger_path=root/"PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"
+          index_path=root/"PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"
+
+          contract=json.loads(contract_path.read_text(encoding="utf-8"))
+          rep=contract["independentAgentReplication"]
+          rep.update({
+            "status":"PASS_INDEPENDENT_AGENT_REPLICATION",
+            "classification":"VERIFY / EXTERNAL EVIDENCE / PASS",
+            "executedEvaluationSessionCount":12,
+            "scoreProduced":True,
+            "blocker":None,
+            "maturityAdvanced":False,
+            "latestAttempt":{
+              "workflowRunId":int(run_id),
+              "workflowRunNumber":run_number,
+              "evaluatorRoute":"direct Anthropic Messages API",
+              "evaluatorModel":os.environ["MODEL"],
+              "sessionCountExecuted":12,
+              "scoreProduced":True,
+              "resultDigest":result["resultDigest"]
+            },
+            "nextGate":"Bounded human usefulness study and other explicitly separate evidence gates; do not infer causal human usefulness from G."
+          })
+          contract["nextGate"]="Independent-agent replication completed for the six bounded paired tasks; human usefulness remains a separate future gate."
+          contract["doesNotProve"]=[x for x in contract.get("doesNotProve",[]) if "successful independent-agent replication while the current external evaluator policy blocker remains" not in x.lower()]
+          rep.setdefault("evidence",[])
+          for ev in [str(evidence_dir.relative_to(root)).replace("\\","/"),f"workflow run {run_id}",f"G result digest {result['resultDigest']}"]:
+              if ev not in rep["evidence"]:
+                  rep["evidence"].append(ev)
+          contract_path.write_text(json.dumps(contract,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          ledger=json.loads(ledger_path.read_text(encoding="utf-8"))
+          target=next(x for x in ledger["capabilities"] if x.get("id")=="code_atlas.change_intelligence.customer_wow_v1")
+          target["stateLabel"]="PASS_INDEPENDENT_AGENT_REPLICATION_BOUNDED"
+          target["status"]="LOCAL_VERIFIED"
+          target["nextGate"]="Bounded human usefulness study and other separate evidence gates; no core rebuild."
+          target.setdefault("evidence",[])
+          for ev in [str(evidence_dir.relative_to(root)).replace("\\","/"),f"workflow run {run_id}",f"G result digest {result['resultDigest']}"]:
+              if ev not in target["evidence"]:
+                  target["evidence"].append(ev)
+          target["doesNotProve"]=[x for x in target.get("doesNotProve",[]) if "successful independent-agent replication" not in x.lower()]
+          target["forbiddenClaims"]=[x for x in target.get("forbiddenClaims",[]) if "successful independent-agent replication" not in x.lower()]
+          ledger["updatedAt"]=now
+          ledger_path.write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          index=json.loads(index_path.read_text(encoding="utf-8"))
+          entries=index.get("entries",[])
+          new_entry={
+            "artifact":f"Code Atlas Independent Agent Replication PASS — run {run_id}",
+            "type":"code_atlas_independent_agent_replication_pass_evidence",
+            "scope":["code_atlas","change_intelligence","external_evidence","governance"],
+            "status":"PASS",
+            "proves":[
+              "The six-task same-task BASELINE/ASSISTED paired replication executed all 12 evaluator sessions.",
+              "The evaluator was Anthropic direct Messages API and did not receive repository checkout or sealed ground truth.",
+              "All packet digests matched, all expected sessions were present, and no invalid evidence references, fake-green cases, or unknown omissions were detected."
+            ],
+            "doesNotProve":[
+              "Human usefulness",
+              "Causal uplift",
+              "Production, enterprise, hosted, security/privacy or legal certification",
+              "Arbitrary-repository universality"
+            ],
+            "evidence":[str(evidence_dir.relative_to(root)).replace("\\","/"),f"workflow run {run_id}",f"G result digest {result['resultDigest']}"]
+          }
+          if not any(x.get("artifact")==new_entry["artifact"] for x in entries):
+              entries.append(new_entry)
+          index["entries"]=entries
+          index["updatedAt"]=now
+          index_path.write_text(json.dumps(index,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+      - name: Commit canonical closure evidence
+        env:
+          RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             "PRISMA Factory Ledger/evidence/code-atlas-g/20261001-run-$RUN_ID"             "PRISMA Factory Ledger/PRISMA_EVIDENCE_INDEX.json"             "PRISMA Factory Ledger/PRISMA_FACTORY_LEDGER.json"             "tools/code-atlas/docs/CODE_ATLAS_CUSTOMER_WOW_V1.contract.json"
+          git diff --cached --quiet && { echo "No closure changes to commit"; exit 0; }
+          git commit -m "verify(g): record independent evaluator replication pass"
+          git push origin HEAD:main
+      - name: Close G issue only after canonical evidence commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+          RESULT_DIGEST_FILE: ${{ runner.temp }}/evidence/score/G_INDEPENDENT_AGENT_REPLICATION_RESULT.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          digest="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["resultDigest"])' "$RESULT_DIGEST_FILE")"
+          gh issue close 433             --repo "$GITHUB_REPOSITORY"             --comment "G CLOSED by verified independent-agent replication. Workflow run $RUN_ID; 12/12 evaluator sessions executed; result digest $digest. Canonical evidence committed to main. Human usefulness and other separate gates remain explicitly unmeasured. No Universal Core rebuild."
+      - name: Confirm issue closed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          state="$(gh issue view 433 --repo "$GITHUB_REPOSITORY" --json state --jq '.state')"
+          test "$state" = "CLOSED"
+          echo "PASS_G_ISSUE_433_CLOSED"
