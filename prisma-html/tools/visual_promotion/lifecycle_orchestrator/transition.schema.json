@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prisma.visual.lifecycle-transition.v1",
+  "title": "PRISMA Visual Lifecycle Transition Request",
+  "type": "object",
+  "required": ["schema", "lifecycleId", "transition", "expectedHead", "payload"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "prisma.visual.lifecycle-transition.v1" },
+    "lifecycleId": { "type": "string", "pattern": "^vlo-[a-z0-9][a-z0-9-]{2,95}$" },
+    "transition": {
+      "enum": [
+        "DISCOVER", "ASSESS_RESOLVE", "REGISTER_TARGET", "CANONICAL_BINDING",
+        "AUTHORIZATION", "APPLY", "DERIVE", "RECONCILE", "RUNTIME_VERIFY",
+        "VISUAL_CERTIFY", "CHANGE_ASSURANCE", "CLOSE"
+      ]
+    },
+    "expectedHead": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "payload": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "transition": { "const": "DISCOVER" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["workEntryRequest"],
+            "properties": {
+              "workEntryRequest": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "ASSESS_RESOLVE" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["readinessRecord", "authority"],
+            "properties": {
+              "readinessRecord": { "type": "object" },
+              "authority": { "type": "object" },
+              "projectionEvidence": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "REGISTER_TARGET" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["authority", "authorization", "source"],
+            "properties": {
+              "authority": { "type": "object" },
+              "authorization": { "type": "object" },
+              "source": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "CANONICAL_BINDING" } } },
+      "then": { "properties": { "payload": { "maxProperties": 0 } } }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "AUTHORIZATION" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["authority"],
+            "properties": { "authority": { "type": "object" } },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "APPLY" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["applyKind"],
+            "properties": { "applyKind": { "enum": ["canonical_registration", "product_visual"] } },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "DERIVE" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["executeDerivedSteps"],
+            "properties": { "executeDerivedSteps": { "type": "boolean" } },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "RECONCILE" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["authority", "projectionEvidence"],
+            "properties": {
+              "authority": { "type": "object" },
+              "projectionEvidence": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "RUNTIME_VERIFY" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["gvaeVerifyRequest", "runtimeEvidence"],
+            "properties": {
+              "gvaeVerifyRequest": { "type": "object" },
+              "runtimeEvidence": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "VISUAL_CERTIFY" } } },
+      "then": { "properties": { "payload": { "maxProperties": 0 } } }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "CHANGE_ASSURANCE" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": ["changeAssurance"],
+            "properties": { "changeAssurance": { "type": "object" } },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "transition": { "const": "CLOSE" } } },
+      "then": { "properties": { "payload": { "maxProperties": 0 } } }
+    }
+  ]
+}

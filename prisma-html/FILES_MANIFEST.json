@@ -1,5 +1,5 @@
 {
-  "file_count_excluding_manifest": 951,
+  "file_count_excluding_manifest": 962,
   "files": [
     {
       "bytes": 156,
@@ -2287,6 +2287,21 @@
       "sha256": "8913321CB52A4685B38643C5F8BD93A90AFEC30AD6BC583B1E4CF643331DB7A2"
     },
     {
+      "bytes": 10017,
+      "path": "docs/marketing/PRISMA_MARKETING_MASTER_REGISTRY_V1.json",
+      "sha256": "D12133C2CB328E22EFAA43717568FB1C3D607EBE28F60FAC4392671FBFAA7C6F"
+    },
+    {
+      "bytes": 8606,
+      "path": "docs/marketing/PRISMA_MARKETING_PRODUCTION_MASTER_PLAN_V1.md",
+      "sha256": "C4568B9BD7D507F79BC0AAB47851244E3260A47B603B85551BF54A9F43CAFE19"
+    },
+    {
+      "bytes": 6895,
+      "path": "docs/marketing/previews/master-01-hero/index.html",
+      "sha256": "A10556EBBAAC77D746E824445E83C50D4CC274BE3F8E8930965B61DF12DA40CC"
+    },
+    {
       "bytes": 7899,
       "path": "docs/ops/PRISMA_FIELD_MANUAL_APRENDIZAJE_OPERATIVO.md",
       "sha256": "DDA747D0D91FF31F03220CF0912289F3451F67FFCF1DC36F7E6E41DCC9D01E19"
@@ -4252,9 +4267,9 @@
       "sha256": "724ED23E024393EC2B1E71A7DCB40D822D76746877E6349541AB86BCD10BDB7A"
     },
     {
-      "bytes": 10964,
+      "bytes": 11417,
       "path": "tools/visual_application/authority.py",
-      "sha256": "A8A4E497D059C36EBF879DD1D45DEAAA2A7F96206B396ECEC63AC6172CBD9A35"
+      "sha256": "D553DFD50529226646EC1B743230398A49046D303A6ED16ED061B982F02CAF4D"
     },
     {
       "bytes": 1702,
@@ -4337,14 +4352,14 @@
       "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
     },
     {
-      "bytes": 8313,
+      "bytes": 8399,
       "path": "tools/visual_application/tests/helpers.py",
-      "sha256": "FB89CB30416C5F23D41906441E4E2EB43B9BBF786064B3D8A466D7FBB4AA31CB"
+      "sha256": "995A58A2D2D4A5C84C1407026F7562972BA94A37F491AFB034C896D90BD6A807"
     },
     {
-      "bytes": 3223,
+      "bytes": 3726,
       "path": "tools/visual_application/tests/test_authority_hardening.py",
-      "sha256": "B971B165FBBB6EA725AF148B857DED9AABC987F27ECC6B8E63762EDD38970551"
+      "sha256": "A88AAF36A5DE3D8390EACEB211E443974299A1702AA1C9985693CD2E656045F9"
     },
     {
       "bytes": 949,
@@ -4467,14 +4482,14 @@
       "sha256": "94C8E63B2475646019597433B8EA7FB85A06A9BE8C0F3F1FCB02F3AC998F934F"
     },
     {
-      "bytes": 2781,
+      "bytes": 3282,
       "path": "tools/visual_promotion/README.md",
-      "sha256": "C1BD0FCE875839BC7DFD1915936C25D8D78C42A156C4EB267EE8B16CA4FE2FAA"
+      "sha256": "605E73790E8341C3EAFB53CDE47C4C3813F594584F107680693FD3D8A4A4C54D"
     },
     {
-      "bytes": 2192,
+      "bytes": 2047,
       "path": "tools/visual_promotion/__init__.py",
-      "sha256": "7EBAAD57E15B2B1069BD6701889F3C2C87CE9A29823B54F007C080982980EB15"
+      "sha256": "6CF5930E73A2E6EB6C8EF27D3CCE939717DDB351F5ED4E91FC633B347650DB2C"
     },
     {
       "bytes": 1457,
@@ -4592,9 +4607,9 @@
       "sha256": "D72D323D53913F7D6695D10C2198703F034114D66623D667335F9757B265F004"
     },
     {
-      "bytes": 1890,
+      "bytes": 1938,
       "path": "tools/visual_promotion/canonical_registration/lifecycle_state.py",
-      "sha256": "B62710CFA936E28329FFD3966A12D2EB108C7929A02AA21960187E63C0393092"
+      "sha256": "9F1160DE96A305BFC4C38ECCF165FDABA088AD34D74F4440C8FF306F754DC605"
     },
     {
       "bytes": 3818,
@@ -4652,6 +4667,11 @@
       "sha256": "16FA9B6B532A13C775372647769AA3C23CD7A015FCDA101973685538A1E1C4F1"
     },
     {
+      "bytes": 1082,
+      "path": "tools/visual_promotion/canonical_registration/tests/test_lifecycle_state.py",
+      "sha256": "93B3FCF6F34778D3A0E580503583B6BDA10C43D1ECA9898B747FC60A181967BC"
+    },
+    {
       "bytes": 1782,
       "path": "tools/visual_promotion/canonical_registration/tests/test_projection_reconciler.py",
       "sha256": "79FA5F24574C97FA1BAA8D7F71B7182FCF822254948DA55DE7161B94CF9DE109"
@@ -4700,6 +4720,41 @@
       "bytes": 1180,
       "path": "tools/visual_promotion/final_aggregation.py",
       "sha256": "0172AE0CA1D264FD0FD85DA055CF57CEF773F0B420C64ADEE2C8998E8EB8F4EC"
+    },
+    {
+      "bytes": 6067,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/README.md",
+      "sha256": "9A4702CD530A4116D80A9A2EC90D99E67A3E75E8A976CCCA853638B249A1466A"
+    },
+    {
+      "bytes": 460,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/__init__.py",
+      "sha256": "4A6C92AA7DF915451DBBEB1F63DCF4F3713C969F98D4601E4DD395DB3B98192B"
+    },
+    {
+      "bytes": 48,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/__main__.py",
+      "sha256": "935A1C1166B0C1EA35A82256345000BF2C73DED718D77773BC27A71ECCE28F7D"
+    },
+    {
+      "bytes": 3752,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/cli.py",
+      "sha256": "3FEA7CF177E0ED62B89B7010740F3A4269C1D044BBA1DC22E576646FE8402E96"
+    },
+    {
+      "bytes": 67451,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/orchestrator.py",
+      "sha256": "4A6F7B8E4C26D0C65DC152CCF7D930FF51D93CEA0B2AFD99D23A1F68810602EA"
+    },
+    {
+      "bytes": 9341,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/tests/test_orchestrator.py",
+      "sha256": "A7CD5379931EE9B4AC6FFF00EE22EF843056081CD4DFC78A10FAAE1A68FD5FAF"
+    },
+    {
+      "bytes": 4938,
+      "path": "tools/visual_promotion/lifecycle_orchestrator/transition.schema.json",
+      "sha256": "D2DA2035E394EB7C4B1FFB3745A5618C20173747174DDECC3BF723612A473E90"
     },
     {
       "bytes": 26416,

@@ -22,9 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout exact PR head
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - uses: actions/setup-python@v6
         with:
@@ -42,16 +44,16 @@ jobs:
           import unittest
           suite = unittest.defaultTestLoader.discover('tools/visual_application/tests', top_level_dir='tools')
           count = suite.countTestCases()
-          if count != 134:
+          if count != 135:
               raise SystemExit(f'GVAE_TEST_COUNT_DRIFT:{count}')
           result = unittest.TextTestRunner(verbosity=2).run(suite)
-          if result.testsRun != 134:
+          if result.testsRun != 135:
               raise SystemExit(f'GVAE_TEST_RUN_DRIFT:{result.testsRun}')
           if result.skipped:
               raise SystemExit('GVAE_FULL_CHECKOUT_TESTS_SKIPPED:' + repr(result.skipped))
           if not result.wasSuccessful():
               raise SystemExit('GVAE_TEST_SUITE_FAILED')
-          print('PASS_GVAE_V1_TESTS_134_ZERO_SKIPS')
+          print('PASS_GVAE_V1_TESTS_135_ZERO_SKIPS')
           PY
 
       - name: Canonical Registration deterministic suite

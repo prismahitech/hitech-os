@@ -70,7 +70,7 @@ def make_json_repo():
             "layerId":"LYR.JSON","adapterId":"ADP.TEST","recipeId":"REC.JSON","operations":[{"type":"jsonValues","path":path,"values":values}]}
     return td,root,source,output,manifest,provider,request
 
-def make_mesh_artifact(root:Path, task_id="gvae-test", head="a"*40, request_digest="c"*64):
+def make_mesh_artifact(root:Path, task_id="gvae-test", head="a"*40, request_digest="c"*64, layer_map=None):
     ev=root/"evidence"; ev.mkdir(parents=True,exist_ok=True)
     legacy_buf=io.BytesIO()
     cert={"status":"PASS","read_only_repo":True,"provenance_verified":True,
@@ -78,7 +78,8 @@ def make_mesh_artifact(root:Path, task_id="gvae-test", head="a"*40, request_dige
           "children":[{"task_id":task_id,"returncode":0,"manifest_status":"PASS","provenance":{"verified":True}}]}
     with zipfile.ZipFile(legacy_buf,"w",zipfile.ZIP_DEFLATED) as z:
         z.writestr("PARALLEL_CERTIFICATION.json",json.dumps(cert))
-        z.writestr(f"tasks/{task_id}/authority_mesh/reports/LAYERS_MAP.json",json.dumps({"status":"PASS","layers":[{"id":"x"}]}))
+        layer_map = layer_map if layer_map is not None else {"status":"PASS","layers":[{"id":"x"}]}
+        z.writestr(f"tasks/{task_id}/authority_mesh/reports/LAYERS_MAP.json",json.dumps(layer_map))
     composed_buf=io.BytesIO()
     report={"status":"PASS_COMPOSED_AUTHORITY_MESH","repoHead":head,"requestDigest":request_digest}
     preflight={"status":"PASS_PREFLIGHT","repoHead":head,"blockers":[],"lanes":[{"id":task_id,"coverage":{"resolvedPercent":100.0},"missing":[]}]}
