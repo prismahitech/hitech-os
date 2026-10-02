@@ -1,0 +1,61 @@
+name: PRISMA Merge Governance Hardening Tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions: {}
+
+jobs:
+  merge-governance-hardening:
+    name: merge-governance-hardening
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR source without repository permissions
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Python syntax validation
+        run: |
+          set -euo pipefail
+          python -m py_compile             tools/prisma-governance/prisma_required_merge_gate.py             tools/prisma-governance/test_prisma_required_merge_gate.py             autogit/engine/autogit_engine/config.py             autogit/engine/autogit_engine/github_cli.py             autogit/engine/autogit_engine/pr_gate.py             autogit/engine/autogit_engine/flight_cli.py             autogit/engine/autogit_engine/ag98_dashboard.py             autogit/engine/test_merge_gate_hardening.py             autogit/engine/test_flight_merge_hardening.py
+
+      - name: Merge governance regression suite
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          import importlib.util
+          import inspect
+          import unittest
+          from pathlib import Path
+
+          test_files = [
+              Path("tools/prisma-governance/test_prisma_required_merge_gate.py"),
+              Path("autogit/engine/test_merge_gate_hardening.py"),
+              Path("autogit/engine/test_flight_merge_hardening.py"),
+          ]
+
+          suite = unittest.TestSuite()
+          for path in test_files:
+              spec = importlib.util.spec_from_file_location("prisma_regression_" + path.stem, path)
+              if spec is None or spec.loader is None:
+                  raise RuntimeError("Cannot load test module: " + str(path))
+              module = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(module)
+              for name, func in inspect.getmembers(module, inspect.isfunction):
+                  if name.startswith("test_"):
+                      suite.addTest(unittest.FunctionTestCase(func, description=str(path) + ":" + name))
+
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          raise SystemExit(0 if result.wasSuccessful() else 1)
+          PY
+
+      - name: Static bypass scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -RInE --exclude-dir=.git             --include='*.py'             -- 'AUTOGIT_ALLOW_ADMIN_MERGE|--allow-merge-no-checks|--admin|admin=True'             autogit/engine/autogit_engine tools/prisma-governance

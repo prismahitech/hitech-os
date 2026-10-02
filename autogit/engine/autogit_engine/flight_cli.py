@@ -670,13 +670,20 @@ def apply_plan(args):
             if not checks["ok"]:
                 raise FlightError("GitHub checks failed; merge blocked")
         if args.allow_merge:
-            if not args.wait_checks and not args.allow_merge_no_checks:
-                raise FlightError("Merge requires --wait-checks or --allow-merge-no-checks")
+            if not args.wait_checks:
+                raise FlightError("Merge requires --wait-checks; there is no no-checks merge mode")
+            require_canonical_merge_check(runner, url)
+            merge_head = read_pr_head(runner, url)
             progress(90, "Merge PR")
-            m=runner.run(["gh","pr","merge",url,"--merge"], timeout=600, name="gh_pr_merge")
-            merged={"returncode":m.returncode,"stdout":m.stdout,"stderr":m.stderr,"ok":m.returncode==0}
+            m=runner.run(
+                ["gh","pr","merge",url,"--merge","--match-head-commit",merge_head],
+                timeout=600,
+                name="gh_pr_merge",
+            )
+            merged={"returncode":m.returncode,"stdout":m.stdout,"stderr":m.stderr,"ok":m.returncode==0,"matched_head":merge_head}
             if m.returncode != 0:
                 raise FlightError("PR merge failed")
+            merged["post_merge_proof"] = write_post_merge_proof(runner, url, merge_head)
     hygiene = ag100_write_post_run_hygiene_report(repo, runner, report, context="apply_plan")
     summary={"result":"ok","branch":branch,"created_commits":created,"pr":pr,"checks":checks,"merged":merged,"post_run_hygiene":hygiene,"rollback":"Use generated revert commands; no reset --hard was executed."}
     # AG98_APPLY_DASHBOARD_HOOK_V1
@@ -714,6 +721,91 @@ def make_revert_script(commits):
 def make_apply_md(summary):
     return "# AutoGit apply result\n\n```json\n"+json.dumps(summary, indent=2, ensure_ascii=False)+"\n```\n"
 
+def require_canonical_merge_check(runner: Runner, pr: str):
+    chk = runner.run(["gh", "pr", "checks", pr, "--watch", "--fail-fast"], timeout=1800, name="gh_pr_checks")
+    try:
+        ag98_write_ci_decision(Path(runner.report), chk.stdout, chk.stderr, chk.returncode, context="canonical_merge_gate")
+    except Exception:
+        pass
+    if chk.returncode != 0:
+        raise FlightError("GitHub checks failed; canonical merge gate blocked")
+    detail = runner.run(
+        ["gh", "pr", "checks", pr, "--json", "name,state,bucket,link"],
+        timeout=120,
+        name="gh_pr_checks_json_canonical",
+    )
+    if detail.returncode != 0:
+        raise FlightError("Could not read canonical merge-gate check state")
+    try:
+        rows = json.loads(detail.stdout or "[]")
+    except Exception as exc:
+        raise FlightError("Invalid canonical merge-gate check response") from exc
+    matches = [row for row in rows if str(row.get("name") or "") == "forgeos-quality-gate"]
+    if not matches:
+        raise FlightError("Canonical forgeos-quality-gate check is missing; merge blocked")
+    if not any(
+        str(row.get("state") or "").upper() == "SUCCESS"
+        and str(row.get("bucket") or "").lower() in {"pass", "success"}
+        for row in matches
+    ):
+        raise FlightError("Canonical forgeos-quality-gate check is not green; merge blocked")
+
+def read_pr_head(runner: Runner, pr: str) -> str:
+    view = runner.run(["gh", "pr", "view", pr, "--json", "state,headRefOid"], timeout=120, name="gh_pr_view_head")
+    if view.returncode != 0:
+        raise FlightError("Could not read PR head")
+    try:
+        payload = json.loads(view.stdout or "{}")
+    except Exception as exc:
+        raise FlightError("Invalid PR metadata response") from exc
+    if str(payload.get("state") or "").upper() != "OPEN":
+        raise FlightError("PR is not open; merge blocked")
+    head = str(payload.get("headRefOid") or "")
+    if not re.fullmatch(r"[0-9a-f]{40}", head):
+        raise FlightError("PR head SHA is invalid; merge blocked")
+    return head
+
+def write_post_merge_proof(runner: Runner, pr: str, matched_head: str) -> dict:
+    view = runner.run(
+        ["gh", "pr", "view", pr, "--json", "state,mergedAt,mergeCommit,headRefOid"],
+        timeout=120,
+        name="gh_pr_post_merge_view",
+    )
+    if view.returncode != 0:
+        raise FlightError("Could not read post-merge PR state")
+    try:
+        payload = json.loads(view.stdout or "{}")
+    except Exception as exc:
+        raise FlightError("Invalid post-merge PR state response") from exc
+    merged_at = str(payload.get("mergedAt") or "")
+    merge_obj = payload.get("mergeCommit") if isinstance(payload.get("mergeCommit"), dict) else {}
+    merge_sha = str(merge_obj.get("oid") or "")
+    actual_head = str(payload.get("headRefOid") or "")
+    if not merged_at or not merge_sha:
+        raise FlightError("Post-merge proof missing merge SHA or mergedAt")
+    if actual_head and actual_head != matched_head:
+        raise FlightError("Post-merge PR head differs from certified head")
+    runner.run(["git", "fetch", "origin", "main"], check=True, timeout=600, name="post_merge_fetch_main")
+    canonical = runner.run(["git", "rev-parse", "origin/main"], check=True, timeout=120, name="post_merge_main_head").stdout.strip()
+    ancestor = runner.run(["git", "merge-base", "--is-ancestor", merge_sha, canonical], timeout=120, name="post_merge_ancestry_check")
+    if ancestor.returncode != 0:
+        raise FlightError("Merged commit is not an ancestor of canonical main")
+    proof = {
+        "schemaVersion": "prisma.autogit.post-merge-proof.v1",
+        "prNumberOrUrl": pr,
+        "prHeadSha": matched_head,
+        "mergeSha": merge_sha,
+        "canonicalMainHead": canonical,
+        "mergedAt": merged_at,
+        "headExactBeforeMerge": True,
+        "mergeShaObservedByGitHub": True,
+    }
+    (runner.report / "post_merge_proof.json").write_text(
+        json.dumps(proof, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    return proof
+
 def merge_command(args):
     if not args.allow_merge:
         raise FlightError("merge command requires --allow-merge")
@@ -722,19 +814,18 @@ def merge_command(args):
     runner=Runner(repo, report)
     if not shutil.which("gh"):
         raise FlightError("gh CLI no encontrado")
-    if args.wait_checks:
-        chk=runner.run(["gh","pr","checks",args.pr,"--watch","--fail-fast"], timeout=args.check_timeout, name="gh_pr_checks")
-        # AG98_CI_DECISION_MERGE_HOOK_V1
-        try:
-            ag98_write_ci_decision(report, chk.stdout, chk.stderr, chk.returncode, context="merge_pr_checks")
-        except Exception:
-            pass
-        if chk.returncode != 0 and "no checks" not in (chk.stdout+chk.stderr).lower():
-            raise FlightError("Checks failed; merge blocked")
-    elif not args.allow_merge_no_checks:
-        raise FlightError("Merge requires --wait-checks or --allow-merge-no-checks")
-    m=runner.run(["gh","pr","merge",args.pr,"--merge"], timeout=600, name="gh_pr_merge")
-    summary={"result":"ok" if m.returncode==0 else "failed", "returncode":m.returncode, "stdout":m.stdout, "stderr":m.stderr}
+    if not args.wait_checks:
+        raise FlightError("Merge requires --wait-checks; there is no no-checks merge mode")
+    require_canonical_merge_check(runner, args.pr)
+    merge_head = read_pr_head(runner, args.pr)
+    m=runner.run(
+        ["gh","pr","merge",args.pr,"--merge","--match-head-commit",merge_head],
+        timeout=600,
+        name="gh_pr_merge",
+    )
+    summary={"result":"ok" if m.returncode==0 else "failed", "returncode":m.returncode, "stdout":m.stdout, "stderr":m.stderr, "matched_head":merge_head}
+    if m.returncode == 0:
+        summary["post_merge_proof"] = write_post_merge_proof(runner, args.pr, merge_head)
     summary["post_run_hygiene"] = ag100_write_post_run_hygiene_report(repo, runner, report, context="merge_command")
     # AG98_SYNC_LOCAL_MAIN_HOOK_V1
     if m.returncode == 0 and getattr(args, "sync_local_main", False):
@@ -783,8 +874,8 @@ def main(argv=None):
     ap.add_argument("--out", default=r"F:\descargasf")
     sub=ap.add_subparsers(dest="cmd", required=True)
     p=sub.add_parser("plan"); p.add_argument("--task", required=True); p.add_argument("--base", default="main")
-    a=sub.add_parser("apply-plan"); a.add_argument("--plan", required=True); a.add_argument("--task", default=""); a.add_argument("--base", default="main"); a.add_argument("--branch"); a.add_argument("--remote", default="origin"); a.add_argument("--allow-commit", action="store_true"); a.add_argument("--allow-push", action="store_true"); a.add_argument("--allow-pr", action="store_true"); a.add_argument("--allow-merge", action="store_true"); a.add_argument("--allow-merge-no-checks", action="store_true"); a.add_argument("--wait-checks", action="store_true"); a.add_argument("--check-timeout", type=int, default=1800); a.add_argument("--pr-title"); a.add_argument("--allow-drift", action="store_true")
-    m=sub.add_parser("merge"); m.add_argument("--pr", required=True); m.add_argument("--allow-merge", action="store_true"); m.add_argument("--allow-merge-no-checks", action="store_true"); m.add_argument("--wait-checks", action="store_true"); m.add_argument("--check-timeout", type=int, default=1800); m.add_argument("--sync-local-main", action="store_true")  # AG98_SYNC_LOCAL_MAIN_ARG_V1
+    a=sub.add_parser("apply-plan"); a.add_argument("--plan", required=True); a.add_argument("--task", default=""); a.add_argument("--base", default="main"); a.add_argument("--branch"); a.add_argument("--remote", default="origin"); a.add_argument("--allow-commit", action="store_true"); a.add_argument("--allow-push", action="store_true"); a.add_argument("--allow-pr", action="store_true"); a.add_argument("--allow-merge", action="store_true"); a.add_argument("--wait-checks", action="store_true"); a.add_argument("--check-timeout", type=int, default=1800); a.add_argument("--pr-title"); a.add_argument("--allow-drift", action="store_true")
+    m=sub.add_parser("merge"); m.add_argument("--pr", required=True); m.add_argument("--allow-merge", action="store_true"); m.add_argument("--wait-checks", action="store_true"); m.add_argument("--check-timeout", type=int, default=1800); m.add_argument("--sync-local-main", action="store_true")  # AG98_SYNC_LOCAL_MAIN_ARG_V1
     ns=ap.parse_args(argv)
     out=Path(ns.out or DEFAULT_OUT); report=None
     try:
