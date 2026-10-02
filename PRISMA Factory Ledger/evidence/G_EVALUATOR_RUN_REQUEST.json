@@ -1,7 +1,8 @@
 {
   "schemaVersion": "code_atlas_g_evaluator_run_request.v1",
-  "requestedAt": "2026-10-01T18:00:00-06:00",
+  "requestedAt": "2026-10-02T00:10:25.049Z",
   "purpose": "Trigger the final six-task same-task BASELINE/ASSISTED independent evaluator ceremony.",
   "status": "PENDING_EXTERNAL_EVALUATOR",
-  "requiredSecret": "ANTHROPIC_API_KEY"
+  "requiredSecret": "ANTHROPIC_API_KEY",
+  "triggerNonce": "rerun-20261001-v2"
 }
